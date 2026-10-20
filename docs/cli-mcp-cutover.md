@@ -6,7 +6,7 @@ The target product is local agent configuration through CLI/MCP, a phone control
 
 | Owner | Required transition |
 | --- | --- |
-| `Sources/CLI/ThumbleCLI.swift` | Replace GUI launch/onboarding/editor-window commands and GUI runtime/defaults/notification fallbacks. Retain profile/design operations, local generation, preview capture/rendering, diagnostics, pairing, permissions guidance, and game-app launch targets. |
+| `Sources/CLI/ThumbleCLI.swift` | Lifecycle/status/pairing inspection now use the headless receiver; verify remaining GUI launch/onboarding/editor-window commands and other runtime/defaults/notification fallbacks. Retain profile/design operations, local generation, preview capture/rendering, diagnostics, pairing, permissions guidance, and game-app launch targets. |
 | `Host/crates/thumble-cli-bridge/src/main.rs` | It currently prefers the native configuration endpoint before Rust online/offline authority. Establish explicit authority ownership and migrate legacy data before removing that route. Preserve its bounded request and authority-lock guarantees. |
 | `Sources/Mac/MacControllerServer.swift` and native output helpers | Transfer essential pairing, trust, synchronization, release barriers, and keyboard/pointer/gamepad behavior to the retained headless runtime before deleting GUI ownership. Compare against `thumble-host`, rather than assuming parity from its existence. |
 | Shared design models/renderers and helpers compiled from `Sources/Mac` | Extract non-UI operations used by CLI/bridge, including WoW import/refresh and binding conversion. SwiftUI/AppKit used for headless image rendering does not itself require a desktop GUI product. |

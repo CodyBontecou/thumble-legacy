@@ -1,0 +1,10 @@
+Test Suite 'Selected tests' started at 2026-10-20 19:24:51.617.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-20 19:24:51.617.
+Test Suite 'ThumbleCLIRuntimeBackendTests' started at 2026-10-20 19:24:51.622.
+Test Suite 'ThumbleCLIRuntimeBackendTests' passed at 2026-10-20 19:24:52.198.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.568 (0.576) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-20 19:24:52.198.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.568 (0.581) seconds
+Test Suite 'Selected tests' passed at 2026-10-20 19:24:52.198.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.568 (0.581) seconds
+** TEST SUCCEEDED **

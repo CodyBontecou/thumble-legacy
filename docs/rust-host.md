@@ -27,15 +27,24 @@ thumble-bridge (same-directory constrained Swift helper)
   `- one bounded JSON transform; no state, paths, argv, credentials, or persistence
 
 thumble CLI
+  |- exact-sibling thumble-host -> detached receiver start/stop/restart
   `- exact-sibling thumble-cli-bridge -> live control socket or offline authority lock
 
 Thumble Mac UI
-  `- legacy writable backend holds the same authority lock and refuses Rust coexistence
+  `- transitional legacy owner; scheduled for retirement, holds the same authority lock
 ```
 
 The long-running receiver runs in the logged-in user's session. It must not run as root or as a system daemon because macOS Accessibility approval and input delivery belong to the active GUI session. Future Windows and Linux implementations should follow the same per-user-agent model.
 
 The host owns its portable state under `~/Library/Application Support/ThumbleHost`. On first run it may import the existing Thumble Mac server identity, trusted clients, and current UUID-based profiles/bindings without writing back to the defaults domain. Preserving the server ID and trusted tokens allows an already-paired current client to reconnect. Obsolete named-input configurations and binding storage are rejected without migration, aliases, or recovery. An unreadable critical record leaves the source untouched; the host never installs a fresh identity over a detected but unreadable store. If a pre-rename Rust-host state directory already exists and the canonical directory does not, Thumble continues using that directory to avoid creating a second server identity.
+
+## CLI receiver lifecycle
+
+The packaged `thumble`, `thumble-host`, and `thumble-cli-bridge` executables must be siblings. `thumble server start` now starts the headless receiver rather than opening Thumble Mac. It accepts `--port PORT` (including `0` for an ephemeral port), `--no-bonjour`, `--no-input`, and `--allow-config-write`. Use the last flag when the local MCP workflow needs revision-checked draft commits. `thumble server stop` and `restart` use the receiver's lifecycle implementation; restart preserves the running port request, discovery/input settings, and configuration-write permission.
+
+`thumble server status [--json]`, `server addresses`, `server urls`, `pairing code`, and `pairing payload` inspect the headless receiver without desktop notifications or status defaults. A stopped host reports `{"running":false}` for JSON status. A live JSON status retains the correlated runtime response envelope; detailed host diagnostics are under `response.status`. A held or unreachable authority is an error, rather than a stopped result or a reason to launch the desktop GUI. Other legacy runtime commands are still being migrated; see [the cutover gates](cli-mcp-cutover.md).
+
+For a recording-only development check, run `thumble server start --port 0 --no-bonjour --no-input`, inspect status, then stop it. This is not physical input acceptance. `scripts/verify-headless-lifecycle-cli.py --cli BUILT_CLI --host BUILT_HOST --bridge BUILT_BRIDGE` automates lifecycle/pairing checks in a private temporary HOME, with input/Bonjour disabled and persisted-state integrity checks.
 
 ## MVP scope
 

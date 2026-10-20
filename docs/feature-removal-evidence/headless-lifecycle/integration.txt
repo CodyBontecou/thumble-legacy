@@ -1,0 +1,1 @@
+Headless lifecycle verified: start/status/pairing/restart/stop; options/state preserved; held authority and corrupt legacy import rejected; input disabled

@@ -58,25 +58,24 @@ The iOS script uses the `asc` CLI. Set `ASC_APP_ID` (or pass `--app`) and option
 
 ## Use
 
-1. Run `ThumbleMac` on the Mac. The first-launch slides walk through setup; reopen them from **Setup Guide** in the toolbar.
-2. Install Thumble on your iPhone and keep both apps open. The guide has a disabled App Store link placeholder until the iOS launch; existing test builds can be used now.
-3. Allow **Local Network** access on both devices. On macOS 15+, open **System Settings → Privacy & Security → Local Network** and enable **Thumble Mac**. On iPhone, open **Settings → Privacy & Security → Local Network** and enable **Thumble**. macOS 14 has no Local Network switch; a running helper does not confirm permission on newer macOS versions.
-4. Grant Accessibility permission when prompted, then restart/refresh if needed.
-5. Run `ThumbleiOS` on the iPhone and tap **Scan Mac QR Code** to connect instantly, or manually enter one of the displayed `ws://<mac-ip>:<port>` addresses and tap **Request Pairing**. QR pairing can also discover the Mac over nearby peer-to-peer when there is no Wi‑Fi router.
-6. For manual pairing, enter the six-digit code shown in the Mac helper's secure pairing card.
-7. After the first successful pair, **Smart Connect** remembers this Mac, discovers it over Bonjour, and reconnects automatically when the iOS app opens or returns to foreground.
-8. The iOS app also keeps the last synced keypads available for viewing and switching even when Thumble Mac is not open.
-9. Focus the Mac app you want to control, such as Terminal, Cursor, or a browser.
+The target desktop setup is the local CLI/MCP and headless receiver, configured through your agent. Phone controller and editing UI remain. The desktop GUI is transitional while the remaining [cutover work](docs/cli-mcp-cutover.md) is completed.
 
-The CLI provides the same setup instructions with `thumble app setup-guide`. `thumble app local-network-settings` opens the Mac permission pane without requiring the helper to be running. `thumble app ios-app` reports the launch placeholder for now; it will open the App Store listing once `iOSAppStoreURL` in `Sources/Shared/ThumbleMacSetupGuide.swift` is set.
+1. Install the standalone host distribution, keeping `thumble`, `thumble-host`, `thumble-cli-bridge`, and the native transform helper together. See [the receiver documentation](docs/rust-host.md).
+2. Start the receiver with `thumble server start --allow-config-write`. The flag enables revision-checked configuration draft commits for local agent tools. Inspect it with `thumble server status` or `thumble server status --json`.
+3. Install Thumble on your phone. Allow Local Network access on the phone and, where required, for the host on macOS. Grant Accessibility to the receiver for keyboard/pointer output using `thumble-host accessibility prompt`; `thumble-host accessibility open` opens the relevant settings. Native gamepad output has separate [signing and acceptance requirements](docs/virtual-controller-support.md).
+4. Use `thumble server addresses` and `thumble pairing code` to connect the phone. `thumble pairing payload` returns the structured payload an agent can use for pairing instructions. Smart Connect remembers a successfully paired host and reconnects through Bonjour.
+5. Ask your agent to configure profiles with the local CLI/MCP. The phone keeps synced layouts and supports on-phone edits; hosted builders and skin distribution are being retired.
+6. Focus the application you want to control. Use `thumble server restart` to restart with the receiver's current options, or `thumble server stop` to stop it.
 
-For airplane/offline use, turn on Airplane Mode if desired, then manually re-enable Wi‑Fi and Bluetooth. Thumble can use Apple peer-to-peer discovery without internet or a router; if both radios are off, wireless control is not possible.
+The receiver imports supported legacy identity/trust/profile data on first startup without rewriting the original defaults. An unreadable legacy record stops startup rather than creating a replacement identity. This existing import is separate from the forthcoming version-5 appearance/layout migration; see [migration progress](docs/feature-removal-progress.md).
+
+For airplane/offline use, turn on Airplane Mode if desired, then manually re-enable Wi-Fi and Bluetooth. Thumble can use Apple peer-to-peer discovery without internet or a router; if both radios are off, wireless control is not possible.
 
 ## Use with AI coding agents
 
 The standalone Rust distribution includes `thumble-mcp`, a local MCP `2025-11-25` stdio server for Claude, OpenAI Codex, and compatible clients. It talks only to the running host's user-only control socket and exposes curated tools, including a bounded controller-template catalog, revision-aware private draft editing, constrained Swift generation/profile/theme/orientation transforms, deterministic seven-kind `customization.fix`, revision-safe typed non-file `control-bar.item.set`, safe non-file six-kind `element.add` and `element.set`, three-way rebase, safe SVG preview export, and atomic save, without authentication tokens, raw key codes, asset/image payloads, caller paths, arbitrary input text, or shell execution. `render_controller` returns a bounded geometry, sanitized native normal-state appearance, and message-free layout-quality snapshot plus an embedded MCP Apps `2026-01-26` SVG interface for compatible clients, with structured/text fallback elsewhere. Input is disabled unless the MCP process is explicitly launched with `--allow-input`; `release_all` is always available. Configuration examples and the complete tool contract are in [`docs/rust-host.md`](docs/rust-host.md#mcp-adapter).
 
-Thumble also includes a ready-to-use [`SKILL.md`](SKILL.md) that teaches terminal-capable agents how to inspect the current setup, generate or edit profiles, validate layouts, operate the Mac helper safely, and verify their work. Hosted controller building and remote connector relays are being retired. Local CLI/MCP editing, deterministic generation, and ordinary profile import/export remain supported. Give the agent the skill's absolute path plus the outcome you want; you do not need to write the CLI commands yourself.
+Thumble also includes a ready-to-use [`SKILL.md`](SKILL.md) that teaches terminal-capable agents how to inspect the current setup, generate or edit profiles, validate layouts, operate the local receiver safely, and verify their work. Hosted controller building and remote connector relays are being retired. Local CLI/MCP editing, deterministic generation, and ordinary profile import/export remain supported. Give the agent the skill's absolute path plus the outcome you want; you do not need to write the CLI commands yourself.
 
 ```text
 Read /absolute/path/to/Thumble/SKILL.md, then use the thumble CLI to

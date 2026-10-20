@@ -134,6 +134,67 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
             URL(fileURLWithPath: "/nonexistent-thumble-test/thumble-cli-bridge")))
     }
 
+    func testReceiverLifecycleAcceptsOnlyKnownOptionsAndBoundsThePort() throws {
+        typealias Command = ThumbleCLIRuntimeBackend.ReceiverCommand
+        XCTAssertEqual(try Command.parse(["start"]).arguments, ["start"])
+        XCTAssertEqual(try Command.parse(["start", "--no-input", "--port", "0", "--allow-config-write", "--no-bonjour"]).arguments,
+                       ["start", "--port", "0", "--no-bonjour", "--no-input", "--allow-config-write"])
+        XCTAssertEqual(try Command.parse(["start", "--port", "65535"]).arguments, ["start", "--port", "65535"])
+        for command in ["stop", "restart"] { XCTAssertEqual(try Command.parse([command]).arguments, [command]) }
+        for arguments in [[], ["run"], ["stop", "--port", "42"], ["restart", "--no-input"],
+                          ["start", "--port"], ["start", "--port", "65536"], ["start", "--port", "-1"],
+                          ["start", "--port", "+42"], ["start", "--port", "42.0"], ["start", "--port", ""],
+                          ["start", "--state-dir", "/tmp/other"], ["start", "--no-input", "--no-input"],
+                          ["start", "--port", "42", "--port", "43"]] {
+            XCTAssertThrowsError(try Command.parse(arguments), "\(arguments)")
+        }
+    }
+
+    func testHeadlessStatusDistinguishesStoppedMissingAndUnreachableAuthority() throws {
+        let stopped = ThumbleCLIRuntimeBackend(transport: { _ in (0, self.frame(owner: "none")) })
+        XCTAssertNil(try stopped.headlessStatus(invocationID: id))
+        let good = ThumbleCLIRuntimeBackend(transport: { _ in (0, try self.headlessStatusFrame()) })
+        XCTAssertEqual(try good.headlessStatus(invocationID: id)?.control?.status?.serviceName, "Headless receiver")
+        for frame in [self.frame(owner: "unreachable", ok: false, error: "legacy_owner_possible"),
+                      self.frame(owner: "unreachable", ok: false, error: "authority_unreachable"),
+                      self.frame(owner: "rust", response: "{\"ok\":true}")] {
+            let backend = ThumbleCLIRuntimeBackend(transport: { _ in (1, frame) })
+            XCTAssertThrowsError(try backend.headlessStatus(invocationID: id))
+        }
+    }
+
+    func testReceiverLifecycleUsesValidatedSiblingProcessAndReportsFailure() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true,
+                                               attributes: [.posixPermissions: 0o700])
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let host = directory.appendingPathComponent("thumble-host")
+        let script = """
+        #!/bin/sh
+        case "$1" in
+        start) printf '%s\\n' "$@" ;;
+        stop) printf 'receiver rejected stop\\n' >&2; exit 7 ;;
+        restart) exec /bin/sleep 10 ;;
+        esac
+        """
+        try Data(script.utf8).write(to: host)
+        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: host.path)
+        let command = try ThumbleCLIRuntimeBackend.ReceiverCommand.parse(["start", "--port", "0", "--no-input"])
+        let output = try ThumbleCLIRuntimeBackend.runReceiver(command, executableURL: host)
+        XCTAssertEqual(String(decoding: output, as: UTF8.self), "start\n--port\n0\n--no-input\n")
+        XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.runReceiver(.stop, executableURL: host)) {
+            XCTAssertEqual($0.localizedDescription, "receiver rejected stop")
+        }
+        XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.runReceiver(.restart, executableURL: host, timeout: 0.05)) {
+            guard case .timeout = $0 as? ThumbleCLIRuntimeBackend.BackendError else { return XCTFail("Expected timeout: \($0)") }
+        }
+        let link = directory.appendingPathComponent("linked-host")
+        try FileManager.default.createSymbolicLink(at: link, withDestinationURL: host)
+        XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.runReceiver(command, executableURL: link))
+        try FileManager.default.setAttributes([.posixPermissions: 0o722], ofItemAtPath: host.path)
+        XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.runReceiver(command, executableURL: host))
+    }
+
     func testHeadlessPairingPayloadUsesVerifiedReceiverWithoutLegacyStatus() throws {
         let backend = ThumbleCLIRuntimeBackend(transport: { _ in
             (0, try self.headlessStatusFrame())

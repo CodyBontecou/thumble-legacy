@@ -1,11 +1,11 @@
 ---
 name: thumble-keypad-generator
-description: Generate, install, skin, edit, export/import, and runtime-control Thumble keypad profiles using the `thumble` CLI. Use whenever a user asks for a Thumble keypad, iPhone controller layout, game profile, keyboard-to-touch controls, shortcut pad setup, profile/template management, key binding changes, joystick/custom button layout changes, shareable skin creation (material JSON or CSS authoring), or Mac helper runtime actions such as status, pairing code/payload, accessibility, test tap, server restart, or release-all. For unknown games, research or infer controls, write an agent-provided JSON spec, dry-run it, and install it without asking the user unless they explicitly want custom controls.
+description: "Configure Thumble through local CLI/MCP: generate and edit controller profiles, bindings, appearance, layout, haptics, and WoW imports; inspect or operate the headless receiver, pairing, and input diagnostics. Use when a user requests a Thumble controller/keypad or changes to an existing setup. Preserve on-phone edits and unrelated profiles. For unknown games, research controls, write an agent JSON spec, and dry-run before installing."
 ---
 
 # Thumble CLI / Keypad Generator
 
-Use this skill to configure Thumble from the command line. Thumble turns an iPhone into a programmable keypad/controller for a Mac. The CLI can now do both agent-friendly game profile generation and most saved-configuration/runtime actions exposed by the macOS app.
+Use this skill to configure Thumble from the command line. Thumble turns an iPhone into a programmable keypad/controller for a Mac. The target is local CLI/MCP configuration through the user’s agent, with phone controller/editor UI and a headless local receiver. Desktop UI is being retired; use the headless lifecycle and profile tools. See `docs/cli-mcp-cutover.md` for unfinished authority/tool migrations.
 
 ## Decision tree
 
@@ -13,7 +13,7 @@ Use this skill to configure Thumble from the command line. Thumble turns an iPho
 - User wants an emulator/controller-style layout → use `template list` / `template install`.
 - User wants to change shortcuts → use `binding` commands.
 - User wants shape/color/joystick/layout changes → use `customization` or `element` commands.
-- User wants a shareable appearance-only skin (materials or CSS) → use `skin` commands; scaffold with `--css` for CSS authoring.
+- User wants appearance changes → edit profile-owned colors, styles, artwork, icons, and haptics through design commands. Preserve legacy packages as migration inputs.
 - User wants to customize the iPhone control bar or one of its buttons → use `control-bar` commands.
 - User wants backup/restore/share → use `profile export` / `profile import`.
 - User wants pairing/status/server/accessibility/test/release-all → use runtime commands.
@@ -32,9 +32,11 @@ xcodebuild -project Thumble.xcodeproj \
 THUMBLE_CLI="$PWD/build/DerivedData/Build/Products/Debug/thumble"
 ```
 
-If `build/DerivedData/Build/Products/Debug/thumble` already exists and is recent enough, reuse it. New subcommands land in source before any prebuilt binary: if an existing binary rejects a subcommand documented here (probe with `"$THUMBLE_CLI" skin css capabilities`), rebuild it from the current source.
+If `build/DerivedData/Build/Products/Debug/thumble` already exists and is recent enough, reuse it. New subcommands land in source before any prebuilt binary: if an existing binary rejects a subcommand documented here (inspect `"$THUMBLE_CLI" --help`), rebuild it from the current source.
 
-Note: the `skin` family is CLI-only. It is not part of the MCP tool surface (local stdio adapter or hosted gateway), so skin scaffold/lint/compile/quality/preview always run through the local `thumble` CLI; do not look for skin MCP tools. MCP tools cover status, pairing, input, profiles, configuration drafts, catalog queries, and rendering.
+The standalone distribution keeps `thumble`, `thumble-host`, `thumble-cli-bridge`, and the native transform helper together. Building the Swift CLI alone does not install its Rust siblings; build the retained host/bridge or use the packaged distribution. Local MCP talks to the running headless receiver. Hosted builder/relay flows are retired.
+
+If a retained operation reports `operation_not_migrated`, preserve the source and report the missing headless operation. Do not write another catalog through legacy defaults or launch the desktop GUI as a fallback.
 
 ## Generate a game profile
 
@@ -64,7 +66,7 @@ If uncertain, still create a playable spec, set `confidence` to `low`, and menti
   "source": "Agent best guess from common/default keyboard controls",
   "confidence": "low",
   "notes": [
-    "Generated from the agent's best guess. Adjust in Thumble Mac if your in-game bindings differ."
+    "Generated from the agent's best guess. Ask your agent to update the bindings if your in-game settings differ."
   ],
   "controls": [
     { "label": "Left", "key": "LeftArrow", "role": "movement" },
@@ -88,7 +90,7 @@ Run:
 "$THUMBLE_CLI" generate --stdin < /tmp/game-keypad.json
 ```
 
-By default, `generate` installs, selects, and marks the profile as default. If Thumble Mac is running, it reloads and pushes the selected keypad to the paired iPhone.
+By default, `generate` installs, selects, and marks the profile as default. Use the authoritative local tools and verify delivery through receiver/phone status; a saved profile alone does not prove the phone received it.
 
 Useful variants:
 
@@ -139,7 +141,7 @@ Control fields:
 | `cornerRadius` | optional | Rounded-rectangle corner radius. |
 | `shadowStrength` | optional | Shadow multiplier `0`–`2`. |
 | `isHidden` | optional | Hide this control. |
-| `isLocationLocked` | optional | Prevent drag repositioning in the Mac editor. |
+| `isLocationLocked` | optional | Prevent drag repositioning in the layout editor. |
 | `kind` / `controlKind` | optional | `button`, `joystick`, `trigger`, `trackpad`, `text`, or `decoration` for saved element/profile editing. `text` and `decoration` are passive; agent-generated action specs still require a keyboard `key`. |
 | `trackpadSettings` | optional | Object with `sensitivity`, `scrollSensitivity`, `tapToClick`, `twoFingerScroll`, and `naturalScrolling` for trackpad components. |
 | `sensitivity`, `cursorSensitivity`, `pointerSensitivity` | optional | Trackpad cursor sensitivity multiplier (`0.2`–`4.0` after normalization). Implies `kind: "trackpad"` if no kind is set. |
@@ -250,46 +252,11 @@ Use these for emulator/controller-style layouts rather than game-specific key ge
 
 Templates include NES, Super Nintendo, Nintendo 64, GameCube, Game Boy, Game Boy Advance, Genesis 6-Button, Sega Saturn, Dreamcast, Arcade Stick, PSP, PlayStation, and Xbox.
 
-## Shareable skins
+## Appearance ownership and previews
 
-Use `.pocketpad` skins for appearance-only sharing. They preserve profile geometry, labels, keyboard/controller bindings, launch targets, native controls, and accessibility:
+Create new designs through direct profile appearance and layout operations. Skin packages and portrait variants are legacy migration inputs; retain their original bytes/assets until the backed-up conversion is verified. Avoid detaching a package as a shortcut for migration: that can lose state-specific appearance. See `docs/feature-removal-migration-contract.md` when converting existing data.
 
-```bash
-"$THUMBLE_CLI" skin artboard list
-"$THUMBLE_CLI" skin scaffold "Indigo Pocket" --identifier com.creator.indigo-pocket --artboard showcase-controller-v1 -o ./IndigoPocket
-"$THUMBLE_CLI" skin compile ./IndigoPocket -o ./IndigoPocket/build/indigo-pocket.pocketpad --clean --strict
-"$THUMBLE_CLI" skin validate ./IndigoPocket/build/indigo-pocket.pocketpad --strict
-"$THUMBLE_CLI" skin quality ./IndigoPocket --artboard showcase-controller-v1 --strict
-"$THUMBLE_CLI" skin preview ./IndigoPocket -o ./IndigoPocket/reviews/contact-sheet.png --all-variants --all-states --native-renderer --contact-sheet
-"$THUMBLE_CLI" skin list
-"$THUMBLE_CLI" skin inspect ./IndigoPocket/build/indigo-pocket.pocketpad
-"$THUMBLE_CLI" skin import ./IndigoPocket/build/indigo-pocket.pocketpad
-"$THUMBLE_CLI" skin apply com.example.pocketpad.skin.aurora --profile "My Setup"
-"$THUMBLE_CLI" skin detach --profile "My Setup"
-```
-
-### CSS-authored skins
-
-The same skin workflow can be driven by real CSS (profile `thumble-css-core-1`) instead of material JSON. CSS is a compile-time authoring format — it lowers into the same deterministic native style model, and no stylesheet ever ships inside the package or runs at runtime:
-
-```bash
-"$THUMBLE_CLI" skin scaffold "My Skin" --identifier com.creator.my-skin --css -o ./MySkin
-"$THUMBLE_CLI" skin css capabilities          # live property/selector/limit list
-"$THUMBLE_CLI" skin css lint ./MySkin
-"$THUMBLE_CLI" skin css computed ./MySkin --control builtin-jump --scheme dark --state pressed
-"$THUMBLE_CLI" skin compile ./MySkin --clean --strict
-```
-
-Style controls with semantic selectors (`control[role="primary_action"]`, `#builtin-jump`, `:pressed`, `@media (prefers-color-scheme: dark)`) so one skin covers any profile using the same roles. Unsupported CSS is a strict compile error, never silently ignored. See `docs/skins/css-authoring.md` and the complete example at `docs/skins/examples/css-first-light/`.
-
-Assign reusable semantic roles and independent touch expansion while creating a keypad:
-
-```bash
-"$THUMBLE_CLI" element set jump --skin-role primary-action --hit-insets 16
-"$THUMBLE_CLI" element set pause --skin-role menu --hit-insets 10,18,14,18
-```
-
-For handcrafted skin creation or critique, load the project `thumble-skin-author` skill and use its separate art-director, designer, visual-critic, and QA stages. Human approval of the exact final contact sheet and package hash is required before directory publication. See `docs/skins/README.md` for authoring source, canonical artboards, package schemas, layers, nine-slice assets, quality gates, and security rules.
+Use `layout preview --profile PROFILE -o /tmp/thumble-layout.png --variant landscape` for layout inspection, and local MCP `render_controller` for its supported read-only native appearance preview. Inspect the returned artifact and layout warnings. These tools have different rendering scopes; a geometry preview does not establish full artwork fidelity. Preserve direct colors, gradients, reusable styles, text/icons/assets, layers/groups, haptics, and all required light/dark and held-trigger states.
 
 ## Shortcut bindings
 
@@ -347,7 +314,7 @@ Appearance/design flags:
 
 ## iPhone control bar
 
-Control-bar items keep their built-in actions, but their order, visibility, icon, size, fill, shape, corners, effects, and haptics can be customized per portrait/landscape variant:
+Control-bar items keep their built-in actions; their order, visibility, icon, size, fill, shape, corners, effects, and haptics remain editable:
 
 ```bash
 "$THUMBLE_CLI" control-bar list --json
@@ -360,35 +327,27 @@ Control-bar items keep their built-in actions, but their order, visibility, icon
 "$THUMBLE_CLI" control-bar reset
 ```
 
-Use `--variant portrait|landscape` and `--profile PROFILE` as needed. A control-bar item's semantic action is fixed: styling `home`, for example, cannot turn it into a keyboard shortcut.
+Use the landscape layout and `--profile PROFILE` as needed. A control-bar item's semantic action is fixed: styling `home`, for example, cannot turn it into a keyboard shortcut.
 
-## Runtime Mac helper commands
+## Headless receiver commands
 
-Thumble Mac must be running for most runtime commands. `app open` launches it first.
+Use the packaged receiver lifecycle. It enforces the shared authority lock; a held/unreachable authority is an error, not permission to start another owner. A stopped receiver reports `{"running":false}` in JSON status. Live JSON status retains the correlated envelope with detailed diagnostics under `response.status`.
 
 ```bash
-"$THUMBLE_CLI" app open
-"$THUMBLE_CLI" app screenshot -o /tmp/thumble-window.png --json
-"$THUMBLE_CLI" status --json
-"$THUMBLE_CLI" server start
-"$THUMBLE_CLI" server stop
-"$THUMBLE_CLI" server restart
+"$THUMBLE_CLI" server start --allow-config-write
+"$THUMBLE_CLI" server status --json
 "$THUMBLE_CLI" server addresses
 "$THUMBLE_CLI" pairing code
 "$THUMBLE_CLI" pairing payload
-"$THUMBLE_CLI" pairing cancel
-"$THUMBLE_CLI" accessibility status
-"$THUMBLE_CLI" accessibility prompt
-"$THUMBLE_CLI" accessibility open
-"$THUMBLE_CLI" latency simulate --pattern hollow-knight --mode compare --log /tmp/thumble-latency.json
-"$THUMBLE_CLI" latency verify --max-ms 4 --p95-ms 4 --log /tmp/thumble-latency-verify.json
-"$THUMBLE_CLI" test tap jump
-"$THUMBLE_CLI" test down left
-"$THUMBLE_CLI" test up left
-"$THUMBLE_CLI" release-all
+"$THUMBLE_CLI" server restart
+"$THUMBLE_CLI" server stop
 ```
 
-For visual verification, agents must use `app screenshot` instead of activating Thumble, sending key events, running AppleScript, or taking a full-screen capture. It captures only the largest visible Thumble window and does not move focus or control the user's screen. Use `--window-title TEXT` to choose among multiple app windows. If Thumble is not running, ask the user to open it; do not launch it without permission because launching can change focus. If Screen Recording access is unavailable, stop and ask the user to grant it to the terminal or agent host; do not trigger permission UI or fall back to screen control.
+`start` accepts `--port PORT`, `--no-bonjour`, `--no-input`, and `--allow-config-write`. Restart preserves the current receiver options. Use `--no-input` for recording-only diagnostics. Inspect actual transport/input status before claiming delivery or latency acceptance. A simulation does not prove physical input performance.
+
+For Accessibility status or permission setup use the sibling `thumble-host accessibility status|prompt|open`; the native `thumble accessibility` wrapper is still being migrated. OS permission approval may need the user. Pairing cancellation and other remaining legacy runtime commands also need headless integration; consult `docs/cli-mcp-cutover.md` rather than opening the desktop GUI.
+
+For authorized input tests, list installed controls first and use their exact element/part IDs (`test tap --element ID#part`); never infer an output from a label. `release-all` releases receiver-owned holds. For visual inspection use preview artifacts, without activating desktop windows or taking screen captures.
 
 Use `latency simulate` before UI automation when investigating controller lag. It is headless and emits per-edge touch-to-injection timings; supported patterns are `hollow-knight`, `same-button-burst`, `udp-recovery`, and `udp-recovery-burst`, with modes `current`, `legacy-main-actor`, or `compare`. Use `latency verify` as the pass/fail gate for whether the current input path is below the configured lag budget.
 
@@ -418,7 +377,7 @@ Bindings:
 - Climb: Z
 - Pause: Esc
 
-If your in-game bindings differ, I can update the profile from the CLI or you can edit it in Thumble Mac's Keypad editor.
+If your in-game bindings differ, I can update the profile through the local tools; you can also edit the layout on your phone.
 ```
 
 ## Troubleshooting
@@ -427,6 +386,6 @@ If your in-game bindings differ, I can update the profile from the CLI or you ca
 - **Need a controller layout, not a game profile**: use `template install`.
 - **Unsupported key**: change `key` to a supported key name, then rerun `--dry-run`.
 - **Malformed JSON**: validate the file or rewrite it with strict JSON syntax.
-- **Profile does not appear on iPhone**: make sure Thumble Mac is running and the iPhone is paired; rerun the install command or restart Thumble Mac.
-- **Runtime status missing**: run `thumble app open`, then `thumble status` again.
+- **Profile does not appear on iPhone**: inspect `server status --json`, confirm the phone is paired, and check synchronization before retrying a revision-safe install.
+- **Runtime status missing**: inspect `thumble server status --json`; start the headless receiver if stopped. A held/unreachable authority needs diagnosis, not a second receiver.
 - **Controls feel wrong in-game**: update the JSON/spec or use `binding set` / `element set` rather than asking the user to hand-edit everything.

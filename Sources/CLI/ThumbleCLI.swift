@@ -6330,17 +6330,10 @@ struct ThumbleCLI {
     private static func server(arguments: [String]) throws {
         guard let subcommand = arguments.first else { throw CLIError.message("Missing server subcommand") }
         switch subcommand {
-        case "start":
-            try openApp()
-            try postRuntimeCommand(.start)
-            print("Requested server start.")
-        case "stop":
-            try postRuntimeCommand(.stop)
-            print("Requested server stop.")
-        case "restart":
-            try openApp()
-            try postRuntimeCommand(.restart)
-            print("Requested server restart.")
+        case "start", "stop", "restart":
+            let command = try ThumbleCLIRuntimeBackend.ReceiverCommand.parse(arguments)
+            let output = try ThumbleCLIRuntimeBackend.runReceiver(command)
+            try FileHandle.standardOutput.write(contentsOf: output)
         case "status":
             try printRuntimeStatus(json: arguments.contains("--json"))
         case "addresses", "urls":
@@ -6369,22 +6362,11 @@ struct ThumbleCLI {
     }
 
     private static func readPairingPayload() throws -> PairingPayload {
-        switch try runtimeRoute(.status) {
-        case .rust(let response):
-            guard let status = response.control?.status else {
-                throw ThumbleCLIRuntimeBackend.BackendError.malformedResponse
-            }
-            return try status.pairingPayload()
-        case .legacy(let data):
-            return try legacyPairingPayload(data)
+        guard let response = try ThumbleCLIRuntimeBackend().headlessStatus(),
+              let status = response.control?.status else {
+            throw ThumbleCLIRuntimeBackend.BackendError.noVerifiedOwner
         }
-    }
-
-    private static func legacyPairingPayload(_ data: Data) throws -> PairingPayload {
-        let status = try JSONDecoder().decode(ThumbleMacRuntimeStatus.self, from: data)
-        return PairingPayload(urls: status.localURLs, pairingCode: status.pairingCode,
-            serviceName: status.bonjourServiceName, serviceType: status.bonjourServiceType,
-            serviceDomain: status.bonjourServiceDomain, serverID: status.serverID)
+        return try status.pairingPayload()
     }
 
     private static func accessibility(arguments: [String]) throws {
@@ -7228,106 +7210,24 @@ struct ThumbleCLI {
     }
 
     private static func printRuntimeStatus(json: Bool) throws {
-        let route = try runtimeRoute(.status)
-        let data: Data
-        switch route {
-        case .rust(let response):
-            if json {
-                try FileHandle.standardOutput.write(contentsOf: response.frame)
-            } else if let status = response.control?.status {
-                print("Owner: rust (PID \(status.pid))")
-                print("Port: \(status.port)")
-                print("Service: \(status.serviceName)")
-                print("Accessibility: \(status.accessibilityTrusted ? "granted" : "required")")
-                print("Input: \(status.inputEnabled ? "enabled" : "recording")")
-                print("Output: \(status.output.mode)")
-                if let gamepad = status.output.virtualGamepadStatus {
-                    print("Virtual Gamepad: \(gamepad.phase.rawValue)")
-                    if let error = gamepad.lastError { print("Virtual Gamepad Error: \(error)") }
-                }
-            }
+        guard let response = try ThumbleCLIRuntimeBackend().headlessStatus() else {
+            if json { try printJSON(["running": false]) }
+            else { print("Thumble Host is not running") }
             return
-        case .legacy(let statusData): data = statusData
         }
-        let status = try JSONDecoder().decode(ThumbleMacRuntimeStatus.self, from: data)
         if json {
-            try printJSON(status)
-        } else {
-            print("Status: \(status.statusText)")
-            print("Running: \(status.isRunning ? "yes" : "no")")
-            print("Client: \(status.clientName)\(status.isClientConnected ? " (connected)" : "")")
-            if let clientDeviceInfo = status.clientDeviceInfo {
-                if let frame = GamepadEditorDeviceCatalog.suggestedFrame(for: clientDeviceInfo) {
-                    print("Client Device: \(frame.spec.displayName) (\(formatSize(frame.screenRect.size)) pt \(frame.orientation.rawValue))")
-                } else {
-                    let model = clientDeviceInfo.modelIdentifier.map { " \($0)" } ?? ""
-                    print("Client Device: \(clientDeviceInfo.deviceName)\(model)")
-                }
-            }
+            try FileHandle.standardOutput.write(contentsOf: response.frame)
+        } else if let status = response.control?.status {
+            print("Owner: rust (PID \(status.pid))")
             print("Port: \(status.port)")
-            print("Pairing Code: \(status.pairingCode)")
+            print("Service: \(status.serviceName)")
             print("Accessibility: \(status.accessibilityTrusted ? "granted" : "required")")
-            if let preference = status.activeGamepadProfileOrientationPreference {
-                print("iPhone Rotation: \(preference.rawValue)")
+            print("Input: \(status.inputEnabled ? "enabled" : "recording")")
+            print("Output: \(status.output.mode)")
+            if let gamepad = status.output.virtualGamepadStatus {
+                print("Virtual Gamepad: \(gamepad.phase.rawValue)")
+                if let error = gamepad.lastError { print("Virtual Gamepad Error: \(error)") }
             }
-            if let serviceName = status.bonjourServiceName, !serviceName.isEmpty {
-                let serviceType = status.bonjourServiceType ?? PairingPayload.defaultServiceType
-                print("Nearby Service: \(serviceName) (\(serviceType))")
-            }
-            if !status.localURLs.isEmpty {
-                print("Addresses:")
-                for url in status.localURLs { print("- \(url)") }
-            }
-            print("Last Event: \(status.lastReceivedEvent)")
-            if let roundTripLatencyMS = status.roundTripLatencyMS ?? status.estimatedLatencyMS {
-                print("Round-trip Latency: \(roundTripLatencyMS) ms")
-            }
-            if let p50 = status.inputPipelineP50MS,
-               let p95 = status.inputPipelineP95MS,
-               let p99 = status.inputPipelineP99MS {
-                print(String(format: "Mac Input Pipeline: p50 %.3f ms, p95 %.3f ms, p99 %.3f ms", p50, p95, p99))
-            }
-            if let processingP95 = status.inputProcessingP95MS {
-                print(String(format: "Mac Input Processing: p95 %.3f ms", processingP95))
-            }
-            if let lookupP95 = status.bindingLookupP95MS {
-                print(String(format: "Binding Lookup: p95 %.3f ms", lookupP95))
-            }
-            if let injectionP50 = status.outputInjectionP50MS,
-               let injectionP95 = status.outputInjectionP95MS,
-               let injectionP99 = status.outputInjectionP99MS {
-                print(String(format: "Output Injection: p50 %.3f ms, p95 %.3f ms, p99 %.3f ms", injectionP50, injectionP95, injectionP99))
-            }
-            if let postInjectionP95 = status.postInjectionP95MS {
-                print(String(format: "Post-injection Processing: p95 %.3f ms", postInjectionP95))
-            }
-            if let protocolVersion = status.inputProtocolVersion {
-                let generation = status.activeInputGeneration.map(String.init) ?? "legacy"
-                print("Input Protocol: v\(protocolVersion), generation \(generation), stale drops \(status.staleInputGenerationDrops ?? 0)")
-            }
-            print("Pressed: \(status.pressedButtons.map(\.rawValue).sorted().joined(separator: ", "))")
-            if let pressedElementInputs = status.pressedElementInputs {
-                print("Pressed Elements: \(pressedElementInputs.map(\.storageKey).sorted().joined(separator: ", "))")
-            }
-            if let deliveryState = status.editorDeliveryState {
-                let detail = status.editorDeliveryDetail.map { " — \($0)" } ?? ""
-                print("Editor Delivery: \(deliveryState.rawValue)\(detail)")
-            }
-            if status.virtualGamepadActive != nil || status.virtualGamepadAvailable != nil || status.virtualGamepadLastError != nil {
-                let active = status.virtualGamepadActive == true ? "active" : "inactive"
-                let availability = status.virtualGamepadAvailable == false ? "unavailable" : "available"
-                print("Virtual Gamepad: \(active), \(availability)")
-                if let error = status.virtualGamepadLastError, !error.isEmpty {
-                    print("Virtual Gamepad Error: \(error)")
-                }
-                if let pressed = status.virtualGamepadPressedButtons, !pressed.isEmpty {
-                    print("Virtual Gamepad Pressed: \(pressed.map(\.shortName).joined(separator: ", "))")
-                }
-            }
-            if let captureLogPath = status.captureLogPath, !captureLogPath.isEmpty {
-                print("Capture Log: \(captureLogPath)")
-            }
-            print("Frames: missing=\(status.missedButtonFrames) ignored=\(status.ignoredButtonEdges) recovered=\(status.recoveredButtonEdges)")
         }
     }
 
@@ -8687,7 +8587,8 @@ struct ThumbleCLI {
           thumble monitor [--jsonl] [--clear] [--from-start] [--duration seconds]
           thumble latency simulate [--pattern hollow-knight] [--mode compare] [--log report.json]
           thumble latency verify [--max-ms 4] [--p95-ms 4] [--log report.json]
-          thumble server start|stop|restart|addresses
+          thumble server start [--port PORT] [--no-bonjour] [--no-input] [--allow-config-write]
+          thumble server stop|restart|addresses
           thumble pairing code|payload|cancel
           thumble accessibility status|prompt|open|refresh
           thumble test tap UUID

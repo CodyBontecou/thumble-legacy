@@ -6,6 +6,68 @@ final class ThumbleCLIRuntimeBackend {
     static let schemaVersion = 1
     static let maximumFrameBytes = 64 * 1024
 
+    enum ReceiverCommand {
+        case start(port: UInt16?, noBonjour: Bool, noInput: Bool, allowConfigWrite: Bool)
+        case stop, restart
+
+        static func parse(_ arguments: [String]) throws -> Self {
+            guard let command = arguments.first else { throw BackendError.invalidReceiverArguments }
+            if command == "stop" || command == "restart" {
+                guard arguments.count == 1 else { throw BackendError.invalidReceiverArguments }
+                return command == "stop" ? .stop : .restart
+            }
+            guard command == "start" else { throw BackendError.invalidReceiverArguments }
+            var port: UInt16?
+            var flags = Set<String>()
+            var index = 1
+            while index < arguments.count {
+                let flag = arguments[index]
+                guard flags.insert(flag).inserted else { throw BackendError.invalidReceiverArguments }
+                switch flag {
+                case "--port":
+                    index += 1
+                    guard index < arguments.count, !arguments[index].isEmpty,
+                          arguments[index].utf8.allSatisfy({ (48...57).contains($0) }),
+                          let value = UInt16(arguments[index]) else { throw BackendError.invalidReceiverArguments }
+                    port = value
+                case "--no-bonjour", "--no-input", "--allow-config-write": break
+                default: throw BackendError.invalidReceiverArguments
+                }
+                index += 1
+            }
+            return .start(port: port, noBonjour: flags.contains("--no-bonjour"),
+                noInput: flags.contains("--no-input"), allowConfigWrite: flags.contains("--allow-config-write"))
+        }
+
+        var arguments: [String] {
+            switch self {
+            case .stop: return ["stop"]
+            case .restart: return ["restart"]
+            case .start(let port, let noBonjour, let noInput, let allowConfigWrite):
+                var arguments = ["start"]
+                if let port { arguments += ["--port", String(port)] }
+                if noBonjour { arguments.append("--no-bonjour") }
+                if noInput { arguments.append("--no-input") }
+                if allowConfigWrite { arguments.append("--allow-config-write") }
+                return arguments
+            }
+        }
+    }
+
+    /// Lifecycle belongs to the packaged receiver executable, not GUI IPC or
+    /// the short-lived profile helper. Host start/stop retain its authority lock.
+    static func runReceiver(_ command: ReceiverCommand, executableURL: URL? = nil,
+                            timeout: TimeInterval = 20) throws -> Data {
+        let url = executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0]).standardizedFileURL
+            .deletingLastPathComponent().appendingPathComponent("thumble-host")
+        let (status, output, diagnostics) = try execute(Data(), at: url, timeout: timeout, arguments: command.arguments)
+        guard status == 0 else {
+            let message = String(decoding: diagnostics, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
+            throw BackendError.receiverFailed(message.isEmpty ? "Headless receiver command failed with status \(status)." : message)
+        }
+        return output
+    }
+
     enum Command: Encodable {
         case status, releaseAll, gamepadStatus, gamepadRetry
         case launchProfile(ThumbleCLIProfileBackend.ProfileSelector)
@@ -93,6 +155,7 @@ final class ThumbleCLIRuntimeBackend {
         case invalidControl, invalidProfile, malformedResponse, requestTooLarge, responseTooLarge
         case launchFailed, timeout, helperFailed, noVerifiedOwner
         case remote(RemoteFailure, UUID)
+        case invalidReceiverArguments, receiverFailed(String)
         var errorDescription: String? {
             switch self {
             case .invalidProfile: return "Profile selector must be a UUID or bounded name."
@@ -103,7 +166,9 @@ final class ThumbleCLIRuntimeBackend {
             case .launchFailed: return "Could not launch the validated runtime bridge."
             case .timeout: return "Runtime bridge timed out; ownership remains unverified."
             case .helperFailed: return "Runtime bridge did not acknowledge the command."
-            case .noVerifiedOwner: return "No verified live runtime owner. Open Thumble Mac or the Rust host first."
+            case .noVerifiedOwner: return "No verified live runtime owner. Start the local receiver with thumble server start."
+            case .invalidReceiverArguments: return "Usage: thumble server start [--port 0...65535] [--no-bonjour] [--no-input] [--allow-config-write] | stop | restart"
+            case .receiverFailed(let message): return message
             case .remote(let failure, let id): return "\(failure.message) [\(failure.code)] Invocation ID: \(id.uuidString)"
             }
         }
@@ -116,7 +181,10 @@ final class ThumbleCLIRuntimeBackend {
         let url = executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0]).standardizedFileURL
             .deletingLastPathComponent().appendingPathComponent("thumble-cli-bridge")
         try ThumbleCLIProfileBackend.validateExecutable(at: url)
-        transport = { input in try Self.execute(input, at: url, timeout: timeout) }
+        transport = { input in
+            let (status, output, _) = try Self.execute(input, at: url, timeout: timeout)
+            return (status, output)
+        }
     }
 
     /// Test seam exercises the exact public request/response/routing contract without OS input.
@@ -158,6 +226,17 @@ final class ThumbleCLIRuntimeBackend {
         let response = try Self.decodeResponse(frame, invocationID: invocationID)
         // A valid typed unreachable error must remain visible to owner routing.
         guard exitStatus == 0 || !response.ok else { throw BackendError.helperFailed }
+        return response
+    }
+
+    /// Receiver inspection never asks a desktop process to publish defaults.
+    /// A held/unreachable authority is an error, distinct from a stopped host.
+    func headlessStatus(invocationID: UUID = UUID()) throws -> Response? {
+        let response = try perform(.status, invocationID: invocationID)
+        if response.owner == .none && response.ok { return nil }
+        guard response.owner == .rust, response.ok, response.control?.status != nil else {
+            throw failure(response)
+        }
         return response
     }
 
@@ -310,11 +389,12 @@ final class ThumbleCLIRuntimeBackend {
         else { throw BackendError.noVerifiedOwner }
     }
 
-    private static func execute(_ input: Data, at url: URL, timeout: TimeInterval) throws -> (Int32, Data) {
+    private static func execute(_ input: Data, at url: URL, timeout: TimeInterval,
+                                arguments: [String] = []) throws -> (Int32, Data, Data) {
         try ThumbleCLIProfileBackend.validateExecutable(at: url)
         let process = Process()
         process.executableURL = url
-        process.arguments = []
+        process.arguments = arguments
         process.environment = sanitizedEnvironment()
         process.currentDirectoryURL = URL(fileURLWithPath: "/", isDirectory: true)
         let stdin = Pipe(), stdout = Pipe(), stderr = Pipe()
@@ -356,7 +436,7 @@ final class ThumbleCLIRuntimeBackend {
         }
         guard !inputResult.overflowed else { throw BackendError.helperFailed }
         guard !output.overflowed else { throw BackendError.responseTooLarge }
-        return (process.terminationStatus, output.data)
+        return (process.terminationStatus, output.data, diagnostics.data)
     }
 
     private static func sanitizedEnvironment() -> [String: String] {

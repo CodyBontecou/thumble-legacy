@@ -1,0 +1,24 @@
+{
+  "sourceCommitBeforeChanges": "e8729bff84def16af2f27024e78f50ca9d4945c4",
+  "nativeSnapshotBaseCommit": "66abae64ef7f3ce984b985276d88ec2b3f169ae6",
+  "isolation": "Previous native migration/pairing snapshot plus these overlays; concurrent unrelated checkout edits excluded",
+  "sourceHashes": {
+    "Sources/CLI/ThumbleCLIRuntimeBackend.swift": "3ba21d56a5ee03e8a27e90d2c4c8ce48019bb7a0fe02699b857c3979ebfb2b29",
+    "Tests/ThumbleCLIRuntimeBackendTests.swift": "195b813c58e72baeff7191860d00ba8d70015148b7531d78d4720a3f42d81e2a",
+    "scripts/verify-headless-lifecycle-cli.py": "eb95646226ad3c55b29f67b905ba2394f9fd5228fec3dcd16634b3ea410a212c",
+    "Sources/CLI/ThumbleCLI.swift": "8b87fdfaf65cb82fa00c67fd2d45135a6019c4ffe971a99f59b7544ed72cc778"
+  },
+  "testedBinaryHashes": {
+    "thumble": "5d99fcc1629e32016ba567d1c25e667aab8ff5d2aab368cfb8b3329d07283fff",
+    "thumble-host": "2abbba8c3fd633b4b469a08db8c505560d0b70e9eb622d04e61967b2535ce055",
+    "thumble-cli-bridge": "17da83746934a9b9998531805a0732173dc9a48a88c736d5ed6aa22c7afef78c"
+  },
+  "runtimeTests": 16,
+  "stackTests": 39,
+  "rustBuildToolchain": "1.88.0",
+  "realReceiverLifecycle": true,
+  "physicalInputEnabled": false,
+  "bonjourEnabled": false,
+  "desktopCutoverComplete": false,
+  "corruptLegacyImportRejectedWithoutReplacement": true
+}
