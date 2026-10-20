@@ -1,0 +1,17 @@
+{
+  "fixtureVersion": 1,
+  "files": {
+    "after.json": "76f4345501f0aa7e47568e4e5f774af4e1f06dff497f15fde2a9a6737e7a29dd",
+    "before.json": "c3d0500144dbd7b060f6a5623ece2ed53df091c0bac17065a5637a7a7431681b",
+    "destination.json": "d3205ae4a2173b4d4e45525d38391d046ef8ee55de31f19e87625cde5dc1d239"
+  },
+  "sources": {
+    "Tests/OwnedConfigurationDocumentTests.swift": "8a87abd3244e6e8c18049ac5f62971c44a892711dd4cf8824b4a3c320893f243",
+    "Host/crates/thumble-core/tests/owned_configuration_writes.rs": "b00f5916b22f3fea9105bed83fb2074a357b3a4abeb4f561e3eb427bd338f851",
+    "Host/fixtures/owned-configuration-edits/v1/input.json": "86b7ad365fb0a406b197274bf57ae8ef66c577849ba80d725e5fa30fd15e0838",
+    "Host/fixtures/owned-configuration-edits/v1/destination.json": "2655928a34014e312abb7d2128da14cc8b01084c0aab19c824df271d99142586"
+  },
+  "profileCount": 2,
+  "appearanceStates": 8,
+  "activatedMigration": false
+}

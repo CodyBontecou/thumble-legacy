@@ -14,6 +14,8 @@ mod profile_formats;
 pub use profile_formats::*;
 mod raw_json_edits;
 pub use raw_json_edits::{edit_json_values, JsonEditError, JsonValueEdit};
+mod projection_merge;
+pub use projection_merge::{merge_json_projection, ProjectionMergeError};
 mod strict_json;
 mod wire;
 

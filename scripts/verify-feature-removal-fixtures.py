@@ -83,3 +83,27 @@ for field, digest in [("baseDocument", "baseSHA256"), ("generator", "generatorSH
     assert hashlib.sha256((repo / path).read_bytes()).hexdigest() == contract[digest]
 assert len(json.loads((written / "edits.json").read_text())["edits"]) == contract["operationCount"]
 print("Lossless owned-edit destination verified:", contract["operationCount"], "operations")
+
+# Native typed views are merged into original source, never substituted for it.
+merged = repo / "Host/fixtures/owned-projection-merge/v1"
+contract = json.loads((merged / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1 and contract["activatedMigration"] is False
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((merged / name).read_bytes()).hexdigest() == digest
+for name, digest in contract["sources"].items():
+    assert not Path(name).is_absolute() and ".." not in Path(name).parts
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+before = json.loads((merged / "before.json").read_text())
+after = json.loads((merged / "after.json").read_text())
+destination_bytes = (merged / "destination.json").read_bytes()
+destination = json.loads(destination_bytes)
+assert all(len(value["profiles"]) == contract["profileCount"] for value in [before, after, destination])
+assert all(value["version"] == 5 for value in [before, after, destination])
+assert "futureRootMetadata" not in before and "futureRootMetadata" not in after
+assert "futureRootMetadata" in destination and "futureProfileMetadata" in destination["profiles"][0]
+assert b"18446744073709551617" in destination_bytes
+assert b"0.12345678901234567890123456789" in destination_bytes
+assert len(destination["profiles"][0]["appearanceBank"]["variants"]) == contract["appearanceStates"]
+assert destination["profiles"][0]["name"] == "Edited keypad"
+print("Native projection merge verified:", contract["profileCount"], "profiles,", contract["appearanceStates"], "appearance states")

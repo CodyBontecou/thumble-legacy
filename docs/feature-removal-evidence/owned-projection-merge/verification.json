@@ -1,0 +1,40 @@
+{
+  "baseCommit": "64871cbf5f56d47fc5075969888154c87b72b16d",
+  "nativeAndAndroidIsolation": "Committed source comparison found only the two test overlays; concurrent unrelated changes excluded",
+  "archiveLineEndingNormalization": [
+    "Android/gradlew.bat"
+  ],
+  "isolatedCodeOverlays": {
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt": "9d19b3cdb89c618f3f25ed6e148c1c6a28a23497032c1a501ba36bee196235b2",
+    "Tests/OwnedConfigurationDocumentTests.swift": "8a87abd3244e6e8c18049ac5f62971c44a892711dd4cf8824b4a3c320893f243"
+  },
+  "sourceHashes": {
+    "Host/crates/thumble-protocol/src/projection_merge.rs": "c80f5b648044b70618df4eeb3de36dbde49c08246c9ba9237c79ae388f1f6c30",
+    "Host/crates/thumble-protocol/src/lib.rs": "c7b1f50377844acb27114e5860f174c493e752bbe85b273057bc45744f5ea956",
+    "Host/crates/thumble-protocol/tests/projection_merge.rs": "1af72d5a077dcb6a98b0b7977e2857049c1d2ae6f64a3afa8e3497422f4bd745",
+    "Host/crates/thumble-core/src/owned_configuration.rs": "dadb2f8bf63740cd093dc6e5727133b22af3efe62fa9f45c643c507616ad37de",
+    "Host/crates/thumble-core/tests/owned_configuration_writes.rs": "b00f5916b22f3fea9105bed83fb2074a357b3a4abeb4f561e3eb427bd338f851",
+    "Tests/OwnedConfigurationDocumentTests.swift": "8a87abd3244e6e8c18049ac5f62971c44a892711dd4cf8824b4a3c320893f243",
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt": "9d19b3cdb89c618f3f25ed6e148c1c6a28a23497032c1a501ba36bee196235b2",
+    "scripts/verify-feature-removal-fixtures.py": "c6414243481bd7d9c6db848b64bbabd412aedd8402e384899845269a7e8eeb3d"
+  },
+  "fixtureManifestSHA256": "0e577789f7aae8625f9f7ca74afc45cf266b2cdd7e3e170ae23fd2a136ca48a5",
+  "rustPassed": 517,
+  "rustIgnored": 3,
+  "nativeTests": 5,
+  "nativeStackTests": 39,
+  "android": {
+    "tests": 205,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "activationEnabled": false,
+  "physicalDeviceAcceptance": false,
+  "logSHA256": {
+    "rust": "bb6901ade832cdc48414671ec96de2a5148109ecd675a97b2b1bb3c4c461169b",
+    "nativeTests": "0ab5d5744a68ebac89fdb7aa203e55475faae733f1e29a9abe06643b347e0dc7",
+    "nativeStack": "4632268b0ebdc3411096a472b1e25d0b9e72e558e82aa544a15e5f09b7e8d18f",
+    "android": "302b966f34b60d9b944324338c63e98baf81f4350984aa72da2f90fc73e74462"
+  }
+}

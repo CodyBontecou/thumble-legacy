@@ -1,0 +1,5 @@
+Full Rust gate: 517 passed; 3 native-dependent ignored.
+test skins::tests::native_bridge_acceptance ... ignored, requires THUMBLE_TEST_SKIN_BRIDGE pointing to the built native executable
+test native_legacy_inline_outputs_and_integral_float_metadata_round_trip_without_changes ... ignored, requires THUMBLE_TEST_ARTIFACT_RUNTIME_BIN with native compatibility bridge
+test native_receiver_authenticates_skin_changes_and_never_acknowledges_failed_persistence ... ignored, requires THUMBLE_TEST_SKIN_RUNTIME_BIN containing the packaged host and native bridge
+Thumble Rust host and MCP verification passed.

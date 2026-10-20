@@ -22,6 +22,7 @@ pub enum OwnedConfigurationError {
     InvalidJson,
     InvalidEnvelope,
     Edit(thumble_protocol::JsonEditError),
+    Projection(thumble_protocol::ProjectionMergeError),
     Configuration(ConfigurationDocumentError),
 }
 impl fmt::Display for OwnedConfigurationError {
@@ -32,6 +33,7 @@ impl fmt::Display for OwnedConfigurationError {
             Self::InvalidEnvelope => f.write_str("invalid version-5 configuration envelope"),
             Self::Configuration(error) => error.fmt(f),
             Self::Edit(error) => error.fmt(f),
+            Self::Projection(error) => error.fmt(f),
         }
     }
 }
@@ -171,6 +173,25 @@ impl OwnedConfigurationDocument {
             MAXIMUM_CONFIGURATION_DOCUMENT_BYTES,
         )
         .map_err(OwnedConfigurationError::Edit)?;
+        Self::decode(&bytes)
+    }
+    /// Apply changes from two validated typed projections, preserving source
+    /// metadata omitted by that codec. `before` must originate from this exact
+    /// source/revision and both projections must use the same codec. These
+    /// provenance/CAS guarantees belong to the authority adapter. This pure
+    /// method neither enables v5 authority nor persists a destination.
+    pub fn with_projected_changes(
+        &self,
+        before: &Self,
+        after: &Self,
+    ) -> Result<Self, OwnedConfigurationError> {
+        let bytes = thumble_protocol::merge_json_projection(
+            &self.original,
+            &before.original,
+            &after.original,
+            MAXIMUM_CONFIGURATION_DOCUMENT_BYTES,
+        )
+        .map_err(OwnedConfigurationError::Projection)?;
         Self::decode(&bytes)
     }
     pub fn original_bytes(&self) -> &[u8] {

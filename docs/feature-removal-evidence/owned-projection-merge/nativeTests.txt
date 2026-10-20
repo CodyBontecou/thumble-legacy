@@ -1,0 +1,10 @@
+Test Suite 'Selected tests' started at 2026-10-20 19:43:47.884.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-20 19:43:47.885.
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-20 19:43:47.885.
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-20 19:43:50.081.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2.194 (2.196) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-20 19:43:50.081.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2.194 (2.196) seconds
+Test Suite 'Selected tests' passed at 2026-10-20 19:43:50.081.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2.194 (2.197) seconds
+** TEST SUCCEEDED **

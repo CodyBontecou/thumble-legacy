@@ -1,0 +1,16 @@
+==> Host architecture: arm64
+==> Verifying Debug arm64 build settings
+==> Verifying stack-frame parser
+==> Running constrained-stack regression tests
+	 Executed 39 tests, with 0 failures (0 unexpected) in 7.522 (7.531) seconds
+	 Executed 39 tests, with 0 failures (0 unexpected) in 7.522 (7.532) seconds
+	 Executed 39 tests, with 0 failures (0 unexpected) in 7.522 (7.532) seconds
+** TEST SUCCEEDED **
+==> Building macOS Debug target with network stack budgets
+mac-network stack-frame check passed: 1036 symbols, largest 29056 bytes
+** BUILD SUCCEEDED **
+==> Building iOS Debug target with static stack budgets
+controller stack-frame check passed: 1370 symbols, largest 11968 bytes
+ios-runtime stack-frame check passed: 2105 symbols, largest 29056 bytes
+** BUILD SUCCEEDED **
+Stack-safety verification passed.

@@ -75,6 +75,8 @@ The original working tree is preserved in commit `5fadf15`, including Android ed
 
 ## Remaining work
 
+Typed projection changes now have a bounded raw merge, plus a validated owned-document adapter. It preserves unknown metadata and unchanged numeric spellings, aligns identified arrays, preserves root framing, and rejects opaque-container loss, unidentifiable opaque array changes, and UUID map-key alias ambiguity. A new shared fixture contains native-generated before/after views and the actual merged Rust destination, independently read by Apple/Android. This is an in-memory edit capability; source/revision provenance, live editor integration, raw legacy document assembly and backed-up authority migration still remain. Evidence is in `docs/feature-removal-evidence/owned-projection-merge`.
+
 The product target now includes retirement of the desktop application/UI in favor of local CLI/MCP configuration through users' agents, phone UI, and a headless receiver. `docs/cli-mcp-cutover.md` defines authority, tool, packaging, and no-GUI acceptance gates. Earlier desktop build evidence remains valid historical regression evidence; it does not prove the cutover complete.
 
 The native CLI's pairing code/payload and server address/URL commands now consume verified headless receiver status rather than requiring desktop status. Incomplete headless pairing metadata fails without switching owners. Seventeen focused tests and the standalone CLI scheme pass; built-command verification covers four outputs and one nonmutating rejection using a correlated test bridge. This does not prove real phone pairing, discovery, receiver lifecycle, or complete GUI independence. Evidence is in `docs/feature-removal-evidence/headless-pairing`.

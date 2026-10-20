@@ -6,6 +6,58 @@ final class OwnedConfigurationDocumentTests: XCTestCase {
     private func fixture(_ name: String) throws -> Data {
         try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/\(name).json"))
     }
+    func testFrozenNativeEditProjectionsAndMergedDestination() throws {
+        let directory = root.appendingPathComponent("Host/fixtures/owned-projection-merge/v1")
+        let output = root.appendingPathComponent("build/OwnedProjectionMerge")
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        for (input, name) in [("input", "before"), ("destination", "after")] {
+            let source = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration-edits/v1/\(input).json"))
+            let projection = try typedProjection(source)
+            try projection.write(to: output.appendingPathComponent("\(name).json"), options: .atomic)
+            let frozen = directory.appendingPathComponent("\(name).json")
+            guard FileManager.default.fileExists(atPath: frozen.path) else {
+                XCTFail("Freeze native projection from build/OwnedProjectionMerge/\(name).json")
+                continue
+            }
+            XCTAssertEqual(try JSONDecoder().decode(ThumbleBridgeJSONValue.self, from: projection),
+                           try JSONDecoder().decode(ThumbleBridgeJSONValue.self, from: Data(contentsOf: frozen)))
+        }
+        let merged = directory.appendingPathComponent("destination.json")
+        guard FileManager.default.fileExists(atPath: merged.path) else {
+            return XCTFail("Freeze the Rust merged destination before accepting the fixture")
+        }
+        let original = try Data(contentsOf: merged)
+        let actual = try ThumbleOwnedConfigurationDocument(validating: original)
+        let expected = try ThumbleOwnedConfigurationDocument(validating: Data(contentsOf:
+            root.appendingPathComponent("Host/fixtures/owned-configuration-edits/v1/destination.json")))
+        XCTAssertEqual(actual.originalData, original)
+        XCTAssertEqual(actual.projectedProfiles, expected.projectedProfiles)
+        XCTAssertEqual(actual.activeProfileID, expected.activeProfileID)
+        XCTAssertEqual(actual.defaultProfileID, expected.defaultProfileID)
+        XCTAssertTrue(String(decoding: original, as: UTF8.self).contains("18446744073709551617"))
+        XCTAssertTrue(String(decoding: original, as: UTF8.self).contains("0.12345678901234567890123456789"))
+    }
+    private func typedProjection(_ source: Data) throws -> Data {
+        let document = try ThumbleOwnedConfigurationDocument(validating: source)
+        let original = try XCTUnwrap(JSONSerialization.jsonObject(with: source) as? [String: Any])
+        let known = Set(["schema", "version", "exportedAt", "activeProfileID", "defaultProfileID",
+                         "keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"])
+        var result = original.filter { known.contains($0.key) }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        result["profiles"] = try document.projectedProfiles.map { profile in
+            var projected = try XCTUnwrap(JSONSerialization.jsonObject(with: encoder.encode(profile)) as? [String: Any])
+            // The temporary native view supplies landscape for the legacy model.
+            // It is not a v4 export or a retained v5 orientation field.
+            for key in ["skinReference", "skinBaselineCustomization", "landscapeSkinBaselineCustomization",
+                        "portraitSkinBaselineCustomization", "landscapeCustomization", "portraitCustomization", "orientationPreference"] {
+                projected.removeValue(forKey: key)
+            }
+            projected["profileFormatVersion"] = 5
+            return projected
+        }
+        return try JSONSerialization.data(withJSONObject: result, options: [.sortedKeys, .withoutEscapingSlashes])
+    }
     func testSharedVersionFiveContractAndRejectedMutations() throws {
         let original = try JSONSerialization.jsonObject(with: fixture("document"))
         let matrix = try XCTUnwrap(JSONSerialization.jsonObject(with: fixture("cases")) as? [String: Any])

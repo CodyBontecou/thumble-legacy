@@ -60,7 +60,12 @@ class OwnedConfigurationDocumentTest {
         assertArrayEquals(bytes,document.originalData())
     }
     @Test fun rustWrittenDestinationRetainsEditablePaintGeometryAndHaptics() {
-        val data = javaClass.classLoader!!.getResourceAsStream("owned-configuration-edits/v1/destination.json")!!.use { it.readBytes() }
+        assertEditedDestination(javaClass.classLoader!!.getResourceAsStream("owned-configuration-edits/v1/destination.json")!!.use { it.readBytes() })
+    }
+    @Test fun nativeProjectedChangesMergeWithoutLosingOpaqueSourceData() {
+        assertEditedDestination(javaClass.classLoader!!.getResourceAsStream("owned-projection-merge/v1/destination.json")!!.use { it.readBytes() })
+    }
+    private fun assertEditedDestination(data: ByteArray) {
         val document = OwnedConfigurationDocument.decode(data)
         val profile = document.projectedProfiles().first()
         assertEquals("Edited keypad",profile.name)
