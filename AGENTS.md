@@ -1,8 +1,8 @@
 # AGENTS.md
 
-## macOS app and CLI parity
+## CLI/MCP product boundary
 
-Any functionality added to or changed in the macOS app must also be reflected in the CLI. The `thumble` CLI should be able to do everything the macOS app can do, so changes under `Sources/Mac` should be reviewed for corresponding updates under `Sources/CLI`.
+The target product is a local CLI/MCP configured through users' agents, phone controller/editor UI, and a headless local input receiver. Migrate retained functionality from the desktop application to CLI/MCP before retiring its UI and IPC. Configuration, pairing, receiver lifecycle, appearance/design tools, previews, haptics, and WoW import/refresh must work without the Thumble desktop GUI installed or running. Preserve required native input/signing helpers and shared rendering code. See `docs/cli-mcp-cutover.md` when changing desktop dependencies, authority routing, setup, or release packaging.
 
 ## Swift stack safety
 

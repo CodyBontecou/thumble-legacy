@@ -1,6 +1,6 @@
 # Thumble feature removal plan
 
-Remove skins and their catalog, hosted AI systems, portrait controller mode, and thumb calibration. Preserve fast controller/keypad input, direct appearance editing, desktop design tools, haptics, on-phone editing, and the WoW addon.
+Remove skins and their catalog, hosted AI systems, portrait controller mode, thumb calibration, and the desktop application/UI. The target is local CLI/MCP configuration through users' agents, phone controller/editor UI, and a headless local receiver. Preserve fast controller/keypad input, direct appearance editing, design operations and previews, haptics, on-phone editing, and the WoW addon.
 
 This plan covers implementation and migration work; it does not initiate removals or shut down deployed services. Execute in small, independently verified changes. The working tree already contains substantial ongoing work, including Android editing and synchronization; preserve it and establish the implementation baseline before starting.
 
@@ -9,13 +9,24 @@ This plan covers implementation and migration work; it does not initiate removal
 | Remove | Preserve |
 | --- | --- |
 | Skin package installation, selection, detachment, storage, synchronization, and updates | Profile-owned appearance, colors, gradients, effects, light/dark variants, text, icons, embedded assets, and reusable styles |
-| Skin catalog, downloads, submissions, publishing, and skin-specific authoring pipeline | Desktop canvas, layers, groups, alignment, snapping, undo/redo, device sizing, previews, and layout validation |
+| Skin catalog, downloads, submissions, publishing, and skin-specific authoring pipeline | Agent-accessible canvas operations, layers, groups, alignment, snapping, undo/redo, device sizing, previews, and layout validation |
+| Desktop windows, menu bar/Dock UI, onboarding screens, interactive desktop editor, and GUI IPC | Local CLI/MCP setup and receiver lifecycle, phone editing, headless rendering, and required native input/signing helpers |
 | Cloud controller builder and remote Mac relay, including OAuth and tunnel infrastructure | Local CLI, local stdio MCP, local controller generation, local design sessions, and profile import/export |
 | Hosted shared-build links, pickup, quarantine, and remote artifact adoption | Local backups, ordinary profile import, paired profile synchronization, and offline on-phone edits |
 | Portrait controller runtime and separate portrait design variants | Landscape controller and editing, both landscape directions, and portrait-capable connection/onboarding/settings screens |
 | Thumb reach tracing, calibration storage, scoring, and calibration suggestions | Manual positioning, touch-target checks, safe-area checks, overlap checks, and deliberate layout repair |
 
 Android and Windows/Linux support remain in scope as existing platforms. Trackpad controls, app launching, general templates, accessibility, support links, and developer capture tools are unaffected by this removal plan.
+
+“Hosted AI systems” means the hosted builder, shared-build pickup, remote relay, OAuth/tunnel infrastructure, and their deployment machinery. It does not remove a user's local agent, local CLI/MCP, local generation, or ordinary design tools. Removing skins means removing the package product and distribution system; it does not remove visual customization, imported artwork, reusable styles, or light/dark appearance.
+
+## Starting point and remaining decisions
+
+Use [implementation progress](feature-removal-progress.md) for evidence and [the ownership inventory](feature-removal-inventory.md) for code boundaries. Existing work has retired public catalog/distribution source, hosted gateway/relay source and phone pickup flows, receiver adoption uploads, and phone calibration. This is source-level progress, not evidence of a deployed shutdown or a completed migration.
+
+Active skin libraries/runtime and portrait variants still require removal. Package-independent appearance, explicit version-5 readers, and lossless in-memory edits are preparation; version 5 is not activated in live authority or phone negotiation. No skin-backed or portrait user profile should be treated as converted merely because these helpers exist. Complete and verify the persistence, synchronization, and recovery path before enabling migration.
+
+Record these decisions before activation: which previous releases can upgrade directly, how long original backups and legacy import decoding remain supported, and how users resolve missing packages/assets or divergent orientation layouts. An unresolved profile stays recoverable rather than being replaced with a default. Existing landscape and portrait variants can contain different controls; choosing landscape must not silently delete controls that occur only in another variant.
 
 ## Preservation requirements
 
@@ -26,7 +37,7 @@ Android and Windows/Linux support remain in scope as existing platforms. Trackpa
 - Keep on-phone move/resize/rotate/delete, grouped edits, undo/cancel, offline persistence, and trusted-host reconciliation.
 - Keep Practice/Test mode and suppression of all output paths while testing or editing requires it.
 - Preserve Thumble Link export/import/refresh and WoW Forever native controller outputs, including simultaneous trigger holds. Static class-themed skin content is removable; addon behavior and bindings are not.
-- Keep Mac and CLI parity for every retained operation and every removal. Preserve local MCP contracts where the underlying feature remains.
+- Every retained operation must work through CLI/MCP without a Thumble desktop GUI installed or running. Preserve local MCP contracts where the underlying feature remains, and move retained desktop-only behavior into tools or the headless receiver before deleting its owner.
 - Preserve immutable/COW storage and the constrained-stack coverage required by AGENTS.md and docs/stack-safety.md.
 
 ## Phase 1 Establish the baseline and migration contract
@@ -38,6 +49,12 @@ Android and Windows/Linux support remain in scope as existing platforms. Trackpa
 5. Establish a migration fixture shared across Swift and Rust, with corresponding Android expectations. Verify repeat runs, interrupted writes, and rollback before depending on it.
 
 Exit: a concrete reference map, representative fixtures, and a written migration contract. No user data has been discarded.
+
+## Desktop retirement workstream
+
+Follow [the CLI/MCP cutover](cli-mcp-cutover.md) alongside the phases below. Inventory GUI dependencies, establish one headless authority and migrate legacy configuration/trust safely, expose retained setup/design/runtime operations through CLI/MCP, then remove desktop UI/IPC and its release path. A signed background-only helper container may remain where required for native input authorization; it must not provide or require the desktop GUI. Retire interactive desktop design-session surfaces while retaining their design operations, validation, transactions, and preview artifacts.
+
+Exit: a clean account can install, configure, pair, edit, run input, recover, and update using only local tools and the phone. The old GUI cannot be required as a fallback. Transitional desktop builds are regression evidence only, not the intended release product.
 
 ## Phase 2 Separate appearance from skin packages
 
@@ -77,7 +94,7 @@ Exit: controller use, direct editing, local CLI/MCP, and local import/export wor
 ## Phase 5 Make controller mode landscape only
 
 1. Make the live controller and phone layout editor landscape-only on iOS and Android. Keep both landscape rotations. Connection, onboarding, and settings can remain portrait-capable.
-2. Simplify desktop/CLI editing to one landscape layout per profile. Remove rotation preferences, portrait canvas selection, automatic variant switching, orientation copy/arrange/compare workflows, and portrait template generation. Keep device dimensions and landscape canvas sizing.
+2. Simplify CLI/MCP and phone editing to one landscape layout per profile. Remove rotation preferences, portrait canvas selection, automatic variant switching, orientation copy/arrange/compare workflows, and portrait template generation. Keep device dimensions and landscape canvas sizing.
 3. Migrate to one canonical layout. Prefer an existing explicit landscape variant; otherwise preserve a landscape base layout. Convert portrait-only layouts through a deterministic arrangement that preserves all control IDs, outputs, style, and group membership. Keep the original layout in the migration backup and flag layouts needing manual review.
 4. Resolve pending phone edits against their original orientation before eliminating variant storage. Preserve unmatched edits for recovery; do not apply portrait coordinates directly to a landscape layout.
 5. Preserve input release before geometry transitions. A geometry request can be rejected or interrupted; suppress input while the controller cannot present its supported layout and provide a recoverable rotation state.
@@ -105,8 +122,8 @@ Run checks at each relevant phase, then perform final end-to-end acceptance:
 | Haptics | Device-level intensity and per-control patterns/settings on physical supported phones |
 | Input and latency | Buttons, multitouch, sticks, triggers, pointer, fallback transport, disconnect recovery, release-all, and comparison with the recorded baseline |
 | WoW | Existing addon exporter/importer checks, template outputs and trigger combinations; live client acceptance where the required client and signing are available |
-| Surface parity | Mac/CLI retained operations agree; local MCP schemas match surviving commands; removed operations fail clearly without mutation |
-| Build and packaging | Retained Swift targets, Rust workspace, Android checks, website links, CI, release scripts, and clean installation without removed services |
+| Surface parity | Retained operations work without the desktop GUI; local MCP schemas match surviving CLI commands; removed operations fail clearly without mutation |
+| Build and packaging | CLI/native bridge, headless receiver, phone targets, Rust workspace, Android checks, website links, CI, release scripts, and clean installation without the desktop GUI or hosted services |
 | Stack safety | Run ./scripts/verify-stack-safety.sh for shared model/codec/sync/startup changes; preserve meaningful constrained-stack coverage and inline-size budgets |
 
 Use scripts/verify-thumble-link.py and scripts/verify-thumble-link-cli.py for the addon boundary. Update scripts/verify-rust-host.sh to verify the surviving workspace, rather than disabling the gate because hosted checks were removed. Retain migration regression tests even after obsolete feature tests are deleted.
@@ -121,6 +138,22 @@ Update README, CLI help, local agent instructions, platform parity docs, screens
 4. Hosted UI, relay/cloud source, and packaging removal; separate deployed-service retirement.
 5. Landscape-only profile migration and controller/editor changes.
 6. Calibration removal.
-7. Remaining compatibility cleanup, docs, and final acceptance.
+7. Complete headless CLI/MCP ownership and tools-only installation, then remove desktop UI, GUI IPC, and desktop release targets.
+8. Remaining compatibility cleanup, docs, and final acceptance.
 
 Phases 4 and 6 are relatively independent after the baseline; the ordering above keeps review focused. Phase 2 must precede skin-runtime deletion, and migration fixtures must precede orientation-model deletion. Keep original backups until acceptance is complete and the supported recovery window is defined.
+
+## Remaining reviewable batches
+
+These batches refine the phase ordering around the current repository state. Each should leave the retained app usable and carry its own relevant verification; do not combine migration activation with wholesale deletion of its fallback readers.
+
+| Batch | Deliverable | Gate before proceeding |
+| --- | --- | --- |
+| 1. Finish the migration transaction | Lossless authoritative version-5 writes; complete configuration, resource, and pending-edit bounds; backup, revision check, atomic commit, receipt, restart recovery, and rollback | Cross-platform fixtures agree; interrupted/concurrent/repeated conversions preserve source data and unknown metadata; missing assets and variant-only controls enter recovery |
+| 2. Integrate retained peers | Authority snapshots, local import/export, CLI/MCP edits, and both phone editors use the owned appearance and single-layout contract | Actual transfer fits bounds; unsupported older peers receive update-required errors; offline edits reconcile in their original coordinates and remain recoverable |
+| 3. Activate and detach packages | Migrate resolvable profiles, preserve eight light/dark × Base/LT/RT/LT+RT appearances, and remove active skin selection/transfer/library commands and UI | Designs render and remain editable after the package library is unavailable; all IDs, outputs, assets, groups, and haptics survive save/export/reload |
+| 4. Retire portrait controller/editing | One landscape layout, both landscape directions, deterministic portrait conversion with review, and removal of variant controls/schema paths | No variant-only controls disappear; phone offline changes survive; rotation, cancellation, reconnect, and backgrounding release held inputs |
+| 5. Finish source and release cleanup | Complete the CLI/MCP cutover; remove desktop UI/IPC/release entries, remaining package-only tooling, obsolete hosted/calibration references, associations, capabilities, and dependencies; update documentation | CLI/MCP work with no desktop GUI installed or running; clean installation works offline from hosted services; preserved design tools, phone editing, and WoW tests pass |
+| 6. Accept the product and retire deployments | Native preview review, supported-phone haptics, same-condition latency comparison, WoW client checks, then separately authorized service retirement | Record actual device/client evidence and unresolved limits; deployed-resource inventory and backups precede shutdown |
+
+Calibration needs a regression and reference audit in the final cleanup, rather than a second implementation of its already recorded removal. Hosted source retirement likewise does not authorize deleting deployed resources. Keep the [operational retirement checklist](hosted-service-retirement.md) separate from source changes.
