@@ -211,6 +211,26 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testLegacyProfilePreparationFitsConstrainedThread() throws {
+        assertInlineSize(ThumbleLegacyProfileMigration.Preparation.self, atMost: 8)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let package = try ThumbleSkinPackageCodec.decode(Data(contentsOf: root.appendingPathComponent("Host/fixtures/legacy-skin-packages/solar-sumi-1.0.0-edbecde5b708.pocketpad")))
+            var layout = GamepadCustomization.defaultValue
+            layout.deviceCanvas = GamepadDeviceCanvas(frameID: "iphone-17-pro-portrait")
+            var profile = GamepadConfigurationProfile(name: "Cold portrait migration", primaryCustomization: layout, orientationPreference: .portrait, updatedAt: 42)
+            profile.applySkin(package)
+            profile.updatedAt = 42
+            let bytes = try JSONEncoder().encode(profile)
+            let result = try ThumbleLegacyProfileMigration.prepare(profileData: bytes, package: package)
+            guard result.originalData == bytes, result.stagingProfile.id == profile.id,
+                  result.stagingProfile.updatedAt == 42, result.stagingProfile.appearanceBank?.variants.count == 8,
+                  result.reviewReasons.contains(.portraitArranged), result.stagingProfile.portraitCustomization == nil else {
+                throw StackTestError.unexpectedDecodedState
+            }
+        }
+    }
+
     func testOwnedConfigurationReaderFitsConstrainedThread() throws {
         assertInlineSize(ThumbleOwnedConfigurationDocument.self, atMost: 8)
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {

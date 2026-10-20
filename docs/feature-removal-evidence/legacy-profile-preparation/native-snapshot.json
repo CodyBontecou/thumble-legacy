@@ -1,0 +1,12 @@
+{
+  "baseCommit": "66abae64ef7f3ce984b985276d88ec2b3f169ae6",
+  "snapshotPath": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "overlaidFiles": {
+    "Sources/Shared/LegacyProfileMigration.swift": "a3747e32493c7c1342b48869ab367caffe7545bf142fa37083416557f94330d2",
+    "Tests/LegacyProfileMigrationTests.swift": "7a33ba294e0402d9864bfaafb07cc4b43b34ee57de7305c3658ce0cd7c55f0d3",
+    "scripts/check-controller-stack-frames.py": "e4ab832c9ec52fc9ff3ab44ee914e0e8eded71b45ca93590b942956171f58504",
+    "Tests/StackSafetyRegressionTests.swift": "8eba01b9d35e5323388db8db04cad015e538507781b919c8c60f0f9d9fcaf28d",
+    "Thumble.xcodeproj/project.pbxproj": "537a533d107166fc826f19ba8902abb9928313dae6a3bff5ff48c8534117e56b"
+  },
+  "excluded": "Concurrent WoW/Android UI changes, unrelated stack-test addition and hunter/warrior project refs"
+}

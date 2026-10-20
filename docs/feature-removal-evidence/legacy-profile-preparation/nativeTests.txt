@@ -1,0 +1,13 @@
+Test Suite 'Selected tests' started at 2026-10-20 19:10:45.114.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-20 19:10:45.115.
+Test Suite 'LegacyProfileMigrationTests' started at 2026-10-20 19:10:45.115.
+Test Suite 'LegacyProfileMigrationTests' passed at 2026-10-20 19:10:45.547.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.431 (0.432) seconds
+Test Suite 'StackSafetyRegressionTests' started at 2026-10-20 19:10:45.547.
+Test Suite 'StackSafetyRegressionTests' passed at 2026-10-20 19:10:52.520.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 6.966 (6.973) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-20 19:10:52.520.
+	 Executed 43 tests, with 0 failures (0 unexpected) in 7.397 (7.405) seconds
+Test Suite 'Selected tests' passed at 2026-10-20 19:10:52.520.
+	 Executed 43 tests, with 0 failures (0 unexpected) in 7.397 (7.406) seconds
+** TEST SUCCEEDED **

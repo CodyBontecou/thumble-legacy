@@ -75,10 +75,15 @@ The original working tree is preserved in commit `5fadf15`, including Android ed
 
 ## Remaining work
 
+The product target now includes retirement of the desktop application/UI in favor of local CLI/MCP configuration through users' agents, phone UI, and a headless receiver. `docs/cli-mcp-cutover.md` defines authority, tool, packaging, and no-GUI acceptance gates. Earlier desktop build evidence remains valid historical regression evidence; it does not prove the cutover complete.
+
+Native legacy-profile preparation now retains original bytes, chooses the effective source layout, materializes eight appearances and prepares landscape geometry, including hidden controls. It preserves executable declarations and tested haptics/groups/timestamps, and rejects variant-only controls rather than dropping them. This is an immutable typed staging result, not a lossless authoritative export or live migration. The required full stack gate passes 39 constrained-thread cases and both builds after splitting an oversized selection frame without changing budgets. All four focused migration tests also pass against the refactored source in the 17-test headless-pairing run. Source isolation and remaining boundaries are recorded in `docs/feature-removal-evidence/legacy-profile-preparation`.
+
 1. Complete version-5 edit/write and live interchange, integrate Rust owned resolution into live authority/snapshots and retained-peer profile/synchronization using the prepared format negotiation, then implement authority-backed migration with backups, portrait-only conversion, missing-resource recovery, pending phone-edit reconciliation, interruption recovery and rollback. Enforce resource/document bounds across complete configurations and pending-edit transport before activation. Native bank storage/resolution, pooled resources and pure materialization do not themselves commit these conversions.
 2. Remove active skin UI/runtime and package-only authoring infrastructure after successful migration. The public catalog/distribution source is retired.
 3. Inventory and back up deployed services before operational retirement. Both phone hosted flows, receiver upload transactions/capability advertisements, hosted gateway/relay source and release installer are retired. Local recovery and profile import remain. Authenticate the Fly CLI to collect live resources; no shutdown has been performed.
 4. Make the controller and layout editor landscape-only and remove active portrait variants after reconciliation and migration are verified.
 5. Finish retained-platform/device acceptance, physical haptics, input latency, WoW client acceptance where available, final documentation/capability cleanup, and complete build/release gates.
+6. Complete headless authority/setup/runtime/design tools and legacy data migration, then retire desktop UI/IPC/releases. Verify clean-account use with no Thumble desktop GUI installed or running; retain required native input/signing helpers.
 
 No deployed service has been stopped, and no skin-backed or portrait user profile has been migrated or discarded by this batch.

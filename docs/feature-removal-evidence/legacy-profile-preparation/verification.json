@@ -1,0 +1,18 @@
+{
+  "baseCommit": "66abae64ef7f3ce984b985276d88ec2b3f169ae6",
+  "snapshot": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "migrationTests": 4,
+  "stackTests": 39,
+  "initialGateFailure": {
+    "function": "chooseSource",
+    "stackBytes": 86064,
+    "limitBytes": 32768
+  },
+  "finalFrames": {
+    "chooseSource": 11520,
+    "prepareLandscape": 29056
+  },
+  "limitsChanged": false,
+  "originalUserDataMigrated": false,
+  "gateLogSHA256": "9c1b313ff9c6b7344d0a8a27a82ca3d5ac17fab82707e53911d5e17838a96769"
+}
