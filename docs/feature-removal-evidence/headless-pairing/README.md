@@ -1,0 +1,7 @@
+# Headless pairing CLI routes
+
+`thumble pairing code`, `pairing payload`, `server addresses`, and `server urls` now use the verified runtime owner. Rust status already supplies URLs, pairing code, service name, and server identity; the native CLI now projects those fields into the existing phone pairing payload. Missing required metadata fails without switching to desktop state. The correlated legacy route remains transitional until its authority migration is implemented.
+
+All 17 focused native cases pass (13 runtime-backend and four migration-preparation cases). The standalone CLI scheme and its legacy aliases build. `scripts/verify-headless-pairing-cli.py <built-thumble>` exercises all four command outputs and one incomplete-metadata rejection against a local correlated test bridge. It copies the binary into a private temporary directory, never starts an input receiver, and removes its test files afterward. The tests prove routing and command output, not real phone pairing or network discovery.
+
+Verification uses the isolated native snapshot described by legacy-profile-preparation, overlaid with the source hashes in `verification.json`. Concurrent unrelated CLI/WoW work is excluded. Runtime lifecycle, pairing cancellation/trust operations, accessibility setup, authority migration, desktop UI/IPC removal, and tools-only release acceptance remain unfinished. No profiles, credentials, or live pairings were changed by these checks.

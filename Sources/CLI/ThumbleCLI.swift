@@ -6344,8 +6344,7 @@ struct ThumbleCLI {
         case "status":
             try printRuntimeStatus(json: arguments.contains("--json"))
         case "addresses", "urls":
-            let status = try readFreshRuntimeStatus()
-            for url in status.localURLs { print(url) }
+            for url in try readPairingPayload().urls { print(url) }
         default:
             throw CLIError.message("Unknown server subcommand: \(subcommand)")
         }
@@ -6355,24 +6354,37 @@ struct ThumbleCLI {
         guard let subcommand = arguments.first else { throw CLIError.message("Missing pairing subcommand") }
         switch subcommand {
         case "code":
-            print(try readFreshRuntimeStatus().pairingCode)
+            guard let code = try readPairingPayload().pairingCode else {
+                throw CLIError.message("Receiver did not provide a pairing code.")
+            }
+            print(code)
         case "payload":
-            let status = try readFreshRuntimeStatus()
-            let payload = PairingPayload(
-                urls: status.localURLs,
-                pairingCode: status.pairingCode,
-                serviceName: status.bonjourServiceName,
-                serviceType: status.bonjourServiceType,
-                serviceDomain: status.bonjourServiceDomain,
-                serverID: status.serverID
-            )
-            try printJSON(payload)
+            try printJSON(readPairingPayload())
         case "cancel":
             try postRuntimeCommand(.cancelPairing)
             print("Requested pairing cancel.")
         default:
             throw CLIError.message("Unknown pairing subcommand: \(subcommand)")
         }
+    }
+
+    private static func readPairingPayload() throws -> PairingPayload {
+        switch try runtimeRoute(.status) {
+        case .rust(let response):
+            guard let status = response.control?.status else {
+                throw ThumbleCLIRuntimeBackend.BackendError.malformedResponse
+            }
+            return try status.pairingPayload()
+        case .legacy(let data):
+            return try legacyPairingPayload(data)
+        }
+    }
+
+    private static func legacyPairingPayload(_ data: Data) throws -> PairingPayload {
+        let status = try JSONDecoder().decode(ThumbleMacRuntimeStatus.self, from: data)
+        return PairingPayload(urls: status.localURLs, pairingCode: status.pairingCode,
+            serviceName: status.bonjourServiceName, serviceType: status.bonjourServiceType,
+            serviceDomain: status.bonjourServiceDomain, serverID: status.serverID)
     }
 
     private static func accessibility(arguments: [String]) throws {

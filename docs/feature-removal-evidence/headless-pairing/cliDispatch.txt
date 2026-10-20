@@ -1,0 +1,1 @@
+Headless pairing CLI dispatch verified: 4 outputs and 1 nonmutating rejection

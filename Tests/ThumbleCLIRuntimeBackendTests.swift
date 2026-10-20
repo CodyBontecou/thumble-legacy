@@ -134,6 +134,50 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
             URL(fileURLWithPath: "/nonexistent-thumble-test/thumble-cli-bridge")))
     }
 
+    func testHeadlessPairingPayloadUsesVerifiedReceiverWithoutLegacyStatus() throws {
+        let backend = ThumbleCLIRuntimeBackend(transport: { _ in
+            (0, try self.headlessStatusFrame())
+        })
+        let route = try backend.route(.status, invocationID: id, legacyStatus: { _ in
+            XCTFail("Headless pairing must not read desktop status")
+            return Data()
+        }, processIsLive: { _ in false })
+        guard case .rust(let response) = route else { return XCTFail("Expected headless owner") }
+        let payload = try XCTUnwrap(response.control?.status).pairingPayload()
+        XCTAssertEqual(payload.urls, ["ws://192.168.1.42:9123"])
+        XCTAssertEqual(payload.pairingCode, "123456")
+        XCTAssertEqual(payload.serverID, instance.uuidString)
+        XCTAssertEqual(payload.serviceName, "Headless receiver")
+        XCTAssertEqual(payload.normalizedServiceType, "_pocketpad._tcp")
+        XCTAssertNotNil(PairingPayload.decode(from: String(decoding: try JSONEncoder().encode(payload), as: UTF8.self)))
+    }
+
+    func testIncompleteHeadlessPairingCannotCreatePayloadOrConsultDesktop() throws {
+        for field in ["urls", "pairingCode", "serverID"] {
+            let backend = ThumbleCLIRuntimeBackend(transport: { _ in
+                (0, try self.headlessStatusFrame(omitting: field))
+            })
+            let route = try backend.route(.status, invocationID: id, legacyStatus: { _ in
+                XCTFail("Incomplete Rust status must not switch owners")
+                return Data()
+            }, processIsLive: { _ in false })
+            guard case .rust(let response) = route else { return XCTFail("Expected headless owner") }
+            XCTAssertThrowsError(try XCTUnwrap(response.control?.status).pairingPayload())
+        }
+    }
+
+    private func headlessStatusFrame(omitting field: String? = nil) throws -> Data {
+        var status: [String: Any] = [
+            "pid": 42, "port": 9123, "serviceName": "Headless receiver",
+            "accessibilityTrusted": true, "inputEnabled": true,
+            "output": ["mode": "recording"], "urls": ["ws://192.168.1.42:9123"],
+            "pairingCode": "123456", "serverID": instance.uuidString
+        ]
+        if let field { status.removeValue(forKey: field) }
+        let json = try JSONSerialization.data(withJSONObject: ["ok": true, "status": status])
+        return frame(owner: "rust", response: String(decoding: json, as: UTF8.self))
+    }
+
     private func frame(owner: String, ok: Bool = true, response: String? = nil, error: String? = nil) -> Data {
         var text = "{\"schemaVersion\":1,\"ok\":\(ok),\"invocationID\":\"\(id.uuidString)\",\"owner\":\"\(owner)\""
         if let response { text += ",\"response\":\(response)" }

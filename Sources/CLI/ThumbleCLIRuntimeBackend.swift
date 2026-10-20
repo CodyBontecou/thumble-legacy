@@ -69,6 +69,16 @@ final class ThumbleCLIRuntimeBackend {
         let inputEnabled: Bool
         let output: OutputProjection
         let applicationLaunch: LaunchProjection?
+        let urls: [String]?
+        let pairingCode: String?
+        let serverID: String?
+
+        func pairingPayload() throws -> PairingPayload {
+            guard let urls, !urls.isEmpty, let pairingCode, !pairingCode.isEmpty,
+                  let serverID, !serverID.isEmpty else { throw BackendError.malformedResponse }
+            return PairingPayload(urls: urls, pairingCode: pairingCode,
+                serviceName: serviceName, serverID: serverID)
+        }
     }
     struct OutputProjection: Decodable {
         let mode: String

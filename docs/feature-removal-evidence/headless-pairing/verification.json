@@ -1,0 +1,16 @@
+{
+  "baseCommit": "66abae64ef7f3ce984b985276d88ec2b3f169ae6",
+  "isolation": "Committed-base native snapshot plus legacy-profile-preparation and these overlays; unrelated concurrent checkout changes excluded",
+  "files": {
+    "Sources/CLI/ThumbleCLIRuntimeBackend.swift": "afe826b54e65e7a081924a364fdc039d6d49cf8037b0cc0d2d5c8417c37d2f4b",
+    "Tests/ThumbleCLIRuntimeBackendTests.swift": "76804ce2df3ec939469db2aaa037014ab3f77d7879c429845ac3c6cad0d7959c",
+    "scripts/verify-headless-pairing-cli.py": "3012e83bd6b837bf0b51231a06db06906a097ef8f223b72ed5cf9e4f03c0847d",
+    "Sources/CLI/ThumbleCLI.swift": "8c35942ff5d0e9f655517a2e323da2571e662ff7b23deee0a6a294e1b3db7482"
+  },
+  "focusedTests": 17,
+  "migrationTestsIncluded": 4,
+  "runtimeTestsIncluded": 13,
+  "cliDispatch": "4 outputs and 1 nonmutating incomplete-metadata rejection using correlated test bridge",
+  "realReceiverPairingTested": false,
+  "desktopCutoverComplete": false
+}
