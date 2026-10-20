@@ -1,0 +1,14 @@
+{
+  "baseCommit": "6816f727dc8962af6ae4630c0d9fe78bb055bcfb",
+  "snapshotPath": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "overlaidFiles": {
+    "Tests/OwnedConfigurationDocumentTests.swift": "0a70a732ee5efd6579419a9c0b07b4ce02084d6d7392e06adbbcfc17446b2c0d",
+    "scripts/verify-feature-removal-fixtures.py": "71dbf1e794887f21d9ae9bd44b196f472c87fa1077831c2d8030ea508995abcc",
+    "Host/crates/thumble-core/tests/owned_configuration.rs": "9284bff1064e573168310eb67f7ddb1ec03b58eba02d9e2bcdecf3a6fac87f3c",
+    "Host/fixtures/owned-configuration-edits/v1/input.json": "86b7ad365fb0a406b197274bf57ae8ef66c577849ba80d725e5fa30fd15e0838",
+    "Host/fixtures/owned-configuration-edits/v1/destination.json": "2655928a34014e312abb7d2128da14cc8b01084c0aab19c824df271d99142586",
+    "Host/fixtures/owned-configuration-edits/v1/manifest.json": "7a17b503d94beebae571fda2ee3adab1db2793e9a959ce2b0c44d8d9fbda6ed6",
+    "Host/fixtures/owned-configuration-edits/v1/edits.json": "3121d847004d1226903f97c3cea2875a0c804f2a0e2023ae70368726a2cfcefa"
+  },
+  "scope": "Committed native baseline plus writer-result tests/fixtures; unrelated shared checkout changes excluded."
+}

@@ -59,6 +59,29 @@ class OwnedConfigurationDocumentTest {
         assertEquals(name,document.projectedProfiles().first().name)
         assertArrayEquals(bytes,document.originalData())
     }
+    @Test fun rustWrittenDestinationRetainsEditablePaintGeometryAndHaptics() {
+        val data = javaClass.classLoader!!.getResourceAsStream("owned-configuration-edits/v1/destination.json")!!.use { it.readBytes() }
+        val document = OwnedConfigurationDocument.decode(data)
+        val profile = document.projectedProfiles().first()
+        assertEquals("Edited keypad",profile.name)
+        val repository = SkinRenderRepository { error("Edited owned appearance must not load packages") }
+        for (scheme in ProfileAppearanceBank.schemes) for (action in ProfileAppearanceBank.actions) {
+            val projection = repository.resolve(profile,true,scheme=="dark",action)
+            assertNull(projection.warning)
+            val style = projection.profile!!.layout(true).getJSONArray("elements").getJSONObject(0).getJSONObject("layout")
+            assertEquals(.78,style.getDouble("centerX"),0.0)
+            assertEquals("Mine",style.getJSONObject("icon").getString("value"))
+            val feedback = style.getJSONObject("hapticFeedback")
+            assertEquals("double",feedback.getString("pattern"))
+            assertEquals(.25,feedback.getDouble("intensity"),0.0)
+            assertEquals(.75,feedback.getDouble("sharpness"),0.0)
+            assertEquals(.12,feedback.getDouble("duration"),0.0)
+        }
+        assertArrayEquals(data,document.originalData())
+        assertTrue(data.toString(Charsets.UTF_8).contains("18446744073709551617"))
+        assertTrue(data.toString(Charsets.UTF_8).contains("0.123456789012345678901234567890"))
+    }
+
     @Test fun duplicateKeysInvalidUTF8AndCompleteDocumentOverflowAreRejected() {
         val bytes = fixture("document")
         val duplicate = bytes.toString(Charsets.UTF_8).replace("\"version\": 5","\"version\": 5, \"version\": 4")

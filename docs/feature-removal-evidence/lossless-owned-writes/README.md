@@ -1,0 +1,14 @@
+# Lossless in-memory owned-document writes
+
+`OwnedConfigurationDocument::with_edits` now applies bounded ordered value changes to original JSON spans and returns a revalidated v5 document. Unknown numbers, escaped keys, resources and metadata outside addressed ranges do not roundtrip through normalized models. The original remains immutable on success or failure. The helper supports object additions/removals and array replacement/removal/append, NFC-aware decoded key lookup, strict duplicate-key rejection and bounded path/batch/input/output sizes. Root replacement is excluded. The existing serde JSON dependency enables `raw_value`; arbitrary-precision/global number behavior was not changed.
+
+A real seven-edit destination is recorded in `Host/fixtures/owned-configuration-edits/v1`. It moves a control and changes its icon and double-tap haptic parameters across all eight scheme/trigger states while preserving executable output and existing image bytes. Its unknown integer exceeds u64 and its precise decimal retains the original spelling. Rust compares the full destination to the pinned file; Apple and Android independently read/project it and assert the resulting states. Resource tests also insert a valid new blob/reference, retain existing entries, and reject canonical Base64 whose digest does not match. These are model/codec checks, not physical haptic or network delivery evidence.
+
+Verification:
+
+- Full Rust host/MCP gate passes formatting, clippy, 504 tests and retained target checks; three native-dependent tests remain ignored.
+- Android passes all 208 unit tests and device-test assembly. Instrumentation was compiled, not run.
+- Four focused Apple reader tests pass, followed by the required 38-case stack gate and both Debug builds. Budgets are unchanged. Native verification uses an archive of committed base `7185f9b` plus only the writer-result tests/fixtures, avoiding unrelated concurrent WoW/phone UI work. The original native production readers are unchanged. `native-snapshot.json` records overlay hashes, each compared to the current files. This does not claim the concurrent uncommitted checkout was built.
+- Original frozen fixtures, appearance oracles, the 41-case document contract and the new producer/input/destination hashes verify successfully.
+
+The API edits in memory. It does not write user files, perform authority revision CAS, commit migration receipts/backups, reconcile pending edits or activate v5 import/startup/synchronization. The Rust reader revalidation is not a replacement for full typed/native admission in the eventual live authoring transaction. A caller replacing a parent object must preserve its unknown children deliberately; typed adapters must generate scoped edits instead of serializing a display projection over the original. No user data was migrated, no phone format offer changed and no deployed services were stopped. Physical haptics, latency and live WoW acceptance remain outstanding.

@@ -1,0 +1,13 @@
+{
+  "fixtureVersion": 1,
+  "operationCount": 7,
+  "files": {
+    "input.json": "86b7ad365fb0a406b197274bf57ae8ef66c577849ba80d725e5fa30fd15e0838",
+    "edits.json": "3121d847004d1226903f97c3cea2875a0c804f2a0e2023ae70368726a2cfcefa",
+    "destination.json": "2655928a34014e312abb7d2128da14cc8b01084c0aab19c824df271d99142586"
+  },
+  "baseDocument": "Host/fixtures/owned-configuration/v1/document.json",
+  "baseSHA256": "0b0cd5d4335e278358e9320be05c882891fb8a305cb3f30d19f6f2c6b905fa3f",
+  "generator": "Host/crates/thumble-core/tests/owned_configuration.rs",
+  "generatorSHA256": "9284bff1064e573168310eb67f7ddb1ec03b58eba02d9e2bcdecf3a6fac87f3c"
+}

@@ -1,0 +1,8 @@
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.333 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.057 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.046 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.761 seconds).
+	 Executed 4 tests, with 0 failures (0 unexpected) in 1.197 (1.198) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 1.197 (1.198) seconds
+	 Executed 4 tests, with 0 failures (0 unexpected) in 1.197 (1.199) seconds
+** TEST SUCCEEDED **

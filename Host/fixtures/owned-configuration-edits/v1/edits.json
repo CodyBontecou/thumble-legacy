@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "edits": [
+    {
+      "pointer": "/profiles/0/name",
+      "json": "\"Edited keypad\""
+    },
+    {
+      "pointer": "/profiles/0/customization/elements/0/layout/centerX",
+      "json": "0.78"
+    },
+    {
+      "pointer": "/profiles/0/customization/elements/0/layout/icon/value",
+      "json": "\"Mine\""
+    },
+    {
+      "pointer": "/profiles/0/customization/elements/0/layout/hapticFeedback",
+      "json": "{\"style\":\"light\",\"pattern\":\"double\",\"intensity\":0.25,\"sharpness\":0.75,\"duration\":0.12}"
+    },
+    {
+      "pointer": "/profiles/0/customization/buttonCustomizations/1/centerX",
+      "json": "0.78"
+    },
+    {
+      "pointer": "/profiles/0/customization/buttonCustomizations/1/icon/value",
+      "json": "\"Mine\""
+    },
+    {
+      "pointer": "/profiles/0/customization/buttonCustomizations/1/hapticFeedback",
+      "json": "{\"style\":\"light\",\"pattern\":\"double\",\"intensity\":0.25,\"sharpness\":0.75,\"duration\":0.12}"
+    }
+  ]
+}

@@ -21,6 +21,7 @@ pub enum OwnedConfigurationError {
     TooLarge,
     InvalidJson,
     InvalidEnvelope,
+    Edit(thumble_protocol::JsonEditError),
     Configuration(ConfigurationDocumentError),
 }
 impl fmt::Display for OwnedConfigurationError {
@@ -30,6 +31,7 @@ impl fmt::Display for OwnedConfigurationError {
             Self::InvalidJson => f.write_str("invalid version-5 configuration JSON"),
             Self::InvalidEnvelope => f.write_str("invalid version-5 configuration envelope"),
             Self::Configuration(error) => error.fmt(f),
+            Self::Edit(error) => error.fmt(f),
         }
     }
 }
@@ -152,6 +154,24 @@ impl OwnedConfigurationDocument {
             active_profile_id: active,
             default_profile_id: default,
         })
+    }
+    /// Ordered atomic edit transaction in memory. Untouched source bytes retain
+    /// their exact spelling; the complete resulting v5 document is revalidated.
+    /// Persistence/revision CAS belongs to the authority, never this pure codec.
+    pub fn with_edits(
+        &self,
+        edits: &[thumble_protocol::JsonValueEdit<'_>],
+    ) -> Result<Self, OwnedConfigurationError> {
+        if edits.is_empty() {
+            return Ok(self.clone());
+        }
+        let bytes = thumble_protocol::edit_json_values(
+            &self.original,
+            edits,
+            MAXIMUM_CONFIGURATION_DOCUMENT_BYTES,
+        )
+        .map_err(OwnedConfigurationError::Edit)?;
+        Self::decode(&bytes)
     }
     pub fn original_bytes(&self) -> &[u8] {
         &self.original

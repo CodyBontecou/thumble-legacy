@@ -69,3 +69,17 @@ assert document["version"] == 5 and all(p["profileFormatVersion"] == 5 for p in 
 retired = {"skinReference", "skinBaselineCustomization", "landscapeSkinBaselineCustomization", "portraitSkinBaselineCustomization", "landscapeCustomization", "portraitCustomization", "orientationPreference"}
 assert all(not (retired & p.keys()) for p in document["profiles"])
 print("Explicit owned-configuration contract verified:", contract["caseCount"], "cases")
+
+# A real Rust writer result, independently rendered/projected by retained peers.
+written = repo / "Host/fixtures/owned-configuration-edits/v1"
+contract = json.loads((written / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((written / name).read_bytes()).hexdigest() == digest
+for field, digest in [("baseDocument", "baseSHA256"), ("generator", "generatorSHA256")]:
+    path = Path(contract[field])
+    assert not path.is_absolute() and ".." not in path.parts
+    assert hashlib.sha256((repo / path).read_bytes()).hexdigest() == contract[digest]
+assert len(json.loads((written / "edits.json").read_text())["edits"]) == contract["operationCount"]
+print("Lossless owned-edit destination verified:", contract["operationCount"], "operations")

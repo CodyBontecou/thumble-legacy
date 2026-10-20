@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-20",
+  "operationCount": 7,
+  "nativeFocusedTests": 4,
+  "constrainedStackTests": 38,
+  "advertisedFormats": [
+    4
+  ],
+  "logs": {
+    "rustGate": {
+      "path": "/tmp/thumble-owned-writer-rust-final.log",
+      "sha256": "bd7ea9a5ff7049a03b5838e9b7e30c02bd53250233ed6ed3a51bf75ff9873d56"
+    },
+    "androidGate": {
+      "path": "/tmp/thumble-owned-writer-android.log",
+      "sha256": "fe537c71a141eb4ac7e61fc225af75bf386f0901c0ff9fe1f671db2e4d2d05c6"
+    },
+    "nativeTests": {
+      "path": "/tmp/thumble-owned-writer-native-tests.log",
+      "sha256": "da2202eee6e4015f4c85d403f0f452591ac931d1f30edb5dcebf028fba5832aa"
+    },
+    "nativeStack": {
+      "path": "/tmp/thumble-owned-writer-native-stack.log",
+      "sha256": "82d63509dbd5dee16cb6829cafa01b9aadf30aaca65898e44e67d67ee7de73d3"
+    }
+  },
+  "rustTests": 504,
+  "rustIgnored": 3,
+  "androidTests": 208
+}

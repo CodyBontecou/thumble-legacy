@@ -111,3 +111,162 @@ fn duplicate_keys_invalid_utf8_and_complete_document_overflow_are_rejected() {
     maximum.push(b' ');
     assert!(OwnedConfigurationDocument::decode(&maximum).is_err());
 }
+
+#[test]
+fn lossless_edits_revalidate_complete_destinations_and_keep_original_on_failure() {
+    use thumble_protocol::JsonValueEdit;
+    let source = std::str::from_utf8(DOCUMENT)
+        .unwrap()
+        .replace("18446744073709551615", "18446744073709551616");
+    let original = OwnedConfigurationDocument::decode(source.as_bytes()).unwrap();
+    let updated = original
+        .with_edits(&[
+            JsonValueEdit {
+                pointer: "/profiles/0/name",
+                value: Some(br#""Edited locally""#),
+            },
+            JsonValueEdit {
+                pointer: "/profiles/0/customization/futureDesignSetting",
+                value: Some(br#"{"enabled":true}"#),
+            },
+        ])
+        .unwrap();
+    assert_eq!(original.original_bytes(), source.as_bytes());
+    let expected = source.replacen(
+        "\"name\": \"Resource fixture\"",
+        "\"name\": \"Edited locally\"",
+        1,
+    );
+    // The added setting changes only its insertion site. Removing it must leave
+    // the exact original body except for the deliberate name replacement.
+    let reverted_setting = updated
+        .with_edits(&[JsonValueEdit {
+            pointer: "/profiles/0/customization/futureDesignSetting",
+            value: None,
+        }])
+        .unwrap();
+    assert_eq!(reverted_setting.original_bytes(), expected.as_bytes());
+    assert!(updated
+        .with_edits(&[JsonValueEdit {
+            pointer: "/profiles/0/profileFormatVersion",
+            value: Some(b"4")
+        }])
+        .is_err());
+    assert!(updated
+        .with_edits(&[JsonValueEdit {
+            pointer: "/profiles/0/portraitCustomization",
+            value: Some(b"null")
+        }])
+        .is_err());
+    assert_eq!(original.original_bytes(), source.as_bytes());
+    assert_eq!(thumble_protocol::SUPPORTED_PROFILE_FORMATS, &[4]);
+}
+
+#[test]
+fn lossless_geometry_icon_and_haptic_edits_match_shared_destination() {
+    use thumble_protocol::JsonValueEdit;
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures/owned-configuration-edits/v1");
+    let input = std::fs::read(root.join("input.json")).unwrap();
+    let request: Value =
+        serde_json::from_slice(&std::fs::read(root.join("edits.json")).unwrap()).unwrap();
+    let edits: Vec<_> = request["edits"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| JsonValueEdit {
+            pointer: row["pointer"].as_str().unwrap(),
+            value: row["json"].as_str().map(str::as_bytes),
+        })
+        .collect();
+    let original = OwnedConfigurationDocument::decode(&input).unwrap();
+    let edited = original.with_edits(&edits).unwrap();
+    let profile = &edited.profiles()[0];
+    assert_eq!(profile["name"], "Edited keypad");
+    let bank = ProfileAppearanceBank::from_profile(profile)
+        .unwrap()
+        .unwrap();
+    for scheme in ["light", "dark"] {
+        for action in ["base", "left-trigger", "right-trigger", "both-triggers"] {
+            let rendered = bank
+                .resolve_layout(&profile["customization"], scheme, action)
+                .unwrap();
+            let style = &rendered["elements"][0]["layout"];
+            assert_eq!(style["centerX"], 0.78);
+            assert_eq!(style["icon"]["value"], "Mine");
+            assert_eq!(style["hapticFeedback"]["pattern"], "double");
+            assert_eq!(style["hapticFeedback"]["intensity"], 0.25);
+            assert_eq!(style["hapticFeedback"]["sharpness"], 0.75);
+            assert_eq!(style["hapticFeedback"]["duration"], 0.12);
+            assert_eq!(
+                rendered["elements"][0]["output"],
+                original.profiles()[0]["customization"]["elements"][0]["output"]
+            );
+        }
+    }
+    let output = std::str::from_utf8(edited.original_bytes()).unwrap();
+    assert!(output.contains("18446744073709551617"));
+    assert!(output.contains("0.123456789012345678901234567890"));
+    assert_eq!(original.original_bytes(), input);
+    if std::env::var_os("THUMBLE_REGENERATE_OWNED_EDIT_FIXTURE").is_some() {
+        std::fs::write(root.join("destination.json"), edited.original_bytes()).unwrap();
+    }
+    assert_eq!(
+        edited.original_bytes(),
+        std::fs::read(root.join("destination.json")).unwrap()
+    );
+}
+
+#[test]
+fn resource_edits_require_matching_bytes_and_retain_original_resources() {
+    use base64::{engine::general_purpose::STANDARD, Engine};
+    use sha2::{Digest, Sha256};
+    use thumble_core::ProfileResourceTable;
+    use thumble_protocol::JsonValueEdit;
+    let original = OwnedConfigurationDocument::decode(DOCUMENT).unwrap();
+    let bytes = b"replacement-image";
+    let digest = format!("{:x}", Sha256::digest(bytes));
+    let pointer = format!("/profiles/0/appearanceResources/{digest}");
+    let encoded = serde_json::to_vec(&STANDARD.encode(bytes)).unwrap();
+    let reference = serde_json::to_vec(&serde_json::json!({"resourceSHA256":digest})).unwrap();
+    let updated = original
+        .with_edits(&[
+            JsonValueEdit {
+                pointer: &pointer,
+                value: Some(&encoded),
+            },
+            JsonValueEdit {
+                pointer: "/profiles/0/customization/assetLibrary/assets/0/data",
+                value: Some(&reference),
+            },
+        ])
+        .unwrap();
+    let table = ProfileResourceTable::from_profile(&updated.profiles()[0])
+        .unwrap()
+        .unwrap();
+    assert_eq!(
+        table
+            .data(&serde_json::from_slice(&reference).unwrap())
+            .unwrap()
+            .as_ref(),
+        bytes
+    );
+    assert_eq!(original.original_bytes(), DOCUMENT);
+    assert_eq!(
+        updated.profiles()[0]["appearanceResources"]
+            .as_object()
+            .unwrap()
+            .len(),
+        original.profiles()[0]["appearanceResources"]
+            .as_object()
+            .unwrap()
+            .len()
+            + 1
+    );
+    assert!(original
+        .with_edits(&[JsonValueEdit {
+            pointer: &pointer,
+            value: Some(br#""incorrect-hash""#)
+        }])
+        .is_err());
+}

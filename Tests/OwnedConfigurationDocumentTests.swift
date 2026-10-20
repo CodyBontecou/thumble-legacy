@@ -61,6 +61,33 @@ final class OwnedConfigurationDocumentTests: XCTestCase {
         XCTAssertEqual(ProfileFormatPolicy.supportedFormats,[4])
         XCTAssertThrowsError(try ThumbleKeypadConfigurationExport.validateImportBoundary(original))
     }
+    func testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics() throws {
+        let data = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration-edits/v1/destination.json"))
+        let document = try ThumbleOwnedConfigurationDocument(validating: data)
+        let profile = try XCTUnwrap(document.projectedProfiles.first)
+        XCTAssertEqual(profile.name, "Edited keypad")
+        for scheme in ThumbleSkinColorScheme.allCases {
+            for action in ThumbleActionSet.allCases {
+                let layout = profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                let element = try XCTUnwrap(layout.elements.first)
+                let style = layout.buttonCustomization(for: element.inputID)
+                XCTAssertEqual(style.centerX, 0.78)
+                XCTAssertEqual(layout.resolvedPresentation(for: style, scheme: scheme == .dark ? .dark : .light).icon, .text("Mine"))
+                let feedback = try XCTUnwrap(style.hapticFeedback)
+                XCTAssertEqual(feedback.pattern, .double)
+                XCTAssertEqual(feedback.intensity, 0.25)
+                XCTAssertEqual(feedback.sharpness, 0.75)
+                XCTAssertEqual(feedback.duration, 0.12)
+                XCTAssertEqual(layout.elements.map(\.output), profile.customization.elements.map(\.output))
+                XCTAssertEqual(layout.assetLibrary.assets.first?.data, Data("fixture-image".utf8))
+            }
+        }
+        XCTAssertEqual(document.originalData, data)
+        let text = try XCTUnwrap(String(data: document.originalData, encoding: .utf8))
+        XCTAssertTrue(text.contains("18446744073709551617"))
+        XCTAssertTrue(text.contains("0.123456789012345678901234567890"))
+    }
+
     func testDuplicateKeysInvalidUTF8AndExactDocumentLimit() throws {
         let original = try fixture("document")
         let text = try XCTUnwrap(String(data: original, encoding: .utf8))
