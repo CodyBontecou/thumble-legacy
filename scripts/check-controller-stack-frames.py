@@ -188,6 +188,7 @@ def is_shared_runtime_symbol(name: str) -> bool:
             ".ProfileFormatPolicy.",
             ".ThumbleOwnedConfigurationDocument.",
             ".ThumbleLegacyProfileMigration.",
+            ".ThumbleLegacyProfileBridge",
         )
     ):
         return True

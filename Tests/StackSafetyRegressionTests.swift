@@ -211,6 +211,22 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testLegacyPreparationBridgeFitsConstrainedThread() throws {
+        assertInlineSize(ThumbleLegacyProfileBridgeRequest.self, atMost: 256)
+        assertInlineSize(ThumbleLegacyProfileBridgeResponse.self, atMost: 256)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let data = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/legacy-configuration-migration/v1/portrait-only-request.json"))
+            let request = try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self, from: data)
+            let result = try ThumbleLegacyProfileBridge.transform(request)
+            let profile = try JSONDecoder().decode(GamepadConfigurationProfile.self, from: result.afterProfileData)
+            guard result.invocationID == request.invocationID, result.sourceOrientation == "portrait",
+                  result.reviewReasons.contains("portraitArranged"), profile.appearanceBank?.variants.count == 8,
+                  profile.customization.deviceCanvas.editorDeviceFrame.isLandscape else { throw StackTestError.unexpectedDecodedState }
+            _ = try JSONEncoder().encode(result)
+        }
+    }
+
     func testLegacyProfilePreparationFitsConstrainedThread() throws {
         assertInlineSize(ThumbleLegacyProfileMigration.Preparation.self, atMost: 8)
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {

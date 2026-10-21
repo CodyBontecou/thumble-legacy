@@ -1,0 +1,51 @@
+{
+  "fixtureVersion": 1,
+  "nativeGenerator": "Tests/LegacyProfileMigrationTests.swift",
+  "rustGenerator": "Host/crates/thumble-core/tests/legacy_configuration_migration.rs",
+  "files": {
+    "explicit-landscape-destination.json": "03aab0210d42ca50635e41f7e80323c4c75e636c77738e9ffb382bea191640f7",
+    "explicit-landscape-profile.json": "cbdc5821aa600b116b4331e7f17b67df7ac573cc59d0df85606b4ccce9b9adb3",
+    "explicit-landscape-request.json": "91d07f4f34779317fb7e1b497d7c21b22ac1c927afd0493abc7a86a993f390ad",
+    "explicit-landscape-response.json": "bc6d33b90d4b5e611b79c5cc587958b9348de94b7761c4b6e38cd7fd08a271b5",
+    "explicit-landscape-source.json": "35ee053bdd21b5abad389cd3cdfda895b43bf93a7f4968a2232bb38be645ebba",
+    "legacy-canvas-alias-destination.json": "9dd4cfc456f429939d3ed47899cddd0c9fd1fc5391828dd97b2b42d2858d6113",
+    "legacy-canvas-alias-profile.json": "080d5b9319652842d4de74c4c0cc3fa42bdd6e17d69a68f4f1cb2e4353895c5d",
+    "legacy-canvas-alias-request.json": "90128ac7bd1fe6b44d708bf4eb17e9b72c44df5e88ec427734e8aba56331138d",
+    "legacy-canvas-alias-response.json": "2a322a19f558e680381278669c494fce2b049d71c0ec961828b86c2022ca87a7",
+    "legacy-canvas-alias-source.json": "463c2bd375952e29b37c5797ab9f274f87955637763fdf657ec7365964a1ef11",
+    "missing-canvas-destination.json": "fbd2e548c053c0b3eb70c16ec878b4cc83e7af7d527e7168e2fd0aeffb992439",
+    "missing-canvas-profile.json": "300fc8b3e72deff4319d32e31c7500474d4ce753a287ea14034aa9a62938b822",
+    "missing-canvas-request.json": "c9e73552e3d2eb9a7bd58b4a9acc8a543f42c26b4f5f2f5be28e2f9f4086534a",
+    "missing-canvas-response.json": "367f86e9dafaa1f796524c1c7e0a81781d4ec4fe9c11af15d31a3d34b162c574",
+    "missing-canvas-source.json": "7d362301afb7b74c1dee09e1051913d26838c7e3d03b4ff22deccf7f20d05e90",
+    "missing-package-profile.json": "ef4891babc588dae42cded6f648df91bb835f0739b0a3744f39f9c5c06ae6abc",
+    "missing-package-request.json": "4236630c713e2ab2a4eb31da258ada9c666f6f9c834e9932121d236a78fa1864",
+    "plain-destination.json": "237bc7699751b89215439b2b0c7a4dcaaa917d055b61734ae2b5046c446fe733",
+    "plain-profile.json": "2c7035313e52837068d8c4828b9fba9c9e3b61bad6369280067d66e159ee5b2f",
+    "plain-request.json": "7d43e6f985048917fca5408a2662c1c17476985a79a91147134bc7c836f06b3e",
+    "plain-response.json": "42e594bf921ddc84dd9b286acc02055e2b5e89b5093a7987d6d5c528f408a440",
+    "plain-source.json": "3964a490283fd78ad7c64b7d0a4c1397a17819a03d0d6a2ff494c160ca5e5af8",
+    "portrait-only-destination.json": "c6b30468bcafe2247e82f66362f5a7fc870473bd86c286a62b637095c48d1e0c",
+    "portrait-only-profile.json": "270e57ab28ce7e7d360745de18cbbd1cb93eb6e299d4acb4f971d97ed6e8ade2",
+    "portrait-only-request.json": "73278cb86caef9a94e8c53d3cf104bf46b1cd90efa76189a0aa5b8255b38b182",
+    "portrait-only-response.json": "c659c11a95e067187d133c7f323c943a718a31b186b1b744c6ba2e0daf8e744a",
+    "portrait-only-source.json": "dee8d284a29a0001f628ac5d47ddae127f85a2f9ea210864b8a58bb512263953"
+  },
+  "sources": {
+    "Tests/LegacyProfileMigrationTests.swift": "b7b28699ec61df77a2cb596aacf94b299cc4c2a73b60bf471e879963e3cf3e89",
+    "Host/crates/thumble-core/tests/legacy_configuration_migration.rs": "dc004956a110812f868e8625f0af26f857c5bf958d98527f7eedf554c373ca6d",
+    "Host/fixtures/feature-removal/v1/migration-cases.json": "8dd37b39b8fc31960d5f90166c8b71f0cf092da58572db97446ed2ecf4e8d1a9"
+  },
+  "convertedCases": [
+    "plain",
+    "portrait-only",
+    "explicit-landscape",
+    "legacy-canvas-alias",
+    "missing-canvas"
+  ],
+  "recoveryCases": {
+    "missing-package": "legacy_package_missing"
+  },
+  "appearanceStates": 8,
+  "activationEnabled": false
+}

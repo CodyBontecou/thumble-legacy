@@ -1,0 +1,3 @@
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.244 (1.247) seconds
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.244 (1.248) seconds
+	 Executed 8 tests, with 0 failures (0 unexpected) in 1.244 (1.249) seconds

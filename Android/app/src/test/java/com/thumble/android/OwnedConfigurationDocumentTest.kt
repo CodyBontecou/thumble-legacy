@@ -7,6 +7,42 @@ import org.junit.Test
 
 class OwnedConfigurationDocumentTest {
     private fun fixture(name: String) = javaClass.classLoader!!.getResourceAsStream("owned-configuration/v1/$name.json")!!.use { it.readBytes() }
+    @Test fun actualLegacyConversionsRetainAppearanceOutputsAndOpaqueBytes() {
+        for (name in listOf("plain","portrait-only","explicit-landscape","legacy-canvas-alias","missing-canvas")) {
+            fun data(suffix: String) = javaClass.classLoader!!.getResourceAsStream("legacy-configuration-migration/v1/$name-$suffix.json")!!.use { it.readBytes() }
+            val bytes = data("destination")
+            val document = OwnedConfigurationDocument.decode(bytes)
+            assertArrayEquals(bytes,document.originalData())
+            assertNull(document.defaultProfileID)
+            val actual = document.projectedProfiles().single()
+            val packet = JSONObject(data("response").toString(Charsets.UTF_8))
+            val after = JSONObject(java.util.Base64.getDecoder().decode(packet.getString("afterProfileData")).toString(Charsets.UTF_8))
+            val expected = ControllerProfile.parse(after)
+            assertEquals(expected.id,actual.id)
+            assertEquals(expected.name,actual.name)
+            val repository = SkinRenderRepository { error("Converted data must not load a package") }
+            for (scheme in ProfileAppearanceBank.schemes) for (action in ProfileAppearanceBank.actions) {
+                val result = repository.resolve(actual,true,scheme=="dark",action)
+                val target = repository.resolve(expected,true,scheme=="dark",action)
+                assertNull(result.warning); assertNull(target.warning)
+                val layout = AppearanceJSON.objectCopy(result.profile!!.layout(true))
+                val reference = target.profile!!.layout(true)
+                layout.remove("futureLayoutMetadata")
+                if (name=="legacy-canvas-alias") {
+                    assertEquals("keep",layout.getJSONObject("deviceCanvas").getString("futureCanvasMetadata"))
+                    layout.getJSONObject("deviceCanvas").remove("futureCanvasMetadata")
+                }
+                assertTrue("$name/$scheme/$action",AppearanceJSON.same(layout,reference))
+            }
+            if (name=="legacy-canvas-alias") {
+                assertEquals("keep",actual.layout(true).getJSONObject("deviceCanvas").getString("futureCanvasMetadata"))
+            }
+            assertArrayEquals(bytes,document.originalData())
+            val raw = bytes.toString(Charsets.UTF_8)
+            assertTrue(raw.contains("18446744073709551617"))
+            assertTrue(raw.contains("0.12345678901234567890123456789"))
+        }
+    }
     @Test fun sharedVersionFiveContractAndRejectedMutations() {
         val original = fixture("document")
         val rows = JSONObject(fixture("cases").toString(Charsets.UTF_8)).getJSONArray("cases")

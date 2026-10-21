@@ -2,6 +2,7 @@
 """Verify the immutable pre-removal fixtures without regenerating expectations."""
 import hashlib
 import json
+import base64
 from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent / "Host/fixtures/feature-removal/v1"
@@ -107,3 +108,50 @@ assert b"0.12345678901234567890123456789" in destination_bytes
 assert len(destination["profiles"][0]["appearanceBank"]["variants"]) == contract["appearanceStates"]
 assert destination["profiles"][0]["name"] == "Edited keypad"
 print("Native projection merge verified:", contract["profileCount"], "profiles,", contract["appearanceStates"], "appearance states")
+
+# Actual legacy inputs prepared by native code and composed into owned documents.
+legacy = repo / "Host/fixtures/legacy-configuration-migration/v1"
+contract = json.loads((legacy / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1 and contract["activationEnabled"] is False
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((legacy / name).read_bytes()).hexdigest() == digest
+for name, digest in contract["sources"].items():
+    assert not Path(name).is_absolute() and ".." not in Path(name).parts
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+for name in contract["convertedCases"]:
+    profile_data = (legacy / f"{name}-profile.json").read_bytes()
+    request = json.loads((legacy / f"{name}-request.json").read_bytes())
+    response = json.loads((legacy / f"{name}-response.json").read_bytes())
+    assert base64.b64decode(request["profileData"], validate=True) == profile_data
+    assert response["sourceSHA256"] == hashlib.sha256(profile_data).hexdigest()
+    assert response["invocationID"].lower() == request["invocationID"].lower()
+    if "packageData" in request:
+        assert response["packageSHA256"] == hashlib.sha256(base64.b64decode(request["packageData"], validate=True)).hexdigest()
+    else:
+        assert response.get("packageSHA256") is None
+    source = json.loads((legacy / f"{name}-source.json").read_bytes())
+    destination_data = (legacy / f"{name}-destination.json").read_bytes()
+    destination = json.loads(destination_data)
+    assert source["version"] == 4 and destination["version"] == 5
+    original = source["profiles"][0]
+    converted = destination["profiles"][0]
+    assert original == json.loads(profile_data)
+    assert converted["profileFormatVersion"] == 5 and not (retired & converted.keys())
+    for field in ["id", "name", "updatedAt", "outputMode", "futureMigrationMetadata", "futureNativeMigrationMetadata"]:
+        assert converted[field] == original[field]
+    for field in ["activeProfileID", "defaultProfileID", "keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings", "futureRootMetadata"]:
+        assert destination[field] == source[field]
+    selected = original[response["sourceLayout"]]
+    assert converted["customization"]["futureLayoutMetadata"] == selected["futureLayoutMetadata"]
+    assert {item["id"] for item in selected["elements"]} == {item["id"] for item in converted["customization"]["elements"]}
+    assert b"18446744073709551617" in destination_data and b"0.12345678901234567890123456789" in destination_data
+    if name == "portrait-only":
+        assert len(converted["appearanceBank"]["variants"]) == contract["appearanceStates"]
+        assert "portraitArranged" in response["reviewReasons"]
+    if name == "explicit-landscape":
+        assert response["sourceLayout"] == "landscapeCustomization"
+        assert converted["customization"]["colorSchemePreference"] == original["customization"]["colorSchemePreference"]
+for name in contract["recoveryCases"]:
+    assert not (legacy / f"{name}-destination.json").exists()
+print("Legacy configuration preparation verified:", len(contract["convertedCases"]), "conversions,", len(contract["recoveryCases"]), "recovery case")

@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 
 /// Native preparation for the lossless authority migration. This never writes
 /// a user profile or substitutes for source reconciliation/backup/CAS.
@@ -45,6 +46,9 @@ public enum ThumbleLegacyProfileMigration {
         let updatedAt: Int64
         let hasLandscape: Bool
         let hasPortrait: Bool
+        let primaryFrame: String?
+        let landscapeFrame: String?
+        let portraitFrame: String?
         init(from decoder: Decoder) throws {
             let fields = try decoder.container(keyedBy: Keys.self)
             let version = try fields.decodeIfPresent(Int.self, forKey: .profileFormatVersion) ?? 4
@@ -58,6 +62,9 @@ public enum ThumbleLegacyProfileMigration {
             }
             hasLandscape = try fields.contains(.landscapeCustomization) && !fields.decodeNil(forKey: .landscapeCustomization)
             hasPortrait = try fields.contains(.portraitCustomization) && !fields.decodeNil(forKey: .portraitCustomization)
+            primaryFrame = try fields.decodeIfPresent(LayoutHeader.self, forKey: .customization)?.deviceCanvas?.frameID
+            landscapeFrame = try fields.decodeIfPresent(LayoutHeader.self, forKey: .landscapeCustomization)?.deviceCanvas?.frameID
+            portraitFrame = try fields.decodeIfPresent(LayoutHeader.self, forKey: .portraitCustomization)?.deviceCanvas?.frameID
             id = try fields.decode(String.self, forKey: .id)
             name = try fields.decode(String.self, forKey: .name)
             updatedAt = try fields.decode(Int64.self, forKey: .updatedAt)
@@ -65,7 +72,9 @@ public enum ThumbleLegacyProfileMigration {
                   !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
                   name.unicodeScalars.count <= 256, updatedAt >= 0 else { throw RecoveryRequired.invalidSource }
         }
-        enum Keys: String, CodingKey { case id, name, updatedAt, profileFormatVersion, appearanceBank, appearanceResources, appearanceResourceVersion, landscapeCustomization, portraitCustomization }
+        private struct LayoutHeader: Decodable { let deviceCanvas: CanvasHeader? }
+        private struct CanvasHeader: Decodable { let frameID: String }
+        enum Keys: String, CodingKey { case id, name, updatedAt, profileFormatVersion, appearanceBank, appearanceResources, appearanceResourceVersion, customization, landscapeCustomization, portraitCustomization }
     }
     private final class Workspace {
         let data: Data
@@ -93,6 +102,7 @@ public enum ThumbleLegacyProfileMigration {
         }
         private func chooseSource() throws {
             try chooseSourceSlot()
+            try validateSourceFrame()
             source = original?.customization(for: orientation)
             try validateControlMembership()
             recordSourceReview()
@@ -107,6 +117,17 @@ public enum ThumbleLegacyProfileMigration {
             } else {
                 slot = header.hasPortrait ? .portrait : .primary; orientation = .portrait
             }
+        }
+        private func validateSourceFrame() throws {
+            guard let header else { throw RecoveryRequired.invalidSource }
+            let stored: String?
+            switch slot {
+            case .primary: stored = header.primaryFrame
+            case .landscape: stored = header.landscapeFrame
+            case .portrait: stored = header.portraitFrame
+            }
+            if let stored, !stored.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+               GamepadEditorDeviceCatalog.frame(forStoredID: stored) == nil { throw RecoveryRequired.invalidSource }
         }
         private func primaryIsLandscape() -> Bool {
             original?.customization.deviceCanvas.editorDeviceFrame.isLandscape ?? false
@@ -173,5 +194,121 @@ public enum ThumbleLegacyProfileMigration {
             return Preparation(Storage(data: data, original: original, source: source, slot: slot,
                 orientation: orientation, staging: staging, review: review))
         }
+    }
+}
+
+/// Internal pure preparation transport. Bytes stay separate from display JSON
+/// values so unknown source fields never enter a normalized projection.
+public struct ThumbleLegacyProfileBridgeRequest: Decodable, Sendable {
+    public let schemaVersion: Int
+    public let invocationID: UUID
+    public let legacyProfileCommand: String
+    public let profileData: Data
+    public let packageData: Data?
+
+    public init(from decoder: Decoder) throws {
+        let fields = try decoder.container(keyedBy: Field.self)
+        guard Set(fields.allKeys.map(\.stringValue)).isSubset(of:
+            ["schemaVersion", "invocationID", "legacyProfileCommand", "profileData", "packageData"])
+        else { throw ThumbleLegacyProfileBridgeError.invalidRequest }
+        schemaVersion = try fields.decode(Int.self, forKey: Field("schemaVersion"))
+        invocationID = try fields.decode(UUID.self, forKey: Field("invocationID"))
+        legacyProfileCommand = try fields.decode(String.self, forKey: Field("legacyProfileCommand"))
+        profileData = try Self.data(fields.decode(String.self, forKey: Field("profileData")),
+                                    maximum: ThumbleOwnedConfigurationDocument.maximumBytes)
+        if let encoded = try fields.decodeIfPresent(String.self, forKey: Field("packageData")) {
+            packageData = try Self.data(encoded, maximum: ThumbleSkinPackageCodec.maximumArchiveBytes)
+        } else { packageData = nil }
+    }
+    private static func data(_ encoded: String, maximum: Int) throws -> Data {
+        guard encoded.utf8.count <= ((maximum + 2) / 3) * 4,
+              let data = Data(base64Encoded: encoded), data.count <= maximum,
+              data.base64EncodedString() == encoded else { throw ThumbleLegacyProfileBridgeError.invalidRequest }
+        return data
+    }
+    private struct Field: CodingKey {
+        let stringValue: String
+        let intValue: Int? = nil
+        init(_ string: String) { stringValue = string }
+        init?(stringValue: String) { self.init(stringValue) }
+        init?(intValue: Int) { return nil }
+    }
+}
+
+public struct ThumbleLegacyProfileBridgeResponse: Encodable, Sendable {
+    public let schemaVersion = 1
+    public let invocationID: UUID
+    public let profileID: UUID
+    public let sourceSHA256: String
+    public let packageSHA256: String?
+    public let sourceLayout: String
+    public let sourceOrientation: String
+    public let reviewReasons: [String]
+    public let beforeCustomizationData: Data
+    public let afterProfileData: Data
+}
+
+public enum ThumbleLegacyProfileBridgeError: String, Error {
+    case invalidRequest = "invalid_legacy_preparation_request"
+    case invalidPackage = "invalid_legacy_package"
+    case missingPackage = "legacy_package_missing"
+    case appearanceRecovery = "legacy_appearance_recovery_required"
+    case profileRecovery = "legacy_profile_recovery_required"
+    case tooLarge = "legacy_preparation_too_large"
+}
+
+public enum ThumbleLegacyProfileBridge {
+    public static func transform(_ request: ThumbleLegacyProfileBridgeRequest) throws -> ThumbleLegacyProfileBridgeResponse {
+        guard request.schemaVersion == 1, request.legacyProfileCommand == "prepare" else {
+            throw ThumbleLegacyProfileBridgeError.invalidRequest
+        }
+        return try Workspace(request).run()
+    }
+    private final class Workspace {
+        let request: ThumbleLegacyProfileBridgeRequest
+        var preparation: ThumbleLegacyProfileMigration.Preparation?
+        init(_ request: ThumbleLegacyProfileBridgeRequest) { self.request = request }
+        func run() throws -> ThumbleLegacyProfileBridgeResponse {
+            let package: ThumbleSkinPackage?
+            do { package = try request.packageData.map { try ThumbleSkinPackageCodec.decode($0) } }
+            catch { throw ThumbleLegacyProfileBridgeError.invalidPackage }
+            do { preparation = try ThumbleLegacyProfileMigration.prepare(profileData: request.profileData, package: package) }
+            catch ThumbleLegacyAppearanceMaterializer.RecoveryRequired.missingPackage { throw ThumbleLegacyProfileBridgeError.missingPackage }
+            catch is ThumbleLegacyAppearanceMaterializer.RecoveryRequired { throw ThumbleLegacyProfileBridgeError.appearanceRecovery }
+            catch { throw ThumbleLegacyProfileBridgeError.profileRecovery }
+            return try response()
+        }
+        private func literalSource() throws -> GamepadCustomization {
+            guard let preparation else { throw ThumbleLegacyProfileBridgeError.profileRecovery }
+            switch preparation.sourceLayout {
+            case .primary: return preparation.originalProfile.customization
+            case .landscape: return try landscapeSource()
+            case .portrait: return try portraitSource()
+            }
+        }
+        private func landscapeSource() throws -> GamepadCustomization {
+            guard let layout = preparation?.originalProfile.landscapeCustomization else { throw ThumbleLegacyProfileBridgeError.profileRecovery }
+            return layout
+        }
+        private func portraitSource() throws -> GamepadCustomization {
+            guard let layout = preparation?.originalProfile.portraitCustomization else { throw ThumbleLegacyProfileBridgeError.profileRecovery }
+            return layout
+        }
+        private func response() throws -> ThumbleLegacyProfileBridgeResponse {
+            guard let preparation, request.packageData == nil || preparation.originalProfile.skinReference != nil else {
+                throw ThumbleLegacyProfileBridgeError.invalidRequest
+            }
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+            let before = try encoder.encode(literalSource())
+            let after = try encoder.encode(preparation.stagingProfile)
+            guard before.count <= ThumbleOwnedConfigurationDocument.maximumBytes,
+                  after.count <= ThumbleOwnedConfigurationDocument.maximumBytes else { throw ThumbleLegacyProfileBridgeError.tooLarge }
+            return ThumbleLegacyProfileBridgeResponse(invocationID: request.invocationID, profileID: preparation.originalProfile.id,
+                sourceSHA256: Self.digest(request.profileData), packageSHA256: request.packageData.map(Self.digest),
+                sourceLayout: preparation.sourceLayout.rawValue, sourceOrientation: preparation.sourceOrientation.rawValue,
+                reviewReasons: preparation.reviewReasons.map(\.rawValue), beforeCustomizationData: before, afterProfileData: after)
+        }
+        private static func digest(_ data: Data) -> String { SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined() }
     }
 }

@@ -30,6 +30,12 @@ Rust now also has a package-independent owned-appearance resolver in `thumble-co
 
 This is not an activated upgrade path. Version-4 native configuration import/export and the current Rust authority reject non-null banks; the authority also rejects resource markers on their own. Before accepting a bank into live authority, integrate the retained peers and version-5 capability handshake, preserve raw unknown metadata, enforce resource/document bounds across full configurations and pending phone edits, and complete the backup/compare-and-swap recovery transaction below. Do not advertise version 5 or enable automatic migration merely because native profile roundtrips pass.
 
+### Complete configuration staging
+
+`prepare_legacy_configuration` now streams validated version-4 profiles through correlated native preparation into a validated `OwnedConfigurationDocument`. It retains the exact original configuration and raw unknown fields, precise numeric literals, bindings, selection and null default values. Native known-field projections do not replace the raw profile. Canonical canvas updates preserve opaque children; known aliases and missing canvases convert, while unknown frame IDs require recovery. Another orientation's executable controls cannot silently disappear. Source/package hashes and review reasons accompany each prepared profile for a future transaction receipt.
+
+Five actual converted destinations are frozen in `Host/fixtures/legacy-configuration-migration`; Swift and Android independently consume them and compare appearance/output behavior. See [verification evidence](feature-removal-evidence/legacy-configuration-migration/README.md). This remains in-memory staging: no authority installation, automatic startup migration, phone format activation, backup/CAS/receipt persistence, rollback or pending-edit migration is enabled.
+
 ## Layout conversion
 
 Prefer an explicit landscape variant, then an existing landscape base layout. If only portrait exists, convert deterministically into the supported landscape canvas with unchanged control IDs, bindings, appearance, and groups; include a review item for manual inspection. Keep the exact portrait original in the backup. Geometry conversion must preserve all controls even when layout-quality warnings remain.

@@ -1,0 +1,43 @@
+{
+  "baseCommit": "963eef9b3e538f39b55aabcb5c10f1beac282c0b",
+  "isolatedSourceOverlays": [
+    "Sources/Bridge/ThumbleBridgeMain.swift",
+    "Sources/Shared/LegacyProfileMigration.swift",
+    "Tests/LegacyProfileMigrationTests.swift",
+    "Tests/StackSafetyRegressionTests.swift",
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt",
+    "scripts/check-controller-stack-frames.py"
+  ],
+  "isolatedStackSourceSHA256": "c7f3264168268be21d6e0c895597ccb50a23151c0ad6868897dd78f00ab1363f",
+  "sourceHashes": {
+    "Sources/Shared/LegacyProfileMigration.swift": "736ca3de9b6042a3b41ca73cfbe473bbc893b22b81ee6bd98312865e50c84e29",
+    "Sources/Bridge/ThumbleBridgeMain.swift": "86f04929d34ed9adf16a726539c70aa12e268bc229896897897777543290404d",
+    "Tests/LegacyProfileMigrationTests.swift": "b7b28699ec61df77a2cb596aacf94b299cc4c2a73b60bf471e879963e3cf3e89",
+    "scripts/check-controller-stack-frames.py": "36075ce88d51a470da67e4ad74b367e19502a739f8882c73400b30cd0d1807bd",
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt": "15e3255bbd93f0cd9d88ccc9169ade3b56557466af21774045e89022967ef370",
+    "Host/crates/thumble-core/src/legacy_configuration_migration.rs": "01bfcc6d0575e80b8d714e8018e7901ea2cdcb10cd08ce66560b60884ae79886",
+    "Host/crates/thumble-core/tests/legacy_configuration_migration.rs": "dc004956a110812f868e8625f0af26f857c5bf958d98527f7eedf554c373ca6d",
+    "Host/crates/thumble-host/src/bridge.rs": "eddc8ebcfc00fc7160ebc614af7e7a1f5fd799b78ed6344f7885cdccbf1d1bf3",
+    "Host/crates/thumble-host/tests/legacy_preparation_bridge.rs": "feab1589eb0e1f9dfb05633585fedbc9877488314f6ce003288ade23b476c8f3",
+    "scripts/verify-feature-removal-fixtures.py": "639948dfed0b7f31fa8c23c8ee0d17338cf75dadc0c3f5c5608172d70aecfcf0",
+    "scripts/verify-legacy-preparation-bridge.py": "919e6748de88096c3c926a4f7107dfa863272aafec4ef7552c1bdcf05919f8c3"
+  },
+  "logSHA256": {
+    "rust": "aa9cedfc5898801d40a5c2b4793de7eede0611ce876c0c36c722391920e3ae75",
+    "nativeTests": "a763261e38324a30b3b460685608f533eb7c7e3a798aeccd8c9594049ec417e3",
+    "nativeStack": "b711931a19d3173233267b06abe4ba0eb6960217b48867586633f3cbca2fbb2b",
+    "android": "02b09b1e9c00ab39181b9eca6a9f77da7b4dd72a601e6f0d0109dc2ca2b433ab"
+  },
+  "rustGate": "shared working tree: 527 passed, 3 ignored; includes unrelated concurrent changes",
+  "nativeTests": 8,
+  "nativeStackTests": 40,
+  "android": {
+    "tests": 206,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "nativeProcess": "5 exact responses; missing-package and unknown-canvas recovery; 4 invalid requests",
+  "activationEnabled": false,
+  "physicalDeviceAcceptance": false
+}

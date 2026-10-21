@@ -14,6 +14,11 @@ mod gamepad;
 mod generation_spec;
 mod owned_configuration;
 pub use owned_configuration::{OwnedConfigurationDocument, OwnedConfigurationError};
+mod legacy_configuration_migration;
+pub use legacy_configuration_migration::{
+    prepare_legacy_configuration, LegacyMigrationCandidate, LegacyMigrationError,
+    LegacyMigrationReview, LegacySourceLayout, NativeLegacyPreparation,
+};
 mod profile_appearance;
 mod profile_artifact;
 mod profile_resources;

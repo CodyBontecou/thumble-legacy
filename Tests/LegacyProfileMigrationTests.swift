@@ -22,6 +22,129 @@ final class LegacyProfileMigrationTests: XCTestCase {
         return ThumbleSkinPackage(manifest: try JSONDecoder().decode(ThumbleSkinManifest.self, from: JSONSerialization.data(withJSONObject: manifest)),
             skin: try JSONDecoder().decode(ThumbleSkin.self, from: JSONSerialization.data(withJSONObject: XCTUnwrap(raw["skin"]))), assets: payloads)
     }
+    func testNativePreparationTransportAndFrozenMigrationInputs() throws {
+        let fixture = try migrationFixture()
+        let packages = try XCTUnwrap(fixture["packages"] as? [String: [String: Any]])
+        var rows = try XCTUnwrap(fixture["cases"] as? [[String: Any]])
+        var alternate = try XCTUnwrap(rows.first { $0["name"] as? String == "plain" })
+        alternate["name"] = "explicit-landscape"
+        var alternateProfile = try XCTUnwrap(alternate["profile"] as? [String: Any])
+        var primary = try XCTUnwrap(alternateProfile["customization"] as? [String: Any])
+        var landscape = primary
+        primary["colorSchemePreference"] = "light"
+        landscape["colorSchemePreference"] = "dark"
+        landscape["futureLayoutMetadata"] = ["scope": "landscape", "keep": true]
+        alternateProfile["customization"] = primary
+        alternateProfile["landscapeCustomization"] = landscape
+        alternate["profile"] = alternateProfile
+        rows.append(alternate)
+        for name in ["legacy-canvas-alias", "missing-canvas"] {
+            var row = try XCTUnwrap(rows.first { $0["name"] as? String == "plain" })
+            row["name"] = name
+            var profile = try XCTUnwrap(row["profile"] as? [String: Any])
+            var layout = try XCTUnwrap(profile["customization"] as? [String: Any])
+            if name == "legacy-canvas-alias" {
+                layout["deviceCanvas"] = ["frameID": "landscape", "futureCanvasMetadata": "keep"]
+            } else { layout.removeValue(forKey: "deviceCanvas") }
+            profile["customization"] = layout
+            row["profile"] = profile
+            rows.append(row)
+        }
+        let output = root.appendingPathComponent("build/LegacyConfigurationMigration")
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        for (index, row) in rows.enumerated() {
+            let name = try XCTUnwrap(row["name"] as? String)
+            var profile = try XCTUnwrap(row["profile"] as? [String: Any])
+            var layout = try XCTUnwrap(profile["customization"] as? [String: Any])
+            layout["futureLayoutMetadata"] = ["scope": "selected", "keep": true]
+            profile["customization"] = layout
+            var sourceText = String(decoding: try JSONSerialization.data(withJSONObject: profile, options: [.sortedKeys, .withoutEscapingSlashes]), as: UTF8.self)
+            sourceText.removeLast()
+            sourceText += ",\"futureNativeMigrationMetadata\":{\"large\":18446744073709551617,\"decimal\":0.12345678901234567890123456789}}"
+            let source = Data(sourceText.utf8)
+            let invocation = try XCTUnwrap(UUID(uuidString: "ba000000-0000-4000-8000-00000000000\(index)"))
+            var packet: [String: Any] = ["schemaVersion": 1, "invocationID": invocation.uuidString,
+                "legacyProfileCommand": "prepare", "profileData": source.base64EncodedString()]
+            if let key = row["availablePackage"] as? String {
+                packet["packageData"] = try ThumbleSkinPackageCodec.encode(package(XCTUnwrap(packages[key]))).base64EncodedString()
+            }
+            let requestData = try JSONSerialization.data(withJSONObject: packet, options: [.sortedKeys, .withoutEscapingSlashes])
+            let request = try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self, from: requestData)
+            var generated = ["\(name)-profile.json": source, "\(name)-request.json": requestData]
+            if row["expectedDisposition"] as? String == "recovery-required" {
+                XCTAssertThrowsError(try ThumbleLegacyProfileBridge.transform(request)) {
+                    XCTAssertEqual($0 as? ThumbleLegacyProfileBridgeError, .missingPackage)
+                }
+            } else {
+                let result = try ThumbleLegacyProfileBridge.transform(request)
+                XCTAssertEqual(result.invocationID, invocation)
+                XCTAssertEqual(result.sourceSHA256, SHA256.hash(data: source).map { String(format: "%02x", $0) }.joined())
+                XCTAssertEqual(result.sourceLayout, name == "explicit-landscape" ? "landscapeCustomization" : "customization")
+                XCTAssertEqual(result.sourceOrientation, name == "portrait-only" ? "portrait" : "landscape")
+                let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+                generated["\(name)-response.json"] = try encoder.encode(result)
+                XCTAssertEqual(try JSONDecoder().decode(GamepadConfigurationProfile.self, from: result.afterProfileData).id, result.profileID)
+            }
+            for (filename, bytes) in generated {
+                try bytes.write(to: output.appendingPathComponent(filename), options: .atomic)
+                let frozen = root.appendingPathComponent("Host/fixtures/legacy-configuration-migration/v1/\(filename)")
+                guard FileManager.default.fileExists(atPath: frozen.path) else {
+                    XCTFail("Freeze generated input from build/LegacyConfigurationMigration/\(filename)")
+                    continue
+                }
+                XCTAssertEqual(bytes, try Data(contentsOf: frozen), filename)
+            }
+        }
+    }
+    func testPreparationTransportRejectsUnexpectedFieldsAndInvalidBase64() throws {
+        var packet: [String: Any] = ["schemaVersion": 1, "invocationID": UUID().uuidString,
+            "legacyProfileCommand": "prepare", "profileData": "e30="]
+        for key in ["path", "operation", "skinCommand"] {
+            var invalid = packet; invalid[key] = "unexpected"
+            XCTAssertThrowsError(try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self,
+                from: JSONSerialization.data(withJSONObject: invalid)))
+        }
+        packet["profileData"] = "e30"
+        XCTAssertThrowsError(try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self,
+            from: JSONSerialization.data(withJSONObject: packet)))
+    }
+    func testUnknownStoredCanvasRequiresRecoveryWithoutChoosingADefault() throws {
+        let rows = try XCTUnwrap(try migrationFixture()["cases"] as? [[String: Any]])
+        var profile = try XCTUnwrap(rows.first { $0["name"] as? String == "plain" }?["profile"] as? [String: Any])
+        var layout = try XCTUnwrap(profile["customization"] as? [String: Any])
+        layout["deviceCanvas"] = ["frameID": "unknown-future-device"]
+        profile["customization"] = layout
+        let data = try JSONSerialization.data(withJSONObject: profile)
+        XCTAssertThrowsError(try ThumbleLegacyProfileMigration.prepare(profileData: data, package: nil)) {
+            XCTAssertEqual($0 as? ThumbleLegacyProfileMigration.RecoveryRequired, .invalidSource)
+        }
+    }
+    func testActualLegacyConversionDocumentsRetainNativeProfileFeatures() throws {
+        let directory = root.appendingPathComponent("Host/fixtures/legacy-configuration-migration/v1")
+        for name in ["plain", "portrait-only", "explicit-landscape", "legacy-canvas-alias", "missing-canvas"] {
+            let bytes = try Data(contentsOf: directory.appendingPathComponent("\(name)-destination.json"))
+            let document = try ThumbleOwnedConfigurationDocument(validating: bytes)
+            let actual = try XCTUnwrap(document.projectedProfiles.first)
+            let packet = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf:
+                directory.appendingPathComponent("\(name)-response.json"))) as? [String: Any])
+            let encoded = try XCTUnwrap(packet["afterProfileData"] as? String)
+            let staged = try JSONDecoder().decode(GamepadConfigurationProfile.self, from: XCTUnwrap(Data(base64Encoded: encoded)))
+            XCTAssertEqual(document.originalData, bytes)
+            XCTAssertNil(document.defaultProfileID)
+            XCTAssertEqual(actual, staged)
+            for scheme in ThumbleSkinColorScheme.allCases { for action in ThumbleActionSet.allCases {
+                let layout = actual.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                let expected = staged.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                XCTAssertEqual(GamepadAppearanceSnapshot(layout), GamepadAppearanceSnapshot(expected))
+                XCTAssertEqual(layout.elements.map(\.output), expected.elements.map(\.output))
+            }}
+            let text = String(decoding: bytes, as: UTF8.self)
+            XCTAssertTrue(text.contains("18446744073709551617"))
+            XCTAssertTrue(text.contains("0.12345678901234567890123456789"))
+            XCTAssertTrue(text.contains("futureLayoutMetadata"))
+            XCTAssertThrowsError(try ThumbleKeypadConfigurationExport.validateImportBoundary(bytes))
+        }
+    }
     func testFrozenMigrationDispositionsProducePreparationOrPreservedRecovery() throws {
         let fixture = try migrationFixture()
         let packages = try XCTUnwrap(fixture["packages"] as? [String: [String: Any]])

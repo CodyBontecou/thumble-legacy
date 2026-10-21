@@ -1,4 +1,6 @@
 use crate::draft_operation::{ConfigurationOperation, ConfigurationOperationOutcome};
+use base64::{engine::general_purpose::STANDARD, Engine};
+use sha2::{Digest, Sha256};
 #[path = "element_operation.rs"]
 mod element_operation;
 #[path = "layout_fix.rs"]
@@ -139,6 +141,42 @@ struct BridgeFailureDetail {
 }
 
 impl ConfigurationBridge {
+    /// Read-only legacy preparation. Only exact source bytes and an optional
+    /// already-selected package enter the child; no paths or authority writes.
+    pub fn prepare_legacy_profile(
+        &self,
+        profile: &[u8],
+        package: Option<&[u8]>,
+        invocation: Uuid,
+    ) -> Result<thumble_core::NativeLegacyPreparation, thumble_core::LegacyMigrationError> {
+        use thumble_core::LegacyMigrationError as Error;
+        if profile.len() > MAXIMUM_CONFIGURATION_DOCUMENT_BYTES
+            || package.is_some_and(|archive| archive.len() > 40 * 1024 * 1024)
+        {
+            return Err(Error::TooLarge);
+        }
+        let mut request = serde_json::json!({"schemaVersion":1,"invocationID":invocation,
+            "legacyProfileCommand":"prepare","profileData":STANDARD.encode(profile)});
+        if let Some(archive) = package {
+            request["packageData"] = STANDARD.encode(archive).into();
+        }
+        let mut input = serde_json::to_vec(&request).map_err(|_| Error::InvalidPreparation)?;
+        if input.len() > 64 * 1024 * 1024 {
+            return Err(Error::TooLarge);
+        }
+        input.push(b'\n');
+        let response = self
+            .execute_with_limits(input, 64 * 1024 * 1024, 24 * 1024 * 1024 + 1)
+            .map_err(|_| Error::PreparationFailed)?;
+        let package_hash = package.map(|archive| format!("{:x}", Sha256::digest(archive)));
+        thumble_core::NativeLegacyPreparation::decode(
+            profile,
+            invocation,
+            package_hash.as_deref(),
+            &response,
+        )
+    }
+
     pub fn discover() -> Result<Self, ConfigurationBridgeError> {
         let executable = std::env::current_exe().map_err(ConfigurationBridgeError::Discovery)?;
         let directory = executable

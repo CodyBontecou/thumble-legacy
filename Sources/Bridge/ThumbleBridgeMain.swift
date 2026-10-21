@@ -10,7 +10,13 @@ private enum ThumbleBridgeMain {
         do {
             let requestData = try readSingleBoundedRequest()
             let probe = try JSONDecoder().decodeUnique(BridgeRequestKind.self, from: requestData)
-            if probe.profileArtifactCommand != nil {
+            if probe.legacyProfileCommand != nil {
+                guard probe.skinCommand == nil, probe.phoneLayoutCommand == nil, probe.profileArtifactCommand == nil else {
+                    throw ThumbleBridgeInputError.multipleRequests
+                }
+                let request = try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self, from: requestData)
+                try emit(ThumbleLegacyProfileBridge.transform(request), maximumBytes: 24 * 1024 * 1024)
+            } else if probe.profileArtifactCommand != nil {
                 guard probe.skinCommand == nil, probe.phoneLayoutCommand == nil,
                       requestData.count <= 12 * 1024 * 1024 else { throw ThumbleBridgeInputError.tooLarge }
                 let request = try JSONDecoder().decodeUnique(ThumbleProfileArtifactBridgeRequest.self, from: requestData)
@@ -27,6 +33,9 @@ private enum ThumbleBridgeMain {
                 let request = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: requestData)
                 try emit(ThumbleConfigurationBridge.transform(request))
             }
+        } catch let error as ThumbleLegacyProfileBridgeError {
+            emitFailure(code: error.rawValue, message: "Legacy profile preparation requires recovery")
+            exit(1)
         } catch let error as ThumblePhoneLayoutBridgeError {
             emitFailure(code: error.rawValue, message: "Phone layout operation failed validation")
             exit(1)
@@ -92,6 +101,7 @@ private enum ThumbleBridgeInputError: Error {
 }
 
 private struct BridgeRequestKind: Decodable {
+    let legacyProfileCommand: String?
     let skinCommand: String?
     let phoneLayoutCommand: String?
     let profileArtifactCommand: String?
