@@ -1,0 +1,16 @@
+# Owned design workspace evidence
+
+The tested isolated source adds exact owned capture and direct reviewed-appearance application to the existing local CLI/MCP design tools. `verification.json` records the baseline, source inventories, binary hashes, logs and measured limits. The shared checkout retains separate concurrent phone/WoW/gamepad work; these checks describe the indexed source identified by the manifests.
+
+- Full Rust gate passes formatting, clippy, parity, frozen/retirement checks, 623 tests and all-target checks. Three existing native-dependent tests remain ignored in that gate.
+- Native backend/owned-document tests pass 51 cases. Three retained design-session/layout/evidence tests also pass. The fixed native design packet produces the same before/after projections in Swift and Rust; invalid hashes and forged nonvisual/trigger-haptic changes are rejected.
+- All 45 constrained-stack tests pass, including the reviewed design on a 512 KiB thread. macOS/iOS Debug builds and static frame gates pass without raising budgets. The initially oversized haptic-restoration function was split into element, reveal and bar phases.
+- Real native CLI begin/private-draft/update/review/apply and local MCP begin/update/review/apply run against a private owned authority with no desktop GUI. CSS, a typed layout plan and editable anchored SVG artwork become eight ordinary appearance states. Save receipts replay after restarting the receiver and MCP. An invalid package-library destination remains untouched, and no skin store is created.
+- Forty review frames cover two schemes, four trigger states, and normal/pressed/active/disabled/mixed controls. The complete review is retained losslessly as `cli-review.json.gz`; its compressed and original hashes are recorded. The sixteen PNGs here compare the saved normal state and reviewed normal state for all eight appearances. Dimensions agree; the maximum observed channel difference is one 8-bit RGB level after codec/antialiasing round-trip. Counts and both artifact hashes are recorded; these images are not claimed byte-identical.
+- Portable export retains all eight artwork states and one pooled raster resource from editable SVG source. Output bindings, an unrelated profile and exact opaque numeric metadata survive. Tampered contact-sheet data and the owned-authority session marker are refused.
+
+The historical six native-operation response fixtures were also replayed through the actual helper and remained byte-identical. Their test-source provenance hashes advance because cases were added; historical expected fixture bytes were not regenerated.
+
+Reproduce with `scripts/verify-rust-host.sh`, the native backend/owned-document tests, the three design-session/layout/evidence tests named in `legacyReviewTests.txt`, `scripts/verify-stack-safety.sh`, and `scripts/verify-owned-design-workspace.py --cli PATH --bridge PATH --cli-bridge PATH --host PATH --mcp PATH --output-dir DIRECTORY`. The verifier uses the Python standard library for PNG comparisons.
+
+This does not activate migration, enable shipping phone format 5, delete active skin/portrait/desktop runtime surfaces, retire the private compiler archive, stop deployments, or establish physical-device haptics/latency or live WoW acceptance. The remaining work stays in the removal plan.

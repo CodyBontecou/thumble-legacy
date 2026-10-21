@@ -1,0 +1,23 @@
+{
+  "Sources/CLI/ThumbleCLI.swift": "8f6ac10f0cb7ecf477b84841c4a243afabf2d4eeffbab7cfa40fe2e805591d6e",
+  "Sources/CLI/ThumbleCLIBackend.swift": "1a43f66244964bbbbd33c514ded8e1136a32f315f052509015efc45d31910d89",
+  "Sources/Shared/ControllerDesignSession.swift": "535918012e86d634515979659b8462cb7a5b14b44ae831c8d59b33aa4aa19aec",
+  "Sources/Shared/OwnedConfigurationDocument.swift": "2be4adf4c2ec9c9e87266f5c25238aa1b14c5bf5619b805aa0192bb469a70ebc",
+  "Host/crates/thumble-host/src/owned_operation_bridge.rs": "f3b31d2baa0bd8f45889ea374b7f8cde802dd23a6b7fd2ae46c9af19b4914925",
+  "Tests/OwnedConfigurationDocumentTests.swift": "327f7b317b751631a9504e29a8b7d1def9ccc1d28bf5ee3cb988ce2695291500",
+  "Tests/ThumbleCLIBackendTests.swift": "4fc1850a68c37f3263f1c8867e7bd9206918f856d63f592e9a02d986bd1961d0",
+  "Tests/StackSafetyRegressionTests.swift": "b89c83527f1c8ab32b609871ff439a9b8d609e9c547db0f02e9d1d12d198dcea",
+  "Host/fixtures/owned-projection-merge/v1/manifest.json": "df357064930ec98259bfe1d780255f54e01a4b6cf1d0d438ca9b471c5fa37f02",
+  "Host/fixtures/owned-native-operations/v1/manifest.json": "0baef088f5d46b65e5c641d0792341680d9a8da85322e79f8dbb17e34ff4ed32",
+  "scripts/verify-feature-removal-fixtures.py": "0d6a61123ffea0533e086e42ff246d8da8106643bad72159b6133d9c402bff81",
+  "scripts/verify-owned-design-workspace.py": "b01864b8a7b7c54aebfe49f6b3199f1d7b796b4f13dd0ff1fe11fcee2164da17",
+  "Host/fixtures/owned-design/v1/apply-request.json": "fc87011c61e48115e2ef293e5cd4d05434ee0eb72f9bbcfe1f3dbc341561082a",
+  "Host/fixtures/owned-design/v1/apply-response.json": "fdfc1f520e004f44e584c4ab53b33ff87cbc9403595d3a18f23663b34ce36b07",
+  "Host/fixtures/owned-design/v1/manifest.json": "8333af5df581a660de134e04712589bee90bd76aec1f2299b772c445eefa2757",
+  "docs/owned-design-workspace.md": "a2f5bb4b59be3971a9bdc927185abdd8ba656a859f0f536a51b553a067503ee0",
+  "docs/cli-mcp-cutover.md": "dd24fd90517883e37529edbd5f0df6d57c0e9b347646a6ea8e62b5387fb12cfa",
+  "docs/feature-removal-progress.md": "e34808cccde1a63728f5dd29b8da3405495ee1bcb94bedeba3e0c99520d428c7",
+  "docs/feature-removal-inventory.md": "33a7db4048cb1415d43e7e203a0edfea4958c87844ab27d3c8bee7cfa4ee8225",
+  "docs/mcp/README.md": "00c1e7f80c621d31a1222b70ea55f1cdb1ca34bdd87b3b89a9945b6ab01211be",
+  "README.md": "12af709b7997f7bb25166bd96cdf81d4f5e15b7b54ea70b47661a09b2ff98852"
+}

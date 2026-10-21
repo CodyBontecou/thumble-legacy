@@ -164,6 +164,54 @@ public enum ThumbleOwnedOperationBridge {
     public static func transform(_ request: ThumbleOwnedOperationBridgeRequest) throws -> ThumbleOwnedOperationBridgeResponse {
         try Workspace(request).run()
     }
+    /// Reviewed visual source cannot erase saved per-control feedback settings.
+    static func applyingReviewedAppearance(to source: GamepadCustomization, package: ThumbleSkinPackage,
+        scheme: ThumbleSkinColorScheme, actionSet: ThumbleActionSet) -> GamepadCustomization {
+        ReviewedAppearance(source, package: package, scheme: scheme, actionSet: actionSet).run()
+    }
+    private final class ReviewedAppearance {
+        let source: GamepadCustomization
+        var result: GamepadCustomization
+        init(_ source: GamepadCustomization, package: ThumbleSkinPackage, scheme: ThumbleSkinColorScheme, actionSet: ThumbleActionSet) {
+            self.source = source
+            result = source.applying(skinPackage: package, orientation: .landscape, colorScheme: scheme,
+                options: .replacingAppearance, actionSet: actionSet)
+        }
+        private func restoring(_ layout: GamepadButtonCustomization, from original: GamepadButtonCustomization) -> GamepadButtonCustomization {
+            var value = layout
+            value.hapticStyle = original.hapticStyle
+            value.hapticFeedback = original.hapticFeedback
+            if original.visualStyle?.hapticStyle != nil || original.visualStyle?.hapticFeedback != nil {
+                var visual = value.visualStyle ?? .empty
+                visual.hapticStyle = original.visualStyle?.hapticStyle
+                visual.hapticFeedback = original.visualStyle?.hapticFeedback
+                value.visualStyle = visual.normalized
+            }
+            return value
+        }
+        func run() -> GamepadCustomization {
+            for index in result.elements.indices { restoreElement(index) }
+            restoreTopBar()
+            for item in result.controlBarItems { restoreBarItem(item) }
+            result.normalizeInPlace()
+            return result
+        }
+        private func restoreElement(_ index: Int) {
+            let id = result.elements[index].id
+            guard let original = source.elements.first(where: { $0.id == id }) else { return }
+            let layout = restoring(result.elements[index].layout, from: original.layout)
+            result.elements[index].layout = layout
+            if let button = result.elements[index].defaultControlID { result.buttonCustomizations[button] = layout }
+            if let custom = result.customButtons.firstIndex(where: { $0.id == id }) { result.customButtons[custom].layout = layout }
+        }
+        private func restoreTopBar() {
+            result.topBarActivationRegion = restoring(result.topBarActivationRegion, from: source.topBarActivationRegion)
+        }
+        private func restoreBarItem(_ item: GamepadControlBarItem) {
+            let value = restoring(result.controlBarItemCustomization(for: item), from: source.controlBarItemCustomization(for: item))
+            result.setControlBarItemCustomization(value, for: item)
+        }
+    }
     private final class Workspace {
         let request: ThumbleOwnedOperationBridgeRequest
         var source = Data()
@@ -241,12 +289,68 @@ public enum ThumbleOwnedOperationBridge {
             for key in ["schema", "version", "exportedAt"] { document.removeValue(forKey: key) }
             for key in ["keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"] where document[key] == nil { document[key] = [String: Any]() }
             let operation = try canonicalOperation()
+            if try applyOwnedDesign(operation) { return }
             let object = try JSONSerialization.jsonObject(with: encoder.encode(operation))
             let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "nowMillis":request.nowMillis, "document":document, "operation":object], options: [.sortedKeys])
             let legacy = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: bytes)
             let response = try ThumbleConfigurationBridge.transform(legacy)
             paths = response.changedPaths
             try captureResult(response.document, operation: operation)
+        }
+        /// A reviewed compiler artifact supplies appearance only. It is never
+        /// installed or attached as a runtime package on an owned authority.
+        private func applyOwnedDesign(_ operation: ThumbleBridgeJSONValue) throws -> Bool {
+            guard case .object(let fields) = operation, fields["type"] == .string("design.apply") else { return false }
+            let decoded = try JSONDecoder().decodeUnique(ThumbleBridgeOperation.self, from: encoder.encode(operation))
+            guard case let .designApply(profileID, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON) = decoded,
+                  let id = UUID(uuidString: profileID), let index = beforeProfiles.firstIndex(where: { $0.id == id }),
+                  [packageSHA256, profileSHA256, evidenceSHA256].allSatisfy({ $0.count == 64 && $0.allSatisfy(\.isHexDigit) }),
+                  packageBase64.utf8.count <= 12 * 1024 * 1024,
+                  let data = Data(base64Encoded: packageBase64), data.base64EncodedString() == packageBase64,
+                  data.count <= ControllerDesignWorkspace.maximumFileBytes, data.thumbleSHA256 == packageSHA256 else {
+                throw ThumbleOwnedOperationBridgeError.invalidRequest
+            }
+            let package = try ThumbleSkinPackageCodec.decode(data)
+            guard package.skin != nil, ThumbleSkinPackageValidator.validate(package).isValid else {
+                throw ThumbleOwnedOperationBridgeError.invalidRequest
+            }
+            var profile = beforeProfiles[index]
+            guard try ControllerDesignWorkspace.digest(profile) == (baseProfileSHA256 ?? profileSHA256),
+                  (baseProfileSHA256 == nil) == (layoutEditsJSON == nil) else {
+                throw ControllerDesignError.conflict("authoritative target differs from frozen design profile")
+            }
+            if let baseProfileSHA256, let layoutEditsJSON {
+                guard baseProfileSHA256.count == 64, baseProfileSHA256.allSatisfy(\.isHexDigit), layoutEditsJSON.utf8.count <= 64 * 1024 else {
+                    throw ThumbleOwnedOperationBridgeError.invalidRequest
+                }
+                let edits = try JSONDecoder().decodeUnique([ControllerDesignLayoutEdit].self, from: Data(layoutEditsJSON.utf8))
+                guard edits.allSatisfy({ $0.variant != .portrait }) else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+                profile = try ControllerDesignLayout.applying(edits, to: profile)
+                guard try ControllerDesignWorkspace.digest(profile) == profileSHA256 else {
+                    throw ControllerDesignError.conflict("layout plan differs from reviewed profile")
+                }
+            }
+            var variants: [GamepadAppearanceBank.Variant] = []
+            for scheme in ThumbleSkinColorScheme.allCases {
+                for action in ThumbleActionSet.allCases {
+                    let source = profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                    let rendered = ThumbleOwnedOperationBridge.applyingReviewedAppearance(to: source, package: package,
+                        scheme: scheme, actionSet: action)
+                    let appearance = GamepadAppearanceSnapshot(rendered)
+                    guard try appearance.missingResourceIDs().isEmpty else { throw ThumbleOwnedOperationBridgeError.invalidResult }
+                    variants.append(.init(colorScheme: scheme, actionSet: action, appearance: appearance))
+                }
+            }
+            guard let canonical = variants.first(where: { $0.colorScheme == .light && $0.actionSet == .base }) else {
+                throw ThumbleOwnedOperationBridgeError.invalidResult
+            }
+            profile.customization = canonical.appearance.applying(to: profile.customization)
+            profile.appearanceBank = try GamepadAppearanceBank(variants: variants)
+            profile.updatedAt = request.nowMillis
+            var profiles = beforeProfiles; profiles[index] = profile
+            after = try projection(profiles)
+            paths = ["/profiles/" + profileID]
+            return true
         }
         private func captureResult(_ document: ThumbleBridgeConfigurationDocument, operation: ThumbleBridgeJSONValue) throws {
             var result: [GamepadConfigurationProfile] = []

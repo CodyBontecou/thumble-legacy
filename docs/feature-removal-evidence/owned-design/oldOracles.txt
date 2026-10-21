@@ -1,0 +1,38 @@
+[
+  {
+    "case": "nullable-select",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "93e7f8c5e25d53e688fc4dc47c52a57be474db415d6662bb09a5c03d57efd619"
+  },
+  {
+    "case": "geometry",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "a075dbaa2c402c361ea784781fd679a55748029a5d8629bb54d960b01876d794"
+  },
+  {
+    "case": "haptic",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "c7825548daaaae5767b43414e704cb1c263075a4b1afacec2801a5a84e1b18b6"
+  },
+  {
+    "case": "add",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "159817f531b1b62aaf733a929241a53a827ab445304aed2be1629a4634ee623c"
+  },
+  {
+    "case": "delete",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "d4bf3ef9140f237589c9d9aedb3ad0749211f356910d55c177416921170ae026"
+  },
+  {
+    "case": "scheme",
+    "projectionBytesIdentical": true,
+    "wireJSONBytesIdentical": true,
+    "fixtureSHA256": "4ef2d13d3b7c74c75a55471408419a4efa6837465907d45e7c6ba87b30275822"
+  }
+]

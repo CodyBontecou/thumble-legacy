@@ -1,0 +1,4 @@
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-assets-muag5ses/Host/crates/thumble-host)
+   Compiling thumble-mcp v0.1.0 (/private/tmp/thumble-owned-assets-muag5ses/Host/crates/thumble-mcp)
+   Compiling thumble-cli-bridge v0.1.0 (/private/tmp/thumble-owned-assets-muag5ses/Host/crates/thumble-cli-bridge)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.67s

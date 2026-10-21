@@ -28,6 +28,24 @@ final class ThumbleCLIBackendTests: XCTestCase {
         }
         XCTAssertEqual(projection.sourceProfileData, Data(snapshot.profileJSON.utf8))
     }
+    func testOwnedDesignCaptureRequiresExactDraftIdentityAndRevision() throws {
+        let source = try ownedInspectionSnapshot()
+        let id = UUID()
+        let draft = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 41, draftID: id, draftRevision: 3,
+            profileJSON: source.profileJSON, bindingJSON: "{}")
+        let capture = try ThumbleCLIProfileBackend.inspectionProfile(draft, expectedRevision: 41,
+            expectedDraftID: id, expectedDraftRevision: 3)
+        XCTAssertTrue(capture.owned)
+        XCTAssertEqual(capture.sourceProfileData, Data(source.profileJSON.utf8))
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(draft, expectedRevision: 41,
+            expectedDraftID: UUID(), expectedDraftRevision: 3))
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(draft, expectedRevision: 41,
+            expectedDraftID: id, expectedDraftRevision: 2))
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(draft, expectedRevision: 41,
+            expectedDraftID: id))
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(source, expectedRevision: 41,
+            expectedDraftID: id, expectedDraftRevision: 3))
+    }
     func testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources() throws {
         let source = try ownedInspectionSnapshot()
         XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(source, expectedRevision: 42))

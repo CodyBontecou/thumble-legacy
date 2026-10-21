@@ -1,0 +1,174 @@
+{
+  "baseCommit": "06b0cf61ecabeedf04916bfe9c9b8614cda0c258",
+  "isolatedSource": "/private/tmp/thumble-owned-assets-muag5ses",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "native-source-hashes.json",
+  "helperSourceSHA256File": "helper-source-hashes.json",
+  "rawLogSHA256": {
+    "rust.txt": "6a82cb62e592e3e686da48e992cc26d18e90c8ac8b7ced92dec1170b6dcce4dc",
+    "rustBuild.txt": "52ff5b091876f6475c3e9f00ba7e99cc85b1bff1dc054765e91ce12565f1245f",
+    "nativeTests.txt": "4fcc283f80e8383c846a379342dd3f2a05e9e5a104a188a881566e31bde7ab2f",
+    "legacyReviewTests.txt": "e006550c424477df4bc38306163d0f671893b082b7851b101b6ebc1af1180876",
+    "stack.txt": "f7774f7e545e1cf0a8b9a1c231b265e56b0dfc5ae169b7a7051875c9bc4c3a66",
+    "cliBuild.txt": "4867f958c2d148cacce8701650cc8eae92ff12ea55a20b21bddad5a68ccb0ef8",
+    "helperBuild.txt": "5a324b8ef20f599facd5fd3eedb1aa14317b5e2edd79395f8ce19cd531bc41d0",
+    "process.txt": "5f136d4b7f33105fc1d716fe50c936b3fcec1413e38739bc44da5fb6f70e0ea9",
+    "oldOracles.txt": "6cbd4b2ae07c2499555ba5e1735772973fbf5831bf153f5a90127e240f14673e"
+  },
+  "logSHA256": {
+    "rust.txt": "6a82cb62e592e3e686da48e992cc26d18e90c8ac8b7ced92dec1170b6dcce4dc",
+    "rustBuild.txt": "52ff5b091876f6475c3e9f00ba7e99cc85b1bff1dc054765e91ce12565f1245f",
+    "nativeTests.txt": "72367bcfd2cafa93646a9cd95d8d810eec2998621a6a4e3e79d37d286de5212d",
+    "legacyReviewTests.txt": "e006550c424477df4bc38306163d0f671893b082b7851b101b6ebc1af1180876",
+    "stack.txt": "65511e15b740faf56644bd2625bcb0b724d0107731b062bfc74996cac968d4c9",
+    "cliBuild.txt": "a3e7836d168d3bddd86a020a054235284ae5ce304c5200228d48f16ec03efbb3",
+    "helperBuild.txt": "2130811cfc9bb175e429d41de091b63fd42f959840879fc52ba3efcf5b7894d5",
+    "process.txt": "5f136d4b7f33105fc1d716fe50c936b3fcec1413e38739bc44da5fb6f70e0ea9",
+    "oldOracles.txt": "6cbd4b2ae07c2499555ba5e1735772973fbf5831bf153f5a90127e240f14673e"
+  },
+  "logNormalization": "Trailing whitespace and trailing blank lines stripped; raw hashes identify original /tmp logs.",
+  "binarySHA256": {
+    "thumble": "aeea1d701532240bd9e5162aa58b967adc755c5818ac0e92fbedee07530cb2c9",
+    "thumbconsole": "f705dc50c5ff012d30e0a4d231467777accb5b0bdb545a3882330732813fd84e",
+    "thumble-bridge": "afc7bc1ecf4408474b45941851ec1a29e890e194dacef09c08111e7b6cc1f5ce",
+    "thumble-host": "116abcb47b75915e01819a0670fe19cdb5b74ac71b8b7db9423f7edfe0f8ed32",
+    "thumble-cli-bridge": "6c8143ed14aa7c2791972a78e2ac0cb6a3f55c62970b07ef77dc02c75339722e",
+    "thumble-mcp": "bdd66e37e2a31384051c3db9019965c0b63c543ad1c54e1c49b176114c24d410"
+  },
+  "rust": {
+    "passed": 623,
+    "failed": 0,
+    "ignored": 3
+  },
+  "native": {
+    "backendAndOwnedDocumentPassed": 51,
+    "legacyReviewPassed": 3,
+    "failed": 0
+  },
+  "stack": {
+    "passed": 45,
+    "failed": 0,
+    "newConstrainedDesignTest": true,
+    "budgetsUnchanged": true,
+    "macAndIOSDebugBuilds": true
+  },
+  "process": {
+    "nativeCLIBeginUpdateReviewApply": true,
+    "localMCPBeginUpdateReviewApply": true,
+    "privateDraftAndLayoutPlan": true,
+    "allEightSavedStatesMatchReviewedPixels": true,
+    "maximumAllowedChannelDelta": 1,
+    "pixelComparison": {
+      "light/base": {
+        "maximumChannelDelta": 0,
+        "changedChannels": 0
+      },
+      "light/left-trigger": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 588
+      },
+      "light/right-trigger": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 602
+      },
+      "light/both-triggers": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 550
+      },
+      "dark/base": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 369
+      },
+      "dark/left-trigger": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 382
+      },
+      "dark/right-trigger": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 410
+      },
+      "dark/both-triggers": {
+        "maximumChannelDelta": 1,
+        "changedChannels": 361
+      }
+    },
+    "pixelSHA256": {
+      "light/base": "2538e1d86d11ea28388c6e1c18444c63194a085288a33a6049edef284b5fedc0",
+      "light/left-trigger": "d6baebecf010c1e0e2f69253905d101193e6b10440bf03dc631edd80c9f820cf",
+      "light/right-trigger": "76f2094bf1669eebdf0f128f126bebd37a21c137c315b2a4e03476b423a7cc31",
+      "light/both-triggers": "fc09edf093a5b707489afdc0d34e7771dc1aa10a12c5958ad147d2b1b41dab58",
+      "dark/base": "0075c1d37dd2da7eda3ad37bc34124daa62064736bdf6096430595b9f200538f",
+      "dark/left-trigger": "206c7dfd97b5e014345176fb527d465a2bc959f73a408213d11a88f1c5dd1cc4",
+      "dark/right-trigger": "4156c160b7d41c8672cb9d273483c0498f3cfeb169d6174bd5bac59e2145594a",
+      "dark/both-triggers": "9c9c38e48cfc166094dbfb266ab6fce8ca32751122475a9ef356ad373cdd0574"
+    },
+    "noPackageInstallation": true,
+    "svgArtworkAndPortableResourcesPreserved": true,
+    "outputsAndUnrelatedProfilesPreserved": true,
+    "opaqueMetadataPreserved": true,
+    "tamperedEvidenceRefused": true,
+    "tamperedAuthorityMarkerRefused": true,
+    "replayAfterReceiverRestart": true,
+    "configurationRevision": 43,
+    "automaticMigrationActivated": false
+  },
+  "unchangedHistoricalOracles": [
+    "owned-native-operations/v1/nullable-select-response.json",
+    "owned-native-operations/v1/geometry-response.json",
+    "owned-native-operations/v1/haptic-response.json",
+    "owned-native-operations/v1/add-response.json",
+    "owned-native-operations/v1/delete-response.json",
+    "owned-native-operations/v1/scheme-response.json"
+  ],
+  "limits": [
+    "Explicit owned authorities only; no automatic migration or shipping phone format activation.",
+    "Private CSS/compiler archive machinery remains until general design-module extraction.",
+    "Physical haptics, network latency, live WoW and final tools-only release signing/install acceptance remain outstanding.",
+    "Other ongoing phone, WoW and gamepad changes are not part of the isolated tested commit."
+  ],
+  "historicalOracleReplay": [
+    {
+      "case": "nullable-select",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "93e7f8c5e25d53e688fc4dc47c52a57be474db415d6662bb09a5c03d57efd619"
+    },
+    {
+      "case": "geometry",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "a075dbaa2c402c361ea784781fd679a55748029a5d8629bb54d960b01876d794"
+    },
+    {
+      "case": "haptic",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "c7825548daaaae5767b43414e704cb1c263075a4b1afacec2801a5a84e1b18b6"
+    },
+    {
+      "case": "add",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "159817f531b1b62aaf733a929241a53a827ab445304aed2be1629a4634ee623c"
+    },
+    {
+      "case": "delete",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "d4bf3ef9140f237589c9d9aedb3ad0749211f356910d55c177416921170ae026"
+    },
+    {
+      "case": "scheme",
+      "projectionBytesIdentical": true,
+      "wireJSONBytesIdentical": true,
+      "fixtureSHA256": "4ef2d13d3b7c74c75a55471408419a4efa6837465907d45e7c6ba87b30275822"
+    }
+  ],
+  "fullReview": {
+    "path": "cli-review.json.gz",
+    "uncompressedSHA256": "22fb78a8cb6ddb0ee24a805b1bdc73420fe8fd6ed1f4e41ee9d85749df59879e",
+    "compressedSHA256": "c7803dc1a6be48ab505dbf52ce80cc0d773aa8292405bd36f0dd0fbf69627488",
+    "compression": "gzip",
+    "frames": 40
+  }
+}

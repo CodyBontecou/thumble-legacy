@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "apply-request.json": "fc87011c61e48115e2ef293e5cd4d05434ee0eb72f9bbcfe1f3dbc341561082a",
+    "apply-response.json": "fdfc1f520e004f44e584c4ab53b33ff87cbc9403595d3a18f23663b34ce36b07"
+  },
+  "appearanceStates": 8,
+  "expectedCanonicalCenterX": 0.61,
+  "automaticMigrationActivated": false
+}

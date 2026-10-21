@@ -1,0 +1,419 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/OwnedAssets "-only-testing:ThumbleCLITests/ThumbleCLIBackendTests" "-only-testing:ThumbleCLITests/OwnedConfigurationDocumentTests" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 804e038b162d7914c37099842714702a
+Build description path: /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/XCBuildData/804e038b162d7914c37099842714702a.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-owned-assets-muag5ses/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+SwiftDriver ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ControllerDesignSession.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinWorkspaceTests.swift /tmp/thumble-owned-assets-muag5ses/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests normal (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests -Xlinker -add_ast_path -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+CopySwiftLibs /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --module-name ThumbleCLITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F113 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.codybontecou.PocketPadCLITests --output /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --dependency-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat --stringsdata-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList --metadata-file-list /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList --static-metadata-file-list /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 06:35:32.902 appintentsmetadataprocessor[41498:87055474] Starting appintentsmetadataprocessor export
+2026-10-21 06:35:32.904 appintentsmetadataprocessor[41498:87055474] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessInfoPlistFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-infoPlistUtility /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+Test Suite 'Selected tests' started at 2026-10-21 06:35:33.640.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 06:35:33.640.
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-21 06:35:33.641.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.344 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.062 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' passed (0.329 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' passed (3.344 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' passed (0.229 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs]' passed (1.665 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.049 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.825 seconds).
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-21 06:35:40.490.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 6.847 (6.849) seconds
+Test Suite 'ThumbleCLIBackendTests' started at 2026-10-21 06:35:40.490.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' started.
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Utility quality-of-service class. Investigate ways to avoid priority inversions
+PID: 41505, TID: 87055504
+Backtrace
+=================================================================
+0   ThumbleCLITests                     0x00000001120f6318 $s15ThumbleCLITests0A17CLIProfileBackendC7execute33_5D0F5FD078676A937C3428050A5A2BA2LL5inputAC15ExecutionResultAELLV10Foundation4DataV_tKF + 3236
+1   ThumbleCLITests                     0x00000001120e7f60 $s15ThumbleCLITests0A17CLIProfileBackendC7perform_12invocationID29expectedConfigurationRevisionAC8ResponseVAC7CommandO_10Foundation4UUIDVSgs6UInt64VSgtKF + 2080
+2   ThumbleCLITests                     0x00000001121c67b0 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0H0VyKXEfu_ + 564
+3   ThumbleCLITests                     0x00000001121dafc8 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0H0VyKXEfu_TA + 28
+4   libXCTestSwiftSupport.dylib         0x00000001053a7514 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_ + 156
+5   libXCTestSwiftSupport.dylib         0x00000001053a757c $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_TA + 24
+6   libXCTestSwiftSupport.dylib         0x00000001053a0d68 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEFyyXEfU_ + 44
+7   libXCTestSwiftSupport.dylib         0x00000001053a88bc $sIg_Ieg_TR + 28
+8   libXCTestSwiftSupport.dylib         0x00000001053a88e4 $sIeg_IyB_TR + 28
+9   XCTestCore                          0x0000000103314b1c _XCTRunThrowableBlockBridge + 44
+10  libXCTestSwiftSupport.dylib         0x00000001053a0c98 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEF + 244
+11  libXCTestSwiftSupport.dylib         0x00000001053a7130 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlF + 112
+12  libXCTestSwiftSupport.dylib         0x00000001053a7088 $s6XCTest20XCTAssertThrowsError__4file4line_yxyKXK_SSyXKs12StaticStringVSuys0D0_pXEtlF + 44
+13  ThumbleCLITests                     0x00000001121ac4e0 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutF + 280
+14  ThumbleCLITests                     0x00000001121ad140 $s15ThumbleCLITests0A15CLIBackendTestsC027testArtifactResponseRejectsF18LargerThanEightMiByyKF + 240
+15  ThumbleCLITests                     0x00000001121ad1c4 $s15ThumbleCLITests0A15CLIBackendTestsC027testArtifactResponseRejectsF18LargerThanEightMiByyKFTo + 56
+16  CoreFoundation                      0x000000018ffd7634 __invoking___ + 148
+17  CoreFoundation                      0x000000018ffd74c0 -[NSInvocation invoke] + 424
+18  XCTestCore                          0x00000001033174dc +[XCTFailableInvocation invokeErrorConventionInvocation:completion:] + 92
+19  XCTestCore                          0x0000000103317478 __90+[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:]_block_invoke + 28
+20  XCTestCore                          0x0000000103316db0 __81+[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:]_block_invoke + 364
+21  XCTestCore                          0x00000001033074cc __49+[XCTSwiftErrorObservation observeErrorsInBlock:]_block_invoke + 36
+22  XCTestCore                          0x00000001033904f4 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZ + 336
+23  XCTestCore                          0x0000000103390590 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZTo + 60
+24  XCTestCore                          0x00000001033073c4 +[XCTSwiftErrorObservation observeErrorsInBlock:] + 208
+25  XCTestCore                          0x0000000103316b44 +[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:] + 224
+26  XCTestCore                          0x0000000103317264 +[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:] + 176
+27  XCTestCore                          0x00000001033177f0 +[XCTFailableInvocation invokeInvocation:lastObservedErrorIssue:] + 72
+28  XCTestCore                          0x000000010333eff0 -[XCTestCase invokeTestMethod:] + 64
+29  XCTestCore                          0x000000010333fc28 __24-[XCTestCase invokeTest]_block_invoke_4 + 56
+30  XCTestCore                          0x000000010336d414 -[XCTMemoryChecker _assertInvalidObjectsDeallocatedAfterScope:] + 84
+31  XCTestCore                          0x00000001033432e8 -[XCTestCase assertInvalidObjectsDeallocatedAfterScope:] + 92
+32  XCTestCore                          0x000000010333f970 __24-[XCTestCase invokeTest]_block_invoke.112 + 696
+33  XCTestCore                          0x0000000103345da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+34  XCTestCore                          0x000000010333f2bc -[XCTestCase invokeTest] + 640
+35  XCTestCore                          0x000000010334128c __26-[XCTestCase performTest:]_block_invoke.170 + 36
+36  XCTestCore                          0x0000000103345da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+37  XCTestCore                          0x0000000103340c7c __26-[XCTestCase performTest:]_block_invoke.155 + 552
+38  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+39  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+40  XCTestCore                          0x000000010334070c -[XCTestCase performTest:] + 308
+41  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+42  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+43  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+44  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+45  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+46  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+47  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+48  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+49  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+50  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+51  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+52  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+53  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+54  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+55  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+56  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+57  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+58  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+59  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+60  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+61  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+62  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+63  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+64  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+65  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+66  XCTestCore                          0x000000010336a140 __89-[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:]_block_invoke + 100
+67  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+68  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+69  XCTestCore                          0x0000000103369fe8 -[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:] + 340
+70  XCTestCore                          0x000000010335f7a4 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke_2 + 156
+71  XCTestCore                          0x0000000103360804 __XCTAsyncEnumerateWithWaiter_block_invoke + 244
+72  XCTestCore                          0x00000001033609b8 __XCTAsyncEnumerate_block_invoke.117 + 64
+73  XCTestCore                          0x000000010335f600 XCTAsyncEnumerateWithWaiter + 568
+74  XCTestCore                          0x000000010335f378 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke + 148
+75  XCTestCore                          0x000000010335f8e8 -[XCTExecutionWorker runWithError:] + 84
+76  XCTestCore                          0x000000010335d608 __25-[XCTestDriver _runTests]_block_invoke.400 + 56
+77  XCTestCore                          0x00000001033746b0 -[XCTestObservationCenter _observeTestExecutionForTestBundle:inBlock:] + 104
+78  XCTestCore                          0x000000010335cfe0 -[XCTestDriver _runTests] + 1192
+79  XCTestCore                          0x000000010335eff8 _XCTestMain + 96
+80  xctest                              0x0000000102515e44 $s10xctesttool6xctestO4mainyyFZ + 284
+81  dyld                                0x000000018fb7be00 start + 6992
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' passed (2.686 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' passed (0.857 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' passed (0.317 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' passed (0.223 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' passed (0.159 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testAssetWritesUseTypedContentAndStableCallerInvocation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testAssetWritesUseTypedContentAndStableCallerInvocation]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' passed (0.160 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' passed (0.505 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' passed (0.209 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' passed (0.705 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.162 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' passed (0.175 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' passed (0.155 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' passed (0.159 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' passed (0.554 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' passed (0.186 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' passed (1.575 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' passed (3.756 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' passed (2.284 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' passed (0.185 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' started.
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Utility quality-of-service class. Investigate ways to avoid priority inversions
+PID: 41505, TID: 87055504
+Backtrace
+=================================================================
+0   ThumbleCLITests                     0x00000001120f6318 $s15ThumbleCLITests0A17CLIProfileBackendC7execute33_5D0F5FD078676A937C3428050A5A2BA2LL5inputAC15ExecutionResultAELLV10Foundation4DataV_tKF + 3236
+1   ThumbleCLITests                     0x00000001120e7f60 $s15ThumbleCLITests0A17CLIProfileBackendC7perform_12invocationID29expectedConfigurationRevisionAC8ResponseVAC7CommandO_10Foundation4UUIDVSgs6UInt64VSgtKF + 2080
+2   ThumbleCLITests                     0x000000011219da94 $s15ThumbleCLITests0A15CLIBackendTestsC70testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccessyyKFAA0A17CLIProfileBackendC8ResponseVyKXEfu_ + 588
+3   ThumbleCLITests                     0x00000001121da388 $s15ThumbleCLITests0A15CLIBackendTestsC70testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccessyyKFAA0A17CLIProfileBackendC8ResponseVyKXEfu_TA + 28
+4   libXCTestSwiftSupport.dylib         0x00000001053a7514 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_ + 156
+5   libXCTestSwiftSupport.dylib         0x00000001053a757c $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_TA + 24
+6   libXCTestSwiftSupport.dylib         0x00000001053a0d68 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEFyyXEfU_ + 44
+7   libXCTestSwiftSupport.dylib         0x00000001053a88bc $sIg_Ieg_TR + 28
+8   libXCTestSwiftSupport.dylib         0x00000001053a88e4 $sIeg_IyB_TR + 28
+9   XCTestCore                          0x0000000103314b1c _XCTRunThrowableBlockBridge + 44
+10  libXCTestSwiftSupport.dylib         0x00000001053a0c98 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEF + 244
+11  libXCTestSwiftSupport.dylib         0x00000001053a7130 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlF + 112
+12  libXCTestSwiftSupport.dylib         0x00000001053a7088 $s6XCTest20XCTAssertThrowsError__4file4line_yxyKXK_SSyXKs12StaticStringVSuys0D0_pXEtlF + 44
+13  ThumbleCLITests                     0x000000011219d75c $s15ThumbleCLITests0A15CLIBackendTestsC70testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccessyyKF + 1296
+14  ThumbleCLITests                     0x000000011219df68 $s15ThumbleCLITests0A15CLIBackendTestsC70testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccessyyKFTo + 56
+15  CoreFoundation                      0x000000018ffd7634 __invoking___ + 148
+16  CoreFoundation                      0x000000018ffd74c0 -[NSInvocation invoke] + 424
+17  XCTestCore                          0x00000001033174dc +[XCTFailableInvocation invokeErrorConventionInvocation:completion:] + 92
+18  XCTestCore                          0x0000000103317478 __90+[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:]_block_invoke + 28
+19  XCTestCore                          0x0000000103316db0 __81+[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:]_block_invoke + 364
+20  XCTestCore                          0x00000001033074cc __49+[XCTSwiftErrorObservation observeErrorsInBlock:]_block_invoke + 36
+21  XCTestCore                          0x00000001033904f4 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZ + 336
+22  XCTestCore                          0x0000000103390590 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZTo + 60
+23  XCTestCore                          0x00000001033073c4 +[XCTSwiftErrorObservation observeErrorsInBlock:] + 208
+24  XCTestCore                          0x0000000103316b44 +[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:] + 224
+25  XCTestCore                          0x0000000103317264 +[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:] + 176
+26  XCTestCore                          0x00000001033177f0 +[XCTFailableInvocation invokeInvocation:lastObservedErrorIssue:] + 72
+27  XCTestCore                          0x000000010333eff0 -[XCTestCase invokeTestMethod:] + 64
+28  XCTestCore                          0x000000010333fc28 __24-[XCTestCase invokeTest]_block_invoke_4 + 56
+29  XCTestCore                          0x000000010336d414 -[XCTMemoryChecker _assertInvalidObjectsDeallocatedAfterScope:] + 84
+30  XCTestCore                          0x00000001033432e8 -[XCTestCase assertInvalidObjectsDeallocatedAfterScope:] + 92
+31  XCTestCore                          0x000000010333f970 __24-[XCTestCase invokeTest]_block_invoke.112 + 696
+32  XCTestCore                          0x0000000103345da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+33  XCTestCore                          0x000000010333f2bc -[XCTestCase invokeTest] + 640
+34  XCTestCore                          0x000000010334128c __26-[XCTestCase performTest:]_block_invoke.170 + 36
+35  XCTestCore                          0x0000000103345da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+36  XCTestCore                          0x0000000103340c7c __26-[XCTestCase performTest:]_block_invoke.155 + 552
+37  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+38  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+39  XCTestCore                          0x000000010334070c -[XCTestCase performTest:] + 308
+40  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+41  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+42  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+43  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+44  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+45  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+46  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+47  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+48  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+49  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+50  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+51  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+52  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+53  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+54  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+55  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+56  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+57  XCTestCore                          0x000000010334c944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+58  XCTestCore                          0x000000010334c748 __27-[XCTestSuite performTest:]_block_invoke + 184
+59  XCTestCore                          0x000000010334bce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+60  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+61  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+62  XCTestCore                          0x000000010334bc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+63  XCTestCore                          0x000000010334c1c8 -[XCTestSuite performTest:] + 236
+64  XCTestCore                          0x000000010333bc54 -[XCTest runTest] + 48
+65  XCTestCore                          0x000000010336a140 __89-[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:]_block_invoke + 100
+66  XCTestCore                          0x000000010330416c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+67  XCTestCore                          0x000000010330405c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+68  XCTestCore                          0x0000000103369fe8 -[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:] + 340
+69  XCTestCore                          0x000000010335f7a4 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke_2 + 156
+70  XCTestCore                          0x0000000103360804 __XCTAsyncEnumerateWithWaiter_block_invoke + 244
+71  XCTestCore                          0x00000001033609b8 __XCTAsyncEnumerate_block_invoke.117 + 64
+72  XCTestCore                          0x000000010335f600 XCTAsyncEnumerateWithWaiter + 568
+73  XCTestCore                          0x000000010335f378 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke + 148
+74  XCTestCore                          0x000000010335f8e8 -[XCTExecutionWorker runWithError:] + 84
+75  XCTestCore                          0x000000010335d608 __25-[XCTestDriver _runTests]_block_invoke.400 + 56
+76  XCTestCore                          0x00000001033746b0 -[XCTestObservationCenter _observeTestExecutionForTestBundle:inBlock:] + 104
+77  XCTestCore                          0x000000010335cfe0 -[XCTestDriver _runTests] + 1192
+78  XCTestCore                          0x000000010335eff8 _XCTestMain + 96
+79  xctest                              0x0000000102515e44 $s10xctesttool6xctestO4mainyyFZ + 284
+80  dyld                                0x000000018fb7be00 start + 6992
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' passed (0.324 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' passed (0.067 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.204 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' passed (0.004 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' passed (0.154 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' passed (0.182 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedDesignCaptureRequiresExactDraftIdentityAndRevision]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedDesignCaptureRequiresExactDraftIdentityAndRevision]' passed (0.038 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' passed (0.041 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.170 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' passed (0.057 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' passed (0.183 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' passed (0.346 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' passed (0.222 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' passed (0.190 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' passed (0.194 seconds).
+Test Suite 'ThumbleCLIBackendTests' passed at 2026-10-21 06:35:57.893.
+	 Executed 43 tests, with 0 failures (0 unexpected) in 17.395 (17.403) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 06:35:57.893.
+	 Executed 51 tests, with 0 failures (0 unexpected) in 24.242 (24.253) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 06:35:57.894.
+	 Executed 51 tests, with 0 failures (0 unexpected) in 24.242 (24.253) seconds
+2026-10-21 06:36:05.745 xcodebuild[41415:87054883] [MT] IDETestOperationsObserverDebug: 32.720 elapsed -- Testing started completed.
+2026-10-21 06:36:05.745 xcodebuild[41415:87054883] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 06:36:05.745 xcodebuild[41415:87054883] [MT] IDETestOperationsObserverDebug: 32.720 sec, +32.720 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Logs/Test/Test-ThumbleTests-2026.10.21_06-35-28--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

@@ -1,0 +1,92 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/OwnedAssets "-only-testing:ThumbleCLITests/ThumbleSkinWorkspaceTests/testDesignSessionFreezesContractAndBoundsTransactionalSourceUpdates" "-only-testing:ThumbleCLITests/ThumbleSkinWorkspaceTests/testTypedDesignLayoutRevisionReplacesContractAndPreservesOldEvidence" "-only-testing:ThumbleCLITests/ThumbleSkinWorkspaceTests/testDesignNativeEvidenceIncludesExactMatrixAndRejectsStaleSourceOrPixels" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 1c18dd867315322d8392f26071f9c047
+Build description path: /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/XCBuildData/1c18dd867315322d8392f26071f9c047.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-owned-assets-muag5ses/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+CopySwiftLibs /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-infoPlistUtility /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+Test Suite 'Selected tests' started at 2026-10-21 06:38:55.925.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 06:38:55.925.
+Test Suite 'ThumbleSkinWorkspaceTests' started at 2026-10-21 06:38:55.925.
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testDesignNativeEvidenceIncludesExactMatrixAndRejectsStaleSourceOrPixels]' started.
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testDesignNativeEvidenceIncludesExactMatrixAndRejectsStaleSourceOrPixels]' passed (22.164 seconds).
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testDesignSessionFreezesContractAndBoundsTransactionalSourceUpdates]' started.
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testDesignSessionFreezesContractAndBoundsTransactionalSourceUpdates]' passed (0.141 seconds).
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testTypedDesignLayoutRevisionReplacesContractAndPreservesOldEvidence]' started.
+Test Case '-[ThumbleCLITests.ThumbleSkinWorkspaceTests testTypedDesignLayoutRevisionReplacesContractAndPreservesOldEvidence]' passed (14.502 seconds).
+Test Suite 'ThumbleSkinWorkspaceTests' passed at 2026-10-21 06:39:32.734.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 36.807 (36.808) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 06:39:32.734.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 36.807 (36.809) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 06:39:32.734.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 36.807 (36.809) seconds
+2026-10-21 06:39:33.011 xcodebuild[44921:87089922] [MT] IDETestOperationsObserverDebug: 37.875 elapsed -- Testing started completed.
+2026-10-21 06:39:33.011 xcodebuild[44921:87089922] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 06:39:33.011 xcodebuild[44921:87089922] [MT] IDETestOperationsObserverDebug: 37.875 sec, +37.875 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Logs/Test/Test-ThumbleTests-2026.10.21_06-38-54--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

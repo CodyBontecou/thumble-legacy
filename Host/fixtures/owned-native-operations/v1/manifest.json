@@ -9,7 +9,7 @@
     "scheme"
   ],
   "sources": {
-    "Tests/OwnedConfigurationDocumentTests.swift": "84b462b07bd005d84e396d21a6c09951f66c43992f72270db6f6dc9b2ec3b828",
+    "Tests/OwnedConfigurationDocumentTests.swift": "327f7b317b751631a9504e29a8b7d1def9ccc1d28bf5ee3cb988ce2695291500",
     "Host/crates/thumble-host/tests/owned_operation_bridge.rs": "ceaa4b4107a9120b70c86d49b3155421f28eda0f6d92117796400bb2da172f07"
   },
   "files": {

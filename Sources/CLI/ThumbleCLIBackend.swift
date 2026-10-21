@@ -1411,9 +1411,11 @@ final class ThumbleCLIProfileBackend {
         return projection
     }
 
-    static func inspectionProfile(_ snapshot: DesignSnapshot, expectedRevision: UInt64) throws -> InspectionProfile {
+    static func inspectionProfile(_ snapshot: DesignSnapshot, expectedRevision: UInt64,
+                                  expectedDraftID: UUID? = nil, expectedDraftRevision: UInt64? = nil) throws -> InspectionProfile {
         guard expectedRevision > 0, snapshot.configurationRevision == expectedRevision,
-              snapshot.draftID == nil, snapshot.draftRevision == nil else { throw BackendError.malformedResponse }
+              (expectedDraftID == nil) == (expectedDraftRevision == nil),
+              snapshot.draftID == expectedDraftID, snapshot.draftRevision == expectedDraftRevision else { throw BackendError.malformedResponse }
         let data = Data(snapshot.profileJSON.utf8)
         guard data.count <= maximumProfileArtifactBytes else { throw BackendError.responseTooLarge }
         struct Header: Decodable { let id: UUID; let profileFormatVersion: Int? }

@@ -9,6 +9,42 @@ final class OwnedConfigurationDocumentTests: XCTestCase {
     private func operationRequest(_ source: Data, _ operation: [String: Any]) throws -> Data {
         try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "invocationID":"AC000000-0000-0000-0000-000000000001", "ownedConfigurationCommand":"apply", "documentData":source.base64EncodedString(), "operation":operation, "nowMillis":2000], options: [.sortedKeys, .withoutEscapingSlashes])
     }
+    func testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs() throws {
+        let directory = root.appendingPathComponent("Host/fixtures/owned-design/v1")
+        let bytes = try Data(contentsOf: directory.appendingPathComponent("apply-request.json"))
+        let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes)
+        let response = try ThumbleOwnedOperationBridge.transform(request)
+        let expected = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: directory.appendingPathComponent("apply-response.json"))) as? [String: Any])
+        XCTAssertEqual(response.beforeDocumentData, expected["beforeDocumentData"] as? String)
+        XCTAssertEqual(response.afterDocumentData, expected["afterDocumentData"] as? String)
+        let before = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.beforeDocumentData)))
+        let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+        let original = try XCTUnwrap(before.projectedProfiles.last)
+        let edited = try XCTUnwrap(after.projectedProfiles.last)
+        XCTAssertEqual(before.projectedProfiles.first, after.projectedProfiles.first)
+        XCTAssertNil(edited.skinReference)
+        XCTAssertNil(edited.landscapeCustomization)
+        XCTAssertNil(edited.portraitCustomization)
+        XCTAssertEqual(edited.customization.elements.map(\.output), original.customization.elements.map(\.output))
+        XCTAssertEqual(edited.customization.elements.map(\.id), original.customization.elements.map(\.id))
+        XCTAssertEqual(edited.appearanceBank?.variants.count, 8)
+        let id = UUID(uuidString: "00000000-0000-0000-0000-000000000105")!
+        let originalFeedback = try XCTUnwrap(original.customization.elements.first(where: { $0.id == id })).layout.hapticFeedback
+        for scheme in ThumbleSkinColorScheme.allCases { for action in ThumbleActionSet.allCases {
+            let resolved = edited.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+            let control = try XCTUnwrap(resolved.elements.first(where: { $0.id == id }))
+            XCTAssertEqual(try XCTUnwrap(control.layout.centerX), CGFloat(0.61), accuracy: 0.000001)
+            XCTAssertEqual(control.layout.hapticFeedback, originalFeedback)
+        } }
+        for field in ["baseProfileSHA256", "profileSHA256", "packageSHA256"] {
+            var invalid = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+            var operation = try XCTUnwrap(invalid["operation"] as? [String: Any])
+            operation[field] = String(repeating: "0", count: 64); invalid["operation"] = operation
+            let decoded = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,
+                from: JSONSerialization.data(withJSONObject: invalid))
+            XCTAssertThrowsError(try ThumbleOwnedOperationBridge.transform(decoded), field)
+        }
+    }
     func testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity() throws {
         let source = try fixture("document")
         let document = try ThumbleOwnedConfigurationDocument(validating: source)

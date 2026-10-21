@@ -1692,7 +1692,9 @@ struct ThumbleCLI {
                   (createDraft ? snapshot.draftID != nil && snapshot.draftRevision == 1 : snapshot.draftID == draftID && snapshot.draftRevision == draftRevision) else {
                 throw CLIError.message("Authoritative service did not return the requested exact design snapshot")
             }
-            let profile = try JSONDecoder().decodeUnique(GamepadConfigurationProfile.self, from: Data(snapshot.profileJSON.utf8))
+            let captured = try ThumbleCLIProfileBackend.inspectionProfile(snapshot, expectedRevision: expected,
+                expectedDraftID: snapshot.draftID, expectedDraftRevision: snapshot.draftRevision)
+            let profile = captured.profile
             let safeAreas: [ThumbleSkinOrientation: ThumbleNormalizedInsets]
             if let file = optionValue("--safe-areas", in: rest) {
                 let data = try Data(contentsOf: URL(fileURLWithPath: file))
@@ -1714,7 +1716,7 @@ struct ThumbleCLI {
                 try ControllerDesignWorkspace.beginNative(profile: profile, bindings: Data(snapshot.bindingJSON.utf8),
                     targetRevision: expected, safeAreas: safeAreas, name: optionValue("--name", in: rest) ?? profile.name,
                     identifier: identifier, at: root, draftID: snapshot.draftID, draftRevision: snapshot.draftRevision,
-                    rendererSHA256: renderer)
+                    rendererSHA256: renderer, ownedAuthority: captured.owned)
             }
             try printJSON(session)
         case "update":
@@ -1776,7 +1778,9 @@ struct ThumbleCLI {
             // New references are installed before the atomic profile attachment. Never replace a
             // version already used by another profile; a failed CAS can leave only an unused package.
             let library = optionValue("--skin-library", in: rest).map { URL(fileURLWithPath: $0).standardizedFileURL }
-            _ = try ThumbleSkinStore(rootURL: library).install(data: packageData, policy: .newerOnly)
+            if session.ownedAuthority != true {
+                _ = try ThumbleSkinStore(rootURL: library).install(data: packageData, policy: .newerOnly)
+            }
             let layoutPlan: String?
             if session.layoutPlanSHA256 != nil {
                 let bytes = try ControllerDesignWorkspace.boundedData(root.appendingPathComponent("contract/layout-edits.json"), root: root)
@@ -1790,7 +1794,7 @@ struct ThumbleCLI {
                 invocationID: invocationID, expectedConfigurationRevision: configurationRevision)
             guard let outcome = response.outcome else { throw CLIError.message("Design authority returned no apply receipt") }
             try ControllerDesignWorkspace.write(outcome, to: root.appendingPathComponent("reviews/apply-\(invocationID.uuidString.lowercased()).json"))
-            notifySkinStoreChanged()
+            if session.ownedAuthority != true { notifySkinStoreChanged() }
             try printJSON(outcome)
         case "critique":
             let revision = try designRevision(rest)

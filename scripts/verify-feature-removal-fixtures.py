@@ -309,3 +309,22 @@ assert all(row["schemaVersion"] == 8 for row in asset_requests)
 assert asset_requests[1]["command"]["assetID"] == asset_contract["importedAssetID"]
 assert asset_requests[2]["command"]["assetID"] == asset_contract["importedAssetID"]
 print("Owned asset import/set/remove fixture verified; public format activation unchanged")
+
+# Reviewed designs are compiler intermediates, never installed runtime skins.
+_owned_design = repo / "Host/fixtures/owned-design/v1"
+_owned_design_manifest = json.loads((_owned_design / "manifest.json").read_bytes())
+for _name, _hash in _owned_design_manifest["files"].items():
+    assert hashlib.sha256((_owned_design / _name).read_bytes()).hexdigest() == _hash, _name
+_design_request = json.loads((_owned_design / "apply-request.json").read_bytes())
+_design_response = json.loads((_owned_design / "apply-response.json").read_bytes())
+assert _design_request["operation"]["type"] == "design.apply"
+assert _design_response["invocationID"].lower() == _design_request["invocationID"].lower()
+assert _design_response["sourceSHA256"] == hashlib.sha256(base64.b64decode(_design_request["documentData"], validate=True)).hexdigest()
+assert _design_request["operation"]["packageSHA256"] == hashlib.sha256(base64.b64decode(_design_request["operation"]["packageBase64"], validate=True)).hexdigest()
+_design_after = json.loads(base64.b64decode(_design_response["afterDocumentData"], validate=True))
+_design_target = next(p for p in _design_after["profiles"] if p["id"].lower() == _design_request["operation"]["profileID"].lower())
+assert _design_target["profileFormatVersion"] == 5 and "skinReference" not in _design_target
+assert len(_design_target["appearanceBank"]["variants"]) == _owned_design_manifest["appearanceStates"] == 8
+assert len({(v["colorScheme"], v["actionSet"]) for v in _design_target["appearanceBank"]["variants"]}) == 8
+assert _owned_design_manifest["automaticMigrationActivated"] is False
+print("Owned reviewed-design fixture verified; no runtime package attachment or public format activation")

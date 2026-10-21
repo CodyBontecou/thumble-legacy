@@ -211,6 +211,20 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedDesignApplyFitsConstrainedThread() throws {
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let bytes = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-design/v1/apply-request.json"))
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes)
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            let document = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            let profile = try XCTUnwrap(document.projectedProfiles.last)
+            XCTAssertTrue(response.changed)
+            XCTAssertNil(profile.skinReference)
+            XCTAssertEqual(profile.appearanceBank?.variants.count, 8)
+            XCTAssertLessThanOrEqual(try JSONEncoder().encode(response).count, 24 * 1024 * 1024)
+        }
+    }
     func testOwnedOperationBridgeFitsConstrainedThread() throws {
         assertInlineSize(ThumbleOwnedOperationBridgeRequest.self, atMost: 256)
         assertInlineSize(ThumbleOwnedOperationBridgeResponse.self, atMost: 256)

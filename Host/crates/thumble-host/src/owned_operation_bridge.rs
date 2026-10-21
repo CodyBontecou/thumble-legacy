@@ -80,8 +80,8 @@ impl ConfigurationBridge {
         if response.changed != (before.original_bytes() != after.original_bytes())
             || response.changed == response.changed_paths.is_empty()
             || !valid_operation_delta(
-                &legacy_view(&before, fallback)?,
-                &legacy_view(&after, after_fallback)?,
+                &operation_view(&before, fallback, &canonical)?,
+                &operation_view(&after, after_fallback, &canonical)?,
                 &canonical,
             )
             || !banks_preserved(&before, &after, &canonical)
@@ -131,6 +131,23 @@ fn canonical_operation(
         *variant = json!("primary");
     }
     serde_json::from_value(value).map_err(|_| ConfigurationBridgeError::InvalidOperation)
+}
+fn operation_view(
+    document: &OwnedConfigurationDocument,
+    fallback: &str,
+    operation: &ConfigurationOperation,
+) -> Result<ConfigurationDocument, ConfigurationBridgeError> {
+    let mut view = legacy_view(document, fallback)?;
+    if matches!(operation, ConfigurationOperation::DesignApply { .. }) {
+        // The design layout plan names the single canonical slot. An invented
+        // landscape mirror must not demand a second, unreviewed layout edit.
+        for profile in &mut view.profiles {
+            if let Some(object) = profile.as_object_mut() {
+                object.remove("landscapeCustomization");
+            }
+        }
+    }
+    Ok(view)
 }
 fn legacy_view(
     document: &OwnedConfigurationDocument,
@@ -191,6 +208,17 @@ fn banks_preserved(
         };
         if profile.get("appearanceBank") == next.get("appearanceBank") {
             continue;
+        }
+        if let ConfigurationOperation::DesignApply { profile_id, .. } = operation {
+            if profile["id"]
+                .as_str()
+                .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
+            {
+                if !design_states_preserved(before, after, profile, next, operation) {
+                    return false;
+                }
+                continue;
+            }
         }
         if let ConfigurationOperation::ElementDuplicate {
             profile_id,
@@ -267,6 +295,69 @@ fn banks_preserved(
                 if !paint_equal(&expected, &actual) {
                     return false;
                 }
+            }
+        }
+    }
+    true
+}
+/// Design may replace paint, but never executable declarations or saved haptic
+/// settings hidden in a non-base appearance state.
+fn design_states_preserved(
+    before: &OwnedConfigurationDocument,
+    after: &OwnedConfigurationDocument,
+    profile: &Value,
+    next: &Value,
+    operation: &ConfigurationOperation,
+) -> bool {
+    let (Ok(old_bank), Ok(Some(new_bank))) = (
+        ProfileAppearanceBank::from_profile(profile),
+        ProfileAppearanceBank::from_profile(next),
+    ) else {
+        return false;
+    };
+    let (Ok(mut left), Ok(mut right)) = (
+        operation_view(
+            before,
+            before
+                .default_profile_id()
+                .unwrap_or(before.active_profile_id()),
+            operation,
+        ),
+        operation_view(
+            after,
+            after
+                .default_profile_id()
+                .unwrap_or(after.active_profile_id()),
+            operation,
+        ),
+    ) else {
+        return false;
+    };
+    let Some(index) = before
+        .profiles()
+        .iter()
+        .position(|value| value["id"] == profile["id"])
+    else {
+        return false;
+    };
+    for scheme in ["light", "dark"] {
+        for action in ["base", "left-trigger", "right-trigger", "both-triggers"] {
+            let old = match &old_bank {
+                Some(bank) => {
+                    match bank.resolve_layout(&profile["customization"], scheme, action) {
+                        Ok(value) => value,
+                        Err(_) => return false,
+                    }
+                }
+                None => profile["customization"].clone(),
+            };
+            let Ok(new) = new_bank.resolve_layout(&next["customization"], scheme, action) else {
+                return false;
+            };
+            left.profiles[index]["customization"] = old;
+            right.profiles[index]["customization"] = new;
+            if !valid_operation_delta(&left, &right, operation) {
+                return false;
             }
         }
     }
@@ -356,5 +447,80 @@ mod arrangement_tests {
             &legacy_view(&forged, forged.active_profile_id()).unwrap(),
             &operation
         ));
+    }
+}
+
+#[cfg(test)]
+mod design_tests {
+    use super::*;
+    #[test]
+    fn owned_design_cannot_change_trigger_haptics_geometry_outputs_or_other_profiles() {
+        let request: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-design/v1/apply-request.json"
+        ))
+        .unwrap();
+        let response: Response = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-design/v1/apply-response.json"
+        ))
+        .unwrap();
+        let operation: ConfigurationOperation =
+            serde_json::from_value(request["operation"].clone()).unwrap();
+        let before = projection(&response.before_document_data).unwrap();
+        let after_bytes = STANDARD.decode(&response.after_document_data).unwrap();
+        for path in [
+            "/profiles/1/appearanceBank/variants/1/appearance/controls/00000000-0000-0000-0000-000000000105/hapticFeedback/intensity",
+            "/profiles/1/customization/elements/0/layout/centerY",
+            "/profiles/1/customization/elements/0/output/keyboard/keyCode",
+            "/profiles/0/customization/elements/0/layout/centerX",
+        ] {
+            let mut forged: Value = serde_json::from_slice(&after_bytes).unwrap();
+            *forged.pointer_mut(path).expect(path) = serde_json::json!(0.123);
+            let forged = OwnedConfigurationDocument::decode(&serde_json::to_vec(&forged).unwrap());
+            if let Ok(forged) = forged {
+                assert!(
+                    !banks_preserved(&before, &forged, &operation)
+                        || !valid_operation_delta(&operation_view(&before,before.active_profile_id(),&operation).unwrap(), &operation_view(&forged,forged.active_profile_id(),&operation).unwrap(), &operation),
+                    "forged design passed {path}"
+                );
+            }
+        }
+    }
+    #[test]
+    fn reviewed_owned_design_preserves_executable_declarations_and_raw_metadata() {
+        let request: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-design/v1/apply-request.json"
+        ))
+        .unwrap();
+        let response: Response = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-design/v1/apply-response.json"
+        ))
+        .unwrap();
+        let operation: ConfigurationOperation =
+            serde_json::from_value(request["operation"].clone()).unwrap();
+        let source = projection(request["documentData"].as_str().unwrap()).unwrap();
+        let before = projection(&response.before_document_data).unwrap();
+        let after = projection(&response.after_document_data).unwrap();
+        assert!(
+            response
+                .changed_paths
+                .iter()
+                .all(|path| allowed_changed_path(&operation, path)),
+            "paths"
+        );
+        assert!(banks_preserved(&before, &after, &operation), "banks");
+        assert!(
+            valid_operation_delta(
+                &operation_view(&before, before.active_profile_id(), &operation).unwrap(),
+                &operation_view(&after, after.active_profile_id(), &operation).unwrap(),
+                &operation
+            ),
+            "delta"
+        );
+        let merged = source
+            .with_projected_changes(&before, &after)
+            .expect("lossless source merge");
+        assert!(std::str::from_utf8(merged.original_bytes())
+            .unwrap()
+            .contains("0.12345678901234567890123456789"));
     }
 }

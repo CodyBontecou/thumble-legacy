@@ -86,3 +86,5 @@ structured issues against the current native render hashes. See
 [controller design workspaces](controller-design-v1.md) for the shared CLI contract.
 
 `edit_profile_asset` imports bounded Base64 artwork or changes/removes an owned profile asset using exact revision/invocation IDs and the existing configuration-write opt-in. It accepts a basename rather than a host path, pools bytes across all eight appearance states, and refuses removal of referenced assets. See [the asset contract](../owned-profile-assets.md).
+
+Owned authorities can use the existing controller-design tools without a desktop GUI or installed skin library. Begin captures exact authority/private-draft revisions; review renders both schemes and all four held-trigger states; apply commits ordinary owned appearance and retains saved haptics, bindings and typed layout changes. `skinLibraryPath` applies only to the guarded legacy path. See [the owned design contract](../owned-design-workspace.md).

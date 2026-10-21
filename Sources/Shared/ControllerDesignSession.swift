@@ -21,6 +21,7 @@ public struct ControllerDesignSession: Codable, Equatable, Sendable {
     public var latestReview: Int?
     public var baseProfileSHA256: String? = nil
     public var layoutPlanSHA256: String? = nil
+    public var ownedAuthority: Bool? = nil
 
     public struct FileDigest: Codable, Equatable, Sendable {
         public let path: String
@@ -226,6 +227,7 @@ public struct ControllerDesignSession: Codable, Equatable, Sendable {
         public var controlBar: ControlBarReview? = nil
         public var drawer: DrawerReview? = nil
         public var diagnostics: DiagnosticReport? = nil
+        public var ownedAuthority: Bool? = nil
     }
 }
 
@@ -557,7 +559,7 @@ public enum ControllerDesignWorkspace {
 
     private static func create(profile: GamepadConfigurationProfile, bindings: Data, targetRevision: UInt64,
         safeAreas: [ThumbleSkinOrientation: ThumbleNormalizedInsets], name: String, identifier: String, at root: URL,
-        draftID: UUID?, draftRevision: UInt64?, nativeCapture: ((ThumbleSkinArtboard, GamepadConfigurationProfile) throws -> ThumbleSkinArtboard)?) throws -> ControllerDesignSession {
+        draftID: UUID?, draftRevision: UInt64?, nativeCapture: ((ThumbleSkinArtboard, GamepadConfigurationProfile) throws -> ThumbleSkinArtboard)?, ownedAuthority: Bool = false) throws -> ControllerDesignSession {
         try withLock(root) {
             let fm = FileManager.default
             guard !fm.fileExists(atPath: root.path) else {
@@ -597,10 +599,16 @@ public enum ControllerDesignWorkspace {
             try Data("control { background: #EFEDE7; color: #272A30; border: 1px solid #777A80; }\n".utf8)
                 .write(to: staging.appendingPathComponent("styles/controller.css"))
             let source = try sourceDigests(at: staging)
-            let session = ControllerDesignSession(schemaVersion: 1, id: id, revision: 1, profileID: profile.id,
+            var session = ControllerDesignSession(schemaVersion: 1, id: id, revision: 1, profileID: profile.id,
                 targetRevision: targetRevision, draftID: draftID, draftRevision: draftRevision, artboardSHA256: artboardData.thumbleSHA256,
                 profileSHA256: profileData.thumbleSHA256, bindingSHA256: canonicalBindings.thumbleSHA256,
                 sourceSHA256: try digest(source), sourceFiles: source, latestReview: nil)
+            if ownedAuthority {
+                guard artboard.variants.allSatisfy({ $0.orientation == .landscape }) else {
+                    throw ControllerDesignError.invalid("owned design captures require a single landscape layout")
+                }
+                session.ownedAuthority = true
+            }
             try write(session, to: staging.appendingPathComponent(sessionFile))
             try fm.moveItem(at: staging, to: root)
             return session
@@ -672,6 +680,9 @@ public enum ControllerDesignWorkspace {
             var session = try load(at: root)
             guard session.revision == expectedRevision else { throw ControllerDesignError.conflict("expected \(expectedRevision), found \(session.revision)") }
             guard session.revision < UInt64.max else { throw ControllerDesignError.invalid("revision exhausted") }
+            guard session.ownedAuthority != true || layoutEdits.allSatisfy({ $0.variant != .portrait }) else {
+                throw ControllerDesignError.invalid("owned design edits require landscape")
+            }
             guard layoutEdits.count <= 256 else { throw ControllerDesignError.invalid("layout update exceeds budget") }
             guard edits.count <= maximumSourceFiles, Set(edits.map(\.path)).count == edits.count else {
                 throw ControllerDesignError.invalid("too many edits or duplicate paths")
@@ -934,6 +945,7 @@ public enum ControllerDesignWorkspace {
                   review.sessionRevision == session.revision,
                   review.profileID == session.profileID, review.targetRevision == session.targetRevision,
                   review.draftID == session.draftID, review.draftRevision == session.draftRevision,
+                  review.ownedAuthority == session.ownedAuthority,
                   review.artboardSHA256 == session.artboardSHA256, review.profileSHA256 == session.profileSHA256,
                   review.bindingSHA256 == session.bindingSHA256,
                   review.baseProfileSHA256 == session.baseProfileSHA256, review.layoutPlanSHA256 == session.layoutPlanSHA256,
@@ -1068,12 +1080,12 @@ extension ControllerDesignWorkspace {
     @MainActor
     public static func beginNative(profile: GamepadConfigurationProfile, bindings: Data, targetRevision: UInt64,
         safeAreas: [ThumbleSkinOrientation: ThumbleNormalizedInsets], name: String, identifier: String, at root: URL,
-        draftID: UUID? = nil, draftRevision: UInt64? = nil, rendererSHA256: String) throws -> ControllerDesignSession {
+        draftID: UUID? = nil, draftRevision: UInt64? = nil, rendererSHA256: String, ownedAuthority: Bool = false) throws -> ControllerDesignSession {
         try create(profile: profile, bindings: bindings, targetRevision: targetRevision, safeAreas: safeAreas,
             name: name, identifier: identifier, at: root, draftID: draftID, draftRevision: draftRevision,
             nativeCapture: { board, profile in try MainActor.assumeIsolated {
                 try captureNativeLayout(artboard: board, profile: profile, rendererSHA256: rendererSHA256)
-            } })
+            } }, ownedAuthority: ownedAuthority)
     }
 
     @MainActor
@@ -1216,129 +1228,139 @@ extension ControllerDesignWorkspace {
                 guard Set(mixed.keys).isSubset(of: Set(variant.controls.map(\.id))) else {
                     throw ControllerDesignError.invalid("mixed-state target missing from \(variant.orientation.rawValue) artboard")
                 }
-                for scheme in ThumbleSkinColorScheme.allCases {
-                    let rendered = source.applying(skinPackage: compilation.package, orientation: variant.orientation,
-                        colorScheme: scheme, options: .replacingAppearance)
-                    let resolvedControls = rendered.resolvedControls(in: CGSize(width: variant.canvasWidth, height: variant.canvasHeight))
-                        .filter { !$0.layoutCustomization.isHidden }
-                    guard Set(resolvedControls.map { $0.id.id }) == Set(variant.controls.map(\.id)) else {
-                        throw ControllerDesignError.conflict("native render control inventory differs from frozen artboard")
-                    }
-                    for control in resolvedControls {
-                        guard let captured = variant.controls.first(where: { $0.id == control.id.id }),
-                              abs(control.frame.minX - captured.frame.x * variant.canvasWidth) < 0.001,
-                              abs(control.frame.minY - captured.frame.y * variant.canvasHeight) < 0.001,
-                              abs(control.frame.width - captured.frame.width * variant.canvasWidth) < 0.001,
-                              abs(control.frame.height - captured.frame.height * variant.canvasHeight) < 0.001,
-                              captured.rotationDegrees.map({ abs(control.rotationDegrees - $0) < 0.000001 }) ?? true else {
-                            throw ControllerDesignError.conflict("native render geometry differs from frozen artboard")
+                for actionSet in session.ownedAuthority == true ? ThumbleActionSet.allCases : [.base] {
+                    let actionSuffix = session.ownedAuthority == true ? "-" + actionSet.rawValue : ""
+                    for scheme in ThumbleSkinColorScheme.allCases {
+                        let rendered: GamepadCustomization
+                        if session.ownedAuthority == true {
+                            let stateSource = profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: actionSet)
+                            rendered = ThumbleOwnedOperationBridge.applyingReviewedAppearance(to: stateSource,
+                                package: compilation.package, scheme: scheme, actionSet: actionSet)
+                        } else {
+                            rendered = source.applying(skinPackage: compilation.package, orientation: variant.orientation,
+                                colorScheme: scheme, options: .replacingAppearance, actionSet: actionSet)
                         }
-                    }
-                    for control in resolvedControls {
-                        if let hit = variant.controls.first(where: { $0.id == control.id.id })?.nativeGeometry?.hitFrame {
-                            guard abs(control.hitFrame.minX - hit.x * variant.canvasWidth) < 0.001,
-                                  abs(control.hitFrame.minY - hit.y * variant.canvasHeight) < 0.001,
-                                  abs(control.hitFrame.width - hit.width * variant.canvasWidth) < 0.001,
-                                  abs(control.hitFrame.height - hit.height * variant.canvasHeight) < 0.001 else {
-                                throw ControllerDesignError.conflict("native hit geometry differs from frozen artboard")
+                        let resolvedControls = rendered.resolvedControls(in: CGSize(width: variant.canvasWidth, height: variant.canvasHeight))
+                            .filter { !$0.layoutCustomization.isHidden }
+                        guard Set(resolvedControls.map { $0.id.id }) == Set(variant.controls.map(\.id)) else {
+                            throw ControllerDesignError.conflict("native render control inventory differs from frozen artboard")
+                        }
+                        for control in resolvedControls {
+                            guard let captured = variant.controls.first(where: { $0.id == control.id.id }),
+                                  abs(control.frame.minX - captured.frame.x * variant.canvasWidth) < 0.001,
+                                  abs(control.frame.minY - captured.frame.y * variant.canvasHeight) < 0.001,
+                                  abs(control.frame.width - captured.frame.width * variant.canvasWidth) < 0.001,
+                                  abs(control.frame.height - captured.frame.height * variant.canvasHeight) < 0.001,
+                                  captured.rotationDegrees.map({ abs(control.rotationDegrees - $0) < 0.000001 }) ?? true else {
+                                throw ControllerDesignError.conflict("native render geometry differs from frozen artboard")
                             }
                         }
-                    }
-                    if includesControlBar {
-                        for connected in [false, true] {
-                            for editing in [false, true] {
-                                let title = "bar-\(variant.orientation.rawValue)-\(scheme.rawValue)-\(connected ? "connected" : "offline")-\(editing ? "editing" : "normal")"
-                                let snapshot = try ThumbleNativeSkinPreviewRenderer.renderControlBarSnapshot(profile: profile,
-                                    orientation: deviceOrientation, colorScheme: scheme, isConnected: connected,
-                                    isDefault: false, isEditing: editing, scale: renderScale, customizationOverride: rendered)
-                                let image = snapshot.image
-                                let png = try ThumbleNativeSkinPreviewRenderer.pngData(image)
-                                guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("bar image exceeds budget") }
-                                try png.write(to: staging.appendingPathComponent(title + ".png"))
-                                let visible = GamepadControllerPresentationRouting.visibleControlBarItems(rendered.controlBarItems,
-                                    hiddenItems: Set(rendered.controlBarItems.filter { rendered.controlBarItemCustomization(for: $0).isHidden }),
-                                    hasProfiles: true, hasLaunchTarget: profile.launchTarget != nil)
-                                for item in visible where item != .spacer {
-                                    if let styleID = rendered.controlBarItemCustomization(for: item).styleID {
-                                        barStyleUses.append(.init(styleID: styleID, orientation: variant.orientation, colorScheme: scheme,
-                                            target: .init(controlID: nil, action: nil, layerID: "native-control-bar",
-                                                          surfaceID: "native-control-bar/" + item.rawValue), frameTitle: title))
-                                    }
+                        for control in resolvedControls {
+                            if let hit = variant.controls.first(where: { $0.id == control.id.id })?.nativeGeometry?.hitFrame {
+                                guard abs(control.hitFrame.minX - hit.x * variant.canvasWidth) < 0.001,
+                                      abs(control.hitFrame.minY - hit.y * variant.canvasHeight) < 0.001,
+                                      abs(control.hitFrame.width - hit.width * variant.canvasWidth) < 0.001,
+                                      abs(control.hitFrame.height - hit.height * variant.canvasHeight) < 0.001 else {
+                                    throw ControllerDesignError.conflict("native hit geometry differs from frozen artboard")
                                 }
-                                barFrames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
-                                    isConnected: connected, isEditing: editing, isDefaultProfile: false, profileName: profile.name,
-                                    visibleItems: visible, surfaceIDs: snapshot.layout.frames.keys.filter { !$0.hasSuffix("/spacer") }.sorted(),
-                                    viewportWidth: CGFloat(image.width) / renderScale,
-                                    viewportHeight: CGFloat(image.height) / renderScale, renderScale: renderScale,
-                                    image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256),
-                                    nativeLayout: snapshot.layout,
-                                    drawerLayoutInputs: .init(safeAreaInsets: EdgeInsets(
-                                        top: variant.safeAreaInsets.top * variant.canvasHeight,
-                                        leading: variant.safeAreaInsets.leading * variant.canvasWidth,
-                                        bottom: variant.safeAreaInsets.bottom * variant.canvasHeight,
-                                        trailing: variant.safeAreaInsets.trailing * variant.canvasWidth),
-                                        isLandscape: deviceOrientation == .landscape, minimumPortraitTopInset: minimumPortraitTopInset)))
-                                barFrames[barFrames.count - 1].containerPresentation = .init(isLandscape: deviceOrientation == .landscape,
-                                    colorScheme: scheme == .dark ? .dark : .light)
-                                barSnapshots.append((title, image))
                             }
                         }
-                    }
-                    let hints = Dictionary(uniqueKeysWithValues: resolvedControls.compactMap { control -> (String, String)? in
-                        KeypadBindingPresentationBuilder.compactHint(for: control, entries: bindingEntries).map { (control.id.id, $0) }
-                    })
-                    if includesControlBar {
-                        let controller = try ThumbleNativeSkinPreviewRenderer.render(item: .init(title: "drawer-underlay",
-                            customization: rendered, colorScheme: scheme, state: .normal,
-                            safeAreaInsets: variant.safeAreaInsets, showsSafeAreaOverlay: showsSafeAreaOverlay,
-                            showsTouchTargets: showsTouchTargets, secondaryBindingTexts: hints, omitsRevealHandle: true), scale: renderScale)
-                        let samples: [(Bool, Bool, Bool, CGFloat, String)] = [false, true].flatMap { connected in
-                            [false, true].map { editing in (connected, editing, true, CGFloat(1), "expanded") }
-                        } + [(true, false, false, 1, "collapsed"), (true, false, false, 0, "faded")]
-                        for (connected, editing, requested, opacity, sample) in samples {
-                            let title = "drawer-\(variant.orientation.rawValue)-\(scheme.rawValue)-\(connected ? "connected" : "offline")-\(editing ? "editing" : "normal")-\(sample)"
-                            let snapshot = try ThumbleNativeSkinPreviewRenderer.renderDrawerSnapshot(profile: profile,
-                                orientation: deviceOrientation, colorScheme: scheme, safeAreaInsets: variant.safeAreaInsets,
-                                minimumPortraitTopInset: minimumPortraitTopInset, requestedVisibility: requested,
-                                isConnected: connected, isDefault: false, isEditing: editing, collapsedOpacity: opacity,
-                                scale: renderScale, customizationOverride: rendered)
-                            let image = try ThumbleNativeSkinPreviewRenderer.composite(controller: controller, drawer: snapshot.image)
-                            let png = try ThumbleNativeSkinPreviewRenderer.pngData(image)
-                            guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("drawer image exceeds budget") }
-                            try png.write(to: staging.appendingPathComponent(title + ".png"))
-                            let surfaces = snapshot.layout.frames.keys.filter {
-                                !$0.hasSuffix("/spacer") && $0 != "native-drawer" && (snapshot.isVisible || opacity > 0)
-                            }.sorted()
-                            drawerFrames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
-                                isConnected: connected, isEditing: editing, requestedVisibility: requested,
-                                resolvedVisibility: snapshot.isVisible, collapsedOpacity: opacity, surfaceIDs: surfaces,
-                                nativeLayout: snapshot.layout, layoutInputs: snapshot.inputs, renderScale: renderScale,
-                                image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256)))
-                            drawerSnapshots.append((title, image))
+                        if includesControlBar {
+                            for connected in [false, true] {
+                                for editing in [false, true] {
+                                    let title = "bar-\(variant.orientation.rawValue)-\(scheme.rawValue)\(actionSuffix)-\(connected ? "connected" : "offline")-\(editing ? "editing" : "normal")"
+                                    let snapshot = try ThumbleNativeSkinPreviewRenderer.renderControlBarSnapshot(profile: profile,
+                                        orientation: deviceOrientation, colorScheme: scheme, isConnected: connected,
+                                        isDefault: false, isEditing: editing, scale: renderScale, customizationOverride: rendered)
+                                    let image = snapshot.image
+                                    let png = try ThumbleNativeSkinPreviewRenderer.pngData(image)
+                                    guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("bar image exceeds budget") }
+                                    try png.write(to: staging.appendingPathComponent(title + ".png"))
+                                    let visible = GamepadControllerPresentationRouting.visibleControlBarItems(rendered.controlBarItems,
+                                        hiddenItems: Set(rendered.controlBarItems.filter { rendered.controlBarItemCustomization(for: $0).isHidden }),
+                                        hasProfiles: true, hasLaunchTarget: profile.launchTarget != nil)
+                                    for item in visible where item != .spacer {
+                                        if let styleID = rendered.controlBarItemCustomization(for: item).styleID {
+                                            barStyleUses.append(.init(styleID: styleID, orientation: variant.orientation, colorScheme: scheme,
+                                                target: .init(controlID: nil, action: nil, layerID: "native-control-bar",
+                                                              surfaceID: "native-control-bar/" + item.rawValue), frameTitle: title))
+                                        }
+                                    }
+                                    barFrames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
+                                        isConnected: connected, isEditing: editing, isDefaultProfile: false, profileName: profile.name,
+                                        visibleItems: visible, surfaceIDs: snapshot.layout.frames.keys.filter { !$0.hasSuffix("/spacer") }.sorted(),
+                                        viewportWidth: CGFloat(image.width) / renderScale,
+                                        viewportHeight: CGFloat(image.height) / renderScale, renderScale: renderScale,
+                                        image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256),
+                                        nativeLayout: snapshot.layout,
+                                        drawerLayoutInputs: .init(safeAreaInsets: EdgeInsets(
+                                            top: variant.safeAreaInsets.top * variant.canvasHeight,
+                                            leading: variant.safeAreaInsets.leading * variant.canvasWidth,
+                                            bottom: variant.safeAreaInsets.bottom * variant.canvasHeight,
+                                            trailing: variant.safeAreaInsets.trailing * variant.canvasWidth),
+                                            isLandscape: deviceOrientation == .landscape, minimumPortraitTopInset: minimumPortraitTopInset)))
+                                    barFrames[barFrames.count - 1].containerPresentation = .init(isLandscape: deviceOrientation == .landscape,
+                                        colorScheme: scheme == .dark ? .dark : .light)
+                                    barSnapshots.append((title, image))
+                                }
+                            }
                         }
-                    }
-                    let matrix = GamepadControlPresentationState.allCases.map { ($0.rawValue, $0, [String: GamepadControlPresentationState]()) }
-                        + [("mixed", .normal, mixed)]
-                    for (label, state, overrides) in matrix {
-                        let title = "\(variant.orientation.rawValue)-\(scheme.rawValue)-\(label)"
-                        let item = ThumbleNativeSkinPreviewItem(title: title, customization: rendered,
-                            colorScheme: scheme, state: state, statesByControlID: overrides,
-                            safeAreaInsets: variant.safeAreaInsets, showsSafeAreaOverlay: showsSafeAreaOverlay,
-                            showsTouchTargets: showsTouchTargets, secondaryBindingTexts: hints)
-                        let png = try ThumbleNativeSkinPreviewRenderer.pngData(item: item, scale: renderScale)
-                        guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("rendered image exceeds budget") }
-                        try png.write(to: staging.appendingPathComponent(title + ".png"))
-                        items.append(item)
-                        frames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
-                            state: state, statesByControlID: overrides, viewportWidth: variant.canvasWidth,
-                            viewportHeight: variant.canvasHeight, safeAreaInsets: variant.safeAreaInsets,
-                            renderScale: renderScale,
-                            canvasFill: rendered.keypadBackgroundFillStyle(scheme: scheme == .dark ? .dark : .light),
-                            artworkLayers: rendered.artworkLayers,
-                            controls: try controlEvidence(customization: rendered, variant: variant, scheme: scheme,
-                                                      state: state, overrides: overrides, renderScale: renderScale, secondaryBindingTexts: hints),
-                            image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256),
-                            showsSafeAreaOverlay: showsSafeAreaOverlay, showsTouchTargets: showsTouchTargets, showsBindingHints: showsBindingHints))
+                        let hints = Dictionary(uniqueKeysWithValues: resolvedControls.compactMap { control -> (String, String)? in
+                            KeypadBindingPresentationBuilder.compactHint(for: control, entries: bindingEntries).map { (control.id.id, $0) }
+                        })
+                        if includesControlBar {
+                            let controller = try ThumbleNativeSkinPreviewRenderer.render(item: .init(title: "drawer-underlay",
+                                customization: rendered, colorScheme: scheme, state: .normal,
+                                safeAreaInsets: variant.safeAreaInsets, showsSafeAreaOverlay: showsSafeAreaOverlay,
+                                showsTouchTargets: showsTouchTargets, secondaryBindingTexts: hints, omitsRevealHandle: true), scale: renderScale)
+                            let samples: [(Bool, Bool, Bool, CGFloat, String)] = [false, true].flatMap { connected in
+                                [false, true].map { editing in (connected, editing, true, CGFloat(1), "expanded") }
+                            } + [(true, false, false, 1, "collapsed"), (true, false, false, 0, "faded")]
+                            for (connected, editing, requested, opacity, sample) in samples {
+                                let title = "drawer-\(variant.orientation.rawValue)-\(scheme.rawValue)\(actionSuffix)-\(connected ? "connected" : "offline")-\(editing ? "editing" : "normal")-\(sample)"
+                                let snapshot = try ThumbleNativeSkinPreviewRenderer.renderDrawerSnapshot(profile: profile,
+                                    orientation: deviceOrientation, colorScheme: scheme, safeAreaInsets: variant.safeAreaInsets,
+                                    minimumPortraitTopInset: minimumPortraitTopInset, requestedVisibility: requested,
+                                    isConnected: connected, isDefault: false, isEditing: editing, collapsedOpacity: opacity,
+                                    scale: renderScale, customizationOverride: rendered)
+                                let image = try ThumbleNativeSkinPreviewRenderer.composite(controller: controller, drawer: snapshot.image)
+                                let png = try ThumbleNativeSkinPreviewRenderer.pngData(image)
+                                guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("drawer image exceeds budget") }
+                                try png.write(to: staging.appendingPathComponent(title + ".png"))
+                                let surfaces = snapshot.layout.frames.keys.filter {
+                                    !$0.hasSuffix("/spacer") && $0 != "native-drawer" && (snapshot.isVisible || opacity > 0)
+                                }.sorted()
+                                drawerFrames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
+                                    isConnected: connected, isEditing: editing, requestedVisibility: requested,
+                                    resolvedVisibility: snapshot.isVisible, collapsedOpacity: opacity, surfaceIDs: surfaces,
+                                    nativeLayout: snapshot.layout, layoutInputs: snapshot.inputs, renderScale: renderScale,
+                                    image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256)))
+                                drawerSnapshots.append((title, image))
+                            }
+                        }
+                        let matrix = GamepadControlPresentationState.allCases.map { ($0.rawValue, $0, [String: GamepadControlPresentationState]()) }
+                            + [("mixed", .normal, mixed)]
+                        for (label, state, overrides) in matrix {
+                            let title = "\(variant.orientation.rawValue)-\(scheme.rawValue)\(actionSuffix)-\(label)"
+                            let item = ThumbleNativeSkinPreviewItem(title: title, customization: rendered,
+                                colorScheme: scheme, state: state, statesByControlID: overrides,
+                                safeAreaInsets: variant.safeAreaInsets, showsSafeAreaOverlay: showsSafeAreaOverlay,
+                                showsTouchTargets: showsTouchTargets, secondaryBindingTexts: hints)
+                            let png = try ThumbleNativeSkinPreviewRenderer.pngData(item: item, scale: renderScale)
+                            guard png.count <= maximumFileBytes else { throw ControllerDesignError.invalid("rendered image exceeds budget") }
+                            try png.write(to: staging.appendingPathComponent(title + ".png"))
+                            items.append(item)
+                            frames.append(.init(title: title, orientation: variant.orientation, colorScheme: scheme,
+                                state: state, statesByControlID: overrides, viewportWidth: variant.canvasWidth,
+                                viewportHeight: variant.canvasHeight, safeAreaInsets: variant.safeAreaInsets,
+                                renderScale: renderScale,
+                                canvasFill: rendered.keypadBackgroundFillStyle(scheme: scheme == .dark ? .dark : .light),
+                                artworkLayers: rendered.artworkLayers,
+                                controls: try controlEvidence(customization: rendered, variant: variant, scheme: scheme,
+                                                          state: state, overrides: overrides, renderScale: renderScale, secondaryBindingTexts: hints),
+                                image: .init(path: "reviews/review-\(number)/\(title).png", byteCount: png.count, sha256: png.thumbleSHA256),
+                                showsSafeAreaOverlay: showsSafeAreaOverlay, showsTouchTargets: showsTouchTargets, showsBindingHints: showsBindingHints))
+                        }
                     }
                 }
             }
@@ -1377,6 +1399,7 @@ extension ControllerDesignWorkspace {
                 sourceFiles: sources, frames: frames, sourceDiagnostics: compilation.sourceReport,
                 qualityDiagnostics: quality, visualApproval: "pending-independent-critique",
                 baseProfileSHA256: session.baseProfileSHA256, layoutPlanSHA256: session.layoutPlanSHA256, controlBar: barEvidence, drawer: drawerEvidence)
+            evidence.ownedAuthority = session.ownedAuthority
             evidence.diagnostics = try ControllerDesignDiagnosticBuilder.build(source: compilation.sourceReport, quality: quality,
                 artboard: artboard, frames: frames, layouts: layoutInputs, barStyles: barStyleUses, workspace: compilation.workspace, skin: compilation.package.skin)
             try write(evidence, to: staging.appendingPathComponent("manifest.json"))
