@@ -159,7 +159,22 @@ fn run(root: &Path, log: Option<&Path>) -> Result<(), &'static str> {
     Ok(())
 }
 fn main() {
-    let result = args().and_then(|(mode, root, log)| match mode.as_str() {
+    let native_args = std::env::args().skip(1).collect::<Vec<_>>();
+    let result = if native_args
+        .first()
+        .is_some_and(|mode| mode == "pairing-host")
+    {
+        if !(3..=4).contains(&native_args.len()) {
+            Err("invalid_pairing_host_arguments")
+        } else {
+            thumble_rewrite_receiver::pairing_host::run(
+                Path::new(&native_args[1]),
+                &native_args[2],
+                native_args.get(3).map(Path::new),
+            )
+        }
+    } else {
+        args().and_then(|(mode, root, log)| match mode.as_str() {
         "secure-directory" => security::directory(&root),
         "host-identity-initialize" | "host-identity-show" if log.is_none() => {
             let operation = if mode == "host-identity-initialize" { thumble_rewrite_receiver::host_identity::load_or_create } else { thumble_rewrite_receiver::host_identity::load_existing };
@@ -169,7 +184,8 @@ fn main() {
         }
         "run" => run(&root, log.as_deref()),
         _ => Err("unsupported_mode"),
-    });
+    })
+    };
     if let Err(error) = result {
         eprintln!("{error}");
         std::process::exit(1);

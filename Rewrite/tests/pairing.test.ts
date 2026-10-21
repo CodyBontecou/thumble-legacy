@@ -8,6 +8,8 @@ import {
   decodePairingCommand,
   decodePairingReply,
   PAIRING_WINDOW_MS,
+  type PairingCommand,
+  type PairingTransport,
 } from "@thumble/contracts/pairing";
 function fixture(authority = "authority-A") {
   let now = 1000,
@@ -262,4 +264,90 @@ test("shared native enrollment fixture preserves service proof and public status
     attemptsRemaining: 0,
     networkEnabled: false,
   });
+});
+
+test("listener commands require bounded explicit addresses without executing caller objects", () => {
+  const value = {
+    command: "pairing-listen",
+    bindAddress: "127.0.0.1:0",
+    advertiseHost: "127.0.0.1",
+  } satisfies PairingCommand;
+  expect(decodePairingCommand(value)).toEqual(value);
+  expect(Object.isFrozen(decodePairingCommand(value))).toBe(true);
+  for (const bad of [
+    { ...value, bindAddress: "localhost:0" },
+    { ...value, advertiseHost: "0.0.0.0" },
+    { ...value, advertiseHost: "127.0.0.1/path" },
+    { ...value, secret: "not-an-option" },
+    { command: "pairing-stop-listening", bindAddress: "127.0.0.1:0" },
+  ])
+    expect(() => decodePairingCommand(bad)).toThrow();
+  let calls = 0;
+  expect(() =>
+    decodePairingCommand({
+      get command() {
+        calls++;
+        return "pairing-listen";
+      },
+      bindAddress: "127.0.0.1:0",
+      advertiseHost: "127.0.0.1",
+    }),
+  ).toThrow();
+  expect(() =>
+    decodePairingCommand({
+      command: {
+        toString() {
+          calls++;
+          return "pairing-open";
+        },
+      },
+    }),
+  ).toThrow();
+  expect(calls).toBe(0);
+});
+test("native listener metadata binds full invitations to the exact advertised host pin port and authority", () => {
+  const f = fixture(),
+    offer = f.windows.open();
+  const transport = {
+    listening: true,
+    bindAddress: "127.0.0.1:12345",
+    advertiseHost: "127.0.0.1",
+    port: 12345,
+    certificatePin: "1".repeat(64),
+    certificateDER: "00",
+    persistentIdentity: true,
+    serverName: "thumble-rewrite.local",
+    controlVersion: 2,
+    inputEnabled: false,
+  } satisfies PairingTransport;
+  const reply = {
+    authorityInstanceId: "authority-A",
+    pairing: { ...f.windows.status(), networkEnabled: true },
+    offer: {
+      ...offer,
+      host: "127.0.0.1",
+      port: 12345,
+      certificatePin: transport.certificatePin,
+      authorityInstanceId: "authority-A",
+    },
+    transport,
+  };
+  expect(decodePairingReply(reply)).toEqual(reply);
+  expect(Object.isFrozen(decodePairingReply(reply).transport)).toBe(true);
+  for (const invalid of [
+    { ...reply, offer: { ...reply.offer, host: "different.local" } },
+    { ...reply, offer: { ...reply.offer, port: 12346 } },
+    { ...reply, offer: { ...reply.offer, certificatePin: "2".repeat(64) } },
+    {
+      ...reply,
+      offer: { ...reply.offer, authorityInstanceId: "another-authority" },
+    },
+    { ...reply, transport: { ...transport, inputEnabled: true } },
+    { ...reply, transport: { ...transport, persistentIdentity: false } },
+    { ...reply, transport: { ...transport, certificateDER: "GG" } },
+    { ...reply, transport: { ...transport, serverName: "wrong.local" } },
+    { ...reply, transport: { ...transport, port: "12345" } },
+    { ...reply, pairing: { ...reply.pairing, networkEnabled: false } },
+  ])
+    expect(() => decodePairingReply(invalid)).toThrow();
 });

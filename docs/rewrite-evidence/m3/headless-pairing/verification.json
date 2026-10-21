@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "scope": "Native pairing owner, service/CLI forwarding and explicit listener lifecycle",
+  "rustUnixTests": 61,
+  "windowsExpectedTests": 59,
+  "windowsNote": "two Unix-only filesystem tests excluded; new source not hosted",
+  "typescriptTests": 73,
+  "typescriptSkipped": 1,
+  "typescriptAssertions": 878,
+  "standalonePackage": {
+    "tests": 1,
+    "assertions": 42
+  },
+  "clippy": "pass",
+  "independentNodeTLS": "normal certificate/name/time validation and exact pin before proof; control v2 completion",
+  "ownerDeath": "stalled TLS peer closed and recording receiver neutralized within tested one-second bound",
+  "capacity": {
+    "workers": 4,
+    "queue": 4,
+    "registeredSockets": 8
+  },
+  "inputEnabled": false,
+  "hostedNewSource": "not published; separate from pending 25-file phone snapshot 8f216c9",
+  "remaining": [
+    "Windows/macOS/Linux hosted verification for this source",
+    "OS-provider vault tests",
+    "input-session authorization and native packet routing",
+    "revocation/reconnect and phone app",
+    "signing/gameplay/optical acceptance"
+  ],
+  "retainedSwiftStackSafety": "unverified after prior compiler macro-probe stall"
+}

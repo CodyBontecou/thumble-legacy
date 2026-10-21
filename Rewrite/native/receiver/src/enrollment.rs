@@ -204,7 +204,7 @@ fn receive<T: serde::de::DeserializeOwned>(
 pub fn enroll(
     channel: &mut ControlChannel,
     windows: &Mutex<PairingWindows>,
-    store: &mut PhoneTrustStore,
+    store: &Mutex<PhoneTrustStore>,
     mut now: impl FnMut() -> Result<u64, &'static str>,
 ) -> Result<TrustedPhone, &'static str> {
     let result = (|| {
@@ -212,7 +212,13 @@ pub fn enroll(
             let policy = windows.lock().map_err(|_| "pairing_owner_unavailable")?;
             (policy.authority.clone(), policy.pin)
         };
-        if channel.native_server_pin() != Some(pin) || store.host_pin() != pin.hex() {
+        if channel.native_server_pin() != Some(pin)
+            || store
+                .lock()
+                .map_err(|_| "phone_trust_owner_unavailable")?
+                .host_pin()
+                != pin.hex()
+        {
             return Err("enrollment_host_mismatch");
         }
         let hello: Hello = receive(channel)?;
@@ -256,7 +262,10 @@ pub fn enroll(
                 &request.proof,
                 proof_time,
             )?;
-        let issued = store.enroll_after_pairing(&request.phone_id, &request.label, now()?)?;
+        let issued = store
+            .lock()
+            .map_err(|_| "phone_trust_owner_unavailable")?
+            .enroll_after_pairing(&request.phone_id, &request.label, now()?)?;
         issued.send_enrollment(channel)?;
         let ack: Acknowledgment =
             receive(channel).map_err(|_| "phone_credential_delivery_unconfirmed")?;
@@ -357,10 +366,10 @@ mod tests {
         let address = listener.local_addr().unwrap();
         let path = root.0.clone();
         let worker = thread::spawn(move || {
-            let mut store = PhoneTrustStore::open(&path).unwrap();
+            let store = Mutex::new(PhoneTrustStore::open(&path).unwrap());
             let (stream, _) = listener.accept().unwrap();
             let mut channel = ControlChannel::accept_unenrolled(stream, &identity).unwrap();
-            let result = enroll(&mut channel, &windows, &mut store, clock);
+            let result = enroll(&mut channel, &windows, &store, clock);
             (result, windows.lock().unwrap().status(102).unwrap())
         });
         let mut channel = ControlChannel::connect_pinned(address, pin).unwrap();
@@ -580,16 +589,16 @@ mod tests {
             assert!(channel.receive().is_err());
         });
         let mut client = ControlChannel::connect_pinned(address, pin).unwrap();
-        let mut store = PhoneTrustStore::open(&root.0).unwrap();
+        let store = Mutex::new(PhoneTrustStore::open(&root.0).unwrap());
         let mut w = PairingWindows::new("authority-a", pin).unwrap();
         w.open(100).unwrap();
         let w = Mutex::new(w);
         assert_eq!(
-            enroll(&mut client, &w, &mut store, || Ok(101)).err(),
+            enroll(&mut client, &w, &store, || Ok(101)).err(),
             Some("enrollment_host_mismatch")
         );
         assert_eq!(w.lock().unwrap().status(102).unwrap().attempts_remaining, 5);
-        assert!(store.list().unwrap().is_empty());
+        assert!(store.lock().unwrap().list().unwrap().is_empty());
         server.join().unwrap();
     }
     #[test]

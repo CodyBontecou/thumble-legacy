@@ -1,0 +1,3 @@
+$ cargo +1.88.0 build --locked --manifest-path native/receiver/Cargo.toml
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.23s
