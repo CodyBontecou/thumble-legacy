@@ -1,6 +1,6 @@
 # Thumble TypeScript rewrite plan
 
-Status: headless implementation underway in a dedicated worktree. M2 workspace/contracts, recording receiver/service/CLI and native mobile library seams are implemented and pass hosted checks. M3 pairing windows, native encrypted packet/safety adapters and isolated host/phone pinned TLS/framing libraries are implemented; product enrollment, persistent trust, network worker/socket routing and the React Native app remain pending. No acceptance milestones are complete. See [M2 evidence](rewrite-evidence/m2/README.md) and [the baseline](rewrite-evidence/m0/README.md).
+Status: headless implementation underway in a dedicated worktree. M2 workspace/contracts, recording receiver/service/CLI and native mobile library seams are implemented and pass hosted checks. M3 pairing windows, native encrypted packet/safety adapters and isolated host/phone pinned TLS/framing libraries are implemented; native host identity persistence and explicit CLI setup are also implemented; product enrollment, persistent phone trust, host worker/socket routing and the React Native app remain pending. No acceptance milestones are complete. See [M2 evidence](rewrite-evidence/m2/README.md) and [the baseline](rewrite-evidence/m0/README.md).
 Created: 2026-10-21.
 
 ## Outcome and scope

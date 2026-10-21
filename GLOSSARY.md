@@ -15,3 +15,6 @@ A bounded authorization for one trusted phone to send physical controller state 
 
 **Activation generation**:
 The identity of a particular activated runtime configuration. Replacing it retires input associated with the previous activation.
+
+**Persistent host identity**:
+The native host's private TLS key, certificate and public certificate pin, retained across receiver restarts. It does not identify a temporary authority process or authorize a phone/input session.

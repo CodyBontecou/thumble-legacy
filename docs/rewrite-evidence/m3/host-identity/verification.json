@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "rustTests": 33,
+  "sourceTests": 67,
+  "sourceSkipped": 1,
+  "standalonePackageTests": 1,
+  "standaloneAssertions": 29,
+  "nativeClippy": "pass",
+  "sourceFormatting": "pass",
+  "hostedNewIdentity": "not published",
+  "hostedEarlierTLS": "a73d432 Windows/macOS/Linux green; excludes persistent identity",
+  "keyBoundary": "PKCS8 key stays in native private binary record; CLI returns only public metadata",
+  "remaining": [
+    "explicit identity rotation/repair workflow",
+    "phone identity and secure storage",
+    "transactional phone trust",
+    "enrollment protocol",
+    "product listener/grants",
+    "UDP routing/reconnect",
+    "physical and optical launch acceptance"
+  ]
+}

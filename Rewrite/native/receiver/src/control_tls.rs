@@ -134,6 +134,10 @@ pub struct ServerIdentity {
 }
 impl ServerIdentity {
     pub fn generate() -> Result<Self, TransportRejected> {
+        let (certificate, key) = Self::generate_material()?;
+        Self::from_der(certificate, key)
+    }
+    pub(crate) fn generate_material() -> Result<(Vec<u8>, Vec<u8>), TransportRejected> {
         let mut params = rcgen::CertificateParams::new(vec![CONTROL_SERVER_NAME.to_string()])
             .map_err(|_| TransportRejected)?;
         let now = time::OffsetDateTime::now_utc();
@@ -142,7 +146,7 @@ impl ServerIdentity {
         params.extended_key_usages = vec![rcgen::ExtendedKeyUsagePurpose::ServerAuth];
         let key = rcgen::KeyPair::generate().map_err(|_| TransportRejected)?;
         let cert = params.self_signed(&key).map_err(|_| TransportRejected)?;
-        Self::from_der(cert.der().to_vec(), key.serialize_der())
+        Ok((cert.der().to_vec(), key.serialize_der()))
     }
     /// Call only with key bytes loaded by the user-private native identity owner.
     pub fn from_der(certificate: Vec<u8>, key: Vec<u8>) -> Result<Self, TransportRejected> {
@@ -167,6 +171,21 @@ impl ServerIdentity {
             config: Arc::new(config),
             pin,
         })
+    }
+    pub(crate) fn validate_current(&self) -> Result<(), TransportRejected> {
+        PinVerifier {
+            pin: self.pin,
+            provider: Arc::new(default_provider()),
+        }
+        .verify_server_cert(
+            &self.certificate,
+            &[],
+            &ServerName::try_from(CONTROL_SERVER_NAME).map_err(|_| TransportRejected)?,
+            &[],
+            UnixTime::now(),
+        )
+        .map(|_| ())
+        .map_err(|_| TransportRejected)
     }
     pub fn certificate_der(&self) -> &[u8] {
         self.certificate.as_ref()

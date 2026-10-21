@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/host-identity.test.ts:
+(pass) public identity contract rejects credentials, unsupported policy and executable object fields [3.28ms]
+(pass) headless identity initialize/show survives separate native processes without exporting private keys [371.77ms]
+
+ 2 pass
+ 0 fail
+ 34 expect() calls
+Ran 2 tests across 1 file. [406.00ms]
