@@ -196,6 +196,27 @@
           "mcpTool": "import_desktop_defaults",
           "gate": "configuration-write",
           "phoneEffect": "Explicit stopped-authority bootstrap preserves configuration and pairing; no phone activation"
+        },
+        {
+          "id": "profile.migrate-authority",
+          "cli": [
+            "thumble-host configuration migration plan",
+            "thumble-host configuration migration apply"
+          ],
+          "status": "current",
+          "mcpTool": "migrate_profile_authority",
+          "gate": "configuration-write",
+          "phoneEffect": "Explicit offline reviewed migration; reconcile retained phone journals before applying"
+        },
+        {
+          "id": "profile.rollback-authority",
+          "cli": [
+            "thumble-host configuration migration rollback"
+          ],
+          "status": "current",
+          "mcpTool": "rollback_profile_authority",
+          "gate": "configuration-write",
+          "phoneEffect": "Explicit rollback of an unchanged destination; preserves phone journals and advances revision"
         }
       ]
     },

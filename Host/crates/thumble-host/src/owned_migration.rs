@@ -1,4 +1,5 @@
-//! Backed-up owned-state transactions. No automatic migration or CLI activation.
+//! Backed-up owned-state transactions. Explicit offline CLI/MCP activation uses
+//! migration_command; automatic startup and retained-phone admission remain gated.
 use crate::{paths::HostPaths, runtime::AuthorityLock, storage};
 use serde::{Deserialize, Serialize};
 use serde_json::value::RawValue;
@@ -26,6 +27,7 @@ const MAXIMUM_PACKAGES: usize = 512 * 1024 * 1024;
 pub enum MigrationError {
     InvalidSource,
     Preparation,
+    ResourceConflict,
     InvalidJournal,
     Conflict,
     Security,
@@ -36,6 +38,7 @@ impl fmt::Display for MigrationError {
         f.write_str(match self {
             Self::InvalidSource => "migration source failed validation",
             Self::Preparation => "profile migration requires recovery",
+            Self::ResourceConflict => "migration resource conflict: an installed archive differs; the original archive remains in the private backup",
             Self::InvalidJournal => "migration backup or journal requires recovery",
             Self::Conflict => "migration source changed; preserved data requires review",
             Self::Security => "migration storage or authority lease failed validation",
@@ -536,6 +539,30 @@ fn commit_with_hook(
     write_receipt(&path, &receipt)?;
     Ok(receipt)
 }
+/// Recover only the exact reviewed forward migration. Never complete a rollback
+/// or acknowledge a different candidate from a plan supplied by a local caller.
+pub fn recover_reviewed(
+    paths: &HostPaths,
+    lease: &AuthorityLock,
+    expected: &MigrationReceipt,
+) -> Result<MigrationReceipt, MigrationError> {
+    let path = journal(paths, lease, &expected.source_sha256)?;
+    let (receipt, _, destination) = load_journal(&path, &expected.source_sha256)?;
+    let mut prepared = receipt.clone();
+    prepared.phase = MigrationPhase::Prepared;
+    if &prepared != expected
+        || !matches!(
+            receipt.phase,
+            MigrationPhase::Prepared | MigrationPhase::Committed
+        )
+        || read(&paths.state_file)? != destination
+    {
+        return Err(MigrationError::Conflict);
+    }
+    recover(paths, lease, &expected.source_sha256, |_, _| {
+        Err(MigrationError::Preparation)
+    })
+}
 /// Explicit recovery of recorded intent; startup wiring remains gated. Never
 /// treat a staging file without a valid receipt as a committed migration.
 pub fn recover(
@@ -608,6 +635,68 @@ pub fn recover(
         MigrationPhase::Committed | MigrationPhase::RolledBack => (),
     }
     Ok(receipt)
+}
+/// Roll back only the reviewed transaction, including exact replay checks.
+/// A later authority write cannot be acknowledged or replaced as a replay.
+pub fn rollback_reviewed(
+    paths: &HostPaths,
+    lease: &AuthorityLock,
+    expected: &MigrationReceipt,
+    restore_package: impl FnMut(&str, &[u8]) -> Result<(), MigrationError>,
+) -> Result<MigrationReceipt, MigrationError> {
+    if expected.phase != MigrationPhase::Prepared || expected.rollback_sha256.is_some() {
+        return Err(MigrationError::InvalidJournal);
+    }
+    let path = journal(paths, lease, &expected.source_sha256)?;
+    let (receipt, source, destination) = load_journal(&path, &expected.source_sha256)?;
+    let mut prepared = receipt.clone();
+    prepared.phase = MigrationPhase::Prepared;
+    prepared.rollback_sha256 = None;
+    if &prepared != expected {
+        return Err(MigrationError::Conflict);
+    }
+    if matches!(
+        receipt.phase,
+        MigrationPhase::RollbackPrepared | MigrationPhase::RolledBack
+    ) {
+        let revision = receipt
+            .result_revision
+            .checked_add(1)
+            .ok_or(MigrationError::InvalidJournal)?
+            .to_string();
+        let updated = state(&destination)?.configuration_updated_at.to_string();
+        let expected_bytes = edit_json_values(
+            &source,
+            &[
+                JsonValueEdit {
+                    pointer: "/configurationRevision",
+                    value: Some(revision.as_bytes()),
+                },
+                JsonValueEdit {
+                    pointer: "/configurationUpdatedAt",
+                    value: Some(updated.as_bytes()),
+                },
+            ],
+            MAXIMUM,
+        )
+        .map_err(|_| MigrationError::InvalidJournal)?;
+        if read(&path.join("rollback-state.json"))? != expected_bytes
+            || receipt.rollback_sha256.as_deref() != Some(digest(&expected_bytes).as_str())
+        {
+            return Err(MigrationError::InvalidJournal);
+        }
+    }
+    let current = read(&paths.state_file)?;
+    match receipt.phase {
+        MigrationPhase::Committed if current == destination => (),
+        MigrationPhase::RollbackPrepared
+            if current == destination
+                || receipt.rollback_sha256.as_deref() == Some(digest(&current).as_str()) => {}
+        MigrationPhase::RolledBack
+            if receipt.rollback_sha256.as_deref() == Some(digest(&current).as_str()) => {}
+        _ => return Err(MigrationError::Conflict),
+    }
+    rollback(paths, lease, &expected.source_sha256, restore_package)
 }
 /// Restore callbacks must durably and idempotently install/verify each archive
 /// in the legacy resource store before the original profile state is published.

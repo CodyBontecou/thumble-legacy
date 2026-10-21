@@ -12,6 +12,7 @@ pub mod drafts;
 pub mod gamepad;
 mod input_liveness;
 pub mod legacy_import;
+pub mod migration_command;
 pub mod native_configuration;
 pub mod output;
 pub mod owned_drafts;

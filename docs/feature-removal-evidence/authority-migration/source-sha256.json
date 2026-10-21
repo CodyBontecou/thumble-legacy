@@ -1,0 +1,15 @@
+{
+  "Host/crates/thumble-host/src/migration_command.rs": "026a358dab2ca8108b71a81fc1a904ed8a741dd922c4742ed9eed1f3cd7512ab",
+  "Host/crates/thumble-host/src/cli_configuration.rs": "1fabf323a03ae5a52c675923121fbdcf21a979636eda1989d078b1770abd22b8",
+  "Host/crates/thumble-host/src/owned_migration.rs": "b7c1b7b745c46e0817034883f8682a0744edd444beaf6e8cbbbb8c4b483f425b",
+  "Host/crates/thumble-host/src/owned_migration_tests.rs": "83328788b140495434ff87ac6038a910a5919bbb6525566434886d40c1b12dc7",
+  "Host/crates/thumble-host/src/skins.rs": "2f8e7cb870117a299728c316ba02f5be835650b99c3b93d84a390716c972b70a",
+  "Host/crates/thumble-mcp/src/main.rs": "678e5610323328e449e0b1125e6fc3ad12cf0ba8209211281f2bcda640275d8f",
+  "Host/crates/thumble-core/src/core.rs": "9dfac825ad5127316b427fc88b4b5fc76a25577ff3e13ebbed29090c202137ad",
+  "scripts/verify-authority-migration.py": "60728f51d4891a0f8067bc4c052dca6ccea17da384427b990445643725e50d00",
+  "docs/authority-migration.md": "09fc8e2ff780b536f7c22454939658ce68434120bc28a51f55fc10ff164dba38",
+  "Host/crates/thumble-host/src/lib.rs": "409c44f9e679b1d79e477737cd00036508c84139589220bc15e605e70490e4d8",
+  "Host/crates/thumble-mcp/src/server.rs": "28896a24369b753a8fa421c11f2a123888c5a07a22fca8cdd354b3a2dd44eb78",
+  "docs/mcp/cli-capabilities-v1.json": "0463991a9d862936e4b6093f0929827310a67e9059435ac0f1276f294bf70864",
+  "docs/cli-mcp-cutover.md": "f061804945e0b34dc461d1df7e0d8bd9f26033072c908a3b2994afd9c74942d2"
+}

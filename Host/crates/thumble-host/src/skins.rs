@@ -441,11 +441,26 @@ impl SkinLibrary {
     }
 
     pub fn install(&self, package: &ValidatedSkinPackage) -> Result<bool, SkinError> {
+        self.install_with_overwrite(package, true)
+    }
+    /// Recovery may restore an absent original archive, but cannot overwrite a
+    /// different archive installed since the migration backup was made.
+    pub(crate) fn restore_exact(&self, package: &ValidatedSkinPackage) -> Result<bool, SkinError> {
+        self.install_with_overwrite(package, false)
+    }
+    fn install_with_overwrite(
+        &self,
+        package: &ValidatedSkinPackage,
+        overwrite: bool,
+    ) -> Result<bool, SkinError> {
         let _lock = self.lock()?;
         let destination = self.root.join(format!("{}.json", package.info.storage_key));
         if let Some(existing) = self.read_key(&package.info.storage_key)? {
             if existing.info == package.info {
                 return Ok(false);
+            }
+            if !overwrite {
+                return Err(SkinError("skin_restore_conflict"));
             }
         }
         let data = serde_json::to_vec(&StoredPackage {
@@ -773,6 +788,25 @@ print(json.dumps(o))
         fs::remove_file(library.root.join("library.lock")).unwrap();
         symlink(&outside, library.root.join("library.lock")).unwrap();
         assert!(library.list().is_err());
+    }
+
+    #[test]
+    fn original_archive_restore_never_overwrites_a_newer_different_archive() {
+        let (_directory, bridge, paths) = fixture();
+        let first = bridge.inspect(b"first".to_vec()).unwrap();
+        let second = bridge.inspect(b"second".to_vec()).unwrap();
+        let library = SkinLibrary::open(&paths, bridge).unwrap();
+        assert!(library.restore_exact(&first).unwrap());
+        assert!(!library.restore_exact(&first).unwrap());
+        assert!(library.restore_exact(&second).is_err());
+        assert_eq!(
+            library
+                .load(&first.info.reference)
+                .unwrap()
+                .unwrap()
+                .archive(),
+            b"first"
+        );
     }
 
     #[test]

@@ -480,3 +480,116 @@ fn legacy_wire_mutations_cannot_corrupt_an_owned_authority() {
         core.persistent_state().validate().unwrap();
     }
 }
+
+#[test]
+fn reviewed_recovery_requires_exact_candidate_and_current_destination() {
+    let (_root, paths, lease, candidate) = setup("plain");
+    // An unapplied plan must not install anything through the replay path.
+    assert!(super::recover_reviewed(&paths, &lease, candidate.receipt()).is_err());
+    super::commit(&paths, &lease, &candidate).unwrap();
+    let original = read(&paths.state_file).unwrap();
+    assert_eq!(
+        super::recover_reviewed(&paths, &lease, candidate.receipt())
+            .unwrap()
+            .phase,
+        MigrationPhase::Committed
+    );
+    let mut changed = candidate.receipt().clone();
+    changed.result_revision += 1;
+    assert!(super::recover_reviewed(&paths, &lease, &changed).is_err());
+    assert_eq!(read(&paths.state_file).unwrap(), original);
+    let edited = edit_json_values(
+        &original,
+        &[JsonValueEdit {
+            pointer: "/configurationRevision",
+            value: Some(b"43"),
+        }],
+        MAXIMUM,
+    )
+    .unwrap();
+    storage::install_private_state_bytes(&paths.state_file, &edited, Some(&original), || Ok(()))
+        .unwrap();
+    assert!(super::recover_reviewed(&paths, &lease, candidate.receipt()).is_err());
+    assert_eq!(read(&paths.state_file).unwrap(), edited);
+}
+
+#[test]
+fn reviewed_rollback_binds_plan_and_refuses_later_forward_or_legacy_writes() {
+    let (_root, paths, lease, candidate) = setup("plain");
+    assert!(
+        super::rollback_reviewed(&paths, &lease, candidate.receipt(), |h, b| restore(
+            &paths, h, b
+        ))
+        .is_err()
+    );
+    commit(&paths, &lease, &candidate).unwrap();
+    let mut altered = candidate.receipt().clone();
+    altered.result_revision += 1;
+    assert!(
+        super::rollback_reviewed(&paths, &lease, &altered, |h, b| restore(&paths, h, b)).is_err()
+    );
+    let receipt = super::rollback_reviewed(&paths, &lease, candidate.receipt(), |h, b| {
+        restore(&paths, h, b)
+    })
+    .unwrap();
+    assert_eq!(receipt.phase, MigrationPhase::RolledBack);
+    assert_eq!(
+        super::rollback_reviewed(&paths, &lease, candidate.receipt(), |h, b| restore(
+            &paths, h, b
+        ))
+        .unwrap(),
+        receipt
+    );
+    let original = read(&paths.state_file).unwrap();
+    let edited = edit_json_values(
+        &original,
+        &[JsonValueEdit {
+            pointer: "/configurationRevision",
+            value: Some(b"44"),
+        }],
+        MAXIMUM,
+    )
+    .unwrap();
+    storage::install_private_state_bytes(&paths.state_file, &edited, Some(&original), || Ok(()))
+        .unwrap();
+    assert!(
+        super::rollback_reviewed(&paths, &lease, candidate.receipt(), |h, b| restore(
+            &paths, h, b
+        ))
+        .is_err()
+    );
+    assert_eq!(read(&paths.state_file).unwrap(), edited);
+}
+
+#[test]
+fn reviewed_rollback_rejects_corrupt_opaque_bytes_even_with_matching_receipt_hash() {
+    let (_root, paths, lease, candidate) = setup("plain");
+    commit(&paths, &lease, &candidate).unwrap();
+    super::rollback_reviewed(&paths, &lease, candidate.receipt(), |h, b| {
+        restore(&paths, h, b)
+    })
+    .unwrap();
+    let journal = receipt_path(&paths, &candidate);
+    let original = read(&paths.state_file).unwrap();
+    let changed = edit_json_values(
+        &original,
+        &[JsonValueEdit {
+            pointer: "/futureState/decimal",
+            value: Some(b"0.5"),
+        }],
+        MAXIMUM,
+    )
+    .unwrap();
+    fs::write(journal.join("rollback-state.json"), &changed).unwrap();
+    fs::write(&paths.state_file, &changed).unwrap();
+    let (mut receipt, _, _) = load_journal(&journal, &candidate.receipt.source_sha256).unwrap();
+    receipt.rollback_sha256 = Some(digest(&changed));
+    write_receipt(&journal, &receipt).unwrap();
+    assert!(
+        super::rollback_reviewed(&paths, &lease, candidate.receipt(), |_, _| panic!(
+            "corrupt rollback must not restore resources"
+        ))
+        .is_err()
+    );
+    assert_eq!(read(&paths.state_file).unwrap(), changed);
+}

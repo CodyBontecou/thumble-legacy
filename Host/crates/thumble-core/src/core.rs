@@ -179,6 +179,9 @@ pub struct StatusSnapshot {
     pub running: bool,
     pub paired: bool,
     pub client_name: Option<String>,
+    /// The authenticated peer advertised v5 at this connection handshake.
+    #[serde(default)]
+    pub client_supports_owned_profiles: bool,
     pub pairing_pending: bool,
     pub active_generation: Option<u64>,
     pub pressed_buttons: Vec<KeypadElementID>,
@@ -549,6 +552,10 @@ impl HostCore {
             running: self.running,
             paired: self.active_client.is_some(),
             client_name,
+            client_supports_owned_profiles: self
+                .active_client
+                .as_ref()
+                .is_some_and(|client| client.profile_formats.contains(&5)),
             pairing_pending,
             active_generation: self.active_generation,
             pressed_buttons,
@@ -2601,6 +2608,7 @@ mod digital_sequence_tests {
             .as_ref()
             .unwrap()
             .contains(&ControllerCapability::OwnedPhoneEditV1));
+        assert!(core.status().client_supports_owned_profiles);
         assert!(core.accepts_owned_phone_edits(1));
         assert!(!core.accepts_owned_phone_edits(2));
         let effects = core
@@ -2642,6 +2650,7 @@ mod digital_sequence_tests {
         hello.supported_profile_formats = Some(vec![4]);
         let effects = legacy.handle_message(1, hello, 100, &mut tokens).unwrap();
         assert!(effects.iter().any(|e|matches!(e,Effect::SendMessage{message,..} if message.message_type==ControllerMessageType::PairingAccepted && message.configuration_revision.is_none())));
+        assert!(!legacy.status().client_supports_owned_profiles);
         assert!(!legacy.accepts_owned_phone_edits(1));
     }
 }

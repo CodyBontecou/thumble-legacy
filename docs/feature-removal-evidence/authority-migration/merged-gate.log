@@ -1,0 +1,10 @@
+MCP CLI parity ledger verified: 157 operations, 29 root commands, 268 CLI spellings
+Frozen feature-removal fixtures verified against checkpoint 5fadf15
+Native appearance edit oracle verified: 21 cases, 168 results
+Profile-format matrix verified: 14 negotiations, 14 frames
+Explicit owned-configuration contract verified: 41 cases
+Lossless owned-edit destination verified: 7 operations
+Traceback (most recent call last):
+  File "/Users/codybontecou/dev/Thumble/scripts/verify-feature-removal-fixtures.py", line 97, in <module>
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+AssertionError
