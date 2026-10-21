@@ -1,0 +1,109 @@
+$ bun run check:generated && bun run check:boundaries && bun run typecheck && bun test
+$ bun tooling/generate-contracts.ts --check
+Generated 33 packet vectors and 5 invalid authenticated payloads
+$ bun tooling/check-boundaries.ts
+Portable contracts/domain import boundaries verified
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json
+bun test v1.4.3 (c6da4a4d3)
+
+tests/receiver-seam.test.ts:
+(pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [243.28ms]
+(pass) service death neutralizes the independent receiver within the owner lease [208.89ms]
+(pass) JS stalls do not stall native expiry [926.53ms]
+(pass) only one service owns a runtime directory; unrelated state is refused [105.96ms]
+(pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [92.09ms]
+(pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.94ms]
+(pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [290.67ms]
+(pass) headless CLI native listener pairs through independent pinned TLS and cancels stalled enrollment [652.95ms]
+(pass) CLI default cannot listen without explicit identity and running identity mismatches fail [189.62ms]
+(pass) service death closes enrollment listener and neutralizes receiver despite a stalled TLS peer [219.85ms]
+
+tests/input-packet.test.ts:
+(pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [1.87ms]
+(pass) authenticated malformed semantic payloads are refused independently of encryption [0.23ms]
+(pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.07ms]
+
+tests/package.test.ts:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.23ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.05ms]
+(pass) retained Swift/Rust v2 native report vectors > east
+(pass) retained Swift/Rust v2 native report vectors > west [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > north [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > left shoulder [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right shoulder
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > select
+(pass) retained Swift/Rust v2 native report vectors > start
+(pass) retained Swift/Rust v2 native report vectors > home
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up
+(pass) retained Swift/Rust v2 native report vectors > up right
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right
+(pass) retained Swift/Rust v2 native report vectors > down
+(pass) retained Swift/Rust v2 native report vectors > down left
+(pass) retained Swift/Rust v2 native report vectors > left
+(pass) retained Swift/Rust v2 native report vectors > up left
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions [0.26ms]
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.32ms]
+(pass) digital trigger release restores independent analog hold [0.07ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.13ms]
+(pass) decoded state has independent immutable ownership [0.03ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.02ms]
+
+tests/pairing.test.ts:
+(pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.25ms]
+(pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.06ms]
+(pass) a valid final allowed proof succeeds without granting another attempt [0.04ms]
+(pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.06ms]
+(pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.05ms]
+(pass) authority and window identities domain-separate the stored verifier [0.02ms]
+(pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.14ms]
+(pass) portable pairing client refuses a different authority and secret-bearing status replies [0.24ms]
+(pass) shared native enrollment fixture preserves service proof and public status semantics [0.90ms]
+(pass) listener commands require bounded explicit addresses without executing caller objects [0.14ms]
+(pass) native listener metadata binds full invitations to the exact advertised host pin port and authority [0.14ms]
+(pass) trusted inventory exposes bounded immutable metadata and rejects executable or secret fields [0.22ms]
+
+tests/host-identity.test.ts:
+(pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.20ms]
+(pass) headless identity initialize/show survives separate native processes without exporting private keys [124.62ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [3.16ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.74ms]
+
+tests/mobile-input.test.ts:
+(pass) mobile control maps are bounded, immutable and share native semantic fixtures [0.63ms]
+(pass) invalid native maps cannot be admitted through the JS configuration boundary [0.16ms]
+(pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.38ms]
+(pass) native bridge configuration requires the matching activation receipt [0.54ms]
+(pass) native control lists reject holes and accessor elements without executing them [0.04ms]
+
+tests/client.test.ts:
+(pass) typed local client handles repeated success and rejection without leaking connections [12.50ms]
+
+1 tests skipped:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+ 74 pass
+ 1 skip
+ 0 fail
+ 916 expect() calls
+Ran 75 tests across 9 files. [3.17s]

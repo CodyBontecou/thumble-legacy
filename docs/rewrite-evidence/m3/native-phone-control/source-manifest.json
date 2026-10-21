@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "scope": "Native Swift/Kotlin control-v3 credential authentication, bounded serialized lifecycle and real native host witnesses",
+  "baseLocalCommit": "bfc9c36",
+  "publication": "Local only; newer than and excluded from frozen 25-file 8f216c9 candidate. No new source published.",
+  "checks": {
+    "swift": 45,
+    "android": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "nativePhoneControlCasesPerPlatform": 9,
+    "realTLSProviders": "Network.framework and JDK; native test credential storage doubles",
+    "iOSSDKs": [
+      "arm64-apple-ios17.0-simulator",
+      "arm64-apple-ios17.0"
+    ],
+    "androidBuild": "AAR and lint passed",
+    "rust": 67,
+    "typescript": 74,
+    "typescriptAssertions": 916,
+    "typescriptSkippedPackageMode": 1,
+    "allTargetsClippy": "passed with warnings denied",
+    "actionlint": "passed",
+    "frozenPhoneCandidate": "25 hashes and byte lengths unchanged",
+    "windows": "not executed for this source",
+    "OSCredentialProviderExecution": "not executed",
+    "retainedSwiftStackSafety": "no new pass; unchanged earlier compiler probe stalled"
+  },
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "bytes": 7952,
+      "sha256": "be715a5eca31ba419fcb53981970c992621e7e43b5a34f14041703913c71302b"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 12888,
+      "sha256": "7477855e1d56e118fb275164a0af3805aaecdbf6463a171fa99cbb2c1690390d"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneCredential.kt",
+      "bytes": 12275,
+      "sha256": "55a5df02b0bf18501f1022ed9c5519cd9a51d67038b863c3e37fcebbf604d622"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneControl.kt",
+      "bytes": 10062,
+      "sha256": "9d3f545e6be49b800dc793f76d7d20da4a6198e159235baa1d33e2f691b6c516"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneControlTest.kt",
+      "bytes": 13921,
+      "sha256": "8907eda3eace69a46624a4586523e96b6f39ca824b054f5fb28b86e8114247c1"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneCredential.swift",
+      "bytes": 8455,
+      "sha256": "22ad5be6c0fe7af3f9ae321b54668e957598dd4e39d3f71ba4fdf1794cfcf36c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneEnrollment.swift",
+      "bytes": 10988,
+      "sha256": "27873da8fe84a6234c4fd6faca0aaeb212da17e58143191597009338b1a752b6"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneControl.swift",
+      "bytes": 7725,
+      "sha256": "c8afb0fe2ec7c586146926cac6d084f811d359e7397ebe7a915b366d8d4dd4e0"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneControlTests.swift",
+      "bytes": 12686,
+      "sha256": "c34f3e9c7748dc7c4a7fcc7d90473b28704100c8b4335f54ea3c835c43db6648"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/phone_control_probe.rs",
+      "bytes": 2116,
+      "sha256": "299ca7db85a6918e212bbefd4fd61f14d47793427ae5c7cb793a08977f73004f"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/authenticated-control-v3.json",
+      "bytes": 1215,
+      "sha256": "f633545a77c1e2ac9d04782f09b86f22939865fc72e20eeff785c605e2ff57da"
+    },
+    {
+      "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+      "bytes": 844,
+      "sha256": "f76e72b318131fa4d43651bf1d21f2e311cc45cf27deb1ed3f7c27e4f14caff6"
+    },
+    {
+      "path": "docs/rewrite-authenticated-control-v3.md",
+      "bytes": 4078,
+      "sha256": "3fd2149c5312a4053c9f99277e7cf99c2bd12bdfaf1a7c98e25a2a7888b1f0e8"
+    },
+    {
+      "path": "docs/rewrite-headless-pairing.md",
+      "bytes": 7755,
+      "sha256": "2ad904a4386e9a41359d5d2dae05aa63bdb7cc673c4f9b9a34c24bfdc21dc784"
+    },
+    {
+      "path": "docs/rewrite-phone-credentials-v1.md",
+      "bytes": 4977,
+      "sha256": "5152063b66f705c40074c941244abeab53051f74b2dfdb5af512509d903c14ea"
+    },
+    {
+      "path": "docs/rewrite-phone-control-v3.md",
+      "bytes": 4081,
+      "sha256": "50365b710c433962a1a5aa351b6657857e49606083e8d35075883ee32b7803af"
+    }
+  ],
+  "excluded": [
+    "private baseline/history",
+    "root rewrite plan progress update",
+    "local evidence",
+    "build products",
+    "real credentials"
+  ]
+}

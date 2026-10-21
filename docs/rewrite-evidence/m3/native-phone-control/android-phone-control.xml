@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.PhoneControlTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-21T23:15:47" hostname="MacBook-Pro.local" time="0.147">
+  <properties/>
+  <testcase name="authenticatesStatusAndDisconnectWithoutExposingBearer" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.01"/>
+  <testcase name="missingExpiredAndForeignCredentialsNeverAuthenticate" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.003"/>
+  <testcase name="lateVaultReadAndConnectCannotAuthenticateAfterClose" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.007"/>
+  <testcase name="wrongHelloNeverReadsVaultOrSendsBearer" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.003"/>
+  <testcase name="malformedAdmissionAndChangingConnectionFailTerminally" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.016"/>
+  <testcase name="localLeaseCannotBeExtendedByLongerHostExpiry" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.002"/>
+  <testcase name="concurrentStatusNeverQueuesAndCloseFencesLateReply" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.005"/>
+  <testcase name="clockRollbackAndLeaseExpiryNeverSendAgain" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.002"/>
+  <testcase name="actualNativePhoneEnrollsAndAuthenticatesThroughPinnedTls" classname="com.thumble.rewrite.input.PhoneControlTest" time="0.099"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

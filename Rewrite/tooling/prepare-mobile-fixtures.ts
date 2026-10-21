@@ -7,6 +7,10 @@ const target = resolve(
 );
 mkdirSync(target, { recursive: true });
 for (const [source, name] of [
+  [
+    "packages/fixtures/authenticated-control-v3.json",
+    "authenticated-control-v3.json",
+  ],
   ["../Host/fixtures/gamepad/v2.json", "gamepad-v2.json"],
   ["packages/fixtures/mobile-input-v1.json", "mobile-input-v1.json"],
   ["packages/fixtures/input-packet-v1.json", "input-packet-v1.json"],

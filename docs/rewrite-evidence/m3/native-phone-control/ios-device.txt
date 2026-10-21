@@ -1,0 +1,2 @@
+$ bun tooling/check-mobile-ios.ts --sdk iphoneos
+Built all three native modules for arm64-apple-ios17.0

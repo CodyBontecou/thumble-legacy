@@ -1,0 +1,9 @@
+# Local native phone authenticated control checkpoint
+
+Swift and Kotlin clients negotiate pinned control-v3 hello before vault access, construct bearer frames only in native credential code and expose metadata-only results. They serialize operations, reject mismatched receipts, keep a bounded local lease and fence late storage/connect/read completions after terminal close. Native input grants/routing and React Native application wiring remain pending.
+
+Local checks: 45 Swift tests, 64 Android tests (zero failures/errors/skips), both iOS SDK builds, Android AAR/lint, 67 Rust tests, all-target Clippy, 74 TypeScript tests/916 assertions and actionlint. Each new platform control suite has nine cases, including actual native-host TLS enrollment/authentication/status/disconnect with Network.framework/JDK providers. Swift uses a test storage actor and Android a test credential owner in those witnesses; these are not production Keychain/Keystore provider results. The prepared workflow exports the new witness path but has not been published or executed. No Windows result is claimed for this source.
+
+The test witness starts the actual native Host on loopback, prints only a synthetic bootstrap invitation, waits at most 30 seconds for test completion and never ships as a product executable. The new library code compiles against both iOS SDKs and Android production targets. Retained Swift sources are unchanged; the earlier retained stack-safety compiler probe has no passing result.
+
+The original frozen phone enrollment/vault candidate remains exactly 25 manifest-verified files; newer overlapping local source is excluded from that capsule and earlier approvals. The full rewrite goal remains active, with receiver authorization/handoff, packet routing, actual OS output, phone UI, optical sync and launch acceptance still open.
