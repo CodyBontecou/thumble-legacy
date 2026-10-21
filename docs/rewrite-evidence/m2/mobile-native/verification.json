@@ -37,9 +37,16 @@
   },
   "incomplete": {
     "retainedStackSafetyScript": "Started as required; Xcode compiler probe blocked in write with no application compilation. Sampled both live build and compiler; terminated only owned builds. No stack-safety pass claimed.",
-    "genericXcodePackageBuild": "Same local build-service/compiler-probe wait. Direct SDK builds of actual modules passed; generic Xcode check remains in the proposed hosted workflow.",
-    "hostedCI": "Not dispatched: automatic approval review rejected public source snapshot/workflow publication. Approval of a scoped mobile diff is required.",
     "ReactNativeIntegration": "Native libraries and portable configuration interface exist; app/bridge and authenticated native transport are M3 work."
   },
-  "physicalAcceptanceComplete": false
+  "physicalAcceptanceComplete": false,
+  "hostedCI": {
+    "sourceCommit": "92820df9808bbf7116c479639978181d70c25234",
+    "portableMatrix": "success on Windows/macOS/Linux",
+    "iOS": "Swift tests, both direct SDK builds and both generic Xcode package builds passed",
+    "androidFollowupRun": 39659933913,
+    "android": "testDebugUnitTest, assembleDebug and lintDebug passed",
+    "followupCommit": "994ce1a21a428aa04c3a2cb9ea5f1800373af06c",
+    "followupConclusion": "success for Android and iOS"
+  }
 }

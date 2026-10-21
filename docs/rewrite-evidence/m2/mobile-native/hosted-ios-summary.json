@@ -1,0 +1,12 @@
+{
+  "iOSJob": 119428457433,
+  "run": 39659489513,
+  "lines": [
+    "2026-10-21T19:12:07.3760270Z Xcode 26.3",
+    "2026-10-21T19:12:10.2714140Z Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)",
+    "2026-10-21T19:12:27.1671130Z \u2714 Test run with 7 tests in 0 suites passed after 0.012 seconds.",
+    "2026-10-21T19:13:17.1527090Z ** BUILD SUCCEEDED **",
+    "2026-10-21T19:13:36.6226740Z ** BUILD SUCCEEDED **"
+  ],
+  "note": "Selected terminal/toolchain lines; authoritative full job log retained by GitHub Actions."
+}

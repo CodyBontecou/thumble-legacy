@@ -1,0 +1,24 @@
+{
+  "run": 39659933913,
+  "commit": "994ce1a21a428aa04c3a2cb9ea5f1800373af06c",
+  "jobs": [
+    {
+      "id": 119429993634,
+      "lines": [
+        "2026-10-21T19:16:52.6817366Z BUILD SUCCESSFUL in 1m 37s",
+        "2026-10-21T19:16:54.2753425Z Artifact rewrite-mobile-android-native.zip successfully finalized. Artifact ID 12374625432",
+        "2026-10-21T19:16:54.2754911Z Artifact rewrite-mobile-android-native has been successfully uploaded! Final size is 64823 bytes. Artifact ID is 12374625432"
+      ]
+    },
+    {
+      "id": 119429994283,
+      "lines": [
+        "2026-10-21T19:15:28.8844700Z \u2714 Test run with 7 tests in 0 suites passed after 0.010 seconds.",
+        "2026-10-21T19:16:12.6503870Z ** BUILD SUCCEEDED **",
+        "2026-10-21T19:16:39.4782300Z ** BUILD SUCCEEDED **",
+        "2026-10-21T19:16:41.1579970Z Artifact rewrite-mobile-ios-native.zip successfully finalized. Artifact ID 12372588423",
+        "2026-10-21T19:16:41.1580870Z Artifact rewrite-mobile-ios-native has been successfully uploaded! Final size is 2828 bytes. Artifact ID is 12372588423"
+      ]
+    }
+  ]
+}

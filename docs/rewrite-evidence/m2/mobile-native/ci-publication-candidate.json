@@ -8,7 +8,7 @@
   },
   "purpose": "Run native-mobile workflow and portable/Windows regression CI for the M2 input-module implementation. No release or production OS input activation.",
   "localBaseCommit": "f0751ca0038ced925ef35bb72a8187bfabde2d5f",
-  "approvalStatus": "pending-user-approval-after-automatic-review-rejection",
+  "approvalStatus": "approved-and-published",
   "excludes": [
     "Unrelated preserved baseline sources",
     "Private profile/trust/character/account data",
@@ -266,5 +266,10 @@
       "mode": "100644",
       "sha256": "6cd07418d2bc4acc2f77ce2d9e9505c753d11e250a2c4b988c5652072fe9e7a6"
     }
-  ]
+  ],
+  "approvalReceipt": {
+    "answer": "Approve this scoped CI push",
+    "publicCommit": "92820df9808bbf7116c479639978181d70c25234",
+    "localSourceCommit": "040c51f"
+  }
 }
