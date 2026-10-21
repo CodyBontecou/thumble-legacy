@@ -1,0 +1,6 @@
+$ bun tooling/build.ts
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `release` profile [optimized] target(s) in 2.10s
+   [9ms]  bundle  15 modules
+ [128ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime

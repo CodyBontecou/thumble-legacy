@@ -209,8 +209,8 @@ pub fn enroll(
     mut now: impl FnMut() -> Result<u64, &'static str>,
 ) -> Result<TrustedPhone, &'static str> {
     let result = (|| {
-        begin(channel, windows, store, false)?;
-        complete(channel, windows, store, policy_mutation, &mut now)
+        begin(channel, windows, store, 2)?;
+        complete(channel, windows, store, policy_mutation, None, &mut now)
     })();
     if result.is_err() {
         channel.close();
@@ -222,11 +222,21 @@ pub(crate) fn serve(
     windows: &Mutex<PairingWindows>,
     store: &Mutex<PhoneTrustStore>,
     policy_mutation: &Mutex<()>,
+    input_grants: &crate::input_broker::Registry,
+    root: &std::path::Path,
     mut now: impl FnMut() -> Result<u64, &'static str>,
 ) -> Result<(), &'static str> {
-    let result = (|| match begin(channel, windows, store, true)? {
-        2 => complete(channel, windows, store, policy_mutation, &mut now).map(|_| ()),
-        3 => {
+    let result = (|| match begin(channel, windows, store, 4)? {
+        2 => complete(
+            channel,
+            windows,
+            store,
+            policy_mutation,
+            Some(input_grants),
+            &mut now,
+        )
+        .map(|_| ()),
+        version @ (3 | 4) => {
             let authority = windows
                 .lock()
                 .map_err(|_| "pairing_owner_unavailable")?
@@ -237,6 +247,11 @@ pub(crate) fn serve(
                 &authority,
                 store,
                 policy_mutation,
+                if version == 4 {
+                    Some((root, input_grants))
+                } else {
+                    None
+                },
                 &mut now,
             )
         }
@@ -249,7 +264,7 @@ fn begin(
     channel: &mut ControlChannel,
     windows: &Mutex<PairingWindows>,
     store: &Mutex<PhoneTrustStore>,
-    allow_authentication: bool,
+    max_version: u8,
 ) -> Result<u8, &'static str> {
     let (authority, pin) = {
         let policy = windows.lock().map_err(|_| "pairing_owner_unavailable")?;
@@ -267,7 +282,7 @@ fn begin(
     let hello: Hello = receive(channel)?;
     if hello.version != 1
         || hello.command != "hello"
-        || (hello.control_version != 2 && !(allow_authentication && hello.control_version == 3))
+        || !(2..=max_version).contains(&hello.control_version)
         || hello.input_version != 1
         || hello.document_version != 1
         || hello.capabilities_version != 1
@@ -288,6 +303,7 @@ fn complete(
     windows: &Mutex<PairingWindows>,
     store: &Mutex<PhoneTrustStore>,
     policy_mutation: &Mutex<()>,
+    input_grants: Option<&crate::input_broker::Registry>,
     now: &mut impl FnMut() -> Result<u64, &'static str>,
 ) -> Result<TrustedPhone, &'static str> {
     let request: Enroll = receive(channel)?;
@@ -318,10 +334,14 @@ fn complete(
                 &request.proof,
                 proof_time,
             )?;
-        store
+        let issued = store
             .lock()
             .map_err(|_| "phone_trust_owner_unavailable")?
-            .enroll_after_pairing(&request.phone_id, &request.label, now()?)?
+            .enroll_after_pairing(&request.phone_id, &request.label, now()?)?;
+        if let Some(grants) = input_grants {
+            grants.retire_phone(&request.phone_id)?;
+        }
+        issued
     };
     issued.send_enrollment(channel)?;
     let ack: Acknowledgment =

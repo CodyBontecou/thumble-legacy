@@ -3,6 +3,7 @@ use crate::{
     control_tls::{ControlChannel, ServerIdentity, CONTROL_SERVER_NAME},
     enrollment::{self, PairingOffer, PairingWindows},
     host_identity,
+    input_broker::Registry,
     phone_trust::PhoneTrustStore,
     runtime, security,
 };
@@ -101,6 +102,7 @@ pub struct Host {
     store: Option<Arc<Mutex<PhoneTrustStore>>>,
     listener: Option<Listener>,
     policy_mutation: Arc<Mutex<()>>,
+    input_grants: Arc<Registry>,
     jobs: mpsc::SyncSender<Job>,
     _lease: File,
 }
@@ -126,6 +128,7 @@ impl Host {
             .map(|store| Arc::new(Mutex::new(store)));
         let windows = Arc::new(Mutex::new(PairingWindows::new(authority, identity.pin())?));
         let policy_mutation = Arc::new(Mutex::new(()));
+        let input_grants = Arc::new(Registry::default());
         let (jobs, incoming) = mpsc::sync_channel::<Job>(4);
         let incoming = Arc::new(Mutex::new(incoming));
         if let Some(store) = &store {
@@ -135,6 +138,8 @@ impl Host {
                 let windows = windows.clone();
                 let store = store.clone();
                 let policy_mutation = policy_mutation.clone();
+                let input_grants = input_grants.clone();
+                let runtime_directory = root.to_path_buf();
                 thread::spawn(move || loop {
                     let job = match incoming.lock() {
                         Ok(receiver) => match receiver.recv() {
@@ -153,6 +158,8 @@ impl Host {
                                     &windows,
                                     &store,
                                     &policy_mutation,
+                                    &input_grants,
+                                    &runtime_directory,
                                     now,
                                 );
                             }
@@ -172,6 +179,7 @@ impl Host {
             store,
             listener: None,
             policy_mutation,
+            input_grants,
             jobs,
             _lease: lease,
         })
@@ -334,12 +342,16 @@ impl Host {
                         .policy_mutation
                         .lock()
                         .map_err(|_| "phone_trust_owner_unavailable")?;
-                    self.store
+                    let durable = self
+                        .store
                         .as_ref()
                         .ok_or("pairing_persistent_identity_required")?
                         .lock()
                         .map_err(|_| "phone_trust_owner_unavailable")?
-                        .revoke(&phone_id, now()?)
+                        .revoke(&phone_id, now()?);
+                    let retired = self.input_grants.retire_phone(&phone_id);
+                    durable?;
+                    retired
                 })();
                 self.close_peers();
                 result?;

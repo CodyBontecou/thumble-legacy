@@ -131,6 +131,9 @@ pub struct NativeGrant {
     binding: GrantRef,
 }
 impl NativeGrant {
+    pub(crate) fn session_id(&self) -> String {
+        crate::gamepad::hex(&self.session)
+    }
     pub fn binding(&self) -> GrantRef {
         self.binding
     }
@@ -142,6 +145,21 @@ impl NativeGrant {
     }
     pub fn lifetime_ms(&self) -> u32 {
         self.lifetime_ms
+    }
+    pub(crate) fn send_to(
+        &self,
+        channel: &mut crate::control_tls::ControlChannel,
+    ) -> Result<(), &'static str> {
+        if channel.native_binding() != Some(self.binding.connection) {
+            return Err("native_grant_delivery_unconfirmed");
+        }
+        let value = serde_json::json!({"version":1,"command":"input-granted","connectionId":crate::gamepad::hex(&self.binding.connection),"generation":self.generation.to_string(),"revision":self.revision.to_string(),"sessionId":crate::gamepad::hex(&self.session),"key":crate::gamepad::hex(&self.key),"noncePrefix":crate::gamepad::hex(&self.prefix),"lifetimeMs":self.lifetime_ms,"packetVersion":1,"packetBytes":PACKET_BYTES,"packetLimit":PACKET_LIMIT.to_string(),"transport":"tls","inputEnabled":false});
+        channel
+            .send(
+                crate::control_tls::FrameKind::Control,
+                &serde_json::to_vec(&value).map_err(|_| "native_grant_delivery_unconfirmed")?,
+            )
+            .map_err(|_| "native_grant_delivery_unconfirmed")
     }
     /// Native fixture/delivery owner only. Consumes the material so callers cannot reset its sender.
     pub fn into_sender(self) -> Result<PacketSender, &'static str> {
@@ -202,6 +220,9 @@ impl Client {
             return Err("native_input_server_rejected");
         }
         Ok(Self { stream, token })
+    }
+    pub(crate) fn close(&mut self) {
+        let _ = self.stream.shutdown(Shutdown::Both);
     }
     fn request(&mut self, op: u8, payload: &[u8]) -> Result<Vec<u8>, &'static str> {
         let mut bytes = vec![1];
@@ -610,7 +631,11 @@ impl Server {
                     .as_ref()
                     .is_some_and(|a| a.reference == reference)
                 {
-                    return Err("native_input_session_closed");
+                    return if op == RELEASE {
+                        Ok(Vec::new())
+                    } else {
+                        Err("native_input_session_closed")
+                    };
                 }
                 if op == PACKET {
                     runtime.receive(&b[32..], now, output)?;

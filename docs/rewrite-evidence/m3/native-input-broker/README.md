@@ -1,0 +1,9 @@
+# Local native input broker checkpoint
+
+Native control-v4 now authenticates the phone and exact activation receipt, requests a fresh receiver-generated grant through private IPC, delivers the opaque grant only to its exact native TLS channel and forwards sealed input frames without Bun/React sampling. Version 3 remains metadata-only. A native registry fences installed references against per-phone revocation, re-enrollment, scoped release and disconnect.
+
+The initial actual-process revocation test exposed active output after revocation returned: disconnect removed registry discoverability before native release acknowledgment. The fix retains registration until native ack and keeps failed retirements discoverable, with bounded retry on a fresh private endpoint. A deterministic regression pauses receiver processing, starts disconnect cleanup, checks registration, then verifies revocation waits for receiver-owned inactive state. The actual-process test that exposed the race passes.
+
+Local checks pass 79 unit tests plus eight actual receiver-process tests (87 Rust total), all-target Clippy, 74 TypeScript tests/916 assertions and standalone packaging (one test/53 assertions). Real pinned TLS tests enroll/authenticate a native synthetic phone, obtain a grant, seal input, observe the separate receiver, and check revocation, epoch replacement, release/peer drop, stale receipts, delayed release and activation-generation fences. No physical output or Windows pass is claimed for this source.
+
+The complete rewrite goal remains active. Native Swift/Kotlin grant consumers/input-engine binding, UDP, physical OS output/signing, phone UI, optical sync and launch acceptance remain open. New source is local and outside the approved 25-file public phone snapshot. That older snapshot's separate iOS Keychain provider job failed; its failure is being diagnosed without weakening production credential policy.

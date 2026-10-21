@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "scope": "Control-v4 native grant/relay broker and acknowledged per-phone receiver retirement",
+  "baseLocalCommit": "6cb8ac9",
+  "publication": "Local only; excluded from approved public snapshot 07da0e0",
+  "checks": {
+    "rustUnit": 79,
+    "rustActualProcess": 8,
+    "rustTotal": 87,
+    "typescript": 74,
+    "typescriptAssertions": 916,
+    "typescriptSkippedPackageMode": 1,
+    "standalonePackageTests": 1,
+    "standalonePackageAssertions": 53,
+    "clippy": "all targets with warnings denied passed",
+    "retirementRace": "deterministic paused receiver acknowledgment regression passed",
+    "windows": "not run for this source"
+  },
+  "remaining": "Native Swift/Kotlin grant consumers and input binding, UDP, physical output, optical and launch acceptance. Separate approved phone snapshot iOS provider failure is under diagnosis.",
+  "files": [
+    {
+      "path": "Rewrite/native/receiver/src/authenticated_control.rs",
+      "bytes": 17633,
+      "sha256": "70049e4778d38abb31ec4593d5cd1ced5c274748b4c23f3d3a1fbe493ff68b4f"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 30008,
+      "sha256": "29741b7b6953384e144bfdb6151962e27aefd0811abbbe77141b0483250b309c"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 493,
+      "sha256": "0d2e7b20f389ecaf1e869a22f2ded16ed766d76d654ff62df9d02f122f2e46ad"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/native_ingress.rs",
+      "bytes": 33231,
+      "sha256": "7d73fe3aaf1abae0aa52e3458e6591a9dc3bbc2a016aaf7e446643e3751a2535"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "bytes": 33479,
+      "sha256": "ae1613243ce6c8f5d241fc66c6df58c600d837eac23b77c574ea38422b2d55c1"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/input_broker.rs",
+      "bytes": 10602,
+      "sha256": "8762558bd968595e1e9d5803de16c82988d3bccb34861a17f87527db01cf69dd"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+      "bytes": 19447,
+      "sha256": "ac9c7a1b2c911a88781722460ef62df557fb3d4aa9233c9e64f1aa90cc7aa828"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 13167,
+      "sha256": "d5368f8c94550a1aff9805327e0c645273838448ffb4bd6263f53e27c9fdc6e8"
+    },
+    {
+      "path": "docs/rewrite-authenticated-control-v3.md",
+      "bytes": 4141,
+      "sha256": "061b047a579565474e6343d738cd0b80052c73e67ac35c517e6c9416066032bc"
+    },
+    {
+      "path": "docs/rewrite-native-input-ipc-v1.md",
+      "bytes": 6441,
+      "sha256": "cbcea871da08a1a9cbfb07af5a103f9a2a78419314c4e5ff8bc92f71dd7f5019"
+    },
+    {
+      "path": "docs/rewrite-receiver-session-handoff.md",
+      "bytes": 3381,
+      "sha256": "58434c265fc0c5092233e79db3618666ec7077df1255f371728c842e1bb8a63a"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v4.md",
+      "bytes": 6297,
+      "sha256": "bfc0a6b9b45cf6adaaaa2b49fa9071bff199aea61e7986ed4b06a01e5a032c81"
+    }
+  ]
+}
