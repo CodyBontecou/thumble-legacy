@@ -186,6 +186,16 @@
           "status": "current",
           "mcpTool": "edit_configuration_draft",
           "gate": "configuration-write"
+        },
+        {
+          "id": "profile.import-desktop-defaults",
+          "cli": [
+            "thumble-host configuration import-desktop-defaults"
+          ],
+          "status": "current",
+          "mcpTool": "import_desktop_defaults",
+          "gate": "configuration-write",
+          "phoneEffect": "Explicit stopped-authority bootstrap preserves configuration and pairing; no phone activation"
         }
       ]
     },

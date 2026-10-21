@@ -1,3 +1,5 @@
+#[path = "cli_profile_legacy_assets.rs"]
+mod legacy_assets;
 #[path = "cli_profile_owned.rs"]
 mod owned;
 use crate::authority::{
@@ -1597,12 +1599,6 @@ where
         if state.schema_version == thumble_core::OWNED_SCHEMA_VERSION {
             return owned::execute(paths, state, request, invocation_id, &catalog, &mut save);
         }
-        if owned::is_asset_request(&request.command) {
-            return Err(TransactionFailure::new(
-                "owned_configuration_required",
-                "asset authority writes require an owned configuration",
-            ));
-        }
         if let CliProfileCommand::CustomizationExport { target, variant } = &request.command {
             return export_customization(
                 paths,
@@ -1985,7 +1981,23 @@ where
                 )
             })
             .transpose()?;
-        let plan = if decoded_import.is_none() {
+        let asset_plan = if owned::is_asset_request(&request.command) {
+            Some(legacy_assets::plan(
+                &ConfigurationDocument::from_state(state).map_err(|_| {
+                    TransactionFailure::new(
+                        "invalid_configuration",
+                        "asset authority could not be read",
+                    )
+                })?,
+                &request.command,
+                invocation_id,
+                &catalog,
+                now_millis(),
+            )?)
+        } else {
+            None
+        };
+        let plan = if decoded_import.is_none() && asset_plan.is_none() {
             Some(plan_transaction(
                 &request.command,
                 design_catalog.as_ref().unwrap_or(&catalog),
@@ -2028,7 +2040,26 @@ where
                 })?
         };
 
-        if let (Some(import), Some(import_plan)) = (&decoded_import, import_plan.as_ref()) {
+        if let Some(asset) = &asset_plan {
+            let operation_id =
+                deterministic_uuid(invocation_id, "asset.edit:operation:0").to_string();
+            let expected = draft
+                .operation_log
+                .iter()
+                .find(|record| record.operation_id == operation_id)
+                .map_or(draft.draft_revision, |record| record.base_draft_revision);
+            draft = store
+                .edit_with_descriptor(
+                    &draft.draft_id,
+                    expected,
+                    &operation_id,
+                    &request.command,
+                    now_millis(),
+                    |_| Ok((asset.candidate.clone(), asset.outcome.clone())),
+                )
+                .map_err(|error| draft_failure(error).with_draft(&draft))?
+                .draft;
+        } else if let (Some(import), Some(import_plan)) = (&decoded_import, import_plan.as_ref()) {
             let operation_id = deterministic_uuid(invocation_id, "profile.import:operation")
                 .hyphenated()
                 .to_string();
@@ -2137,14 +2168,18 @@ where
                 error: Box::new(error),
             }
         })?;
-        let (profile_names, destination, removed_every_profile) = match (import_plan, plan) {
-            (Some(import), _) => (import.profile_names, None, false),
-            (_, Some(plan)) => (
-                plan.profile_names,
-                plan.destination,
-                plan.removed_every_profile,
-            ),
-            _ => unreachable!("mutation must have an import or operation plan"),
+        let (profile_names, destination, removed_every_profile) = if let Some(asset) = asset_plan {
+            (asset.profile_names, None, false)
+        } else {
+            match (import_plan, plan) {
+                (Some(import), _) => (import.profile_names, None, false),
+                (_, Some(plan)) => (
+                    plan.profile_names,
+                    plan.destination,
+                    plan.removed_every_profile,
+                ),
+                _ => unreachable!("mutation must have an import or operation plan"),
+            }
         };
         let outcome = CliProfileOutcome {
             operation: request.command.kind().to_owned(),
@@ -2233,7 +2268,7 @@ pub fn execute_offline_authority(
             invocation_id,
             "offline",
             "owned_configuration_required",
-            "asset writes require an existing owned authority; no store was initialized",
+            "asset writes require an existing headless authority; no store was initialized",
         );
     }
     let state = match storage::load_or_migrate(paths) {

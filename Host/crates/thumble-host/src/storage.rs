@@ -6,9 +6,7 @@ use std::collections::BTreeMap;
 use std::fs::{self, File, OpenOptions};
 use std::io::{self, Cursor, Read, Write};
 use std::os::unix::fs::{MetadataExt, OpenOptionsExt, PermissionsExt};
-use std::path::{Path, PathBuf};
-#[cfg(target_os = "macos")]
-use std::process::{Command, Stdio};
+use std::path::Path;
 use thumble_core::{ButtonBindings, KeyBinding, OutputBinding, PersistentState, TrustedClient};
 use uuid::Uuid;
 
@@ -17,6 +15,7 @@ use uuid::Uuid;
 // values so migration preserves server identity, pairing, and profiles.
 const MAXIMUM_STATE_BYTES: usize = 16 * 1024 * 1024;
 
+#[cfg(test)]
 const DEFAULTS_DOMAIN: &str = "com.codybontecou.PocketPadMac";
 const SERVER_ID_KEY: &str = "PocketPadMac.serverIdentity.v1";
 const TRUSTED_CLIENTS_KEY: &str = "PocketPadMac.trustedClients.v1";
@@ -47,7 +46,7 @@ pub fn load_or_migrate(paths: &HostPaths) -> Result<PersistentState, String> {
     }
 
     let generated_id = Uuid::new_v4().to_string();
-    install_initial_state(paths, migration_source(paths)?, &generated_id)
+    install_initial_state(paths, None, &generated_id)
 }
 
 fn install_initial_state(
@@ -395,87 +394,6 @@ pub fn migrate_plist_bytes(data: &[u8], generated_id: &str) -> Result<Persistent
     Ok(state)
 }
 
-fn migration_source(paths: &HostPaths) -> Result<Option<Vec<u8>>, String> {
-    #[cfg(target_os = "macos")]
-    if paths
-        .state_dir
-        .ancestors()
-        .nth(3)
-        .is_some_and(effective_user_home_matches)
-    {
-        if let Some(exported) = export_defaults()? {
-            return Ok(Some(exported));
-        }
-    }
-
-    let preferences = paths
-        .state_dir
-        .ancestors()
-        .nth(3)
-        .map(|home| {
-            home.join("Library/Preferences")
-                .join(format!("{DEFAULTS_DOMAIN}.plist"))
-        })
-        .or_else(default_preferences_path);
-    let Some(path) = preferences else {
-        return Ok(None);
-    };
-    match fs::read(&path) {
-        Ok(data) => Ok(Some(data)),
-        Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(None),
-        Err(error) => Err(format!(
-            "read detected legacy preferences {}: {error}",
-            path.display()
-        )),
-    }
-}
-
-#[cfg(target_os = "macos")]
-fn effective_user_home_matches(path: &Path) -> bool {
-    // SAFETY: getpwuid returns process-global immutable storage. The bytes are
-    // copied into a Path before the comparison.
-    unsafe {
-        let entry = libc::getpwuid(libc::geteuid());
-        if entry.is_null() || (*entry).pw_dir.is_null() {
-            return false;
-        }
-        use std::os::unix::ffi::OsStrExt;
-        let bytes = std::ffi::CStr::from_ptr((*entry).pw_dir).to_bytes();
-        path == Path::new(std::ffi::OsStr::from_bytes(bytes))
-    }
-}
-
-#[cfg(target_os = "macos")]
-fn export_defaults() -> Result<Option<Vec<u8>>, String> {
-    let output = Command::new("/usr/bin/defaults")
-        .args(["export", DEFAULTS_DOMAIN, "-"])
-        .stdin(Stdio::null())
-        .output()
-        .map_err(|error| format!("export legacy defaults domain: {error}"))?;
-    if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        return Err(format!(
-            "export legacy defaults domain failed with {}: {}",
-            output.status,
-            stderr.trim()
-        ));
-    }
-    if output.stdout.is_empty() {
-        return Err("legacy defaults export succeeded without data".to_owned());
-    }
-    Ok(Some(output.stdout))
-}
-
-fn default_preferences_path() -> Option<PathBuf> {
-    std::env::var_os("HOME")
-        .filter(|home| !home.is_empty())
-        .map(PathBuf::from)
-        .map(|home| {
-            home.join("Library/Preferences")
-                .join(format!("{DEFAULTS_DOMAIN}.plist"))
-        })
-}
-
 fn optional_data<'a>(
     dictionary: &'a plist::Dictionary,
     key: &str,
@@ -794,6 +712,25 @@ mod tests {
         let mut bytes = Vec::new();
         plist::to_writer_xml(&mut bytes, &Value::Dictionary(dictionary)).unwrap();
         bytes
+    }
+
+    #[test]
+    fn fresh_receiver_never_reads_or_migrates_desktop_preferences() {
+        let directory = tempdir().unwrap();
+        let preferences = directory.path().join("Library/Preferences");
+        fs::create_dir_all(&preferences).unwrap();
+        let plist = preferences.join(format!("{DEFAULTS_DOMAIN}.plist"));
+        fs::write(&plist, b"invalid preferences must not block clean startup").unwrap();
+        let authority = directory
+            .path()
+            .join("Library/Application Support/ThumbleHost");
+        let paths = HostPaths::new(authority.clone(), authority.join("control.sock"));
+        let state = load_or_migrate(&paths).unwrap();
+        assert_eq!(state.profiles.len(), 1);
+        assert_eq!(
+            fs::read(plist).unwrap(),
+            b"invalid preferences must not block clean startup"
+        );
     }
 
     #[test]

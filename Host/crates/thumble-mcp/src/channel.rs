@@ -19,6 +19,11 @@ pub type BoxedHostRequestFuture<'a> =
 /// A transport to the authoritative Thumble Host control surface.
 pub trait HostChannel: Send + Sync + 'static {
     fn request(&self, request: ControlRequest) -> BoxedHostRequestFuture<'_>;
+    /// Offline filesystem operations are available only for this exact local
+    /// authority. Relay/custom channels must not fall back to another catalog.
+    fn local_authority_paths(&self) -> Option<thumble_host::paths::HostPaths> {
+        None
+    }
 }
 
 /// The default channel: the user-only host unix control socket.
@@ -34,6 +39,11 @@ impl UnixHostChannel {
 }
 
 impl HostChannel for UnixHostChannel {
+    fn local_authority_paths(&self) -> Option<thumble_host::paths::HostPaths> {
+        thumble_host::paths::HostPaths::discover()
+            .ok()
+            .filter(|paths| paths.control_socket == self.socket)
+    }
     fn request(&self, request: ControlRequest) -> BoxedHostRequestFuture<'_> {
         let socket = self.socket.clone();
         Box::pin(async move { send_request(&socket, &request).await })

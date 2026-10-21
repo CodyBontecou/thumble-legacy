@@ -1670,24 +1670,6 @@ final class ThumbleCLIProfileBackend {
         }
     }
 
-    func requireLegacyPersistenceAllowed(operation: String) throws {
-        let response = try perform(.authorityStatus)
-        guard response.authorityPresent == false else {
-            throw BackendError.remote(
-                RemoteFailure(
-                    code: "operation_not_migrated",
-                    message: "\(operation) is not migrated to Rust-authoritative transactions and cannot use legacy persistence while Rust authority artifacts exist.",
-                    expectedRevision: nil,
-                    actualRevision: nil,
-                    draftID: nil,
-                    draftRevision: nil,
-                    conflictPaths: nil
-                ),
-                response.invocationID
-            )
-        }
-    }
-
     static func validateExecutable(at url: URL) throws {
         let path = url.path
         let parent = url.deletingLastPathComponent().path

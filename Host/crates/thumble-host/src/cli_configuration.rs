@@ -15,6 +15,13 @@ pub struct ConfigurationArgs {
 }
 #[derive(Debug, Subcommand)]
 pub enum ConfigurationCommand {
+    /// Explicitly bootstrap a stopped, absent authority from an exact reviewed plist.
+    ImportDesktopDefaults {
+        #[arg(long)]
+        source_file: PathBuf,
+        #[arg(long)]
+        source_sha256: String,
+    },
     Status,
     /// Prepare an owned artifact from a legacy file without writing authority state.
     PrepareImport {
@@ -83,7 +90,7 @@ pub enum ConfigurationCommand {
 impl ConfigurationCommand {
     pub(crate) fn request(self) -> Result<ControlRequest, String> {
         Ok(match self {
-            Self::PrepareImport { .. } => {
+            Self::ImportDesktopDefaults { .. } | Self::PrepareImport { .. } => {
                 return Err(
                     "legacy preparation is handled locally without a control request".into(),
                 )
@@ -192,6 +199,18 @@ impl ConfigurationCommand {
     }
 }
 pub async fn run(paths: &HostPaths, args: ConfigurationArgs) -> Result<(), String> {
+    if let ConfigurationCommand::ImportDesktopDefaults {
+        source_file,
+        source_sha256,
+    } = &args.action
+    {
+        let receipt = crate::desktop_defaults::import(paths, source_file, source_sha256)?;
+        println!(
+            "{}",
+            serde_json::to_string(&receipt).map_err(|_| "defaults receipt could not be encoded")?
+        );
+        return Ok(());
+    }
     if let ConfigurationCommand::PrepareImport {
         source_file,
         package,

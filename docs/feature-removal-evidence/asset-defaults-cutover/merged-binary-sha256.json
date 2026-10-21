@@ -1,0 +1,8 @@
+{
+  "thumble": "79ed61a7bfbb58289109fbcd857921d9d7b6ef4c7e2eea589952b28afad6cca3",
+  "thumble-bridge": "0aea498ca03816761f9494da3a61a0db1bc2da18b7d38b0c64bb866f6b724f76",
+  "thumble-host": "9ddd5c7910bdafdbc88fb78a068f8c5297625e1f1e426106fd3422b2c5d32e5b",
+  "thumble-mcp": "a1c1125158c77cd21b1e497eaeb408e6b300ea09c342f12e568e5c0ff49783a8",
+  "thumble-cli-bridge": "71e20d4df00c0923c4511a5d6f55189c00a1aaf51d9b810b2836fb596def388d",
+  "lua-5.1.5": "a030c235cb91e11e470dd3e7017cdcf20eeefe6a316b373c8493e4b1e00e8771"
+}

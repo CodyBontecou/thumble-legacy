@@ -1,0 +1,27 @@
+{
+  "nativeCLIImportSetRemove": true,
+  "mcpImportSetRemove": true,
+  "privateFileGuards": true,
+  "pooledAcrossEightStates": true,
+  "referencedRemovalRefused": true,
+  "stableReplayAfterRestart": true,
+  "staleAndChangedRequestRefused": true,
+  "originalPaintBindingsAndMetadata": true,
+  "portableAssetRoundtrip": true,
+  "configurationRevision": 50,
+  "plainProfileMaterialization": true,
+  "eightNativePreviewsUnchanged": true,
+  "unavailableHelperRecovery": true,
+  "plainGeometryOutputsAndHapticSettingsPreserved": true,
+  "plainPreviewSHA256": [
+    "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+    "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+    "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+    "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43"
+  ],
+  "automaticMigrationActivated": false
+}

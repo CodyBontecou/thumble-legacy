@@ -94,7 +94,7 @@ pub(super) struct Plan {
     pub outcome: ConfigurationOperationOutcome,
     pub names: Vec<String>,
 }
-fn referenced(profile: &Value, id: &str) -> bool {
+pub(in crate::cli_profile) fn referenced(profile: &Value, id: &str) -> bool {
     let mut pending = vec![profile];
     while let Some(node) = pending.pop() {
         if node.get("assetID").and_then(Value::as_str) == Some(id)
@@ -111,7 +111,7 @@ fn referenced(profile: &Value, id: &str) -> bool {
     }
     false
 }
-fn library(
+pub(in crate::cli_profile) fn library(
     bytes: Option<&RawValue>,
     command: &CliProfileCommand,
     imported: Option<&RawValue>,

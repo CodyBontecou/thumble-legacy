@@ -164,6 +164,14 @@ pub struct LegacyPackageInput {
     pub profile_id: String,
     pub archive_path: String,
 }
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ImportDesktopDefaultsParams {
+    pub source_file: String,
+    #[serde(rename = "sourceSHA256")]
+    pub source_sha256: String,
+}
+
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct PrepareLegacyImportParams {
@@ -4621,6 +4629,40 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Explicitly bootstrap a stopped, absent local authority from a user-owned desktop preferences plist with the reviewed exact source SHA256. Preserve profile configuration, server identity and pairing without desktop GUI/defaults access. Keep a private exact backup and a replay receipt. Never overwrite an existing or running authority; require --allow-config-write. Return only checksums and counts, never credentials. Run explicit owned migration separately afterward.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn import_desktop_defaults(
+        &self,
+        Parameters(params): Parameters<ImportDesktopDefaultsParams>,
+    ) -> Result<Json<Value>, String> {
+        if !self.allow_config_write {
+            return Err("Desktop defaults import requires --allow-config-write".into());
+        }
+        let paths = self
+            .channel
+            .local_authority_paths()
+            .ok_or("Desktop defaults import requires the exact local authority channel")?;
+        let result = tokio::task::spawn_blocking(move || {
+            thumble_host::desktop_defaults::import(
+                &paths,
+                std::path::Path::new(&params.source_file),
+                &params.source_sha256,
+            )
+        })
+        .await
+        .map_err(|_| "Defaults import worker failed")??;
+        serde_json::to_value(result)
+            .map(Json)
+            .map_err(|_| "Defaults receipt encoding failed".into())
+    }
+
+    #[tool(
         description = "Prepare a version-4 local configuration/export as a portable owned artifact without writing files, authority state, trust or phone settings. Return exact-source checksums and per-profile landscape/recovery review. Supply original package archives by profile UUID when referenced; missing/invalid packages fail without a partial artifact. Explicitly import the returned artifactJSON in a separate revision-checked operation.",
         annotations(
             read_only_hint = true,
@@ -4779,7 +4821,7 @@ impl ThumbleMcp {
     }
 
     #[tool(
-        description = "Import, rename/change role, or remove a profile-owned asset through revision-safe local authority. Requires --allow-config-write and an owned configuration. Import accepts at most 2,500,000 decoded bytes and a basename, never a host path. It pools bytes across all eight appearance states. Referenced assets cannot be removed. Reuse the original invocationID, revision and content for retries. Responses contain transaction metadata and assetID, never imported bytes.",
+        description = "Import, rename/change role, or remove a profile-owned asset through revision-safe local authority. Requires --allow-config-write and an existing legacy or owned authority. Import accepts at most 2,500,000 decoded bytes and a basename, never a host path. Owned authorities pool bytes across all eight appearance states; legacy authorities update their declared customization slots. Referenced assets cannot be removed. Reuse the original invocationID, revision and content for retries. Responses contain transaction metadata and assetID, never imported bytes.",
         annotations(
             title = "Thumble profile asset edit",
             read_only_hint = false,
@@ -6122,6 +6164,28 @@ const fn element_part_name(part: thumble_protocol::KeypadElementInputPart) -> &'
 mod tests {
     use super::*;
     #[tokio::test]
+    async fn defaults_import_requires_write_opt_in_and_exact_local_channel() {
+        let request = || ImportDesktopDefaultsParams {
+            source_file: "/missing/source.plist".into(),
+            source_sha256: "a".repeat(64),
+        };
+        let disabled = ThumbleMcp::new(PathBuf::from("/missing/control.sock"), false, false);
+        assert!(disabled
+            .import_desktop_defaults(Parameters(request()))
+            .await
+            .err()
+            .expect("write opt-in must be enforced")
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(PathBuf::from("/missing/control.sock"), false, true);
+        assert!(enabled
+            .import_desktop_defaults(Parameters(request()))
+            .await
+            .err()
+            .expect("custom authority must be refused")
+            .contains("exact local authority channel"));
+    }
+
+    #[tokio::test]
     async fn application_launch_requires_input_opt_in_and_correlates_receipts() {
         struct Channel {
             count: Arc<std::sync::atomic::AtomicUsize>,
@@ -6684,7 +6748,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 37);
+        assert_eq!(tools.len(), 38);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6810,6 +6874,7 @@ mod tests {
                 "get_configuration_draft",
                 "host_status",
                 "import_customization",
+                "import_desktop_defaults",
                 "import_profiles",
                 "import_style_library",
                 "inspect_controller_design",
@@ -7121,7 +7186,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 37);
+        assert_eq!(tools.len(), 38);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));

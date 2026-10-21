@@ -5,19 +5,7 @@ import SwiftUI
 
 @main
 struct ThumbleCLI {
-    private static let appDefaultsDomain = ThumbleMacIPC.appDefaultsDomain
-    private static let keyBindingsDefaultsKey = "PocketPadMac.keyBindings.v2"
-    private static let profileKeyBindingsDefaultsKey = "PocketPadMac.profileKeyBindings.v1"
-    private static let outputBindingsDefaultsKey = "PocketPadMac.outputBindings.v1"
-    private static let profileOutputBindingsDefaultsKey = "PocketPadMac.profileOutputBindings.v1"
-    private static let profileStoreChangedNotificationName = Notification.Name("com.codybontecou.PocketPadMac.profileStoreChanged")
     private static let skinStoreChangedNotificationName = Notification.Name("com.codybontecou.PocketPadMac.skinStoreChanged")
-    private static let notificationProfileStateDataKey = "profileStateData"
-    private static let notificationActiveCustomizationDataKey = "activeCustomizationData"
-    private static let notificationKeyBindingsDataKey = "keyBindingsData"
-    private static let notificationProfileKeyBindingsDataKey = "profileKeyBindingsData"
-    private static let notificationOutputBindingsDataKey = "outputBindingsData"
-    private static let notificationProfileOutputBindingsDataKey = "profileOutputBindingsData"
     private static let defaultEditorCanvasSize = GamepadEditorDeviceCatalog.defaultFrame.screenRect.size
     private static let portraitEditorCanvasSize = GamepadEditorDeviceFrame(spec: GamepadEditorDeviceCatalog.specs[0], orientation: .portrait).screenRect.size
     private static let trackpadOptionNames = [
@@ -39,16 +27,6 @@ struct ThumbleCLI {
         "--keyboard", "--key", "--sequence", "--gamepad-button", "--gamepad",
         "--clear-output", "--clear-keyboard", "--clear-gamepad"
     ]
-
-    private struct ProfileStore {
-        var profiles: [GamepadConfigurationProfile]
-        var activeProfileID: UUID
-        var defaultProfileID: UUID
-        var profileKeyBindings: [String: [String: MacKeyBinding]]
-        var profileOutputBindings: [String: [String: MacControlOutputBinding]]
-        var nativeSnapshot: ThumbleNativeConfiguration.Snapshot? = nil
-        var profileSources: [UUID: ThumbleBridgeJSONValue] = [:]
-    }
 
     private struct GenerateOptions {
         var gameName: String?
@@ -668,29 +646,6 @@ struct ThumbleCLI {
 
     private static func printProfileInvocation(_ response: ThumbleCLIProfileBackend.Response) {
         fputs("Invocation ID: \(response.invocationID.uuidString)\n", stderr)
-    }
-
-    private static func requireExplicitUnmigratedProfileAccess(
-        operation: String,
-        artifactRequired: Bool = false
-    ) throws {
-        do {
-            try profileBackend().requireLegacyPersistenceAllowed(operation: operation)
-        } catch ThumbleCLIProfileBackend.BackendError.remote(let failure, let invocationID)
-            where artifactRequired && failure.code == "operation_not_migrated" {
-            throw ThumbleCLIProfileBackend.BackendError.remote(
-                .init(
-                    code: "artifact_required",
-                    message: "\(operation) requires a future bounded artifact transaction and is not available while Rust authority artifacts exist.",
-                    expectedRevision: failure.expectedRevision,
-                    actualRevision: failure.actualRevision,
-                    draftID: failure.draftID,
-                    draftRevision: failure.draftRevision,
-                    conflictPaths: failure.conflictPaths
-                ),
-                invocationID
-            )
-        }
     }
 
     private static func profile(arguments: [String]) throws {
@@ -1329,8 +1284,8 @@ struct ThumbleCLI {
             let outputs = MacConfigurationBindings.applyingKeyboardBindings(generatedBindings, to: profile.initialMacOutputBindings)
             MacConfigurationBindings.synchronizeElementOutputs(in: &profile, outputs: outputs)
             envelope.profiles = [profile]
-            envelope.profileKeyBindings = [profile.id.uuidString: rawBindings(generatedBindings)]
-            envelope.profileOutputBindings = [profile.id.uuidString: rawOutputBindings(outputs)]
+            envelope.profileKeyBindings = [profile.id.uuidString: MacConfigurationBindings.rawKeyBindings(generatedBindings)]
+            envelope.profileOutputBindings = [profile.id.uuidString: MacConfigurationBindings.rawOutputs(outputs)]
         }
 
         guard envelope.version == ThumbleKeypadConfigurationExport.currentVersion else {
@@ -1694,17 +1649,12 @@ struct ThumbleCLI {
     /// legacy defaults domain after that owner has accepted a skin command.
     private static func routeSkinToRuntime(_ arguments: [String]) throws -> Bool {
         guard let command = arguments.first,
-              ["list", "ls", "import", "install", "apply", "set", "detach", "remove", "delete", "rm", "export", "share"].contains(command)
+              ["list", "ls", "import", "install", "apply", "set", "detach", "fork", "remove", "delete", "rm", "export", "share"].contains(command)
         else { return false }
         let backend = try ThumbleCLIRuntimeBackend()
         let status = try backend.perform(.status)
-        if status.owner == .none {
-            try requireExplicitUnmigratedProfileAccess(operation: "skin \(command)")
-            return false
-        }
-        if status.owner != .rust {
-            guard case .legacy = try runtimeRoute(.status) else { throw CLIError.message("No verified skin runtime owner.") }
-            return false
+        guard status.owner == .rust else {
+            throw CLIError.message("Skin library/runtime commands require the headless receiver. Start it with `thumble host start`; local compile, validate and artifact preview commands remain available.")
         }
         guard status.ok else { throw CLIError.message("Rust runtime is unavailable; skin command was not sent.") }
         let executable = URL(fileURLWithPath: CommandLine.arguments[0]).standardizedFileURL
@@ -1712,7 +1662,7 @@ struct ThumbleCLI {
         try ThumbleCLIProfileBackend.validateExecutable(at: executable)
         let process = Process()
         process.executableURL = executable
-        process.arguments = ["skin"] + arguments
+        process.arguments = ["skin", command == "fork" ? "detach" : command] + Array(arguments.dropFirst())
         process.standardInput = FileHandle.nullDevice
         process.standardOutput = FileHandle.standardOutput
         process.standardError = FileHandle.standardError
@@ -1953,69 +1903,8 @@ struct ThumbleCLI {
             notifySkinStoreChanged()
             print("Installed \(result.reference.identifier)@\(result.reference.version).")
 
-        case "apply", "set":
-            guard let target = firstPositional(in: rest) else {
-                throw CLIError.message("Usage: thumble skin apply <package-path|identifier[@version]> [--profile PROFILE] [--appearance light|dark]")
-            }
-            let resolved = try resolveSkinPackage(target)
-            let skinStore = try ThumbleSkinStore()
-            let reference = ThumbleSkinReference(
-                identifier: resolved.package.manifest.identifier,
-                version: resolved.package.manifest.version
-            )
-            let packageData = try resolved.data ?? ThumbleSkinPackageCodec.encode(resolved.package)
-            let installedData = try? skinStore.packageData(for: reference)
-            if installedData != packageData {
-                _ = try skinStore.install(
-                    data: packageData,
-                    policy: rest.contains("--allow-downgrade") ? .allowDowngrade : .replaceSameVersion
-                )
-                notifySkinStoreChanged()
-            }
-            var profileStore = try loadStore()
-            let profileIndex = try resolveProfileIndex(optionValue("--profile", in: rest), in: profileStore)
-            let scheme = try parseSkinColorScheme(optionValue("--appearance", in: rest) ?? optionValue("--scheme", in: rest) ?? "light")
-            profileStore.profiles[profileIndex].applySkin(resolved.package, colorScheme: scheme)
-            let profileName = profileStore.profiles[profileIndex].name
-            try persistStore(profileStore)
-            print("Applied \(resolved.package.manifest.name) to \(profileName).")
-
-        case "detach", "fork":
-            var profileStore = try loadStore()
-            let profileIndex = try resolveProfileIndex(optionValue("--profile", in: rest) ?? firstPositional(in: rest), in: profileStore)
-            guard let reference = profileStore.profiles[profileIndex].skinReference else {
-                print("\(profileStore.profiles[profileIndex].name) already uses local appearance.")
-                return
-            }
-            let scheme = try parseSkinColorScheme(optionValue("--appearance", in: rest) ?? "light")
-            if let package = try? ThumbleSkinStore().package(for: reference) {
-                profileStore.profiles[profileIndex].detachSkin(resolving: package, colorScheme: scheme)
-            } else {
-                profileStore.profiles[profileIndex].detachSkin()
-            }
-            let profileName = profileStore.profiles[profileIndex].name
-            try persistStore(profileStore)
-            print("Forked the current appearance for \(profileName).")
-
-        case "remove", "delete", "rm":
-            guard let target = firstPositional(in: rest) else {
-                throw CLIError.message("Usage: thumble skin remove <identifier[@version]>")
-            }
-            let resolved = try resolveSkinPackage(target)
-            let reference = ThumbleSkinReference(
-                identifier: resolved.package.manifest.identifier,
-                version: resolved.package.manifest.version
-            )
-            let store = try ThumbleSkinStore()
-            if (try store.installedSkins().first(where: { $0.reference == reference }))?.isBundled == true {
-                throw CLIError.message("Built-in skins cannot be removed.")
-            }
-            if let profile = try loadStore().profiles.first(where: { $0.skinReference == reference }) {
-                throw CLIError.message("Skin is still used by profile \"\(profile.name)\". Run `thumble skin detach --profile \"\(profile.name)\"` first.")
-            }
-            try store.remove(reference)
-            notifySkinStoreChanged()
-            print("Removed \(reference.identifier)@\(reference.version).")
+        case "apply", "set", "detach", "fork", "remove", "delete", "rm":
+            throw CLIError.message("Skin runtime operations require the headless receiver")
 
         case "export", "share":
             guard let target = firstPositional(in: rest) else {
@@ -2100,7 +1989,7 @@ struct ThumbleCLI {
 
         let profile: GamepadConfigurationProfile
         if let requested = optionValue("--profile", in: arguments) {
-            profile = try resolveProfile(requested, in: loadStore())
+            profile = try profileBackend().captureInspectionProfile(target: .init(requested)).profile
         } else if let requestedArtboard = optionValue("--artboard", in: arguments),
                   let canonical = ThumbleSkinArtboardCatalog.profile(for: requestedArtboard) {
             profile = canonical
@@ -2113,7 +2002,7 @@ struct ThumbleCLI {
         } else if let canonical = ThumbleSkinArtboardCatalog.profile(for: ThumbleSkinArtboardCatalog.defaultID) {
             profile = canonical
         } else {
-            profile = try resolveProfile(nil, in: loadStore())
+            profile = try profileBackend().captureInspectionProfile(target: .init(nil)).profile
         }
 
         let requestsAllVariants = arguments.contains("--all-variants")
@@ -3558,41 +3447,6 @@ struct ThumbleCLI {
         return profile.customization
     }
 
-    private static func removeDeletedOwnerReferences(previous: GamepadConfigurationProfile, current: GamepadConfigurationProfile, from store: inout ProfileStore) {
-        let id = current.id.uuidString
-        var keys = store.profileKeyBindings[id] ?? [:]
-        var outputs = store.profileOutputBindings[id] ?? [:]
-        MacConfigurationBindings.removeDeletedOwnerReferences(previous: previous, current: current, keys: &keys, outputs: &outputs)
-        if store.profileKeyBindings[id] != nil { store.profileKeyBindings[id] = keys }
-        if store.profileOutputBindings[id] != nil { store.profileOutputBindings[id] = outputs }
-    }
-
-    private static func mutateProfileResources(
-        profileTarget: String?,
-        mutate: (inout GamepadCustomization) throws -> Void
-    ) throws {
-        var store = try loadStore()
-        let index = try resolveProfileIndex(profileTarget, in: store)
-        let previous = store.profiles[index]
-        var profile = previous
-
-        try mutate(&profile.customization)
-        profile.customization = profile.customization.normalized
-        if var landscape = profile.landscapeCustomization {
-            try mutate(&landscape)
-            profile.landscapeCustomization = landscape.normalized
-        }
-        if var portrait = profile.portraitCustomization {
-            try mutate(&portrait)
-            profile.portraitCustomization = portrait.normalized
-        }
-
-        profile.updatedAt = Date.currentMilliseconds
-        store.profiles[index] = profile.normalized
-        removeDeletedOwnerReferences(previous: previous, current: store.profiles[index], from: &store)
-        try persistStore(store)
-    }
-
     // MARK: - Styles / layers / groups / assets
 
     private static func style(arguments: [String]) throws {
@@ -3964,19 +3818,11 @@ struct ThumbleCLI {
             let name = (optionValue("--name", in: rest) ?? url.deletingPathExtension().lastPathComponent).trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty else { throw CLIError.message("Asset name cannot be empty") }
             let role = try optionValue("--role", in: rest).map(parseAssetRole) ?? .reference
-            if let response = try ownedAssetResponse(.assetImport(.init(optionValue("--profile", in: rest)), name: name,
-                    fileName: url.lastPathComponent, contentType: contentType(for: url), dataBase64: data.base64EncodedString(), role: role.rawValue), arguments: rest) {
+            let response = try authorityAssetResponse(.assetImport(.init(optionValue("--profile", in: rest)), name: name,
+                    fileName: url.lastPathComponent, contentType: contentType(for: url), dataBase64: data.base64EncodedString(), role: role.rawValue), arguments: rest)
                 print("Imported asset \"\(name)\".")
                 printProfileInvocation(response)
                 return
-            }
-            let asset = GamepadAsset(name: name, fileName: url.lastPathComponent, contentType: contentType(for: url), data: data, role: role)
-            try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
-                var library = customization.assetLibrary.normalized
-                library.assets.append(asset)
-                customization.assetLibrary = library.normalized
-            }
-            print("Imported asset \"\(name)\".")
         case "set", "edit", "rename":
             let positional = positionals(in: rest)
             guard let id = positional.first else { throw CLIError.message("Usage: thumble asset set <asset-id> [--name NAME] [--role ROLE]") }
@@ -3986,48 +3832,26 @@ struct ThumbleCLI {
             let requestedRole = try optionValue("--role", in: rest).map(parseAssetRole)
             guard requestedName != nil || requestedRole != nil else { throw CLIError.message("asset set needs --name or --role") }
             if let requestedName, requestedName.isEmpty { throw CLIError.message("Asset name cannot be empty") }
-            if let response = try ownedAssetResponse(.assetSet(.init(optionValue("--profile", in: rest)), assetID: id,
-                    name: requestedName, role: requestedRole?.rawValue), arguments: rest) {
+            let response = try authorityAssetResponse(.assetSet(.init(optionValue("--profile", in: rest)), assetID: id,
+                    name: requestedName, role: requestedRole?.rawValue), arguments: rest)
                 print("Updated asset \"\(id)\".")
                 printProfileInvocation(response)
                 return
-            }
-            let assetStore = try loadStore()
-            let assetProfile = try resolveProfile(optionValue("--profile", in: rest), in: assetStore)
-            guard assetProfile.customization.assetLibrary.asset(id: id) != nil else { throw CLIError.message("Asset not found: \(id)") }
-            try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
-                if let index = customization.assetLibrary.assets.firstIndex(where: { $0.id == id }) {
-                    if let requestedName { customization.assetLibrary.assets[index].name = requestedName }
-                    if let requestedRole { customization.assetLibrary.assets[index].role = requestedRole }
-                }
-            }
-            print("Updated asset \"\(id)\".")
         case "remove", "delete", "rm":
             guard let id = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble asset remove <asset-id>") }
-            if let response = try ownedAssetResponse(.assetRemove(.init(optionValue("--profile", in: rest)), assetID: id), arguments: rest) {
+            let response = try authorityAssetResponse(.assetRemove(.init(optionValue("--profile", in: rest)), assetID: id), arguments: rest)
                 print("Removed asset \"\(id)\".")
                 printProfileInvocation(response)
                 return
-            }
-            try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
-                customization.assetLibrary.assets.removeAll { $0.id == id }
-            }
-            print("Removed asset \"\(id)\".")
         default:
             throw CLIError.message("Unknown asset subcommand: \(subcommand)")
         }
     }
 
-    private static func ownedAssetResponse(_ command: ThumbleCLIProfileBackend.Command, arguments: [String]) throws -> ThumbleCLIProfileBackend.Response? {
-        do {
-            let response = try profileBackend().perform(command, invocationID: try profileInvocationID(in: arguments))
-            guard response.outcome != nil else { throw CLIError.message("Authority returned no asset edit outcome") }
-            return response
-        } catch ThumbleCLIProfileBackend.BackendError.remote(let failure, _) where failure.code == "owned_configuration_required" {
-            // Only an explicit format refusal can reach the existing guarded
-            // native-owner path. Other failures never authorize a fallback.
-            return nil
-        }
+    private static func authorityAssetResponse(_ command: ThumbleCLIProfileBackend.Command, arguments: [String]) throws -> ThumbleCLIProfileBackend.Response {
+        let response = try profileBackend().perform(command, invocationID: try profileInvocationID(in: arguments))
+        guard response.outcome != nil else { throw CLIError.message("Authority returned no asset edit outcome") }
+        return response
     }
 
     /// Bounded descriptor-based IO; symbolic links, devices and FIFOs cannot enter an asset transaction.
@@ -6522,308 +6346,7 @@ struct ThumbleCLI {
 
     // MARK: - Persistence
 
-    private static func loadStore() throws -> ProfileStore {
-        if ThumbleNativeConfiguration.endpointExists() {
-            let snapshot = try ThumbleNativeConfiguration.snapshot()
-            let document = snapshot.document
-            let encoder = ThumbleNativeConfiguration.encoder()
-            let state = try GamepadConfigurationProfilePersistence.decodeSavedState(encoder.encode(ThumbleBridgeJSONValue.object([
-                "profiles": .array(document.profiles), "activeProfileID": .string(document.activeProfileID), "defaultProfileID": .string(document.defaultProfileID)])))
-            let maps = try MacConfigurationBindings.loadSavedBindings(from: [
-                keyBindingsDefaultsKey: try encoder.encode(document.keyBindings), outputBindingsDefaultsKey: try encoder.encode(document.outputBindings),
-                profileKeyBindingsDefaultsKey: try encoder.encode(document.profileKeyBindings), profileOutputBindingsDefaultsKey: try encoder.encode(document.profileOutputBindings)], state: state)
-            return ProfileStore(profiles: state.profiles, activeProfileID: state.activeProfileID, defaultProfileID: state.defaultProfileID,
-                profileKeyBindings: Dictionary(uniqueKeysWithValues: maps.profileKeys.map { ($0.key.uuidString, rawBindings($0.value)) }),
-                profileOutputBindings: Dictionary(uniqueKeysWithValues: maps.profileOutputs.map { ($0.key.uuidString, rawOutputBindings($0.value)) }), nativeSnapshot: snapshot,
-                profileSources: try MacConfigurationBindings.profileSources(document.profiles, matching: state.profiles))
-        }
-        let domain = loadAppDomain()
-        let state = try loadProfileState(from: domain)
-        let sources = try savedProfileSources(from: domain, matching: state)
-        let maps = try MacConfigurationBindings.loadSavedBindings(from: domain, state: state)
-        let activeProfile = state.activeProfile ?? state.profiles[0]
-        var profileBindings = Dictionary(uniqueKeysWithValues: maps.profileKeys.map { ($0.key.uuidString, rawBindings($0.value)) })
-        if profileBindings[state.activeProfileID.uuidString] == nil {
-            profileBindings[state.activeProfileID.uuidString] = rawBindings(activeProfile.initialMacOutputBindings.keyboardBindings)
-        }
-        var profileOutputBindings = Dictionary(uniqueKeysWithValues: maps.profileOutputs.map { ($0.key.uuidString, rawOutputBindings($0.value)) })
-        if profileOutputBindings[state.activeProfileID.uuidString] == nil {
-            let activeBindings = decodedBindings(profileBindings[state.activeProfileID.uuidString]) ?? activeProfile.initialMacOutputBindings.keyboardBindings
-            profileOutputBindings[state.activeProfileID.uuidString] = rawOutputBindings(
-                effectiveOutputBindings(
-                    for: activeProfile.outputMode,
-                    keyBindings: activeBindings,
-                    customOutputBindings: activeProfile.initialMacOutputBindings
-                )
-            )
-        }
-        return ProfileStore(
-            profiles: state.profiles,
-            activeProfileID: state.activeProfileID,
-            defaultProfileID: state.defaultProfileID,
-            profileKeyBindings: profileBindings,
-            profileOutputBindings: profileOutputBindings,
-            profileSources: sources
-        )
-    }
-
-    private static func persistStore(_ inputStore: ProfileStore) throws {
-        if let snapshot = inputStore.nativeSnapshot {
-            try persistNativeStore(inputStore, snapshot: snapshot)
-            return
-        }
-        // A native endpoint appearing after an offline read must not cause a
-        // write from that stale/different configuration source.
-        guard !ThumbleNativeConfiguration.endpointExists() else { throw CLIError.message("Native configuration authority changed after the read; retry without writing another store.") }
-        try profileBackend().requireLegacyPersistenceAllowed(operation: "legacy configuration write")
-        var store = inputStore
-        let state = GamepadConfigurationProfilePersistence.normalizedState(
-            profiles: store.profiles,
-            activeProfileID: store.activeProfileID,
-            defaultProfileID: store.defaultProfileID,
-            fallbackCustomization: store.profiles.first?.customization ?? .defaultValue
-        )
-        store.profiles = state.profiles
-        store.activeProfileID = state.activeProfileID
-        store.defaultProfileID = state.defaultProfileID
-
-        let validIDs = Set(store.profiles.map { $0.id.uuidString })
-        store.profileKeyBindings = store.profileKeyBindings.filter { validIDs.contains($0.key) }
-        store.profileOutputBindings = store.profileOutputBindings.filter { validIDs.contains($0.key) }
-        let activeProfile = state.activeProfile ?? state.profiles[0]
-        let activeBindings = decodedBindings(store.profileKeyBindings[activeProfile.id.uuidString]) ?? activeProfile.initialMacOutputBindings.keyboardBindings
-        store.profileKeyBindings[activeProfile.id.uuidString] = rawBindings(activeBindings)
-        let storedActiveOutputBindings = decodedOutputBindings(store.profileOutputBindings[activeProfile.id.uuidString]) ?? activeProfile.initialMacOutputBindings
-        let activeOutputBindings = effectiveOutputBindings(
-            for: activeProfile.outputMode,
-            keyBindings: activeBindings,
-            customOutputBindings: storedActiveOutputBindings
-        )
-        store.profileOutputBindings[activeProfile.id.uuidString] = rawOutputBindings(activeOutputBindings)
-
-        var domain = loadAppDomain()
-        let stateData = try MacConfigurationBindings.encodedProfileState(
-            state.profiles, activeProfileID: state.activeProfileID, defaultProfileID: state.defaultProfileID,
-            preserving: store.profileSources
-        )
-        let checkedSources = try MacConfigurationBindings.decodedProfileSources(stateData, matching: state)
-        guard case .object(let activeFields) = checkedSources[state.activeProfileID],
-              let activeCustomization = activeFields["customization"] else {
-            throw GamepadSavedConfigurationError.invalid("encoded profile store must contain the selected customization")
-        }
-        let activeCustomizationData = try JSONEncoder().encode(activeCustomization)
-        _ = try GamepadCustomizationPersistence.decodeSavedCustomization(activeCustomizationData)
-        let keyBindingsData = try JSONEncoder().encode(rawBindings(activeBindings))
-        let profileKeyBindingsData = try JSONEncoder().encode(store.profileKeyBindings)
-        let outputBindingsData = try JSONEncoder().encode(rawOutputBindings(activeOutputBindings))
-        let profileOutputBindingsData = try JSONEncoder().encode(store.profileOutputBindings)
-
-        domain[GamepadConfigurationProfilePersistence.defaultsKey] = stateData
-        domain[GamepadCustomizationPersistence.defaultsKey] = activeCustomizationData
-        domain[keyBindingsDefaultsKey] = keyBindingsData
-        domain[profileKeyBindingsDefaultsKey] = profileKeyBindingsData
-        domain[outputBindingsDefaultsKey] = outputBindingsData
-        domain[profileOutputBindingsDefaultsKey] = profileOutputBindingsData
-
-        UserDefaults.standard.setPersistentDomain(domain, forName: appDefaultsDomain)
-        UserDefaults.standard.synchronize()
-        notifyRunningMacHelper(
-            profileStateData: stateData,
-            activeCustomizationData: activeCustomizationData,
-            keyBindingsData: keyBindingsData,
-            profileKeyBindingsData: profileKeyBindingsData,
-            outputBindingsData: outputBindingsData,
-            profileOutputBindingsData: profileOutputBindingsData
-        )
-    }
-
-    private static func persistNativeStore(_ store: ProfileStore, snapshot: ThumbleNativeConfiguration.Snapshot) throws {
-        let encoder = ThumbleNativeConfiguration.encoder()
-        func raw<T: Encodable>(_ value: T) throws -> ThumbleBridgeJSONValue {
-            try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: encoder.encode(value))
-        }
-        let profiles = try MacConfigurationBindings.profileValues(store.profiles, preserving: store.profileSources)
-        guard let active = store.profiles.first(where: { $0.id == store.activeProfileID }) else { throw CLIError.message("Native configuration has no declared active profile.") }
-        let keys = decodedBindings(store.profileKeyBindings[active.id.uuidString]) ?? active.initialMacOutputBindings.keyboardBindings
-        let outputs = decodedOutputBindings(store.profileOutputBindings[active.id.uuidString]) ?? active.initialMacOutputBindings
-        let document = ThumbleBridgeConfigurationDocument(profiles: profiles, activeProfileID: store.activeProfileID.uuidString, defaultProfileID: store.defaultProfileID.uuidString,
-            keyBindings: try raw(rawBindings(keys)), outputBindings: try raw(rawOutputBindings(outputs)),
-            profileKeyBindings: try store.profileKeyBindings.mapValues(raw), profileOutputBindings: try store.profileOutputBindings.mapValues(raw))
-        try ThumbleNativeConfiguration.commit(document, from: snapshot)
-    }
-
-    private static func loadAppDomain() -> [String: Any] {
-        UserDefaults.standard.persistentDomain(forName: appDefaultsDomain) ?? [:]
-    }
-
-    private static func loadProfileState(from domain: [String: Any]) throws -> GamepadConfigurationProfilePersistence.LoadedState {
-        var activeCustomization = GamepadCustomization.defaultValue
-        if let value = domain[GamepadCustomizationPersistence.defaultsKey] {
-            guard let data = dataValue(value) else { throw GamepadSavedConfigurationError.invalid("standalone customization must contain JSON data") }
-            activeCustomization = try GamepadCustomizationPersistence.decodeSavedCustomization(data)
-        }
-        if let value = domain[GamepadConfigurationProfilePersistence.defaultsKey] {
-            guard let data = dataValue(value) else { throw GamepadSavedConfigurationError.invalid("profile store must contain JSON data") }
-            return try GamepadConfigurationProfilePersistence.decodeSavedState(data)
-        }
-        if domain[GamepadCustomizationPersistence.defaultsKey] != nil {
-            let profile = GamepadConfigurationProfile(name: "Current Setup", primaryCustomization: activeCustomization)
-            return .init(profiles: [profile], activeProfileID: profile.id, defaultProfileID: profile.id)
-        }
-        return GamepadConfigurationProfilePersistence.normalizedState(
-            profiles: [], activeProfileID: nil, defaultProfileID: nil, fallbackCustomization: activeCustomization
-        )
-    }
-
-    private static func savedProfileSources(
-        from domain: [String: Any], matching state: GamepadConfigurationProfilePersistence.LoadedState
-    ) throws -> [UUID: ThumbleBridgeJSONValue] {
-        if let value = domain[GamepadConfigurationProfilePersistence.defaultsKey] {
-            guard let data = dataValue(value) else { throw GamepadSavedConfigurationError.invalid("profile store must contain JSON data") }
-            return try MacConfigurationBindings.decodedProfileSources(data, matching: state)
-        }
-        guard let value = domain[GamepadCustomizationPersistence.defaultsKey] else { return [:] }
-        guard let data = dataValue(value), state.profiles.count == 1 else {
-            throw GamepadSavedConfigurationError.invalid("standalone source must match its newly authored profile")
-        }
-        let customization = try GamepadCustomizationPersistence.decodeSavedCustomization(data)
-        let profile = state.profiles[0]
-        guard profile.customization == customization else {
-            throw GamepadSavedConfigurationError.invalid("standalone source must match its newly authored profile")
-        }
-        let source = try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: data)
-        guard case .object(var fields) = try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: JSONEncoder().encode(profile)) else {
-            throw GamepadSavedConfigurationError.invalid("new profile must contain a declared customization")
-        }
-        // Genuine catalog absence permits authoring, not recovery. The checked
-        // standalone declaration remains the source for each matching canvas.
-        fields["customization"] = source
-        if profile.landscapeCustomization == customization { fields["landscapeCustomization"] = source }
-        if profile.portraitCustomization == customization { fields["portraitCustomization"] = source }
-        return try MacConfigurationBindings.profileSources([.object(fields)], matching: state.profiles)
-    }
-
-    private static func decodedBindings(_ raw: [String: MacKeyBinding]?) -> [KeypadElementID: MacKeyBinding]? {
-        MacConfigurationBindings.decodedKeyBindings(raw)
-    }
-
-    private static func rawBindings(_ bindings: [KeypadElementID: MacKeyBinding]) -> [String: MacKeyBinding] {
-        MacConfigurationBindings.rawKeyBindings(bindings)
-    }
-
-    private static func outputBindings(from keyBindings: [KeypadElementID: MacKeyBinding]) -> [KeypadElementID: MacControlOutputBinding] {
-        MacConfigurationBindings.keyboardOutputs(from: keyBindings)
-    }
-
-    private static func effectiveOutputBindings(
-        for mode: GamepadProfileOutputMode,
-        keyBindings: [KeypadElementID: MacKeyBinding],
-        customOutputBindings: [KeypadElementID: MacControlOutputBinding]
-    ) -> [KeypadElementID: MacControlOutputBinding] {
-        MacConfigurationBindings.effectiveOutputs(
-            for: mode,
-            keyBindings: keyBindings,
-            customOutputs: customOutputBindings
-        )
-    }
-
-    private static func bindingPresentations(
-        for profile: GamepadConfigurationProfile,
-        store: ProfileStore
-    ) -> [GamepadProfileBindingPresentations] {
-        let profileID = profile.id.uuidString
-        let keys = decodedBindings(store.profileKeyBindings[profileID]) ?? profile.initialMacOutputBindings.keyboardBindings
-        let storedOutputs = decodedOutputBindings(store.profileOutputBindings[profileID]) ?? profile.initialMacOutputBindings
-        let outputs = effectiveOutputBindings(
-            for: profile.outputMode,
-            keyBindings: keys,
-            customOutputBindings: storedOutputs
-        )
-        return KeypadBindingPresentationBuilder.presentations(
-            for: profile,
-            elementOutputs: outputs.mapValues(\.sharedBinding)
-        )
-    }
-
-    private static func rawOutputBindings(_ bindings: [KeypadElementID: MacControlOutputBinding]) -> [String: MacControlOutputBinding] {
-        MacConfigurationBindings.rawOutputs(bindings)
-    }
-
-    private static func decodedOutputBindings(_ raw: [String: MacControlOutputBinding]?) -> [KeypadElementID: MacControlOutputBinding]? {
-        MacConfigurationBindings.decodedOutputs(raw)
-    }
-
-    private static func dataValue(_ value: Any?) -> Data? {
-        if let data = value as? Data { return data }
-        if let data = value as? NSData { return data as Data }
-        return nil
-    }
-
-    private static func notifyRunningMacHelper(
-        profileStateData: Data,
-        activeCustomizationData: Data?,
-        keyBindingsData: Data?,
-        profileKeyBindingsData: Data,
-        outputBindingsData: Data?,
-        profileOutputBindingsData: Data
-    ) {
-        var userInfo: [String: Any] = [
-            notificationProfileStateDataKey: profileStateData,
-            notificationProfileKeyBindingsDataKey: profileKeyBindingsData,
-            notificationProfileOutputBindingsDataKey: profileOutputBindingsData
-        ]
-        if let activeCustomizationData { userInfo[notificationActiveCustomizationDataKey] = activeCustomizationData }
-        if let keyBindingsData { userInfo[notificationKeyBindingsDataKey] = keyBindingsData }
-        if let outputBindingsData { userInfo[notificationOutputBindingsDataKey] = outputBindingsData }
-
-        DistributedNotificationCenter.default().postNotificationName(
-            profileStoreChangedNotificationName,
-            object: nil,
-            userInfo: userInfo,
-            deliverImmediately: true
-        )
-    }
-
     // MARK: - Resolution / parsing helpers
-
-    private static func resolveProfile(_ target: String?, in store: ProfileStore) throws -> GamepadConfigurationProfile {
-        store.profiles[try resolveProfileIndex(target, in: store)]
-    }
-
-    private static func resolveProfileIndex(_ target: String?, in store: ProfileStore) throws -> Int {
-        let trimmed = target?.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let trimmed, !trimmed.isEmpty, trimmed.lowercased() != "active" else {
-            guard let index = store.profiles.firstIndex(where: { $0.id == store.activeProfileID }) else { throw CLIError.message("Active profile not found") }
-            return index
-        }
-        if trimmed.lowercased() == "default" {
-            guard let index = store.profiles.firstIndex(where: { $0.id == store.defaultProfileID }) else { throw CLIError.message("Default profile not found") }
-            return index
-        }
-        if let uuid = UUID(uuidString: trimmed), let index = store.profiles.firstIndex(where: { $0.id == uuid }) { return index }
-        if let index = store.profiles.firstIndex(where: { sameProfileName($0.name, trimmed) }) { return index }
-        let normalized = normalizedLookup(trimmed)
-        let matches = store.profiles.indices.filter { normalizedLookup(store.profiles[$0].name).contains(normalized) }
-        if matches.count == 1 { return matches[0] }
-        if matches.count > 1 { throw CLIError.message("Profile name is ambiguous: \(trimmed)") }
-        throw CLIError.message("Profile not found: \(trimmed)")
-    }
-
-    private static func resolveProfileIndexes(_ targets: [String], in store: ProfileStore) throws -> [Int] {
-        var indexes: [Int] = []
-        var seenIndexes = Set<Int>()
-        for target in targets {
-            let index = try resolveProfileIndex(target, in: store)
-            if seenIndexes.insert(index).inserted {
-                indexes.append(index)
-            }
-        }
-        return indexes.sorted()
-    }
-
-    private static func validProfileID(_ id: UUID, in profiles: [GamepadConfigurationProfile]) -> UUID? {
-        profiles.contains(where: { $0.id == id }) ? id : nil
-    }
 
     private static func resolveTemplate(_ text: String) throws -> GamepadControllerTemplate {
         let normalized = normalizedLookup(text)

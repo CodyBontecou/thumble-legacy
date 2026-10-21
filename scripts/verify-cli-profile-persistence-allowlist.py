@@ -10,12 +10,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "Sources/CLI/ThumbleCLI.swift"
-EXPECTED = {
-    "skin": (3, 2),
-    "renderSkinPreview": (2, 0),  # mutually exclusive lazy reads; artifact previews need no store
-    "mutateProfileResources": (1, 1),
-    "asset": (1, 0),  # legacy asset metadata mutation only; reads use authority snapshots
-}
+EXPECTED = {}  # No retained CLI command may read/write desktop preferences.
+
 
 function = "<top-level>"
 actual: dict[str, list[int]] = collections.defaultdict(lambda: [0, 0])
@@ -293,3 +289,8 @@ for method in ("createProfile", "attachApplicationToProfile", "detachApplication
     block = source_text.split(f"private static func {method}(",1)[1].split("private static func ",1)[0]
     for forbidden in ("loadStore(", "persistStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess("):
         if forbidden in block: raise SystemExit(f"{method} still uses {forbidden}")
+
+for forbidden in ("UserDefaults", "CFPreferences", "loadStore(", "persistStore(", "persistNativeStore(", "ThumbleNativeConfiguration", "requireExplicitUnmigratedProfileAccess", "owned_configuration_required"):
+    if forbidden in source_text: raise SystemExit(f"CLI still depends on legacy persistence: {forbidden}")
+asset_block = source_text.split("private static func asset(arguments:",1)[1].split("private static func readBoundedResourceFile",1)[0]
+if asset_block.count("authorityAssetResponse(") != 4: raise SystemExit("All asset writes must require typed authority receipts")

@@ -1,7 +1,7 @@
 //! High-level planning on owned authorities never serializes a legacy document.
 use super::*;
 #[path = "cli_profile_owned_assets.rs"]
-mod assets;
+pub(super) mod assets;
 #[path = "cli_profile_owned_customization.rs"]
 mod customization;
 #[path = "cli_profile_owned_import.rs"]

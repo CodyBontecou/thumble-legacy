@@ -6,6 +6,7 @@ pub mod bridge;
 pub mod cli;
 pub mod cli_profile;
 pub mod control;
+pub mod desktop_defaults;
 pub mod draft_operation;
 pub mod drafts;
 pub mod gamepad;

@@ -1,0 +1,20 @@
+{
+  "Host/crates/thumble-host/src/cli_configuration.rs": "d64fb79d4d3eee552effa99cd2b4f747b8939d069adbaaf8635e212c6b74f2ab",
+  "Host/crates/thumble-host/src/cli_profile.rs": "5ec93c49ef49208eed279ff7339d084aed21b0c5910ce88e21d9f958c43d1daa",
+  "Host/crates/thumble-host/src/cli_profile_legacy_assets.rs": "d8aa36650b87d94eca304eebcf8ae70d60e24e307f4f57542bc8c4073d845593",
+  "Host/crates/thumble-host/src/cli_profile_owned.rs": "c670def2f13e902e1f7ccb219059eadc82f73f71c28dcb4162281a6cdc0d76e8",
+  "Host/crates/thumble-host/src/cli_profile_owned_assets.rs": "2385974908f8fcd10728c3c304915f21bc3835b4099b42465a3ee1ce2804b0c7",
+  "Host/crates/thumble-host/src/desktop_defaults.rs": "0482ccddcbe113a2c1abff48f8ca9899404ad6291efa5af29fb29213fc9ca0a1",
+  "Host/crates/thumble-host/src/lib.rs": "b6f7fbc62a24d5a507ad77a9506517ce6eb2286db7e12a305950772d712c19a0",
+  "Host/crates/thumble-host/src/storage.rs": "039070595ebb31108a33bee5581742a25a1385d851841418126d51d03879d158",
+  "Host/crates/thumble-mcp/src/channel.rs": "3f24dde6fc9659e02d6ff8ba9b72aae7078c60d3857b7cf106970eabb74f2b9d",
+  "Host/crates/thumble-mcp/src/server.rs": "01b153147717eadbd6e1d51252de35e6825c83f084c0600449bee90d386fe4ca",
+  "Sources/CLI/ThumbleCLI.swift": "123e991cf49c408a3eda5864fd5f66e61947cc2d5d735e601f8ad0e8be0af7ae",
+  "Sources/CLI/ThumbleCLIBackend.swift": "75e232e0c0f0fd19f9bdbfc59c862d769d1d959264458f1e643b947e2d759cdf",
+  "docs/cli-mcp-cutover.md": "fc0fbb5653e5ad099d1f437dae8668342855b65d0074965fb2e7271e631b4b76",
+  "docs/local-asset-defaults-cutover.md": "7f4a6cecfc86126b5e868163a4d6e784685d51fbcf0cd92687c2a4131e281602",
+  "docs/mcp/cli-capabilities-v1.json": "38ca5b90b20fef56b07e3cc433cbc8b1bc0cc5c1c4cc691f13e56c56e3a7fd9d",
+  "docs/rust-host.md": "1f0b5147836595ff8e68039fa160d1543d2569c5e0f90753c1dbfec158b1bc81",
+  "scripts/verify-asset-defaults-cutover.py": "a22e1f8ac6a7b30b1e9fbbdc9b47bb165590e537b65165defe483de5cfaccb7e",
+  "scripts/verify-cli-profile-persistence-allowlist.py": "603ca2ebc8e4f81228ae1a8a73a9f3386431a23beadc900b2f3bc320226f2895"
+}
