@@ -23,3 +23,5 @@ pub mod enrollment;
 pub mod pairing_host;
 
 pub mod authenticated_control;
+
+pub mod native_ingress;

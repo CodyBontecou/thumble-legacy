@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "scope": "Private native input IPC in the actual recording receiver, exact-config grant attachment and sealed packet forwarding",
+  "baseLocalCommit": "4b7117c",
+  "publication": "Local only; outside approved public snapshot 07da0e0",
+  "checks": {
+    "rustUnit": 77,
+    "rustActualProcess": 4,
+    "rustTotal": 81,
+    "typescript": 74,
+    "typescriptAssertions": 916,
+    "typescriptSkippedPackageMode": 1,
+    "standalonePackageTests": 1,
+    "standalonePackageAssertions": 53,
+    "clippy": "all targets with warnings denied passed",
+    "windows": "not executed for this source",
+    "realOutput": "disabled recording backend only"
+  },
+  "remaining": "Authenticated control dispatch, native phone grant delivery/input binding, UDP, signing/gameplay, optical sync and launch acceptance",
+  "files": [
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 474,
+      "sha256": "01481c3cbf3cf1ba2a305d9a0968632b0e24c5dee5068a322e48a81df1dea9be"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "bytes": 7487,
+      "sha256": "dfa3281df07e84ebcf8f6139a670a39cf04b85f10568342aae006d61efe9399e"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/native_ingress.rs",
+      "bytes": 31854,
+      "sha256": "84c45733cca1242b7302faeea6c87ffe08119c4d444af5860a3cc4542a44f077"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+      "bytes": 8746,
+      "sha256": "91b9c1a40ae70a0c085b7ec3d1dd45579e4852897fd9487c02dad1595624f313"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 13111,
+      "sha256": "55fa36785a841112d00072ec8b14df223badee93208a62e672b28a9f5a213080"
+    },
+    {
+      "path": "docs/rewrite-receiver-session-handoff.md",
+      "bytes": 3481,
+      "sha256": "c6f52176d6a62e16012b0de580187e738349630d6eb40c63ded6cce0aa07a770"
+    },
+    {
+      "path": "docs/rewrite-native-input-ipc-v1.md",
+      "bytes": 6496,
+      "sha256": "18bb6aea3b67774b2be77828ae489db351ae50712089316e716a179f3eea8961"
+    },
+    {
+      "path": "docs/adr/0009-rewrite-native-input-ipc.md",
+      "bytes": 746,
+      "sha256": "69d53bb4e00824cf16203859bed329eba532092649a272885b7e80de46ec8ffe"
+    }
+  ]
+}

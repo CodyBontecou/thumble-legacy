@@ -1,0 +1,3 @@
+# Use private native IPC for receiver grants and packets
+
+The native control owner hands grants and sealed input to the independent receiver through capability-authenticated loopback IPC, with private runtime files protected by Unix ownership/modes or Windows ACLs. This keeps the implementation portable across launch platforms and keeps keys/sample traffic outside Bun; a fresh HMAC server challenge is verified before the client discloses the capability, including after stale endpoint port reuse. Four socket workers and bounded queues feed only the existing native safety loop, which owns all state/output changes and continues enforcing its separate configuration lease and input TTL. See [the contract](../rewrite-native-input-ipc-v1.md).

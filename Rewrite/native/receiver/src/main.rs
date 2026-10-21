@@ -55,6 +55,7 @@ fn run(root: &Path, log: Option<&Path>) -> Result<(), &'static str> {
     };
     let mut runtime = PacketRuntime::default();
     runtime.release_reason(&mut output, "startup")?;
+    let mut ingress = thumble_rewrite_receiver::native_ingress::Server::bind(root)?;
     let (incoming, received) = mpsc::sync_channel::<Option<Vec<u8>>>(16);
     std::thread::spawn(move || {
         let mut input = BufReader::new(std::io::stdin());
@@ -118,6 +119,10 @@ fn run(root: &Path, log: Option<&Path>) -> Result<(), &'static str> {
             }
         };
         runtime.tick(now, &mut output)?;
+        if let Err(error) = ingress.drain(&mut runtime, now, &mut output) {
+            let _ = runtime.release_reason(&mut output, "native_input_owner_failed");
+            return Err(error);
+        }
         let bytes = match received.recv_timeout(Duration::from_millis(10)) {
             Ok(Some(bytes)) => bytes,
             Ok(None) | Err(mpsc::RecvTimeoutError::Disconnected) => {
