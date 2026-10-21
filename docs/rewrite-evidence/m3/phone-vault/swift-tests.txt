@@ -1,0 +1,91 @@
+[0/1] Planning build
+Building for debugging...
+[0/5] Write sources
+[2/5] Write swift-version--58304C5D6DBC2206.txt
+[4/7] Compiling MobileInputCore PhoneCredential.swift
+[5/7] Emitting module MobileInputCore
+[6/13] Emitting module MobileInputUIKit
+[7/13] Compiling MobileInputTests InputTests.swift
+[8/13] Compiling MobileInputTests InputPacketTests.swift
+[9/13] Emitting module MobileInputTests
+[10/13] Compiling MobileInputTests ControlTLSTests.swift
+[11/13] Compiling MobileInputTests PhoneCredentialTests.swift
+[11/13] Write Objects.LinkFileList
+[12/13] Linking ThumbleMobileInputPackageTests
+Build complete! (2.35s)
+Test Suite 'All tests' started at 2026-10-21 17:38:19.801.
+Test Suite 'All tests' passed at 2026-10-21 17:38:19.802.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test failedReadbackLeavesPotentiallyCommittedCredentialForExplicitRecovery() started.
+◇ Test actualNetworkFrameworkTLSRejectsWrongPinBeforeControl() started.
+◇ Test sharedNativeScenarios() started.
+◇ Test sharedEncryptedPacketsMatchAndDecodeBeforeHardwareQuantization() started.
+◇ Test expiryHostBindingAndForgetRemainIndependent() started.
+◇ Test disposalStopsCallbacksAndPreservesItsTerminalReason() started.
+◇ Test touchBoundAndNonfiniteValuesFailClosed() started.
+◇ Test vaultRejectsStaleOrConflictingEpochAndPreservesNewerCredential() started.
+◇ Test nativeTransportFailureCannotKeepOrReplayHeldTouches() started.
+◇ Test nativeTouchLifecycle(_:) started.
+◇ Test packetSenderBudgetValidationAndOwnership() started.
+◇ Test vaultPersistsReadbackAndIdempotentSaveWithNoSecretExposure() started.
+◇ Test nativeTLSCoalescesInputBackpressureAndBoundsControlQueue() started.
+◇ Test allRetainedNativeVectors() started.
+◇ Test actualNativeTouchEngineDeliversMultitouchThroughTLSAndReleasesOnLoss() started.
+◇ Test channelGenerationSequenceAndReentrancyBarriersAreTerminal() started.
+◇ Test actualNetworkFrameworkTLSExchangesControlAndEncryptedInputWithRust() started.
+◇ Test credentialDecodeRejectsMalformedBoundsMagicIDsEpochsAndExpiry() started.
+◇ Test nativeTouchEngineUsesEncryptedChannelAndFailsNeutralOnTransportLoss() started.
+◇ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() started.
+◇ Test controlTLSRejectsMalformedInvitationsAndTerminalReconnect() started.
+◇ Test vaultStorageFailureNeverAcknowledgesOrErasesExistingTrust() started.
+◇ Test case passing 1 argument scenario → two sticks capture and release independently to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → both triggers and a face button remain independently held to nativeTouchLifecycle(_:) started.
+◇ Test sharedCredentialFixtureAndOpaqueStoragePreserveExactBytes() started.
+◇ Test case passing 1 argument scenario → background retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → practice releases host input and never replays held touches to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → profile replacement is a neutral generation barrier to nativeTouchLifecycle(_:) started.
+◇ Test packetTamperingAndMalformedPayloadsNeverBurnTheReplayCounter() started.
+◇ Test case passing 1 argument scenario → disposal cannot reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → duplicate pointer fails closed to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → stick ownership never transfers to a previously rejected finger to nativeTouchLifecycle(_:) started.
+◇ Test packetReplayReorderingWrongKeysAndTerminalClose() started.
+◇ Test case passing 1 argument scenario → stick diagonals remain circular and saturate outside the control to nativeTouchLifecycle(_:) started.
+◇ Test invalidConfigurationPreservesCurrentActivationAndHeldState() started.
+◇ Test case passing 1 argument scenario → duplicate semantic buttons are reference counted to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → last hit region wins overlaps to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → disconnected retires touches before reconnect to nativeTouchLifecycle(_:) started.
+✔ Test sharedNativeScenarios() passed after 0.001 seconds.
+◇ Test case passing 1 argument scenario → screenLock retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → touchCancelled retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test controlTLSFramingRejectsInvalidLengthsKindsAndInputSizes() started.
+✔ Test vaultPersistsReadbackAndIdempotentSaveWithNoSecretExposure() passed after 0.001 seconds.
+◇ Test case passing 1 argument scenario → rotation retires touches before reconnect to nativeTouchLifecycle(_:) started.
+✔ Test vaultStorageFailureNeverAcknowledgesOrErasesExistingTrust() passed after 0.001 seconds.
+✔ Test failedReadbackLeavesPotentiallyCommittedCredentialForExplicitRecovery() passed after 0.001 seconds.
+✔ Test vaultRejectsStaleOrConflictingEpochAndPreservesNewerCredential() passed after 0.001 seconds.
+✔ Test expiryHostBindingAndForgetRemainIndependent() passed after 0.001 seconds.
+✔ Test controlTLSFramingRejectsInvalidLengthsKindsAndInputSizes() passed after 0.001 seconds.
+✔ Test credentialDecodeRejectsMalformedBoundsMagicIDsEpochsAndExpiry() passed after 0.001 seconds.
+✔ Test sharedCredentialFixtureAndOpaqueStoragePreserveExactBytes() passed after 0.001 seconds.
+✔ Test allRetainedNativeVectors() passed after 0.002 seconds.
+✔ Test sharedEncryptedPacketsMatchAndDecodeBeforeHardwareQuantization() passed after 0.020 seconds.
+✔ Test touchBoundAndNonfiniteValuesFailClosed() passed after 0.020 seconds.
+✔ Test nativeTransportFailureCannotKeepOrReplayHeldTouches() passed after 0.020 seconds.
+✔ Test packetSenderBudgetValidationAndOwnership() passed after 0.021 seconds.
+✔ Test disposalStopsCallbacksAndPreservesItsTerminalReason() passed after 0.022 seconds.
+✔ Test channelGenerationSequenceAndReentrancyBarriersAreTerminal() passed after 0.031 seconds.
+✔ Test nativeTouchEngineUsesEncryptedChannelAndFailsNeutralOnTransportLoss() passed after 0.032 seconds.
+✔ Test controlTLSRejectsMalformedInvitationsAndTerminalReconnect() passed after 0.041 seconds.
+✔ Test packetReplayReorderingWrongKeysAndTerminalClose() passed after 0.042 seconds.
+✔ Test invalidConfigurationPreservesCurrentActivationAndHeldState() passed after 0.043 seconds.
+✔ Test packetTamperingAndMalformedPayloadsNeverBurnTheReplayCounter() passed after 0.054 seconds.
+✔ Test nativeTouchLifecycle(_:) with 15 test cases passed after 0.063 seconds.
+✔ Test actualNetworkFrameworkTLSExchangesControlAndEncryptedInputWithRust() passed after 0.132 seconds.
+✔ Test nativeTLSCoalescesInputBackpressureAndBoundsControlQueue() passed after 0.206 seconds.
+✔ Test actualNativeTouchEngineDeliversMultitouchThroughTLSAndReleasesOnLoss() passed after 0.207 seconds.
+✔ Test actualNetworkFrameworkTLSRejectsWrongPinBeforeControl() passed after 3.213 seconds.
+✔ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() passed after 12.358 seconds.
+✔ Test run with 27 tests in 0 suites passed after 12.359 seconds.

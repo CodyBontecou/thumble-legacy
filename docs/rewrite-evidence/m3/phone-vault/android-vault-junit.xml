@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.PhoneCredentialTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-21T21:37:56" hostname="MacBook-Pro.local" time="0.009">
+  <properties/>
+  <testcase name="malformedRecordsDoNotCreateCredentials" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.002"/>
+  <testcase name="expiryHostBindingAndForgetAreScoped" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.001"/>
+  <testcase name="sharedFixtureIsExactOpaqueAndImmutable" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.001"/>
+  <testcase name="realJceEncryptionUsesFreshNonceAndBindsPinNamespaceKeyAndContent" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.002"/>
+  <testcase name="savesReadBackAndEqualEpochIsStrictlyIdempotent" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.001"/>
+  <testcase name="storageAndReadbackFailuresCannotAcknowledgeOrErase" classname="com.thumble.rewrite.input.PhoneCredentialTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

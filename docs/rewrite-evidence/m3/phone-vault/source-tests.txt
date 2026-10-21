@@ -1,0 +1,103 @@
+$ bun run check:generated && bun run check:boundaries && bun run typecheck && bun test
+$ bun tooling/generate-contracts.ts --check
+Generated 33 packet vectors and 5 invalid authenticated payloads
+$ bun tooling/check-boundaries.ts
+Portable contracts/domain import boundaries verified
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json
+bun test v1.4.3 (c6da4a4d3)
+
+tests/receiver-seam.test.ts:
+(pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [184.20ms]
+(pass) service death neutralizes the independent receiver within the owner lease [172.09ms]
+(pass) JS stalls do not stall native expiry [921.75ms]
+(pass) only one service owns a runtime directory; unrelated state is refused [89.35ms]
+(pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [88.53ms]
+(pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [1.02ms]
+(pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [259.35ms]
+
+tests/input-packet.test.ts:
+(pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [1.51ms]
+(pass) authenticated malformed semantic payloads are refused independently of encryption [0.15ms]
+(pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.04ms]
+
+tests/package.test.ts:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.15ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > east
+(pass) retained Swift/Rust v2 native report vectors > west
+(pass) retained Swift/Rust v2 native report vectors > north
+(pass) retained Swift/Rust v2 native report vectors > left shoulder [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right shoulder
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > select
+(pass) retained Swift/Rust v2 native report vectors > start
+(pass) retained Swift/Rust v2 native report vectors > home
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up [0.16ms]
+(pass) retained Swift/Rust v2 native report vectors > up right [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right
+(pass) retained Swift/Rust v2 native report vectors > down
+(pass) retained Swift/Rust v2 native report vectors > down left
+(pass) retained Swift/Rust v2 native report vectors > left
+(pass) retained Swift/Rust v2 native report vectors > up left
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.28ms]
+(pass) digital trigger release restores independent analog hold [0.06ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.11ms]
+(pass) decoded state has independent immutable ownership [0.04ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.02ms]
+
+tests/pairing.test.ts:
+(pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.19ms]
+(pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.05ms]
+(pass) a valid final allowed proof succeeds without granting another attempt [0.03ms]
+(pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.05ms]
+(pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.04ms]
+(pass) authority and window identities domain-separate the stored verifier [0.02ms]
+(pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.10ms]
+(pass) portable pairing client refuses a different authority and secret-bearing status replies [0.16ms]
+(pass) shared native enrollment fixture preserves service proof and public status semantics [0.81ms]
+
+tests/host-identity.test.ts:
+(pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.12ms]
+(pass) headless identity initialize/show survives separate native processes without exporting private keys [94.23ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [3.31ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.98ms]
+
+tests/mobile-input.test.ts:
+(pass) mobile control maps are bounded, immutable and share native semantic fixtures [0.60ms]
+(pass) invalid native maps cannot be admitted through the JS configuration boundary [0.09ms]
+(pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.30ms]
+(pass) native bridge configuration requires the matching activation receipt [0.45ms]
+(pass) native control lists reject holes and accessor elements without executing them [0.05ms]
+
+tests/client.test.ts:
+(pass) typed local client handles repeated success and rejection without leaking connections [12.07ms]
+
+1 tests skipped:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+ 68 pass
+ 1 skip
+ 0 fail
+ 819 expect() calls
+Ran 69 tests across 9 files. [1.92s]

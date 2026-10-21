@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "scope": "Opaque native credential vault/policies; OS runtime pending",
+  "swiftTests": 27,
+  "androidJUnit": {
+    "tests": 46,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "iosSDKs": ["iphoneos", "iphonesimulator"],
+  "iosRuntimeTestBundle": "build-for-testing pass; not executed",
+  "androidRuntimeTestAPK": "assembly pass; not executed",
+  "androidAAR": "pass",
+  "androidLint": "pass",
+  "products": [
+    {
+      "path": "Rewrite/native/mobile-input/android/build/outputs/aar/ThumbleRewriteMobileInput-debug.aar",
+      "bytes": 96205,
+      "sha256": "5521cff026d9dc5d005190a123179f03cbafb430603d75fea7281b3744f080b5"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/build/outputs/apk/androidTest/debug/ThumbleRewriteMobileInput-debug-androidTest.apk",
+      "bytes": 1760875,
+      "sha256": "66125631445b7cd636968581011cf80d3ffd41608e493977b22bfbcee1c2a03c"
+    }
+  ],
+  "hostedNewSource": "not published",
+  "retainedStackSafety": "unverified after prior compiler macro-probe stall; isolated credential inline size tested",
+  "remaining": [
+    "real iOS Keychain and AndroidKeyStore runtime execution",
+    "phone enrollment client wiring",
+    "lock/lifecycle and credential recovery/rotation UX",
+    "physical acceptance"
+  ]
+}
