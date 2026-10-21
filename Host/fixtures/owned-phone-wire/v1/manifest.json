@@ -1,0 +1,11 @@
+{
+  "fixtureVersion": 1,
+  "frameCount": 5,
+  "files": {
+    "frames.json": "3ae4ab73b965ca95a26cf9b35a0ff6a9b887fef2f123415085b3473817d07e83"
+  },
+  "advertisedPhoneFormats": [
+    4
+  ],
+  "automaticMigrationActivated": false
+}

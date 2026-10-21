@@ -654,6 +654,19 @@ impl HostCore {
             return Ok(effects);
         }
 
+        if (message.owned_phone_edit.is_some() || message.owned_phone_edit_result.is_some())
+            && !matches!(
+                message.message_type,
+                ControllerMessageType::OwnedPhoneEdit | ControllerMessageType::OwnedPhoneEditResult
+            )
+        {
+            self.send_diagnostic(
+                connection_id,
+                "owned phone payload requires its reliable edit message",
+                &mut effects,
+            );
+            return Ok(effects);
+        }
         match message.message_type {
             ControllerMessageType::PairingRequest => {
                 self.handle_pairing_request(
@@ -738,7 +751,9 @@ impl HostCore {
                     &mut effects,
                 );
             }
-            ControllerMessageType::PairingChallenge
+            ControllerMessageType::OwnedPhoneEdit
+            | ControllerMessageType::OwnedPhoneEditResult
+            | ControllerMessageType::PairingChallenge
             | ControllerMessageType::PairingAccepted
             | ControllerMessageType::SkinPackages
             | ControllerMessageType::SkinPackageRemoval
@@ -1271,13 +1286,16 @@ impl HostCore {
         accepted.default_gamepad_profile_id = Some(self.state.default_profile_id.clone());
         accepted.capabilities = Some(
             if self.state.schema_version == crate::OWNED_SCHEMA_VERSION {
-                Vec::new()
+                vec![ControllerCapability::OwnedPhoneEditV1]
             } else {
                 vec![ControllerCapability::GamepadProfileOrientationPreferenceMutation]
             },
         );
         accepted.input_protocol_version = Some(ControllerWireCodec::CURRENT_INPUT_PROTOCOL_VERSION);
         accepted.profile_format_version = Some(self.required_profile_format);
+        accepted.configuration_revision = (self.state.schema_version
+            == crate::OWNED_SCHEMA_VERSION)
+            .then_some(self.state.configuration_revision);
         // Transport adapters may attach a session-scoped realtime token when UDP
         // is available. The core owns input ordering across both transports.
         accepted
@@ -1825,6 +1843,9 @@ impl HostCore {
         }
         let mut response = ControllerMessage::new(message_type, 0);
         response.profile_format_version = Some(self.required_profile_format);
+        response.configuration_revision = (self.state.schema_version
+            == crate::OWNED_SCHEMA_VERSION)
+            .then_some(self.state.configuration_revision);
         response.gamepad_customization = Some(self.state.active_customization());
         response.gamepad_profiles = Some(self.state.profiles.clone());
         response.binding_presentations = Some(Vec::new());
@@ -1832,7 +1853,7 @@ impl HostCore {
         response.default_gamepad_profile_id = Some(self.state.default_profile_id.clone());
         response.capabilities = Some(
             if self.state.schema_version == crate::OWNED_SCHEMA_VERSION {
-                Vec::new()
+                vec![ControllerCapability::OwnedPhoneEditV1]
             } else {
                 vec![ControllerCapability::GamepadProfileOrientationPreferenceMutation]
             },
@@ -2208,6 +2229,16 @@ impl HostCore {
             .as_ref()
             .is_some_and(|active| active.connection_id == connection_id)
     }
+    pub fn accepts_owned_phone_edits(&self, connection_id: ConnectionId) -> bool {
+        self.running
+            && self.is_authenticated(connection_id)
+            && self.state.schema_version == crate::OWNED_SCHEMA_VERSION
+            && self.required_profile_format == 5
+            && self
+                .active_client
+                .as_ref()
+                .is_some_and(|client| client.profile_formats.contains(&5))
+    }
 
     fn profile_format_error(&self) -> ControllerMessage {
         let mut message = ControllerMessage::new(ControllerMessageType::Error, 0);
@@ -2403,6 +2434,8 @@ fn normalized_token(value: Option<&str>) -> Option<&str> {
 fn message_type_name(message_type: ControllerMessageType) -> &'static str {
     match message_type {
         ControllerMessageType::Hello => "hello",
+        ControllerMessageType::OwnedPhoneEdit => "owned_phone_edit",
+        ControllerMessageType::OwnedPhoneEditResult => "owned_phone_edit_result",
         ControllerMessageType::PairingRequest => "pairing_request",
         ControllerMessageType::PairingChallenge => "pairing_challenge",
         ControllerMessageType::PairingAccepted => "pairing_accepted",
@@ -2513,5 +2546,102 @@ mod digital_sequence_tests {
         assert!(!history.accept(1, &identity, Some(1)));
         assert!(!history.accept(10_000, &identity, Some(10_000)));
         assert!(history.accept(10_001, &identity, Some(10_001)));
+    }
+    #[test]
+    fn owned_snapshots_publish_revision_and_capability_without_changing_legacy_frames() {
+        struct WireTokens;
+        impl TokenSource for WireTokens {
+            fn next_pairing_code(&mut self) -> String {
+                "123456".into()
+            }
+            fn next_auth_token(&mut self) -> String {
+                "owned-wire-test-auth".into()
+            }
+        }
+        let document: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-configuration/v1/document.json"
+        ))
+        .unwrap();
+        let mut raw =
+            serde_json::to_value(PersistentState::minimal("owned-wire-core").unwrap()).unwrap();
+        for key in [
+            "profiles",
+            "activeProfileID",
+            "defaultProfileID",
+            "keyBindings",
+            "outputBindings",
+            "profileKeyBindings",
+            "profileOutputBindings",
+        ] {
+            raw[key] = document[key].clone();
+        }
+        raw["schemaVersion"] = serde_json::json!(crate::OWNED_SCHEMA_VERSION);
+        raw["configurationRevision"] = serde_json::json!(41);
+        let state: PersistentState = serde_json::from_value(raw).unwrap();
+        let mut core = HostCore::new(state, "123456").unwrap();
+        let mut tokens = WireTokens;
+        let mut hello = ControllerMessage::new(ControllerMessageType::Hello, 0);
+        hello.pairing_code = Some("123456".into());
+        hello.supported_profile_formats = Some(vec![5]);
+        let effects = core.handle_message(1, hello, 100, &mut tokens).unwrap();
+        let accepted = effects
+            .iter()
+            .find_map(|e| match e {
+                Effect::SendMessage { message, .. }
+                    if message.message_type == ControllerMessageType::PairingAccepted =>
+                {
+                    Some(message)
+                }
+                _ => None,
+            })
+            .unwrap();
+        assert_eq!(accepted.configuration_revision, Some(41));
+        assert!(accepted
+            .capabilities
+            .as_ref()
+            .unwrap()
+            .contains(&ControllerCapability::OwnedPhoneEditV1));
+        assert!(core.accepts_owned_phone_edits(1));
+        assert!(!core.accepts_owned_phone_edits(2));
+        let effects = core
+            .handle_message(
+                1,
+                ControllerMessage::new(ControllerMessageType::GamepadProfiles, 0),
+                101,
+                &mut tokens,
+            )
+            .unwrap();
+        assert!(effects.iter().any(|e|matches!(e,Effect::SendMessage{message,..} if message.configuration_revision==Some(41))));
+        let mut button = ControllerMessage::new(ControllerMessageType::Button, 0);
+        button.button = Some(KeypadElementID::preset(9));
+        button.state = Some(ButtonPressState::Down);
+        assert!(core
+            .handle_message(1, button.clone(), 102, &mut tokens)
+            .unwrap()
+            .iter()
+            .any(|e| matches!(e, Effect::KeyDown(_))));
+        button.state = Some(ButtonPressState::Up);
+        core.handle_message(1, button.clone(), 103, &mut tokens)
+            .unwrap();
+        button.state = Some(ButtonPressState::Down);
+        button.owned_phone_edit = Some(Box::new(
+            thumble_protocol::OwnedPhoneEdit::decode_json(include_bytes!(
+                "../../../fixtures/owned-phone-edits/v1/intent.json"
+            ))
+            .unwrap(),
+        ));
+        assert!(!core
+            .handle_message(1, button, 104, &mut tokens)
+            .unwrap()
+            .iter()
+            .any(|e| matches!(e, Effect::KeyDown(_))));
+        let mut legacy =
+            HostCore::new(PersistentState::minimal("legacy-wire").unwrap(), "123456").unwrap();
+        let mut hello = ControllerMessage::new(ControllerMessageType::Hello, 0);
+        hello.pairing_code = Some("123456".into());
+        hello.supported_profile_formats = Some(vec![4]);
+        let effects = legacy.handle_message(1, hello, 100, &mut tokens).unwrap();
+        assert!(effects.iter().any(|e|matches!(e,Effect::SendMessage{message,..} if message.message_type==ControllerMessageType::PairingAccepted && message.configuration_revision.is_none())));
+        assert!(!legacy.accepts_owned_phone_edits(1));
     }
 }

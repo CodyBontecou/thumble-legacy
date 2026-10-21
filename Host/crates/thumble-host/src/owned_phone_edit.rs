@@ -153,6 +153,25 @@ pub fn stage(
             .map_err(DraftError::Bridge)
     })
 }
+/// Replay and invalid/stale requests do not require native helper discovery.
+pub fn stage_local(
+    paths: &HostPaths,
+    source: &[u8],
+    intent: &OwnedPhoneEdit,
+    now: i64,
+) -> Result<OwnedPhoneStage, OwnedPhoneStageError> {
+    let mut bridge = None;
+    stage_with(paths, source, intent, now, |document, operation| {
+        if bridge.is_none() {
+            bridge = Some(ConfigurationBridge::discover().map_err(DraftError::Bridge)?);
+        }
+        bridge
+            .as_ref()
+            .unwrap()
+            .apply_owned(document, operation, now, Uuid::new_v4())
+            .map_err(DraftError::Bridge)
+    })
+}
 fn stage_with(
     paths: &HostPaths,
     source: &[u8],

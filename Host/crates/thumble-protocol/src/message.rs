@@ -154,6 +154,8 @@ pub enum ControllerPointerButton {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ControllerCapability {
+    #[serde(rename = "owned_phone_edit_v1")]
+    OwnedPhoneEditV1,
     #[serde(rename = "profile_artifact_adoption_v1")]
     ProfileArtifactAdoptionV1,
     #[serde(rename = "gamepad_profile_orientation_preference_mutation")]
@@ -166,6 +168,10 @@ pub enum ControllerCapability {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ControllerMessageType {
+    #[serde(rename = "owned_phone_edit")]
+    OwnedPhoneEdit,
+    #[serde(rename = "owned_phone_edit_result")]
+    OwnedPhoneEditResult,
     #[serde(rename = "hello")]
     Hello,
     #[serde(rename = "pairing_request")]
@@ -353,6 +359,12 @@ pub struct ControllerMessage {
     #[serde(rename = "serverID", skip_serializing_if = "Option::is_none")]
     pub server_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub owned_phone_edit: Option<Box<crate::OwnedPhoneEdit>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub owned_phone_edit_result: Option<Box<crate::OwnedPhoneEditResult>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub configuration_revision: Option<u64>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub gamepad_customization: Option<Value>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub gamepad_profiles: Option<Vec<Value>>,
@@ -440,6 +452,9 @@ impl ControllerMessage {
             realtime_token: None,
             auth_token: None,
             server_id: None,
+            owned_phone_edit: None,
+            owned_phone_edit_result: None,
+            configuration_revision: None,
             gamepad_customization: None,
             gamepad_profiles: None,
             skin_packages: None,

@@ -7,6 +7,7 @@ use thumble_protocol::ControllerCapability;
 use unicode_normalization::UnicodeNormalization;
 
 pub(super) enum ProfileJob {
+    OwnedIntent(Box<thumble_protocol::OwnedPhoneEdit>),
     Skin(Box<ControllerMessage>),
     Appearance(Box<crate::phone_appearance::PhoneAppearanceRequest>),
     Layout(Box<crate::phone_layout::PhoneLayoutRequest>),
@@ -65,6 +66,10 @@ pub(super) fn is_skin_message(message: &ControllerMessage) -> bool {
 impl SharedRuntime {
     pub(super) fn handle_profile_job(&self, id: ConnectionId, job: ProfileJob) {
         let job = match job {
+            ProfileJob::OwnedIntent(request) => {
+                self.handle_owned_phone_intent(id, *request);
+                return;
+            }
             ProfileJob::Layout(request) => {
                 self.handle_phone_layout(id, *request);
                 return;

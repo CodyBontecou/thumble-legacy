@@ -1,3 +1,5 @@
+#[path = "runtime_owned_intent.rs"]
+mod owned_intent_runtime;
 #[path = "runtime_owned.rs"]
 mod owned_runtime;
 #[path = "runtime_skins.rs"]
@@ -162,6 +164,9 @@ impl SharedRuntime {
         connection_id: ConnectionId,
         message: ControllerMessage,
     ) -> Result<(), String> {
+        if self.try_handle_owned_phone_intent(connection_id, &message)? {
+            return Ok(());
+        }
         let retired_adoption = matches!(
             message.message_type,
             ControllerMessageType::ProfileArtifactAdoptionBegin
@@ -1919,12 +1924,15 @@ pub async fn run_runtime(paths: HostPaths, options: RuntimeOptions) -> Result<()
         started_at: crate::input_liveness::InputClock::now(),
     });
 
-    if shared.skin_service.is_some() || shared.phone_layout_bridge.is_some() {
+    if ConfigurationBridge::is_available()
+        || shared.skin_service.is_some()
+        || shared.phone_layout_bridge.is_some()
+    {
         let (sender, jobs) = std::sync::mpsc::sync_channel(8);
         *shared.skin_jobs.lock().expect("skin jobs poisoned") = Some(sender);
         let weak = Arc::downgrade(&shared);
         std::thread::Builder::new()
-            .name("skin-sync".into())
+            .name("profile-sync".into())
             .spawn(move || {
                 while let Ok((id, message)) = jobs.recv() {
                     let Some(runtime) = weak.upgrade() else {
@@ -1933,7 +1941,7 @@ pub async fn run_runtime(paths: HostPaths, options: RuntimeOptions) -> Result<()
                     runtime.handle_profile_job(id, message);
                 }
             })
-            .map_err(|_| "could not start skin worker")?;
+            .map_err(|_| "could not start profile worker")?;
     }
     {
         let mut inner = shared.inner.lock().expect("runtime mutex poisoned");

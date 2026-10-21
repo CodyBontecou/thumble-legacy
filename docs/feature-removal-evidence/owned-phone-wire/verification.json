@@ -1,0 +1,60 @@
+{
+  "baseCommit": "a795f02ff37e3e2433a44b1ee1f01e2a09131b2f",
+  "isolatedSource": "/private/tmp/thumble-phone-wire-2dasb8xp",
+  "nativeSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "apple-source-hashes.json",
+  "logSHA256": {
+    "rust.txt": "81a828cf5079a754b00e40127accac024c83d0db9868bb29178487a8434ec3d3",
+    "stack.txt": "83c648491b51828cffc9d84efa12b7dea934681bebc724d2574c4553e40599d6",
+    "process.txt": "7bdf98df99b30184b737216b0f7cb989dfb6c98dc1e612968f781f327a61a25b",
+    "fixtures.txt": "f0ab212e255ab426d21188c2552bbe0e43d542d864108a0930c7883c55880424",
+    "build.txt": "e51e61bf43eaa13bc79ab996dbb799552e19c554f7e16a71616f76c5d4ce5481"
+  },
+  "binarySHA256": {
+    "thumble-host": "db7a86f79ccf8d3b884e50b94fa828a403e55a97941594ce80d52e5b7fdb58dc",
+    "thumble-bridge": "f83f6b0c2e475f72fa4da542589f711fd00d7b6e2290af45fe450f8d09ad0a62"
+  },
+  "rust": {
+    "passed": 612,
+    "failed": 0,
+    "ignored": 3
+  },
+  "stack": {
+    "passed": 41,
+    "failed": 0,
+    "macAndIOSDebugBuilds": true,
+    "nativeSourcesUnchanged": true,
+    "inputCount": 131
+  },
+  "wire": {
+    "authenticatedPhoneEdit": true,
+    "explicitRevisionAndReceipts": true,
+    "unauthorizedRefused": true,
+    "pairedWriteWithoutAgentOptIn": true,
+    "agentWritesStillDisabled": true,
+    "helperFreeReplay": true,
+    "staleAndChangedIntentRefused": true,
+    "historicalReceiptKeepsCurrentRevision": true,
+    "restartReplay": true,
+    "appearanceStates": 8,
+    "preciseMetadata": true,
+    "configurationRevision": 43,
+    "publicPhoneFormatsActivated": false
+  },
+  "wireDispatchImplemented": true,
+  "mobileAdaptersImplemented": false,
+  "profileFormatsAdvertised": [
+    4
+  ],
+  "automaticMigrationActivated": false,
+  "desktopGUIRetired": false,
+  "rawLogSHA256": {
+    "rust.txt": "81a828cf5079a754b00e40127accac024c83d0db9868bb29178487a8434ec3d3",
+    "stack.txt": "fd8dbc9e966070802f35f7283e136a9ab3d37990c7943fc2ad1be8149a8f3b47",
+    "process.txt": "7bdf98df99b30184b737216b0f7cb989dfb6c98dc1e612968f781f327a61a25b",
+    "fixtures.txt": "f0ab212e255ab426d21188c2552bbe0e43d542d864108a0930c7883c55880424",
+    "build.txt": "e51e61bf43eaa13bc79ab996dbb799552e19c554f7e16a71616f76c5d4ce5481"
+  },
+  "logNormalization": "Trailing whitespace stripped; raw hashes retained for original /tmp logs."
+}

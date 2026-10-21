@@ -137,6 +137,32 @@ impl OwnedPhoneEdit {
         Ok(())
     }
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum OwnedPhoneEditStatus {
+    Applied,
+    Replayed,
+    Conflict,
+    Rejected,
+}
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct OwnedPhoneEditResult {
+    pub schema_version: u32,
+    #[serde(rename = "editID", deserialize_with = "canonical_uuid")]
+    pub edit_id: Uuid,
+    #[serde(rename = "profileID", deserialize_with = "canonical_uuid")]
+    pub profile_id: Uuid,
+    pub base_configuration_revision: u64,
+    pub configuration_revision: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub committed_revision: Option<u64>,
+    pub changed: bool,
+    pub status: OwnedPhoneEditStatus,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub error_code: Option<String>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -218,6 +244,93 @@ mod tests {
                 "{}",
                 row["name"]
             );
+        }
+        assert_eq!(crate::SUPPORTED_PROFILE_FORMATS, &[4]);
+    }
+    #[test]
+    fn edit_and_receipt_wire_roundtrip_and_never_hide_in_compact_input() {
+        use crate::{
+            ButtonPressState, ControllerMessage, ControllerMessageType, ControllerWireCodec,
+            KeypadElementID,
+        };
+        let intent = OwnedPhoneEdit::decode_json(&valid()).unwrap();
+        let mut message = ControllerMessage::new(ControllerMessageType::OwnedPhoneEdit, 0);
+        message.profile_format_version = Some(5);
+        message.owned_phone_edit = Some(Box::new(intent.clone()));
+        assert_eq!(
+            ControllerWireCodec::decode(&ControllerWireCodec::encode(&message).unwrap()).unwrap(),
+            message
+        );
+        let result = OwnedPhoneEditResult {
+            schema_version: 1,
+            edit_id: intent.edit_id,
+            profile_id: intent.profile_id,
+            base_configuration_revision: 41,
+            configuration_revision: 43,
+            committed_revision: Some(42),
+            changed: true,
+            status: OwnedPhoneEditStatus::Replayed,
+            error_code: None,
+        };
+        let mut receipt = ControllerMessage::new(ControllerMessageType::OwnedPhoneEditResult, 0);
+        receipt.configuration_revision = Some(43);
+        receipt.owned_phone_edit_result = Some(Box::new(result));
+        assert_eq!(
+            ControllerWireCodec::decode(&ControllerWireCodec::encode(&receipt).unwrap()).unwrap(),
+            receipt
+        );
+        let mut input = ControllerMessage::new(ControllerMessageType::Button, 0);
+        input.button = Some(KeypadElementID::preset(1));
+        input.state = Some(ButtonPressState::Down);
+        assert!(ControllerWireCodec::encode(&input)
+            .unwrap()
+            .starts_with(b"PP"));
+        input.owned_phone_edit = Some(Box::new(intent));
+        assert!(!ControllerWireCodec::encode(&input)
+            .unwrap()
+            .starts_with(b"PP"));
+        input.owned_phone_edit = None;
+        input.configuration_revision = Some(41);
+        assert!(!ControllerWireCodec::encode(&input)
+            .unwrap()
+            .starts_with(b"PP"));
+    }
+    #[test]
+    fn frozen_wire_frames_keep_current_revision_separate_from_commit_receipts() {
+        use crate::{ControllerMessage, ControllerMessageType, ControllerWireCodec};
+        let frames: Vec<ControllerMessage> = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-phone-wire/v1/frames.json"
+        ))
+        .unwrap();
+        assert_eq!(frames.len(), 5);
+        let intent = frames[0].owned_phone_edit.as_ref().unwrap();
+        intent.validate().unwrap();
+        for frame in &frames {
+            assert_eq!(frame.profile_format_version, Some(5));
+            let wire = ControllerWireCodec::encode(frame).unwrap();
+            assert!(!wire.starts_with(b"PP"));
+            assert_eq!(ControllerWireCodec::decode(&wire).unwrap(), *frame);
+            if frame.message_type == ControllerMessageType::OwnedPhoneEditResult {
+                let result = frame.owned_phone_edit_result.as_ref().unwrap();
+                assert_eq!(result.edit_id, intent.edit_id);
+                assert_eq!(result.profile_id, intent.profile_id);
+                assert_eq!(
+                    result.base_configuration_revision,
+                    intent.base_configuration_revision
+                );
+                assert_eq!(
+                    frame.configuration_revision,
+                    Some(result.configuration_revision)
+                );
+                if result.status == OwnedPhoneEditStatus::Replayed {
+                    assert_eq!(result.committed_revision, Some(42));
+                    assert_eq!(result.configuration_revision, 43);
+                }
+                assert_eq!(
+                    result.committed_revision.is_some(),
+                    result.error_code.is_none()
+                );
+            }
         }
         assert_eq!(crate::SUPPORTED_PROFILE_FORMATS, &[4]);
     }

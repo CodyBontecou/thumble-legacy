@@ -31,5 +31,6 @@ pub use wire::{ControllerWireCodec, ControllerWireCodecError};
 mod owned_phone_edit;
 pub use owned_phone_edit::{
     OwnedPhoneColorScheme, OwnedPhoneControlEdit, OwnedPhoneEdit, OwnedPhoneEditError,
-    MAXIMUM_OWNED_PHONE_CONTROL_EDITS, MAXIMUM_OWNED_PHONE_EDIT_BYTES,
+    OwnedPhoneEditResult, OwnedPhoneEditStatus, MAXIMUM_OWNED_PHONE_CONTROL_EDITS,
+    MAXIMUM_OWNED_PHONE_EDIT_BYTES,
 };

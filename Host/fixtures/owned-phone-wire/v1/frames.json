@@ -1,0 +1,90 @@
+[
+  {
+    "type": "owned_phone_edit",
+    "timestamp": 0,
+    "profileFormatVersion": 5,
+    "ownedPhoneEdit": {
+      "schemaVersion": 1,
+      "editID": "aa000000-0000-0000-0000-000000000001",
+      "profileID": "ea000000-0000-0000-0000-000000000001",
+      "baseConfigurationRevision": 41,
+      "controlEdits": [
+        {
+          "controlID": "00000000-0000-0000-0000-000000000109",
+          "centerX": 0.61,
+          "centerY": 0.42,
+          "rotationDegrees": 12,
+          "isHidden": false
+        }
+      ],
+      "removedControlIDs": [
+        "ac000000-0000-0000-0000-000000000002"
+      ],
+      "colorScheme": "dark"
+    }
+  },
+  {
+    "type": "owned_phone_edit_result",
+    "timestamp": 0,
+    "profileFormatVersion": 5,
+    "configurationRevision": 42,
+    "ownedPhoneEditResult": {
+      "schemaVersion": 1,
+      "editID": "aa000000-0000-0000-0000-000000000001",
+      "profileID": "ea000000-0000-0000-0000-000000000001",
+      "baseConfigurationRevision": 41,
+      "configurationRevision": 42,
+      "changed": true,
+      "status": "applied",
+      "committedRevision": 42
+    }
+  },
+  {
+    "type": "owned_phone_edit_result",
+    "timestamp": 0,
+    "profileFormatVersion": 5,
+    "configurationRevision": 43,
+    "ownedPhoneEditResult": {
+      "schemaVersion": 1,
+      "editID": "aa000000-0000-0000-0000-000000000001",
+      "profileID": "ea000000-0000-0000-0000-000000000001",
+      "baseConfigurationRevision": 41,
+      "configurationRevision": 43,
+      "changed": true,
+      "status": "replayed",
+      "committedRevision": 42
+    }
+  },
+  {
+    "type": "owned_phone_edit_result",
+    "timestamp": 0,
+    "profileFormatVersion": 5,
+    "configurationRevision": 43,
+    "ownedPhoneEditResult": {
+      "schemaVersion": 1,
+      "editID": "aa000000-0000-0000-0000-000000000001",
+      "profileID": "ea000000-0000-0000-0000-000000000001",
+      "baseConfigurationRevision": 41,
+      "configurationRevision": 43,
+      "changed": false,
+      "status": "conflict",
+      "errorCode": "owned_phone_revision_conflict"
+    }
+  },
+  {
+    "type": "owned_phone_edit_result",
+    "timestamp": 0,
+    "profileFormatVersion": 5,
+    "configurationRevision": 43,
+    "ownedPhoneEditResult": {
+      "schemaVersion": 1,
+      "editID": "aa000000-0000-0000-0000-000000000001",
+      "profileID": "ea000000-0000-0000-0000-000000000001",
+      "baseConfigurationRevision": 41,
+      "configurationRevision": 43,
+      "changed": false,
+      "status": "rejected",
+      "errorCode": "owned_phone_intent_conflict"
+    }
+  }
+]

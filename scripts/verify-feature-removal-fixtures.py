@@ -270,7 +270,26 @@ for name, digest in contract["files"].items():
     assert Path(name).name == name
     assert hashlib.sha256((phone / name).read_bytes()).hexdigest() == digest
 assert len(json.loads((phone / "cases.json").read_text())["cases"]) == contract["caseCount"]
-print("Owned phone intent fixtures verified; transport and peer activation remain gated")
+print("Owned phone intent fixtures verified; public peer activation remains gated")
 schema = Path(contract["schema"])
 assert not schema.is_absolute() and ".." not in schema.parts
 assert hashlib.sha256((repo / schema).read_bytes()).hexdigest() == contract["schemaSHA256"]
+
+# Receiver wire support does not activate shipping phone profile offers.
+phone_wire = repo / "Host/fixtures/owned-phone-wire/v1"
+contract = json.loads((phone_wire / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1
+assert contract["advertisedPhoneFormats"] == [4]
+assert contract["automaticMigrationActivated"] is False
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((phone_wire / name).read_bytes()).hexdigest() == digest
+frames = json.loads((phone_wire / "frames.json").read_text())
+assert len(frames) == contract["frameCount"] == 5
+assert frames[0]["type"] == "owned_phone_edit"
+for frame in frames[1:]:
+    result = frame["ownedPhoneEditResult"]
+    assert frame["configurationRevision"] == result["configurationRevision"]
+assert frames[2]["ownedPhoneEditResult"]["committedRevision"] == 42
+assert frames[2]["configurationRevision"] == 43
+print("Owned phone wire frames verified; historical receipts retain current authority revision")

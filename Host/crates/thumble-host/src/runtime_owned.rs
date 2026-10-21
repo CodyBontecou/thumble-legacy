@@ -33,7 +33,7 @@ impl SharedRuntime {
         }
         Ok(())
     }
-    fn owned_snapshot_source(&self) -> Result<Vec<u8>, DraftError> {
+    pub(super) fn owned_snapshot_source(&self) -> Result<Vec<u8>, DraftError> {
         // Disk reads and schema validation can be expensive; only the final
         // comparison needs to exclude concurrent input/configuration updates.
         let (source, stored) = self.read_owned_source()?;
@@ -41,12 +41,6 @@ impl SharedRuntime {
         Self::check_owned_source(&stored, inner.core.persistent_state())?;
         Ok(source)
     }
-    fn owned_source(&self, inner: &RuntimeInner) -> Result<Vec<u8>, DraftError> {
-        let (source, stored) = self.read_owned_source()?;
-        Self::check_owned_source(&stored, inner.core.persistent_state())?;
-        Ok(source)
-    }
-
     fn owned_summary(&self, draft: &OwnedDraft) -> Result<ConfigurationDraftSummary, DraftError> {
         let mut summary = draft.summary()?;
         let inner = self.inner.lock().expect("runtime mutex poisoned");
@@ -185,40 +179,76 @@ impl SharedRuntime {
         &self,
         request: OwnedCommitRequest<'_>,
     ) -> Result<ConfigurationSaveSummary, SaveConfigurationError> {
-        if !self.configuration_write_enabled {
+        self.owned_save_with_origin(request, None)
+    }
+    pub(super) fn owned_save_from_phone(
+        &self,
+        request: OwnedCommitRequest<'_>,
+        connection: ConnectionId,
+    ) -> Result<ConfigurationSaveSummary, SaveConfigurationError> {
+        self.owned_save_with_origin(request, Some(connection))
+    }
+    fn owned_save_with_origin(
+        &self,
+        request: OwnedCommitRequest<'_>,
+        connection: Option<ConnectionId>,
+    ) -> Result<ConfigurationSaveSummary, SaveConfigurationError> {
+        if connection.is_none() && !self.configuration_write_enabled {
+            return Err(SaveConfigurationError::Disabled);
+        }
+        let authorized = |inner: &RuntimeInner| {
+            connection.is_none_or(|id| {
+                inner.connections.contains_key(&id) && inner.core.accepts_owned_phone_edits(id)
+            })
+        };
+        if !authorized(&self.inner.lock().expect("runtime mutex poisoned")) {
             return Err(SaveConfigurationError::Disabled);
         }
         let now = unix_millis();
         let store = OwnedDraftStore::new(&self.paths);
-        let mut inner = self.inner.lock().expect("runtime mutex poisoned");
         let commit_error =
             |error| SaveConfigurationError::Commit(ConfigurationCommitError::Draft(error));
-        let source = self.owned_source(&inner).map_err(commit_error)?;
+        // Disk reads, draft decoding and candidate validation stay off the input mutex.
+        let source = self.owned_snapshot_source().map_err(commit_error)?;
+        let mut original: PersistentState = thumble_protocol::decode_unique_json(&source)
+            .map_err(|_| commit_error(DraftError::Malformed))?;
+        original
+            .normalize()
+            .map_err(|_| commit_error(DraftError::Malformed))?;
         let id = request.draft_id.to_owned();
         let revision = request.draft_revision;
         let prepared = store
             .prepare_commit(&source, request, now)
             .map_err(commit_error)?;
         let mut summary = prepared.summary;
+        let next = prepared
+            .candidate
+            .as_ref()
+            .map(|candidate| {
+                let mut state: PersistentState = thumble_protocol::decode_unique_json(candidate)
+                    .map_err(|_| commit_error(DraftError::Malformed))?;
+                state
+                    .normalize()
+                    .map_err(|_| commit_error(DraftError::Malformed))?;
+                Ok(state)
+            })
+            .transpose()?;
+        let mut inner = self.inner.lock().expect("runtime mutex poisoned");
+        if !authorized(&inner) {
+            return Err(SaveConfigurationError::Disabled);
+        }
         let Some(candidate) = prepared.candidate else {
             return Ok(summary);
         };
-        let mut state: PersistentState = thumble_protocol::decode_unique_json(&candidate)
-            .map_err(|_| commit_error(DraftError::Malformed))?;
-        state
-            .normalize()
-            .map_err(|_| commit_error(DraftError::Malformed))?;
+        Self::check_owned_source(&original, inner.core.persistent_state()).map_err(commit_error)?;
         if summary.changed {
             let releases = inner.core.release_all_locally();
             let effects_result =
                 self.execute_effects_with_output_errors(&mut inner, releases, true);
-            // A prior failed release may leave output-side holds after the core
-            // has cleared ownership. Retry those even when no new effects exist.
             let tracked_result = inner.output.release_tracked();
             effects_result.map_err(SaveConfigurationError::ReleaseFailed)?;
             tracked_result.map_err(SaveConfigurationError::ReleaseFailed)?;
         }
-        // The live host's InstanceGuard holds the authority lease for this runtime.
         storage::install_private_state_bytes(
             &self.paths.state_file,
             &candidate,
@@ -226,7 +256,9 @@ impl SharedRuntime {
             || Ok(()),
         )
         .map_err(SaveConfigurationError::PersistenceFailed)?;
-        let effects = inner.core.install_validated_persisted_state(state);
+        let effects = inner
+            .core
+            .install_validated_persisted_state(next.expect("candidate was validated"));
         summary.phone_sync_queued = effects
             .iter()
             .any(|effect| matches!(effect, Effect::SendMessage { .. }));
@@ -242,11 +274,11 @@ impl SharedRuntime {
 }
 
 #[cfg(test)]
-mod tests {
+pub(super) mod tests {
     use super::*;
     use serde_json::value::RawValue;
     use thumble_protocol::{edit_json_values, JsonValueEdit};
-    fn fixture() -> (tempfile::TempDir, AuthorityLock, SharedRuntime) {
+    pub(in crate::runtime) fn fixture() -> (tempfile::TempDir, AuthorityLock, SharedRuntime) {
         let directory = tempfile::tempdir().unwrap();
         let paths = HostPaths::new(
             directory.path().join("authority"),
@@ -311,7 +343,10 @@ mod tests {
         drop(inner);
         (directory, lease, shared)
     }
-    fn begin_edit(shared: &SharedRuntime, name: &str) -> ConfigurationDraftSummary {
+    pub(in crate::runtime) fn begin_edit(
+        shared: &SharedRuntime,
+        name: &str,
+    ) -> ConfigurationDraftSummary {
         let response = shared.handle(ControlRequest::BeginConfigurationDraft {
             expected_configuration_revision: 41,
         });
@@ -495,7 +530,7 @@ mod tests {
                 .ok
         );
     }
-    fn hold_key(shared: &SharedRuntime) {
+    pub(in crate::runtime) fn hold_key(shared: &SharedRuntime) {
         let mut inner = shared.inner.lock().unwrap();
         let effects = inner
             .core

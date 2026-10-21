@@ -1,0 +1,20 @@
+{
+  "Host/crates/thumble-protocol/src/owned_phone_edit.rs": "87222d056ecf46f23a79e1b5843d26a1fcb0a451b49559d6ac82b749e3867f4b",
+  "Host/crates/thumble-protocol/src/lib.rs": "bc8db8f573aed79f75ec3b66a800fc65a7149423396ac7d6ee1ccf2c45136f52",
+  "Host/crates/thumble-protocol/src/message.rs": "f9ed6df340d34403083440f8a33bc8c9f8cc64547cc032ed2ffaefacb731699e",
+  "Host/crates/thumble-protocol/src/wire.rs": "ea68147f56370d5140c58b1616668adc88d249d05c1892904a00af4b75e270e7",
+  "Host/crates/thumble-core/src/core.rs": "e1a647dcb8bc9df707900ce640a2845fd7d4ede0256f9b8b1a809271dddc798c",
+  "Host/crates/thumble-host/src/owned_phone_edit.rs": "84e21ef34944e11441386533c47ba64880a17336cc395e972df2e94ef3241130",
+  "Host/crates/thumble-host/src/runtime_owned.rs": "404c5c228a4cae9669fb982d7672350abce5591602452c8e501443e5d1183a65",
+  "Host/crates/thumble-host/src/runtime.rs": "95e11fc45b61675dfabb2a21e5a1acec340e8d589b796e9c75a7163304a5c7c2",
+  "Host/crates/thumble-host/src/runtime_skins.rs": "a6ca2857ca942ef4178f18e543eac921b298c0bf6c18181e3d52a9bdbc67a410",
+  "scripts/verify-feature-removal-fixtures.py": "b2d10b22c5e7f8b1e6966e3e886f4f3b03160f01b21ed6e051971da4ca31a93f",
+  "docs/owned-phone-edit-contract.md": "b68cadb5e685b34c92f7f13d6d9205ed3c61cb7eab1bf2be6181ba5c214a4e6b",
+  "docs/feature-removal-progress.md": "25b04cd9288e0455c6d6b61e4932a09fb3a802cb2e1027227a6cac8b9efb36f0",
+  "docs/feature-removal-inventory.md": "94201e10845d338347442f13a00b5f69df79e777f0b0e94003b7f2a6b05fb7dd",
+  "Host/crates/thumble-host/src/runtime_owned_intent.rs": "39709dc207f48a2c1b77c186ab5bee59ff1908658b0bc0e4bb617e1f89f91112",
+  "scripts/verify-owned-phone-wire.py": "d423f2b4678ec6911e17d59d04d3acfdbfa68410b038ec24e8badf7182b95ea6",
+  "Host/fixtures/owned-phone-wire/v1/frames.json": "3ae4ab73b965ca95a26cf9b35a0ff6a9b887fef2f123415085b3473817d07e83",
+  "Host/fixtures/owned-phone-wire/v1/manifest.json": "00ff35274313616eda922ca3eaa023690db0af3855eb3e3215c5bfac800849db",
+  "docs/cli-mcp-cutover.md": "bc7d84e1feb3efb252a031ccc53eb7e2b9451ef75272b59d2dc09e4ec2cad612"
+}

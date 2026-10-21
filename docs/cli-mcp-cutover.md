@@ -48,3 +48,5 @@ Owned portable import/export is now available through native CLI profile command
 Version-4 file preparation is now exposed as a read-only host CLI/MCP step, returning an owned artifact and exact-source/layout reviews. It handles plain inline artwork and explicitly supplied package archives without authorizing authority migration or phone activation. See [legacy import preparation](legacy-import-preparation.md).
 
 The owned-phone intent and private-draft staging backend now preserve native geometry/deletion/color behavior with revision and replay checks. Authenticated wire dispatch, matching acknowledgments and retained mobile journal adapters remain required before paired format-5 or automatic migration activation. See [the staged contract](owned-phone-edit-contract.md).
+
+Authenticated owned-phone wire dispatch now commits scoped intents through the headless release/CAS path and returns correlated revision receipts without requiring local agent-write opt-in. Shipping mobile journal integration and profile-format activation remain gated. See [the wire contract](owned-phone-edit-contract.md).
