@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "scope": "M2 native module SDK compilation; production signing and physical delivery unverified",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk",
+  "target": "arm64-apple-ios17.0-simulator",
+  "artifacts": {
+    "libMobileInputCore.a": {
+      "bytes": 319048,
+      "sha256": "1d61f34f9577602a3909fb581bb90804edafcc2271e9f7730c9173b178f29cd4"
+    },
+    "libThumbleContracts.a": {
+      "bytes": 60808,
+      "sha256": "ad07a9b5449ff1ff84505c50c13dea6c5551dfd0a0f6e320b69e7336105cbb09"
+    },
+    "libMobileInputUIKit.a": {
+      "bytes": 75784,
+      "sha256": "46cd2e9168e0d8a37943d2cb32228115230f6bc38d359955254af485ec460dfc"
+    }
+  }
+}

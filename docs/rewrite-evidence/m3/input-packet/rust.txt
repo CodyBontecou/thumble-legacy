@@ -1,0 +1,35 @@
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.42s
+     Running unittests src/lib.rs (Rewrite/native/receiver/target/debug/deps/thumble_rewrite_receiver-ffc14fad1b1fd6b5)
+
+running 15 tests
+test runtime::tests::owner_lease_expires_even_without_samples ... ok
+test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+test gamepad::tests::retained_native_vectors ... ok
+test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running unittests src/main.rs (Rewrite/native/receiver/target/debug/deps/thumble_rewrite_receiver-7579075962ffd07b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_rewrite_receiver
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

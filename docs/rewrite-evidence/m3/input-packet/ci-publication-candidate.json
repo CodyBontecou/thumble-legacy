@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "repository": "CodyBontecou/Thumble",
+  "visibility": "public",
+  "branch": "codex/typescript-rewrite-headless-ci",
+  "expectedPublicParent": "160418187157fea978a9368f12cf831c16168cb6",
+  "scope": "Native encrypted input/safety adapters, shared vectors, tooling/workflow/notices and protocol documentation; existing approved pairing source unchanged",
+  "status": "pending-scoped-publication-approval",
+  "fileCount": 28,
+  "totalBytes": 197161,
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite.yml",
+      "bytes": 2287,
+      "sha256": "376ecb8d47b575d61180d4be166f7614e5bc79a7b6d01eec2433aec4d7e7bb18"
+    },
+    {
+      "path": "GLOSSARY.md",
+      "bytes": 724,
+      "sha256": "776664b813fd19e9fc3a5f5edeaa69d82d50c65362bf024834483f45a54d34a5"
+    },
+    {
+      "path": "Rewrite/.prettierignore",
+      "bytes": 244,
+      "sha256": "51c4e09ebab10d0462d69f2c4ba45020084f894227504a30576cfd1a168cb08e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 6529,
+      "sha256": "1b59cf2fee37c29821dbf6490ed626ebeb28288679ab5ed62e330904d9094e77"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/InputPacket.kt",
+      "bytes": 7193,
+      "sha256": "40858043ec274c2315303e31ed130f0bba56f45aa678ea9922f86605b69bea33"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/InputPacketTest.kt",
+      "bytes": 9238,
+      "sha256": "bad5e55020489cc35b9c4c37d9a4f7c0156722871198f83f5f47f488a8f29fdf"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/InputPacket.swift",
+      "bytes": 6051,
+      "sha256": "abeba7f2bf663a767b0e1e7846fe4f07719438ace41964efeaf856dffa3d0d61"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/InputPacketTests.swift",
+      "bytes": 7956,
+      "sha256": "efc971fe752a44ba77d28c10ecaa8b4a9b1df355d6eb24629aa029f8d2f00b66"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.lock",
+      "bytes": 8832,
+      "sha256": "7473419a6316c766a942ca736a3f21c28d1b7d18e707a9ac1cb14f2712d6ab50"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "bytes": 521,
+      "sha256": "d535f07d1623626065f6e81e1d5d09f89ec9c48075a3dc51b8300e74a09f0834"
+    },
+    {
+      "path": "Rewrite/native/receiver/THIRD-PARTY-NOTICES.txt",
+      "bytes": 47267,
+      "sha256": "910fbbe4e8ef5a5425cb7bd388cb038fc5983bc4623838a820a80b7e8c464c47"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/generated-packet.rs",
+      "bytes": 699,
+      "sha256": "d1c4544ca7d9518b85d7fbe233861f8363865a69186fa1a592ab92f05ca8ffa1"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/input_packet.rs",
+      "bytes": 10825,
+      "sha256": "346a52638d3a6dc3db221ceafeecd97b579dc14e7078317cf7e547194e8744d9"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 249,
+      "sha256": "d20fe831a9630e2a91c81326d59c4ce896ee3355daf5eec95697aa86207a2db9"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "bytes": 6087,
+      "sha256": "58cdfcb23500f961c4fe37cacd1cd5ff55363d2af97ed0eb3d9f2443ff986a6b"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/packet_runtime.rs",
+      "bytes": 12281,
+      "sha256": "dc2a5e05a43f3cf89eb21026933cc78ace11cb7957e802745d53ce0280a6cf5f"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/runtime.rs",
+      "bytes": 11741,
+      "sha256": "ea842b716f05e1eb34e6bc3616695a63fb0585c8a0ffa17a88cd903dd2a542e3"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/index.ts",
+      "bytes": 3235,
+      "sha256": "81732e5f8c695285ba822f6c65b09b2b989db1c8b71e724c4dfccf4784223d85"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/input-packet.ts",
+      "bytes": 1672,
+      "sha256": "a90c8fe2ded83da059af5b3c0d26d48cafe76ac72e3a11f985aa24c09943cee1"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/input-packet-v1.json",
+      "bytes": 26920,
+      "sha256": "792b63fd58035a475fefea4116263276ea25a51eb50848f71dc16578b4a5f3be"
+    },
+    {
+      "path": "Rewrite/tests/input-packet.test.ts",
+      "bytes": 3322,
+      "sha256": "00e5241377265b33cdffccf35f3e406e4423208f6ccdb39c1a8e9b198aedf9e7"
+    },
+    {
+      "path": "Rewrite/tooling/build.ts",
+      "bytes": 2042,
+      "sha256": "0e146256bd217d03905244d4bfa53cff0d9517ccd2fdbf8137e03091f63b9784"
+    },
+    {
+      "path": "Rewrite/tooling/generate-contracts.ts",
+      "bytes": 5134,
+      "sha256": "b8ad4ae5c457d6015fcecb2619b2269753c3bba10c8b767004bedda00fc04072"
+    },
+    {
+      "path": "Rewrite/tooling/generate-input-packet-fixtures.ts",
+      "bytes": 4863,
+      "sha256": "d9b613c5c83acbd07f6325ba54e94e1be43e9a10e3bdace17ca97b8e504e15bb"
+    },
+    {
+      "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+      "bytes": 570,
+      "sha256": "6ce22097ca5883f0469ad0e08a133039c4d319308e4750f717bb7a826946e8b6"
+    },
+    {
+      "path": "Rewrite/tooling/verify-input-packet-oracle.mjs",
+      "bytes": 2391,
+      "sha256": "7175a76ff4baa872634df13bc5ea09cf6c3123e49864aa8616f9cfd8b9779b17"
+    },
+    {
+      "path": "docs/adr/0001-rewrite-pairing-and-input-transport.md",
+      "bytes": 4213,
+      "sha256": "8706cea070b27193d9275eeb2cfacb493e84e49bd5fc945c0e73089961172167"
+    },
+    {
+      "path": "docs/adr/0002-rewrite-input-packet-v1.md",
+      "bytes": 4075,
+      "sha256": "72c5a5f389c4b2ab92319086546eef630dc8288753e0fe54b92ca282bef08a58"
+    }
+  ],
+  "excludes": [
+    "Private baseline/history",
+    "Credentials or real session keys",
+    "Build products/caches",
+    "Local evidence logs",
+    "Unrelated retained sources"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "scope": "M2 native module SDK compilation; production signing and physical delivery unverified",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk",
+  "target": "arm64-apple-ios17.0",
+  "artifacts": {
+    "libMobileInputCore.a": {
+      "bytes": 321160,
+      "sha256": "e4cec577d4239e52ca62463746b331408e3b454d3ee1ea019e3bacdcbd42cd16"
+    },
+    "libThumbleContracts.a": {
+      "bytes": 60968,
+      "sha256": "f6c5186be82026bd697456a08a6bc56f26664b0369099f4e562593d67cc5832e"
+    },
+    "libMobileInputUIKit.a": {
+      "bytes": 75936,
+      "sha256": "16cb2cf428f4486ff3dab10ba4fbf7efdc512834f6dea7dd20bb3b4188eac4c8"
+    }
+  }
+}

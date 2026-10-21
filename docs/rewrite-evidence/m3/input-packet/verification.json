@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "sourceBaseCommit": "68038fa",
+  "scope": "M3 native authenticated packet codec, touch output adapters and receiver safety integration; no LAN enrollment/socket activation",
+  "toolchains": {
+    "bun": "1.4.3",
+    "typescript": "6.0.3",
+    "rust": "1.88.0",
+    "swift": "6.3.3",
+    "iOSSDK": "26.5",
+    "androidCompileSDK": 35,
+    "java": "17.0.20",
+    "gradle": "8.11.1",
+    "agp": "8.9.1",
+    "kotlin": "2.1.20",
+    "node": "26.8.1",
+    "openssl": "3.6.4"
+  },
+  "results": {
+    "portableTestsPassed": 65,
+    "portablePackagePhaseSkipped": 1,
+    "standalonePackageTestsPassed": 1,
+    "rustNativeTestsPassed": 15,
+    "swiftTestFunctionsPassed": 13,
+    "swiftParameterizedTouchScenariosPassed": 15,
+    "androidNativeTestsPassed": 28,
+    "packetVectorsEachLanguage": 33,
+    "authenticatedInvalidPayloadsEachLanguage": 5,
+    "tamperPositionsTestedEachNativeLanguage": 108,
+    "directIOSStaticModulesBuiltEachSDK": 3,
+    "androidAARAndLint": "passed",
+    "strictPortableAndHostTypes": "passed",
+    "formatAndClippy": "passed",
+    "nodeOpenSSLIndependentExactCiphertexts": "matched"
+  },
+  "resolvedFailures": [
+    "aes-gcm 0.11.1 resolved aes 0.9.3 requiring Rust 1.89; pinned patched aes-gcm 0.10.3 works with retained Rust 1.88.",
+    "Android channel test initially used ULong for a Long touch ID; corrected test to the native API type.",
+    "Generated packet fixture JSON is now excluded from Prettier and owned by deterministic exact-content drift checking."
+  ],
+  "developmentArtifacts": {
+    "Rewrite/dist/thumble-rewrite": {
+      "bytes": 70895474,
+      "sha256": "fdd88a4169d3a9416d2e1fd62909d77aafa53815be78c9c3b5d9588a699bbec7"
+    },
+    "Rewrite/dist/SteamControllerBridge-LICENSE.txt": {
+      "bytes": 1234,
+      "sha256": "f3b592ee3a1c9ce42bdc9d14f0aea069b1276e5d304aaae932feb7338fdf4da3"
+    },
+    "Rewrite/dist/README.txt": {
+      "bytes": 263,
+      "sha256": "0911670f534f148930c5ef65f216fbfaa87a8f0b2307fdc919a2bc513a28afd4"
+    },
+    "Rewrite/dist/Native-THIRD-PARTY-NOTICES.txt": {
+      "bytes": 47267,
+      "sha256": "910fbbe4e8ef5a5425cb7bd388cb038fc5983bc4623838a820a80b7e8c464c47"
+    },
+    "Rewrite/dist/thumble-rewrite-receiver": {
+      "bytes": 815792,
+      "sha256": "7d5dfc95b86c91fcbb15367a48a6cd5ba083ce042944b1482d958c1e0afc6b18"
+    },
+    "Rewrite/native/mobile-input/android/build/outputs/aar/ThumbleRewriteMobileInput-debug.aar": {
+      "bytes": 51316,
+      "sha256": "d9a991c2c18279bb3a11660d686255fd8c957141706712bd4d86f3996d3e6311"
+    }
+  },
+  "incomplete": [
+    "Pinned native TLS enrollment and transactional trust/secure credential storage",
+    "Native UDP and reliable socket adapters and discovery/manual invitation",
+    "Hosted checks for this new packet source; prior approved pairing CI does not certify it",
+    "Full React Native app, physical input/haptics/latency/gameplay and production helper/driver signing",
+    "Retained stack-safety script remains incomplete after previously documented local Xcode probe wait",
+    "Full rewrite and required optical live sync acceptance"
+  ],
+  "productionInputEnabled": false
+}

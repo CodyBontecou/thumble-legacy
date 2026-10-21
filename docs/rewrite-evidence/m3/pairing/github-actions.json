@@ -1,0 +1,498 @@
+{
+  "version": 1,
+  "approvedFiles": 15,
+  "approval": "Approve this scoped pairing CI push",
+  "publicCommit": "160418187157fea978a9368f12cf831c16168cb6",
+  "localSourceCommit": "68038fa",
+  "runs": [
+    {
+      "id": 39664550715,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39664550715",
+      "jobs": [
+        {
+          "id": 119445999213,
+          "name": "portable (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:boundaries",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun x --no-install prettier --check .",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:test",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run typecheck",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:package:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Typecheck generated Swift DTOs",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 119445999530,
+          "name": "portable (macos-latest)",
+          "status": "queued",
+          "conclusion": null,
+          "steps": []
+        },
+        {
+          "id": 119445999615,
+          "name": "portable (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:boundaries",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun x --no-install prettier --check .",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:test",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run typecheck",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:package:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Typecheck generated Swift DTOs",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12376641552,
+          "name": "rewrite-portable-tests-ubuntu-latest",
+          "size_in_bytes": 3080,
+          "digest": "sha256:b52d3a769b75f74c94f452f5b1e6c05f1e2994eedf19c5ec660a15892e9ac648",
+          "created_at": "2026-10-21T19:47:10Z",
+          "expired": false
+        },
+        {
+          "id": 12376421555,
+          "name": "rewrite-m2-recording-ubuntu-latest",
+          "size_in_bytes": 42976916,
+          "digest": "sha256:2851581345a211016d75c993f61bef84667b8ab3f9313feccbcf05d8a5febfac",
+          "created_at": "2026-10-21T19:47:09Z",
+          "expired": false
+        },
+        {
+          "id": 12375713301,
+          "name": "rewrite-m2-recording-windows-latest",
+          "size_in_bytes": 45679454,
+          "digest": "sha256:842133d1fd1d5fd397c72966e26625cfc739aec39c15fb3ea61534ba83b56425",
+          "created_at": "2026-10-21T19:47:53Z",
+          "expired": false
+        },
+        {
+          "id": 12375388988,
+          "name": "rewrite-portable-tests-windows-latest",
+          "size_in_bytes": 3067,
+          "digest": "sha256:e5ab4bfad2518acae518335b27443296879cb2d735817cb7bfe28c4913f82fb6",
+          "created_at": "2026-10-21T19:47:54Z",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "id": 39664550915,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39664550915",
+      "jobs": [
+        {
+          "id": 119446000448,
+          "name": "android-native",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run android-actions/setup-android@v3",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned Android SDK",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build and test native Android module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 119446000908,
+          "name": "ios-native",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run mobile:prepare",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Record native toolchain",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Swift native contract and lifecycle tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Compile native modules directly against both iOS SDKs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build native iOS Simulator module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build native iPhone module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 12376846686,
+          "name": "rewrite-mobile-ios-native",
+          "size_in_bytes": 2823,
+          "digest": "sha256:ea8547fff7ac0e170730c3a26b768f9bfd83ebeef0d9239b593dff04d017c1ca",
+          "created_at": "2026-10-21T19:48:29Z",
+          "expired": false
+        },
+        {
+          "id": 12375683387,
+          "name": "rewrite-mobile-android-native",
+          "size_in_bytes": 64840,
+          "digest": "sha256:5fb091ba19619056dd689277cf4fd3a77d5868dc855f1a7f567151df961b5b8f",
+          "created_at": "2026-10-21T19:48:01Z",
+          "expired": false
+        }
+      ]
+    }
+  ],
+  "windowsTerminalLines": [
+    "2026-10-21T19:47:32.8243136Z test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\r",
+    "2026-10-21T19:47:42.3483211Z  62 pass\r",
+    "2026-10-21T19:47:42.3483548Z  1 skip\r",
+    "2026-10-21T19:47:42.3483842Z  0 fail\r",
+    "2026-10-21T19:47:42.3484548Z Ran 63 tests across 7 files. [3.78s]\r",
+    "2026-10-21T19:47:48.6170158Z  1 pass\r",
+    "2026-10-21T19:47:48.6170388Z  0 fail\r",
+    "2026-10-21T19:47:48.6170901Z Ran 1 test across 1 file. [1394.00ms]\r"
+  ],
+  "scope": "Only approved pairing source; excludes later local native packet implementation. macOS portable job queued at evidence capture."
+}

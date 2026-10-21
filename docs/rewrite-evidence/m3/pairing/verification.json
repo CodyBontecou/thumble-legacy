@@ -36,7 +36,15 @@
       "sha256": "e0ef616ca1b957f4d090cea3c3a1c2d7c2a4c46e8f048986f0a35505d37dc88b"
     }
   },
-  "hostedCI": "pending explicit scoped source-publication approval",
+  "hostedCI": {
+    "commit": "160418187157fea978a9368f12cf831c16168cb6",
+    "portableRun": 39664550715,
+    "windows": "success: six native, 62 source, one standalone package test",
+    "linux": "success",
+    "macOS": "queued at evidence capture",
+    "unchangedNativeMobileRun": 39664550915,
+    "nativeMobile": "both jobs success; does not certify subsequent local packet source"
+  },
   "outstanding": [
     "Native pinned TLS enrollment endpoint and secure phone credential storage",
     "Durable trust enrollment and revocation",

@@ -5,7 +5,7 @@
   "branch": "codex/typescript-rewrite-headless-ci",
   "expectedPublicParent": "994ce1a21a428aa04c3a2cb9ea5f1800373af06c",
   "scope": "M3 pairing window contracts, portable application/client, host CLI/service integration, tests and Rewrite README only",
-  "status": "pending-scoped-publication-approval",
+  "status": "approved-and-published",
   "fileCount": 15,
   "totalBytes": 62982,
   "files": [
@@ -91,5 +91,10 @@
     "Build products",
     "Local evidence logs",
     "Unrelated retained sources"
-  ]
+  ],
+  "approval": {
+    "answer": "Approve this scoped pairing CI push",
+    "publicCommit": "160418187157fea978a9368f12cf831c16168cb6",
+    "localSourceCommit": "68038fa"
+  }
 }

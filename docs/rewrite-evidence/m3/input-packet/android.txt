@@ -1,0 +1,63 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :generateDebugResValues UP-TO-DATE
+> Task :generateDebugResources UP-TO-DATE
+> Task :packageDebugResources UP-TO-DATE
+> Task :parseDebugLocalResources UP-TO-DATE
+> Task :generateDebugRFile UP-TO-DATE
+> Task :compileDebugKotlin UP-TO-DATE
+> Task :javaPreCompileDebug UP-TO-DATE
+> Task :compileDebugJavaWithJavac NO-SOURCE
+> Task :bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :bundleLibCompileToJarDebug UP-TO-DATE
+> Task :preDebugUnitTestBuild UP-TO-DATE
+> Task :generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :processDebugJavaRes UP-TO-DATE
+> Task :mergeDebugJniLibFolders UP-TO-DATE
+> Task :mergeDebugNativeLibs NO-SOURCE
+> Task :stripDebugDebugSymbols NO-SOURCE
+> Task :copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :extractDebugAnnotations UP-TO-DATE
+> Task :extractDeepLinksForAarDebug UP-TO-DATE
+> Task :mergeDebugShaders UP-TO-DATE
+> Task :compileDebugShaders NO-SOURCE
+> Task :generateDebugAssets UP-TO-DATE
+> Task :mergeDebugAssets UP-TO-DATE
+> Task :mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :prepareDebugArtProfile UP-TO-DATE
+> Task :prepareLintJarForPublish UP-TO-DATE
+> Task :processDebugManifest UP-TO-DATE
+> Task :mergeDebugJavaResource UP-TO-DATE
+> Task :syncDebugLibJars UP-TO-DATE
+> Task :writeDebugAarMetadata UP-TO-DATE
+> Task :bundleDebugAar UP-TO-DATE
+> Task :assembleDebug UP-TO-DATE
+> Task :bundleDebugLocalLintAar UP-TO-DATE
+> Task :createFullJarDebug UP-TO-DATE
+> Task :preDebugAndroidTestBuild UP-TO-DATE
+> Task :generateDebugAndroidTestResValues UP-TO-DATE
+> Task :writeDebugLintModelMetadata UP-TO-DATE
+> Task :extractProguardFiles UP-TO-DATE
+> Task :generateDebugAndroidTestLintModel UP-TO-DATE
+> Task :generateDebugLintReportModel UP-TO-DATE
+> Task :generateDebugUnitTestLintModel
+> Task :lintAnalyzeDebug UP-TO-DATE
+> Task :compileDebugUnitTestKotlin
+> Task :compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :processDebugUnitTestJavaRes UP-TO-DATE
+> Task :testDebugUnitTest
+> Task :lintAnalyzeDebugAndroidTest
+> Task :lintAnalyzeDebugUnitTest
+
+> Task :lintReportDebug
+Wrote HTML report to file:///Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/mobile-input/android/build/reports/lint-results-debug.html
+
+> Task :lintDebug
+
+BUILD SUCCESSFUL in 8s
+43 actionable tasks: 7 executed, 36 up-to-date

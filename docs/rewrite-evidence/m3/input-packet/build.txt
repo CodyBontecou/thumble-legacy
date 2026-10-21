@@ -1,0 +1,25 @@
+$ bun tooling/build.ts
+   Compiling version_check v0.9.5
+   Compiling typenum v1.20.1
+   Compiling cfg-if v1.0.5
+   Compiling subtle v2.6.1
+   Compiling opaque-debug v0.3.1
+   Compiling cpufeatures v0.2.17
+   Compiling getrandom v0.2.17
+   Compiling rand_core v0.6.4
+   Compiling generic-array v0.14.7
+   Compiling crypto-common v0.1.7
+   Compiling inout v0.1.4
+   Compiling universal-hash v0.5.1
+   Compiling aead v0.5.2
+   Compiling cipher v0.4.4
+   Compiling polyval v0.6.2
+   Compiling ghash v0.5.1
+   Compiling ctr v0.9.2
+   Compiling aes v0.8.4
+   Compiling aes-gcm v0.10.3
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `release` profile [optimized] target(s) in 2.02s
+   [9ms]  bundle  13 modules
+ [151ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime

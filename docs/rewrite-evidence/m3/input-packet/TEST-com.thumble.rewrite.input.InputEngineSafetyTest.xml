@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.InputEngineSafetyTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T19:44:22" hostname="MacBook-Pro.local" time="0.044">
+  <properties/>
+  <testcase name="invalidConfigurationPreservesHeldInputAndOwnsItsControlList" classname="com.thumble.rewrite.input.InputEngineSafetyTest" time="0.024"/>
+  <testcase name="transportFailureCannotReplayHeldTouches" classname="com.thumble.rewrite.input.InputEngineSafetyTest" time="0.004"/>
+  <testcase name="crossThreadMutationIsRejected" classname="com.thumble.rewrite.input.InputEngineSafetyTest" time="0.003"/>
+  <testcase name="allRetainedNativeVectors" classname="com.thumble.rewrite.input.InputEngineSafetyTest" time="0.01"/>
+  <testcase name="touchBoundsAndNonfiniteEventsFailClosed" classname="com.thumble.rewrite.input.InputEngineSafetyTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

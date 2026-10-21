@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="1" assertions="22" failures="0" skipped="0" time="2.213785">
+  <testsuite name="tests/package.test.ts" file="tests/package.test.ts" tests="1" assertions="22" failures="0" skipped="0" time="2.211725" hostname="MacBook-Pro.local">
+    <testcase name="compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH" classname="" time="2.208909" file="tests/package.test.ts" line="17" assertions="22" />
+  </testsuite>
+</testsuites>

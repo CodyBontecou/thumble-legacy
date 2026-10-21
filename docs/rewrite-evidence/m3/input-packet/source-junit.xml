@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="66" assertions="779" failures="0" skipped="1" time="1.797301">
+  <testsuite name="tests/receiver-seam.test.ts" file="tests/receiver-seam.test.ts" tests="7" assertions="76" failures="0" skipped="0" time="1.712562" hostname="MacBook-Pro.local">
+    <testcase name="service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers" classname="" time="0.178955" file="tests/receiver-seam.test.ts" line="101" assertions="26" />
+    <testcase name="service death neutralizes the independent receiver within the owner lease" classname="" time="0.173484" file="tests/receiver-seam.test.ts" line="200" assertions="7" />
+    <testcase name="JS stalls do not stall native expiry" classname="" time="0.923837" file="tests/receiver-seam.test.ts" line="248" assertions="5" />
+    <testcase name="only one service owns a runtime directory; unrelated state is refused" classname="" time="0.09018" file="tests/receiver-seam.test.ts" line="278" assertions="4" />
+    <testcase name="local auth, input opt-in and duplicate JSON rejection never activate outputs" classname="" time="0.087914" file="tests/receiver-seam.test.ts" line="301" assertions="7" />
+    <testcase name="strict JSON rejects escaped duplicate keys, excessive nesting and malformed values" classname="" time="0.000115" file="tests/receiver-seam.test.ts" line="342" assertions="6" />
+    <testcase name="pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart" classname="" time="0.249748" file="tests/receiver-seam.test.ts" line="356" assertions="21" />
+  </testsuite>
+  <testsuite name="tests/input-packet.test.ts" file="tests/input-packet.test.ts" tests="3" assertions="352" failures="0" skipped="0" time="0.001825" hostname="MacBook-Pro.local">
+    <testcase name="shared input packet vectors authenticate exact metadata and portable semantic bytes" classname="" time="0.001141" file="tests/input-packet.test.ts" line="28" assertions="333" />
+    <testcase name="authenticated malformed semantic payloads are refused independently of encryption" classname="" time="0.000127" file="tests/input-packet.test.ts" line="57" assertions="15" />
+    <testcase name="semantic payload encoding cannot execute button array accessors or accept sparse lists" classname="" time="0.000045" file="tests/input-packet.test.ts" line="68" assertions="4" />
+  </testsuite>
+  <testsuite name="tests/package.test.ts" file="tests/package.test.ts" tests="1" assertions="0" failures="0" skipped="1" time="0.00026" hostname="MacBook-Pro.local">
+    <testcase name="compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH" classname="" time="0" file="tests/package.test.ts" line="17" assertions="0">
+      <skipped />
+    </testcase>
+  </testsuite>
+  <testsuite name="tests/gamepad.test.ts" file="tests/gamepad.test.ts" tests="39" assertions="58" failures="0" skipped="0" time="0.001089" hostname="MacBook-Pro.local">
+    <testsuite name="retained Swift/Rust v2 native report vectors" file="tests/gamepad.test.ts" line="17" tests="34" assertions="34" failures="0" skipped="0" time="0" hostname="MacBook-Pro.local">
+      <testcase name="neutral" classname="retained Swift/Rust v2 native report vectors" time="0.000117" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="south" classname="retained Swift/Rust v2 native report vectors" time="0.000022" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="east" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="west" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="north" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="left shoulder" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="right shoulder" classname="retained Swift/Rust v2 native report vectors" time="0.000008" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="digital left trigger also actuates axis" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="digital right trigger also actuates axis" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="select" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="start" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="home" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="left stick press" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="right stick press" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="up" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="up right" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="right" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="down right" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="down" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="down left" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="left" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="up left" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="opposed vertical" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="opposed horizontal" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="all dpad directions" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="sticks full scale" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="sticks clamp" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="sticks half scale" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="left trigger independent" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="right trigger independent" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="triggers together" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="trigger midpoint rounds away from zero" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="triggers clamp" classname="retained Swift/Rust v2 native report vectors" time="0.000003" file="tests/gamepad.test.ts" line="19" assertions="1" />
+      <testcase name="mixed state" classname="retained Swift/Rust v2 native report vectors" time="0.000011" file="tests/gamepad.test.ts" line="19" assertions="1" />
+    </testsuite>
+    <testcase name="internal oracle neutralizes nonfinite values; external validator refuses them" classname="" time="0.000033" file="tests/gamepad.test.ts" line="39" assertions="2" />
+    <testcase name="digital trigger release restores independent analog hold" classname="" time="0.000027" file="tests/gamepad.test.ts" line="52" assertions="3" />
+    <testcase name="contract rejects malformed, unknown, duplicate, missing and out-of-range data" classname="" time="0.000064" file="tests/gamepad.test.ts" line="65" assertions="13" />
+    <testcase name="decoded state has independent immutable ownership" classname="" time="0.00002" file="tests/gamepad.test.ts" line="92" assertions="4" />
+    <testcase name="signed axis ties match Swift/Rust rounding away from zero" classname="" time="0.000017" file="tests/gamepad.test.ts" line="103" assertions="2" />
+  </testsuite>
+  <testsuite name="tests/pairing.test.ts" file="tests/pairing.test.ts" tests="8" assertions="64" failures="0" skipped="0" time="0.00084" hostname="MacBook-Pro.local">
+    <testcase name="pairing proof succeeds once; public status and admission receipt omit bootstrap material" classname="" time="0.000157" file="tests/pairing.test.ts" line="43" assertions="8" />
+    <testcase name="wrong ID and malformed secrets each spend one attempt and exhaust the window" classname="" time="0.000043" file="tests/pairing.test.ts" line="68" assertions="7" />
+    <testcase name="a valid final allowed proof succeeds without granting another attempt" classname="" time="0.000032" file="tests/pairing.test.ts" line="84" assertions="6" />
+    <testcase name="expiry boundary, replacement, cancellation, restart and entropy failure retire old material" classname="" time="0.000046" file="tests/pairing.test.ts" line="95" assertions="7" />
+    <testcase name="clock rollback and invalid clocks fail closed rather than extending pairing" classname="" time="0.00004" file="tests/pairing.test.ts" line="121" assertions="12" />
+    <testcase name="authority and window identities domain-separate the stored verifier" classname="" time="0.000023" file="tests/pairing.test.ts" line="140" assertions="4" />
+    <testcase name="pairing decoders reject extra fields, inconsistent state, malformed values and accessors" classname="" time="0.000096" file="tests/pairing.test.ts" line="151" assertions="13" />
+    <testcase name="portable pairing client refuses a different authority and secret-bearing status replies" classname="" time="0.000148" file="tests/pairing.test.ts" line="198" assertions="7" />
+  </testsuite>
+  <testsuite name="tests/boundaries.test.ts" file="tests/boundaries.test.ts" tests="2" assertions="12" failures="0" skipped="0" time="0.063012" hostname="MacBook-Pro.local">
+    <testcase name="portable modules cannot import platform code, host policy or escape through relative paths" classname="" time="0.002942" file="tests/boundaries.test.ts" line="5" assertions="9" />
+    <testcase name="portable domain imports and ordinary document variables remain valid" classname="" time="0.000373" file="tests/boundaries.test.ts" line="20" assertions="3" />
+  </testsuite>
+  <testsuite name="tests/mobile-input.test.ts" file="tests/mobile-input.test.ts" tests="5" assertions="127" failures="0" skipped="0" time="0.00414" hostname="MacBook-Pro.local">
+    <testcase name="mobile control maps are bounded, immutable and share native semantic fixtures" classname="" time="0.002802" file="tests/mobile-input.test.ts" line="6" assertions="104" />
+    <testcase name="invalid native maps cannot be admitted through the JS configuration boundary" classname="" time="0.000134" file="tests/mobile-input.test.ts" line="21" assertions="12" />
+    <testcase name="mobile map getters cannot execute and source mutation cannot edit an admitted map" classname="" time="0.000078" file="tests/mobile-input.test.ts" line="46" assertions="4" />
+    <testcase name="native bridge configuration requires the matching activation receipt" classname="" time="0.000469" file="tests/mobile-input.test.ts" line="66" assertions="4" />
+    <testcase name="native control lists reject holes and accessor elements without executing them" classname="" time="0.000032" file="tests/mobile-input.test.ts" line="99" assertions="3" />
+  </testsuite>
+  <testsuite name="tests/client.test.ts" file="tests/client.test.ts" tests="1" assertions="90" failures="0" skipped="0" time="0.011337" hostname="MacBook-Pro.local">
+    <testcase name="typed local client handles repeated success and rejection without leaking connections" classname="" time="0.011146" file="tests/client.test.ts" line="16" assertions="90" />
+  </testsuite>
+</testsuites>
