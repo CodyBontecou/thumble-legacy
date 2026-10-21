@@ -15,3 +15,5 @@ pub mod host_identity;
 pub mod security;
 #[cfg(windows)]
 mod windows_security;
+
+pub mod phone_trust;

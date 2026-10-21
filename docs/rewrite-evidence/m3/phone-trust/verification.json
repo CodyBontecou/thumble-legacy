@@ -1,0 +1,16 @@
+{
+  "scope": "isolated native phone trust store",
+  "rustTests": 43,
+  "typescriptTests": 67,
+  "typescriptExplicitSkips": 1,
+  "clippy": "pass",
+  "standalonePackage": {
+    "tests": 1,
+    "assertions": 29
+  },
+  "independentNodeTLS": "pass",
+  "noticesRegistryCrates": 108,
+  "hostedLedgerTests": "not published",
+  "retainedStackSafety": "unverified: previous compiler macro-probe stall",
+  "physicalPowerLoss": "pending"
+}

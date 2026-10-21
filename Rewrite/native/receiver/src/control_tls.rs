@@ -308,6 +308,7 @@ pub struct ControlFrame {
 /// Blocking IO belongs on a bounded network worker, never the native safety tick owner.
 pub struct ControlChannel {
     stream: Option<Stream>,
+    server_pin: Option<CertificatePin>,
 }
 impl ControlChannel {
     pub fn connect_pinned(
@@ -338,6 +339,7 @@ impl ControlChannel {
         }
         Ok(Self {
             stream: Some(Stream::Client(StreamOwned::new(conn, socket))),
+            server_pin: None,
         })
     }
     pub fn accept_unenrolled(
@@ -360,7 +362,15 @@ impl ControlChannel {
         }
         Ok(Self {
             stream: Some(Stream::Server(StreamOwned::new(conn, socket))),
+            server_pin: Some(identity.pin()),
         })
+    }
+    pub(crate) fn native_server_pin(&self) -> Option<CertificatePin> {
+        if self.stream.is_some() {
+            self.server_pin
+        } else {
+            None
+        }
     }
     pub fn close(&mut self) {
         self.stream = None;

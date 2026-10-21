@@ -1,0 +1,63 @@
+{
+  "scope": "Local native trust ledger; not approved for publication",
+  "dependsOnLocalHostIdentityCommit": "d52b438",
+  "publicHeadAtPreparation": "ac9cafeec2ae987d6d9d7125ce6e1793f047c675",
+  "files": [
+    {
+      "path": "GLOSSARY.md",
+      "sha256": "d8b251f2a4a801e462f10c4d3a6667edb284c2f8895d70cc66665ad22f16895d",
+      "bytes": 1382
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.lock",
+      "sha256": "dd7272e332e172c66f64fa94f9fc894dcee12373b0f932a72949dfb5b582362d",
+      "bytes": 25356
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "sha256": "49a6997cea0288257bac8361c78c949d06566dad72ea6cb0fa799364ffefcd9a",
+      "bytes": 928
+    },
+    {
+      "path": "Rewrite/native/receiver/THIRD-PARTY-NOTICES.txt",
+      "sha256": "7ab1d4aff354f1aabf56d1a86d5b12943ac982c2bf49c8cb882f18cb112f5e96",
+      "bytes": 170126
+    },
+    {
+      "path": "Rewrite/native/receiver/src/control_tls.rs",
+      "sha256": "fea1238a66551242ccd20332ddff3976ad21a3f4a92edda376f0e59e7ed6109b",
+      "bytes": 28544
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "sha256": "882520c435211a4928f9a2d275b6701ee152022c38fb467df45014c8046551c0",
+      "bytes": 373
+    },
+    {
+      "path": "Rewrite/native/receiver/src/phone_trust.rs",
+      "sha256": "db1566a937c22c03dc2df11f61e1054289f2e445bd88b02261e2a31251c9e7f0",
+      "bytes": 25161
+    },
+    {
+      "path": "Rewrite/tooling/native-notices.ts",
+      "sha256": "a89e2e80908236cbd635acf758dda39459fc14819c12882a343fbf3b7da76cef",
+      "bytes": 4098
+    },
+    {
+      "path": "docs/adr/0001-rewrite-pairing-and-input-transport.md",
+      "sha256": "e2cf9a5fbba8ad08a01727bdf0e60e084b6a80e7dd5aae43989d14e7d5eb44b9",
+      "bytes": 4389
+    },
+    {
+      "path": "docs/adr/0005-rewrite-native-phone-trust.md",
+      "sha256": "f9e27b9d9248477b6d0cd807f32d290e7b9721d22930b7628c83982ecdd602aa",
+      "bytes": 5942
+    }
+  ],
+  "excluded": [
+    "private baseline/history",
+    "real credentials",
+    "build products",
+    "local evidence"
+  ]
+}
