@@ -18,12 +18,17 @@ def main():
     parser.add_argument('--host', type=Path, required=True)
     parser.add_argument('--mcp', type=Path, required=True)
     parser.add_argument('--bridge', type=Path, required=True)
+    parser.add_argument('--cli-bridge', type=Path)
+    parser.add_argument('--native-cli', type=Path)
     args = parser.parse_args()
+    if bool(args.cli_bridge) != bool(args.native_cli):
+        parser.error('--cli-bridge and --native-cli must be supplied together')
     repo = Path(__file__).resolve().parent.parent
     fixtures = repo / 'Host/fixtures/owned-native-operations/v1'
     packets = {name: json.loads((fixtures / (name + '-request.json')).read_text())
                for name in ('geometry', 'haptic')}
     document = json.loads(base64.b64decode(packets['geometry']['documentData']))
+    geometry_destination = json.loads((fixtures / 'geometry-destination.json').read_text())
     with tempfile.TemporaryDirectory(prefix='thumble-owned-flow-', dir='/private/tmp') as temp:
         root = Path(temp)
         install = root / 'bin'
@@ -31,8 +36,12 @@ def main():
         for source, name in ((args.host, 'thumble-host'), (args.mcp, 'thumble-mcp'),
                              (args.bridge, 'thumble-bridge')):
             shutil.copy2(source, install / name)
-        state_dir = root / 'state'
-        state_dir.mkdir(mode=0o700)
+        test_home = root / 'home'
+        if args.cli_bridge:
+            test_home.mkdir(mode=0o700)
+        state_dir = (test_home / 'Library/Application Support/ThumbleHost') if args.cli_bridge else (root / 'state')
+        state_dir.mkdir(mode=0o700, parents=True)
+        control_socket = state_dir / 'control.sock' if args.cli_bridge else root / 'control.sock'
         state_file = state_dir / 'state.json'
         state = dict(schemaVersion=4, serverID=str(uuid.uuid4()), trustedClients={},
                      configurationRevision=41, configurationUpdatedAt=100,
@@ -41,12 +50,24 @@ def main():
                       'outputBindings', 'profileKeyBindings', 'profileOutputBindings'):
             if field in document:
                 state[field] = document[field]
+        if args.cli_bridge:
+            state['profiles'][0]['futurePrecise'] = 'PRECISE_FRACTION_SENTINEL'
+            shutil.copy2(args.cli_bridge, install / 'thumble-cli-bridge')
+            shutil.copy2(args.native_cli, install / 'thumble')
         state['futureState'] = 'PRECISE_NUMBER_SENTINEL'
         state_file.write_text(json.dumps(state).replace('"PRECISE_NUMBER_SENTINEL"',
-                                                       '9007199254740993'))
+                                                       '9007199254740993').replace('"PRECISE_FRACTION_SENTINEL"', '0.12345678901234567890123456789'))
         state_file.chmod(0o600)
         env = dict(os.environ, THUMBLE_HOST_STATE_DIR=str(state_dir),
-                   THUMBLE_HOST_CONTROL_SOCKET=str(root / 'control.sock'))
+                   THUMBLE_HOST_CONTROL_SOCKET=str(control_socket))
+        if args.cli_bridge:
+            # The CLI bridge intentionally clears path overrides and derives its
+            # authority from a securely owned HOME. Use that same canonical
+            # location for every process in this temporary test account.
+            env['HOME'] = str(test_home)
+            for key in ('THUMBLE_HOST_STATE_DIR', 'THUMBLE_HOST_CONTROL_SOCKET',
+                        'POCKETPAD_HOST_STATE_DIR', 'POCKETPAD_HOST_CONTROL_SOCKET'):
+                env.pop(key, None)
         host = None
         mcp = None
         with (root / 'host.log').open('w') as host_log, (root / 'mcp.log').open('w') as mcp_log:
@@ -62,7 +83,7 @@ def main():
                                          '--no-bonjour', '--no-input', '--allow-config-write'],
                                         env=env, stdout=host_log, stderr=host_log)
                 deadline = time.monotonic() + 15
-                while not (root / 'control.sock').exists():
+                while not control_socket.exists():
                     if host.poll() is not None or time.monotonic() > deadline:
                         raise AssertionError('receiver did not become ready')
                     time.sleep(0.05)
@@ -146,7 +167,7 @@ def main():
                                          '--no-bonjour', '--no-input', '--allow-config-write'],
                                         env=env, stdout=host_log, stderr=host_log)
                 deadline = time.monotonic() + 15
-                while not (root / 'control.sock').exists():
+                while not control_socket.exists():
                     if host.poll() is not None or time.monotonic() > deadline:
                         raise AssertionError('receiver did not restart')
                     time.sleep(0.05)
@@ -155,10 +176,62 @@ def main():
                 assert replay['idempotentReplay'] and replay['configurationRevision'] == 42
                 assert state_file.read_bytes() == committed_bytes
                 assert call('configuration_status', {})['configurationRevision'] == 43
+                high_level = False
+                if args.cli_bridge:
+                    def profile_request(command, revision=None, invocation=None):
+                        request = dict(schemaVersion=8, invocationID=invocation or str(uuid.uuid4()), command=command)
+                        if revision is not None:
+                            request['expectedConfigurationRevision'] = revision
+                        result = subprocess.run([str(install / 'thumble-cli-bridge')], env=env,
+                                                input=json.dumps(request) + '\n', capture_output=True,
+                                                text=True, timeout=20)
+                        response = json.loads(result.stdout)
+                        assert result.returncode == 0 and response['ok'], dict(response=response, receiverExit=host.poll(), stateExists=state_file.exists(), helperStderr=result.stderr[-500:], receiverLog=(root / 'host.log').read_text()[-1200:])
+                        return response
+
+                    def native_cli(*arguments):
+                        result = subprocess.run([str(install / 'thumble'), *arguments], env=env,
+                                                capture_output=True, text=True, timeout=30)
+                        assert result.returncode == 0, result.stderr[-700:]
+                        return result.stdout
+
+                    invocation = str(uuid.uuid4())
+                    rename = dict(type='profile.rename', target=dict(kind='active'), name='High Level')
+                    saved = profile_request(rename, 43, invocation)
+                    assert saved['authorityMode'] == 'online' and saved['outcome']['configurationRevision'] == 44
+                    assert profile_request(rename, 43, invocation)['outcome']['idempotentReplay']
+                    native_cli('profile', 'rename', 'High Level', 'Native CLI', '--invocation-id', str(uuid.uuid4()))
+                    assert cli('configuration', 'status')['configuration']['configurationRevision'] == 45
+                    before_guard = state_file.read_bytes()
+                    guarded = subprocess.run([str(install / 'thumble'), 'element', 'set', element_id, '--profile', 'Native CLI', '--x', '0.55'], env=env, capture_output=True, text=True, timeout=30)
+                    assert guarded.returncode != 0 and 'operation_not_migrated' in guarded.stderr
+                    assert state_file.read_bytes() == before_guard
+                    native_cli('customization', 'set', '--profile', 'Native CLI', '--appearance', 'dark', '--invocation-id', str(uuid.uuid4()))
+                    assert cli('configuration', 'status')['configuration']['configurationRevision'] == 46
+                    host.terminate()
+                    host.wait(timeout=10)
+                    rename = dict(type='profile.rename', target=dict(kind='active'), name='Offline')
+                    invocation = str(uuid.uuid4())
+                    saved = profile_request(rename, 46, invocation)
+                    assert saved['authorityMode'] == 'offline' and saved['outcome']['configurationRevision'] == 47
+                    assert profile_request(rename, 46, invocation)['outcome']['idempotentReplay']
+                    native_cli('profile', 'rename', 'Offline', 'Native Offline', '--invocation-id', str(uuid.uuid4()))
+                    capture = profile_request(dict(type='design.snapshot', target=dict(kind='active'), createDraft=True), 48)['designSnapshot']
+                    assert '0.12345678901234567890123456789' in capture['profileJSON']
+                    assert capture['draftRevision'] == 1 and capture['draftID']
+                    final = json.loads(state_file.read_bytes())
+                    assert final['configurationRevision'] == 48 and final['profiles'][0]['name'] == 'Native Offline'
+                    element = next(item for item in final['profiles'][0]['customization']['elements'] if item['id'] == element_id)
+                    expected_element = next(item for item in geometry_destination['profiles'][0]['customization']['elements'] if item['id'] == element_id)
+                    assert element['layout']['centerX'] == expected_element['layout']['centerX']
+                    assert final['profiles'][0]['customization']['colorSchemePreference'] == 'dark'
+                    assert final['profiles'][0]['appearanceBank'] == document['profiles'][0]['appearanceBank']
+                    high_level = True
                 print(json.dumps(dict(cliNativeGeometry=True, mcpNativeHaptic=True,
                                       commitReplay=True, restartReplay=True, retainedAppearanceStates=8,
                                       exactUnknownInteger=True, resourceTablePreserved=True,
-                                      configurationRevision=43, desktopGUIRequired=False)))
+                                      configurationRevision=48 if high_level else 43, highLevelOnlineOffline=high_level,
+                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, elementSetStillUnmigrated=high_level, desktopGUIRequired=False)))
             finally:
                 if mcp is not None:
                     mcp.terminate()

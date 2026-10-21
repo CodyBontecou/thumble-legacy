@@ -1,3 +1,5 @@
+#[path = "cli_profile_owned.rs"]
+mod owned;
 use crate::authority::{
     prepare_configuration_commit, ConfigurationCommitError, ConfigurationCommitInput,
     PreparedConfigurationCommit,
@@ -1434,6 +1436,9 @@ where
                 ..TransactionResult::default()
             });
         }
+        if state.schema_version == thumble_core::OWNED_SCHEMA_VERSION {
+            return owned::execute(paths, state, request, invocation_id, &catalog, &mut save);
+        }
         if let CliProfileCommand::DesignSnapshot {
             target,
             draft_id,
@@ -2084,6 +2089,44 @@ pub fn execute_offline_authority(
         request,
         "offline",
         |draft_id, draft_revision, base_revision, commit_id, request_digest| {
+            if state.schema_version == thumble_core::OWNED_SCHEMA_VERSION {
+                let source = storage::read_state_bytes(&paths.state_file).map_err(|_| {
+                    TransactionFailure::new(
+                        "state_load_failed",
+                        "owned authority could not be read safely",
+                    )
+                })?;
+                let store = crate::owned_drafts::OwnedDraftStore::new(paths);
+                let prepared = store
+                    .prepare_commit(
+                        &source,
+                        crate::owned_drafts::OwnedCommitRequest {
+                            draft_id,
+                            draft_revision,
+                            expected: base_revision,
+                            commit_id,
+                            request_digest: Some(request_digest),
+                        },
+                        now_millis(),
+                    )
+                    .map_err(draft_failure)?;
+                if let Some(candidate) = prepared.candidate {
+                    storage::install_private_state_bytes(
+                        &paths.state_file,
+                        &candidate,
+                        Some(&source),
+                        || Ok(()),
+                    )
+                    .map_err(|_| {
+                        TransactionFailure::new(
+                            "configuration_persistence_failed",
+                            "owned authority could not be persisted atomically",
+                        )
+                    })?;
+                    let _ = store.discard(draft_id, draft_revision, now_millis());
+                }
+                return Ok(prepared.summary);
+            }
             let store = DraftStore::new(paths);
             let PreparedConfigurationCommit { candidate, summary } = prepare_configuration_commit(
                 &state,

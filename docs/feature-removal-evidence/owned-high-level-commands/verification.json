@@ -1,0 +1,62 @@
+{
+  "baseCommit": "084d3e43ca1215622459c684247e2010dbc5bc63",
+  "isolatedRustCheckout": "/private/tmp/thumble-owned-highlevel-mw0cciko",
+  "sourceSHA256": {
+    "Host/crates/thumble-host/src/cli_profile.rs": "feee49468700266c6cd9494b5fb6b37ecbc438bfc2ae7854f1e251f9d6932dd3",
+    "Host/crates/thumble-host/src/cli_profile_owned.rs": "d644b9d9723b2500e18322ff8899b45ced1e1898a0d67f3a815b29e08a20881f",
+    "Host/crates/thumble-host/src/owned_drafts.rs": "5ece20d0643fd7fe44f5aff16b9257d16c20b84bb8ec30595b12ea6f8a8582ee",
+    "scripts/verify-owned-runtime-flow.py": "47fe83563b5268746eda5c85777a4699e8d4b653ea232c34523e3f1390cf26bf"
+  },
+  "logSHA256": {
+    "rust.txt": "1a413871a3faaae8431b8e1e5cc1f3264230e85932f555fbcdf3d018c5d21e11",
+    "nativeStack.txt": "b7a2dd5903ebf48dee5fbf4b0522f6b8d3859069a37beaf0486e1d8d679ed066",
+    "nativeCLI.txt": "f5aacf38ec47787b4ecd8247bd335ad2562e493a0038108a078fc73876d93470",
+    "rustBuild.txt": "b801066cda7620fc35c2ac295c343f3efd0f25be4e3b2eb83bd80ee51f42f838",
+    "process.txt": "00cf25e046f8b042d472679bda5d76d8f39749f8ce0e713e19801c7cf412a798"
+  },
+  "binarySHA256": {
+    "host": "76f14ba1df3e91d41cb8abd190099c69bcc5c1f278980f9d0fb874643c12c3d9",
+    "mcp": "cddf3381e5d79ec2ddcac8eb5a713853e34433ff9f4b6b187dfbb56fd1249e54",
+    "cliBridge": "48c188205c0f87ef761ac910757cf245afc607b6e7a3d473700e64af58b7e057",
+    "nativeCLI": "1f6854bd88c8b79d6f82f94918e0a354b3cab242ba1c12411af4b12f934e9185",
+    "nativeBridge": "3e9f852ba8b3d7abe4952bbef41db8f1131236678b022688cd910af407623367"
+  },
+  "rust": {
+    "gateExitCode": 0,
+    "passed": 567,
+    "failed": 0,
+    "ignored": 3,
+    "newTests": 4,
+    "scope": "committed base plus owned high-level planning, raw design capture and offline commit dispatch; concurrent changes excluded"
+  },
+  "apple": {
+    "stackTests": 41,
+    "macDebugBuild": true,
+    "iosDebugBuild": true,
+    "nativeCLIBuild": true,
+    "gateExitCode": 0,
+    "sourceManifestSHA256": "5581a22a1087f8675378418558e99df003d209465c0c98eaa209245cda913d3a",
+    "scope": "178 tracked native/test/project/script files match base; two process-verifier scripts absent from native checkout"
+  },
+  "process": {
+    "cliNativeGeometry": true,
+    "mcpNativeHaptic": true,
+    "commitReplay": true,
+    "restartReplay": true,
+    "retainedAppearanceStates": 8,
+    "exactUnknownInteger": true,
+    "resourceTablePreserved": true,
+    "configurationRevision": 48,
+    "highLevelOnlineOffline": true,
+    "nativeCLIRenameAndDesign": true,
+    "exactDesignCapture": true,
+    "elementSetStillUnmigrated": true,
+    "desktopGUIRequired": false
+  },
+  "highLevelOwnedPlanningEnabled": true,
+  "ownedPortableInterchangeEnabled": false,
+  "nativeElementSetMigrated": false,
+  "automaticMigrationEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "physicalDeviceAcceptance": false
+}

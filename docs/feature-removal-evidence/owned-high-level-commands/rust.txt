@@ -1,0 +1,890 @@
+MCP CLI parity ledger verified: 159 operations, 29 root commands, 274 CLI spellings
+Frozen feature-removal fixtures verified against checkpoint 5fadf15
+Native appearance edit oracle verified: 21 cases, 168 results
+Profile-format matrix verified: 14 negotiations, 14 frames
+Explicit owned-configuration contract verified: 41 cases
+Lossless owned-edit destination verified: 7 operations
+Native projection merge verified: 2 profiles, 8 appearance states
+Legacy configuration preparation verified: 5 conversions, 1 recovery case
+Owned native edits verified: 6 operations across eight appearance states
+Marketplace retired; four exact legacy packages remain outside the public website
+Hosted gateway, builder, relay, receiver uploads and installer retired; local runtime remains packaged
+CLI direct profile/orientation/binding/output/customization/style/layer/group/control-bar/device persistence allowlist passed.
+    Checking thumble-protocol v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-protocol)
+    Checking thumble-core v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-core)
+    Checking thumble-host v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-host)
+    Checking thumble-receiver v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-receiver)
+    Checking thumble-mcp v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-mcp)
+    Checking thumble-cli-bridge v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-cli-bridge)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 15.74s
+   Compiling thumble-protocol v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-protocol)
+   Compiling thumble-core v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-core)
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-host)
+   Compiling thumble-receiver v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-receiver)
+   Compiling thumble-mcp v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-mcp)
+   Compiling thumble-cli-bridge v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-cli-bridge)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.81s
+     Running unittests src/main.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_cli_bridge-876de695184e39ab)
+
+running 13 tests
+test tests::authority_status_rejects_wrong_schema_with_typed_current_schema_failure ... ok
+test runtime::tests::insecure_state_directory_and_symlink_lock_fail_closed ... ok
+test runtime::tests::any_runtime_artifact_fails_closed_even_if_stale_or_not_a_socket ... ok
+test runtime::tests::persistent_profile_state_is_not_a_runtime_owner_and_probe_creates_nothing ... ok
+test runtime::tests::held_authority_without_rust_artifacts_is_only_a_legacy_candidate ... ok
+test runtime::tests::failure_frame_preserves_schema_correlation_and_owner_within_bound ... ok
+test tests::typed_request_denies_unknown_fields_and_raw_paths ... ok
+test runtime::tests::launch_profile_uses_only_a_strict_typed_selector ... ok
+test runtime::tests::runtime_envelope_is_tagged_strict_and_bounded ... ok
+test tests::request_frame_accepts_exact_newline_inclusive_bound_and_rejects_invalid_frames ... ok
+test tests::offline_generation_planning_in_a_fresh_home_creates_no_authority_artifacts ... ok
+test tests::offline_generation_planning_rejects_outdated_state_without_modifying_it ... ok
+test tests::response_frame_is_bounded_and_uses_current_fallback_schema ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_core-b2f07aba0b9f3905)
+
+running 55 tests
+test controller_snapshot::tests::malformed_source_scanning_and_raw_strings_are_independently_bounded ... ok
+test controller_snapshot::tests::non_button_starter_layer_uses_the_declared_custom_identity_and_order ... ok
+test controller_snapshot::tests::explicit_layout_is_bounded_and_hidden_or_unknown_elements_are_skipped ... ok
+test controller_snapshot::tests::layer_snapshot_exposes_hidden_and_custom_targets_in_effective_z_order ... ok
+test controller_snapshot::tests::layout_quality_snapshot_is_bounded_typed_and_message_free ... ok
+test controller_snapshot::tests::minimal_profile_resolves_default_landscape_geometry_without_outputs ... ok
+test configuration::tests::document_rejects_credentials_even_across_free_form_profile_fields ... ok
+test controller_snapshot::tests::canvas_snapshot_preserves_safe_native_appearance_and_marks_omitted_artwork ... ok
+test controller_snapshot::tests::appearance_snapshot_fields_decode_with_rolling_upgrade_defaults ... ok
+test controller_snapshot::tests::non_button_starter_uuid_does_not_supply_button_label_or_placement ... ok
+test controller_snapshot::tests::locked_portrait_uses_portrait_variant_and_canvas ... ok
+test element_identity::presentation_regression_tests::persistent_presentation_validates_at_import_and_keeps_acronym_wire_fields ... ok
+test controller_snapshot::tests::control_bar_snapshot_is_typed_ordered_and_redacts_unsupported_content ... ok
+test controller_snapshot::tests::element_snapshot_exposes_only_semantic_outputs_and_flags_unsupported_content ... ok
+test controller_snapshot::tests::custom_canvas_is_parsed_and_unknown_canvas_fails_closed ... ok
+test controller_snapshot::tests::locked_orientation_canonicalizes_reused_and_fallback_frame_ids ... ok
+test controller_snapshot::tests::redaction_precedes_every_free_form_string_boundary ... ok
+test configuration::tests::owned_appearance_candidates_cannot_enter_version_four_authority ... ok
+test configuration::tests::document_round_trip_changes_only_configuration_fields ... ok
+test configuration::tests::validation_preserves_unknown_fields_but_rejects_duplicate_ids ... ok
+test profile_artifact::tests::all_selection_preserves_order_references_and_canonical_maps ... ok
+test controller_snapshot::tests::style_snapshot_is_bounded_typed_and_omits_asset_content ... ok
+test profile_artifact::tests::content_hash_detects_semantic_tampering_but_excludes_export_timestamp ... ok
+test profile_artifact::tests::conversion_hydrates_global_mirrors_only_from_the_active_profile ... ok
+test profile_artifact::tests::explicit_decode_selection_hash_and_bound_failures_are_covered ... ok
+test profile_artifact::tests::current_envelope_preserves_safe_metadata_and_uuid_case_without_identity_translation ... ok
+test profile_artifact::tests::export_removes_launch_target_and_rejects_embedded_or_local_content ... ok
+test profile_artifact::tests::artifact_round_trip_preserves_raw_unknown_fields_and_is_deterministic ... ok
+test profile_artifact::tests::orphan_maps_are_rejected_before_export_selection_or_decoded_hashing ... ok
+test profile_artifact::tests::current_envelope_without_export_timestamp_uses_zero ... ok
+test profile_artifact::tests::rfc8785_numbers_key_order_and_escaping_match_the_standard_vector ... ok
+test profile_appearance::tests::future_layout_metadata_and_later_geometry_edits_survive_resolution ... ok
+test profile_artifact::tests::missing_envelope_version_is_rejected_even_without_timestamp ... ok
+test profile_artifact::tests::import_decode_never_falls_back_when_artifact_version_is_present ... ok
+test semantic_key::tests::every_known_code_and_name_round_trips ... ok
+test profile_artifact::tests::single_selection_filters_and_null_default_falls_back_on_conversion ... ok
+test semantic_key::tests::generated_lookup_accepts_case_and_punctuation_insensitive_aliases ... ok
+test semantic_key::tests::generated_lookup_accepts_only_known_numeric_codes ... ok
+test semantic_key::tests::generated_modifier_aliases_collapse_duplicates_and_reject_unknowns ... ok
+test semantic_key::tests::strict_lookup_preserves_configuration_operation_vocabulary ... ok
+test profile_artifact::tests::portable_json_depth_string_and_container_bounds_are_enforced ... ok
+test profile_artifact::tests::configuration_profile_bound_is_reused ... ok
+test profile_appearance::tests::all_eight_pooled_states_resolve_without_package_lookup_or_source_mutation ... ok
+test profile_artifact::tests::current_envelope_rejects_nonportable_globals_references_and_schema ... ok
+test profile_artifact::tests::current_unhashed_envelope_import_is_deterministic_and_old_versions_are_rejected ... ok
+test profile_artifact::tests::native_optional_field_omissions_preserve_signed_content_and_round_trip ... ok
+test profile_artifact::tests::portable_json_integers_enforce_i_json_safe_bounds_without_rejecting_floats ... ok
+test profile_artifact::tests::current_envelope_rejects_orphan_invalid_and_duplicate_binding_maps_without_filtering ... ok
+test profile_artifact::tests::structure_versions_references_ids_and_binding_keys_fail_closed ... ok
+test core::digital_sequence_tests::replay_history_is_bounded_and_evicted_presses_cannot_return ... ok
+test profile_artifact::tests::standard_secrets_are_rejected_while_null_local_fields_are_allowed ... ok
+test profile_appearance::tests::corrupt_banks_assets_resources_and_geometry_in_paint_require_recovery ... ok
+test profile_appearance::tests::byte_budget_matches_compact_json_including_escapes_without_rejecting_the_boundary ... ok
+test profile_appearance::tests::native_edit_oracles_match_every_scheme_and_action ... ok
+test configuration::tests::whole_catalog_bound_includes_opaque_metadata_and_rejects_without_installing ... ok
+
+test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests/cross_language_profile.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/cross_language_profile-cc41a16195eb12cc)
+
+running 1 test
+test minimal_profile_matches_shared_swift_fixture ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/element_owned_inputs.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/element_owned_inputs-16612e04b60ca63f)
+
+running 13 tests
+test imported_mirrors_never_declare_or_override_executable_settings ... ok
+test imported_appearance_and_design_references_reject_before_normalization ... ok
+test joystick_parts_bind_outputs_without_routing_through_another_control ... ok
+test arbitrary_controls_with_identical_labels_have_independent_outputs ... ok
+test named_keys_and_duplicate_uuid_keys_are_rejected ... ok
+test missing_joystick_bindings_do_not_materialize_starter_direction_outputs ... ok
+test imports_reject_undeclared_custom_mirrors ... ok
+test explicit_empty_binding_does_not_restore_a_default_or_global_map ... ok
+test repeated_part_output_entries_are_not_collapsed_into_a_binding ... ok
+test imported_declarations_enforce_total_and_specialized_capacities ... ok
+test imports_must_declare_controls_and_do_not_reconstruct_starters ... ok
+test routing_fields_and_old_joystick_targets_are_rejected_without_migration ... ok
+test obsolete_unhashed_configuration_versions_are_rejected_not_upgraded ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/feature_removal_baseline.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/feature_removal_baseline-6a13a2e276fd5f5a)
+
+running 2 tests
+test migration_inputs_preserve_unknown_metadata_and_unresolved_profiles ... ok
+test frozen_legacy_profiles_survive_host_validation_and_serialization ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/gamepad_input.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/gamepad_input-0979bb85c4a8a5d5)
+
+running 19 tests
+test analog_refresh_expiry_is_per_axis_and_heartbeat_does_not_refresh_it ... ok
+test delayed_pre_wrap_and_excessive_forward_analog_packets_do_not_refresh_expiry ... ok
+test digital_expiry_and_bounded_local_taps_preserve_existing_holds ... ok
+test local_multi_button_taps_press_the_complete_chord_before_releasing ... ok
+test legacy_analog_retains_expiry_when_v2_establishes_and_neutral_cancels_expiry ... ok
+test host_release_all_retires_generation_before_late_analog_can_reassert ... ok
+test malformed_analog_is_rejected_without_consuming_target_sequence ... ok
+test keyboard_sequences_do_not_skip_gamepad_holds_and_digital_triggers_are_independent ... ok
+test element_and_button_counts_share_typed_outputs_and_ignore_future_names_losslessly ... ok
+test materialization_scans_active_variants_with_keyboard_as_the_missing_mode_default ... ok
+test missing_output_mode_defaults_to_keyboard_and_gates_direct_elements ... ok
+test analog_sequences_are_per_target_stale_filtered_and_compact_wrap_aware ... ok
+test authentication_generation_and_keyboard_mode_gate_all_controller_paths ... ok
+test legacy_analog_and_all_button_spellings_are_supported ... ok
+test local_held_tests_share_phone_ownership_and_expire_when_the_cli_exits ... ok
+test mixed_outputs_refcount_each_button_and_capture_complete_binding ... ok
+test materialization_scans_declared_parts_and_explicit_joystick_outputs_not_orphan_mirrors ... ok
+test dreamcast_template_trigger_inputs_use_trigger_channels_without_shoulders ... ok
+test every_lifecycle_boundary_resets_and_generation_reset_precedes_new_analog ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/generation_spec.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/generation_spec-483cb1c726d603ed)
+
+running 21 tests
+test control_character_error_paths_and_messages_are_bounded_and_safe ... ok
+test control_characters_are_rejected_in_all_generation_strings_before_planning ... ok
+test strict_safety_revision_bounds_and_unknown_field_failures_are_precise ... ok
+test key_modifier_type_count_and_size_errors_are_rejected ... ok
+test unsafe_or_excess_rich_appearance_errors_have_exact_variants_and_paths ... ok
+test icon_haptic_alias_precedence_normalization_and_clamping_are_exact ... ok
+test aliases_precedence_bindings_and_uuid_rules_match_the_basic_contract ... ok
+test explicit_visual_style_wins_and_safe_states_and_gradients_normalize ... ok
+test material_and_scalar_aliases_merge_with_swift_precedence ... ok
+test default_outer_haptic_feedback_is_omitted_without_affecting_material_feedback ... ok
+test joystick_trackpad_text_and_decoration_defaults_are_explicit_and_safe ... ok
+test generation_is_byte_deterministic_and_emits_valid_profile_and_artifact ... ok
+test expected_semantic_vector_matches_fixture ... ok
+test repeated_requested_uuid_authoring_retains_each_owned_output_but_saved_duplicates_reject ... ok
+test trigger_defaults_labels_and_kind_specific_shape_normalization_match_swift ... ok
+test specialized_capacities_drop_before_assignment_and_leave_no_profile_or_artifact_trace ... ok
+test rich_appearance_and_material_presets_match_exact_semantic_vectors ... ok
+test generated_json_bytes_match_checked_in_swift_decoder_fixtures ... ok
+test normalized_rich_fields_participate_in_deterministic_identity_and_hashes ... ok
+test repeated_labels_have_independent_ids_and_no_slot_capacity ... ok
+test warning_output_is_bounded_and_reports_deterministic_omissions ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.36s
+
+     Running tests/input_safety.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/input_safety-a85da6331810d0e5)
+
+running 13 tests
+test reliable_sequences_are_monotonic_and_deduplicated ... ok
+test disconnect_releases_every_key_and_pointer_button ... ok
+test pointer_relative_deltas_and_buttons_dedupe_without_suppressing_delayed_releases ... ok
+test current_plus_one_generation_releases_then_transitions_and_retired_is_rejected ... ok
+test separate_wall_and_monotonic_timestamps_drive_persistence_and_expiry ... ok
+test legacy_v1_is_accepted_only_before_v2_establishes ... ok
+test pointer_move_scroll_button_dedupe_and_explicit_release_are_typed ... ok
+test independent_presses_allow_reordering_without_losing_releases_or_resurrecting_holds ... ok
+test heartbeat_refresh_dedupes_while_overlapping_press_ids_emit_distinct_pulse ... ok
+test unexpected_generation_and_v2_missing_sequence_are_rejected ... ok
+test expiry_removes_individual_press_references_and_only_releases_last ... ok
+test overlapping_press_ids_on_one_control_have_independent_ordering ... ok
+test identical_bindings_are_reference_counted_across_inputs ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/legacy_configuration_migration.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/legacy_configuration_migration-d1fa078e918361f1)
+
+running 6 tests
+test source_and_preparation_failures_return_no_partial_destination ... ok
+test another_variant_cannot_lose_controls_even_if_a_preparation_omits_the_guard ... ok
+test failure_on_a_later_profile_does_not_publish_a_partial_candidate ... ok
+test preparation_correlation_source_and_package_digests_are_mandatory ... ok
+test changed_control_declarations_and_missing_resources_cannot_escape_final_validation ... ok
+test native_prepared_legacy_profiles_become_real_validated_owned_documents ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+     Running tests/owned_configuration.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/owned_configuration-bc909e060f046e47)
+
+running 6 tests
+test exact_source_metadata_resources_and_all_states_survive_without_packages ... ok
+test resource_edits_require_matching_bytes_and_retain_original_resources ... ok
+test lossless_geometry_icon_and_haptic_edits_match_shared_destination ... ok
+test lossless_edits_revalidate_complete_destinations_and_keep_original_on_failure ... ok
+test duplicate_keys_invalid_utf8_and_complete_document_overflow_are_rejected ... ok
+test shared_version_five_contract_and_rejected_mutations ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running tests/owned_configuration_writes.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/owned_configuration_writes-05873b6875ff415f)
+
+running 2 tests
+test valid_base64_with_a_wrong_digest_cannot_replace_an_owned_resource ... ok
+test native_projected_changes_preserve_original_metadata_and_validate_the_final_document ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/pairing.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/pairing-cdd6b7c11e9b49b2)
+
+running 9 tests
+test pending_pairing_is_not_rotated_or_superseded_by_other_connections ... ok
+test explicit_pairing_code_rotation_is_validated_and_preserves_state ... ok
+test pairing_request_rotates_code_and_pairing_acceptance_is_websocket_only ... ok
+test wrong_pairing_codes_apply_a_short_global_backoff ... ok
+test debug_and_status_never_render_authentication_tokens ... ok
+test pending_pairing_expires_even_if_socket_remains_open ... ok
+test trusted_same_token_replaces_connection_and_releases_held_output ... ok
+test different_active_token_is_rejected_without_disrupting_active_client ... ok
+test wrong_code_server_and_token_have_clear_secret_free_errors ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/persisted_references.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/persisted_references-60dfcc2b8910002e)
+
+running 5 tests
+test binding_references_belong_to_their_target_profile_not_any_installed_profile ... ok
+test orientation_declarations_are_valid_binding_owners_and_empty_maps_stay_empty ... ok
+test configuration_documents_reject_all_invalid_saved_references ... ok
+test persisted_reference_errors_reject_without_normalization_mutation ... ok
+test every_orientation_can_own_128_independent_controls_and_binding_references ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests/profile_artifact.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/profile_artifact-e4435915827ffbde)
+
+running 3 tests
+test literal_duplicate_profile_and_binding_fields_reject_before_integrity_projection ... ok
+test checked_in_profile_artifact_matches_canonical_vector_and_hash ... ok
+test named_binding_keys_are_rejected_even_in_portable_artifacts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/profile_formats.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/profile_formats-b83539a693aee2ec)
+
+running 4 tests
+test incompatible_offer_does_not_persist_trust_or_send_a_profile_snapshot ... ok
+test future_ready_offer_can_receive_a_new_contract_but_authority_acceptance_stays_closed ... ok
+test installed_future_contract_releases_and_retires_old_peer_before_any_new_snapshot_or_input ... ok
+test explicit_and_legacy_v4_pairing_preserve_profiles_and_input_protocol ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/profile_resources.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/profile_resources-e0b3ccbfef74dfc1)
+
+running 4 tests
+test native_fixture_decodes_and_expands_without_altering_profile_or_outputs ... ok
+test pruning_launch_metadata_keeps_shared_images_and_unknown_metadata ... ok
+test integrity_and_reference_errors_do_not_become_missing_image_defaults ... ok
+test unpooled_legacy_profiles_remain_unmodified_and_authority_stays_closed ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/profiles_and_messages.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/profiles_and_messages-0d79c8400c1e460f)
+
+running 14 tests
+test invalid_network_customization_rejects_before_releasing_holds_or_writing_state ... ok
+test local_profile_selection_releases_persists_and_notifies_active_client ... ok
+test malformed_stale_and_unauthenticated_orientation_requests_do_not_mutate_profiles ... ok
+test orientation_mutation_rejects_revision_exhaustion_without_partial_metadata_change ... ok
+test active_orientation_change_releases_keys_and_retires_old_generation_but_inactive_change_preserves_holds ... ok
+test direct_element_sequence_and_portrait_output_are_executed ... ok
+test profile_selection_changes_owned_binding_and_releases_previous_profile_hold ... ok
+test invalid_profile_ids_are_rejected_without_state_changes ... ok
+test profile_selection_default_and_request_emit_complete_raw_state ... ok
+test ping_pong_and_unsupported_capability_mutations_are_handled_reliably ... ok
+test failed_profile_selection_restores_the_complete_saved_state ... ok
+test orientation_mutation_updates_only_metadata_persists_then_acknowledges_and_is_idempotent ... ok
+test nonactive_customization_and_profile_array_mutations_return_clear_errors ... ok
+test active_customization_replacement_preserves_unknown_profile_fields ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/state_and_bindings.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/state_and_bindings-8859b4bc0b18e59a)
+
+running 13 tests
+test key_bindings_accept_legacy_mac_and_direct_shared_json_shapes ... ok
+test trusted_clients_are_keyed_by_token_not_duplicated_inside_values ... ok
+test arbitrary_uuid_binding_keys_survive_deterministic_serialization_and_names_are_rejected ... ok
+test profile_keyboard_binding_applies_only_to_a_declared_unconfigured_control ... ok
+test configuration_revisions_are_monotonic_and_fail_on_exhaustion ... ok
+test output_binding_retains_unsupported_gamepad_names_without_advertising_them ... ok
+test profile_sidecars_apply_to_declared_controls_and_explicit_empty_output_suppresses_key_fallback ... ok
+test explicit_empty_profile_catalog_rejects_without_constructing_a_default_profile ... ok
+test part_outputs_support_swift_dictionary_arrays_and_owned_joystick_defaults ... ok
+test direct_element_output_in_orientation_variant_beats_primary_sidecar ... ok
+test portable_state_round_trips_tokens_profiles_and_binding_layers_losslessly ... ok
+test obsolete_state_schemas_are_rejected_without_migration ... ok
+test unsupported_output_modes_reject_without_normalization_or_runtime_construction ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_host-f9279fedea14aea7)
+
+running 251 tests
+test bonjour::tests::dns_service_port_value_has_network_order_memory_bytes ... ok
+test bridge::layout_fix::tests::issue_priority_matches_canonical_groups ... ok
+test bridge::layout_fix::tests::bounded_canvas_rejects_nonfinite_and_out_of_range_sizes ... ok
+test bonjour::tests::oversized_txt_field_is_rejected_without_network_side_effects ... ok
+test bonjour::tests::txt_record_uses_dns_length_prefixed_fields_in_order ... ok
+test application_launch::tests::parses_only_bounded_application_target_metadata ... ok
+test bridge::numeric_projection_preserves_exact_values_without_rounding_large_integers ... ok
+test bridge::presentation_delta_regression_tests::binding_sync_accepts_integral_json_number_spelling_but_rejects_layout_changes ... ok
+test bridge::presentation_delta_regression_tests::presentation_edits_require_exact_payload_and_preserve_routing ... ok
+test binding_presentations::tests::native_vocabulary_preserves_modifier_sequence_gamepad_order_and_unknown_keys ... ok
+test application_launch::tests::failed_resolution_does_not_request_input_release ... ok
+test bridge::presentation_delta_regression_tests::presentation_only_delta_preserves_sparse_orientation_mirrors_and_raw_data ... ok
+test binding_presentations::tests::orientation_groups_keep_explicit_empty_variant_and_raw_unknown_numeric_keys ... ok
+test binding_presentations::tests::legacy_joystick_mapping_only_fills_missing_parts ... ok
+test bridge::tests::customization_delta_accepts_only_primary_and_its_orientation_mirror ... ok
+test binding_presentations::tests::profile_snapshot_resolves_authoritative_outputs_parts_empty_overrides_and_modes ... ok
+test application_launch::tests::activation_waits_for_neutralization_and_rejects_concurrent_launches ... ok
+test bridge::tests::control_bar_collection_delta_reconstructs_sparse_defaults_and_variant_frames ... ok
+test bridge::tests::element_output_delta_reconstructs_semantic_keys_and_rejects_raw_substitution ... ok
+test bridge::tests::binding_delta_reconciles_stale_sidecars_to_owned_outputs ... ok
+test bridge::tests::device_set_accepts_only_source_preserving_current_orientation_mirrors ... ok
+test application_launch::tests::failed_neutralization_prevents_activation_and_can_retry ... ok
+test bridge::presentation_delta_regression_tests::output_only_delta_changes_exact_owner_and_keeps_all_other_fields ... ok
+test bridge::tests::element_set_delta_accepts_compact_builtin_layout_storage ... ok
+test bridge::tests::binding_delta_requires_exact_semantic_sequence_and_element_mirrors ... ok
+test bridge::tests::design_attachment_replays_exact_native_reveal_geometry_only ... ok
+test bridge::presentation_delta_regression_tests::presentation_only_native_golden_preserves_full_custom_profile ... ok
+test bridge::tests::control_bar_item_set_delta_reconstructs_exact_target_and_rejects_injection ... ok
+test bridge::presentation_delta_regression_tests::output_only_native_golden_preserves_full_custom_profile ... ok
+test bridge::tests::executable_checks_reject_symlinks_and_writable_files ... ok
+test bridge::tests::generated_install_delta_requires_exact_bindings_and_declared_ids ... ok
+test bridge::tests::reset_recommendations_use_declared_defaults_not_current_outputs ... ok
+test bridge::tests::response_must_be_exactly_one_newline_terminated_line ... ok
+test bridge::tests::layer_delta_requires_the_exact_requested_order_only ... ok
+test bridge::tests::group_nudge_delta_reconstructs_requested_positions_and_rejects_injection ... ok
+test bridge::tests::style_reference_cleanup_reconstructs_all_control_mirrors ... ok
+test bridge::tests::group_state_delta_reconstructs_children_and_rejects_unrelated_mutation ... ok
+test cli::tests::accessibility_json_is_accepted_after_nested_action ... ok
+test bridge::tests::design_attachment_delta_preserves_geometry_routing_defaults_and_unknown_fields ... ok
+test bridge::tests::group_delta_requires_exact_membership_and_requested_metadata ... ok
+test cli::configuration::tests::cli_transactions_require_revisions_and_one_operation_source ... ok
+test cli::tests::explicit_runtime_flags_parse_for_run_and_start ... ok
+test cli::tests::no_subcommand_means_foreground_run_with_defaults ... ok
+test bridge::tests::group_duplicate_delta_requires_declared_exact_clones_and_rejects_injection ... ok
+test cli::tests::profile_and_control_commands_parse_opaque_ids ... ok
+test bridge::tests::style_delta_reconstructs_exact_token_and_rejects_injection ... ok
+test cli::tests::gamepad_commands_parse_owner_actions_and_bounded_installed_tests ... ok
+test bridge::tests::output_delta_preserves_an_owned_clear_instead_of_restoring_defaults ... ok
+test bridge::tests::scalar_customization_delta_requires_the_exact_requested_fields ... ok
+test bridge::tests::orientation_copy_delta_reconstructs_primary_fallback_and_rejects_injection ... ok
+test cli_profile::tests::binding_display_filters_disabled_channels_for_primary_and_parts_without_rebinding ... ok
+test cli_profile::tests::control_bar_projection_and_planning_are_typed_variant_scoped_and_bounded ... ok
+test cli_profile::tests::design_draft_commands_use_native_camel_case_wire_fields ... ok
+test cli_profile::tests::binding_and_output_projections_are_revision_tagged_semantic_and_document_free ... ok
+test authority::tests::deterministic_request_digest_reuse_conflicts_when_content_changes ... ok
+test cli_profile::tests::deterministic_uuid_fixture_is_stable ... ok
+test cli::configuration::tests::edit_rejects_duplicate_keys_and_oversized_files_before_transport ... ok
+test cli_profile::tests::export_command_and_response_are_strict_typed_schema_eight_json ... ok
+test cli_profile::tests::design_snapshot_preserves_native_profile_assets_and_requires_exact_revisions ... ok
+test cli_profile::tests::generation_and_template_plans_are_catalog_typed_and_deterministic ... ok
+test cli_profile::tests::generation_error_mapping_is_specific_bounded_and_omits_untrusted_values ... ok
+test cli_profile::tests::customization_planning_is_typed_bounded_and_variant_scoped ... ok
+test cli_profile::tests::generation_plan_command_and_projection_use_strict_acronym_preserving_schema_eight_json ... ok
+test cli_profile::tests::device_projection_and_planning_are_catalog_typed_and_document_free ... ok
+test cli_profile::tests::borrowed_transactions_reject_whole_invalid_state_before_reads_and_replay ... ok
+test cli_profile::tests::generation_plan_rejects_control_text_before_artifact_or_import_side_effects ... ok
+test cli_profile::tests::design_draft_capture_requires_exact_draft_and_base_revisions ... ok
+test cli_profile::tests::generation_plan_accepts_bounded_rich_appearance_without_exposing_raw_spec ... ok
+test cli_profile::tests::import_command_requires_all_strict_schema_eight_fields ... ok
+test cli_profile::tests::generation_plan_is_revision_exact_decodable_hashed_and_read_only ... ok
+test cli_profile::tests::export_all_is_revision_exact_decodable_and_does_not_create_a_draft_or_save ... ok
+test cli_profile::tests::generation_plan_rejects_bounds_revisions_unsafe_and_expected_revision_without_side_effects ... ok
+test cli_profile::tests::export_single_resolves_active_and_default_against_the_revision_catalog ... ok
+test cli_profile::tests::multi_move_plans_deterministic_order_and_one_save ... ok
+test bridge::layout_fix::tests::independent_reconstruction_matches_swift_goldens_and_rejects_injection ... ok
+test cli_profile::tests::orientation_planning_accepts_matching_primary_source_and_rejects_missing_source ... ok
+test cli_profile::tests::orientation_projection_is_revision_tagged_typed_and_document_free ... ok
+test cli_profile::tests::orientation_set_cli_plans_all_native_preferences_for_the_installed_profile ... ok
+test cli_profile::tests::profile_import_error_mapping_is_specific_and_uses_bounded_messages ... ok
+test bridge::tests::duplicate_preserves_source_future_metadata_and_rejects_replacement_or_loss ... ok
+test cli_profile::tests::style_projection_is_revision_tagged_bounded_and_omits_artifacts ... ok
+test cli_profile::tests::summary_catalog_never_contains_state_credentials_or_documents ... ok
+test control::tests::bounded_reader_accepts_an_eight_mib_heap_backed_line ... ok
+test cli_profile::tests::rejected_offline_imports_never_initialize_or_rewrite_configuration ... ok
+test cli_profile::tests::generation_plan_replays_the_import_base_revision_for_the_same_invocation ... ok
+test bridge::tests::duplicate_delete_reset_reject_exact_operation_injections ... ok
+test bridge::tests::constrained_process_round_trip_validates_unchanged_document ... ok
+test control::tests::control_json_round_trip_is_newline_protocol_safe ... ok
+test cli_profile::tests::import_non_append_replay_reports_claimed_duplicate_name_destinations ... ok
+test control::tests::client_rejects_unterminated_response_frame ... ok
+test control::tests::insecure_existing_control_directory_is_rejected ... ok
+test control::tests::profile_and_control_commands_use_opaque_ids ... ok
+test control::tests::server_rejects_unterminated_request_frame ... ok
+test control::tests::status_schema_does_not_have_an_auth_token_field ... ok
+test control::tests::typed_cli_profile_request_relays_over_same_user_control_ipc ... ok
+test cli_profile::tests::import_replace_merges_profiles_maps_selection_default_and_unknown_fields_once ... ok
+test draft_operation::tests::binding_set_accepts_semantic_names_for_the_constrained_bridge ... ok
+test draft_operation::tests::control_bar_item_set_is_boxed_bounded_strict_and_spacer_safe ... ok
+test control::tests::unix_socket_serves_newline_delimited_request_and_response ... ok
+test draft_operation::tests::customization_fix_accepts_only_bounded_typed_canvas_sources ... ok
+test draft_operation::tests::design_layout_plan_uses_native_reveal_identity_and_rejects_system_semantics ... ok
+test draft_operation::tests::customization_fix_rejects_unknown_path_asset_and_partial_size_fields ... ok
+test cli_profile::tests::import_retained_draft_replays_original_edit_revision_after_save_failure ... ok
+test draft_operation::tests::element_add_accepts_all_six_kinds_and_rejects_passive_outputs ... ok
+test draft_operation::tests::element_operations_reject_unknown_file_asset_path_and_raw_code_fields ... ok
+test control::tests::large_frame_gate_holds_two_frames_without_blocking_small_frames ... ok
+test draft_operation::tests::generated_operations_require_exact_revisions_counts_and_unique_ids ... ok
+test draft_operation::tests::group_operations_require_typed_ids_names_and_unique_children ... ok
+test draft_operation::tests::layer_operations_require_bounded_typed_destinations ... ok
+test draft_operation::tests::invalid_geometry_and_numeric_key_names_fail_closed ... ok
+test draft_operation::tests::output_set_bridge_input_rejects_empty_and_raw_key_edits ... ok
+test cli_profile::owned::tests::stale_configuration_and_interchange_fail_without_authority_mutation ... ok
+test draft_operation::tests::scalar_layout_operations_reject_empty_unsafe_and_non_catalog_values ... ok
+test draft_operation::tests::style_operations_require_complete_bounded_typed_appearance ... ok
+test draft_operation::tests::rename_is_native_and_element_set_requires_the_constrained_bridge ... ok
+test cli_profile::tests::offline_authority_is_revision_safe_noop_stable_and_idempotent ... ok
+test control::tests::bounded_reader_rejects_a_newline_free_oversized_line ... ok
+test cli_profile::tests::import_append_ids_names_digest_replay_and_conflicts_are_deterministic ... ok
+test drafts::tests::begin_persists_private_credential_free_revisioned_draft ... ok
+test drafts::tests::operation_digests_are_deterministic_and_do_not_use_debug_output ... ok
+test drafts::tests::ambiguous_saved_declarations_reject_without_rewriting_drafts ... ok
+test drafts::tests::draft_reads_reject_symlink_replacement_and_insecure_mode ... ok
+test gamepad::tests::callback_policy ... ok
+test gamepad::tests::canonical_fixtures ... ok
+test bridge::tests::element_only_operations_match_native_goldens_and_reject_injection ... ok
+test gamepad::tests::denied_and_creation_failure_are_distinct ... ok
+test gamepad::tests::first_report_failure_latches_and_explicit_retry_waits_for_retirement ... ok
+test gamepad::tests::later_failure_reset_disable_and_drop_neutralize ... ok
+test gamepad::tests::nonfinite_codec_and_strict_setters ... ok
+test drafts::tests::symlinked_draft_directory_is_rejected ... ok
+test gamepad::tests::recording_trigger_release_and_reset ... ok
+test input_liveness::tests::continuous_clock_advances_and_gap_detection_does_not_repeat_or_use_wall_time ... ok
+test native_configuration::tests::evaluation_reads_owned_configuration_without_a_persistent_store ... ok
+test drafts::tests::expected_revisions_and_expiry_fail_without_deleting_live_work ... ok
+test drafts::tests::explicit_descriptor_closure_edits_replay_and_conflict_by_semantics ... ok
+test control::tests::bounded_reader_accepts_exact_control_boundary_and_rejects_one_more ... ok
+test native_configuration::tests::invalid_native_sources_and_revision_conflicts_never_return_candidates ... ok
+test drafts::tests::edits_compare_revisions_and_replay_operation_ids_idempotently ... ok
+test drafts::tests::no_op_edit_is_recorded_without_incrementing_the_draft_revision ... ok
+test cli_profile::owned::tests::read_projections_resolve_dark_owned_styles_without_persisting_display_paint ... ok
+test native_configuration::tests::saturated_connection_queue_cannot_escape_the_connection_deadline ... ok
+test output::tests::pending_release_retry_reconciles_executor_tracking ... ok
+test bridge::tests::operation_specific_delta_rejects_unrelated_profile_mutation ... ok
+test drafts::tests::rebase_conflict_keeps_persisted_draft_unchanged ... ok
+test native_configuration::tests::evaluation_returns_a_valid_candidate_and_keeps_the_source_unchanged ... ok
+test output::tests::recording_backend_tracks_and_safely_releases_without_injection ... ok
+test drafts::tests::rebase_merges_disjoint_authoritative_changes_and_replays_exact_id ... ok
+test cli_profile::tests::import_rejects_stale_malformed_unsupported_tampered_and_oversized_artifacts_before_save ... ok
+test native_configuration::tests::native_design_private_capture_is_durable_and_checks_the_entire_base ... ok
+test native_configuration::tests::missing_invocation_id_is_assigned_once_for_snapshot_evaluation_and_commit ... ok
+test owned_migration::tests::actual_owned_authority_startup_rejects_legacy_peers_before_trust_or_profiles ... ok
+test cli_profile::owned::tests::design_capture_preserves_raw_profile_and_resumes_the_exact_owned_draft ... ok
+test owned_drafts::tests::unsafe_files_and_invalid_outcomes_cannot_replace_a_draft ... ok
+test owned_migration::tests::lease_directory_and_symlink_boundaries_fail_closed ... ok
+test owned_drafts::tests::no_op_replay_and_expiration_are_durable ... ok
+test owned_drafts::tests::simultaneous_revisions_allow_only_one_edit ... ok
+test owned_rebase::tests::conflicting_reorders_and_delete_edit_collisions_fail_closed ... ok
+test owned_rebase::tests::merges_independent_identity_edits_and_retains_precise_values ... ok
+test owned_rebase::tests::paired_customizations_merge_per_key_and_unknown_arrays_conflict ... ok
+test paths::tests::canonical_state_directory_is_preferred_with_legacy_fallback ... ok
+test paths::tests::explicit_paths_keep_control_override_independent ... ok
+test phone_appearance::tests::candidate_preserves_live_trust_and_rejects_revision_or_document_changes ... ok
+test phone_appearance::tests::captures_only_known_appearance_intent_and_never_generic_layout_edits ... ok
+test phone_appearance::tests::unchanged_native_document_never_creates_a_revision ... ok
+test phone_layout::tests::credentials_inside_customization_never_reach_the_native_child ... ok
+test phone_layout::tests::native_delta_cannot_change_profile_identity_metadata_or_recovery_claim ... ok
+test phone_layout::tests::prepared_recovery_preserves_selection_and_new_trust_and_rejects_stale_authority ... ok
+test phone_layout::tests::recovery_response_cannot_introduce_launch_metadata ... ok
+test phone_layout::tests::removed_controls_are_pruned_from_only_the_target_binding_maps ... ok
+test platform::gamepad_macos::tests::entitlement_requires_boolean_true ... ok
+test platform::gamepad_macos::tests::ffi_callback_blocks_validate_and_return_current_cache ... ok
+test platform::gamepad_macos::tests::recording_never_instantiates_worker ... ok
+test owned_drafts::tests::conflicting_rebase_keeps_draft_and_authority_unchanged ... ok
+test platform::gamepad_macos::tests::retirement_retains_device_until_cancel_completion ... ok
+test platform::gamepad_macos::tests::worker_handle_is_send_without_cf_send ... ok
+test owned_drafts::tests::restart_preserves_raw_numbers_and_replays_without_reapplying ... ok
+test platform::macos::application_tests::application_resolution_prefers_existing_path_and_rejects_non_applications ... ok
+test platform::macos::tests::modifier_bits_match_swift_mapping ... ok
+test platform::macos::tests::scroll_rounding_matches_swift_thresholds ... ok
+test owned_migration::tests::missing_archive_and_invalid_source_fail_before_any_persistence ... ok
+test owned_migration::tests::legacy_wire_mutations_cannot_corrupt_an_owned_authority ... ok
+test owned_migration::tests::failed_package_restore_keeps_owned_state_and_can_resume_durably ... ok
+test native_configuration::tests::frame_deadline_is_not_extended_by_partial_reads ... ok
+test cli_profile::owned::tests::name_selector_retry_after_staged_failure_then_commit_and_replay_are_lossless ... ok
+test runtime::skin_runtime::tests::in_use_reference_identity_matches_native_canonical_strings ... ok
+test runtime::owned_runtime::tests::non_regular_authority_source_rejects_without_waiting_for_a_writer ... ok
+test platform::gamepad_macos::tests::stalled_owner_report_stop_and_drop_are_bounded_and_queue_saturation_fails_closed ... ok
+test runtime::tests::advisory_lock_refuses_a_second_owner ... ok
+test runtime::tests::authority_lock_rejects_symlink_replacement ... ok
+test owned_drafts::tests::commit_preserves_authority_metadata_and_replays_after_draft_cleanup ... ok
+test runtime::tests::explicit_controller_hold_does_not_acknowledge_failed_output_or_keep_a_local_hold ... ok
+test runtime::tests::failed_phone_customization_save_restores_authority_and_never_acknowledges ... ok
+test runtime::tests::host_side_control_press_limit_recovers_after_window ... ok
+test runtime::tests::installed_controls_are_allowlisted_profile_targets_without_raw_keys ... ok
+test runtime::tests::installed_taps_accept_swift_uuid_case_without_acknowledging_hid_failure ... ok
+test runtime::tests::failed_draft_persistence_keeps_authoritative_state_and_draft_unchanged ... ok
+test owned_drafts::tests::disjoint_rebase_preserves_raw_remote_metadata_and_local_name ... ok
+test runtime::tests::failed_profile_persistence_rolls_back_in_memory_selection ... ok
+test runtime::tests::runtime_metadata_has_no_secret_fields ... ok
+test runtime::tests::status_string_redaction_removes_embedded_auth_tokens ... ok
+test runtime::tests::status_urls_always_include_loopback_and_actual_port ... ok
+test runtime::tests::resume_gap_neutralizes_mixed_holds_and_retires_even_legacy_queued_connections ... ok
+test runtime::tests::wildcard_listener_reports_an_ephemeral_actual_port ... ok
+test runtime::tests::strict_output_failure_still_executes_every_mixed_cleanup_effect ... ok
+test runtime::tests::online_current_envelope_import_uses_draft_cas_and_rejects_obsolete_versions ... ok
+test skins::tests::native_bridge_acceptance ... ignored, requires THUMBLE_TEST_SKIN_BRIDGE pointing to the built native executable
+test runtime::owned_runtime::tests::disabled_owned_save_and_disk_memory_divergence_preserve_drafts_and_state ... ok
+test skins::tests::prepared_changes_preserve_new_pairing_state_and_reject_concurrent_edits ... ok
+test owned_migration::tests::rollback_interruption_finishes_without_reapplying_or_lowering_revision ... ok
+test control::tests::busy_request_is_rejected_without_late_execution ... ok
+test owned_migration::tests::source_changes_conflict_at_preparation_commit_recovery_and_rollback ... ok
+test storage::tests::atomic_state_file_is_private_and_round_trips ... ok
+test platform::macos::application_tests::bookmark_resolution_precedes_path_and_keeps_bookmark_data_private ... ok
+test storage::tests::current_uuid_xml_defaults_import_preserves_every_independent_layer ... ok
+test storage::tests::defaults_profile_without_primary_declarations_is_rejected_without_writing_state ... ok
+test storage::tests::defaults_references_reject_before_initial_installation ... ok
+test runtime::owned_runtime::tests::owned_rebase_and_discard_use_the_owned_store ... ok
+test runtime::tests::oversized_snapshot_releases_holds_retires_peer_and_preserves_authority ... ok
+test storage::tests::existing_obsolete_state_is_rejected_without_rewriting_the_file ... ok
+test storage::tests::known_auth_tokens_are_removed_from_errors_and_logs ... ok
+test storage::tests::literal_duplicate_saved_keys_and_default_maps_reject_without_writes ... ok
+test storage::tests::malformed_critical_piece_fails_closed_before_state_installation ... ok
+test storage::tests::missing_defaults_maps_derive_only_from_each_profiles_owned_outputs ... ok
+test storage::tests::existing_invalid_references_are_rejected_without_rewriting_saved_state ... ok
+test storage::tests::obsolete_numeric_binding_storage_is_rejected_instead_of_recovered ... ok
+test storage::tests::obsolete_pre_profile_routing_is_rejected_before_installation ... ok
+test storage::tests::state_save_detects_source_replacement_and_removes_staging_file ... ok
+test storage::tests::receiver_saves_preserve_opaque_bytes_through_pairing_and_profile_changes ... ok
+test owned_migration::tests::corrupt_missing_or_partial_backups_do_not_replace_live_state ... ok
+test storage::tests::state_save_interruption_before_rename_leaves_original_intact ... ok
+test three_way_merge::tests::delete_versus_edit_of_same_keyed_entity_conflicts ... ok
+test storage::tests::state_save_rejects_ambiguous_source_without_exposing_contents ... ok
+test three_way_merge::tests::disjoint_profile_and_future_field_changes_merge_losslessly ... ok
+test three_way_merge::tests::keyed_element_arrays_merge_disjoint_nested_edits ... ok
+test storage::tests::state_save_rejects_symlinks_and_initial_install_races ... ok
+test three_way_merge::tests::same_scalar_changed_differently_reports_exact_path ... ok
+test owned_migration::tests::interrupted_checkpoints_recover_only_recorded_validated_intent ... ok
+test storage::tests::legacy_selection_aliases_do_not_create_duplicate_fields_on_save ... ok
+test runtime::owned_runtime::tests::owned_control_transactions_persist_and_replay_without_legacy_projection ... ok
+test skins::tests::canonical_reference_keys_never_contain_path_characters ... ok
+test runtime::owned_runtime::tests::release_failure_prevents_owned_persistence_and_retry_can_commit ... ok
+test owned_migration::tests::commit_backup_restart_repeat_and_monotonic_rollback_preserve_authority ... ok
+test skins::tests::private_modes_and_duplicate_metadata_keys_are_enforced ... ok
+test skins::tests::old_or_replayed_bridge_cannot_advertise_skin_capability ... ok
+test skins::tests::symlinked_directory_archive_and_lock_are_rejected ... ok
+test skins::tests::atomic_library_roundtrip_exact_export_idempotence_and_removal ... ok
+test storage::tests::complete_raw_state_limit_includes_unknown_fields_and_framing ... ok
+test skins::tests::replacement_is_atomic_and_corruption_never_becomes_a_valid_package ... ok
+test control::tests::near_maximum_cli_request_and_response_wrap_over_online_control ... ok
+test bridge::tests::blocked_stdin_write_is_covered_by_bridge_deadline ... ok
+test runtime::tests::editable_controller_snapshot_remains_within_the_48_kib_wire_cap ... ok
+
+test result: ok. 250 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 8.76s
+
+     Running unittests src/main.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_host-4cab7ed89f84032b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/controller_output.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/controller_output-f0b56d6baf2ca82f)
+
+running 1 test
+test recording_controller_reports_preserve_mixed_outputs_and_release_to_neutral ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/element_output_serialization.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/element_output_serialization-770c7904ea8eb934)
+
+running 1 test
+test joystick_directions_serialize_shared_modifier_spelling_without_input_routing ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/legacy_preparation_bridge.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/legacy_preparation_bridge-5a27330f65503c03)
+
+running 2 tests
+test uncorrelated_responses_and_oversized_inputs_fail_before_any_candidate ... ok
+test bounded_host_adapter_preserves_exact_source_and_package_bytes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.47s
+
+     Running tests/local_profile_compatibility.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/local_profile_compatibility-1d03ec31e759754e)
+
+running 1 test
+test native_legacy_inline_outputs_and_integral_float_metadata_round_trip_without_changes ... ignored, requires THUMBLE_TEST_ARTIFACT_RUNTIME_BIN with native compatibility bridge
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loopback_runtime.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/loopback_runtime-f940e75a5f25572a)
+
+running 1 test
+test current_ios_loopback_pairs_reconnects_records_input_and_releases_on_shutdown ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.51s
+
+     Running tests/lossless_authority_storage.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/lossless_authority_storage-a9961c8ee75d26a1)
+
+running 1 test
+test standalone_cli_commit_and_replay_preserve_raw_state_and_trust ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/owned_operation_bridge.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/owned_operation_bridge-054066f7ad8136be)
+
+running 3 tests
+test portrait_and_orientation_mutations_reject_before_native_work ... ok
+test native_operations_merge_into_opaque_source_without_packages ... ok
+test mismatched_or_malformed_native_responses_cannot_change_source ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.50s
+
+     Running tests/realtime_udp.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/realtime_udp-b5fccc7a64effb27)
+
+running 7 tests
+test ipv6_udp_release_barrier_retires_delayed_generation ... ok
+test occupied_udp_port_keeps_websocket_input_available_without_advertising_token ... ok
+test reordered_relative_udp_motion_cannot_suppress_reliable_pointer_release ... ok
+test failed_orientation_save_releases_input_and_keeps_authoritative_memory_and_disk_unchanged ... ok
+test launch_uses_installed_target_only_preserves_session_on_failure_and_rejects_udp ... ok
+test orientation_wire_mutation_persists_metadata_and_releases_holds_without_changing_layouts ... ok
+test udp_auth_mirrored_multitouch_and_websocket_release_after_udp_loss ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests/retired_hosted_builds.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/retired_hosted_builds-818682c85ff2a296)
+
+running 2 tests
+test old_phone_and_socket_uploads_reject_while_pairing_and_profiles_remain_usable ... ok
+test host_cli_hides_and_rejects_retired_commands_without_reading_files_or_opening_state ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+
+     Running tests/signal_shutdown.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/signal_shutdown-5953d7d66b1b8cde)
+
+running 1 test
+test sigterm_releases_held_input_before_process_exit ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/skin_sync.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/skin_sync-1e6c712ebe04c77e)
+
+running 1 test
+test native_receiver_authenticates_skin_changes_and_never_acknowledges_failed_persistence ... ignored, requires THUMBLE_TEST_SKIN_RUNTIME_BIN containing the packaged host and native bridge
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_mcp-a3343d3424ce483c)
+
+running 33 tests
+test rate_limit::tests::limiter_allows_small_burst_then_refills_at_ten_per_second ... ok
+test controller_design::tests::extended_reply_budget_is_only_for_native_evidence_operations ... ok
+test server::tests::controller_apps_render_native_snapshot_appearance_instead_of_a_fixed_palette ... ok
+test controller_design::tests::design_paths_and_revisions_are_bounded_before_launch ... ok
+test server::tests::preview_skin_workspace_returns_an_inline_controller_view_when_configured ... ok
+test skin_preview::tests::missing_sources_report_the_path ... ok
+test channel::tests::unix_channel_fails_closed_on_missing_socket ... ok
+test skin_preview::tests::png_dimensions_parse_the_ihdr_header ... ok
+test skin_preview::tests::relative_paths_are_rejected_before_any_process_starts ... ok
+test skin_preview::tests::render_validates_before_discovering_the_cli ... ok
+test skin_preview::tests::cli_json_summary_parses_the_documented_contract ... ok
+test skin_preview::tests::non_package_files_are_rejected ... ok
+test controller_design::tests::reply_overflow_does_not_wait_for_pending_stderr ... ok
+test controller_design::tests::drawer_portrait_inset_is_bounded_before_cli_discovery ... ok
+test server::tests::published_operation_schema_contains_only_owned_uuid_bindings ... ok
+test server::tests::element_binding_inputs_reject_raw_keys_and_input_routing ... ok
+test server::tests::customization_fix_input_is_strict_canonical_and_bounded_after_conversion ... ok
+test server::tests::style_input_is_typed_and_rejects_assets_paths_and_raw_payloads ... ok
+test server::tests::control_bar_item_set_input_converts_only_typed_non_file_changes ... ok
+test skin_preview::tests::renders_a_real_package_when_provided ... ok
+test skin_preview::tests::scale_bounds_match_the_cli ... ok
+test skin_preview::tests::scale_formats_like_the_cli_accepts ... ok
+test skin_preview::tests::single_frame_rejects_contact_sheets_and_multi_frame_output ... ok
+test tests::canonical_input_environment_takes_precedence_over_legacy_alias ... ok
+test tests::input_environment_opt_in_is_exact_and_fail_closed ... ok
+test controller_design::tests::evidence_reader_supports_large_matrices_and_rejects_overflow ... ok
+test channel::tests::unix_channel_reaches_a_bound_control_socket ... ok
+test server::tests::preview_skin_workspace_rejects_unknown_enums_before_touching_the_cli ... ok
+test server::tests::disabled_input_fails_before_touching_the_control_socket ... ok
+test server::tests::disabled_configuration_write_fails_before_touching_the_control_socket ... ok
+test server::tests::preview_skin_workspace_rejects_unknown_action_set_before_cli ... ok
+test server::tests::tool_router_exposes_curated_controller_and_design_tools ... ok
+test server::tests::official_client_initializes_lists_tools_and_calls_over_mcp ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/main.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_mcp-70b41c30646b13c4)
+
+running 2 tests
+test stdio_request_tests::update_classification_rejects_ambiguous_keys_and_absolute_overflow ... ok
+test stdio_request_tests::large_source_updates_preserve_the_ordinary_request_limit ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_protocol-731e77752df12f86)
+
+running 12 tests
+test message::tests::compact_message_type_codes_are_stable ... ok
+test message::tests::every_button_state_code_is_stable_and_reversible ... ok
+test wire::tests::sequence_timestamp_clamps_both_components ... ok
+test wire::tests::explicit_input_values_take_precedence_even_for_non_input_types ... ok
+test adoption::tests::metadata_limits_and_native_json_names_are_exact ... ok
+test adoption::tests::results_bind_every_identity_and_only_accept_unique_destination_ids ... ok
+test bounded_json::tests::complete_documents_count_unicode_escapes_keys_and_nested_resources ... ok
+test profile_formats::tests::format_metadata_uses_json_instead_of_disappearing_into_compact_frames ... ok
+test bounded_json::tests::an_oversized_prefix_stops_before_serializing_later_fields ... ok
+test strict_json::tests::decoded_keys_are_unique_within_each_object_not_across_siblings ... ok
+test profile_formats::tests::shared_negotiations_and_incoming_frames_match_the_native_clients ... ok
+test message::tests::arbitrary_element_uuids_round_trip_and_named_slots_are_rejected ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cross_language_fixtures.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/cross_language_fixtures-93907b16160e0ce2)
+
+running 1 test
+test shared_wire_vectors_encode_and_decode_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/json_compatibility.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/json_compatibility-799d62938fde6070)
+
+running 5 tests
+test absent_optional_fields_are_omitted_like_swift_json_encoder ... ok
+test supporting_enum_names_match_swift_raw_values ... ok
+test every_controller_message_kind_has_the_swift_wire_name_and_round_trips ... ok
+test uuid_json_without_generation_metadata_decodes_but_named_inputs_do_not ... ok
+test full_message_uses_swift_camel_case_keys_and_preserves_complex_unknown_fields ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/projection_merge.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/projection_merge-818f56cb542dde4b)
+
+running 12 tests
+test arrays_without_identities_do_not_guess_metadata_ownership ... ok
+test a_new_projected_key_cannot_overwrite_unknown_source_data ... ok
+test root_whitespace_survives_changes_and_noops_and_counts_toward_the_bound ... ok
+test identity_matching_accepts_uuid_case_but_not_arbitrary_case_changes ... ok
+test duplicate_keys_duplicate_identities_and_size_fail_without_partial_results ... ok
+test removed_or_unprojected_controls_with_metadata_never_disappear ... ok
+test erasing_or_retyping_unknown_containers_requires_recovery ... ok
+test uuid_shaped_map_key_aliases_cannot_create_shadow_owners ... ok
+test objects_add_remove_and_update_fields_with_pointer_escapes_and_normalized_keys ... ok
+test identity_arrays_keep_metadata_with_the_same_control_when_reordered ... ok
+test edits_known_leaves_without_normalizing_opaque_values_or_unchanged_numbers ... ok
+test cold_merge_runs_on_a_constrained_thread ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/raw_json_edits.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/raw_json_edits-68687f22998fd37e)
+
+running 4 tests
+test ordered_array_edits_use_updated_indices_and_append_without_normalizing_values ... ok
+test malformed_ambiguous_missing_and_oversized_edits_return_no_partial_document ... ok
+test only_the_addressed_value_bytes_change_including_escaped_and_unicode_keys ... ok
+test object_add_remove_first_middle_last_and_only_member_preserve_other_values ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/wire_codec.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/wire_codec-4eb2891440547af4)
+
+running 13 tests
+test control_frames_cannot_smuggle_slot_indices ... ok
+test absent_press_identifier_is_not_inferred_from_storage_bytes ... ok
+test v1_sequence_packing_matches_swift_clamping_and_helpers ... ok
+test v1_control_message_codes_and_signed_timestamp_layout_match_swift ... ok
+test generic_encoding_preserves_v3_timestamp_and_metadata ... ok
+test malformed_uuid_frames_and_all_slot_index_frames_are_rejected ... ok
+test input_sent_at_uses_json_instead_of_being_discarded ... ok
+test uuid_inputs_encode_unbounded_identities_and_both_states ... ok
+test v3_metadata_layout_preserves_uuid_generation_sequence_and_press ... ok
+test noncompact_types_and_rich_compact_types_fall_back_to_json ... ok
+test every_swift_json_only_field_prevents_lossy_compact_encoding ... ok
+test json_fallback_accepts_uuid_inputs_and_large_messages_up_to_eight_mib ... ok
+test complete_outbound_profile_frames_fit_the_same_bound_as_receiving_clients ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_receiver-40cff75a0bd0c9a2)
+
+running 11 tests
+test input::failure_tests::fractional_scroll_preserves_total_distance_across_frames ... ok
+test input::keys::tests::translates_physical_codes_and_extended_keys ... ok
+test input::tests::unknown_key_and_gamepad_fail_instead_of_silently_succeeding ... ok
+test input::keys::tests::all_supported_semantic_keys_have_a_mapping_except_fn ... ok
+test input::failure_tests::partial_down_still_gets_released_and_failed_releases_are_retried ... ok
+test input::failure_tests::release_failure_does_not_prevent_other_keys_from_releasing ... ok
+test input::tests::overlapping_chords_keep_shared_modifiers_until_last_release ... ok
+test runtime::tests::scheduling_gap_retires_sessions_and_releases_physical_outputs ... ok
+test store::tests::symlink_and_world_readable_state_are_rejected ... ok
+test store::tests::identity_is_durable_and_corrupt_state_never_resets_it ... ok
+test store::tests::configuration_import_preserves_identity_and_rejects_live_mutation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src/main.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_receiver-2405fb703c5e8dc9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loopback.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/loopback-a1d4064d1dd20c00)
+
+running 2 tests
+test local_control_rejects_wrong_credentials_and_oversized_frames ... ok
+test pairing_input_expiry_disconnect_and_durable_reconnect ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.71s
+
+     Running tests/native_delivery.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/native_delivery-e853ee2ea2f3c2b1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_host
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_mcp
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_protocol
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_receiver
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Checking thumble-protocol v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-protocol)
+    Checking thumble-core v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-core)
+    Checking thumble-host v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-host)
+    Checking thumble-mcp v0.1.0 (/private/tmp/thumble-owned-highlevel-mw0cciko/Host/crates/thumble-mcp)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.90s
+Thumble Rust host and MCP verification passed.

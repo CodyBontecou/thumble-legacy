@@ -70,6 +70,9 @@ pub struct OwnedDraft {
     expires_at: i64,
 }
 impl OwnedDraft {
+    pub(crate) fn operation_records(&self) -> &[DraftOperationRecord] {
+        &self.operation_log
+    }
     pub fn document(&self) -> &OwnedConfigurationDocument {
         &self.working_document.0
     }
