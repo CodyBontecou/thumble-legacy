@@ -74,5 +74,6 @@ pub use state::{
     canonical_default_profile_key_bindings, minimal_default_customization, minimal_default_profile,
     ConfigurationCommitRecord, PersistentState, StateError, TrustedClient, CURRENT_SCHEMA_VERSION,
     DEFAULT_PROFILE_ID, INITIAL_CONFIGURATION_REVISION, MAXIMUM_RECENT_CONFIGURATION_COMMITS,
+    OWNED_SCHEMA_VERSION,
 };
 pub use thumble_protocol::{decode_unique_json, validate_unique_json};

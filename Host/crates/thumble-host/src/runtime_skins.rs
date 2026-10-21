@@ -391,6 +391,9 @@ impl SharedRuntime {
         }
     }
     pub(super) fn decorate_skin_snapshot(&self, message: &mut ControllerMessage) {
+        if message.profile_format_version == Some(5) {
+            return;
+        }
         if let Some(service) = &self.skin_service {
             if matches!(
                 message.message_type,

@@ -7,6 +7,9 @@ use std::fmt;
 use thumble_protocol::{KeypadElementID, KeypadElementInputPart};
 
 pub const CURRENT_SCHEMA_VERSION: u32 = 3;
+/// Explicit single-landscape, owned-appearance state. Fresh installations remain
+/// at schema 3 until the backed-up migration and retained clients are activated.
+pub const OWNED_SCHEMA_VERSION: u32 = 4;
 pub const INITIAL_CONFIGURATION_REVISION: u64 = 1;
 pub const MAXIMUM_RECENT_CONFIGURATION_COMMITS: usize = 32;
 pub const DEFAULT_PROFILE_ID: &str = "00000000-0000-0000-0000-000000000201";
@@ -170,7 +173,7 @@ impl PersistentState {
     /// Borrowed transaction sources must pass this before reads or cached replay.
     pub fn validate(&self) -> Result<(), StateError> {
         match self.schema_version {
-            CURRENT_SCHEMA_VERSION => {
+            CURRENT_SCHEMA_VERSION | OWNED_SCHEMA_VERSION => {
                 if self.configuration_revision == 0 {
                     return Err(StateError::InvalidConfigurationRevision);
                 }

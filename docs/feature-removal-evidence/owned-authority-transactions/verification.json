@@ -1,0 +1,39 @@
+{
+  "baseCommit": "23c0fdb8bdace66da9aa9680246c79cf8a99b1a9",
+  "sourceHashes": {
+    "Host/crates/thumble-core/src/configuration.rs": "710f904ea1c87e56488467a676959c10ae806251e08e14311435614c35fca57d",
+    "Host/crates/thumble-core/src/core.rs": "27e6deba69c48b62ba8ab3aa9998233d46f6bf3102801f5c3fb84ade98ab4135",
+    "Host/crates/thumble-core/src/state.rs": "c3767d5686ba80c605629674dd711f001fec2543750199c5c17548f111d292d3",
+    "Host/crates/thumble-core/src/lib.rs": "d0640193bcc959c4bf9fb0d3e1d8fc54f3e64dc0f895b1163b66a1fedd9b65ac",
+    "Host/crates/thumble-core/src/legacy_configuration_migration.rs": "e149e188edf96652986c628c461c44a3ce8e6502ce3f2f449b00fac2ae2ad4fc",
+    "Host/crates/thumble-host/src/lib.rs": "1f0b95b983c619229da1fe53d89227164924760301bee8528aabd14c375a29c5",
+    "Host/crates/thumble-host/src/runtime.rs": "fc78a5b7dee3c14dd6f516b2857b683c5f55234c5fc4e60db38b19a5048861b7",
+    "Host/crates/thumble-host/src/runtime_skins.rs": "f5bde4c502a544332d8f6430e18763a4a05f25019cd137094dfbaa13dbec471f",
+    "Host/crates/thumble-host/src/storage.rs": "84877e72e0f73ee3230f41174528f900ec9ef7cfcb488a3b8db6d2b66895ff59",
+    "Host/crates/thumble-host/src/owned_migration.rs": "199668cfd7a6be5e5f044a04896a71b03bcc17d492b9175a7989d96f1a4def46",
+    "Host/crates/thumble-host/src/owned_migration_tests.rs": "0a602a32124dbc9f2acc760608eadacdc9f81ddce4d441ddaa374222d3f87526"
+  },
+  "fixtureManifestSHA256": "308d9c66454c58a0803a6948106485b2741ef07d7bf87098c49b14e56d90258d",
+  "logSHA256": {
+    "rust": "ee6714bb2d5346bc2a2ff35866a4770937138311d3b9097e244163194f3ecfbb",
+    "nativeStack": "afb2aa6b8629eaf19ad5e22b6fcc122fe363c41ff24c38f58f7e4cb9c25aeb68"
+  },
+  "rust": {
+    "passed": 545,
+    "failed": 0,
+    "ignored": 3,
+    "scope": "full shared-tree formatting/clippy/test/target gate; includes concurrent unrelated changes"
+  },
+  "transactionTests": 10,
+  "convertedCases": 5,
+  "nativeStackTests": 40,
+  "nativeScope": "unchanged isolated Apple source overlays recorded in legacy-configuration-migration/verification.json; both Debug builds passed",
+  "freshStateSchema": 3,
+  "ownedStateSchema": 4,
+  "ownedProfileFormat": 5,
+  "automaticMigrationEnabled": false,
+  "migrationCliMcpCommandsEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "startupRecoveryDispatchEnabled": false,
+  "physicalDeviceAcceptance": false
+}

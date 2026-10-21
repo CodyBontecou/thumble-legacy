@@ -4,7 +4,7 @@ use crate::{
     MAXIMUM_CONFIGURATION_DOCUMENT_BYTES as MAXIMUM,
 };
 use base64::{engine::general_purpose::STANDARD, Engine};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{value::RawValue, Value};
 use sha2::{Digest, Sha256};
 use std::{
@@ -49,7 +49,7 @@ impl fmt::Display for LegacyMigrationError {
 }
 impl std::error::Error for LegacyMigrationError {}
 
-#[derive(Debug, Clone, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub enum LegacySourceLayout {
     #[serde(rename = "customization")]
     Primary,
@@ -190,7 +190,8 @@ fn decode_projection(encoded: &str) -> Result<Vec<u8>, LegacyMigrationError> {
     Ok(data)
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct LegacyMigrationReview {
     pub profile_id: Uuid,
     pub source_sha256: String,

@@ -1,0 +1,9 @@
+	 Executed 40 tests, with 0 failures (0 unexpected) in 8.426 (8.435) seconds
+	 Executed 40 tests, with 0 failures (0 unexpected) in 8.426 (8.436) seconds
+	 Executed 40 tests, with 0 failures (0 unexpected) in 8.426 (8.436) seconds
+mac-network stack-frame check passed: 1281 symbols, largest 29056 bytes
+** BUILD SUCCEEDED **
+controller stack-frame check passed: 1370 symbols, largest 11968 bytes
+ios-runtime stack-frame check passed: 2350 symbols, largest 29056 bytes
+** BUILD SUCCEEDED **
+Stack-safety verification passed.

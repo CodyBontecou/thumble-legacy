@@ -1269,9 +1269,13 @@ impl HostCore {
         accepted.binding_presentations = Some(Vec::new());
         accepted.gamepad_profile_id = Some(self.state.active_profile_id.clone());
         accepted.default_gamepad_profile_id = Some(self.state.default_profile_id.clone());
-        accepted.capabilities = Some(vec![
-            ControllerCapability::GamepadProfileOrientationPreferenceMutation,
-        ]);
+        accepted.capabilities = Some(
+            if self.state.schema_version == crate::OWNED_SCHEMA_VERSION {
+                Vec::new()
+            } else {
+                vec![ControllerCapability::GamepadProfileOrientationPreferenceMutation]
+            },
+        );
         accepted.input_protocol_version = Some(ControllerWireCodec::CURRENT_INPUT_PROTOCOL_VERSION);
         accepted.profile_format_version = Some(self.required_profile_format);
         // Transport adapters may attach a session-scoped realtime token when UDP
@@ -1554,6 +1558,15 @@ impl HostCore {
         unix_millis: i64,
         effects: &mut Vec<Effect>,
     ) {
+        if self.state.schema_version == crate::OWNED_SCHEMA_VERSION
+            && (message.message_type
+                == ControllerMessageType::GamepadProfileOrientationPreferenceMutation
+                || (message.message_type == ControllerMessageType::GamepadCustomization
+                    && message.gamepad_customization.is_some()))
+        {
+            self.send_error(connection_id, "This owned profile requires the owned-layout edit contract; the saved profile has been preserved", effects);
+            return;
+        }
         match message.message_type {
             ControllerMessageType::GamepadProfileOrientationPreferenceMutation => {
                 let (Some(profile_id), Some(preference)) = (
@@ -1817,9 +1830,13 @@ impl HostCore {
         response.binding_presentations = Some(Vec::new());
         response.gamepad_profile_id = Some(self.state.active_profile_id.clone());
         response.default_gamepad_profile_id = Some(self.state.default_profile_id.clone());
-        response.capabilities = Some(vec![
-            ControllerCapability::GamepadProfileOrientationPreferenceMutation,
-        ]);
+        response.capabilities = Some(
+            if self.state.schema_version == crate::OWNED_SCHEMA_VERSION {
+                Vec::new()
+            } else {
+                vec![ControllerCapability::GamepadProfileOrientationPreferenceMutation]
+            },
+        );
         response
     }
 

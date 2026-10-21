@@ -2254,9 +2254,31 @@ fn ipv4_listener(port: u16) -> Result<TcpListener, String> {
 /// standalone transaction path use this exact lock implementation.
 pub struct AuthorityLock {
     lock: File,
+    directory_identity: (u64, u64),
 }
 
 impl AuthorityLock {
+    pub(crate) fn protects(&self, paths: &HostPaths) -> bool {
+        use std::os::unix::fs::MetadataExt;
+        let (Ok(held), Ok(named)) = (self.lock.metadata(), fs::symlink_metadata(&paths.lock_file))
+        else {
+            return false;
+        };
+        let Ok(directory) = fs::symlink_metadata(&paths.state_dir) else {
+            return false;
+        };
+        directory.is_dir()
+            && !directory.file_type().is_symlink()
+            && directory.uid() == unsafe { libc::geteuid() }
+            && directory.permissions().mode() & 0o077 == 0
+            && (directory.dev(), directory.ino()) == self.directory_identity
+            && named.is_file()
+            && !named.file_type().is_symlink()
+            && held.dev() == named.dev()
+            && held.ino() == named.ino()
+            && named.uid() == unsafe { libc::geteuid() }
+            && named.permissions().mode() & 0o077 == 0
+    }
     pub fn try_acquire(paths: &HostPaths) -> Result<Option<Self>, String> {
         paths
             .ensure_state_dir()
@@ -2281,7 +2303,14 @@ impl AuthorityLock {
             return Err("runtime authority lock failed ownership or permission checks".to_owned());
         }
         match lock.try_lock_exclusive() {
-            Ok(()) => Ok(Some(Self { lock })),
+            Ok(()) => {
+                let directory = fs::symlink_metadata(&paths.state_dir)
+                    .map_err(|_| "runtime authority directory could not be inspected".to_owned())?;
+                Ok(Some(Self {
+                    lock,
+                    directory_identity: (directory.dev(), directory.ino()),
+                }))
+            }
             Err(error) if error.kind() == std::io::ErrorKind::WouldBlock => Ok(None),
             Err(_) => Err("runtime authority lock could not be acquired".to_owned()),
         }

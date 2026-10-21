@@ -12,6 +12,7 @@ pub mod gamepad;
 mod input_liveness;
 pub mod native_configuration;
 pub mod output;
+pub mod owned_migration;
 pub mod paths;
 mod phone_appearance;
 mod phone_layout;

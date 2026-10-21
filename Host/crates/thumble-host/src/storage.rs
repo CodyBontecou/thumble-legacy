@@ -141,30 +141,6 @@ fn save_atomic_against(
     expected: Option<&[u8]>,
     before_install: impl FnOnce() -> io::Result<()>,
 ) -> Result<(), String> {
-    let parent = path
-        .parent()
-        .ok_or_else(|| format!("state path {} has no parent", path.display()))?;
-    if let Ok(metadata) = fs::symlink_metadata(parent) {
-        if metadata.file_type().is_symlink()
-            || !metadata.is_dir()
-            || metadata.uid() != unsafe { libc::geteuid() }
-        {
-            return Err("state directory failed ownership or symlink validation".to_owned());
-        }
-    }
-    fs::create_dir_all(parent).map_err(|error| format!("create {}: {error}", parent.display()))?;
-    fs::set_permissions(parent, fs::Permissions::from_mode(0o700))
-        .map_err(|error| format!("protect {}: {error}", parent.display()))?;
-    let metadata = fs::symlink_metadata(parent)
-        .map_err(|error| format!("inspect {}: {error}", parent.display()))?;
-    if metadata.file_type().is_symlink()
-        || !metadata.is_dir()
-        || metadata.uid() != unsafe { libc::geteuid() }
-        || metadata.permissions().mode() & 0o077 != 0
-    {
-        return Err("state directory failed ownership or permission validation".to_owned());
-    }
-
     let after = serde_json::to_vec_pretty(state)
         .map_err(|_| "persistent state could not be encoded".to_owned())?;
     if after.len() > MAXIMUM_STATE_BYTES {
@@ -196,6 +172,44 @@ fn save_atomic_against(
         }
         data
     };
+    install_private_state_bytes(path, &data, expected, before_install)
+}
+
+/// Internal raw-state install boundary. The caller validates both the state
+/// schema and transaction provenance and holds the matching authority lease.
+pub(crate) fn install_private_state_bytes(
+    path: &Path,
+    data: &[u8],
+    expected: Option<&[u8]>,
+    before_install: impl FnOnce() -> io::Result<()>,
+) -> Result<(), String> {
+    if data.len() > MAXIMUM_STATE_BYTES {
+        return Err("persistent state exceeds its size limit".to_owned());
+    }
+    let parent = path
+        .parent()
+        .ok_or_else(|| format!("state path {} has no parent", path.display()))?;
+    if let Ok(metadata) = fs::symlink_metadata(parent) {
+        if metadata.file_type().is_symlink()
+            || !metadata.is_dir()
+            || metadata.uid() != unsafe { libc::geteuid() }
+        {
+            return Err("state directory failed ownership or symlink validation".to_owned());
+        }
+    }
+    fs::create_dir_all(parent).map_err(|error| format!("create {}: {error}", parent.display()))?;
+    fs::set_permissions(parent, fs::Permissions::from_mode(0o700))
+        .map_err(|error| format!("protect {}: {error}", parent.display()))?;
+    let metadata = fs::symlink_metadata(parent)
+        .map_err(|error| format!("inspect {}: {error}", parent.display()))?;
+    if metadata.file_type().is_symlink()
+        || !metadata.is_dir()
+        || metadata.uid() != unsafe { libc::geteuid() }
+        || metadata.permissions().mode() & 0o077 != 0
+    {
+        return Err("state directory failed ownership or permission validation".to_owned());
+    }
+
     let temporary = parent.join(format!(
         ".{}.{}.tmp",
         path.file_name()
@@ -209,7 +223,7 @@ fn save_atomic_against(
             .create_new(true)
             .mode(0o600)
             .open(&temporary)?;
-        file.write_all(&data)?;
+        file.write_all(data)?;
         file.sync_all()?;
         before_install()?;
         let unchanged = match (expected, fs::symlink_metadata(path)) {

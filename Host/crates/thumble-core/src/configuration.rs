@@ -101,7 +101,11 @@ impl<'a> From<&'a PersistentState> for ConfigurationView<'a> {
 }
 
 pub(crate) fn validate_state(state: &PersistentState) -> Result<(), ConfigurationDocumentError> {
-    ConfigurationView::from(state).validate()
+    if state.schema_version == crate::OWNED_SCHEMA_VERSION {
+        ConfigurationView::from(state).validate_for_profile_format(5)
+    } else {
+        ConfigurationView::from(state).validate()
+    }
 }
 
 impl ConfigurationDocument {
@@ -174,6 +178,11 @@ impl ConfigurationDocument {
         &self,
         state: &mut PersistentState,
     ) -> Result<(), ConfigurationDocumentError> {
+        // A legacy transaction cannot downgrade an owned authority. Its owned
+        // adapter must preserve the v5 raw document and revision explicitly.
+        if state.schema_version == crate::OWNED_SCHEMA_VERSION {
+            return Err(ConfigurationDocumentError::UnsupportedProfileFormat);
+        }
         self.validate()?;
         state.profiles.clone_from(&self.profiles);
         state.active_profile_id.clone_from(&self.active_profile_id);
