@@ -7,7 +7,21 @@
   "standaloneAssertions": 29,
   "nativeClippy": "pass",
   "sourceFormatting": "pass",
-  "hostedNewIdentity": "not published",
+  "hostedNewIdentity": {
+    "commit": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+    "hostRun": 39679838153,
+    "nativeRun": 39679838124,
+    "windows": "success",
+    "macos": "success",
+    "linux": "success",
+    "ios": "success",
+    "android": "success",
+    "rustUnix": 55,
+    "rustWindows": 53,
+    "rustWindowsExclusions": "two cfg(unix) filesystem tests",
+    "typescript": 68,
+    "standalonePackageAssertions": 29
+  },
   "hostedEarlierTLS": "a73d432 Windows/macOS/Linux green; excludes persistent identity",
   "keyBoundary": "PKCS8 key stays in native private binary record; CLI returns only public metadata",
   "remaining": [

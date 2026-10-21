@@ -1,0 +1,902 @@
+{
+  "version": 1,
+  "publication": {
+    "localSnapshot": "7d511549353121617eb038809cee41d3bbc9667f",
+    "publicCommit": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+    "parent": "ac9cafeec2ae987d6d9d7125ce6e1793f047c675",
+    "tree": "ba59efd176e2075ba8bf4adff30475438fc29f16",
+    "verifiedFiles": [
+      {
+        "path": "GLOSSARY.md",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/apps/cli/src/main.ts",
+        "status": "modified",
+        "additions": 27,
+        "deletions": 2
+      },
+      {
+        "path": "Rewrite/native/receiver/Cargo.lock",
+        "status": "modified",
+        "additions": 186,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/Cargo.toml",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/THIRD-PARTY-NOTICES.txt",
+        "status": "modified",
+        "additions": 638,
+        "deletions": 5
+      },
+      {
+        "path": "Rewrite/native/receiver/src/control_tls.rs",
+        "status": "modified",
+        "additions": 30,
+        "deletions": 1
+      },
+      {
+        "path": "Rewrite/native/receiver/src/enrollment.rs",
+        "status": "added",
+        "additions": 686,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/src/host_identity.rs",
+        "status": "added",
+        "additions": 371,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/src/lib.rs",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/src/main.rs",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 4
+      },
+      {
+        "path": "Rewrite/native/receiver/src/phone_trust.rs",
+        "status": "added",
+        "additions": 623,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/native/receiver/src/security.rs",
+        "status": "modified",
+        "additions": 17,
+        "deletions": 4
+      },
+      {
+        "path": "Rewrite/packages/contracts/package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/packages/contracts/src/host-identity.ts",
+        "status": "added",
+        "additions": 43,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/packages/fixtures/enrollment-v1.json",
+        "status": "added",
+        "additions": 35,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/tests/host-identity.test.ts",
+        "status": "added",
+        "additions": 127,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/tests/package.test.ts",
+        "status": "modified",
+        "additions": 9,
+        "deletions": 2
+      },
+      {
+        "path": "Rewrite/tests/pairing.test.ts",
+        "status": "modified",
+        "additions": 37,
+        "deletions": 0
+      },
+      {
+        "path": "Rewrite/tooling/native-notices.ts",
+        "status": "modified",
+        "additions": 14,
+        "deletions": 2
+      },
+      {
+        "path": "docs/adr/0001-rewrite-pairing-and-input-transport.md",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 2
+      },
+      {
+        "path": "docs/adr/0004-rewrite-persistent-host-identity.md",
+        "status": "added",
+        "additions": 17,
+        "deletions": 0
+      },
+      {
+        "path": "docs/adr/0005-rewrite-native-phone-trust.md",
+        "status": "added",
+        "additions": 21,
+        "deletions": 0
+      },
+      {
+        "path": "docs/adr/0006-rewrite-native-enrollment.md",
+        "status": "added",
+        "additions": 5,
+        "deletions": 0
+      },
+      {
+        "path": "docs/rewrite-enrollment-v1.md",
+        "status": "added",
+        "additions": 30,
+        "deletions": 0
+      }
+    ],
+    "totalCommits": 1
+  },
+  "runs": [
+    {
+      "id": 39679838124,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39679838124",
+      "jobs": [
+        {
+          "id": 119499127785,
+          "name": "ios-native",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run mobile:prepare",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Record native toolchain",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build synthetic native TLS witness",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Swift native contract and lifecycle tests",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Compile native modules directly against both iOS SDKs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build native iOS Simulator module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build native iPhone module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 119499128265,
+          "name": "android-native",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run android-actions/setup-android@v3",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned Android SDK",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build synthetic native TLS witness",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Build and test native Android module",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run gradle/actions/setup-gradle@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 39679838153,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39679838153",
+      "jobs": [
+        {
+          "id": 119499128255,
+          "name": "portable (macos-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify independent Node AES-GCM packet oracle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:boundaries",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun x --no-install prettier --check .",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:test",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify native TLS with independent Node/OpenSSL client",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run typecheck",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:package:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Typecheck generated Swift DTOs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 119499128492,
+          "name": "portable (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify independent Node AES-GCM packet oracle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:boundaries",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun x --no-install prettier --check .",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:test",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify native TLS with independent Node/OpenSSL client",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run typecheck",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:package:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Typecheck generated Swift DTOs",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 119499129205,
+          "name": "portable (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run dtolnay/rust-toolchain@1.88.0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify independent Node AES-GCM packet oracle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:generated",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run check:boundaries",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun x --no-install prettier --check .",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:test",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run native:build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify native TLS with independent Node/OpenSSL client",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run typecheck",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run bun run test:package:ci",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Typecheck generated Swift DTOs",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run oven-sh/setup-bun@v2",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "run": 39679838124,
+      "artifacts": [
+        {
+          "id": 12383945569,
+          "name": "rewrite-mobile-android-native",
+          "size": 114144,
+          "digest": "sha256:8bd298ba687f80a111c4c9bd18dd9435a43706a56c6366182b5784938e2c7fb2",
+          "expired": false
+        },
+        {
+          "id": 12382844753,
+          "name": "rewrite-mobile-ios-native",
+          "size": 3363,
+          "digest": "sha256:22f1a1b25c75a158802593a8b5315cf21b93ed808c19180c57fe78a9657b28d3",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run": 39679838153,
+      "artifacts": [
+        {
+          "id": 12384630143,
+          "name": "rewrite-portable-tests-windows-latest",
+          "size": 3414,
+          "digest": "sha256:2fd62b52f7ef40560b18bee538bbe957035ba03408ef2b3ee261a8f3798c811e",
+          "expired": false
+        },
+        {
+          "id": 12384505256,
+          "name": "rewrite-m2-recording-windows-latest",
+          "size": 47082751,
+          "digest": "sha256:1377c21028880b162059e7441a6776655dcdd61f8e0393ede86288055b33550f",
+          "expired": false
+        },
+        {
+          "id": 12383835883,
+          "name": "rewrite-portable-tests-macos-latest",
+          "size": 3502,
+          "digest": "sha256:36a27f70cbba3cf9d37a43500766fc9d8dc1abb3a67511cb998f4b3aabf96edc",
+          "expired": false
+        },
+        {
+          "id": 12383382074,
+          "name": "rewrite-m2-recording-macos-latest",
+          "size": 32750118,
+          "digest": "sha256:f16a643a6c09231feeca09929044aab29d25d66f3dcd461404c1e3e021337035",
+          "expired": false
+        },
+        {
+          "id": 12383064258,
+          "name": "rewrite-m2-recording-ubuntu-latest",
+          "size": 43551750,
+          "digest": "sha256:473fa163933dd37fae42a260db63b0c53e543c4ae2e84cea9ca2a33b227e2121",
+          "expired": false
+        },
+        {
+          "id": 12382979206,
+          "name": "rewrite-portable-tests-ubuntu-latest",
+          "size": 3428,
+          "digest": "sha256:55643013fc2461a372aa008f78b5b49fb43c54c1d91cdf465c590963a4892f04",
+          "expired": false
+        }
+      ]
+    }
+  ],
+  "testCounts": {
+    "rust": {
+      "macos": 55,
+      "linux": 55,
+      "windows": 53,
+      "windowsDifference": "Two Unix-only filesystem alias/symlink tests excluded by cfg(unix)"
+    },
+    "typescript": 68,
+    "typescriptExplicitSkip": 1,
+    "standalonePackage": {
+      "tests": 1,
+      "assertions": 29
+    },
+    "swift": 20,
+    "android": "native unit/AAR/lint job success; unchanged 40-test source"
+  },
+  "logExcerpts": [
+    {
+      "job": 119499127785,
+      "lines": [
+        "2026-10-21T21:35:51.9252370Z ✔ Test run with 20 tests in 0 suites passed after 12.502 seconds.",
+        "2026-10-21T21:36:52.7016360Z ** BUILD SUCCEEDED **",
+        "2026-10-21T21:37:20.4822860Z ** BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "job": 119499128265,
+      "lines": [
+        "2026-10-21T21:36:32.6523246Z BUILD SUCCESSFUL in 1m 38s"
+      ]
+    },
+    {
+      "job": 119499128255,
+      "lines": [
+        "2026-10-21T21:35:04.1380580Z test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s",
+        "2026-10-21T21:35:04.1451730Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-21T21:35:04.2739110Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-21T21:35:10.4335670Z Node v24.21.0; OpenSSL 4.0.3; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed",
+        "2026-10-21T21:35:15.0547720Z  68 pass",
+        "2026-10-21T21:35:15.0549480Z  819 expect() calls",
+        "2026-10-21T21:35:51.2157780Z  1 pass",
+        "2026-10-21T21:35:51.2160620Z  29 expect() calls"
+      ]
+    },
+    {
+      "job": 119499128492,
+      "lines": [
+        "2026-10-21T21:35:40.9376738Z test result: ok. 53 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.86s\r",
+        "2026-10-21T21:35:40.9512766Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\r",
+        "2026-10-21T21:35:41.0961194Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\r",
+        "2026-10-21T21:35:49.2651790Z Node v22.23.3; OpenSSL 3.5.8; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed\r",
+        "2026-10-21T21:35:57.4995054Z  68 pass\r",
+        "2026-10-21T21:35:57.4996115Z  817 expect() calls\r",
+        "2026-10-21T21:36:40.6834273Z  1 pass\r",
+        "2026-10-21T21:36:40.6834871Z  29 expect() calls\r"
+      ]
+    },
+    {
+      "job": 119499129205,
+      "lines": [
+        "2026-10-21T21:34:55.6620043Z test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s",
+        "2026-10-21T21:34:55.6639835Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-21T21:34:55.7399844Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-21T21:35:00.3516391Z Node v22.23.3; OpenSSL 3.5.8; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed",
+        "2026-10-21T21:35:05.4610692Z  68 pass",
+        "2026-10-21T21:35:05.4611243Z  819 expect() calls",
+        "2026-10-21T21:35:57.2850187Z  1 pass",
+        "2026-10-21T21:35:57.2869587Z  29 expect() calls"
+      ]
+    }
+  ],
+  "exclusions": [
+    "private baseline/history",
+    "real credentials",
+    "build products",
+    "local evidence",
+    "new phone credential vault source"
+  ],
+  "remaining": "Product CLI forwarding/listener admission, native safety-worker integration, phone vault/client enrollment and physical acceptance remain pending."
+}

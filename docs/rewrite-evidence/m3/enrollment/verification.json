@@ -9,7 +9,21 @@
     "tests": 1,
     "assertions": 29
   },
-  "hostedNewSource": "not published",
+  "hostedNewSource": {
+    "commit": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+    "hostRun": 39679838153,
+    "nativeRun": 39679838124,
+    "windows": "success",
+    "macos": "success",
+    "linux": "success",
+    "ios": "success",
+    "android": "success",
+    "rustUnix": 55,
+    "rustWindows": 53,
+    "rustWindowsExclusions": "two cfg(unix) filesystem tests",
+    "typescript": 68,
+    "standalonePackageAssertions": 29
+  },
   "remaining": [
     "service/CLI forwarding",
     "product listener/native safety worker",

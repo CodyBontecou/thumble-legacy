@@ -10,7 +10,21 @@
   },
   "independentNodeTLS": "pass",
   "noticesRegistryCrates": 108,
-  "hostedLedgerTests": "not published",
+  "hostedLedgerTests": {
+    "commit": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+    "hostRun": 39679838153,
+    "nativeRun": 39679838124,
+    "windows": "success",
+    "macos": "success",
+    "linux": "success",
+    "ios": "success",
+    "android": "success",
+    "rustUnix": 55,
+    "rustWindows": 53,
+    "rustWindowsExclusions": "two cfg(unix) filesystem tests",
+    "typescript": 68,
+    "standalonePackageAssertions": 29
+  },
   "retainedStackSafety": "unverified: previous compiler macro-probe stall",
   "physicalPowerLoss": "pending"
 }
