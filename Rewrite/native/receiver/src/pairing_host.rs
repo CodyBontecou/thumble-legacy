@@ -148,7 +148,7 @@ impl Host {
                             ControlChannel::accept_unenrolled(job.stream, &identity)
                         {
                             if !job.stop.load(Ordering::SeqCst) {
-                                let _ = enrollment::enroll(
+                                let _ = enrollment::serve(
                                     &mut channel,
                                     &windows,
                                     &store,
@@ -668,6 +668,153 @@ mod tests {
         assert_eq!(inventory["phones"][0]["phoneId"], "phone-a");
         assert_eq!(inventory["phones"][0]["active"], false);
         assert!(!inventory.to_string().contains("credential\""));
+    }
+    fn enrolled(host: &mut Host) -> (Value, Value) {
+        let value = listen(host);
+        let mut channel = connect(&value);
+        hello(&mut channel);
+        send(&mut channel, proof(&value));
+        let credential = receive(&mut channel);
+        send(
+            &mut channel,
+            json!({"version":1,"command":"enrollment-stored","phoneId":"phone-a","credentialEpoch":credential["credentialEpoch"]}),
+        );
+        assert_eq!(receive(&mut channel)["command"], "enrollment-complete");
+        (value, credential)
+    }
+    fn authentication(channel: &mut ControlChannel, credential: &Value) {
+        send(
+            channel,
+            json!({"version":1,"command":"hello","controlVersion":3,"inputVersion":1,"documentVersion":1,"capabilitiesVersion":1}),
+        );
+        assert_eq!(receive(channel)["controlVersion"], 3);
+        send(
+            channel,
+            json!({"version":1,"command":"authenticate","authorityInstanceId":"authority-a","phoneId":"phone-a","credentialEpoch":credential["credentialEpoch"],"credential":credential["credential"]}),
+        );
+    }
+    #[test]
+    fn authenticated_native_control_rechecks_trust_and_never_enables_input() {
+        let root = Root::new();
+        let mut host = Host::new(
+            &root.0.join("runtime"),
+            "authority-a",
+            Some(&root.0.join("identity")),
+        )
+        .unwrap();
+        let (value, credential) = enrolled(&mut host);
+        let mut channel = connect(&value);
+        authentication(&mut channel, &credential);
+        let receipt = receive(&mut channel);
+        assert_eq!(receipt["command"], "authenticated");
+        assert_eq!(receipt["inputEnabled"], false);
+        assert_eq!(receipt["inputSessionAvailable"], false);
+        assert!(!receipt
+            .to_string()
+            .contains(credential["credential"].as_str().unwrap()));
+        assert_eq!(receipt["connectionId"].as_str().unwrap().len(), 32);
+        assert!(receipt["expiresAt"].as_u64().unwrap() <= now().unwrap() + 60_000);
+        assert!(host.policy_mutation.try_lock().is_ok());
+        assert!(host.store.as_ref().unwrap().try_lock().is_ok());
+        send(
+            &mut channel,
+            json!({"version":1,"command":"control-status","connectionId":receipt["connectionId"]}),
+        );
+        assert_eq!(receive(&mut channel)["command"], "control-status");
+        host.execute(Command::PairingRevoke {
+            phone_id: "phone-a".into(),
+        })
+        .unwrap();
+        assert!(channel.receive().is_err());
+        let mut rejected = connect(&value);
+        authentication(&mut rejected, &credential);
+        assert!(rejected.receive().is_err());
+    }
+    #[test]
+    fn connection_identifiers_do_not_transfer_authority_and_reenrollment_retires_old_epoch() {
+        let root = Root::new();
+        let mut host = Host::new(
+            &root.0.join("runtime"),
+            "authority-a",
+            Some(&root.0.join("identity")),
+        )
+        .unwrap();
+        let (value, old) = enrolled(&mut host);
+        let mut one = connect(&value);
+        authentication(&mut one, &old);
+        let receipt = receive(&mut one);
+        let mut two = connect(&value);
+        authentication(&mut two, &old);
+        let second = receive(&mut two);
+        assert_ne!(receipt["connectionId"], second["connectionId"]);
+        send(
+            &mut two,
+            json!({"version":1,"command":"control-status","connectionId":receipt["connectionId"]}),
+        );
+        assert!(two.receive().is_err());
+        send(
+            &mut one,
+            json!({"version":1,"command":"disconnect","connectionId":receipt["connectionId"]}),
+        );
+        assert_eq!(receive(&mut one)["command"], "disconnected");
+        assert!(one.receive().is_err());
+        let (new_value, fresh) = enrolled(&mut host);
+        assert_ne!(old["credentialEpoch"], fresh["credentialEpoch"]);
+        for credential in [
+            old.clone(),
+            json!({"credential":fresh["credential"],"credentialEpoch":old["credentialEpoch"]}),
+        ] {
+            let mut rejected = connect(&new_value);
+            authentication(&mut rejected, &credential);
+            assert!(rejected.receive().is_err());
+        }
+        let mut valid = connect(&new_value);
+        authentication(&mut valid, &fresh);
+        let valid_receipt = receive(&mut valid);
+        assert_eq!(valid_receipt["command"], "authenticated");
+        // Direct native policy changes are still rechecked on every authorized operation.
+        host.store
+            .as_ref()
+            .unwrap()
+            .lock()
+            .unwrap()
+            .revoke("phone-a", now().unwrap())
+            .unwrap();
+        send(
+            &mut valid,
+            json!({"version":1,"command":"control-status","connectionId":valid_receipt["connectionId"]}),
+        );
+        assert!(valid.receive().is_err());
+    }
+    #[test]
+    fn authenticated_connections_bound_work_and_reject_unimplemented_input_grants() {
+        let root = Root::new();
+        let mut host = Host::new(
+            &root.0.join("runtime"),
+            "authority-a",
+            Some(&root.0.join("identity")),
+        )
+        .unwrap();
+        let (value, credential) = enrolled(&mut host);
+        let mut channel = connect(&value);
+        authentication(&mut channel, &credential);
+        let receipt = receive(&mut channel);
+        for _ in 0..128 {
+            send(
+                &mut channel,
+                json!({"version":1,"command":"control-status","connectionId":receipt["connectionId"]}),
+            );
+            assert_eq!(receive(&mut channel)["command"], "control-status");
+        }
+        assert!(channel.receive().is_err());
+        let mut denied = connect(&value);
+        authentication(&mut denied, &credential);
+        let receipt = receive(&mut denied);
+        send(
+            &mut denied,
+            json!({"version":1,"command":"input-grant","connectionId":receipt["connectionId"]}),
+        );
+        assert!(denied.receive().is_err());
     }
     #[test]
     fn bounded_acceptance_and_stop_close_all_stalled_sockets_without_more_workers() {

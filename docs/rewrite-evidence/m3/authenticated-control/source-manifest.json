@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "scope": "Control-v3 native authentication, exact server-channel binding, durable epoch revalidation, bounded status/disconnect",
+  "baseLocalCommit": "3c913f4",
+  "publication": "Local only; outside frozen 25-file phone candidate and earlier approvals",
+  "checks": {
+    "rust": 67,
+    "typescript": 74,
+    "typescriptAssertions": 916,
+    "typescriptSkippedPackageMode": 1,
+    "standalonePackageTests": 1,
+    "standalonePackageAssertions": 53,
+    "swift": 36,
+    "androidFresh": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "clippy": "all targets passed with warnings denied",
+    "frozenPhoneCandidate": "25 exact hashes and byte lengths unchanged",
+    "windows": "not run for this source",
+    "OSCredentialProviderExecution": "not run",
+    "retainedSwiftStackSafety": "no new pass; prior compiler probe stalled"
+  },
+  "files": [
+    {
+      "path": "GLOSSARY.md",
+      "bytes": 1886,
+      "sha256": "75ae59aec33bae6849419c97b953a7c67e88c873f74c1a9058d568b41e4589ff"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/control_tls.rs",
+      "bytes": 28943,
+      "sha256": "90f60ca4ad965dd78161b101ccabece737058b90759306f65eda539750fccf72"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 29503,
+      "sha256": "8c712503fae60b33492ae3d51f5687e4741c5fb5d190a4a7196bae94000c95fb"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 449,
+      "sha256": "1b4983284a78c7c7eb354194f8c3b834e79e060287c78b10f9bb9943ed559fba"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "bytes": 32935,
+      "sha256": "4c22e02bca49f785b4c03482fe027c3addcdbc0b9205360ebed6d7d4b35a1668"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/phone_trust.rs",
+      "bytes": 26158,
+      "sha256": "b285ce35319a65833a139d31a8a085db2d15fe4038e026351ae6c766113a5038"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/authenticated_control.rs",
+      "bytes": 10060,
+      "sha256": "422944d94679bd4fc72e86c7b44e38b8c94ad8ec38d36b772ccc2193bee29ae3"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "bytes": 5873,
+      "sha256": "033e8854075f3666998f9d09c84caba79161cd23a5cb6ad7a9ee16a40ae5a6c3"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "bytes": 24880,
+      "sha256": "0314f21dffdb94babd36376fd840ca7936fa3155fce7e614d15ebe1a92365e94"
+    },
+    {
+      "path": "Rewrite/tooling/check-pairing-listener.mjs",
+      "bytes": 6096,
+      "sha256": "2f599f503a7d594bcedc64f33aa0f04709f2da56d5a221ed486a828bab85c98a"
+    },
+    {
+      "path": "docs/rewrite-headless-pairing.md",
+      "bytes": 7732,
+      "sha256": "ae6b43601887bb4c8046cd69e1a647daa25668892802e7daf10cc9bc0a16782b"
+    },
+    {
+      "path": "docs/adr/0008-rewrite-native-control-authentication.md",
+      "bytes": 597,
+      "sha256": "a823ed60e13f3eac6ff9f0eaa7052441055974940845c8e5eb6142af4c0ae94b"
+    },
+    {
+      "path": "docs/rewrite-authenticated-control-v3.md",
+      "bytes": 3950,
+      "sha256": "afb105f3e1afb97f6e7b462969f9dc063ae75adafd2618c1fc20f83c8b90504c"
+    }
+  ]
+}

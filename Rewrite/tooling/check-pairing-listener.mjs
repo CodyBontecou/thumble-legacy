@@ -14,7 +14,7 @@ assert.equal(
   invitation.certificatePin,
 );
 const certificate = new X509Certificate(der);
-const socket = connect({
+const options = {
   host: invitation.host,
   port: invitation.port,
   servername: "thumble-rewrite.local",
@@ -23,24 +23,30 @@ const socket = connect({
   minVersion: "TLSv1.3",
   maxVersion: "TLSv1.3",
   ALPNProtocols: ["thumble-rewrite-control/1"],
-});
+};
+let socket = connect(options);
 const deadline = setTimeout(
   () => socket.destroy(new Error("pairing_oracle_deadline")),
   12000,
 );
 try {
-  await new Promise((resolve, reject) => {
-    socket.once("secureConnect", resolve);
-    socket.once("error", reject);
-  });
-  assert.equal(socket.getProtocol(), "TLSv1.3");
-  assert.equal(socket.alpnProtocol, "thumble-rewrite-control/1");
-  assert.equal(
-    createHash("sha256").update(socket.getPeerCertificate().raw).digest("hex"),
-    invitation.certificatePin,
-  );
+  async function verifyPinnedSocket() {
+    await new Promise((resolve, reject) => {
+      socket.once("secureConnect", resolve);
+      socket.once("error", reject);
+    });
+    assert.equal(socket.getProtocol(), "TLSv1.3");
+    assert.equal(socket.alpnProtocol, "thumble-rewrite-control/1");
+    assert.equal(
+      createHash("sha256")
+        .update(socket.getPeerCertificate().raw)
+        .digest("hex"),
+      invitation.certificatePin,
+    );
+  }
+  await verifyPinnedSocket();
   let bytes = Buffer.alloc(0);
-  const incoming = socket[Symbol.asyncIterator]();
+  let incoming = socket[Symbol.asyncIterator]();
   async function receive() {
     async function need(count) {
       while (bytes.length < count) {
@@ -121,8 +127,56 @@ try {
     assert.equal(complete.phoneId, reply.phoneId);
     assert.equal(complete.credentialEpoch, reply.credentialEpoch);
     assert.equal(complete.inputEnabled, false);
+    socket.destroy();
+    socket = connect(options);
+    await verifyPinnedSocket();
+    bytes = Buffer.alloc(0);
+    incoming = socket[Symbol.asyncIterator]();
+    send({
+      version: 1,
+      command: "hello",
+      controlVersion: 3,
+      inputVersion: 1,
+      documentVersion: 1,
+      capabilitiesVersion: 1,
+    });
+    const controlHello = await receive();
+    assert.equal(controlHello.controlVersion, 3);
+    assert.equal(
+      controlHello.authorityInstanceId,
+      invitation.authorityInstanceId,
+    );
+    send({
+      version: 1,
+      command: "authenticate",
+      authorityInstanceId: invitation.authorityInstanceId,
+      phoneId: reply.phoneId,
+      credentialEpoch: reply.credentialEpoch,
+      credential: reply.credential,
+    });
+    const authorized = await receive();
+    assert.equal(authorized.command, "authenticated");
+    assert.equal(authorized.phoneId, reply.phoneId);
+    assert.equal(authorized.credentialEpoch, reply.credentialEpoch);
+    assert.equal(authorized.inputEnabled, false);
+    assert.equal(authorized.inputSessionAvailable, false);
+    assert(/^[0-9a-f]{32}$/.test(authorized.connectionId));
+    assert(!JSON.stringify(authorized).includes(reply.credential));
+    send({
+      version: 1,
+      command: "control-status",
+      connectionId: authorized.connectionId,
+    });
+    assert.equal((await receive()).command, "control-status");
+    send({
+      version: 1,
+      command: "disconnect",
+      connectionId: authorized.connectionId,
+    });
+    assert.equal((await receive()).command, "disconnected");
     console.log(
       JSON.stringify({
+        authenticated: true,
         completed: true,
         phoneId: complete.phoneId,
         credentialEpoch: complete.credentialEpoch,

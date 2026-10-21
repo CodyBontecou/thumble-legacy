@@ -123,6 +123,7 @@ packageTest(
         expect(code).toBe(0);
         expect(error).toBe("");
         expect(JSON.parse(text).completed).toBe(true);
+        expect(JSON.parse(text).authenticated).toBe(true);
         expect(JSON.parse(text).inputEnabled).toBe(false);
       } finally {
         if (peer.exitCode === null) peer.kill();

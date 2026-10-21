@@ -21,3 +21,5 @@ pub mod phone_trust;
 pub mod enrollment;
 
 pub mod pairing_host;
+
+pub mod authenticated_control;

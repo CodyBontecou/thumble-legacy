@@ -30,3 +30,6 @@ The phone's confirmation that it retained its newly issued credential. It comple
 
 **Enrollment listener**:
 The host endpoint that redeems pairing invitations and establishes a phone's trust. Authorization for an input session is a separate operation.
+
+**Authenticated control connection**:
+A temporary conversation in which a trusted phone has proved its current credential to one host authority. Input authorization remains a separate grant for a particular activation.

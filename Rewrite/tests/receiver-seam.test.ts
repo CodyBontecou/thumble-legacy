@@ -506,6 +506,7 @@ test("headless CLI native listener pairs through independent pinned TLS and canc
     try {
       const result = await peer.lines.next();
       expect(result.value.completed).toBe(true);
+      expect(result.value.authenticated).toBe(true);
       expect(result.value.inputEnabled).toBe(false);
       expect(await peer.child.exited).toBe(0);
       expect(await new Response(peer.child.stderr).text()).toBe("");
