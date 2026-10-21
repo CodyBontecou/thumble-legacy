@@ -176,7 +176,7 @@ def is_controller_symbol(name: str) -> bool:
 
 def is_shared_runtime_symbol(name: str) -> bool:
     if ".ThumbleConfigurationBridge." in name and any(
-        method in name for method in ("importCustomization", "overlayImportedBindings", "preservingMirroredCustomizationSource")
+        method in name for method in ("importCustomization", "overlayImportedBindings", "preservingMirroredCustomizationSource", "applyBackgroundEdit")
     ):
         return True
     if any(
@@ -191,6 +191,7 @@ def is_shared_runtime_symbol(name: str) -> bool:
             ".ThumbleLegacyAppearanceMaterializer.",
             ".PendingProfileRecovery.",
             ".ProfileFormatPolicy.",
+            ".ThumbleBridgeBackgroundFill.",
             ".ThumbleOwnedConfigurationDocument.",
             ".ThumbleOwnedOperationBridge",
             ".ThumbleLegacyProfileMigration.",

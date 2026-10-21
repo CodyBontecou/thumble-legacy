@@ -335,10 +335,34 @@ public struct ThumbleBridgeRGBAColor: Decodable, Sendable {
     }
 }
 
+/// Rich background payloads stay boxed so image-bearing requests do not grow
+/// the operation enum or copy appearance aggregates onto constrained stacks.
+public final class ThumbleBridgeBackgroundFill: Decodable, @unchecked Sendable {
+    let fillStyle: GamepadFillStyle
+    public required init(from decoder: Decoder) throws {
+        let fields = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
+        if try fields.decode(String.self, forKey: .init("kind")) != "image" {
+            fillStyle = try ThumbleBridgeElementFill(from: decoder).fillStyle
+            return
+        }
+        try fields.requireOnly(["kind", "dataBase64", "fileName", "contentMode"])
+        let text = try fields.decode(String.self, forKey: .init("dataBase64"))
+        let fileName = try fields.decodeIfPresent(String.self, forKey: .init("fileName"))
+        let mode = try fields.decode(GamepadImageContentMode.self, forKey: .init("contentMode"))
+        guard text.utf8.count <= ((GamepadImageFill.maximumStoredBytes + 2) / 3) * 4,
+              let data = Data(base64Encoded: text), data.base64EncodedString() == text,
+              !data.isEmpty, data.count <= GamepadImageFill.maximumStoredBytes,
+              fileName.map({ !$0.isEmpty && $0.utf8.count <= 512 && !$0.contains("/") && !$0.contains("\\") && !$0.unicodeScalars.contains(where: { CharacterSet.controlCharacters.contains($0) }) }) ?? true
+        else { throw ThumbleConfigurationBridgeError.invalidCustomizationChanges }
+        fillStyle = .image(GamepadImageFill(data: data, fileName: fileName, contentMode: mode).normalized)
+    }
+}
+
 public enum ThumbleBridgeBackgroundEdit: Decodable, Sendable {
     case keep
     case clear
     case set(scope: ThumbleBridgeBackgroundScope, color: ThumbleBridgeRGBAColor)
+    case fill(scope: ThumbleBridgeBackgroundScope, fill: ThumbleBridgeBackgroundFill)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
@@ -350,6 +374,10 @@ public enum ThumbleBridgeBackgroundEdit: Decodable, Sendable {
         case "clear":
             try container.requireOnly(["action"])
             self = .clear
+        case "fill":
+            try container.requireOnly(["action", "scope", "fill"])
+            self = .fill(scope: try container.decode(ThumbleBridgeBackgroundScope.self, forKey: .init("scope")),
+                         fill: try container.decode(ThumbleBridgeBackgroundFill.self, forKey: .init("fill")))
         case "set":
             try container.requireOnly(["action", "scope", "color"])
             self = .set(
@@ -1917,35 +1945,11 @@ public enum ThumbleConfigurationBridge {
                 if let showsButtonLabels = changes.showsButtonLabels {
                     customization.showsButtonLabels = showsButtonLabels
                 }
-                switch changes.backgroundEdit {
-                case .keep:
-                    break
-                case .clear:
-                    customization.backgroundLightColor = nil
-                    customization.backgroundDarkColor = nil
-                    customization.backgroundFillStyle = nil
-                    customization.backgroundLightFillStyle = nil
-                    customization.backgroundDarkFillStyle = nil
-                case let .set(scope, inputColor):
-                    guard let color = inputColor.color else {
-                        throw ThumbleConfigurationBridgeError.invalidCustomizationChanges
-                    }
-                    switch scope {
-                    case .all:
-                        customization.backgroundLightColor = color.normalized
-                        customization.backgroundDarkColor = color.normalized
-                        customization.backgroundFillStyle = nil
-                        customization.backgroundLightFillStyle = nil
-                        customization.backgroundDarkFillStyle = nil
-                    case .light:
-                        customization.backgroundLightColor = color.normalized
-                        customization.backgroundLightFillStyle = nil
-                    case .dark:
-                        customization.backgroundDarkColor = color.normalized
-                        customization.backgroundDarkFillStyle = nil
-                    }
-                }
+                try applyBackgroundEdit(changes.backgroundEdit, to: &customization)
+                guard customization != profile.customization else { return }
+                let previousTimestamp = profile.updatedAt
                 setCustomization(customization, in: &profile, variant: variant)
+                profile.updatedAt = previousTimestamp
             }
         case let .customizationImport(profileID, variant, customizationJSON):
             #if os(macOS)
@@ -3934,6 +3938,45 @@ public enum ThumbleConfigurationBridge {
         document.profiles[index] = after
         let canonicalID = try rawProfile.requiredString(forKey: "id")
         return ["/profiles/\(escapePointer(canonicalID))"]
+    }
+
+    static func applyBackgroundEdit(_ edit: ThumbleBridgeBackgroundEdit, to customization: inout GamepadCustomization) throws {
+        switch edit {
+        case .keep:
+            break
+        case .clear:
+            customization.backgroundLightColor = nil
+            customization.backgroundDarkColor = nil
+            customization.backgroundFillStyle = nil
+            customization.backgroundLightFillStyle = nil
+            customization.backgroundDarkFillStyle = nil
+        case let .set(scope, inputColor):
+            guard let color = inputColor.color else {
+                throw ThumbleConfigurationBridgeError.invalidCustomizationChanges
+            }
+            switch scope {
+            case .all:
+                customization.backgroundLightColor = color.normalized
+                customization.backgroundDarkColor = color.normalized
+                customization.backgroundFillStyle = nil
+                customization.backgroundLightFillStyle = nil
+                customization.backgroundDarkFillStyle = nil
+            case .light: customization.setBackgroundColor(color, for: .light)
+            case .dark: customization.setBackgroundColor(color, for: .dark)
+            }
+        case .fill(let scope, let input):
+            let style = input.fillStyle
+            switch scope {
+            case .all:
+                customization.backgroundFillStyle = style
+                customization.backgroundLightColor = nil
+                customization.backgroundDarkColor = nil
+                customization.backgroundLightFillStyle = nil
+                customization.backgroundDarkFillStyle = nil
+            case .light: customization.setBackgroundFillStyle(style, for: .light)
+            case .dark: customization.setBackgroundFillStyle(style, for: .dark)
+            }
+        }
     }
 
     private static func mutateProfile(

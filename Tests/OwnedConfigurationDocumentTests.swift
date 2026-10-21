@@ -1,7 +1,93 @@
 import Foundation
+import SwiftUI
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    func testRichBackgroundFillsReplaceRequestedScopeAcrossAllOwnedStates() throws {
+        let source = try fixture("document")
+        let before = try ThumbleOwnedConfigurationDocument(validating: source)
+        let profile = before.projectedProfiles[0]
+        let pixel = Data([1, 2, 3, 4])
+        let color: [String: Any] = ["red":0.2,"green":0.4,"blue":0.6,"alpha":1]
+        let fills: [[String: Any]] = [
+            ["kind":"gradient","type":"linear","angleDegrees":45,"stops":[["offset":0,"color":color],["offset":1,"color":color]]],
+            ["kind":"tile","pattern":"dots","foregroundColor":color,"backgroundColor":color,"scale":1,"spacingX":0,"spacingY":0,"alignment":"center","opacity":1],
+            ["kind":"image","dataBase64":pixel.base64EncodedString(),"fileName":"test.png","contentMode":"fit"]]
+        let backgroundFields = Set(["backgroundFillStyle","backgroundLightFillStyle","backgroundDarkFillStyle","backgroundLightColor","backgroundDarkColor"])
+        for scope in ["all", "light", "dark"] {
+            for fill in fills {
+                let edit: [String: Any] = ["action":"fill","scope":scope,"fill":fill]
+                let operation: [String: Any] = ["type":"customization.set","profileID":profile.id.uuidString,"variant":"primary","changes":["backgroundEdit":edit]]
+                let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source, operation))
+                let response = try ThumbleOwnedOperationBridge.transform(request)
+                let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+                XCTAssertEqual(after.projectedProfiles[1], before.projectedProfiles[1])
+                let original = try XCTUnwrap(profile.appearanceBank)
+                let bank = try XCTUnwrap(after.projectedProfiles[0].appearanceBank)
+                XCTAssertEqual(bank.variants.count, 8)
+                for (old, row) in zip(original.variants, bank.variants) {
+                    let oldPaint = old.appearance.applying(to: profile.customization)
+                    let paint = row.appearance.applying(to: after.projectedProfiles[0].customization)
+                    for scheme in [ThumbleSkinColorScheme.light, .dark] where scope == "all" || scope == scheme.rawValue {
+                        let actual = paint.keypadBackgroundFillStyle(scheme: scheme == .dark ? .dark : .light)
+                        switch fill["kind"] as! String {
+                        case "image":
+                            guard case .image(let image) = actual else { return XCTFail("Missing image in saved state") }
+                            XCTAssertEqual(image.data, pixel); XCTAssertEqual(image.contentMode, .fit)
+                        case "gradient": guard case .gradient = actual else { return XCTFail("Missing gradient in saved state") }
+                        default: guard case .tile = actual else { return XCTFail("Missing tile in saved state") }
+                        }
+                    }
+                    if scope != "all" {
+                        let scheme: SwiftUI.ColorScheme = scope == "light" ? .dark : .light
+                        XCTAssertEqual(paint.keypadBackgroundFillStyle(scheme: scheme), oldPaint.keypadBackgroundFillStyle(scheme: scheme))
+                    }
+                    let a = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(old.appearance)) as? [String: Any])
+                    let b = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(row.appearance)) as? [String: Any])
+                    XCTAssertEqual(NSDictionary(dictionary: a.filter { !backgroundFields.contains($0.key) }), NSDictionary(dictionary: b.filter { !backgroundFields.contains($0.key) }))
+                }
+                let replay = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(try XCTUnwrap(Data(base64Encoded: response.afterDocumentData)), operation, nowMillis: 9000))
+                XCTAssertFalse(try ThumbleOwnedOperationBridge.transform(replay).changed)
+                if scope == "all", fill["kind"] as? String == "image" {
+                    var root = try XCTUnwrap(JSONSerialization.jsonObject(with: XCTUnwrap(Data(base64Encoded: response.afterDocumentData))) as? [String: Any])
+                    var profiles = try XCTUnwrap(root["profiles"] as? [[String: Any]])
+                    var bank = try XCTUnwrap(profiles[0]["appearanceBank"] as? [String: Any])
+                    var rows = try XCTUnwrap(bank["variants"] as? [[String: Any]])
+                    var paint = try XCTUnwrap(rows[3]["appearance"] as? [String: Any])
+                    paint["backgroundDarkFillStyle"] = ["kind":"solid","color":color]
+                    rows[3]["appearance"] = paint; bank["variants"] = rows; profiles[0]["appearanceBank"] = bank; root["profiles"] = profiles
+                    let stateOnly = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(JSONSerialization.data(withJSONObject: root), operation, nowMillis: 12000))
+                    let corrected = try ThumbleOwnedOperationBridge.transform(stateOnly)
+                    XCTAssertTrue(corrected.changed)
+                    let correctedDocument = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: corrected.afterDocumentData)))
+                    let correctedProfile = correctedDocument.projectedProfiles[0]
+                    XCTAssertNil(correctedProfile.appearanceBank?.variants[3].appearance.applying(to: correctedProfile.customization).backgroundDarkFillStyle)
+                    var lightOperation = operation
+                    lightOperation["changes"] = ["backgroundEdit":["action":"set","scope":"light","color":color]]
+                    let lightRequest = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(try XCTUnwrap(Data(base64Encoded: response.afterDocumentData)), lightOperation, nowMillis: 13000))
+                    let lightResult = try ThumbleOwnedOperationBridge.transform(lightRequest)
+                    let lightDocument = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: lightResult.afterDocumentData)))
+                    let lightProfile = lightDocument.projectedProfiles[0]
+                    for row in try XCTUnwrap(lightProfile.appearanceBank).variants {
+                        let layout = row.appearance.applying(to: lightProfile.customization)
+                        guard case .solid = layout.keypadBackgroundFillStyle(scheme: .light), case .image(let dark) = layout.keypadBackgroundFillStyle(scheme: .dark) else { return XCTFail("Scheme color must preserve the opposite image") }
+                        XCTAssertEqual(dark.data, pixel)
+                    }
+                    var clearOperation = operation; clearOperation["changes"] = ["backgroundEdit":["action":"clear"]]
+                    let clearRequest = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(try XCTUnwrap(Data(base64Encoded: lightResult.afterDocumentData)), clearOperation, nowMillis: 14000))
+                    let cleared = try ThumbleOwnedOperationBridge.transform(clearRequest)
+                    let clearDocument = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: cleared.afterDocumentData)))
+                    let clearProfile = clearDocument.projectedProfiles[0]
+                    for row in try XCTUnwrap(clearProfile.appearanceBank).variants {
+                        let layout = row.appearance.applying(to: clearProfile.customization)
+                        XCTAssertNil(layout.backgroundFillStyle); XCTAssertNil(layout.backgroundLightFillStyle); XCTAssertNil(layout.backgroundDarkFillStyle)
+                        XCTAssertNil(layout.backgroundLightColor); XCTAssertNil(layout.backgroundDarkColor)
+                    }
+                }
+            }
+        }
+    }
+
     func testCustomCanvasTransactionPreservesOwnedControlsAndAppearance() throws {
         let source = try fixture("document")
         let before = try ThumbleOwnedConfigurationDocument(validating: source)

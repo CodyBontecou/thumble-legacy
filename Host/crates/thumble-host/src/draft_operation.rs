@@ -10,6 +10,12 @@ use thumble_core::{
 use thumble_protocol::KeypadElementID;
 use uuid::Uuid;
 
+#[path = "background_fill.rs"]
+mod background_fill;
+pub use background_fill::{
+    BackgroundFill, BackgroundImageFill, BackgroundImageKind, BackgroundImageMode,
+};
+
 const MAXIMUM_OPERATION_ID_BYTES: usize = 128;
 const MAXIMUM_ELEMENT_ID_BYTES: usize = 128;
 const MAXIMUM_PROFILE_NAME_CHARACTERS: usize = 256;
@@ -1109,6 +1115,10 @@ fn validate_style_number(
 pub enum ConfigurationBackgroundEdit {
     Keep,
     Clear,
+    Fill {
+        scope: ConfigurationBackgroundScope,
+        fill: Box<BackgroundFill>,
+    },
     Set {
         scope: ConfigurationBackgroundScope,
         color: ConfigurationRgbaColor,
@@ -1920,6 +1930,9 @@ impl ConfigurationOperation {
                 validate_profile_id(profile_id)?;
                 if changes.is_empty() {
                     return Err(ConfigurationOperationError::EmptyChanges);
+                }
+                if let ConfigurationBackgroundEdit::Fill { fill, .. } = &changes.background_edit {
+                    fill.validate()?;
                 }
                 if let ConfigurationBackgroundEdit::Set { color, .. } = changes.background_edit {
                     if !color.is_valid() {

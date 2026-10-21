@@ -51,7 +51,10 @@ fn rows<'a>(
     let mut result = BTreeMap::new();
     for (index, row) in variants.into_iter().enumerate() {
         let row = object(row.get().as_bytes())?;
-        let key = format!("{}/{}", row["colorScheme"].get(), row["actionSet"].get());
+        let scheme: String =
+            serde_json::from_str(row["colorScheme"].get()).map_err(|_| invalid())?;
+        let action: String = serde_json::from_str(row["actionSet"].get()).map_err(|_| invalid())?;
+        let key = format!("{scheme}/{action}");
         let appearance = object(row["appearance"].get().as_bytes())?;
         if result.insert(key, (index, appearance)).is_some() {
             return Err(invalid());
@@ -96,9 +99,12 @@ pub(super) fn merge(
         &cc,
     )?;
     match (
-        a.get("appearanceBank"),
-        b.get("appearanceBank"),
-        c.get("appearanceBank"),
+        a.get("appearanceBank")
+            .filter(|value| value.get() != "null"),
+        b.get("appearanceBank")
+            .filter(|value| value.get() != "null"),
+        c.get("appearanceBank")
+            .filter(|value| value.get() != "null"),
     ) {
         (Some(original), Some(old), Some(new)) => {
             let original = rows(original)?;
@@ -158,4 +164,100 @@ pub(super) fn merge(
         })
         .collect();
     source.with_edits(&patches).map_err(|_| invalid())
+}
+
+#[cfg(test)]
+mod preservation_tests {
+    use super::*;
+    fn documents(
+        kind: &str,
+    ) -> (
+        OwnedConfigurationDocument,
+        OwnedConfigurationDocument,
+        OwnedConfigurationDocument,
+        String,
+    ) {
+        let (request, response) = match kind {
+            "banked" => (
+                include_bytes!("../../../fixtures/style-library/v1/banked-request.json").as_slice(),
+                include_bytes!("../../../fixtures/style-library/v1/banked-response.json")
+                    .as_slice(),
+            ),
+            _ => (
+                include_bytes!("../../../fixtures/style-library/v1/plain-request.json").as_slice(),
+                include_bytes!("../../../fixtures/style-library/v1/plain-response.json").as_slice(),
+            ),
+        };
+        let request: Value = serde_json::from_slice(request).unwrap();
+        let response: Value = serde_json::from_slice(response).unwrap();
+        let decode = |value: &Value| {
+            OwnedConfigurationDocument::decode(&STANDARD.decode(value.as_str().unwrap()).unwrap())
+                .unwrap()
+        };
+        let id = request["operation"]["profileID"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        (
+            decode(&request["documentData"]),
+            decode(&response["beforeDocumentData"]),
+            decode(&response["afterDocumentData"]),
+            id,
+        )
+    }
+    #[test]
+    fn style_import_matches_decoded_state_labels_and_preserves_raw_spelling() {
+        let (source, before, after, id) = documents("banked");
+        let text = std::str::from_utf8(source.original_bytes()).unwrap();
+        let escaped = text
+            .replace(
+                "\"colorScheme\":\"light\"",
+                "\"colorScheme\":\"li\\u0067ht\"",
+            )
+            .replace(
+                "\"colorScheme\": \"light\"",
+                "\"colorScheme\": \"li\\u0067ht\"",
+            );
+        assert_ne!(escaped, text);
+        let source = OwnedConfigurationDocument::decode(escaped.as_bytes()).unwrap();
+        let expected = merge(
+            &OwnedConfigurationDocument::decode(text.as_bytes()).unwrap(),
+            &before,
+            &after,
+            &id,
+        )
+        .unwrap();
+        let actual = merge(&source, &before, &after, &id).unwrap();
+        assert_eq!(actual.profiles(), expected.profiles());
+        assert!(std::str::from_utf8(actual.original_bytes())
+            .unwrap()
+            .contains("li\\u0067ht"));
+    }
+    #[test]
+    fn style_import_accepts_a_null_bank_and_materializes_imported_states() {
+        let (source, before, after, id) = documents("plain");
+        let mut value: Value = serde_json::from_slice(source.original_bytes()).unwrap();
+        let index = value["profiles"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|p| {
+                p["id"]
+                    .as_str()
+                    .is_some_and(|actual| actual.eq_ignore_ascii_case(&id))
+            })
+            .unwrap();
+        value["profiles"][index]["appearanceBank"] = Value::Null;
+        let source =
+            OwnedConfigurationDocument::decode(&serde_json::to_vec(&value).unwrap()).unwrap();
+        let actual = merge(&source, &before, &after, &id).unwrap();
+        assert_eq!(
+            actual.profiles()[index].get("appearanceBank"),
+            after.profiles()[index].get("appearanceBank")
+        );
+        assert_eq!(
+            actual.profiles()[index]["customization"]["styleLibrary"],
+            after.profiles()[index]["customization"]["styleLibrary"]
+        );
+    }
 }

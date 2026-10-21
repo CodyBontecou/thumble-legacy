@@ -372,3 +372,14 @@ assert _customization_file["schema"] == "com.codybontecou.thumble.customization"
 assert len(_customization_file["appearanceBank"]["variants"]) == _customization_manifest["appearanceStates"] == 8
 assert _customization_manifest["automaticMigrationActivated"] is False
 print("Customization interchange fixtures verified: pooled graph and native legacy operation")
+
+rich = repo / "Host/fixtures/rich-background/v1"
+contract = json.loads((rich / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1 and contract["appearanceStates"] == 8 and contract["maximumImageBytes"] == 2500000
+for name, digest in contract["files"].items():
+    assert Path(name).name == name and hashlib.sha256((rich / name).read_bytes()).hexdigest() == digest
+for name, digest in contract["sources"].items():
+    assert not Path(name).is_absolute() and ".." not in Path(name).parts
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+assert json.loads((rich / "request.json").read_text())["operation"]["changes"]["backgroundEdit"]["fill"]["kind"] == "image"
+print("Native rich-background fixture verified; owned metadata/resource merge and eight-state paint remain scoped")

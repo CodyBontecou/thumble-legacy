@@ -129,12 +129,36 @@ final class ThumbleCLIProfileBackend {
         case dark
     }
 
+    enum BackgroundFill: Encodable, Equatable {
+        case paint(AuthorityFill)
+        case image(String, String?, GamepadImageContentMode)
+        init(_ fill: GamepadFillStyle) throws {
+            if case .image(let image) = fill {
+                guard let data = image.data, !data.isEmpty, data.count <= GamepadImageFill.maximumStoredBytes else { throw BackendError.encodingFailed }
+                self = .image(data.base64EncodedString(), image.fileName, image.contentMode)
+            } else { self = .paint(try AuthorityFill(fill)) }
+        }
+        private enum Key: String, CodingKey { case kind, dataBase64, fileName, contentMode }
+        func encode(to encoder: Encoder) throws {
+            switch self {
+            case .paint(let fill): try fill.encode(to: encoder)
+            case .image(let data, let name, let mode):
+                var fields = encoder.container(keyedBy: Key.self)
+                try fields.encode("image", forKey: .kind)
+                try fields.encode(data, forKey: .dataBase64)
+                try fields.encodeIfPresent(name, forKey: .fileName)
+                try fields.encode(mode, forKey: .contentMode)
+            }
+        }
+    }
+
     enum CustomizationBackgroundEdit: Encodable, Equatable {
         case keep
         case clear
         case set(CustomizationBackgroundScope, AuthorityColor)
+        case fill(CustomizationBackgroundScope, BackgroundFill)
 
-        private enum CodingKeys: String, CodingKey { case action, scope, color }
+        private enum CodingKeys: String, CodingKey { case action, scope, color, fill }
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
@@ -143,6 +167,10 @@ final class ThumbleCLIProfileBackend {
                 try container.encode("keep", forKey: .action)
             case .clear:
                 try container.encode("clear", forKey: .action)
+            case .fill(let scope, let fill):
+                try container.encode("fill", forKey: .action)
+                try container.encode(scope, forKey: .scope)
+                try container.encode(fill, forKey: .fill)
             case .set(let scope, let color):
                 try container.encode("set", forKey: .action)
                 try container.encode(scope, forKey: .scope)

@@ -2585,10 +2585,10 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
         CliProfileCommand::CustomizationSet {
             changes, frame_id, ..
         } => {
-            if changes.len() > 5 || (changes.is_empty() && frame_id.is_none()) {
+            if changes.len() > 14 || (changes.is_empty() && frame_id.is_none()) {
                 return Err(TransactionFailure::new(
                     "invalid_customization_changes",
-                    "customization request must contain one to five bounded changes",
+                    "customization request must contain one to fourteen bounded changes",
                 ));
             }
             if frame_id.as_deref().is_some_and(|frame_id| {

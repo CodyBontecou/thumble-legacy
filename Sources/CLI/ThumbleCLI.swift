@@ -3193,32 +3193,9 @@ struct ThumbleCLI {
     }
 
     private static func setCustomization(arguments: [String]) throws {
-        let richBackgroundOptions = [
-            "--background-gradient", "--bg-gradient", "--background-tile", "--bg-tile",
-            "--light-background-gradient", "--background-light-gradient",
-            "--dark-background-gradient", "--background-dark-gradient",
-            "--light-background-tile", "--background-light-tile",
-            "--dark-background-tile", "--background-dark-tile"
-        ]
-        let imageBackgroundOptions = [
-            "--background-image", "--bg-image", "--light-background-image",
-            "--background-light-image", "--dark-background-image", "--background-dark-image"
-        ]
         let deviceTarget = optionValue("--device", in: arguments)
             ?? optionValue("--frame", in: arguments)
             ?? optionValue("--canvas", in: arguments)
-        if hasAnyOption(richBackgroundOptions, in: arguments)
-            || hasAnyOption(imageBackgroundOptions, in: arguments)
-        {
-            try requireExplicitUnmigratedProfileAccess(
-                operation: "customization rich background or custom device",
-                artifactRequired: hasAnyOption(imageBackgroundOptions, in: arguments)
-            )
-            try setCustomizationUsingLegacyStore(arguments: arguments)
-            print("Updated customization.")
-            return
-        }
-
         var scalar = ThumbleCLIProfileBackend.CustomizationChanges()
         if let value = optionValue("--layout", in: arguments) {
             let parsed = try parseLayoutMode(value)
@@ -3269,6 +3246,28 @@ struct ThumbleCLI {
             )
             changes.append(background)
         }
+        for (scope, options, kind) in [
+            (ThumbleCLIProfileBackend.CustomizationBackgroundScope.all, ["--background-gradient", "--bg-gradient"], "gradient"),
+            (.all, ["--background-tile", "--bg-tile"], "tile"),
+            (.all, ["--background-image", "--bg-image"], "image"),
+            (.light, ["--light-background-gradient", "--background-light-gradient"], "gradient"),
+            (.dark, ["--dark-background-gradient", "--background-dark-gradient"], "gradient"),
+            (.light, ["--light-background-tile", "--background-light-tile"], "tile"),
+            (.dark, ["--dark-background-tile", "--background-dark-tile"], "tile"),
+            (.light, ["--light-background-image", "--background-light-image"], "image"),
+            (.dark, ["--dark-background-image", "--background-dark-image"], "image")
+        ] {
+            guard let value = options.compactMap({ optionValue($0, in: arguments) }).first else { continue }
+            let fill: GamepadFillStyle
+            switch kind {
+            case "gradient": fill = try parseGradientFill(value, arguments: arguments)
+            case "tile": fill = try parseTileFill(value, arguments: arguments)
+            default: fill = try parseImageFill(value, arguments: arguments)
+            }
+            var change = ThumbleCLIProfileBackend.CustomizationChanges()
+            change.backgroundEdit = .fill(scope, try .init(fill))
+            changes.append(change)
+        }
         if arguments.contains("--reset-background") {
             var clear = ThumbleCLIProfileBackend.CustomizationChanges()
             clear.backgroundEdit = .clear
@@ -3307,165 +3306,6 @@ struct ThumbleCLI {
         }
         print("Updated customization.")
         printProfileInvocation(response)
-    }
-
-    private static func setCustomizationUsingLegacyStore(arguments: [String]) throws {
-        try mutateCustomization(
-            profileTarget: optionValue("--profile", in: arguments),
-            variant: try customizationVariant(in: arguments)
-        ) { customization in
-            if let layout = optionValue("--layout", in: arguments) {
-                customization.layoutMode = try parseLayoutMode(layout)
-            }
-            if let scale = optionValue("--scale", in: arguments)
-                ?? optionValue("--control-scale", in: arguments)
-            {
-                customization.controlScale = try parseControlScale(scale)
-            }
-            if let appearance = optionValue("--appearance", in: arguments)
-                ?? optionValue("--color-scheme", in: arguments)
-                ?? optionValue("--scheme", in: arguments)
-            {
-                customization.colorSchemePreference = try parseColorSchemePreference(appearance)
-            }
-            if let device = optionValue("--device", in: arguments)
-                ?? optionValue("--frame", in: arguments)
-                ?? optionValue("--canvas", in: arguments)
-            {
-                let orientation = try (
-                    optionValue("--orientation", in: arguments)
-                        ?? optionValue("--device-orientation", in: arguments)
-                ).map(parseDeviceOrientation)
-                customization.deviceCanvas = GamepadDeviceCanvas(
-                    frameID: try resolveDeviceFrameTarget(
-                        device,
-                        arguments: arguments,
-                        preferredOrientation: orientation
-                    ).id
-                )
-            }
-            if let deviceSize = optionValue("--device-size", in: arguments)
-                ?? optionValue("--size", in: arguments)
-            {
-                let orientation = try (
-                    optionValue("--orientation", in: arguments)
-                        ?? optionValue("--device-orientation", in: arguments)
-                ).map(parseDeviceOrientation)
-                customization.deviceCanvas = GamepadDeviceCanvas(
-                    frameID: try resolveCustomDeviceFrame(
-                        sizeText: deviceSize,
-                        preferredOrientation: orientation
-                    ).id
-                )
-            }
-            if let background = optionValue("--background", in: arguments)
-                ?? optionValue("--bg", in: arguments)
-            {
-                setBackgroundFillColor(try parseRGBAColor(background), in: &customization)
-            }
-            if let light = optionValue("--light-background", in: arguments)
-                ?? optionValue("--background-light", in: arguments)
-            {
-                setBackgroundFillColor(
-                    try parseRGBAColor(light), isDark: false, in: &customization
-                )
-            }
-            if let dark = optionValue("--dark-background", in: arguments)
-                ?? optionValue("--background-dark", in: arguments)
-            {
-                setBackgroundFillColor(
-                    try parseRGBAColor(dark), isDark: true, in: &customization
-                )
-            }
-            if let value = optionValue("--background-gradient", in: arguments)
-                ?? optionValue("--bg-gradient", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseGradientFill(value, arguments: arguments), in: &customization
-                )
-            }
-            if let value = optionValue("--background-tile", in: arguments)
-                ?? optionValue("--bg-tile", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseTileFill(value, arguments: arguments), in: &customization
-                )
-            }
-            if let value = optionValue("--background-image", in: arguments)
-                ?? optionValue("--bg-image", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseImageFill(value, arguments: arguments), in: &customization
-                )
-            }
-            if let value = optionValue("--light-background-gradient", in: arguments)
-                ?? optionValue("--background-light-gradient", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseGradientFill(value, arguments: arguments),
-                    isDark: false,
-                    in: &customization
-                )
-            }
-            if let value = optionValue("--dark-background-gradient", in: arguments)
-                ?? optionValue("--background-dark-gradient", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseGradientFill(value, arguments: arguments),
-                    isDark: true,
-                    in: &customization
-                )
-            }
-            if let value = optionValue("--light-background-tile", in: arguments)
-                ?? optionValue("--background-light-tile", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseTileFill(value, arguments: arguments),
-                    isDark: false,
-                    in: &customization
-                )
-            }
-            if let value = optionValue("--dark-background-tile", in: arguments)
-                ?? optionValue("--background-dark-tile", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseTileFill(value, arguments: arguments),
-                    isDark: true,
-                    in: &customization
-                )
-            }
-            if let value = optionValue("--light-background-image", in: arguments)
-                ?? optionValue("--background-light-image", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseImageFill(value, arguments: arguments),
-                    isDark: false,
-                    in: &customization
-                )
-            }
-            if let value = optionValue("--dark-background-image", in: arguments)
-                ?? optionValue("--background-dark-image", in: arguments)
-            {
-                setBackgroundFillStyle(
-                    try parseImageFill(value, arguments: arguments),
-                    isDark: true,
-                    in: &customization
-                )
-            }
-            if arguments.contains("--reset-background") {
-                clearBackgroundFill(in: &customization)
-            }
-            if let accent = optionValue("--accent", in: arguments)
-                ?? optionValue("--color", in: arguments)
-            {
-                customization.accentStyle = try parseAccentStyle(accent)
-            }
-            if arguments.contains("--show-labels") { customization.showsButtonLabels = true }
-            if arguments.contains("--hide-labels") { customization.showsButtonLabels = false }
-            if let labels = optionValue("--labels", in: arguments) {
-                customization.showsButtonLabels = try parseBool(labels)
-            }
-        }
     }
 
     private static func orientation(arguments: [String]) throws {
@@ -6129,52 +5969,6 @@ struct ThumbleCLI {
         layout.fillStyle = nil
     }
 
-    private static func setBackgroundFillColor(_ color: GamepadRGBAColor, in customization: inout GamepadCustomization) {
-        customization.backgroundLightColor = color.normalized
-        customization.backgroundDarkColor = color.normalized
-        customization.backgroundFillStyle = nil
-        customization.backgroundLightFillStyle = nil
-        customization.backgroundDarkFillStyle = nil
-    }
-
-    private static func setBackgroundFillColor(_ color: GamepadRGBAColor, isDark: Bool, in customization: inout GamepadCustomization) {
-        customization.prepareSchemeSpecificBackgroundFillStorage()
-        if isDark {
-            customization.backgroundDarkColor = color.normalized
-            customization.backgroundDarkFillStyle = nil
-        } else {
-            customization.backgroundLightColor = color.normalized
-            customization.backgroundLightFillStyle = nil
-        }
-    }
-
-    private static func setBackgroundFillStyle(_ style: GamepadFillStyle, in customization: inout GamepadCustomization) {
-        customization.backgroundFillStyle = style.normalized
-        customization.backgroundLightColor = nil
-        customization.backgroundDarkColor = nil
-        customization.backgroundLightFillStyle = nil
-        customization.backgroundDarkFillStyle = nil
-    }
-
-    private static func setBackgroundFillStyle(_ style: GamepadFillStyle, isDark: Bool, in customization: inout GamepadCustomization) {
-        customization.prepareSchemeSpecificBackgroundFillStorage()
-        if isDark {
-            customization.backgroundDarkFillStyle = style.normalized
-            customization.backgroundDarkColor = nil
-        } else {
-            customization.backgroundLightFillStyle = style.normalized
-            customization.backgroundLightColor = nil
-        }
-    }
-
-    private static func clearBackgroundFill(in customization: inout GamepadCustomization) {
-        customization.backgroundLightColor = nil
-        customization.backgroundDarkColor = nil
-        customization.backgroundFillStyle = nil
-        customization.backgroundLightFillStyle = nil
-        customization.backgroundDarkFillStyle = nil
-    }
-
     // MARK: - Runtime commands
 
     private static func server(arguments: [String]) throws {
@@ -7444,7 +7238,7 @@ struct ThumbleCLI {
 
     private static func parseImageFill(_ path: String, arguments: [String]) throws -> GamepadFillStyle {
         let url = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath)
-        let data = try Data(contentsOf: url)
+        let data = try readBoundedResourceFile(url, maximumBytes: GamepadImageFill.maximumStoredBytes)
         guard data.count <= GamepadImageFill.maximumStoredBytes else {
             throw CLIError.message("Image fill must be under 2.5 MB")
         }

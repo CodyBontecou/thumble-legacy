@@ -59,6 +59,27 @@
             "color"
           ],
           "type": "object"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {
+              "const": "fill",
+              "type": "string"
+            },
+            "scope": {
+              "$ref": "#/$defs/ConfigurationBackgroundScopeInput"
+            },
+            "fill": {
+              "$ref": "#/$defs/BackgroundFillInput"
+            }
+          },
+          "required": [
+            "action",
+            "scope",
+            "fill"
+          ]
         }
       ]
     },
@@ -2327,6 +2348,54 @@
           "type": "string",
           "maxLength": 128,
           "pattern": "^custom-(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)x(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)-(landscape|portrait)$"
+        }
+      ]
+    },
+    "BackgroundImageFillInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "image"
+        },
+        "dataBase64": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 3333336,
+          "description": "Canonical Base64; 1...2,500,000 decoded bytes. No filesystem paths or URLs."
+        },
+        "fileName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 512,
+          "description": "Optional display basename, at most 512 UTF-8 bytes; no path separators or controls."
+        },
+        "contentMode": {
+          "type": "string",
+          "enum": [
+            "fill",
+            "fit",
+            "tile"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "dataBase64",
+        "contentMode"
+      ]
+    },
+    "BackgroundFillInput": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ElementFillInput"
+        },
+        {
+          "$ref": "#/$defs/BackgroundImageFillInput"
         }
       ]
     }

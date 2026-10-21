@@ -1,0 +1,20 @@
+{
+  "classicAndOwnedCLI": true,
+  "gradientTileAndImage": true,
+  "allEightStates": true,
+  "plainOwnedNullBankPreserved": true,
+  "decodedImagePixelsInAllEightPreviews": true,
+  "schemeScopedEdits": true,
+  "maximumImageBytes": 2500000,
+  "unreachableImagesPruned": true,
+  "solidAndResetClearSavedImageStates": true,
+  "preciseProfileAndBankRowMetadata": true,
+  "unrelatedControlsProfilesAndLaunchData": true,
+  "opaqueResourceRetained": true,
+  "helperFreeReplay": true,
+  "laterClockNoOp": true,
+  "regularFileGuards": true,
+  "localMCPPrivateDraftCommitReplay": true,
+  "maximumImageThroughMCP": true,
+  "automaticMigrationActivated": false
+}

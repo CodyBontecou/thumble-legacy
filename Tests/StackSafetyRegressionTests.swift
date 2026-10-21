@@ -17,6 +17,28 @@ final class StackSafetyRegressionTests: XCTestCase {
         case generationPlanDecodeMismatch
     }
 
+    func testMaximumRichBackgroundAcrossEightStatesRunsOn512KiBStack() throws {
+        assertInlineSize(ThumbleBridgeBackgroundFill?.self, atMost: 8)
+        try runOnThread(stackSize: 512 * 1024, timeout: 60) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let source = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))
+            let document = try ThumbleOwnedConfigurationDocument(validating: source)
+            let id = document.projectedProfiles[0].id.uuidString
+            let image = Data(repeating: 42, count: GamepadImageFill.maximumStoredBytes)
+            let operation: [String: Any] = ["type":"customization.set", "profileID":id, "variant":"primary",
+                "changes":["backgroundEdit":["action":"fill","scope":"all","fill":["kind":"image","dataBase64":image.base64EncodedString(),"contentMode":"fit"]]]]
+            let input: [String: Any] = ["schemaVersion":1,"invocationID":UUID().uuidString,"ownedConfigurationCommand":"apply","documentData":source.base64EncodedString(),"operation":operation,"nowMillis":2000]
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: input))
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            let result = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            let profile = result.projectedProfiles[0]
+            guard response.changed, let bank = profile.appearanceBank, bank.variants.count == 8 else { throw StackTestError.unexpectedDecodedState }
+            for variant in bank.variants {
+                guard case .image(let value)? = variant.appearance.applying(to: profile.customization).backgroundFillStyle, value.data == image else { throw StackTestError.unexpectedDecodedState }
+            }
+        }
+    }
+
     func testOwnedCustomCanvasWithPooledArtworkRunsOn512KiBStack() throws {
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {
             let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()

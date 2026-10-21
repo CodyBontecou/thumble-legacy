@@ -1,0 +1,9 @@
+thumble-mcp starting transport=stdio input=disabled config-write=enabled
+thumble-mcp tool=begin_configuration_draft outcome=started
+thumble-mcp tool=begin_configuration_draft outcome=succeeded
+thumble-mcp tool=edit_configuration_draft outcome=started
+thumble-mcp tool=edit_configuration_draft outcome=succeeded
+thumble-mcp tool=save_configuration_draft outcome=started
+thumble-mcp tool=save_configuration_draft outcome=succeeded
+thumble-mcp tool=save_configuration_draft outcome=started
+thumble-mcp tool=save_configuration_draft outcome=succeeded

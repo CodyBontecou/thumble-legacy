@@ -1,0 +1,14 @@
+{
+  "fixtureVersion": 1,
+  "appearanceStates": 8,
+  "maximumImageBytes": 2500000,
+  "files": {
+    "request.json": "141f2cb1257a71cfe50916c843baef70211b1e645a802b1b8abd6a7062cbe2d3",
+    "response.json": "5782782e3eea62f55c2d90e395b21c457732eed218b3c1cc5d5a54d705a91082"
+  },
+  "sources": {
+    "Tests/OwnedConfigurationDocumentTests.swift": "9e9f1ef913819dccf822585222ccd43aef51fda64bc3f91eaa5a2e5300334b88",
+    "Host/crates/thumble-host/tests/owned_background_fill.rs": "9d90d1b5f16ee7521afa72547c52d866c7f2c5c091879878d94cf81f7299707c"
+  },
+  "automaticMigrationActivated": false
+}

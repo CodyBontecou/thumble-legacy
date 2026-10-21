@@ -420,6 +420,7 @@ public enum ThumbleOwnedOperationBridge {
                 profile.landscapeCustomization = nil; profile.portraitCustomization = nil
                 profile.orientationPreference = .landscape
                 try reconcileBank(&profile, operation: operation)
+                try applyBackgroundToBank(&profile, operation: operation)
                 result.append(profile)
             }
             root["activeProfileID"] = document.activeProfileID
@@ -431,6 +432,25 @@ public enum ThumbleOwnedOperationBridge {
             root["profileKeyBindings"] = try JSONSerialization.jsonObject(with: encoder.encode(document.profileKeyBindings))
             root["profileOutputBindings"] = try JSONSerialization.jsonObject(with: encoder.encode(document.profileOutputBindings))
             after = try projection(result)
+        }
+        private func applyBackgroundToBank(_ profile: inout GamepadConfigurationProfile, operation: ThumbleBridgeJSONValue) throws {
+            guard case .object(let fields) = operation, fields["type"] == .string("customization.set"),
+                  case .string(let id)? = fields["profileID"], id.caseInsensitiveCompare(profile.id.uuidString) == .orderedSame,
+                  let bank = profile.appearanceBank else { return }
+            let decoded = try JSONDecoder().decodeUnique(ThumbleBridgeOperation.self, from: encoder.encode(operation))
+            guard case .customizationSet(_, _, let changes) = decoded else { return }
+            if case .keep = changes.backgroundEdit { return }
+            let replacement = try GamepadAppearanceBank(variants: bank.variants.map { variant in
+                var layout = variant.appearance.applying(to: profile.customization)
+                try ThumbleConfigurationBridge.applyBackgroundEdit(changes.backgroundEdit, to: &layout)
+                return .init(colorScheme: variant.colorScheme, actionSet: variant.actionSet, appearance: GamepadAppearanceSnapshot(layout))
+            })
+            if replacement != bank {
+                profile.appearanceBank = replacement
+                profile.updatedAt = request.nowMillis
+                let path = "/profiles/" + profile.id.uuidString
+                if !paths.contains(path) { paths.append(path) }
+            }
         }
         private func reconcileBank(_ profile: inout GamepadConfigurationProfile, operation: ThumbleBridgeJSONValue) throws {
             guard let bank = profile.appearanceBank else { return }

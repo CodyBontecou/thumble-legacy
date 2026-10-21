@@ -225,6 +225,8 @@ On macOS, the virtual controller is created with `IOHIDUserDevice` and requires 
 
 ## Keypad customization
 
+Gradient, tile and image background commands also work through local CLI/MCP authority without desktop persistence. Image reads are bounded; edits and background resets cover all eight saved appearance states while preserving the opposite scheme for scoped edits. See [rich backgrounds](docs/local-rich-backgrounds.md).
+
 Local agents can inspect and transfer reusable layouts with `thumble customization show`, `thumble customization export -o appearance.json`, and `thumble customization import appearance.json --profile PROFILE`. These commands use local authority transactions without opening the desktop GUI and preserve profile-owned artwork, styles, feedback settings and saved appearance states. See [customization interchange](docs/customization-interchange.md) for replacement scope and legacy compatibility.
 
 Customize keypad setups from the macOS helper's **Keypad** section or with the CLI. The iOS app receives the Mac's saved setups during pairing, can switch between them from the in-controller **Keypad setup** menu, and can mark the current setup as the default. The macOS helper can also mark any setup as default from the Keypad editor. To create a JSON backup on Mac, use the **Export** menu above the setup list and choose **Export Current Setup…** or **Export All Setups…**. Restore a full backup, individual profile, generated profile, or raw customization from the adjacent **Import** menu; imports can replace matching setups or create new copies. On iPhone, open the in-controller **Keypad setup** menu and choose **Export Keypads as JSON** to save the synced setups locally with Files.

@@ -222,7 +222,7 @@ for command in ("styleList", "styleShow", "styleCreate", "styleRename", "styleAp
 
 customization_set_block = SOURCE.read_text(encoding="utf-8").split(
     "private static func setCustomization(", 1
-)[1].split("private static func setCustomizationUsingLegacyStore", 1)[0]
+)[1].split("private static func orientation(arguments:", 1)[0]
 for forbidden in ("loadStore(", "persistStore(", "mutateCustomization("):
     if forbidden in customization_set_block:
         print(f"Safe customization routing still uses {forbidden}", file=sys.stderr)

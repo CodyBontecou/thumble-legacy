@@ -3010,10 +3010,64 @@ impl From<StyleAppearanceInput> for StyleAppearance {
 }
 
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "lowercase")]
+pub enum BackgroundImageKindInput {
+    Image,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "lowercase")]
+pub enum BackgroundImageModeInput {
+    Fill,
+    Fit,
+    Tile,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct BackgroundImageFillInput {
+    pub kind: BackgroundImageKindInput,
+    /// Canonical Base64 for one nonempty image, at most 2,500,000 decoded bytes.
+    #[schemars(length(min = 4, max = 3_333_336))]
+    pub data_base64: String,
+    #[schemars(length(min = 1, max = 512))]
+    pub file_name: Option<String>,
+    pub content_mode: BackgroundImageModeInput,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(untagged)]
+pub enum BackgroundFillInput {
+    Paint(ElementFillInput),
+    Image(BackgroundImageFillInput),
+}
+impl From<BackgroundFillInput> for thumble_host::draft_operation::BackgroundFill {
+    fn from(input: BackgroundFillInput) -> Self {
+        use thumble_host::draft_operation::{
+            BackgroundImageFill, BackgroundImageKind, BackgroundImageMode,
+        };
+        match input {
+            BackgroundFillInput::Paint(fill) => Self::Paint(fill.into()),
+            BackgroundFillInput::Image(image) => Self::Image(BackgroundImageFill {
+                kind: BackgroundImageKind::Image,
+                data_base64: image.data_base64,
+                file_name: image.file_name,
+                content_mode: match image.content_mode {
+                    BackgroundImageModeInput::Fill => BackgroundImageMode::Fill,
+                    BackgroundImageModeInput::Fit => BackgroundImageMode::Fit,
+                    BackgroundImageModeInput::Tile => BackgroundImageMode::Tile,
+                },
+            }),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(tag = "action", rename_all = "lowercase", deny_unknown_fields)]
 pub enum ConfigurationBackgroundEditInput {
     Keep,
     Clear,
+    Fill {
+        scope: ConfigurationBackgroundScopeInput,
+        fill: Box<BackgroundFillInput>,
+    },
     Set {
         scope: ConfigurationBackgroundScopeInput,
         color: ConfigurationRgbaColorInput,
@@ -3025,6 +3079,10 @@ impl From<ConfigurationBackgroundEditInput> for ConfigurationBackgroundEdit {
         match value {
             ConfigurationBackgroundEditInput::Keep => Self::Keep,
             ConfigurationBackgroundEditInput::Clear => Self::Clear,
+            ConfigurationBackgroundEditInput::Fill { scope, fill } => Self::Fill {
+                scope: scope.into(),
+                fill: Box::new((*fill).into()),
+            },
             ConfigurationBackgroundEditInput::Set { scope, color } => Self::Set {
                 scope: scope.into(),
                 color: color.into(),

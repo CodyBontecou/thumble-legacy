@@ -23,20 +23,44 @@ fn decode_stdio_request(data: &[u8]) -> Result<RxJsonRpcMessage<RoleServer>, &'s
     }
     let value: serde_json::Value =
         thumble_protocol::decode_unique_json(data).map_err(|_| "ambiguous or invalid request")?;
+    let tool = value
+        .pointer("/params/name")
+        .and_then(serde_json::Value::as_str);
+    let arguments = value.pointer("/params/arguments");
     let bounded_source_tool = value.get("method").and_then(serde_json::Value::as_str)
         == Some("tools/call")
-        && value
-            .get("params")
-            .and_then(|params| params.get("name"))
-            .and_then(serde_json::Value::as_str)
-            .is_some_and(|name| {
-                matches!(
-                    name,
-                    "update_controller_design"
-                        | "import_profiles"
-                        | "prepare_legacy_profile_import"
-                )
-            });
+        && match tool {
+            Some(
+                "update_controller_design"
+                | "import_profiles"
+                | "prepare_legacy_profile_import"
+                | "import_customization"
+                | "import_style_library",
+            ) => true,
+            Some("edit_profile_asset") => {
+                arguments
+                    .and_then(|v| v.pointer("/edit/action"))
+                    .and_then(serde_json::Value::as_str)
+                    == Some("import")
+            }
+            Some("edit_configuration_draft") => arguments
+                .and_then(|v| v.get("operation"))
+                .is_some_and(|operation| {
+                    operation["type"] == "customization.set"
+                        && operation
+                            .pointer("/changes/backgroundEdit/action")
+                            .and_then(serde_json::Value::as_str)
+                            == Some("fill")
+                        && operation
+                            .pointer("/changes/backgroundEdit/fill/kind")
+                            .and_then(serde_json::Value::as_str)
+                            == Some("image")
+                        && operation
+                            .pointer("/changes/backgroundEdit/fill/dataBase64")
+                            .is_some_and(serde_json::Value::is_string)
+                }),
+            _ => false,
+        };
     if data.len() > MAXIMUM_ORDINARY_MCP_REQUEST_BYTES && !bounded_source_tool {
         return Err("oversized ordinary request");
     }
@@ -150,6 +174,8 @@ mod stdio_request_tests {
             "update_controller_design",
             "import_profiles",
             "prepare_legacy_profile_import",
+            "import_customization",
+            "import_style_library",
         ] {
             request["params"]["name"] = json!(name);
             assert!(decode_stdio_request(&serde_json::to_vec(&request).unwrap()).is_ok());
@@ -159,6 +185,41 @@ mod stdio_request_tests {
             decode_stdio_request(&serde_json::to_vec(&request).unwrap()).unwrap_err(),
             "oversized ordinary request"
         );
+    }
+
+    #[test]
+    fn large_image_admission_is_scoped_to_data_bearing_edits() {
+        let data = "A".repeat((MAXIMUM_ORDINARY_MCP_REQUEST_BYTES / 4 + 1) * 4);
+        let mut request = json!({"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"edit_configuration_draft","arguments":{
+            "draftId":"aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeeee","expectedDraftRevision":1,"operationId":"aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeeee",
+            "operation":{"type":"customization.set","profileID":"aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeeee","variant":"landscape","changes":{"backgroundEdit":{"action":"fill","scope":"all","fill":{"kind":"image","dataBase64":data,"contentMode":"fit"}}}}
+        }}});
+        assert!(decode_stdio_request(&serde_json::to_vec(&request).unwrap()).is_ok());
+        for action in ["keep", "clear", "set"] {
+            request["params"]["arguments"]["operation"]["changes"]["backgroundEdit"]["action"] =
+                action.into();
+            assert_eq!(
+                decode_stdio_request(&serde_json::to_vec(&request).unwrap()).unwrap_err(),
+                "oversized ordinary request"
+            );
+        }
+        request["params"]["arguments"]["operation"]["changes"]["backgroundEdit"]["action"] =
+            "fill".into();
+        request["params"]["arguments"]["operation"]["type"] = "element.set".into();
+        assert_eq!(
+            decode_stdio_request(&serde_json::to_vec(&request).unwrap()).unwrap_err(),
+            "oversized ordinary request"
+        );
+        request["params"]["name"] = "edit_profile_asset".into();
+        request["params"]["arguments"] = json!({"edit":{"action":"import","dataBase64":data}});
+        assert!(decode_stdio_request(&serde_json::to_vec(&request).unwrap()).is_ok());
+        for action in ["set", "remove"] {
+            request["params"]["arguments"]["edit"]["action"] = action.into();
+            assert_eq!(
+                decode_stdio_request(&serde_json::to_vec(&request).unwrap()).unwrap_err(),
+                "oversized ordinary request"
+            );
+        }
     }
 
     #[test]

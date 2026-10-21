@@ -1,0 +1,22 @@
+{
+  "Host/crates/thumble-host/src/draft_operation.rs": "adefdd5fdfb5962e50d684ee347320d51227d53e840b455e16132d04942ee984",
+  "Host/crates/thumble-host/src/bridge.rs": "ea348c34725338e22fe6a3e5970115e901014d1e8700c7ce64e8e6be8dfaf89f",
+  "Host/crates/thumble-host/src/cli_profile.rs": "6d3c50c9fef773c6b4d5ff452bab6bbf19847fb0f5053b814d3af37deb010028",
+  "Host/crates/thumble-host/src/owned_operation_bridge.rs": "98b489d14af7b99cb3ce8a173326dfe0ba705470a3e4db87136853982a74be17",
+  "Host/crates/thumble-mcp/src/server.rs": "730db08b9db0cb611a88e3461b4d2a9c88622d4f5ed5a0a2bede0dcb31e89472",
+  "Host/crates/thumble-mcp/src/main.rs": "95d698c42c81043e362fabb5b78332d5757ee4c278555de5d9a872ca7a6087ef",
+  "Sources/CLI/ThumbleCLI.swift": "94ce720c4d5477a35623004b706d9b68d7e2833523b1f4d9680214da7deb66c1",
+  "Sources/CLI/ThumbleCLIBackend.swift": "eebfa9d7cda6a00353039a31090fc0aba8825d2a669fbd57240d7980f00796de",
+  "Sources/Shared/ThumbleConfigurationBridge.swift": "c340b4ec78dc312745fdb2116c0a78bc854901ecdabae7a116f77fffddbcf921",
+  "Sources/Shared/OwnedConfigurationDocument.swift": "741e1221fb704d40957446eb91f68d66b93648f9060c371b07dbde2c4b4c855e",
+  "Tests/OwnedConfigurationDocumentTests.swift": "9e9f1ef913819dccf822585222ccd43aef51fda64bc3f91eaa5a2e5300334b88",
+  "Tests/StackSafetyRegressionTests.swift": "5623dce92df34729abd87608dcf8365deabaeabeb979d0ab67b6b837c0857309",
+  "scripts/verify-cli-profile-persistence-allowlist.py": "d819959988a087c050e97772b48f3687f942f55ceed353a7a0d1765087ef3c76",
+  "scripts/verify-feature-removal-fixtures.py": "ff950a3c6ce6ca49945c23e04de9f5306eaa4c840d2c3d7b264ba7e0f5373e4a",
+  "scripts/check-controller-stack-frames.py": "3012aec0036defa411630d63cefbd0484e665e9760b49dd2347212acc9c0c64c",
+  "Host/crates/thumble-host/src/owned_style_import.rs": "60d3b57b003af82c7a425907e03767e91c7bf58d8a8be75757031ae38da40726",
+  "Host/crates/thumble-host/src/background_fill.rs": "c58ef8cee3920b858a4d8d9e1813c11e97c168cbf11909ee5026738b8a80b1e1",
+  "Host/crates/thumble-host/src/owned_background_fill.rs": "ceff7a306e7bc1720174aad648f104ad35acc2e02b151a42dca840091b01d979",
+  "Host/crates/thumble-host/tests/owned_background_fill.rs": "9d90d1b5f16ee7521afa72547c52d866c7f2c5c091879878d94cf81f7299707c",
+  "scripts/verify-rich-backgrounds.py": "511b0232b0a0c6d490126b5cb4cb1f20596d6dbf5894e94dd62640938e6ffbe7"
+}

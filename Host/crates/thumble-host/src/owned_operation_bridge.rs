@@ -9,6 +9,8 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use thumble_core::{ConfigurationDocument, OwnedConfigurationDocument, ProfileAppearanceBank};
 use uuid::Uuid;
+#[path = "owned_background_fill.rs"]
+mod background_fill;
 #[path = "owned_style_import.rs"]
 mod style_import;
 const MAXIMUM: usize = 8 * 1024 * 1024;
@@ -90,7 +92,24 @@ impl ConfigurationBridge {
         {
             return Err(Error::InvalidResponse);
         }
-        let merged = if let ConfigurationOperation::StyleImport { profile_id, .. } = &canonical {
+        let merged = if let ConfigurationOperation::CustomizationSet {
+            profile_id,
+            changes,
+            ..
+        } = &canonical
+        {
+            if !matches!(
+                changes.background_edit,
+                crate::draft_operation::ConfigurationBackgroundEdit::Keep
+            ) && response.changed
+            {
+                background_fill::merge(source, &before, &after, profile_id)?
+            } else {
+                source
+                    .with_projected_changes(&before, &after)
+                    .map_err(|_| Error::InvalidResponse)?
+            }
+        } else if let ConfigurationOperation::StyleImport { profile_id, .. } = &canonical {
             if response.changed {
                 style_import::merge(source, &before, &after, profile_id)?
             } else {
@@ -253,6 +272,47 @@ fn banks_preserved(
                     return false;
                 }
                 continue;
+            }
+        }
+        if let ConfigurationOperation::CustomizationSet {
+            profile_id,
+            changes,
+            ..
+        } = operation
+        {
+            if profile["id"]
+                .as_str()
+                .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
+                && !matches!(
+                    changes.background_edit,
+                    crate::draft_operation::ConfigurationBackgroundEdit::Keep
+                )
+            {
+                match (profile.get("appearanceBank"), next.get("appearanceBank")) {
+                    (None, None) => continue,
+                    (Some(bank), Some(actual)) => {
+                        let mut expected = bank.clone();
+                        let Some(rows) = expected["variants"].as_array_mut() else {
+                            return false;
+                        };
+
+                        for row in rows {
+                            let Some(surface) = row["appearance"].as_object_mut() else {
+                                return false;
+                            };
+                            super::apply_background_edit_fields(
+                                surface,
+                                &changes.background_edit,
+                                next.get("appearanceResources").is_some(),
+                            );
+                        }
+                        if !super::json_semantically_equal(&expected, actual) {
+                            return false;
+                        }
+                        continue;
+                    }
+                    _ => return false,
+                }
             }
         }
         if profile.get("appearanceBank") == next.get("appearanceBank") {

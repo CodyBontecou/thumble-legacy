@@ -575,6 +575,15 @@ fn validate_operation_bounds(
         serde_json::to_value(operation).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
     let encoded =
         serde_json::to_vec(&value).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
+    if matches!(operation, ConfigurationOperation::CustomizationSet { changes, .. } if matches!(changes.background_edit, crate::draft_operation::ConfigurationBackgroundEdit::Fill { .. }))
+    {
+        return if encoded.len() <= MAXIMUM_BRIDGE_BYTES && operation.validate_bridge_input().is_ok()
+        {
+            Ok(())
+        } else {
+            Err(ConfigurationBridgeError::OperationTooLarge)
+        };
+    }
     if matches!(
         operation,
         ConfigurationOperation::DesignApply { .. }
@@ -3236,6 +3245,125 @@ fn normalized_element_fill_value(fill: &crate::draft_operation::ElementFill) -> 
     }
 }
 
+fn apply_background_edit_fields(
+    surface: &mut Map<String, Value>,
+    edit: &crate::draft_operation::ConfigurationBackgroundEdit,
+    pooled: bool,
+) {
+    use crate::draft_operation::{ConfigurationBackgroundEdit, ConfigurationBackgroundScope};
+    match edit {
+        ConfigurationBackgroundEdit::Keep => {}
+        ConfigurationBackgroundEdit::Clear => {
+            for key in [
+                "backgroundFillStyle",
+                "backgroundLightFillStyle",
+                "backgroundDarkFillStyle",
+                "backgroundLightColor",
+                "backgroundDarkColor",
+            ] {
+                surface.remove(key);
+            }
+        }
+        ConfigurationBackgroundEdit::Fill { scope, fill } => apply_background_fill_fields(
+            surface,
+            *scope,
+            normalized_background_fill_value(fill, pooled),
+        ),
+        ConfigurationBackgroundEdit::Set { scope, color } => {
+            let color = serde_json::to_value(color).expect("validated finite background color");
+            match scope {
+                ConfigurationBackgroundScope::All => {
+                    surface.insert("backgroundLightColor".into(), color.clone());
+                    surface.insert("backgroundDarkColor".into(), color);
+                    for key in [
+                        "backgroundFillStyle",
+                        "backgroundLightFillStyle",
+                        "backgroundDarkFillStyle",
+                    ] {
+                        surface.remove(key);
+                    }
+                }
+                ConfigurationBackgroundScope::Light | ConfigurationBackgroundScope::Dark => {
+                    if let Some(global) = surface.remove("backgroundFillStyle") {
+                        surface
+                            .entry("backgroundLightFillStyle")
+                            .or_insert(global.clone());
+                        surface.entry("backgroundDarkFillStyle").or_insert(global);
+                    }
+                    let (key, fill) = if matches!(scope, ConfigurationBackgroundScope::Dark) {
+                        ("backgroundDarkColor", "backgroundDarkFillStyle")
+                    } else {
+                        ("backgroundLightColor", "backgroundLightFillStyle")
+                    };
+                    surface.insert(key.into(), color);
+                    surface.remove(fill);
+                }
+            }
+        }
+    }
+}
+
+fn apply_background_fill_fields(
+    surface: &mut Map<String, Value>,
+    scope: crate::draft_operation::ConfigurationBackgroundScope,
+    fill: Value,
+) {
+    use crate::draft_operation::ConfigurationBackgroundScope;
+    match scope {
+        ConfigurationBackgroundScope::All => {
+            surface.insert("backgroundFillStyle".into(), fill);
+            for name in [
+                "backgroundLightColor",
+                "backgroundDarkColor",
+                "backgroundLightFillStyle",
+                "backgroundDarkFillStyle",
+            ] {
+                surface.remove(name);
+            }
+        }
+        ConfigurationBackgroundScope::Light | ConfigurationBackgroundScope::Dark => {
+            if let Some(global) = surface.remove("backgroundFillStyle") {
+                surface
+                    .entry("backgroundLightFillStyle")
+                    .or_insert(global.clone());
+                surface.entry("backgroundDarkFillStyle").or_insert(global);
+            }
+            let (style, color) = if matches!(scope, ConfigurationBackgroundScope::Dark) {
+                ("backgroundDarkFillStyle", "backgroundDarkColor")
+            } else {
+                ("backgroundLightFillStyle", "backgroundLightColor")
+            };
+            surface.insert(style.into(), fill);
+            surface.remove(color);
+        }
+    }
+}
+
+fn normalized_background_fill_value(
+    fill: &crate::draft_operation::BackgroundFill,
+    pooled: bool,
+) -> Value {
+    use crate::draft_operation::BackgroundFill;
+    use sha2::{Digest, Sha256};
+    match fill {
+        BackgroundFill::Paint(fill) => normalized_element_fill_value(fill),
+        BackgroundFill::Image(image) => {
+            let data = if pooled {
+                let bytes = STANDARD.decode(&image.data_base64).unwrap_or_default();
+                serde_json::json!({"resourceSHA256": format!("{:x}", Sha256::digest(bytes))})
+            } else {
+                Value::String(image.data_base64.clone())
+            };
+            let mut value = serde_json::json!({"kind":"image", "image":{"data":data,"contentMode":image.content_mode,
+                "opacity":1,"exposure":0,"contrast":0,"saturation":0,"temperature":0,"tint":0,"highlights":0,"shadows":0}});
+            if let Some(name) = &image.file_name {
+                value["image"]["fileName"] = Value::String(name.clone());
+            }
+            value
+        }
+    }
+}
+
 fn set_global_control_bar_fill(
     layout: &mut Map<String, Value>,
     fill: &crate::draft_operation::ElementFill,
@@ -4375,8 +4503,7 @@ fn constrained_customization_operation_delta(
     operation: &ConfigurationOperation,
 ) -> bool {
     use crate::draft_operation::{
-        ConfigurationBackgroundEdit, ConfigurationBackgroundScope, ConfigurationVariant,
-        ControlBarMoveDirection, LayerMoveDestination,
+        ConfigurationVariant, ControlBarMoveDirection, LayerMoveDestination,
     };
 
     let (profile_id, variant) = match operation {
@@ -4502,42 +4629,14 @@ fn constrained_customization_operation_delta(
             if let Some(value) = changes.shows_button_labels {
                 expected.insert("showsButtonLabels".to_owned(), Value::Bool(value));
             }
-            match &changes.background_edit {
-                ConfigurationBackgroundEdit::Keep => {}
-                ConfigurationBackgroundEdit::Clear => {
-                    for key in [
-                        "backgroundLightColor",
-                        "backgroundDarkColor",
-                        "backgroundFillStyle",
-                        "backgroundLightFillStyle",
-                        "backgroundDarkFillStyle",
-                    ] {
-                        expected.remove(key);
-                    }
-                }
-                ConfigurationBackgroundEdit::Set { scope, color } => {
-                    let Ok(color) = serde_json::to_value(color) else {
-                        return false;
-                    };
-                    match scope {
-                        ConfigurationBackgroundScope::All => {
-                            expected.insert("backgroundLightColor".to_owned(), color.clone());
-                            expected.insert("backgroundDarkColor".to_owned(), color);
-                            expected.remove("backgroundFillStyle");
-                            expected.remove("backgroundLightFillStyle");
-                            expected.remove("backgroundDarkFillStyle");
-                        }
-                        ConfigurationBackgroundScope::Light => {
-                            expected.insert("backgroundLightColor".to_owned(), color);
-                            expected.remove("backgroundLightFillStyle");
-                        }
-                        ConfigurationBackgroundScope::Dark => {
-                            expected.insert("backgroundDarkColor".to_owned(), color);
-                            expected.remove("backgroundDarkFillStyle");
-                        }
-                    }
-                }
-            }
+            let pooled = [
+                "backgroundFillStyle",
+                "backgroundLightFillStyle",
+                "backgroundDarkFillStyle",
+            ]
+            .iter()
+            .any(|key| after_profile["customization"][key]["image"]["data"].is_object());
+            apply_background_edit_fields(&mut expected, &changes.background_edit, pooled);
         }
         ConfigurationOperation::DeviceSet { frame_id, .. } => {
             if let Some(canvas) = expected

@@ -1,0 +1,22 @@
+{
+  "nativeCLI": {
+    "build": "Debug",
+    "sha256": "bf9f79b683b9ee22b9ffc80a467f840b21f69fd0a37c9c8d299d9ae75ef1fbb1"
+  },
+  "nativeHelper": {
+    "build": "Release",
+    "sha256": "739d0201b474307c9cf5e7434317be20c23e09471d148d2a24f53eaad34de7f6"
+  },
+  "thumble-host": {
+    "build": "Release",
+    "sha256": "09d595f2f7bdfcb15ce94d04bbb9f91dc6de1bcccdc71791eaeab228fd2e9edf"
+  },
+  "thumble-cli-bridge": {
+    "build": "Release",
+    "sha256": "96c3b759b3896d951378403ae2b17c8a410ec95d2a1d9663941910557c313c37"
+  },
+  "thumble-mcp": {
+    "build": "Release",
+    "sha256": "6f1f53a510b49528359f67ec9d62af96b150593bb95428036880ab0d9e954099"
+  }
+}
