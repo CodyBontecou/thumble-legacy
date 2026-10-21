@@ -1,0 +1,13 @@
+# Owned CLI/MCP portable interchange
+
+Explicit schema-4 authorities now export/import owned artifacts through the native CLI and dedicated MCP `export_profiles`/`import_profiles` tools. This batch retains the version-4 path for legacy authorities and refuses implicit initialization/conversion. Native response checks allow the exact-byte checksum only for portable artifact responses. MCP import requires both the tool write gate and the receiver's configuration-write authorization.
+
+Import plans preserve raw nested profile/binding data, geometry, all eight paint states and validated resource tables. UUID/name matching preserves destination identity and local launch associations; append-as-copies derives IDs from the invocation and assigns unique names. Selected/default identities and binding aliases are remapped. A shared internal descriptor adapter gives imports the existing owned-draft replay rules. The commit includes that needed adapter, excluding an unrelated concurrent adapter regression from the working tree.
+
+Safe root extensions persist in a raw `ownedConfigurationExtensions` sidecar. Extraction refuses envelope/known-field collisions, and candidate/credential checks run before saving a draft. Exact integers and long decimal spellings survive commits, restart, later edits and exports. Other authority/trust fields remain byte-preserved.
+
+The isolated complete Rust gate passed 591 tests (7 new host cases and 1 new MCP gate case), with 3 existing ignored cases. Strict lints, CLI/MCP parity and the exact curated tool inventory passed. The native stack gate passed 41 tests plus macOS/iOS Debug builds. All 38 existing backend XTests and the new Swift Testing response case passed, followed by a native CLI build. Apple-source hashes cover the 131 source/project files compiled, with concurrent checkout changes excluded.
+
+The final snapshotted binaries passed the real temporary-home process flow: online/offline edits, native geometry/haptics, restart replay, exact design capture, all element commands, native artifact export, deterministic copy import/replay, paint/resource preservation, invalid-hash refusal without mutation, and MCP export/import/replay at revision 64. No desktop GUI was installed or used in that flow. Source/log/binary hashes identify the final tested inputs. Mixed MCP/owned-draft files are staged from the isolated source; concurrent WoW tools and their test changes remain in the working checkout.
+
+This proves explicit local owned-authority interchange, not automatic migration, paired format-5 transfer, physical haptics/latency or full desktop retirement. Legacy conversion, phone reconciliation, file-backed artwork workflows and remaining runtime/UI removal still require work.

@@ -42,3 +42,5 @@ Native element set/nudge/delete/reset now use typed live/offline authority trans
 Element creation/duplication/alignment/distribution have now joined the typed authority path. All eight primary element-edit handlers avoid legacy persistence, with stable retry IDs and source-preserving paint reconciliation. File-backed artwork workflows, owned portable interchange, phone reconciliation and migration activation still gate retirement.
 
 The pure owned-profile artifact codec now preserves exact version-5 data and validates portable resources. It is not yet wired into native CLI/MCP transactions or phone transfer; those integration gates remain before desktop retirement.
+
+Owned portable import/export is now available through native CLI profile commands and dedicated MCP tools for explicit schema-4 authorities, with revision checks, deterministic retry identities and persistent raw metadata. Explicit legacy conversion, phone reconciliation/format activation, file-backed artwork workflows and automatic migration still gate desktop retirement.

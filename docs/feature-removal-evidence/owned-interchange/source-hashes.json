@@ -1,0 +1,12 @@
+{
+  "Host/crates/thumble-host/src/cli_profile.rs": "fd116e90bb4a61b8b02c42edda5b48673d26198fabe0d9d1bc63573529df366a",
+  "Host/crates/thumble-host/src/cli_profile_owned.rs": "80b69885f97b854fd8c49a4b012ce5c5a9b485f09e4dad730aace64b3550515a",
+  "Host/crates/thumble-host/src/cli_profile_owned_import.rs": "f244a36c16b8f44b9b42a9d37ea966ee1582139bfd17b37640f7544ee63cd704",
+  "Host/crates/thumble-host/src/cli_profile_owned_interchange_tests.rs": "534c60b8c716078fadf4525f33868ea5042af57c11c6e374d8d1b242f5325fb9",
+  "Host/crates/thumble-host/src/owned_drafts.rs": "98f6113491bbc4228808cc7271cecb5e5e1701c20d8582667c898ff797484b24",
+  "Host/crates/thumble-mcp/src/server.rs": "f7ee980a63b027b1b1b539ddd8248b104eb9e87db1e47cebf5ef1ab82c40c35b",
+  "Sources/CLI/ThumbleCLIBackend.swift": "fbe508d0a10e132b628131505a2985f61d0a5520e69116a5a4ee93eec79b6de7",
+  "Tests/ThumbleCLIBackendTests.swift": "b591016d436f963aca4472b38edc17603d76da30b0c0dcef5c797f0a813d7fab",
+  "docs/mcp/cli-capabilities-v1.json": "1aeaa7f0d424f6c3b5efe7b28c6c1b1e93f981189ff2407c1b7278361eac955b",
+  "scripts/verify-owned-runtime-flow.py": "9e303681ba83ef1cc162253eb44688fa44065bce3e1b3b40c1c91a5781e58086"
+}

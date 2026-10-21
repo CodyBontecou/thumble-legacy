@@ -140,16 +140,16 @@
           "cli": [
             "profile export"
           ],
-          "status": "host-cli-only",
-          "mcpTool": "export_configuration_draft"
+          "status": "partial",
+          "mcpTool": "export_profiles"
         },
         {
           "id": "profile.import",
           "cli": [
             "profile import"
           ],
-          "status": "host-cli-only",
-          "mcpTool": "edit_configuration_draft"
+          "status": "partial",
+          "mcpTool": "import_profiles"
         },
         {
           "id": "profile.attach-app",

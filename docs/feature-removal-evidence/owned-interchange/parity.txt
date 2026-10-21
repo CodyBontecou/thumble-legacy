@@ -1,0 +1,1 @@
+MCP CLI parity ledger verified: 159 operations, 29 root commands, 274 CLI spellings

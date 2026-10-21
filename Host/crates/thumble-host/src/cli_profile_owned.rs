@@ -1,5 +1,7 @@
 //! High-level planning on owned authorities never serializes a legacy document.
 use super::*;
+#[path = "cli_profile_owned_import.rs"]
+mod interchange;
 use crate::owned_drafts::{apply_document, authority_document, OwnedDraft, OwnedDraftStore};
 use serde_json::value::RawValue;
 use thumble_core::{OwnedConfigurationDocument, ProfileAppearanceBank};
@@ -308,6 +310,42 @@ fn design_snapshot(
     })
 }
 
+pub(super) fn preflight_import(
+    paths: &HostPaths,
+    command: &CliProfileCommand,
+    invocation: Uuid,
+) -> Result<(), TransactionFailure> {
+    if let CliProfileCommand::Import {
+        artifact_json,
+        append_as_copies,
+        select,
+        make_default,
+    } = command
+    {
+        if interchange::is_owned(artifact_json.as_bytes()) {
+            interchange::decode(command, invocation)?;
+            if storage::load(&paths.state_file)
+                .is_ok_and(|s| s.schema_version == thumble_core::OWNED_SCHEMA_VERSION)
+            {
+                Ok(())
+            } else {
+                Err(TransactionFailure::new("owned_authority_required","owned profile import requires an existing version-5 authority; no implicit migration is performed"))
+            }
+        } else {
+            decode_profile_import(
+                artifact_json,
+                *append_as_copies,
+                *select,
+                *make_default,
+                invocation,
+            )
+            .map(|_| ())
+        }
+    } else {
+        Ok(())
+    }
+}
+
 pub(super) fn execute<F>(
     paths: &HostPaths,
     state: &PersistentState,
@@ -325,12 +363,47 @@ where
     if matches!(request.command, CliProfileCommand::DesignSnapshot { .. }) {
         return design_snapshot(paths, state, request, &source);
     }
-    if matches!(
-        request.command,
-        CliProfileCommand::Import { .. } | CliProfileCommand::Export { .. }
-    ) {
-        return Err(TransactionFailure::new("owned_interchange_unavailable", "owned portable import/export is not enabled; the authority and original data remain unchanged"));
+    if let CliProfileCommand::Export { target } = &request.command {
+        let selection = match target {
+            Some(target) => ProfileArtifactSelection::ProfileId(
+                resolve_selector(target, catalog)?.profile_id.to_string(),
+            ),
+            None => ProfileArtifactSelection::All,
+        };
+        let document = authority_document(&source).map_err(draft_failure)?;
+        let artifact = thumble_core::OwnedProfileArtifact::from_configuration(
+            &document,
+            selection,
+            now_millis(),
+        )
+        .map_err(|_| {
+            TransactionFailure::new(
+                "profile_export_failed",
+                "owned configuration could not be exported safely",
+            )
+        })?;
+        let artifact_json = String::from_utf8(artifact.encode_json().map_err(|_| {
+            TransactionFailure::new(
+                "profile_export_failed",
+                "owned artifact exceeded its size bound",
+            )
+        })?)
+        .map_err(|_| {
+            TransactionFailure::new(
+                "profile_export_failed",
+                "owned artifact could not be encoded",
+            )
+        })?;
+        return Ok(TransactionResult {
+            artifact: Some(CliProfileArtifact {
+                configuration_revision: state.configuration_revision,
+                artifact_json,
+                content_hash: artifact.content_hash().clone(),
+            }),
+            ..Default::default()
+        });
     }
+    let imported = interchange::decode(&request.command, invocation_id)?;
     let display = display_state(state)?;
     if let Some(result) = read_projection(&display, &request.command, catalog)? {
         return Ok(result);
@@ -342,7 +415,10 @@ where
         _ => deterministic_uuid(invocation_id, "configuration-draft"),
     };
     let commit_id = deterministic_uuid(invocation_id, "configuration-commit");
-    let digest = request_digest(&request.command)?;
+    let digest = match &imported {
+        Some(import) => import.digest()?,
+        None => request_digest(&request.command)?,
+    };
     if let Some(record) = state.recent_configuration_commit(&commit_id.to_string()) {
         if record.draft_id != draft_id.to_string()
             || record.client_request_digest.as_deref() != Some(&digest)
@@ -358,7 +434,12 @@ where
         return Ok(TransactionResult {
             outcome: Some(CliProfileOutcome {
                 operation: request.command.kind().into(),
-                profile_names: replay_profile_names(&request.command, catalog, invocation_id),
+                profile_names: imported
+                    .as_ref()
+                    .map(|import| import.replay_names(catalog))
+                    .unwrap_or_else(|| {
+                        replay_profile_names(&request.command, catalog, invocation_id)
+                    }),
                 destination: replay_destination(&request.command),
                 removed_every_profile: replay_removed_every_profile(
                     &request.command,
@@ -382,6 +463,18 @@ where
             )
             .with_revision(expected, state.configuration_revision));
         }
+    }
+    let import_plan = imported
+        .as_ref()
+        .map(|import| {
+            import.plan(
+                &authority_document(&source).map_err(draft_failure)?,
+                now_millis(),
+            )
+        })
+        .transpose()?;
+    if let Some(plan) = &import_plan {
+        apply_document(&source, &plan.document).map_err(draft_failure)?;
     }
     let store = OwnedDraftStore::new(paths);
     let mut draft = if let CliProfileCommand::DesignApply {
@@ -444,13 +537,53 @@ where
     } else {
         (catalog, state.profiles.as_slice())
     };
-    let plan = plan_transaction(
-        &request.command,
-        planning_catalog,
-        planning_profiles,
-        invocation_id,
-    )
-    .map_err(|failure| with_draft(failure, &draft))?;
+    let plan = if let Some(import) = &import_plan {
+        PlannedTransaction {
+            operations: vec![],
+            profile_names: import.names.clone(),
+            destination: None,
+            removed_every_profile: false,
+        }
+    } else {
+        plan_transaction(
+            &request.command,
+            planning_catalog,
+            planning_profiles,
+            invocation_id,
+        )
+        .map_err(|failure| with_draft(failure, &draft))?
+    };
+    if let Some(import) = import_plan {
+        let operation_id =
+            deterministic_uuid(invocation_id, "profile.import:operation:0").to_string();
+        if let Some(record) = draft
+            .operation_records()
+            .iter()
+            .find(|record| record.operation_id == operation_id)
+        {
+            if record.operation_digest != digest {
+                return Err(with_draft(
+                    TransactionFailure::new(
+                        "operation_id_conflict",
+                        "import invocation changed after draft preparation",
+                    ),
+                    &draft,
+                ));
+            }
+        } else {
+            draft = store
+                .edit_with_descriptor(
+                    &draft.draft_id,
+                    draft.draft_revision,
+                    &operation_id,
+                    &digest,
+                    now_millis(),
+                    |_| Ok((import.document, import.outcome)),
+                )
+                .map_err(|e| with_draft(draft_failure(e), &draft))?
+                .draft;
+        }
+    }
     for (ordinal, operation) in plan.operations.iter().enumerate() {
         let operation_id = deterministic_uuid(
             invocation_id,
@@ -519,7 +652,7 @@ mod tests {
     use thumble_protocol::{edit_json_values, JsonValueEdit};
     const PRECISE: &str =
         "{\"integer\":9007199254740993,\"fraction\":0.12345678901234567890123456789}";
-    fn fixture() -> (tempfile::TempDir, crate::runtime::AuthorityLock, HostPaths) {
+    pub(super) fn fixture() -> (tempfile::TempDir, crate::runtime::AuthorityLock, HostPaths) {
         let temp = tempfile::tempdir().unwrap();
         let paths = HostPaths::new(
             temp.path().join("authority"),
@@ -577,7 +710,7 @@ mod tests {
         storage::install_private_state_bytes(&paths.state_file, &source, None, || Ok(())).unwrap();
         (temp, lease, paths)
     }
-    fn request(command: CliProfileCommand) -> CliProfileRequest {
+    pub(super) fn request(command: CliProfileCommand) -> CliProfileRequest {
         let read = command.is_binding_output_read()
             || matches!(
                 command,
@@ -590,7 +723,7 @@ mod tests {
             command,
         }
     }
-    fn load(paths: &HostPaths) -> PersistentState {
+    pub(super) fn load(paths: &HostPaths) -> PersistentState {
         let mut state = storage::load(&paths.state_file).unwrap();
         state.normalize().unwrap();
         state
@@ -771,7 +904,7 @@ mod tests {
         );
     }
     #[test]
-    fn stale_configuration_and_interchange_fail_without_authority_mutation() {
+    fn stale_configuration_and_export_read_preserve_authority_bytes() {
         let (_temp, _lease, paths) = fixture();
         let before = storage::read_state_bytes(&paths.state_file).unwrap();
         let mut req = request(CliProfileCommand::Rename {
@@ -784,10 +917,12 @@ mod tests {
             "configuration_revision_conflict"
         );
         let req = request(CliProfileCommand::Export { target: None });
-        assert_eq!(
-            execute_offline_authority(&paths, &req).error.unwrap().code,
-            "owned_interchange_unavailable"
-        );
+        let response = execute_offline_authority(&paths, &req);
+        assert!(response.ok, "{:?}", response.error);
+        thumble_core::OwnedProfileArtifact::decode_json(
+            response.artifact.unwrap().artifact_json.as_bytes(),
+        )
+        .unwrap();
         assert_eq!(
             storage::read_state_bytes(&paths.state_file).unwrap(),
             before
@@ -965,3 +1100,7 @@ mod tests {
         assert!(!paths.drafts_dir.exists());
     }
 }
+
+#[cfg(test)]
+#[path = "cli_profile_owned_interchange_tests.rs"]
+mod interchange_tests;

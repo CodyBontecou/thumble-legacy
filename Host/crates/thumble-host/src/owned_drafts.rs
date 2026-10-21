@@ -237,9 +237,39 @@ impl OwnedDraftStore {
             DraftError,
         >,
     {
+        let descriptor = DraftStore::operation_digest(operation)?;
+        self.edit_with_descriptor(id, revision, operation_id, &descriptor, now, apply)
+    }
+
+    /// Internal adapters may supply a digest of their typed operation descriptor.
+    /// Replay protection is identical to ordinary configuration operations.
+    pub(crate) fn edit_with_descriptor<F>(
+        &self,
+        id: &str,
+        revision: u64,
+        operation_id: &str,
+        descriptor: &str,
+        now: i64,
+        apply: F,
+    ) -> Result<OwnedDraftEdit, DraftError>
+    where
+        F: FnOnce(
+            &OwnedConfigurationDocument,
+        ) -> Result<
+            (OwnedConfigurationDocument, ConfigurationOperationOutcome),
+            DraftError,
+        >,
+    {
+        if descriptor.len() != 64
+            || !descriptor
+                .bytes()
+                .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+        {
+            return Err(DraftError::InvalidOperationOutcome);
+        }
+        let descriptor = descriptor.to_owned();
         let id = canonical(id)?;
         let operation_id = canonical(operation_id)?;
-        let descriptor = DraftStore::operation_digest(operation)?;
         let _lock = self.lock()?;
         let mut draft = self.read(&id)?;
         validate(&draft, &id, now)?;
@@ -594,6 +624,21 @@ pub fn authority_document(source: &[u8]) -> Result<OwnedConfigurationDocument, D
             output.push_str(&format!(",\"{name}\":{}", value.get()));
         }
     }
+    if let Some(metadata) = raw.get("ownedConfigurationExtensions") {
+        let extensions: BTreeMap<String, &RawValue> =
+            serde_json::from_str(metadata.get()).map_err(|_| DraftError::Malformed)?;
+        for (key, value) in extensions {
+            if FIELDS.contains(&key.as_str())
+                || ["schema", "version", "exportedAt"].contains(&key.as_str())
+            {
+                return Err(DraftError::Malformed);
+            }
+            output.push(',');
+            output.push_str(&serde_json::to_string(&key).map_err(|_| DraftError::EncodingFailed)?);
+            output.push(':');
+            output.push_str(value.get());
+        }
+    }
     output.push('}');
     let document =
         OwnedConfigurationDocument::decode(output.as_bytes()).map_err(|_| DraftError::Malformed)?;
@@ -691,6 +736,28 @@ pub fn apply_document(
         changes.push((
             format!("/{}", original.as_ref().map_or(*key, |(key, _)| key)),
             target.map(|v| v.get().as_bytes()),
+        ));
+    }
+    let extensions: BTreeMap<_, _> = desired
+        .iter()
+        .filter(|(key, _)| {
+            !FIELDS.contains(&key.as_str())
+                && !["schema", "version", "exportedAt"].contains(&key.as_str())
+        })
+        .collect();
+    let metadata = serde_json::to_vec(&extensions).map_err(|_| DraftError::EncodingFailed)?;
+    if extensions.is_empty() {
+        if raw.contains_key("ownedConfigurationExtensions") {
+            changes.push(("/ownedConfigurationExtensions".into(), None));
+        }
+    } else if raw
+        .get("ownedConfigurationExtensions")
+        .map(|v| v.get().as_bytes())
+        != Some(metadata.as_slice())
+    {
+        changes.push((
+            "/ownedConfigurationExtensions".into(),
+            Some(metadata.as_slice()),
         ));
     }
     let edits: Vec<_> = changes

@@ -24,6 +24,24 @@ use thumble_core::ControllerSnapshot;
 use thumble_host::control::{
     AccessibilityAction, ConfigurationDraftSummary, ControlRequest, ControlResponse, HostStatus,
 };
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ExportProfilesParams {
+    pub profile_id: Option<String>,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ImportProfilesParams {
+    pub artifact_json: String,
+    pub expected_configuration_revision: u64,
+    pub invocation_id: String,
+    #[serde(default)]
+    pub append_as_copies: bool,
+    pub select: bool,
+    #[serde(default)]
+    pub make_default: bool,
+}
+
 const THUMBLE_ICON_URL: &str = "https://pocketpad-site.pages.dev/assets/app-icon.png?v=6eae962e";
 const THUMBLE_WEBSITE_URL: &str = "https://pocketpad-site.pages.dev";
 
@@ -4389,6 +4407,119 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Export all profiles, or one profile UUID, as bounded portable JSON with a verified content checksum. Excludes credentials and local launch targets; owned profiles retain all appearance states and image resources. Returns artifactJSON without writing files or opening desktop UI.",
+        annotations(
+            read_only_hint = true,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = false
+        )
+    )]
+    pub async fn export_profiles(
+        &self,
+        Parameters(params): Parameters<ExportProfilesParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            CliProfileCommand, CliProfileRequest, ProfileSelector, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        let target = params
+            .profile_id
+            .map(|id| {
+                id.parse()
+                    .map(|profile_id| ProfileSelector::Id { profile_id })
+                    .map_err(|_| "profileId must be a UUID".to_owned())
+            })
+            .transpose()?;
+        let response = self
+            .request(
+                "export_profiles",
+                ControlRequest::CliProfileTransaction {
+                    request: CliProfileRequest {
+                        schema_version: CLI_PROFILE_SCHEMA_VERSION,
+                        invocation_id: None,
+                        expected_configuration_revision: None,
+                        command: CliProfileCommand::Export { target },
+                    },
+                },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no profile transaction response")?;
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Profile export failed".into()));
+        }
+        serde_json::to_value(result)
+            .map(Json)
+            .map_err(|_| "Profile export encoding failed".into())
+    }
+    #[tool(
+        description = "Import bounded portable profile JSON at an exact configuration revision. Replaces matching profiles or appends deterministic copies, preserves existing local launch associations, and retains owned appearance states and image resources. Supply the same invocation UUID and options to retry. Requires configuration-write permission; does not implicitly migrate an authority.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn import_profiles(
+        &self,
+        Parameters(params): Parameters<ImportProfilesParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            CliProfileCommand, CliProfileRequest, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        if !self.allow_config_write {
+            return Err("MCP configuration writes are disabled; restart thumble-mcp with --allow-config-write".into());
+        }
+        if params.artifact_json.len() > thumble_core::MAXIMUM_PROFILE_ARTIFACT_BYTES {
+            return Err("Profile artifact exceeds 8 MiB".into());
+        }
+        let invocation_id = params
+            .invocation_id
+            .parse()
+            .map_err(|_| "invocationId must be a UUID")?;
+        let response = self
+            .request(
+                "import_profiles",
+                ControlRequest::CliProfileTransaction {
+                    request: CliProfileRequest {
+                        schema_version: CLI_PROFILE_SCHEMA_VERSION,
+                        invocation_id: Some(invocation_id),
+                        expected_configuration_revision: Some(
+                            params.expected_configuration_revision,
+                        ),
+                        command: CliProfileCommand::Import {
+                            artifact_json: params.artifact_json,
+                            append_as_copies: params.append_as_copies,
+                            select: params.select,
+                            make_default: params.make_default,
+                        },
+                    },
+                },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no profile transaction response")?;
+        if result.invocation_id != invocation_id {
+            return Err("Profile import response invocation did not match".into());
+        }
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Profile import failed".into()));
+        }
+        serde_json::to_value(result)
+            .map(Json)
+            .map_err(|_| "Profile import encoding failed".into())
+    }
+
+    #[tool(
         description = "Return the authoritative configuration revision and bounded draft capability status. Use this revision when beginning revision-safe controller work.",
         annotations(
             title = "Thumble configuration status",
@@ -5833,7 +5964,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 28);
+        assert_eq!(tools.len(), 30);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -5952,8 +6083,10 @@ mod tests {
                 "discard_configuration_draft",
                 "edit_configuration_draft",
                 "export_controller_preview",
+                "export_profiles",
                 "get_configuration_draft",
                 "host_status",
+                "import_profiles",
                 "inspect_controller_design",
                 "list_controls",
                 "list_profiles",
@@ -6261,7 +6394,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 28);
+        assert_eq!(tools.len(), 30);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -6741,5 +6874,40 @@ mod tests {
         shutdown_tx.send(true).unwrap();
         control_task.await.unwrap();
         remove_control_socket(&socket);
+    }
+    #[tokio::test]
+    async fn profile_import_gate_and_uuid_validation_precede_socket_access() {
+        let params = || ImportProfilesParams {
+            artifact_json: "{}".into(),
+            expected_configuration_revision: 41,
+            invocation_id: "invalid".into(),
+            append_as_copies: false,
+            select: true,
+            make_default: false,
+        };
+        let server = ThumbleMcp::new(PathBuf::from("/missing/profile-control.sock"), false, false);
+        let error = server
+            .import_profiles(Parameters(params()))
+            .await
+            .err()
+            .expect("request must fail before socket access");
+        assert!(error.contains("--allow-config-write"));
+        assert!(!error.contains("profile-control.sock"));
+        let server = ThumbleMcp::new(PathBuf::from("/missing/profile-control.sock"), false, true);
+        let error = server
+            .import_profiles(Parameters(params()))
+            .await
+            .err()
+            .expect("request must fail before socket access");
+        assert!(error.contains("UUID"));
+        assert!(!error.contains("profile-control.sock"));
+        let error = server
+            .export_profiles(Parameters(ExportProfilesParams {
+                profile_id: Some("invalid".into()),
+            }))
+            .await
+            .err()
+            .expect("request must fail before socket access");
+        assert!(error.contains("UUID"));
     }
 }

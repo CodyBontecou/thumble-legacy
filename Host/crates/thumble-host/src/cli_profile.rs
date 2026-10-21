@@ -2122,26 +2122,8 @@ pub fn execute_offline_authority(
     let invocation_id = request.invocation_id.unwrap_or_else(Uuid::new_v4);
     // Reject the supplied configuration before an absent store can be initialized.
     // Failed imports must not author replacement profiles, revisions, or drafts.
-    let preflight = validate_request(request).and_then(|()| {
-        if let CliProfileCommand::Import {
-            artifact_json,
-            append_as_copies,
-            select,
-            make_default,
-        } = &request.command
-        {
-            decode_profile_import(
-                artifact_json,
-                *append_as_copies,
-                *select,
-                *make_default,
-                invocation_id,
-            )
-            .map(|_| ())
-        } else {
-            Ok(())
-        }
-    });
+    let preflight = validate_request(request)
+        .and_then(|()| owned::preflight_import(paths, &request.command, invocation_id));
     if let Err(failure) = preflight {
         return CliProfileResponse::failure(invocation_id, "offline", failure);
     }

@@ -1295,3 +1295,32 @@ struct NativeArrangementCommandEncodingTests {
         }
     }
 }
+
+struct OwnedArtifactResponseTests {
+    @Test func ownedArtifactHashEncodingPreservesRawJSONAndRefusesUnknownEncodings() throws {
+        let invocation = UUID()
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("owned-artifact-response-\(UUID())")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let payload = "{\"future\":9007199254740993,\"fraction\":0.12345678901234567890123456789}"
+        for encoding in ["exact-json-utf8", "rfc8785", "EXACT-JSON-UTF8", "unknown"] {
+            let response: [String: Any] = ["schemaVersion": 8, "ok": true, "invocationID": invocation.uuidString,
+                "authorityMode": "offline", "artifact": ["configurationRevision": 42, "artifactJSON": payload,
+                    "contentHash": ["algorithm": "sha256", "canonicalization": encoding, "value": String(repeating: "a", count: 64)]]]
+            let json = String(decoding: try JSONSerialization.data(withJSONObject: response), as: UTF8.self)
+            let quoted = "'" + json.replacingOccurrences(of: "'", with: "'\\''") + "'"
+            let helper = directory.appendingPathComponent("helper")
+            let script = "#!/bin/sh\nIFS= read -r line || exit 3\n/usr/bin/printf '%s\\n' \(quoted)\n"
+            try Data(script.utf8).write(to: helper)
+            try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: helper.path)
+            let backend = try ThumbleCLIProfileBackend(executableURL: helper)
+            if ["exact-json-utf8", "rfc8785"].contains(encoding) {
+                let result = try backend.perform(.export(nil), invocationID: invocation)
+                #expect(result.artifact?.artifactJSON == payload)
+                #expect(result.artifact?.contentHash.canonicalization == encoding)
+            } else {
+                #expect(throws: ThumbleCLIProfileBackend.BackendError.self) { try backend.perform(.export(nil), invocationID: invocation) }
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+   Compiling thumble-cli-bridge v0.1.0 (/private/tmp/thumble-owned-import-zrgy8j_g/Host/crates/thumble-cli-bridge)
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-import-zrgy8j_g/Host/crates/thumble-host)
+   Compiling thumble-mcp v0.1.0 (/private/tmp/thumble-owned-import-zrgy8j_g/Host/crates/thumble-mcp)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.28s

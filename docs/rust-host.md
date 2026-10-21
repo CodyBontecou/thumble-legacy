@@ -569,3 +569,5 @@ output text plus a separate accessibility description, grouped by profile and
 orientation. The receiver and `thumble binding display` share authoritative raw
 binding resolution, including explicit part clears, legacy joystick mappings and
 output-mode filtering. Display strings never choose or execute input bindings.
+
+Explicit schema-4 authorities export/import the lossless owned artifact through `thumble profile export/import` and MCP `export_profiles`/`import_profiles`. Imports use revision-tagged drafts/commits, preserve local launch associations on replacement and derive copy IDs from the invocation. Raw root extensions persist in `ownedConfigurationExtensions`. No implicit authority initialization/migration or legacy-artifact conversion occurs. See [the artifact contract](owned-profile-artifact.md).

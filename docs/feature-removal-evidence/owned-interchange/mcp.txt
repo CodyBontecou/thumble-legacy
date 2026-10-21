@@ -1,0 +1,43 @@
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-import-zrgy8j_g/Host/crates/thumble-host)
+   Compiling thumble-mcp v0.1.0 (/private/tmp/thumble-owned-import-zrgy8j_g/Host/crates/thumble-mcp)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.17s
+     Running unittests src/lib.rs (/Users/codybontecou/dev/Thumble/Host/target/debug/deps/thumble_mcp-77d3c2d0eed63a17)
+
+running 34 tests
+test rate_limit::tests::limiter_allows_small_burst_then_refills_at_ten_per_second ... ok
+test controller_design::tests::extended_reply_budget_is_only_for_native_evidence_operations ... ok
+test controller_design::tests::design_paths_and_revisions_are_bounded_before_launch ... ok
+test server::tests::controller_apps_render_native_snapshot_appearance_instead_of_a_fixed_palette ... ok
+test server::tests::preview_skin_workspace_returns_an_inline_controller_view_when_configured ... ok
+test channel::tests::unix_channel_fails_closed_on_missing_socket ... ok
+test skin_preview::tests::missing_sources_report_the_path ... ok
+test controller_design::tests::drawer_portrait_inset_is_bounded_before_cli_discovery ... ok
+test skin_preview::tests::png_dimensions_parse_the_ihdr_header ... ok
+test skin_preview::tests::relative_paths_are_rejected_before_any_process_starts ... ok
+test skin_preview::tests::non_package_files_are_rejected ... ok
+test skin_preview::tests::renders_a_real_package_when_provided ... ok
+test skin_preview::tests::cli_json_summary_parses_the_documented_contract ... ok
+test skin_preview::tests::render_validates_before_discovering_the_cli ... ok
+test skin_preview::tests::scale_formats_like_the_cli_accepts ... ok
+test skin_preview::tests::scale_bounds_match_the_cli ... ok
+test skin_preview::tests::single_frame_rejects_contact_sheets_and_multi_frame_output ... ok
+test tests::canonical_input_environment_takes_precedence_over_legacy_alias ... ok
+test tests::input_environment_opt_in_is_exact_and_fail_closed ... ok
+test server::tests::published_operation_schema_contains_only_owned_uuid_bindings ... ok
+test server::tests::element_binding_inputs_reject_raw_keys_and_input_routing ... ok
+test server::tests::customization_fix_input_is_strict_canonical_and_bounded_after_conversion ... ok
+test controller_design::tests::reply_overflow_does_not_wait_for_pending_stderr ... ok
+test server::tests::style_input_is_typed_and_rejects_assets_paths_and_raw_payloads ... ok
+test server::tests::control_bar_item_set_input_converts_only_typed_non_file_changes ... ok
+test controller_design::tests::evidence_reader_supports_large_matrices_and_rejects_overflow ... ok
+test channel::tests::unix_channel_reaches_a_bound_control_socket ... ok
+test server::tests::profile_import_gate_and_uuid_validation_precede_socket_access ... ok
+test server::tests::disabled_configuration_write_fails_before_touching_the_control_socket ... ok
+test server::tests::preview_skin_workspace_rejects_unknown_action_set_before_cli ... ok
+test server::tests::preview_skin_workspace_rejects_unknown_enums_before_touching_the_cli ... ok
+test server::tests::disabled_input_fails_before_touching_the_control_socket ... ok
+test server::tests::tool_router_exposes_curated_controller_and_design_tools ... ok
+test server::tests::official_client_initializes_lists_tools_and_calls_over_mcp ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

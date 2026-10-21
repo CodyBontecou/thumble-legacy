@@ -1,0 +1,60 @@
+{
+  "baseCommit": "1b4ec028ad8b0379749de38a6aeaaa693a33c4db",
+  "isolatedRustSource": "/private/tmp/thumble-owned-import-zrgy8j_g",
+  "nativeSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "apple-source-hashes.json",
+  "logSHA256": {
+    "rust.txt": "47202d21531a704e1ecbf9b17e92f03261b231f25427a2f263c30e81af2dd10f",
+    "rustBuild.txt": "dde77daf7afa31d05f0a0c9d61fd2ce49cdb7d8d494cdec6c25da11062e72d19",
+    "parity.txt": "990c109594d170643e9e724dca5e8ad73c19a939ece462a09fc31b54294e94bc",
+    "nativeTests.txt": "596d96cf5789c40c2f021a7860cddd75d5c86faff19db7c8e6de5ba95d61f590",
+    "nativeCLI.txt": "0745bca382ecb813bc2ade346bd08daf11df823642d941191d5d8954678b7bd8",
+    "process.txt": "c51db6fc363eb45b571aa6ac2934cb871bd3c764f18e872f118e5f1630d42507",
+    "mcp.txt": "2c1152b05dc5b19ae4de6bea66552647ea5bca53e7b8fc2072be91b84988d59c",
+    "stack.txt": "9e7b88c074fba7b1f0a847285e5fd2831e7d0452f031b60694b74056aa3e434b"
+  },
+  "binarySHA256": {
+    "thumble-host": "3a82cc4505db75942376852a877a9f3921efd6c38525b4cd9a133cc9ea24877d",
+    "thumble-mcp": "5b92268ef5f8619bea834b9adfaa872b3a98c6b898b2d6ebfacfa961629d02f4",
+    "thumble-cli-bridge": "035e4ad85860ed1f2c4933cb58d58f4df7e8dc779dc6c3b9b4ced1938fee97db",
+    "thumble": "b28a7e9213115a53e631c79da95bf8f2c60ee03adedcfdcad575005d4be6ee16",
+    "thumble-bridge": "e381343eb7866d464aa5c14f1d3ab836db894fbb6d7a632ad604766cfe45fa05"
+  },
+  "rust": {
+    "passed": 591,
+    "failed": 0,
+    "ignored": 3,
+    "newHostImportCases": 7,
+    "newMCPGateCase": 1
+  },
+  "apple": {
+    "constrainedStackTests": 41,
+    "existingBackendXCTests": 38,
+    "newSwiftTestingCases": 1,
+    "macAndIOSDebugBuilds": true,
+    "nativeCLIBuild": true
+  },
+  "process": {
+    "cliNativeGeometry": true,
+    "mcpNativeHaptic": true,
+    "commitReplay": true,
+    "restartReplay": true,
+    "retainedAppearanceStates": 8,
+    "exactUnknownInteger": true,
+    "resourceTablePreserved": true,
+    "configurationRevision": 64,
+    "highLevelOnlineOffline": true,
+    "nativeCLIRenameAndDesign": true,
+    "exactDesignCapture": true,
+    "nativeElementSetNudgeResetDelete": true,
+    "nativeElementCreationAndArrangement": true,
+    "ownedPortableInterchange": true,
+    "mcpPortableInterchange": true,
+    "desktopGUIRequired": false
+  },
+  "migrationActivated": false,
+  "pairedFormatFiveActivated": false,
+  "desktopGUIRetired": false,
+  "physicalLatencyAndHapticsAcceptance": false
+}

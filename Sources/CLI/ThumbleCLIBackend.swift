@@ -1660,7 +1660,7 @@ final class ThumbleCLIProfileBackend {
         }
         if let artifact = response.artifact {
             guard artifact.artifactJSON.utf8.count <= maximumProfileArtifactBytes,
-                  boundedSHA256(artifact.contentHash)
+                  boundedSHA256(artifact.contentHash, allowOwnedArtifact: true)
             else { return false }
         }
         if let generationPlan = response.generationPlan {
@@ -1845,9 +1845,9 @@ final class ThumbleCLIProfileBackend {
         return true
     }
 
-    private static func boundedSHA256(_ hash: ContentHash) -> Bool {
+    private static func boundedSHA256(_ hash: ContentHash, allowOwnedArtifact: Bool = false) -> Bool {
         hash.algorithm == "sha256"
-            && hash.canonicalization == "rfc8785"
+            && (hash.canonicalization == "rfc8785" || (allowOwnedArtifact && hash.canonicalization == "exact-json-utf8"))
             && isLowercaseSHA256(hash.value)
     }
 

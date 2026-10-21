@@ -60,6 +60,7 @@ def main():
             shutil.copy2(args.cli_bridge, install / 'thumble-cli-bridge')
             shutil.copy2(args.native_cli, install / 'thumble')
         state['futureState'] = 'PRECISE_NUMBER_SENTINEL'
+        state['ownedConfigurationExtensions'] = dict(futurePortable='PRECISE_FRACTION_SENTINEL')
         state_file.write_text(json.dumps(state).replace('"PRECISE_NUMBER_SENTINEL"',
                                                        '9007199254740993').replace('"PRECISE_FRACTION_SENTINEL"', '0.12345678901234567890123456789'))
         state_file.chmod(0o600)
@@ -311,12 +312,59 @@ def main():
                     cleaned = json.loads(state_file.read_bytes())['profiles'][0]
                     assert cleaned['appearanceBank'] == baseline_profile['appearanceBank']
                     assert {item['id']: item for item in cleaned['customization']['elements']} == baseline_elements
+                    # The native CLI exports raw v5 bytes without normalizing
+                    # future numbers, then imports deterministic copies offline.
+                    exported_file = root / 'owned-export.json'
+                    before_export = state_file.read_bytes()
+                    native_cli('profile', 'export', '--all', '-o', str(exported_file))
+                    assert state_file.read_bytes() == before_export
+                    exported_text = exported_file.read_text()
+                    assert '0.12345678901234567890123456789' in exported_text
+                    portable = json.loads(exported_text)
+                    assert portable['contentHash']['canonicalization'] == 'exact-json-utf8'
+                    assert portable['document']['version'] == 5
+                    assert all('launchTarget' not in p for p in portable['document']['profiles'])
+                    original = json.loads(before_export)
+                    append_args = ('profile', 'import', str(exported_file), '--append', '--default', '--invocation-id', str(uuid.uuid4()))
+                    native_cli(*append_args)
+                    imported_bytes = state_file.read_bytes()
+                    native_cli(*append_args)
+                    assert state_file.read_bytes() == imported_bytes
+                    copied = json.loads(imported_bytes)
+                    count = len(original['profiles'])
+                    assert len(copied['profiles']) == count * 2
+                    assert copied['profiles'][:count] == original['profiles']
+                    for old, new in zip(original['profiles'], copied['profiles'][count:]):
+                        for key in ('customization', 'appearanceBank', 'appearanceResources'):
+                            assert old.get(key) == new.get(key)
+                    assert copied['ownedConfigurationExtensions'] == original['ownedConfigurationExtensions']
+                    bad_file = root / 'bad-owned-export.json'
+                    portable['contentHash']['value'] = '0' * 64
+                    bad_file.write_text(json.dumps(portable))
+                    refused = subprocess.run([str(install / 'thumble'), 'profile', 'import', str(bad_file)], env=env, capture_output=True, timeout=30)
+                    assert refused.returncode and state_file.read_bytes() == imported_bytes
+                    # MCP uses the same high-level host authority transactions.
+                    host = subprocess.Popen([str(install / 'thumble-host'), 'run', '--port', '0', '--no-bonjour', '--no-input', '--allow-config-write'], env=env, stdout=host_log, stderr=host_log)
+                    deadline = time.monotonic() + 15
+                    while not control_socket.exists():
+                        if host.poll() is not None or time.monotonic() > deadline:
+                            raise AssertionError('receiver did not restart for portable MCP flow')
+                        time.sleep(0.05)
+                    mcp_export = call('export_profiles', {})
+                    assert mcp_export['artifact']['contentHash']['canonicalization'] == 'exact-json-utf8'
+                    mcp_import = dict(artifactJson=mcp_export['artifact']['artifactJSON'], expectedConfigurationRevision=copied['configurationRevision'], invocationId=str(uuid.uuid4()), appendAsCopies=False, select=True, makeDefault=False)
+                    imported = call('import_profiles', mcp_import)
+                    assert imported['outcome']['configurationRevision'] == copied['configurationRevision'] + 1
+                    saved = state_file.read_bytes()
+                    assert call('import_profiles', mcp_import)['outcome']['idempotentReplay']
+                    assert state_file.read_bytes() == saved
+                    assert '0.12345678901234567890123456789' in call('export_profiles', {})['artifact']['artifactJSON']
                     high_level = True
                 print(json.dumps(dict(cliNativeGeometry=True, mcpNativeHaptic=True,
                                       commitReplay=True, restartReplay=True, retainedAppearanceStates=8,
                                       exactUnknownInteger=True, resourceTablePreserved=True,
                                       configurationRevision=json.loads(state_file.read_bytes())['configurationRevision'], highLevelOnlineOffline=high_level,
-                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, nativeElementSetNudgeResetDelete=high_level, nativeElementCreationAndArrangement=high_level, desktopGUIRequired=False)))
+                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, nativeElementSetNudgeResetDelete=high_level, nativeElementCreationAndArrangement=high_level, ownedPortableInterchange=high_level, mcpPortableInterchange=high_level, desktopGUIRequired=False)))
             finally:
                 if mcp is not None:
                     mcp.terminate()
