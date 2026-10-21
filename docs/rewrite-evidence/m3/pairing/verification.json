@@ -41,7 +41,7 @@
     "portableRun": 39664550715,
     "windows": "success: six native, 62 source, one standalone package test",
     "linux": "success",
-    "macOS": "queued at evidence capture",
+    "macOS": "success",
     "unchangedNativeMobileRun": 39664550915,
     "nativeMobile": "both jobs success; does not certify subsequent local packet source"
   },

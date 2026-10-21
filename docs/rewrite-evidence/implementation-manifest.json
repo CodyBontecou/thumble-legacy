@@ -180,7 +180,7 @@
     "docs/rewrite-evidence/m2/windows-runtime-diagnosis.md": "7c8321b57f163fa19773a13bda9e4b70a103cac44c3756522e7376f1cbec57dc",
     "docs/rewrite-evidence/m2/workflow-check.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
     "docs/rewrite-evidence/m2/workspace-checks.txt": "3dac87bc993edb95d972d2b10692ea271ad9f91b9b97fc244e9db6457e292a20",
-    "docs/rewrite-evidence/m3/input-packet/README.md": "8c8852f29126ae89419c5c6119afd8c70fa1c76fd9907e9e79b0a21ada90c96c",
+    "docs/rewrite-evidence/m3/input-packet/README.md": "747b990f441cd7ca8fe0316e8f43d379c6f7495c79e8c2a39f4208405c304cb6",
     "docs/rewrite-evidence/m3/input-packet/TEST-com.thumble.rewrite.input.InputEngineSafetyTest.xml": "4c233c46f3f8c56dfad612b4a6f947fc3140e80474412f4edde52a991ddadde9",
     "docs/rewrite-evidence/m3/input-packet/TEST-com.thumble.rewrite.input.InputFixturesTest.xml": "ed9b69e5c1c4906e6aacaa11428325c297c5415831d8825ed5e4bca27a0ecebe",
     "docs/rewrite-evidence/m3/input-packet/TEST-com.thumble.rewrite.input.InputPacketChannelTest.xml": "e72cf7b31ccc31ba852eac5bbae5ffb23c89d2ca2de0294a31203b348ba4c7bc",
@@ -204,17 +204,17 @@
     "docs/rewrite-evidence/m3/input-packet/swift.txt": "ffe804116db3787710e8f60d9af9470a77766b3b5453057fc7e7250d56026030",
     "docs/rewrite-evidence/m3/input-packet/typescript.txt": "e1ad27f8cb7400eb39e4204b84686d02e61aa6af9ca8706887dd8d18d1f81c5c",
     "docs/rewrite-evidence/m3/input-packet/verification.json": "94d3f550c65882629e8467da0249fff4bb4096010b0220749d395735be3a17df",
-    "docs/rewrite-evidence/m3/pairing/README.md": "1a42ee87b4df505d546bb8ca9cec4054b8acc469684fa24586a9a1274dba3dd9",
+    "docs/rewrite-evidence/m3/pairing/README.md": "a69c7bc2e94845671ffb256e6f432cf48fb972bc6ea08b8bd9d590a8a3cba9c8",
     "docs/rewrite-evidence/m3/pairing/build.txt": "6f929e87fc0a8a203e2ddcc5b1231d3d64dee0989a2d41b65e694887181bcb9b",
     "docs/rewrite-evidence/m3/pairing/ci-publication-candidate.json": "df427db2f0f7592c6277f023a98bc4c0f6d00b32311019be4dd52e02c0108d5a",
     "docs/rewrite-evidence/m3/pairing/format.txt": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
-    "docs/rewrite-evidence/m3/pairing/github-actions.json": "b5596f71312f33393143b9e010eb3771b4f63a17653ba11dce80738cfe0d4369",
+    "docs/rewrite-evidence/m3/pairing/github-actions.json": "79e3b3fae2a78e16cd55d050d868ef083094b0a6da41f26abb942a003a7caf29",
     "docs/rewrite-evidence/m3/pairing/package-junit.xml": "aea56b68b418605aff6490db1d31649b44e05057b13b43d4a3125f80c9f8389f",
     "docs/rewrite-evidence/m3/pairing/package-tests.txt": "e1987dc3c3a76fec687bb1960f6b81f219b144748a0b21470897ea27e1a9af7a",
     "docs/rewrite-evidence/m3/pairing/source-junit.xml": "a14958063f1f659cb9c2c4a4d274ab1484a1ccddeedd9d83e7ef6cc19a3a51d0",
     "docs/rewrite-evidence/m3/pairing/source-tests.txt": "bf0deec9314a7579ba6800405cd3d15c9c402bbf1311261061161ef6ae28121d",
     "docs/rewrite-evidence/m3/pairing/static-checks.txt": "7f27461a6f2cbf2339de1b9744e2b8fc661a69eb6c567ba56cd44c06ee78c76e",
-    "docs/rewrite-evidence/m3/pairing/verification.json": "40d34451b62dcd1607e7e99b145bdcbbda23587855d73549ca2dc756da16bfd3"
+    "docs/rewrite-evidence/m3/pairing/verification.json": "87c7ad1fe4e536fdd27a659ad067c83ebecdecab54c35ecf3dc66c7684dbfc38"
   },
-  "scope": "M2 host and native library seams passed hosted CI. Approved M3 pairing source 160418187157fea978a9368f12cf831c16168cb6 passed Windows/Linux and unchanged native iOS/Android CI; portable macOS queued at capture. New M3 native packet codec/channel and Rust safety admission passed 15 Rust, 13 Swift functions/15 touch scenarios, 28 Android, 65 TS and one standalone package test locally, both iOS SDK builds and Android AAR/lint. Exact 28-file next CI source scope recorded for separate approval. Native TLS enrollment, durable trust, UDP/reliable sockets, RN app, retained stack safety, production input/signing/gameplay, required live sync and full rewrite acceptance remain incomplete."
+  "scope": "M2 host and native library seams passed hosted CI. Approved M3 pairing source 160418187157fea978a9368f12cf831c16168cb6 passed Windows/macOS/Linux and unchanged native iOS/Android CI. New M3 native packet codec/channel and Rust safety admission passed 15 Rust, 13 Swift functions/15 touch scenarios, 28 Android, 65 TS and one standalone package test locally, both iOS SDK builds and Android AAR/lint. Exact 28-file next CI source scope recorded for separate approval. Native TLS enrollment, durable trust, UDP/reliable sockets, RN app, retained stack safety, production input/signing/gameplay, required live sync and full rewrite acceptance remain incomplete."
 }
