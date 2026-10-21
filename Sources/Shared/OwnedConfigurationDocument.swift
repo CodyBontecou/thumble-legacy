@@ -255,7 +255,7 @@ public enum ThumbleOwnedOperationBridge {
                 profile.customization = profile.customization.normalized
                 profile.landscapeCustomization = nil; profile.portraitCustomization = nil
                 profile.orientationPreference = .landscape
-                try reconcileBank(&profile)
+                try reconcileBank(&profile, operation: operation)
                 result.append(profile)
             }
             root["activeProfileID"] = document.activeProfileID
@@ -268,28 +268,23 @@ public enum ThumbleOwnedOperationBridge {
             root["profileOutputBindings"] = try JSONSerialization.jsonObject(with: encoder.encode(document.profileOutputBindings))
             after = try projection(result)
         }
-        private func reconcileBank(_ profile: inout GamepadConfigurationProfile) throws {
-            guard let bank = profile.appearanceBank,
-                  bank.variants.first?.appearance.controlIDs != GamepadAppearanceSnapshot(profile.customization).controlIDs else { return }
-            let retainedIDs = GamepadAppearanceSnapshot(profile.customization).controlIDs
-            if retainedIDs.isSubset(of: bank.variants[0].appearance.controlIDs) {
-                profile.appearanceBank = try GamepadAppearanceBank(variants: bank.variants.map {
-                    .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet,
-                          appearance: $0.appearance.retainingControlIDs(retainedIDs))
-                })
-                return
-            }
-            // Add/delete controls across all paint states, retaining each state's
-            // resolved appearance and the canonical geometry/output owners.
-            var variants: [GamepadAppearanceBank.Variant] = []
-            for scheme in ThumbleSkinColorScheme.allCases {
-                for action in ThumbleActionSet.allCases {
-                    let resolved = bank.resolve(profile.customization, colorScheme: scheme, actionSet: action)
-                    variants.append(.init(colorScheme: scheme, actionSet: action, appearance: .init(resolved)))
+        private func reconcileBank(_ profile: inout GamepadConfigurationProfile, operation: ThumbleBridgeJSONValue) throws {
+            guard let bank = profile.appearanceBank else { return }
+            let current = GamepadAppearanceSnapshot(profile.customization)
+            guard bank.variants[0].appearance.controlIDs != current.controlIDs else { return }
+            var duplicates: [String: String] = [:]
+            if case .object(let fields) = operation, fields["type"] == .string("element.duplicate"),
+               case .array(let sources)? = fields["elementIDs"], case .array(let destinations)? = fields["newElementIDs"] {
+                for (source, destination) in zip(sources, destinations) {
+                    if case .string(let oldID) = source, case .string(let newID) = destination {
+                        duplicates[newID.lowercased()] = oldID.lowercased()
+                    }
                 }
             }
-            profile.customization = bank.resolve(profile.customization, colorScheme: .light, actionSet: .base)
-            profile.appearanceBank = try GamepadAppearanceBank(variants: variants)
+            profile.appearanceBank = try GamepadAppearanceBank(variants: bank.variants.map {
+                .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet,
+                      appearance: $0.appearance.reconcilingControls(with: current, duplicates: duplicates))
+            })
         }
     }
 }

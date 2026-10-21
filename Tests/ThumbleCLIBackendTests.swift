@@ -1247,3 +1247,51 @@ struct OwnedElementSequenceTests {
         #expect(after.appearanceBank?.variants.count == 8)
     }
 }
+
+
+struct NativeArrangementCommandEncodingTests {
+    @Test func creationAndArrangementUseTypedSelectorsAndValues() throws {
+        let id = UUID(uuidString: "AC000000-0000-0000-0000-000000000003")!
+        let commands: [ThumbleCLIProfileBackend.Command] = [
+            .elementAdd(.active, .primary, kind: .button, elementID: id, changesJSON: "{}"),
+            .elementDuplicate(.active, .primary, elements: [id.uuidString], offsetX: 0.025, offsetY: -0.025),
+            .elementAlign(.active, .primary, elements: [id.uuidString, "Coin"], alignment: "left"),
+            .elementDistribute(.active, .primary, elements: [id.uuidString, "Coin", "Other"], distribution: "horizontal-spacing")
+        ]
+        for (command, kind) in zip(commands, ["element.add", "element.duplicate", "element.align", "element.distribute"]) {
+            let object = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(command)) as? [String: Any])
+            #expect(object["type"] as? String == kind)
+        }
+    }
+    @Test func duplicationRetainsEveryAppearanceState() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+        let source = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-element-sequences/v1/after-reset-and-hide.json"))
+        let initial = try ThumbleOwnedConfigurationDocument(validating: source)
+        let profile = try #require(initial.projectedProfiles.first)
+        let oldID = "00000000-0000-0000-0000-000000000109"
+        let newID = "AC000000-0000-0000-0000-000000000003"
+        let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion": 1, "invocationID": "AC000000-0000-0000-0000-000000000004",
+            "ownedConfigurationCommand": "apply", "documentData": source.base64EncodedString(), "nowMillis": profile.updatedAt + 1,
+            "operation": ["type": "element.duplicate", "profileID": profile.id.uuidString, "variant": "primary",
+                          "elementIDs": [oldID], "newElementIDs": [newID], "offsetX": 0.025, "offsetY": 0.025]])
+        let response = try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes))
+        let output = root.appendingPathComponent("build/OwnedElementArrangement")
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        try bytes.write(to: output.appendingPathComponent("duplicate-request.json"))
+        try JSONEncoder().encode(response).write(to: output.appendingPathComponent("duplicate-response.json"))
+
+        let result = try ThumbleOwnedConfigurationDocument(validating: #require(Data(base64Encoded: response.afterDocumentData)))
+        let after = try #require(result.projectedProfiles.first)
+        #expect(after.customization.elements.count == profile.customization.elements.count + 1)
+        for element in profile.customization.elements { #expect(after.customization.elements.first { $0.id == element.id } == element) }
+        let rows = try #require(after.appearanceBank?.variants)
+        let original = try #require(profile.appearanceBank?.variants)
+        for (row, oldRow) in zip(rows, original) {
+            let beforeObject = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(oldRow.appearance)) as? [String: Any])
+            let afterObject = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(row.appearance)) as? [String: Any])
+            let beforeControls = try #require(beforeObject["controls"] as? [String: Any])
+            let afterControls = try #require(afterObject["controls"] as? [String: Any])
+            #expect(NSDictionary(dictionary: try #require(beforeControls[oldID.lowercased()] as? [String: Any])).isEqual(to: try #require(afterControls[newID.lowercased()] as? [String: Any])))
+        }
+    }
+}

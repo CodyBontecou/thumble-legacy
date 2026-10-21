@@ -1,0 +1,10 @@
+Frozen feature-removal fixtures verified against checkpoint 5fadf15
+Native appearance edit oracle verified: 21 cases, 168 results
+Profile-format matrix verified: 14 negotiations, 14 frames
+Explicit owned-configuration contract verified: 41 cases
+Lossless owned-edit destination verified: 7 operations
+Native projection merge verified: 2 profiles, 8 appearance states
+Legacy configuration preparation verified: 5 conversions, 1 recovery case
+Owned native edits verified: 6 operations across eight appearance states
+Owned chained element fixture verified: reset/hide followed by custom removal
+Owned duplication packets verified against native sequence fixture hashes

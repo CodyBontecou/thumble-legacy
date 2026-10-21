@@ -250,15 +250,6 @@ element_block = SOURCE.read_text(encoding="utf-8").split(
 if "layerList" not in element_block or "loadStore(" in element_block:
     print("Element list must use the sanitized Rust projection", file=sys.stderr)
     raise SystemExit(1)
-for function_name in (
-    "duplicateElements", "alignElements", "distributeElements", "addElement",
-):
-    function_block = SOURCE.read_text(encoding="utf-8").split(
-        f"private static func {function_name}", 1
-    )[1].split("private static func", 1)[0]
-    if "requireExplicitUnmigratedProfileAccess" not in function_block:
-        print(f"Unmigrated {function_name} write must fail closed", file=sys.stderr)
-        raise SystemExit(1)
 
 device_block = SOURCE.read_text(encoding="utf-8").split(
     "private static func device(arguments:", 1
@@ -273,7 +264,7 @@ for command in ("deviceGet", "deviceSet"):
         raise SystemExit(1)
 
 
-for function, command in (("setElement", ".elementSet("), ("nudgeElement", ".elementNudge("), ("deleteElement", ".elementDelete("), ("resetElement", ".elementReset(")):
+for function, command in (("addElement", ".elementAdd("), ("duplicateElements", ".elementDuplicate("), ("alignElements", ".elementAlign("), ("distributeElements", ".elementDistribute("), ("setElement", ".elementSet("), ("nudgeElement", ".elementNudge("), ("deleteElement", ".elementDelete("), ("resetElement", ".elementReset(")):
     block = source_text.split("private static func " + function + "(", 1)[1].split("private static func ", 1)[0]
     if command not in block or any(token in block for token in ("loadStore(", "persistStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess(")):
         raise SystemExit("Element commands must use typed authority transactions: " + function)

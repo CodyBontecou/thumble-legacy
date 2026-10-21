@@ -84,7 +84,7 @@ impl ConfigurationBridge {
                 &legacy_view(&after, after_fallback)?,
                 &canonical,
             )
-            || !banks_preserved(&before, &after)
+            || !banks_preserved(&before, &after, &canonical)
         {
             return Err(Error::InvalidResponse);
         }
@@ -179,6 +179,7 @@ fn legacy_view(
 fn banks_preserved(
     before: &OwnedConfigurationDocument,
     after: &OwnedConfigurationDocument,
+    operation: &ConfigurationOperation,
 ) -> bool {
     for profile in before.profiles() {
         let Some(next) = after
@@ -190,6 +191,49 @@ fn banks_preserved(
         };
         if profile.get("appearanceBank") == next.get("appearanceBank") {
             continue;
+        }
+        if let ConfigurationOperation::ElementDuplicate {
+            profile_id,
+            element_ids,
+            new_element_ids,
+            ..
+        } = operation
+        {
+            if profile["id"]
+                .as_str()
+                .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
+            {
+                let Some(mut expected) = profile.get("appearanceBank").cloned() else {
+                    return false;
+                };
+                let Some(rows) = expected["variants"].as_array_mut() else {
+                    return false;
+                };
+                if element_ids.len() != new_element_ids.len() {
+                    return false;
+                }
+                for row in rows {
+                    let Some(controls) = row["appearance"]["controls"].as_object_mut() else {
+                        return false;
+                    };
+                    for (source, destination) in element_ids.iter().zip(new_element_ids) {
+                        let Some(paint) = controls.get(&source.to_ascii_lowercase()).cloned()
+                        else {
+                            return false;
+                        };
+                        if controls
+                            .insert(destination.to_ascii_lowercase(), paint)
+                            .is_some()
+                        {
+                            return false;
+                        }
+                    }
+                }
+                if !paint_equal(&expected, &next["appearanceBank"]) {
+                    return false;
+                }
+                continue;
+            }
         }
         let mut old = profile.clone();
         if let Some(resources) = next.get("appearanceResources") {
@@ -255,5 +299,62 @@ fn paint_equal(a: &Value, b: &Value) -> bool {
         }
         (Value::Number(_), Value::Number(_)) => super::json_semantically_equal(a, b),
         _ => a == b,
+    }
+}
+
+#[cfg(test)]
+mod arrangement_tests {
+    use super::*;
+    fn documents() -> (
+        OwnedConfigurationDocument,
+        OwnedConfigurationDocument,
+        ConfigurationOperation,
+    ) {
+        let request: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-element-sequences/v1/duplicate-request.json"
+        ))
+        .unwrap();
+        let response: Response = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/owned-element-sequences/v1/duplicate-response.json"
+        ))
+        .unwrap();
+        (
+            projection(&response.before_document_data).unwrap(),
+            projection(&response.after_document_data).unwrap(),
+            serde_json::from_value(request["operation"].clone()).unwrap(),
+        )
+    }
+    #[test]
+    fn duplicate_inherits_each_saved_state_and_preserves_input_ownership() {
+        let (before, after, operation) = documents();
+        assert!(banks_preserved(&before, &after, &operation));
+        assert!(valid_operation_delta(
+            &legacy_view(&before, before.active_profile_id()).unwrap(),
+            &legacy_view(&after, after.active_profile_id()).unwrap(),
+            &operation
+        ));
+    }
+    #[test]
+    fn forged_duplicate_paint_and_unrelated_geometry_are_rejected() {
+        let (before, after, operation) = documents();
+        let mut value: Value = serde_json::from_slice(after.original_bytes()).unwrap();
+        value["profiles"][0]["appearanceBank"]["variants"][0]["appearance"]["controls"]
+            ["ac000000-0000-0000-0000-000000000003"]["icon"]["value"] = json!("forged-state");
+        let forged =
+            OwnedConfigurationDocument::decode(&serde_json::to_vec(&value).unwrap()).unwrap();
+        assert!(!banks_preserved(&before, &forged, &operation));
+        let mut value: Value = serde_json::from_slice(after.original_bytes()).unwrap();
+        let original = value["profiles"][0]["customization"]["elements"][0]["layout"]["centerX"]
+            .as_f64()
+            .unwrap_or(0.5);
+        value["profiles"][0]["customization"]["elements"][0]["layout"]["centerX"] =
+            json!(original + 0.01);
+        let forged =
+            OwnedConfigurationDocument::decode(&serde_json::to_vec(&value).unwrap()).unwrap();
+        assert!(!valid_operation_delta(
+            &legacy_view(&before, before.active_profile_id()).unwrap(),
+            &legacy_view(&forged, forged.active_profile_id()).unwrap(),
+            &operation
+        ));
     }
 }

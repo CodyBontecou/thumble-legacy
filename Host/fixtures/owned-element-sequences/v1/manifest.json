@@ -2,5 +2,11 @@
   "schemaVersion": 1,
   "description": "Native projection captured after geometry, haptic, scheme, reset and preset hide; custom deletion must preserve remaining canonical controls and eight paint states.",
   "sourceSHA256": "243d72ade32e2a7abebaf4aa5753918d97a9779a6e1c34d3dac18849aaade9ce",
-  "removedElementID": "AC000000-0000-0000-0000-000000000002"
+  "removedElementID": "AC000000-0000-0000-0000-000000000002",
+  "files": {
+    "duplicate-request.json": "623a4261ef60173a288f311ead7ce242807a8e94a38bad83389b2679d879e763",
+    "duplicate-response.json": "49ee69246684f433fb974b381f7bb18daacf0171af644b127b109d6c6e2669fb"
+  },
+  "duplicationSourceID": "00000000-0000-0000-0000-000000000109",
+  "duplicationDestinationID": "AC000000-0000-0000-0000-000000000003"
 }

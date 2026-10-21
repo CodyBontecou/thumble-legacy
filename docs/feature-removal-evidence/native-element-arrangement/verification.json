@@ -1,0 +1,65 @@
+{
+  "baseCommit": "d27591a956eced5e8c5c270b4759fd47e34c81bb",
+  "isolatedSource": "/private/tmp/thumble-element-arrangement-bzs49vj4",
+  "nativeSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256": {
+    "Host/crates/thumble-host/src/cli_profile.rs": "c57a6012589c4ee374340b5441e379739e05745b39c256d75123cb774f3b453b",
+    "Host/crates/thumble-host/src/cli_profile_owned.rs": "f2292df090043064488ea330b773e14250f4b85f2e162f85aef4aa595a6718df",
+    "Host/crates/thumble-host/src/owned_operation_bridge.rs": "42f5692a5d92cc201f6e3c5ec73632f50da70da2320dd5798d8b8e092c0332cb",
+    "Sources/CLI/ThumbleCLI.swift": "10bf46637910441e6be9f05ac05db6d69f7357c6fa169f4b506315cf028ae416",
+    "Sources/CLI/ThumbleCLIBackend.swift": "51190890ccab018c6f1ad4e06b3fc99b1900c6b35bfbaaab823a45a863ea57bc",
+    "Sources/Shared/GamepadAppearanceSnapshot.swift": "395f82451c6b790e1bdd44c25dd9a7341237110c852102eb0f03ca057d99fc49",
+    "Sources/Shared/OwnedConfigurationDocument.swift": "51369c59632a789768cfac9c4e499dac380489fb03cd33eeccb87b97748844d9",
+    "Tests/ThumbleCLIBackendTests.swift": "597d897274798b82447fc6a0c5784a2c79f37f66ebfc959b60e76e1860548f09",
+    "scripts/verify-cli-profile-persistence-allowlist.py": "236520bc1315c0bf777a83c9630442a134a7aec67987f9158a4636fae1aa3d13",
+    "scripts/verify-feature-removal-fixtures.py": "e3c39fb8d2a955fe858f82d1b2129226f01f41ea05db1a22017d1d633afe14a2",
+    "scripts/verify-owned-runtime-flow.py": "0d24146f3c2152a3c4d4e73d53c2e1884f1fd3894aed2dffec7d3fe4f6eb01f7"
+  },
+  "logSHA256": {
+    "fixtures.txt": "06f005ec31e07b1605c71d5ad4307a76d40d7dbaa96ffbfb01515f1cc490a5b1",
+    "guardFocused.txt": "50db9fc1410eccb654deee5eab1c75c1a49fa8bef0eb749b20a4fad5cbd58b76",
+    "nativeBridge.txt": "fb0f0f7546adf4b1c3c3a57b5a30e6ff220c67bdb615e2a8b69fc1baf4f4e964",
+    "nativeCLI.txt": "152ed2226c611942eaaf848889de2312543c9603caf2bcb3ef635cafab4337e8",
+    "nativeTests.txt": "d11a50bbe94d831113a77129420e11906b09a734bb622c619e116133da5c6c7c",
+    "oracles.txt": "20821424c088dabfb538f5e29819b91c4d2594a8a2e81ff8e803be5b18bca67c",
+    "process.txt": "3d16b602803e81e17de5363b43194ce50656e3cdcfeef2a2eae7ca7341c69483",
+    "rust.txt": "ad65b13dafa41af13ad9fa337811495dbe01a99cc33cbd126bd6aa88043ad8f4",
+    "rustBuild.txt": "ff1d540b46cec9248e666c63cae4a0316471a485035e77659b5c8c2d5ef53367",
+    "stack.txt": "5db843ac15d2fe8e67247a2839e5bfe67a94c8cea44a9d076644a2ff78d9d4aa"
+  },
+  "rust": {
+    "passed": 573,
+    "failed": 0,
+    "ignored": 3
+  },
+  "apple": {
+    "constrainedStackTests": 41,
+    "nativeXCTests": 7,
+    "swiftTestingCases": 5,
+    "macDebugBuild": true,
+    "iOSDebugBuild": true,
+    "nativeCLIAndBridgeBuild": true
+  },
+  "process": {
+    "cliNativeGeometry": true,
+    "mcpNativeHaptic": true,
+    "commitReplay": true,
+    "restartReplay": true,
+    "retainedAppearanceStates": 8,
+    "exactUnknownInteger": true,
+    "resourceTablePreserved": true,
+    "configurationRevision": 62,
+    "highLevelOnlineOffline": true,
+    "nativeCLIRenameAndDesign": true,
+    "exactDesignCapture": true,
+    "nativeElementSetNudgeResetDelete": true,
+    "nativeElementCreationAndArrangement": true,
+    "desktopGUIRequired": false
+  },
+  "sixExistingNativeOraclesUnchanged": true,
+  "duplicationPaint": "Exact source paint cloned independently in all eight states; tampered clone paint and unrelated geometry refused.",
+  "automaticMigrationActivated": false,
+  "phoneFormatFiveActivated": false,
+  "ownedPortableInterchangeAvailable": false,
+  "physicalAcceptanceCompleted": false
+}

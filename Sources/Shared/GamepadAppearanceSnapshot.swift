@@ -172,10 +172,14 @@ public struct GamepadAppearanceSnapshot: Codable, Equatable, Sendable {
 
     var controlIDs: Set<String> { Set(storage.content.controls.keys) }
 
-    /// Removing a control must not bake resolved paint into other controls.
-    func retainingControlIDs(_ ids: Set<String>) -> Self {
+    /// Identity changes retain saved paint; duplication inherits each state's
+    /// source paint rather than flattening it into the canonical layout.
+    func reconcilingControls(with current: Self, duplicates: [String: String]) -> Self {
         var content = storage.content
-        content.controls = content.controls.filter { ids.contains($0.key) }
+        content.controls = content.controls.filter { current.storage.content.controls[$0.key] != nil }
+        for (id, appearance) in current.storage.content.controls where content.controls[id] == nil {
+            content.controls[id] = duplicates[id].flatMap { storage.content.controls[$0] } ?? appearance
+        }
         return Self(content: content)
     }
 

@@ -1,0 +1,10 @@
+   Compiling thumble-host v0.1.0 (/Users/codybontecou/dev/Thumble/Host/crates/thumble-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.43s
+     Running unittests src/lib.rs (Host/target/debug/deps/thumble_host-526d2897b637c867)
+
+running 2 tests
+test bridge::owned_operation_bridge::arrangement_tests::duplicate_inherits_each_saved_state_and_preserves_input_ownership ... ok
+test bridge::owned_operation_bridge::arrangement_tests::forged_duplicate_paint_and_unrelated_geometry_are_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 268 filtered out; finished in 0.08s
+

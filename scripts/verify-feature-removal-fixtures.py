@@ -221,3 +221,7 @@ assert any(e["id"].lower() == removed_id for e in profile["customization"]["elem
 assert len(profile["appearanceBank"]["variants"]) == 8
 assert all(removed_id in row["appearance"]["controls"] for row in profile["appearanceBank"]["variants"])
 print("Owned chained element fixture verified: reset/hide followed by custom removal")
+for name, expected in sequence_contract.get("files", {}).items():
+    assert Path(name).name == name
+    assert hashlib.sha256((sequence_root / name).read_bytes()).hexdigest() == expected
+print("Owned duplication packets verified against native sequence fixture hashes")

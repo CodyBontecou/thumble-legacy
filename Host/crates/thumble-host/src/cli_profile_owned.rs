@@ -875,4 +875,93 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn creation_and_duplication_ids_are_deterministic_and_explicit_ids_survive() {
+        let (_temp, _lease, paths) = fixture();
+        let state = load(&paths);
+        let catalog = catalog_from_state(&state).unwrap();
+        let invocation = Uuid::new_v4();
+        let add = CliProfileCommand::ElementAdd {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            kind: ElementKind::Button,
+            element_id: None,
+            changes_json: "{}".into(),
+        };
+        let first = plan_transaction(&add, &catalog, &state.profiles, invocation).unwrap();
+        assert_eq!(
+            first.operations,
+            plan_transaction(&add, &catalog, &state.profiles, invocation)
+                .unwrap()
+                .operations
+        );
+        let id = state.profiles[0]["customization"]["elements"][0]["id"]
+            .as_str()
+            .unwrap();
+        let duplicate = CliProfileCommand::ElementDuplicate {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            elements: vec![id.into()],
+            offset_x: 0.025,
+            offset_y: 0.025,
+        };
+        let first = plan_transaction(&duplicate, &catalog, &state.profiles, invocation).unwrap();
+        assert_eq!(
+            first.operations,
+            plan_transaction(&duplicate, &catalog, &state.profiles, invocation)
+                .unwrap()
+                .operations
+        );
+        assert!(
+            matches!(&first.operations[0], ConfigurationOperation::ElementDuplicate { element_ids, new_element_ids, .. } if element_ids.len() == 1 && new_element_ids.len() == 1 && !new_element_ids[0].eq_ignore_ascii_case(id))
+        );
+        let explicit = Uuid::new_v4();
+        let add = CliProfileCommand::ElementAdd {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            kind: ElementKind::Text,
+            element_id: Some(explicit),
+            changes_json: r#"{"label":"Text layer"}"#.into(),
+        };
+        assert!(
+            matches!(&plan_transaction(&add, &catalog, &state.profiles, invocation).unwrap().operations[0], ConfigurationOperation::ElementAdd { element_id, .. } if element_id == &explicit.to_string())
+        );
+    }
+    #[test]
+    fn arrangement_rejects_repeated_controls_invalid_counts_and_conflicting_kinds() {
+        let (_temp, _lease, paths) = fixture();
+        let state = load(&paths);
+        let catalog = catalog_from_state(&state).unwrap();
+        let id = state.profiles[0]["customization"]["elements"][0]["id"]
+            .as_str()
+            .unwrap();
+        for command in [
+            CliProfileCommand::ElementAlign {
+                target: ProfileSelector::Active,
+                variant: ConfigurationVariant::Primary,
+                elements: vec![id.into(), id.into()],
+                alignment: ControlAlignment::Left,
+            },
+            CliProfileCommand::ElementDistribute {
+                target: ProfileSelector::Active,
+                variant: ConfigurationVariant::Primary,
+                elements: vec![id.into()],
+                distribution: ControlDistribution::HorizontalCenters,
+            },
+        ] {
+            assert!(plan_transaction(&command, &catalog, &state.profiles, Uuid::new_v4()).is_err());
+        }
+        let bad = request(CliProfileCommand::ElementAdd {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            kind: ElementKind::Button,
+            element_id: None,
+            changes_json: r#"{"kind":"text"}"#.into(),
+        });
+        assert_eq!(
+            execute_offline_authority(&paths, &bad).error.unwrap().code,
+            "invalid_element_changes"
+        );
+        assert!(!paths.drafts_dir.exists());
+    }
 }

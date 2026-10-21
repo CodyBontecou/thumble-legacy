@@ -38,3 +38,5 @@ Legacy `UserDefaults`, credentials, active/default profile identities, game laun
 Track implementation evidence in `feature-removal-progress.md`. Historical desktop verification remains historical; only tools-only acceptance proves this cutover complete.
 
 Native element set/nudge/delete/reset now use typed live/offline authority transactions. Rich non-file set changes use the bounded MCP-compatible changes object; unsupported legacy flags fail explicitly. Preset deletion preserves identity by hiding, custom deletion reconciles all eight appearance states without persisting display paint. Remaining creation/duplication/arrangement, file-backed artwork import, owned portable interchange and phone reconciliation still gate desktop retirement.
+
+Element creation/duplication/alignment/distribution have now joined the typed authority path. All eight primary element-edit handlers avoid legacy persistence, with stable retry IDs and source-preserving paint reconciliation. File-backed artwork workflows, owned portable interchange, phone reconciliation and migration activation still gate retirement.

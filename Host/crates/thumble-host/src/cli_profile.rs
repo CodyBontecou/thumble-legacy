@@ -9,10 +9,11 @@ use crate::control::ConfigurationSaveSummary;
 use crate::draft_operation::{
     is_supported_device_frame_id, ConfigurationControlBarItem, ConfigurationGamepadButton,
     ConfigurationOperation, ConfigurationOrientationPreference, ConfigurationOutputMode,
-    ConfigurationVariant, ControlBarItemChanges, ControlBarMoveDirection, ControllerTemplate,
-    CustomizationChanges, GamepadOutputEdit, GeneratedProfileDestination, GenerationPreset,
-    KeyboardOutputEdit, LayerMoveDestination, LayoutRepairCanvas, LayoutRepairTarget,
-    OrientationVariant, SemanticKeyStroke, SemanticModifier, StyleAppearance,
+    ConfigurationVariant, ControlAlignment, ControlBarItemChanges, ControlBarMoveDirection,
+    ControlDistribution, ControllerTemplate, CustomizationChanges, ElementKind, GamepadOutputEdit,
+    GeneratedProfileDestination, GenerationPreset, KeyboardOutputEdit, LayerMoveDestination,
+    LayoutRepairCanvas, LayoutRepairTarget, OrientationVariant, SemanticKeyStroke,
+    SemanticModifier, StyleAppearance,
 };
 use crate::drafts::{ConfigurationDraft, DraftError, DraftStore};
 use crate::paths::HostPaths;
@@ -193,6 +194,40 @@ pub enum CliProfileCommand {
         canvas: Box<LayoutRepairCanvas>,
         #[serde(rename = "includeLocked")]
         include_locked: bool,
+    },
+    #[serde(rename = "element.add")]
+    ElementAdd {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        kind: ElementKind,
+        #[serde(rename = "elementID", default)]
+        element_id: Option<Uuid>,
+        #[serde(rename = "changesJSON")]
+        changes_json: String,
+    },
+    #[serde(rename = "element.duplicate")]
+    ElementDuplicate {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        elements: Vec<String>,
+        #[serde(rename = "offsetX")]
+        offset_x: f64,
+        #[serde(rename = "offsetY")]
+        offset_y: f64,
+    },
+    #[serde(rename = "element.align")]
+    ElementAlign {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        elements: Vec<String>,
+        alignment: ControlAlignment,
+    },
+    #[serde(rename = "element.distribute")]
+    ElementDistribute {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        elements: Vec<String>,
+        distribution: ControlDistribution,
     },
     #[serde(rename = "element.set")]
     ElementSet {
@@ -576,6 +611,10 @@ impl CliProfileCommand {
             Self::TemplateInstall { .. } => "template.install",
             Self::CustomizationSet { .. } => "customization.set",
             Self::CustomizationFix { .. } => "customization.fix",
+            Self::ElementAdd { .. } => "element.add",
+            Self::ElementDuplicate { .. } => "element.duplicate",
+            Self::ElementAlign { .. } => "element.align",
+            Self::ElementDistribute { .. } => "element.distribute",
             Self::ElementSet { .. } => "element.set",
             Self::ElementNudge { .. } => "element.nudge",
             Self::ElementDelete { .. } => "element.delete",
@@ -2326,6 +2365,41 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
             "expected configuration revision is accepted only for mutations",
         ));
     }
+    if let CliProfileCommand::ElementAdd {
+        kind,
+        element_id,
+        changes_json,
+        ..
+    } = &request.command
+    {
+        let changes = decode_element_changes(changes_json)?;
+        if changes.kind.is_some_and(|value| value != *kind) {
+            return Err(TransactionFailure::new(
+                "invalid_element_changes",
+                "creation kind conflicts with changes.kind",
+            ));
+        }
+        let id = element_id.unwrap_or_else(|| {
+            deterministic_uuid(
+                request.invocation_id.unwrap_or(Uuid::nil()),
+                "element.add:control",
+            )
+        });
+        ConfigurationOperation::ElementAdd {
+            profile_id: Uuid::nil().to_string(),
+            variant: ConfigurationVariant::Primary,
+            element_id: id.to_string(),
+            kind: *kind,
+            changes: Box::new(changes),
+        }
+        .validate_bridge_input()
+        .map_err(|_| {
+            TransactionFailure::new(
+                "invalid_element_changes",
+                "creation changes are outside typed bounds",
+            )
+        })?;
+    }
     if let CliProfileCommand::ElementSet {
         changes_json,
         element,
@@ -2645,6 +2719,94 @@ fn plan_transaction(
     invocation_id: Uuid,
 ) -> Result<PlannedTransaction, TransactionFailure> {
     match command {
+        CliProfileCommand::ElementAdd {
+            target,
+            variant,
+            kind,
+            element_id,
+            changes_json,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let id = element_id
+                .unwrap_or_else(|| deterministic_uuid(invocation_id, "element.add:control"));
+            let operation = ConfigurationOperation::ElementAdd {
+                profile_id: selected.profile_id.to_string(),
+                variant: *variant,
+                element_id: id.to_string(),
+                kind: *kind,
+                changes: Box::new(decode_element_changes(changes_json)?),
+            };
+            operation.validate_bridge_input().map_err(|_| {
+                TransactionFailure::new(
+                    "invalid_element_changes",
+                    "creation changes are outside typed bounds",
+                )
+            })?;
+            Ok(plan_one(operation, selected.name.clone()))
+        }
+        CliProfileCommand::ElementDuplicate {
+            target,
+            variant,
+            elements,
+            offset_x,
+            offset_y,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let ids =
+                resolve_transaction_elements(&profiles[selected.index], *variant, elements, 1)?;
+            validate_group_offset(*offset_x, "offsetX")?;
+            validate_group_offset(*offset_y, "offsetY")?;
+            let new_ids = deterministic_ids(invocation_id, "element.duplicate:control", ids.len());
+            Ok(plan_one(
+                ConfigurationOperation::ElementDuplicate {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_ids: ids,
+                    new_element_ids: new_ids,
+                    offset_x: *offset_x,
+                    offset_y: *offset_y,
+                },
+                selected.name.clone(),
+            ))
+        }
+        CliProfileCommand::ElementAlign {
+            target,
+            variant,
+            elements,
+            alignment,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let ids =
+                resolve_transaction_elements(&profiles[selected.index], *variant, elements, 2)?;
+            Ok(plan_one(
+                ConfigurationOperation::ElementAlign {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_ids: ids,
+                    alignment: *alignment,
+                },
+                selected.name.clone(),
+            ))
+        }
+        CliProfileCommand::ElementDistribute {
+            target,
+            variant,
+            elements,
+            distribution,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let ids =
+                resolve_transaction_elements(&profiles[selected.index], *variant, elements, 3)?;
+            Ok(plan_one(
+                ConfigurationOperation::ElementDistribute {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_ids: ids,
+                    distribution: *distribution,
+                },
+                selected.name.clone(),
+            ))
+        }
         CliProfileCommand::ElementSet {
             target,
             variant,
@@ -3675,6 +3837,33 @@ fn validate_cli_element_selector(value: &str) -> Result<(), TransactionFailure> 
         ));
     }
     Ok(())
+}
+
+fn resolve_transaction_elements(
+    profile: &Value,
+    variant: ConfigurationVariant,
+    selectors: &[String],
+    minimum: usize,
+) -> Result<Vec<String>, TransactionFailure> {
+    if selectors.len() < minimum || selectors.len() > 128 {
+        return Err(TransactionFailure::new(
+            "invalid_element_selection",
+            "element selection has an invalid count",
+        ));
+    }
+    let mut seen = BTreeSet::new();
+    let mut result = Vec::new();
+    for selector in selectors {
+        let id = resolve_transaction_element_id(profile, variant, selector)?;
+        if !seen.insert(id.clone()) {
+            return Err(TransactionFailure::new(
+                "invalid_element_selection",
+                "each selected control must be distinct",
+            ));
+        }
+        result.push(id);
+    }
+    Ok(result)
 }
 
 fn resolve_transaction_element_id(
@@ -6045,7 +6234,11 @@ fn replay_profile_names(
             .as_ref()
             .map(|name| name.trim().to_owned())
             .unwrap_or_else(|| template.display_name().to_owned())],
-        CliProfileCommand::ElementSet { target, .. }
+        CliProfileCommand::ElementAdd { target, .. }
+        | CliProfileCommand::ElementDuplicate { target, .. }
+        | CliProfileCommand::ElementAlign { target, .. }
+        | CliProfileCommand::ElementDistribute { target, .. }
+        | CliProfileCommand::ElementSet { target, .. }
         | CliProfileCommand::ElementNudge { target, .. }
         | CliProfileCommand::ElementDelete { target, .. }
         | CliProfileCommand::ElementReset { target, .. }

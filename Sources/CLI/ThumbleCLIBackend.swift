@@ -586,6 +586,10 @@ final class ThumbleCLIProfileBackend {
         case templateInstall(ControllerTemplate, name: String?, select: Bool, makeDefault: Bool)
         case customizationSet(ProfileSelector, ConfigurationVariant, [CustomizationChanges], frameID: String?)
         case customizationFix(ProfileSelector, ConfigurationVariant, LayoutRepairTarget, LayoutRepairCanvas, includeLocked: Bool)
+        case elementAdd(ProfileSelector, ConfigurationVariant, kind: GamepadCustomControlKind, elementID: UUID?, changesJSON: String)
+        case elementDuplicate(ProfileSelector, ConfigurationVariant, elements: [String], offsetX: Double, offsetY: Double)
+        case elementAlign(ProfileSelector, ConfigurationVariant, elements: [String], alignment: String)
+        case elementDistribute(ProfileSelector, ConfigurationVariant, elements: [String], distribution: String)
         case elementSet(ProfileSelector, ConfigurationVariant, element: String, changesJSON: String)
         case elementNudge(ProfileSelector, ConfigurationVariant, element: String, deltaX: Double, deltaY: Double)
         case elementDelete(ProfileSelector, ConfigurationVariant, element: String)
@@ -647,7 +651,7 @@ final class ThumbleCLIProfileBackend {
         private enum CodingKeys: String, CodingKey {
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
-            case specJSON, requestedGameName, element, changesJSON
+            case specJSON, requestedGameName, element, changesJSON, elements, kind, alignment, distribution
             case template, select, makeDefault, styleID, elementID, appearance
             case button, sequence, mode, keyboardEdit, gamepadEdit
             case variant, frameID, items, item, direction, changes
@@ -701,6 +705,32 @@ final class ThumbleCLIProfileBackend {
                 try container.encode(appendAsCopies, forKey: .appendAsCopies)
                 try container.encode(select, forKey: .select)
                 try container.encode(makeDefault, forKey: .makeDefault)
+            case .elementAdd(let target, let variant, let kind, let elementID, let changesJSON):
+                try container.encode("element.add", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(kind, forKey: .kind)
+                try container.encodeIfPresent(elementID, forKey: .elementID)
+                try container.encode(changesJSON, forKey: .changesJSON)
+            case .elementDuplicate(let target, let variant, let elements, let offsetX, let offsetY):
+                try container.encode("element.duplicate", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(elements, forKey: .elements)
+                try container.encode(offsetX, forKey: .offsetX)
+                try container.encode(offsetY, forKey: .offsetY)
+            case .elementAlign(let target, let variant, let elements, let alignment):
+                try container.encode("element.align", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(elements, forKey: .elements)
+                try container.encode(alignment, forKey: .alignment)
+            case .elementDistribute(let target, let variant, let elements, let distribution):
+                try container.encode("element.distribute", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(elements, forKey: .elements)
+                try container.encode(distribution, forKey: .distribution)
             case .elementSet(let target, let variant, let element, let changesJSON):
                 try container.encode("element.set", forKey: .type)
                 try container.encode(target, forKey: .target)

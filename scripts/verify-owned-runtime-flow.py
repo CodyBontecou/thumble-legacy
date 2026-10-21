@@ -266,12 +266,57 @@ def main():
                     assert all(custom_element_id not in row['appearance']['controls'] for row in removed['appearanceBank']['variants'])
                     assert len(removed['appearanceBank']['variants']) == 8
                     assert '0.12345678901234567890123456789' in state_file.read_text()
+                    # Creation and arrangement run after reset/hide/removal, so
+                    # resolving paint into existing canonical controls is observable.
+                    baseline_profile = json.loads(state_file.read_bytes())['profiles'][0]
+                    baseline_elements = {item['id']: item for item in baseline_profile['customization']['elements']}
+                    created_id = str(uuid.uuid4()).upper()
+                    create_args = ('element', 'add', 'button', '--id', created_id, '--label', 'Arrange A', '--x', '0.2', '--y', '0.6', '--invocation-id', str(uuid.uuid4()))
+                    native_cli(*create_args)
+                    created_bytes = state_file.read_bytes()
+                    native_cli(*create_args)
+                    assert state_file.read_bytes() == created_bytes
+                    old_ids = {item['id'] for item in json.loads(created_bytes)['profiles'][0]['customization']['elements']}
+                    auto_args = ('element', 'add', 'text', '--label', 'Arrange B', '--x', '0.65', '--y', '0.3', '--invocation-id', str(uuid.uuid4()))
+                    native_cli(*auto_args)
+                    text_bytes = state_file.read_bytes()
+                    native_cli(*auto_args)
+                    assert state_file.read_bytes() == text_bytes
+                    text_id = next(item['id'] for item in json.loads(text_bytes)['profiles'][0]['customization']['elements'] if item['id'] not in old_ids)
+                    before_duplicate = json.loads(text_bytes)['profiles'][0]
+                    before_ids = {item['id'] for item in before_duplicate['customization']['elements']}
+                    duplicate_args = ('element', 'duplicate', created_id, '--offset-x', '0.3', '--offset-y', '0.05', '--invocation-id', str(uuid.uuid4()))
+                    native_cli(*duplicate_args)
+                    duplicate_bytes = state_file.read_bytes()
+                    native_cli(*duplicate_args)
+                    assert state_file.read_bytes() == duplicate_bytes
+                    duplicated = json.loads(duplicate_bytes)['profiles'][0]
+                    clone_id = next(item['id'] for item in duplicated['customization']['elements'] if item['id'] not in before_ids)
+                    for old_row, new_row in zip(before_duplicate['appearanceBank']['variants'], duplicated['appearanceBank']['variants']):
+                        assert new_row['appearance']['controls'][clone_id.lower()] == old_row['appearance']['controls'][created_id.lower()]
+                    native_cli('element', 'align', 'horizontal-centers', created_id, text_id, '--invocation-id', str(uuid.uuid4()))
+                    aligned = {item['id']: item for item in json.loads(state_file.read_bytes())['profiles'][0]['customization']['elements']}
+                    assert abs(aligned[created_id]['layout']['centerX'] - aligned[text_id]['layout']['centerX']) < 1e-7
+                    native_cli('element', 'distribute', 'horizontal-centers', created_id, text_id, clone_id, '--invocation-id', str(uuid.uuid4()))
+                    arranged = {item['id']: item for item in json.loads(state_file.read_bytes())['profiles'][0]['customization']['elements']}
+                    centers = sorted(arranged[item]['layout']['centerX'] for item in (created_id, text_id, clone_id))
+                    assert abs(centers[1] - (centers[0] + centers[2]) / 2) < 1e-7
+                    for identity, original in baseline_elements.items():
+                        assert arranged[identity] == original
+                    before_reject = state_file.read_bytes()
+                    invalid = subprocess.run([str(install / 'thumble'), 'element', 'align', 'left', created_id, created_id], env=env, capture_output=True, text=True, timeout=30)
+                    assert invalid.returncode != 0 and state_file.read_bytes() == before_reject
+                    for identity in (created_id, text_id, clone_id):
+                        native_cli('element', 'delete', identity, '--invocation-id', str(uuid.uuid4()))
+                    cleaned = json.loads(state_file.read_bytes())['profiles'][0]
+                    assert cleaned['appearanceBank'] == baseline_profile['appearanceBank']
+                    assert {item['id']: item for item in cleaned['customization']['elements']} == baseline_elements
                     high_level = True
                 print(json.dumps(dict(cliNativeGeometry=True, mcpNativeHaptic=True,
                                       commitReplay=True, restartReplay=True, retainedAppearanceStates=8,
                                       exactUnknownInteger=True, resourceTablePreserved=True,
                                       configurationRevision=json.loads(state_file.read_bytes())['configurationRevision'], highLevelOnlineOffline=high_level,
-                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, nativeElementSetNudgeResetDelete=high_level, desktopGUIRequired=False)))
+                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, nativeElementSetNudgeResetDelete=high_level, nativeElementCreationAndArrangement=high_level, desktopGUIRequired=False)))
             finally:
                 if mcp is not None:
                     mcp.terminate()
