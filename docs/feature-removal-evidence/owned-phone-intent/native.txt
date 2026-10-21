@@ -1,0 +1,1 @@
+{"appearanceStates": 8, "canonicalBindingsAndResources": true, "commitReplay": true, "configurationRevision": 42, "exactMetadata": true, "nativePhoneIntent": true, "stagingReplay": true, "wireActivation": false}

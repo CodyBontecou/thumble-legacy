@@ -260,3 +260,17 @@ for name, digest in contract["sources"].items():
     assert not Path(name).is_absolute() and ".." not in Path(name).parts
     assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
 print("Portable legacy preparation verified: five opt-in native responses; original fixtures unchanged")
+
+# Canonical phone intents are a staging contract, not an activated transfer format.
+phone = repo / "Host/fixtures/owned-phone-edits/v1"
+contract = json.loads((phone / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1 and contract["schemaVersion"] == 1
+assert contract["wireActivated"] is False and contract["advertisedProfileFormats"] == [4]
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((phone / name).read_bytes()).hexdigest() == digest
+assert len(json.loads((phone / "cases.json").read_text())["cases"]) == contract["caseCount"]
+print("Owned phone intent fixtures verified; transport and peer activation remain gated")
+schema = Path(contract["schema"])
+assert not schema.is_absolute() and ".." not in schema.parts
+assert hashlib.sha256((repo / schema).read_bytes()).hexdigest() == contract["schemaSHA256"]

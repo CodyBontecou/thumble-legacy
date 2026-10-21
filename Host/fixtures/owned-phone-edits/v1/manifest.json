@@ -1,0 +1,15 @@
+{
+  "fixtureVersion": 1,
+  "schemaVersion": 1,
+  "caseCount": 14,
+  "files": {
+    "intent.json": "20a8b2f26fe007dfa8064dd5a91d9367a50351ffaf8ff6f8fcbcfdfbb7392a6c",
+    "cases.json": "10bbdb990568ca5d3bf5d96f7ce05fca6831fb7323795951bd80a3b284033287"
+  },
+  "wireActivated": false,
+  "advertisedProfileFormats": [
+    4
+  ],
+  "schema": "docs/owned-phone-edit-v1.schema.json",
+  "schemaSHA256": "d927091e0abdd3e9468b65a45fc96f4037ac4b025ba70e30a04f8014506af52a"
+}

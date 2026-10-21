@@ -15,6 +15,7 @@ pub mod native_configuration;
 pub mod output;
 pub mod owned_drafts;
 pub mod owned_migration;
+pub mod owned_phone_edit;
 mod owned_rebase;
 pub mod paths;
 mod phone_appearance;

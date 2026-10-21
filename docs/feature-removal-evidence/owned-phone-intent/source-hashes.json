@@ -1,0 +1,12 @@
+{
+  "Host/crates/thumble-protocol/src/lib.rs": "1a4838b018fc4b7286857f6f954dd4872afb5182117197deca9f5acc6668fcbd",
+  "Host/crates/thumble-protocol/src/owned_phone_edit.rs": "970fbf9ada5de1096aeebb803d095a9e961dee5d03efadc9facef5b34aa7a81e",
+  "Host/crates/thumble-host/src/lib.rs": "6300df1020f3df95a60564048d729b25dbc8a4e96861e9297a29560844289089",
+  "Host/crates/thumble-host/src/owned_phone_edit.rs": "bbbd5c086e1e61d5d712efb01df78b087dd0278692c19788dd6ff41b4a38deed",
+  "Host/crates/thumble-host/examples/verify_owned_phone_edit.rs": "5b165be105a250de08b782657fc10ba8445a3eeb11dc1e513669cd7378e59b38",
+  "scripts/verify-feature-removal-fixtures.py": "7a55abc186d849f3b748d867eb2e9b91f9da6a3c0a635cd59bb6e7bd4af10dca",
+  "docs/owned-phone-edit-v1.schema.json": "d927091e0abdd3e9468b65a45fc96f4037ac4b025ba70e30a04f8014506af52a",
+  "Host/fixtures/owned-phone-edits/v1/intent.json": "20a8b2f26fe007dfa8064dd5a91d9367a50351ffaf8ff6f8fcbcfdfbb7392a6c",
+  "Host/fixtures/owned-phone-edits/v1/cases.json": "10bbdb990568ca5d3bf5d96f7ce05fca6831fb7323795951bd80a3b284033287",
+  "Host/fixtures/owned-phone-edits/v1/manifest.json": "c6579df494e22b5df2e029389d2b089995110fba2bef9e62587b08388b61c72a"
+}

@@ -1,0 +1,48 @@
+{
+  "baseCommit": "aece35f21cb644052de7e3b078f7a518012df133",
+  "isolatedSource": "/private/tmp/thumble-owned-phone-3lzpqurx",
+  "nativeSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "apple-source-hashes.json",
+  "logSHA256": {
+    "native.txt": "ada864d743793b1f72954dc3e8305e8147c93711782af4c8dfca859f28ecb29d",
+    "rust.txt": "89df10fffbdbdb1130a0e5cb7c4b80ce43b3f0766626cfddd0ed5b546bc618b1",
+    "fixtures.txt": "9bdb0ff14354f5d0eceb8215380fe3144bbf361cc983419f480e799da7459a6c",
+    "stack.txt": "d7243bd8f244b0877cb25251b142f67295baf0fce2c251dd8a4069f1fc7248ed",
+    "nativeHarnessBuild.txt": "7cc326aac6492d4a21222fb05a61f7de97930a4e1d30990d0255b70a3e58daef"
+  },
+  "binarySHA256": {
+    "verify_owned_phone_edit": "41311c31fba676e39d06b201cd403b73f91568bcaf004765b3261d08e2b89d11",
+    "thumble-bridge": "f83f6b0c2e475f72fa4da542589f711fd00d7b6e2290af45fe450f8d09ad0a62"
+  },
+  "rust": {
+    "passed": 605,
+    "failed": 0,
+    "ignored": 3,
+    "newProtocolCases": 3,
+    "newStagingCases": 5
+  },
+  "stack": {
+    "passed": 41,
+    "failed": 0,
+    "macAndIOSDebugBuilds": true,
+    "nativeSourcesUnchanged": true
+  },
+  "native": {
+    "appearanceStates": 8,
+    "canonicalBindingsAndResources": true,
+    "commitReplay": true,
+    "configurationRevision": 42,
+    "exactMetadata": true,
+    "nativePhoneIntent": true,
+    "stagingReplay": true,
+    "wireActivation": false
+  },
+  "wireDispatchImplemented": false,
+  "mobileAdaptersImplemented": false,
+  "profileFormatsAdvertised": [
+    4
+  ],
+  "automaticMigrationActivated": false,
+  "desktopGUIRetired": false
+}

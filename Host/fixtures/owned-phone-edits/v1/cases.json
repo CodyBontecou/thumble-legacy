@@ -1,0 +1,323 @@
+{
+  "fixtureVersion": 1,
+  "cases": [
+    {
+      "name": "geometry-delete-color",
+      "allowed": true,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "future-schema",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 2,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "missing-revision",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 0,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "binding-payload",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark",
+        "outputBindings": {}
+      }
+    },
+    {
+      "name": "full-replacement",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark",
+        "gamepadCustomization": {}
+      }
+    },
+    {
+      "name": "portrait-variant",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark",
+        "orientation": "portrait"
+      }
+    },
+    {
+      "name": "geometry-overflow",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 2,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "duplicate-owner",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          },
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "removed-and-edited",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002",
+          "00000000-0000-0000-0000-000000000109"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "uuid-urn",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "urn:uuid:aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "uuid-simple",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000000000000000000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "unsafe-control-field",
+      "allowed": false,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "aa000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false,
+            "haptic": {
+              "style": "heavy"
+            }
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "uppercase-canonical-uuid",
+      "allowed": true,
+      "request": {
+        "schemaVersion": 1,
+        "editID": "AA000000-0000-0000-0000-000000000001",
+        "profileID": "ea000000-0000-0000-0000-000000000001",
+        "baseConfigurationRevision": 41,
+        "controlEdits": [
+          {
+            "controlID": "00000000-0000-0000-0000-000000000109",
+            "centerX": 0.61,
+            "centerY": 0.42,
+            "rotationDegrees": 12,
+            "isHidden": false
+          }
+        ],
+        "removedControlIDs": [
+          "ac000000-0000-0000-0000-000000000002"
+        ],
+        "colorScheme": "dark"
+      }
+    },
+    {
+      "name": "duplicate-json-key",
+      "allowed": false,
+      "raw": "{\"schemaVersion\":1,\"schemaVersion\":1}"
+    }
+  ]
+}

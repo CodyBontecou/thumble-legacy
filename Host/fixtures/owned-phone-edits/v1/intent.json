@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "editID": "aa000000-0000-0000-0000-000000000001",
+  "profileID": "ea000000-0000-0000-0000-000000000001",
+  "baseConfigurationRevision": 41,
+  "controlEdits": [
+    {
+      "controlID": "00000000-0000-0000-0000-000000000109",
+      "centerX": 0.61,
+      "centerY": 0.42,
+      "rotationDegrees": 12,
+      "isHidden": false
+    }
+  ],
+  "removedControlIDs": [
+    "ac000000-0000-0000-0000-000000000002"
+  ],
+  "colorScheme": "dark"
+}

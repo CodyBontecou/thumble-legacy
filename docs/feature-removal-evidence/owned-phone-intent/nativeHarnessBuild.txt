@@ -1,0 +1,4 @@
+   Compiling thumble-protocol v0.1.0 (/private/tmp/thumble-owned-phone-3lzpqurx/Host/crates/thumble-protocol)
+   Compiling thumble-core v0.1.0 (/private/tmp/thumble-owned-phone-3lzpqurx/Host/crates/thumble-core)
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-phone-3lzpqurx/Host/crates/thumble-host)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.88s

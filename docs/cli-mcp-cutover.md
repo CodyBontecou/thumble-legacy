@@ -46,3 +46,5 @@ The pure owned-profile artifact codec now preserves exact version-5 data and val
 Owned portable import/export is now available through native CLI profile commands and dedicated MCP tools for explicit schema-4 authorities, with revision checks, deterministic retry identities and persistent raw metadata. Explicit legacy conversion, phone reconciliation/format activation, file-backed artwork workflows and automatic migration still gate desktop retirement.
 
 Version-4 file preparation is now exposed as a read-only host CLI/MCP step, returning an owned artifact and exact-source/layout reviews. It handles plain inline artwork and explicitly supplied package archives without authorizing authority migration or phone activation. See [legacy import preparation](legacy-import-preparation.md).
+
+The owned-phone intent and private-draft staging backend now preserve native geometry/deletion/color behavior with revision and replay checks. Authenticated wire dispatch, matching acknowledgments and retained mobile journal adapters remain required before paired format-5 or automatic migration activation. See [the staged contract](owned-phone-edit-contract.md).

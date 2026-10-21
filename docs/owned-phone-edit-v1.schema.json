@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "thumble://schemas/owned-phone-edit-v1",
+  "title": "Owned phone layout intent v1",
+  "$comment": "Transport remains disabled. In addition to this structural schema, reject duplicate control IDs across edits and removals and require their combined count <=128. The host validates ownership and base revision before staging.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "editID",
+    "profileID",
+    "baseConfigurationRevision"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "editID": {
+      "$ref": "#/$defs/uuid"
+    },
+    "profileID": {
+      "$ref": "#/$defs/uuid"
+    },
+    "baseConfigurationRevision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18446744073709551615
+    },
+    "controlEdits": {
+      "type": "array",
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/controlEdit"
+      }
+    },
+    "removedControlIDs": {
+      "type": "array",
+      "maxItems": 128,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/uuid"
+      }
+    },
+    "colorScheme": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "system",
+        "light",
+        "dark",
+        null
+      ]
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "colorScheme"
+      ],
+      "properties": {
+        "colorScheme": {
+          "not": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "required": [
+        "controlEdits"
+      ],
+      "properties": {
+        "controlEdits": {
+          "minItems": 1
+        }
+      }
+    },
+    {
+      "required": [
+        "removedControlIDs"
+      ],
+      "properties": {
+        "removedControlIDs": {
+          "minItems": 1
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "not": {
+        "const": "00000000-0000-0000-0000-000000000000"
+      }
+    },
+    "controlEdit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "controlID"
+      ],
+      "properties": {
+        "controlID": {
+          "$ref": "#/$defs/uuid"
+        },
+        "centerX": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "centerY": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "widthScale": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.001,
+          "maximum": 12
+        },
+        "heightScale": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0.001,
+          "maximum": 12
+        },
+        "rotationDegrees": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -36000,
+          "maximum": 36000
+        },
+        "isHidden": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "isLocationLocked": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "zIndex": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": -100,
+          "maximum": 100
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "centerX"
+          ],
+          "properties": {
+            "centerX": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "centerY"
+          ],
+          "properties": {
+            "centerY": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "widthScale"
+          ],
+          "properties": {
+            "widthScale": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "heightScale"
+          ],
+          "properties": {
+            "heightScale": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "rotationDegrees"
+          ],
+          "properties": {
+            "rotationDegrees": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "isHidden"
+          ],
+          "properties": {
+            "isHidden": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "isLocationLocked"
+          ],
+          "properties": {
+            "isLocationLocked": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "zIndex"
+          ],
+          "properties": {
+            "zIndex": {
+              "not": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
