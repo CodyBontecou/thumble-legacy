@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "scope": "Native phone vaults, control-v2 clients/host completion, synthetic fixtures/probe and headless OS-provider CI",
+  "localSnapshot": "8f216c9635c87cbd4ae44eb6be8de5bae9f12590",
+  "expectedPublicParent": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "bytes": 7749,
+      "sha256": "efa5f4558a0727601dddf2f8fc40208b6fde3fb6b359f29a4f9c1f36ccaf2503"
+    },
+    {
+      "path": "Rewrite/.gitignore",
+      "bytes": 130,
+      "sha256": "2f20541abeb692ee15489eb59255c56adac646e7ac58cea849cd10edf30ec655"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 11247,
+      "sha256": "b20f27aa766b6bb3d95cfd85370e6d7aa28d66e60cf6771278667882af53b950"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/build.gradle.kts",
+      "bytes": 1096,
+      "sha256": "29be5939ae8987d1b4bae3829761b37a92cbecc72dcc04ec00abf244bda2bbf2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/androidTest/kotlin/com/thumble/rewrite/input/PhoneCredentialDeviceTest.kt",
+      "bytes": 2039,
+      "sha256": "64924cd32446884be74ec32d8e44e6ba2ebe20c7384f6b9c6614bddbc58dc6b9"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/AndroidManifest.xml",
+      "bytes": 149,
+      "sha256": "678647a824ef7ab16066708585790ab265135d32fdf84bcd918a4b050f8891b9"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneCredential.kt",
+      "bytes": 11540,
+      "sha256": "957903b3903d1eebb0cc790ec9daf71fa49e88e6f8e917c051c248056b315812"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneEnrollment.kt",
+      "bytes": 14869,
+      "sha256": "d72413bf364734465f101091e563f7b1b444261611bc80a351d48f35801ccc7a"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneCredentialTest.kt",
+      "bytes": 7508,
+      "sha256": "062895abf8d66a157bda4ec9a2dbc88064b921c70b5494a49d885ba4c1569556"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneEnrollmentTest.kt",
+      "bytes": 14480,
+      "sha256": "04400162a6fa794afd941a549e71f211a8716ad875ccef272ed970e0c945566d"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneCredential.swift",
+      "bytes": 7819,
+      "sha256": "ccb75c01d339e1656486aa37d0c5eaee6d89af26296d01571f3c03b5c80e3241"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneEnrollment.swift",
+      "bytes": 10859,
+      "sha256": "d5b6849168256ea58767d7d9624e11f96aee03835ebb4a7780087d253f27cb5e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneCredentialTests.swift",
+      "bytes": 7368,
+      "sha256": "ed2c04f9164457e8f252c3a6b42e2670280d268d9ad016a20b0876047a500ad7"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneEnrollmentTests.swift",
+      "bytes": 11390,
+      "sha256": "8331fcecf19d69e9233e3eeb9907462a128ef35e78117c1b036eba81d3476992"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/enrollment_probe.rs",
+      "bytes": 2796,
+      "sha256": "59e8e5d0c8f342a4bf1966a97e7578194a3b679050da4ef3012bd0d889303141"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 27709,
+      "sha256": "28d5e5a363e12125d0ad7589e0f4a672d6f953627143b92f9dd9234fac4e6f8c"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/enrollment-control-v2.json",
+      "bytes": 1179,
+      "sha256": "cbf2e8fb4856696a39635607c4ff93e5566e80fd7ddff857b64162d65a51d2ed"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/enrollment-v1.json",
+      "bytes": 1159,
+      "sha256": "0c69a6b98e6cfe159356dfbdaacd2050aabefa9d2d6a983865996efa74e6eb55"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/phone-credential-v1.json",
+      "bytes": 549,
+      "sha256": "042685c86e369ffa5c49d08b985b80f427bbdb501032152a411c92a19df5d6de"
+    },
+    {
+      "path": "Rewrite/tooling/check_native_vault_results.py",
+      "bytes": 2390,
+      "sha256": "98b94b4f14b62500b77c92cefe5100b6c60baf95163d573b364a6a5c8423d603"
+    },
+    {
+      "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+      "bytes": 743,
+      "sha256": "3a1ed422ae55341615c30e04d51c13ada1b23e7f1e0c2173d5c2e87ac378490e"
+    },
+    {
+      "path": "Rewrite/tooling/test_native_vault_results.py",
+      "bytes": 1833,
+      "sha256": "b3c732c3770af722aaf33cae01c42d9e4fbdbf4c74540c6a4a51ca086069dfd7"
+    },
+    {
+      "path": "docs/adr/0006-rewrite-native-enrollment.md",
+      "bytes": 1397,
+      "sha256": "b8a75c81e7ebb3431b6817b198f540a043e14afe120292caacd203d851071b9f"
+    },
+    {
+      "path": "docs/rewrite-enrollment-v1.md",
+      "bytes": 7022,
+      "sha256": "c1a0d85a97f161fe20a1ca31ef3652b302502ef3efccc8eceef7ea6b05808873"
+    },
+    {
+      "path": "docs/rewrite-phone-credentials-v1.md",
+      "bytes": 4803,
+      "sha256": "3fa4bccfd4aae98544aee14a123583e4494be97e43f36bafd42954724376358b"
+    }
+  ],
+  "exclusions": [
+    "private baseline/history",
+    "real credentials",
+    "build products",
+    "local evidence"
+  ],
+  "publication": "requires separate scoped approval; prior 24-file native host enrollment approval excludes this source"
+}
