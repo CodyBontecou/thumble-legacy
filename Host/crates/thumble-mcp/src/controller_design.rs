@@ -505,6 +505,10 @@ fn reply_budget(args: &[String]) -> usize {
             .is_some_and(|s| matches!(s.as_str(), "review" | "inspect"))
     {
         EVIDENCE_REPLY_BYTES
+    } else if args.first().is_some_and(|s| s == "style")
+        && args.get(1).is_some_and(|s| s == "export")
+    {
+        8 * 1024 * 1024 + 1
     } else {
         ORDINARY_REPLY_BYTES
     }
@@ -516,6 +520,16 @@ async fn read_output<O: tokio::io::AsyncRead + Unpin, E: tokio::io::AsyncRead + 
 ) -> Result<(Vec<u8>, Vec<u8>), String> {
     // Stop on either budget violation even if the other stream remains open.
     tokio::try_join!(bounded(stdout, limit), bounded(stderr, 8 * 1024))
+}
+
+pub async fn export_styles(profile: String) -> Result<Value, String> {
+    run(vec![
+        "style".into(),
+        "export".into(),
+        "--profile".into(),
+        profile,
+    ])
+    .await
 }
 
 async fn run(args: Vec<String>) -> Result<Value, String> {

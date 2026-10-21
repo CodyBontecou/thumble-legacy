@@ -88,6 +88,12 @@ pub struct ProfileAppearanceBank {
     resources: Option<ProfileResourceTable>,
 }
 impl ProfileAppearanceBank {
+    /// Prepare an unbanked layout with the same explicit default paint used by
+    /// bank resolution. This is a display/validation projection, not storage.
+    pub fn canonical_display_layout(current: &Value) -> Result<Value, ProfileAppearanceError> {
+        budget(current)?;
+        applying(current, &snapshot(current)?)
+    }
     pub fn from_profile(profile: &Value) -> Result<Option<Self>, ProfileAppearanceError> {
         budget(profile)?;
         let resources = ProfileResourceTable::from_profile(profile)?;

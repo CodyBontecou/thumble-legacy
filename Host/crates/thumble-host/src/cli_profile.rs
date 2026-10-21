@@ -430,6 +430,13 @@ pub enum CliProfileCommand {
         variant: ConfigurationVariant,
         group: String,
     },
+    #[serde(rename = "style.import")]
+    StyleImport {
+        target: ProfileSelector,
+        #[serde(rename = "libraryJSON")]
+        library_json: String,
+        merge: bool,
+    },
     #[serde(rename = "style.create")]
     StyleCreate {
         target: ProfileSelector,
@@ -672,6 +679,7 @@ impl CliProfileCommand {
             Self::GroupBackward { .. } => "group.backward",
             Self::GroupFront { .. } => "group.front",
             Self::GroupBack { .. } => "group.back",
+            Self::StyleImport { .. } => "style.import",
             Self::StyleCreate { .. } => "style.create",
             Self::StyleRename { .. } => "style.rename",
             Self::StyleApply { .. } => "style.apply",
@@ -2574,6 +2582,14 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
                 )
             })?;
         }
+        CliProfileCommand::StyleImport { library_json, .. } => {
+            crate::draft_operation::validate_style_library_import(library_json).map_err(|_| {
+                TransactionFailure::new(
+                    "invalid_style_import",
+                    "style library JSON is invalid or outside bounds",
+                )
+            })?;
+        }
         CliProfileCommand::StyleCreate {
             style_id,
             name,
@@ -3444,6 +3460,21 @@ fn plan_transaction(
                 _ => unreachable!(),
             };
             Ok(plan_one(operation, profile.name.clone()))
+        }
+        CliProfileCommand::StyleImport {
+            target,
+            library_json,
+            merge,
+        } => {
+            let profile = resolve_selector(target, catalog)?;
+            Ok(plan_one(
+                ConfigurationOperation::StyleImport {
+                    profile_id: profile.profile_id.to_string(),
+                    library_json: library_json.clone(),
+                    merge: *merge,
+                },
+                profile.name.clone(),
+            ))
         }
         CliProfileCommand::StyleCreate {
             target,
@@ -6274,6 +6305,7 @@ fn replay_profile_names(
         | CliProfileCommand::ElementDelete { target, .. }
         | CliProfileCommand::ElementReset { target, .. }
         | CliProfileCommand::CustomizationSet { target, .. }
+        | CliProfileCommand::StyleImport { target, .. }
         | CliProfileCommand::StyleCreate { target, .. }
         | CliProfileCommand::StyleRename { target, .. }
         | CliProfileCommand::StyleApply { target, .. }

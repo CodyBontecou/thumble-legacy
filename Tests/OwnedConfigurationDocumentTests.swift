@@ -2,6 +2,39 @@ import Foundation
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    func testStyleImportMatchesFrozenNativeResponse() throws {
+        let directory = root.appendingPathComponent("Host/fixtures/style-library/v1")
+        for name in ["plain", "banked"] {
+            let data = try Data(contentsOf: directory.appendingPathComponent(name + "-request.json"))
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: data)
+            let result = try ThumbleOwnedOperationBridge.transform(request)
+            let expected = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: directory.appendingPathComponent(name + "-response.json"))) as? [String: Any])
+            XCTAssertEqual(result.beforeDocumentData, expected["beforeDocumentData"] as? String)
+            XCTAssertEqual(result.afterDocumentData, expected["afterDocumentData"] as? String)
+        }
+    }
+    func testStyleFilePoolsRepeatedMaximumImagesAndRetainsRichStates() throws {
+        let data = Data(repeating: 42, count: GamepadImageFill.maximumStoredBytes)
+        let style = GamepadControlVisualStyle(normal: .init(fillStyle: .image(.init(data: data))),
+            pressed: .init(scale: 0.94), hapticFeedback: .init(style: .heavy, pattern: .double, intensity: 0.73, sharpness: 0.42, duration: 0.17))
+        let library = GamepadStyleLibrary(styles: (0..<12).map { .init(id: "style-\($0)", name: "Style \($0)", visualStyle: style) })
+        let bytes = try GamepadStyleLibraryFile.write(library)
+        let record = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+        XCTAssertEqual((record["appearanceResources"] as? [String: String])?.count, 1)
+        XCTAssertLessThan(bytes.count, 4 * 1024 * 1024)
+        XCTAssertEqual(try GamepadStyleLibraryFile.read(bytes), library.normalized)
+        XCTAssertThrowsError(try JSONDecoder().decodeUnique(GamepadConfigurationProfile.self, from: bytes))
+        var corrupt = record
+        corrupt["appearanceResources"] = [:]
+        XCTAssertThrowsError(try GamepadStyleLibraryFile.read(JSONSerialization.data(withJSONObject: corrupt)))
+        let classic = GamepadStyleLibrary(styles: [library.styles[0]])
+        XCTAssertEqual(try GamepadStyleLibraryFile.read(JSONEncoder().encode(classic)), classic.normalized)
+        var unsupported = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(classic)) as? [String: Any])
+        var styles = try XCTUnwrap(unsupported["styles"] as? [[String: Any]])
+        styles[0]["futureUnsupported"] = "keep original source"
+        unsupported["styles"] = styles
+        XCTAssertThrowsError(try GamepadStyleLibraryFile.read(JSONSerialization.data(withJSONObject: unsupported)))
+    }
     private var root: URL { URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent() }
     private func fixture(_ name: String) throws -> Data {
         try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/\(name).json"))

@@ -1,0 +1,7 @@
+# Style-library cutover evidence
+
+Actual local CLI/MCP processes used private temporary homes and input-disabled receivers. `process.jsonl` records classic/pooled import, merge/replace, export, all eight catalogs, exact opaque metadata, unchanged bindings/other profiles, identical-import revisions, rejected references/unsupported fields/symlinks/FIFOs, restart replay and the legacy format path. The verifier also parks the native transformer during committed replay. `asset-regression.json` repeats existing asset workflows after the shared descriptor-reader change.
+
+`rust-gate.log.gz` records 626 passed/3 ignored, formatting, clippy and all-target checks. The final stricter banked mutation assertions and clippy run are separate logs. `native-tests.log.gz` records 54 passed; `native-frozen-replay.log.gz` reruns the 10 owned tests with both frozen import packets. `stack-gate.log.gz` records 47 constrained-stack tests and macOS/iOS Debug builds with unchanged budgets. The six historical native operation response wire objects were independently regenerated and compared unchanged.
+
+Frozen request/response files contain exact source/revision correlation, while native tests replay them and Rust tests validate and merge the projections. The fixture verifier checks their hashes and eight-state structure. These are transport/codec/model/build checks. They do not establish physical haptic quality, network latency or live WoW acceptance, nor enable automatic migration/production format offers.

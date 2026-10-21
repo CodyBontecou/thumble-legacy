@@ -1388,6 +1388,7 @@ dependencies = [
  "thumble-protocol",
  "tokio",
  "tokio-util",
+ "uuid",
 ]
 
 [[package]]

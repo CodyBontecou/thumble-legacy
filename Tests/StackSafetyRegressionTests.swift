@@ -287,6 +287,27 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedStyleImportFitsConstrainedThread() throws {
+        let file = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            .appendingPathComponent("Host/fixtures/style-library/v1/plain-request.json")
+        let data = try Data(contentsOf: file)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: data)
+            let result = try ThumbleOwnedOperationBridge.transform(request)
+            guard result.changed, !result.afterDocumentData.isEmpty else { throw StackTestError.unexpectedDecodedState }
+        }
+    }
+    func testPooledStyleFileFitsConstrainedThread() throws {
+        assertInlineSize(GamepadStyleLibraryFile.self, atMost: 16)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let data = Data(repeating: 42, count: GamepadImageFill.maximumStoredBytes)
+            let style = GamepadControlVisualStyle(normal: .init(fillStyle: .image(.init(data: data))))
+            let library = GamepadStyleLibrary(styles: (0..<8).map { .init(id: "style-\($0)", name: "Style \($0)", visualStyle: style) })
+            let bytes = try GamepadStyleLibraryFile.write(library)
+            XCTAssertEqual(try GamepadStyleLibraryFile.read(bytes), library.normalized)
+            XCTAssertLessThan(bytes.count, 4 * 1024 * 1024)
+        }
+    }
     func testMaximumAssetRequestFitsConstrainedThread() throws {
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {
             let bytes = Data(repeating: 42, count: GamepadAsset.maximumStoredBytes)

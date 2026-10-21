@@ -97,6 +97,33 @@ pub struct EditProfileAssetParams {
 
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ImportStyleLibraryParams {
+    #[serde(rename = "profileID")]
+    pub profile_id: String,
+    pub expected_configuration_revision: u64,
+    #[serde(rename = "invocationID")]
+    pub invocation_id: String,
+    #[serde(rename = "libraryJSON")]
+    pub library_json: String,
+    #[serde(default)]
+    pub merge: bool,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ExportStyleLibraryParams {
+    #[serde(rename = "profileID")]
+    pub profile_id: String,
+}
+fn style_profile_id(text: &str) -> Result<uuid::Uuid, String> {
+    let id: uuid::Uuid = text.parse().map_err(|_| "expected canonical nonnil UUID")?;
+    if id.is_nil() || !id.to_string().eq_ignore_ascii_case(text) {
+        return Err("expected canonical nonnil UUID".into());
+    }
+    Ok(id)
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct LegacyPackageInput {
     pub profile_id: String,
     pub archive_path: String,
@@ -4750,6 +4777,83 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Export a profile's reusable styles through exact local authority inspection. Embedded image bytes use a content-addressed style-file envelope. No desktop GUI or configuration write is required.",
+        annotations(
+            read_only_hint = true,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn export_style_library(
+        &self,
+        Parameters(params): Parameters<ExportStyleLibraryParams>,
+    ) -> Result<Json<Value>, String> {
+        style_profile_id(&params.profile_id)?;
+        Ok(Json(
+            crate::controller_design::export_styles(params.profile_id).await?,
+        ))
+    }
+    #[tool(
+        description = "Import a bounded classic or pooled style-library JSON into one profile. Merge replaces matching token IDs and preserves other styles; replace refuses orphaned style or asset references. Owned appearance states, geometry, bindings and unrelated profiles are preserved. Requires write opt-in, expected configuration revision and stable invocation UUID.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn import_style_library(
+        &self,
+        Parameters(params): Parameters<ImportStyleLibraryParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            CliProfileCommand, CliProfileRequest, ProfileSelector, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        if !self.allow_config_write {
+            return Err("MCP configuration writes are disabled; restart thumble-mcp with --allow-config-write".into());
+        }
+        let profile_id = style_profile_id(&params.profile_id)?;
+        let invocation = style_profile_id(&params.invocation_id)?;
+        if params.expected_configuration_revision == 0 {
+            return Err("Expected a positive configuration revision".into());
+        }
+        thumble_host::draft_operation::validate_style_library_import(&params.library_json)
+            .map_err(|_| "invalid style library JSON or bounds")?;
+        let request = CliProfileRequest {
+            schema_version: CLI_PROFILE_SCHEMA_VERSION,
+            invocation_id: Some(invocation),
+            expected_configuration_revision: Some(params.expected_configuration_revision),
+            command: CliProfileCommand::StyleImport {
+                target: ProfileSelector::Id { profile_id },
+                library_json: params.library_json,
+                merge: params.merge,
+            },
+        };
+        let response = self
+            .request(
+                "import_style_library",
+                ControlRequest::CliProfileTransaction { request },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no style import response")?;
+        if result.invocation_id != invocation {
+            return Err("Style response invocation did not match".into());
+        }
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Style import failed".into()));
+        }
+        Ok(Json(
+            serde_json::to_value(result).map_err(|_| "Cannot encode style import response")?,
+        ))
+    }
+
+    #[tool(
         description = "Return the authoritative configuration revision and bounded draft capability status. Use this revision when beginning revision-safe controller work.",
         annotations(
             title = "Thumble configuration status",
@@ -6194,7 +6298,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 32);
+        assert_eq!(tools.len(), 34);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6315,9 +6419,11 @@ mod tests {
                 "edit_profile_asset",
                 "export_controller_preview",
                 "export_profiles",
+                "export_style_library",
                 "get_configuration_draft",
                 "host_status",
                 "import_profiles",
+                "import_style_library",
                 "inspect_controller_design",
                 "list_controls",
                 "list_profiles",
@@ -6626,7 +6732,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 32);
+        assert_eq!(tools.len(), 34);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -7107,6 +7213,49 @@ mod tests {
         control_task.await.unwrap();
         remove_control_socket(&socket);
     }
+    #[tokio::test]
+    async fn style_import_opt_in_and_validation_precede_socket_access() {
+        let params = || ImportStyleLibraryParams {
+            profile_id: "ea000000-0000-0000-0000-000000000001".into(),
+            invocation_id: "aa000000-0000-0000-0000-000000000001".into(),
+            expected_configuration_revision: 41,
+            library_json: "{\"styles\":[]}".into(),
+            merge: false,
+        };
+        let disabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        assert!(disabled
+            .import_style_library(Parameters(params()))
+            .await
+            .err()
+            .unwrap()
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            true,
+        );
+        let mut bad = params();
+        bad.profile_id = "not-uuid".into();
+        assert!(enabled
+            .import_style_library(Parameters(bad))
+            .await
+            .err()
+            .unwrap()
+            .contains("UUID"));
+        let mut bad = params();
+        bad.library_json = "{\"styles\":[],\"styles\":[]}".into();
+        let error = enabled
+            .import_style_library(Parameters(bad))
+            .await
+            .err()
+            .unwrap();
+        assert!(!error.contains("control.sock"));
+    }
+
     #[tokio::test]
     async fn asset_edit_opt_in_and_validation_precede_socket_access() {
         let params = || EditProfileAssetParams {

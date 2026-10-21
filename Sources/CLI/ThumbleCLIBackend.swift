@@ -599,6 +599,7 @@ final class ThumbleCLIProfileBackend {
         case elementReset(ProfileSelector, ConfigurationVariant, element: String)
         case styleList(ProfileSelector)
         case styleShow(ProfileSelector, styleID: String)
+        case styleImport(ProfileSelector, libraryJSON: String, merge: Bool)
         case styleCreate(ProfileSelector, styleID: String, name: String, appearance: AuthorityStyleAppearance)
         case styleRename(ProfileSelector, styleID: String, name: String)
         case styleApply(ProfileSelector, ConfigurationVariant, styleID: String, elementID: String)
@@ -652,6 +653,7 @@ final class ThumbleCLIProfileBackend {
         case controlBarItemReset(ProfileSelector, ConfigurationVariant, GamepadControlBarItem)
 
         private enum CodingKeys: String, CodingKey {
+            case libraryJSON, merge
             case assetID, fileName, contentType, dataBase64, role
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
@@ -836,6 +838,11 @@ final class ThumbleCLIProfileBackend {
                 try container.encode("style.show", forKey: .type)
                 try container.encode(target, forKey: .target)
                 try container.encode(styleID, forKey: .styleID)
+            case .styleImport(let target, let libraryJSON, let merge):
+                try container.encode("style.import", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(libraryJSON, forKey: .libraryJSON)
+                try container.encode(merge, forKey: .merge)
             case .styleCreate(let target, let styleID, let name, let appearance):
                 try container.encode("style.create", forKey: .type)
                 try container.encode(target, forKey: .target)

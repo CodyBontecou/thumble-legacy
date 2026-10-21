@@ -174,6 +174,14 @@ pub enum ConfigurationOperation {
         item: ConfigurationControlBarItem,
         changes: Box<ControlBarItemChanges>,
     },
+    #[serde(rename = "style.import")]
+    StyleImport {
+        #[serde(rename = "profileID")]
+        profile_id: String,
+        #[serde(rename = "libraryJSON")]
+        library_json: String,
+        merge: bool,
+    },
     #[serde(rename = "style.create")]
     StyleCreate {
         #[serde(rename = "profileID")]
@@ -1966,6 +1974,14 @@ impl ConfigurationOperation {
                     return Err(ConfigurationOperationError::InvalidControlBar);
                 }
             }
+            Self::StyleImport {
+                profile_id,
+                library_json,
+                ..
+            } => {
+                validate_profile_id(profile_id)?;
+                validate_style_library_import(library_json)?;
+            }
             Self::StyleCreate {
                 profile_id,
                 style_id,
@@ -2248,6 +2264,7 @@ impl ConfigurationOperation {
                 | Self::ControlBarRemove { .. }
                 | Self::ControlBarMove { .. }
                 | Self::ControlBarItemSet { .. }
+                | Self::StyleImport { .. }
                 | Self::StyleCreate { .. }
                 | Self::StyleRename { .. }
                 | Self::StyleApply { .. }
@@ -2351,6 +2368,7 @@ impl ConfigurationOperation {
             | Self::ControlBarRemove { profile_id, .. }
             | Self::ControlBarMove { profile_id, .. }
             | Self::ControlBarItemSet { profile_id, .. }
+            | Self::StyleImport { profile_id, .. }
             | Self::StyleCreate { profile_id, .. }
             | Self::StyleRename { profile_id, .. }
             | Self::StyleApply { profile_id, .. }
@@ -3097,6 +3115,69 @@ impl fmt::Display for ConfigurationOperationError {
 }
 
 impl Error for ConfigurationOperationError {}
+
+/// Validate the bounded style envelope before creating a draft.
+pub fn validate_style_library_import(text: &str) -> Result<(), ConfigurationOperationError> {
+    if text.len() > 8 * 1024 * 1024 {
+        return Err(ConfigurationOperationError::InvalidStyle);
+    }
+    let value: serde_json::Value = thumble_protocol::decode_unique_json(text.as_bytes())
+        .map_err(|_| ConfigurationOperationError::InvalidStyle)?;
+    let object = value
+        .as_object()
+        .ok_or(ConfigurationOperationError::InvalidStyle)?;
+    if object.contains_key("schema") {
+        let expected: std::collections::BTreeSet<_> = [
+            "schema",
+            "version",
+            "styles",
+            "appearanceResourceVersion",
+            "appearanceResources",
+        ]
+        .into_iter()
+        .collect();
+        if object
+            .keys()
+            .map(String::as_str)
+            .collect::<std::collections::BTreeSet<_>>()
+            != expected
+            || object["schema"].as_str() != Some("com.codybontecou.thumble.style-library")
+            || object["version"].as_u64() != Some(1)
+            || object["appearanceResourceVersion"].as_u64() != Some(1)
+            || !object["appearanceResources"].is_object()
+        {
+            return Err(ConfigurationOperationError::InvalidStyle);
+        }
+    } else if object.len() != 1 {
+        return Err(ConfigurationOperationError::InvalidStyle);
+    }
+    let styles = object
+        .get("styles")
+        .and_then(serde_json::Value::as_array)
+        .ok_or(ConfigurationOperationError::InvalidStyle)?;
+    let mut ids = std::collections::BTreeSet::new();
+    for style in styles {
+        let id = style
+            .get("id")
+            .and_then(serde_json::Value::as_str)
+            .ok_or(ConfigurationOperationError::InvalidStyle)?;
+        validate_style_id(id)?;
+        if !ids.insert(id)
+            || !style
+                .get("visualStyle")
+                .is_some_and(serde_json::Value::is_object)
+        {
+            return Err(ConfigurationOperationError::InvalidStyle);
+        }
+        validate_style_name(
+            style
+                .get("name")
+                .and_then(serde_json::Value::as_str)
+                .ok_or(ConfigurationOperationError::InvalidStyle)?,
+        )?;
+    }
+    Ok(())
+}
 
 #[cfg(test)]
 mod tests {

@@ -93,6 +93,89 @@ fn preserve_equal_json_numbers(before: &Value, after: &mut Value) {
     }
 }
 
+fn style_import_delta(
+    before: &ConfigurationDocument,
+    after: &ConfigurationDocument,
+    id: &str,
+) -> bool {
+    if !profile_local_delta(
+        before,
+        after,
+        id,
+        &[
+            "customization",
+            "landscapeCustomization",
+            "portraitCustomization",
+            "updatedAt",
+            "appearanceBank",
+            "appearanceResourceVersion",
+            "appearanceResources",
+        ],
+    ) {
+        return false;
+    }
+    let (Some(a), Some(b)) = (profile_position(before, id), profile_position(after, id)) else {
+        return false;
+    };
+    for slot in [
+        "customization",
+        "landscapeCustomization",
+        "portraitCustomization",
+    ] {
+        let a = before.profiles[a].get(slot);
+        let b = after.profiles[b].get(slot);
+        if a.is_none() && b.is_none() {
+            continue;
+        }
+        let (Some(mut a), Some(mut b)) = (
+            a.and_then(Value::as_object).cloned(),
+            b.and_then(Value::as_object).cloned(),
+        ) else {
+            return false;
+        };
+        for value in [&mut a, &mut b] {
+            value.remove("styleLibrary");
+            value.remove("updatedAt");
+        }
+        if !json_semantically_equal(&Value::Object(a), &Value::Object(b)) {
+            return false;
+        }
+    }
+    let a = &before.profiles[a];
+    let b = &after.profiles[b];
+    match (
+        thumble_core::ProfileAppearanceBank::from_profile(a),
+        thumble_core::ProfileAppearanceBank::from_profile(b),
+    ) {
+        (Ok(None), Ok(None)) => true,
+        (Ok(Some(left)), Ok(Some(right))) => {
+            for scheme in ["light", "dark"] {
+                for action in ["base", "left-trigger", "right-trigger", "both-triggers"] {
+                    let (Ok(mut x), Ok(mut y)) = (
+                        left.resolve_layout(&a["customization"], scheme, action),
+                        right.resolve_layout(&b["customization"], scheme, action),
+                    ) else {
+                        return false;
+                    };
+                    let (Some(x), Some(y)) = (x.as_object_mut(), y.as_object_mut()) else {
+                        return false;
+                    };
+                    x.remove("styleLibrary");
+                    y.remove("styleLibrary");
+                    if !json_semantically_equal(
+                        &Value::Object(x.clone()),
+                        &Value::Object(y.clone()),
+                    ) {
+                        return false;
+                    }
+                }
+            }
+            true
+        }
+        _ => false,
+    }
+}
+
 #[cfg(test)]
 #[test]
 fn numeric_projection_preserves_exact_values_without_rounding_large_integers() {
@@ -432,7 +515,10 @@ fn validate_operation_bounds(
         serde_json::to_value(operation).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
     let encoded =
         serde_json::to_vec(&value).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
-    if matches!(operation, ConfigurationOperation::DesignApply { .. }) {
+    if matches!(
+        operation,
+        ConfigurationOperation::DesignApply { .. } | ConfigurationOperation::StyleImport { .. }
+    ) {
         // The typed operation validator bounds the archive and hash fields. Ordinary
         // scalar-edit budgets cannot describe an embedded reviewed package.
         return if encoded.len() <= MAXIMUM_BRIDGE_BYTES && operation.validate_bridge_input().is_ok()
@@ -572,6 +658,7 @@ fn allowed_changed_path(operation: &ConfigurationOperation, path: &str) -> bool 
         | ConfigurationOperation::StyleRename { profile_id, .. }
         | ConfigurationOperation::StyleApply { profile_id, .. }
         | ConfigurationOperation::StyleDetach { profile_id, .. }
+        | ConfigurationOperation::StyleImport { profile_id, .. }
         | ConfigurationOperation::StyleDelete { profile_id, .. }
         | ConfigurationOperation::LayerMove { profile_id, .. }
         | ConfigurationOperation::LayerForward { profile_id, .. }
@@ -738,6 +825,9 @@ fn valid_operation_delta(
         | operation @ ConfigurationOperation::GroupFront { .. }
         | operation @ ConfigurationOperation::GroupBack { .. } => {
             constrained_group_operation_delta(before, after, operation)
+        }
+        ConfigurationOperation::StyleImport { profile_id, .. } => {
+            style_import_delta(before, after, profile_id)
         }
         ConfigurationOperation::DesignApply {
             profile_id,

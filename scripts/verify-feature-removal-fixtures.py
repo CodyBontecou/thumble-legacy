@@ -328,3 +328,22 @@ assert len(_design_target["appearanceBank"]["variants"]) == _owned_design_manife
 assert len({(v["colorScheme"], v["actionSet"]) for v in _design_target["appearanceBank"]["variants"]}) == 8
 assert _owned_design_manifest["automaticMigrationActivated"] is False
 print("Owned reviewed-design fixture verified; no runtime package attachment or public format activation")
+
+# Resource-aware style catalogs use the native owned operation boundary.
+_style_root = repo / "Host/fixtures/style-library/v1"
+_style_manifest = json.loads((_style_root / "manifest.json").read_bytes())
+assert _style_manifest["automaticMigrationActivated"] is False
+for _name, _digest in _style_manifest["files"].items():
+    assert Path(_name).name == _name
+    assert hashlib.sha256((_style_root / _name).read_bytes()).hexdigest() == _digest, _name
+for _case in _style_manifest["cases"]:
+    _request = json.loads((_style_root / (_case + "-request.json")).read_bytes())
+    _response = json.loads((_style_root / (_case + "-response.json")).read_bytes())
+    assert _request["operation"]["type"] == "style.import"
+    assert _response["invocationID"].lower() == _request["invocationID"].lower()
+    assert _response["sourceSHA256"] == hashlib.sha256(base64.b64decode(_request["documentData"], validate=True)).hexdigest()
+    _after = json.loads(base64.b64decode(_response["afterDocumentData"], validate=True))
+    _target = next(p for p in _after["profiles"] if p["id"].lower() == _request["operation"]["profileID"].lower())
+    assert len(_target["appearanceBank"]["variants"]) == _style_manifest["appearanceStates"] == 8
+    assert all(len(v["appearance"]["styleLibrary"]["styles"]) >= 2 for v in _target["appearanceBank"]["variants"])
+print("Native style-library imports verified: plain/banked eight-state catalogs")

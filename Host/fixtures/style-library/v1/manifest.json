@@ -1,0 +1,16 @@
+{
+  "fixtureVersion": 1,
+  "cases": [
+    "plain",
+    "banked"
+  ],
+  "appearanceStates": 8,
+  "automaticMigrationActivated": false,
+  "files": {
+    "banked-request.json": "3f60c56fb5710978e603bebfd5aa8bfde06098e4edb4ad2e8863f833f0878d7c",
+    "banked-response.json": "2b47dff755b5eb27cd1e630022130fa67c10293d0ea748e277b6868ffbf8ff03",
+    "plain-request.json": "0aff1270b8f53ba66f3e4b72cc5f2441fc7b58173d1efd414fb7c7ba6a058a06",
+    "plain-response.json": "b2993ba4710cc9177258af8cfcc35d4371f3de6c397561364a1234c30fef3728",
+    "style-file.json": "4cec0790d1e8994c1223cd608131b4137dc6f45bd670aedc205f6d2789594fc2"
+  }
+}

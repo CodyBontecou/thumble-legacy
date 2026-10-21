@@ -290,6 +290,7 @@ public enum ThumbleOwnedOperationBridge {
             for key in ["keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"] where document[key] == nil { document[key] = [String: Any]() }
             let operation = try canonicalOperation()
             if try applyOwnedDesign(operation) { return }
+            if try applyOwnedStyleImport(operation) { return }
             let object = try JSONSerialization.jsonObject(with: encoder.encode(operation))
             let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "nowMillis":request.nowMillis, "document":document, "operation":object], options: [.sortedKeys])
             let legacy = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: bytes)
@@ -297,6 +298,34 @@ public enum ThumbleOwnedOperationBridge {
             paths = response.changedPaths
             try captureResult(response.document, operation: operation)
         }
+        private func applyOwnedStyleImport(_ operation: ThumbleBridgeJSONValue) throws -> Bool {
+            guard case .object(let fields) = operation, fields["type"] == .string("style.import") else { return false }
+            let decoded = try JSONDecoder().decodeUnique(ThumbleBridgeOperation.self, from: encoder.encode(operation))
+            guard case let .styleImport(profileID, libraryJSON, merge) = decoded,
+                  let id = UUID(uuidString: profileID), let index = beforeProfiles.firstIndex(where: { $0.id == id }) else {
+                throw ThumbleOwnedOperationBridgeError.invalidRequest
+            }
+            let library = try GamepadStyleLibraryFile.read(Data(libraryJSON.utf8))
+            var profile = beforeProfiles[index]
+            let current = GamepadAppearanceSnapshot(profile.customization)
+            let canonical = try current.importingStyles(library, merge: merge).applying(to: profile.customization)
+            if profile.appearanceBank == nil && canonical == profile.customization {
+                after = before; paths = []; return true
+            }
+            profile.customization = canonical
+            let source = profile.appearanceBank?.variants ?? ThumbleSkinColorScheme.allCases.flatMap { scheme in
+                ThumbleActionSet.allCases.map { GamepadAppearanceBank.Variant(colorScheme: scheme, actionSet: $0, appearance: current) }
+            }
+            profile.appearanceBank = try GamepadAppearanceBank(variants: source.map {
+                .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet, appearance: try $0.appearance.importingStyles(library, merge: merge))
+            })
+            if profile != beforeProfiles[index] { profile.updatedAt = request.nowMillis }
+            var profiles = beforeProfiles; profiles[index] = profile
+            after = try projection(profiles)
+            paths = after == before ? [] : ["/profiles/" + profileID]
+            return true
+        }
+
         /// A reviewed compiler artifact supplies appearance only. It is never
         /// installed or attached as a runtime package on an owned authority.
         private func applyOwnedDesign(_ operation: ThumbleBridgeJSONValue) throws -> Bool {

@@ -1307,6 +1307,7 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
     case controlBarAdd(profileID: String, variant: ThumbleBridgeLayoutVariant, item: GamepadControlBarItem)
     case controlBarRemove(profileID: String, variant: ThumbleBridgeLayoutVariant, item: GamepadControlBarItem)
     case controlBarMove(profileID: String, variant: ThumbleBridgeLayoutVariant, item: GamepadControlBarItem, direction: ThumbleBridgeControlBarMoveDirection)
+    case styleImport(profileID: String, libraryJSON: String, merge: Bool)
     case styleCreate(profileID: String, styleID: String, name: String, appearance: ThumbleBridgeStyleAppearance)
     case styleRename(profileID: String, styleID: String, name: String)
     case styleApply(profileID: String, variant: ThumbleBridgeLayoutVariant, styleID: String, elementID: String)
@@ -1476,6 +1477,11 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
                 item: try container.decode(GamepadControlBarItem.self, forKey: .init("item")),
                 direction: try container.decode(ThumbleBridgeControlBarMoveDirection.self, forKey: .init("direction"))
             )
+        case "style.import":
+            try container.requireOnly(["type", "profileID", "libraryJSON", "merge"])
+            self = .styleImport(profileID: try container.decode(String.self, forKey: .init("profileID")),
+                libraryJSON: try container.decode(String.self, forKey: .init("libraryJSON")),
+                merge: try container.decode(Bool.self, forKey: .init("merge")))
         case "style.create":
             try container.requireOnly(["type", "profileID", "styleID", "name", "appearance"])
             self = .styleCreate(
@@ -1997,6 +2003,22 @@ public enum ThumbleConfigurationBridge {
                 guard destination != index else { return }
                 customization.moveControlBarItem(item, to: destination)
                 setCustomization(customization, in: &profile, variant: variant)
+            }
+        case let .styleImport(profileID, libraryJSON, merge):
+            let library = try GamepadStyleLibraryFile.read(Data(libraryJSON.utf8))
+            return try mutateProfile(profileID, in: &document, nowMillis: nowMillis) { profile in
+                if let bank = profile.appearanceBank {
+                    profile.appearanceBank = try GamepadAppearanceBank(variants: bank.variants.map {
+                        .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet, appearance: try $0.appearance.importingStyles(library, merge: merge))
+                    })
+                }
+                profile.customization = try GamepadAppearanceSnapshot(profile.customization).importingStyles(library, merge: merge).applying(to: profile.customization)
+                if let landscape = profile.landscapeCustomization {
+                    profile.landscapeCustomization = try GamepadAppearanceSnapshot(landscape).importingStyles(library, merge: merge).applying(to: landscape)
+                }
+                if let portrait = profile.portraitCustomization {
+                    profile.portraitCustomization = try GamepadAppearanceSnapshot(portrait).importingStyles(library, merge: merge).applying(to: portrait)
+                }
             }
         case let .styleCreate(profileID, styleID, name, appearance):
             let token = try appearance.token(id: styleID, name: name)

@@ -21,7 +21,6 @@ EXPECTED = {
     "customization": (2, 0),
     "mutateCustomization": (1, 1),
     "mutateProfileResources": (1, 1),
-    "style": (1, 0),
     "asset": (1, 0),  # legacy asset metadata mutation only; reads use authority snapshots
 }
 

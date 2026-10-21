@@ -971,16 +971,16 @@
           "cli": [
             "style export"
           ],
-          "status": "planned",
-          "mcpTool": "export_configuration_draft"
+          "status": "current",
+          "mcpTool": "export_style_library"
         },
         {
           "id": "style.import",
           "cli": [
             "style import"
           ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
+          "status": "current",
+          "mcpTool": "import_style_library"
         }
       ]
     },

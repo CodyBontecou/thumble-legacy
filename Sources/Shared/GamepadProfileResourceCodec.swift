@@ -82,6 +82,11 @@ enum GamepadProfileResourceCodec {
         return try workspace.decode(type)
     }
 
+    /// Separate style-file envelope. The profile decoder still requires a bank.
+    static func decodeStyleLibrary(from decoder: Decoder) throws -> GamepadStyleLibrary {
+        try DecodingWorkspace(decoder, styleLibrary: true).decode(GamepadStyleLibrary.self)
+    }
+
     /// Call after removing local-only profile fields for a portable export. An
     /// unreachable bookmark/icon must not survive merely as an orphaned blob.
     static func pruningUnusedResources(in value: ThumbleBridgeJSONValue) throws -> ThumbleBridgeJSONValue {
@@ -120,12 +125,19 @@ enum GamepadProfileResourceCodec {
         var fields: [String: ThumbleBridgeJSONValue]
         let pool: DecodingPool
 
-        init(_ decoder: Decoder) throws {
+        init(_ decoder: Decoder, styleLibrary: Bool = false) throws {
             guard case .object(var fields) = try ThumbleBridgeJSONValue(from: decoder),
                   let version = fields.removeValue(forKey: versionField),
-                  let resources = fields.removeValue(forKey: resourcesField),
-                  fields["appearanceBank"] != nil, fields["appearanceBank"] != .null else {
+                  let resources = fields.removeValue(forKey: resourcesField) else {
                 throw ResourceError.invalidEnvelope
+            }
+            if styleLibrary {
+                guard Set(fields.keys) == ["schema", "version", "styles"],
+                      fields["schema"] == .string(GamepadStyleLibraryFile.schema), fields["version"] == .integer(1) else {
+                    throw ResourceError.invalidEnvelope
+                }
+            } else {
+                guard fields["appearanceBank"] != nil, fields["appearanceBank"] != .null else { throw ResourceError.invalidEnvelope }
             }
             guard version == .integer(1) else { throw ResourceError.unsupportedVersion }
             let pool = try DecodingPool(resources)

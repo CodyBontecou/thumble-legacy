@@ -18,6 +18,8 @@ public struct GamepadControlAppearanceSnapshot: Codable, Equatable, Sendable {
         storage = Storage(value)
     }
 
+    fileprivate var referencedStyleID: String? { storage.value.styleID }
+
     public func applying(to layout: GamepadButtonCustomization) -> GamepadButtonCustomization {
         var result = layout
         result.applyStyleSnapshot(storage.value)
@@ -181,6 +183,23 @@ public struct GamepadAppearanceSnapshot: Codable, Equatable, Sendable {
             content.controls[id] = duplicates[id].flatMap { storage.content.controls[$0] } ?? appearance
         }
         return Self(content: content)
+    }
+
+    /// Import the requested catalog in every saved state without changing paint,
+    /// geometry or feedback owned by individual controls.
+    func importingStyles(_ library: GamepadStyleLibrary, merge: Bool) throws -> Self {
+        var content = storage.content
+        content.styleLibrary = GamepadStyleLibraryFile.merging(library, into: content.styleLibrary, merge: merge)
+        let ids = Set(content.styleLibrary.styles.map(\.id))
+        let controls = Array(content.controls.values) + [content.topBar] + Array(content.controlBar.values)
+        guard controls.allSatisfy({ $0.referencedStyleID.map(ids.contains) ?? true }) else {
+            throw ControllerDesignError.invalid("style import would orphan a referenced style; merge or detach it first")
+        }
+        let result = Self(content: content)
+        guard try result.missingResourceIDs().isEmpty else {
+            throw ControllerDesignError.invalid("style import requires its referenced assets in the destination profile")
+        }
+        return result
     }
 
     private init(content: Content) { storage = Storage(content) }
@@ -398,5 +417,76 @@ private struct AppearanceSnapshotCodingKey: CodingKey {
             throw DecodingError.dataCorruptedError(forKey: key, in: container,
                 debugDescription: "Appearance snapshots cannot contain \(key.stringValue).")
         }
+    }
+}
+
+
+/// Standalone styles may contain repeated image bytes. The explicit style-file
+/// envelope shares the profile resource pool without weakening profile decoding.
+struct GamepadStyleLibraryFile: Codable {
+    static let schema = "com.codybontecou.thumble.style-library"
+    static let maximumBytes = 8 * 1024 * 1024
+    let library: GamepadStyleLibrary
+    init(_ library: GamepadStyleLibrary) { self.library = library.normalized }
+    init(from decoder: Decoder) throws {
+        let fields = try decoder.container(keyedBy: Key.self)
+        if try GamepadProfileResourceCodec.hasResources(decoder) {
+            library = try GamepadProfileResourceCodec.decodeStyleLibrary(from: decoder)
+        } else {
+            guard Set(fields.allKeys.map(\.stringValue)) == ["styles"] else { throw ThumbleConfigurationBridgeError.invalidStyle }
+            library = try GamepadStyleLibrary(from: decoder)
+        }
+    }
+    func encode(to encoder: Encoder) throws {
+        try GamepadProfileResourceCodec.encode(Payload(styles: library.styles), to: encoder)
+    }
+    private struct Payload: Encodable {
+        let schema = GamepadStyleLibraryFile.schema
+        let version = 1
+        let styles: [GamepadStyleToken]
+    }
+    private struct Key: CodingKey {
+        let stringValue: String; var intValue: Int? { nil }
+        init?(stringValue: String) { self.stringValue = stringValue }
+        init?(intValue: Int) { return nil }
+    }
+    static func write(_ library: GamepadStyleLibrary) throws -> Data {
+        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        let bytes = try encoder.encode(GamepadStyleLibraryFile(library))
+        guard bytes.count <= maximumBytes else { throw ControllerDesignError.invalid("style file exceeds 8 MiB; retain the source and use a pooled profile export") }
+        return bytes
+    }
+    static func read(_ data: Data) throws -> GamepadStyleLibrary {
+        guard data.count <= maximumBytes else { throw ThumbleConfigurationBridgeError.invalidStyle }
+        let original = try JSONDecoder().decodeUnique(GamepadStyleLibraryFile.self, from: data)
+        let normalized = original.library.normalized
+        guard normalized.styles.count == original.library.styles.count else { throw ThumbleConfigurationBridgeError.invalidStyle }
+        let source = try JSONSerialization.jsonObject(with: data)
+        let pooled = (source as? [String: Any])?[GamepadProfileResourceCodec.resourcesField] != nil
+        let projected = pooled ? try JSONEncoder().encode(GamepadStyleLibraryFile(normalized)) : try JSONEncoder().encode(normalized)
+        guard supported(source, by: try JSONSerialization.jsonObject(with: projected), key: "") else {
+            throw ControllerDesignError.invalid("style input contains unsupported fields or values; source was not imported")
+        }
+        return normalized
+    }
+    private static func supported(_ source: Any, by target: Any, key: String) -> Bool {
+        if source is NSNull { return true }
+        if let source = source as? [String: Any], let target = target as? [String: Any] {
+            return source.allSatisfy { name, value in target[name].map { supported(value, by: $0, key: name) } ?? (value is NSNull) }
+        }
+        if let source = source as? [Any], let target = target as? [Any] {
+            if key == "appliesTo", let a = source as? [String], let b = target as? [String] { return Set(a) == Set(b) }
+            return source.count == target.count && zip(source, target).allSatisfy { supported($0, by: $1, key: key) }
+        }
+        return (source as? NSObject)?.isEqual(target) == true
+    }
+    static func merging(_ incoming: GamepadStyleLibrary, into existing: GamepadStyleLibrary, merge: Bool) -> GamepadStyleLibrary {
+        guard merge else { return incoming }
+        var styles = existing.styles
+        for style in incoming.styles {
+            if let index = styles.firstIndex(where: { $0.id == style.id }) { styles[index] = style }
+            else { styles.append(style) }
+        }
+        return GamepadStyleLibrary(styles: styles).normalized
     }
 }

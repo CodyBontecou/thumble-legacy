@@ -4109,37 +4109,21 @@ struct ThumbleCLI {
             print("Deleted style \"\(id)\".")
             printProfileInvocation(response)
         case "export":
-            try requireExplicitUnmigratedProfileAccess(
-                operation: "style export",
-                artifactRequired: true
-            )
-            let store = try loadStore()
-            let profile = try resolveProfile(optionValue("--profile", in: rest), in: store)
-            try writeJSON(profile.customization.styleLibrary.normalized, to: optionValue("--output", in: rest) ?? optionValue("-o", in: rest))
+            let capture = try profileBackend().captureInspectionProfile(target: .init(optionValue("--profile", in: rest)))
+            let bytes = try GamepadStyleLibraryFile.write(capture.profile.customization.resolvingAssetReferences().styleLibrary)
+            if let path = optionValue("--output", in: rest) ?? optionValue("-o", in: rest), path != "-" {
+                try bytes.write(to: URL(fileURLWithPath: path), options: .atomic)
+            } else { FileHandle.standardOutput.write(bytes + Data([0x0a])) }
         case "import":
-            try requireExplicitUnmigratedProfileAccess(
-                operation: "style import",
-                artifactRequired: true
-            )
             guard let path = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble style import <style-library.json> [--merge]") }
-            let data = try Data(contentsOf: URL(fileURLWithPath: path))
-            let library = try JSONDecoder().decode(GamepadStyleLibrary.self, from: data).normalized
-            try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
-                if rest.contains("--merge") {
-                    var merged = customization.styleLibrary.normalized.styles
-                    for style in library.styles {
-                        if let index = merged.firstIndex(where: { $0.id == style.id }) {
-                            merged[index] = style
-                        } else {
-                            merged.append(style)
-                        }
-                    }
-                    customization.styleLibrary = GamepadStyleLibrary(styles: merged).normalized
-                } else {
-                    customization.styleLibrary = library
-                }
-            }
-            print("Imported \(library.styles.count) style\(library.styles.count == 1 ? "" : "s")\(rest.contains("--merge") ? " and merged them" : "").")
+            let bytes = try readBoundedResourceFile(URL(fileURLWithPath: path), maximumBytes: GamepadStyleLibraryFile.maximumBytes)
+            let library = try GamepadStyleLibraryFile.read(bytes)
+            let response = try profileBackend().perform(.styleImport(.init(optionValue("--profile", in: rest)),
+                libraryJSON: String(decoding: bytes, as: UTF8.self), merge: rest.contains("--merge")),
+                invocationID: try profileInvocationID(in: rest))
+            guard response.outcome != nil else { throw CLIError.message("Authority returned no style import outcome") }
+            print("Imported \(library.styles.count) styles\(rest.contains("--merge") ? " and merged them" : "").")
+            printProfileInvocation(response)
         default:
             throw CLIError.message("Unknown style subcommand: \(subcommand)")
         }
@@ -4374,7 +4358,7 @@ struct ThumbleCLI {
         case "import":
             guard let path = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble asset import <path> [--name NAME] [--role background|icon|texture]") }
             let url = URL(fileURLWithPath: path)
-            let data = try readAssetFile(url)
+            let data = try readBoundedResourceFile(url)
             guard data.count <= GamepadAsset.maximumStoredBytes else { throw CLIError.message("Assets must be under \(GamepadAsset.maximumStoredBytes) bytes") }
             let name = (optionValue("--name", in: rest) ?? url.deletingPathExtension().lastPathComponent).trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty else { throw CLIError.message("Asset name cannot be empty") }
@@ -4446,14 +4430,14 @@ struct ThumbleCLI {
     }
 
     /// Bounded descriptor-based IO; symbolic links, devices and FIFOs cannot enter an asset transaction.
-    private static func readAssetFile(_ url: URL) throws -> Data {
+    private static func readBoundedResourceFile(_ url: URL, maximumBytes: Int = GamepadAsset.maximumStoredBytes) throws -> Data {
         let descriptor = Darwin.open(url.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
         guard descriptor >= 0 else { throw CLIError.message("Could not open asset as a regular file") }
         defer { Darwin.close(descriptor) }
         var info = stat()
         guard Darwin.fstat(descriptor, &info) == 0, info.st_mode & S_IFMT == S_IFREG,
-              info.st_size >= 0, info.st_size <= GamepadAsset.maximumStoredBytes else {
-            throw CLIError.message("Asset must be a regular file under \(GamepadAsset.maximumStoredBytes) bytes")
+              info.st_size >= 0, info.st_size <= maximumBytes else {
+            throw CLIError.message("Asset must be a regular file under \(maximumBytes) bytes")
         }
         var data = Data()
         var buffer = [UInt8](repeating: 0, count: 64 * 1024)
@@ -4462,7 +4446,7 @@ struct ThumbleCLI {
             if count < 0 && errno == EINTR { continue }
             guard count >= 0 else { throw CLIError.message("Could not read asset file") }
             if count == 0 { break }
-            guard data.count + count <= GamepadAsset.maximumStoredBytes else { throw CLIError.message("Asset grew beyond its size limit") }
+            guard data.count + count <= maximumBytes else { throw CLIError.message("Asset grew beyond its size limit") }
             data.append(contentsOf: buffer.prefix(count))
         }
         guard data.count == info.st_size else { throw CLIError.message("Asset size changed while reading") }

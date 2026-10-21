@@ -9,6 +9,8 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use thumble_core::{ConfigurationDocument, OwnedConfigurationDocument, ProfileAppearanceBank};
 use uuid::Uuid;
+#[path = "owned_style_import.rs"]
+mod style_import;
 const MAXIMUM: usize = 8 * 1024 * 1024;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -88,9 +90,17 @@ impl ConfigurationBridge {
         {
             return Err(Error::InvalidResponse);
         }
-        let merged = source
-            .with_projected_changes(&before, &after)
-            .map_err(|_| Error::InvalidResponse)?;
+        let merged = if let ConfigurationOperation::StyleImport { profile_id, .. } = &canonical {
+            if response.changed {
+                style_import::merge(source, &before, &after, profile_id)?
+            } else {
+                source.clone()
+            }
+        } else {
+            source
+                .with_projected_changes(&before, &after)
+                .map_err(|_| Error::InvalidResponse)?
+        };
         Ok((
             merged,
             ConfigurationOperationOutcome {
@@ -209,7 +219,9 @@ fn banks_preserved(
         if profile.get("appearanceBank") == next.get("appearanceBank") {
             continue;
         }
-        if let ConfigurationOperation::DesignApply { profile_id, .. } = operation {
+        if let ConfigurationOperation::DesignApply { profile_id, .. }
+        | ConfigurationOperation::StyleImport { profile_id, .. } = operation
+        {
             if profile["id"]
                 .as_str()
                 .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
@@ -345,6 +357,13 @@ fn design_states_preserved(
             let old = match &old_bank {
                 Some(bank) => {
                     match bank.resolve_layout(&profile["customization"], scheme, action) {
+                        Ok(value) => value,
+                        Err(_) => return false,
+                    }
+                }
+                None if matches!(operation, ConfigurationOperation::StyleImport { .. }) => {
+                    match ProfileAppearanceBank::canonical_display_layout(&profile["customization"])
+                    {
                         Ok(value) => value,
                         Err(_) => return false,
                     }
@@ -522,5 +541,84 @@ mod design_tests {
         assert!(std::str::from_utf8(merged.original_bytes())
             .unwrap()
             .contains("0.12345678901234567890123456789"));
+    }
+}
+
+#[cfg(test)]
+mod style_tests {
+    use super::*;
+    #[test]
+    fn captured_style_import_preserves_owned_state() {
+        let request: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/style-library/v1/plain-request.json"
+        ))
+        .unwrap();
+        let response: Response = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/style-library/v1/plain-response.json"
+        ))
+        .unwrap();
+        let operation: ConfigurationOperation =
+            serde_json::from_value(request["operation"].clone()).unwrap();
+        let source = projection(request["documentData"].as_str().unwrap()).unwrap();
+        let before = projection(&response.before_document_data).expect("before");
+        let after = projection(&response.after_document_data).expect("after");
+        assert!(banks_preserved(&before, &after, &operation), "banks");
+        assert!(
+            valid_operation_delta(
+                &operation_view(&before, before.default_profile_id().unwrap(), &operation).unwrap(),
+                &operation_view(&after, after.default_profile_id().unwrap(), &operation).unwrap(),
+                &operation
+            ),
+            "delta"
+        );
+        let ConfigurationOperation::StyleImport { profile_id, .. } = operation else {
+            panic!()
+        };
+        style_import::merge(&source, &before, &after, &profile_id).expect("merge");
+    }
+}
+
+#[cfg(test)]
+mod banked_style_tests {
+    use super::*;
+    #[test]
+    fn banked_import_retains_precise_metadata_and_refuses_unrelated_mutation() {
+        let request: Value = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/style-library/v1/banked-request.json"
+        ))
+        .unwrap();
+        let response: Response = serde_json::from_slice(include_bytes!(
+            "../../../fixtures/style-library/v1/banked-response.json"
+        ))
+        .unwrap();
+        let operation: ConfigurationOperation =
+            serde_json::from_value(request["operation"].clone()).unwrap();
+        let source = projection(request["documentData"].as_str().unwrap()).unwrap();
+        let before = projection(&response.before_document_data).unwrap();
+        let after = projection(&response.after_document_data).unwrap();
+        assert!(banks_preserved(&before, &after, &operation));
+        let ConfigurationOperation::StyleImport { ref profile_id, .. } = operation else {
+            panic!()
+        };
+        let merged = style_import::merge(&source, &before, &after, profile_id).unwrap();
+        assert_eq!(
+            std::str::from_utf8(merged.original_bytes())
+                .unwrap()
+                .matches("0.12345678901234567890123456789")
+                .count(),
+            9
+        );
+        assert_eq!(merged.profiles()[1], source.profiles()[1]);
+        for path in [
+            "/profiles/0/appearanceBank/variants/1/appearance/controls/00000000-0000-0000-0000-000000000109/shadowStrength",
+            "/profiles/0/customization/elements/0/layout/centerX",
+            "/profiles/1/customization/elements/0/layout/centerX",
+        ] {
+            let mut forged: Value = serde_json::from_slice(after.original_bytes()).unwrap();
+            if let Some(value) = forged.pointer_mut(path) { *value = json!(0.123); } else { continue; }
+            if let Ok(forged) = OwnedConfigurationDocument::decode(&serde_json::to_vec(&forged).unwrap()) {
+                assert!(!banks_preserved(&before,&forged,&operation) || !valid_operation_delta(&operation_view(&before,before.default_profile_id().unwrap(),&operation).unwrap(),&operation_view(&forged,forged.default_profile_id().unwrap(),&operation).unwrap(),&operation),"{path}");
+            }
+        }
     }
 }

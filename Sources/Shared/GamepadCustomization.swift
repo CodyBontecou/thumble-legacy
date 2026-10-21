@@ -13994,7 +13994,7 @@ struct GamepadCustomizationEditor: View {
 
     private func handleStyleLibraryImport(_ result: Result<[URL], Error>) {
         handleResourceFileResult(result) { url, data in
-            let imported = try JSONDecoder().decode(GamepadStyleLibrary.self, from: data).normalized
+            let imported = try GamepadStyleLibraryFile.read(data)
             update(actionName: "Import Style Library") { next in
                 var merged = next.styleLibrary.normalized.styles
                 for style in imported.styles {
@@ -26754,13 +26754,11 @@ private struct GamepadStyleLibraryJSONDocument: FileDocument {
         guard let data = configuration.file.regularFileContents else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        library = try JSONDecoder().decode(GamepadStyleLibrary.self, from: data).normalized
+        library = try GamepadStyleLibraryFile.read(data)
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
-        return FileWrapper(regularFileWithContents: try encoder.encode(library.normalized))
+        return FileWrapper(regularFileWithContents: try GamepadStyleLibraryFile.write(library))
     }
 }
 #endif

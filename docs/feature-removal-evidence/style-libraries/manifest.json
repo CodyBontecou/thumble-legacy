@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": "8f07b2f480ed874e804e278a1900f3c07ad8aaa74648aae1a0a3d022384b74cd",
+    "asset-regression.json": "b3679431807936c7d1f23f3ab2a940504643a5b26e3b3fe9a4724f68a4deb866",
+    "banked-state-test.log.gz": "219d5c8f18041d563345c64feba00f881013f4534b4c551090c3d1c8dc51c504",
+    "clippy.log.gz": "fc6fc05a8004ee15e6e7a4e79396cfbcb42fe4a948c993a61d434d9caa4cc95b",
+    "fixtures.log.gz": "5127ec8f7de0d23be1ed3fbd35b87e85d08e205e798b79267dd8155a61859f04",
+    "native-frozen-replay.log.gz": "c0a8fadbeacf226380c3ddff97571e2d5173743c7a578124e91f9f4c1489322b",
+    "native-tests.log.gz": "a135fcffc9b2b0505dee08f0cd595ad452c692cbfab8df9f996b1cd8233696fa",
+    "process.jsonl": "ab66dcf46aaaf9e1c7527f4821b8088e152bbe8ab145f19af016e7a1feb1eb36",
+    "rust-gate.log.gz": "63de26ba778a72cd686382f4dd730245141b0bd5c8a5bb4695cdc8cc4b494e4b",
+    "stack-gate.log.gz": "7d38d54e29a8b3e709e694e290b08234bdea0a14f8d50f4a11ffceae8c1d378c"
+  },
+  "binaries": {
+    "build/OwnedAssets/Build/Products/Debug/thumble": "853f3ec1e0517bf1c9306a409ebaa22809aec9e23de7909add760abf18b158b1",
+    "build/OwnedAssets/Build/Products/Debug/thumble-bridge": "3fe0cedb5501fc41b99edf79d54007d046ee22a22fd1a9476f966b6c4c60997c",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-host": "b7e3db0554e7c2989281c835d5f7d3d9805ad2989afabe79eca4e518d69a506f",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-cli-bridge": "ae45fc9f0d66b0207176f5b5ea3d19401f5d4880cd2aa25000c98e9f265f8330",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-mcp": "adc210a2c069a7a4d9b0c5d3c985a3c48b88e3e9afbc34786fd9ede773d37fc2"
+  },
+  "automaticMigrationActivated": false
+}

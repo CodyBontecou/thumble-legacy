@@ -3,6 +3,14 @@ import Foundation
 import XCTest
 
 final class ThumbleCLIBackendTests: XCTestCase {
+    func testStyleImportCommandPreservesRawLibraryAndMergeIntent() throws {
+        let text = "{\"styles\":[]}"
+        let bytes = try JSONEncoder().encode(ThumbleCLIProfileBackend.Command.styleImport(.active, libraryJSON: text, merge: true))
+        let value = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+        XCTAssertEqual(value["type"] as? String, "style.import")
+        XCTAssertEqual(value["libraryJSON"] as? String, text)
+        XCTAssertEqual(value["merge"] as? Bool, true)
+    }
     private func ownedInspectionSnapshot() throws -> ThumbleCLIProfileBackend.DesignSnapshot {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
         let document = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))) as? [String: Any])
