@@ -1,0 +1,60 @@
+{
+  "baseCommit": "b96f7d786d65de1be5e8f1e08a9172f914ceeeff",
+  "isolatedSource": "/private/tmp/thumble-apple-phone-zjmuu2ej",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "native-source-hashes.json",
+  "nativeInputCount": 161,
+  "fixtureSHA256": {
+    "Host/fixtures/owned-phone-edits/v1/intent.json": "20a8b2f26fe007dfa8064dd5a91d9367a50351ffaf8ff6f8fcbcfdfbb7392a6c",
+    "Host/fixtures/owned-phone-edits/v1/cases.json": "10bbdb990568ca5d3bf5d96f7ce05fca6831fb7323795951bd80a3b284033287",
+    "Host/fixtures/owned-phone-edits/v1/manifest.json": "c6579df494e22b5df2e029389d2b089995110fba2bef9e62587b08388b61c72a",
+    "Host/fixtures/owned-phone-wire/v1/frames.json": "3ae4ab73b965ca95a26cf9b35a0ff6a9b887fef2f123415085b3473817d07e83",
+    "Host/fixtures/owned-phone-wire/v1/manifest.json": "00ff35274313616eda922ca3eaa023690db0af3855eb3e3215c5bfac800849db",
+    "Host/fixtures/owned-element-sequences/v1/after-reset-and-hide.json": "243d72ade32e2a7abebaf4aa5753918d97a9779a6e1c34d3dac18849aaade9ce",
+    "Host/fixtures/owned-element-sequences/v1/manifest.json": "0ee0b5c418781440b30246ddd98a4d919c061c0f3b2047c4e4c1b5d182744284",
+    "Host/fixtures/owned-element-sequences/v1/duplicate-request.json": "623a4261ef60173a288f311ead7ce242807a8e94a38bad83389b2679d879e763",
+    "Host/fixtures/owned-element-sequences/v1/duplicate-response.json": "49ee69246684f433fb974b381f7bb18daacf0171af644b127b109d6c6e2669fb",
+    "Host/fixtures/owned-configuration/v1/document.json": "0b0cd5d4335e278358e9320be05c882891fb8a305cb3f30d19f6f2c6b905fa3f",
+    "Host/fixtures/owned-configuration/v1/cases.json": "08b78eb7069e10a95e26c2b50c12c7720883de4002b6346b659c00ab0420cef0",
+    "Host/fixtures/owned-configuration/v1/manifest.json": "f066f685c4dbba32e5aad4db76ad75bf8b32d0baf78628de1d22aeda06ac2b0e",
+    "Host/fixtures/wire/vectors.json": "1c9c5472291761f45316596e8915a467bc03f86b62e3fa8d98993c2659471386"
+  },
+  "rawLogSHA256": {
+    "nativeTests.txt": "99c7c5f4f81d430760b4326f12dac514e83a4bcf28f51c229b51dcd8b922c924",
+    "stack.txt": "0d0c6367d0ac21b1352bf9ef176d85e7bc325e3dace329aaca341feb94b65b79",
+    "fixtures.txt": "f0ab212e255ab426d21188c2552bbe0e43d542d864108a0930c7883c55880424",
+    "parity.txt": "7586d4f5070932177b498aa70c8b725b396eb381b3e980be655204418e1d6463"
+  },
+  "logSHA256": {
+    "nativeTests.txt": "51e1f825edeec4f928c56306192a0a7d2446bb44adb71bb8c694c2c3187f46b2",
+    "stack.txt": "feceb647b46f86c69acb7a7eb49881d7d92ed9b3ebe0b62c526b078e2168abe6",
+    "fixtures.txt": "f0ab212e255ab426d21188c2552bbe0e43d542d864108a0930c7883c55880424",
+    "parity.txt": "7586d4f5070932177b498aa70c8b725b396eb381b3e980be655204418e1d6463"
+  },
+  "logNormalization": "Trailing whitespace stripped; raw hashes identify original /tmp logs.",
+  "nativeTestBinarySHA256": "cb01a762b5e1e2549fc7db52db16a962f920f412db681fb0e77528499cb9b7b8",
+  "nativeTests": {
+    "passed": 47,
+    "failed": 0,
+    "newPhoneAdapterTests": 9
+  },
+  "stack": {
+    "passed": 42,
+    "failed": 0,
+    "macAndIOSDebugBuilds": true,
+    "budgetsUnchanged": true,
+    "inlineBytes": {
+      "OwnedPhoneEdit": 8,
+      "OwnedPhoneEditJournal": 8,
+      "OwnedPhoneEditResult": 88,
+      "ControllerMessage": 2872
+    }
+  },
+  "appleWireAndJournalAdapterImplemented": true,
+  "livePhoneEditorIntegration": false,
+  "shippingProfileFormats": [
+    4
+  ],
+  "automaticMigrationActivated": false,
+  "desktopGUIRetired": false
+}

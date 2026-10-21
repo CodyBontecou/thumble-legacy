@@ -50,3 +50,5 @@ Version-4 file preparation is now exposed as a read-only host CLI/MCP step, retu
 The owned-phone intent and private-draft staging backend now preserve native geometry/deletion/color behavior with revision and replay checks. Authenticated wire dispatch, matching acknowledgments and retained mobile journal adapters remain required before paired format-5 or automatic migration activation. See [the staged contract](owned-phone-edit-contract.md).
 
 Authenticated owned-phone wire dispatch now commits scoped intents through the headless release/CAS path and returns correlated revision receipts without requiring local agent-write opt-in. Shipping mobile journal integration and profile-format activation remain gated. See [the wire contract](owned-phone-edit-contract.md).
+
+The shared Apple owned-phone wire/journal adapter now preserves exact offline intents and recovery documents, with authenticated receipt reconciliation. It does not yet replace the iOS editor's legacy sync path; live owned snapshots, editor application, Android integration and migration activation remain required before desktop retirement.

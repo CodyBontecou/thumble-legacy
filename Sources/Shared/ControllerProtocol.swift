@@ -553,6 +553,9 @@ public struct ThumbleMacRuntimeStatus: Codable, Sendable {
     public var virtualGamepadLeftTrigger: Double?
     public var virtualGamepadRightTrigger: Double?
     public var captureLogPath: String?
+    public var ownedPhoneEdit: OwnedPhoneEdit?
+    public var ownedPhoneEditResult: OwnedPhoneEditResult?
+    public var configurationRevision: UInt64?
     public var virtualGamepadStatus: VirtualGamepadStatus?
     public var runtimeProcessID: Int32?
     public var runtimeInstanceID: String?
@@ -613,6 +616,9 @@ public struct ThumbleMacRuntimeStatus: Codable, Sendable {
         virtualGamepadLeftTrigger: Double? = nil,
         virtualGamepadRightTrigger: Double? = nil,
         captureLogPath: String? = nil,
+        ownedPhoneEdit: OwnedPhoneEdit? = nil,
+        ownedPhoneEditResult: OwnedPhoneEditResult? = nil,
+        configurationRevision: UInt64? = nil,
         virtualGamepadStatus: VirtualGamepadStatus? = nil,
         runtimeProcessID: Int32? = nil,
         runtimeInstanceID: String? = nil,
@@ -672,6 +678,9 @@ public struct ThumbleMacRuntimeStatus: Codable, Sendable {
         self.virtualGamepadLeftTrigger = virtualGamepadLeftTrigger
         self.virtualGamepadRightTrigger = virtualGamepadRightTrigger
         self.captureLogPath = captureLogPath
+        self.ownedPhoneEdit = ownedPhoneEdit
+        self.ownedPhoneEditResult = ownedPhoneEditResult
+        self.configurationRevision = configurationRevision
         self.virtualGamepadStatus = virtualGamepadStatus
         self.runtimeProcessID = runtimeProcessID
         self.runtimeInstanceID = runtimeInstanceID
@@ -697,6 +706,7 @@ public enum ControllerPointerButton: String, Codable, Sendable {
 }
 
 public enum ControllerCapability: String, Codable, CaseIterable, Sendable {
+    case ownedPhoneEditV1 = "owned_phone_edit_v1"
     /// The Mac accepts authenticated, profile-scoped orientation preference mutations
     /// and responds by broadcasting the complete authoritative profile state.
     case gamepadProfileOrientationPreferenceMutation = "gamepad_profile_orientation_preference_mutation"
@@ -709,6 +719,8 @@ public enum ControllerCapability: String, Codable, CaseIterable, Sendable {
 }
 
 public enum ControllerMessageType: String, Codable, Sendable {
+    case ownedPhoneEdit = "owned_phone_edit"
+    case ownedPhoneEditResult = "owned_phone_edit_result"
     case hello
     case pairingRequest = "pairing_request"
     case pairingChallenge = "pairing_challenge"
@@ -787,6 +799,9 @@ public struct ControllerMessage: Codable, Sendable {
     public var profileArtifactAdoptionChunkIndex: Int?
     public var profileArtifactAdoptionChunkData: Data?
     public var profileArtifactAdoptionResult: ProfileArtifactAdoptionResult?
+    public var ownedPhoneEdit: OwnedPhoneEdit?
+    public var ownedPhoneEditResult: OwnedPhoneEditResult?
+    public var configurationRevision: UInt64?
     public var virtualGamepadStatus: VirtualGamepadStatus?
 
     public init(
@@ -834,6 +849,9 @@ public struct ControllerMessage: Codable, Sendable {
         profileArtifactAdoptionChunkIndex: Int? = nil,
         profileArtifactAdoptionChunkData: Data? = nil,
         profileArtifactAdoptionResult: ProfileArtifactAdoptionResult? = nil,
+        ownedPhoneEdit: OwnedPhoneEdit? = nil,
+        ownedPhoneEditResult: OwnedPhoneEditResult? = nil,
+        configurationRevision: UInt64? = nil,
         virtualGamepadStatus: VirtualGamepadStatus? = nil
     ) {
         self.type = type
@@ -880,6 +898,9 @@ public struct ControllerMessage: Codable, Sendable {
         self.profileArtifactAdoptionChunkIndex = profileArtifactAdoptionChunkIndex
         self.profileArtifactAdoptionChunkData = profileArtifactAdoptionChunkData
         self.profileArtifactAdoptionResult = profileArtifactAdoptionResult
+        self.ownedPhoneEdit = ownedPhoneEdit
+        self.ownedPhoneEditResult = ownedPhoneEditResult
+        self.configurationRevision = configurationRevision
         self.virtualGamepadStatus = virtualGamepadStatus
     }
 }
@@ -1072,10 +1093,36 @@ public enum ControllerWireCodec {
         }
         if requiresExpandedStackForDecoding(data) {
             return try withExpandedCodableStack {
-                try decoder.decodeUnique(ControllerMessage.self, from: data)
+                try decodeJSON(data, using: decoder)
             }
         }
-        return try decoder.decodeUnique(ControllerMessage.self, from: data)
+        return try decodeJSON(data, using: decoder)
+    }
+
+    private static func decodeJSON(_ data: Data, using decoder: JSONDecoder) throws -> ControllerMessage {
+        let message = try decoder.decodeUnique(ControllerMessage.self, from: data)
+        if message.ownedPhoneEdit != nil || message.ownedPhoneEditResult != nil || message.configurationRevision != nil || message.type == .ownedPhoneEdit || message.type == .ownedPhoneEditResult {
+            if message.ownedPhoneEdit != nil || message.ownedPhoneEditResult != nil || message.type == .ownedPhoneEdit || message.type == .ownedPhoneEditResult {
+                try OwnedPhoneCoding.validateTokens(data)
+                guard message.profileFormatVersion == 5, message.gamepadProfiles == nil,
+                      message.gamepadCustomization == nil, message.skinPackages == nil, message.skinReference == nil,
+                      message.button == nil, message.elementID == nil, message.state == nil,
+                      message.pointerEvent == nil, message.analogStick == nil, message.analogTrigger == nil,
+                      message.profileArtifactAdoptionMetadata == nil, message.profileArtifactAdoptionChunkData == nil,
+                      message.profileArtifactAdoptionResult == nil else { throw OwnedPhoneCoding.Failure.invalidIntent }
+                switch message.type {
+                case .ownedPhoneEdit:
+                    guard message.ownedPhoneEdit != nil, message.ownedPhoneEditResult == nil else { throw OwnedPhoneCoding.Failure.invalidIntent }
+                case .ownedPhoneEditResult:
+                    guard let result = message.ownedPhoneEditResult, message.ownedPhoneEdit == nil,
+                          message.configurationRevision == result.configurationRevision else { throw OwnedPhoneCoding.Failure.invalidReceipt }
+                default: throw OwnedPhoneCoding.Failure.invalidIntent
+                }
+            } else {
+                try JSONDecoder.validateUniqueKeys(in: data, integerKeys: ["configurationRevision"], integerKeyDepthLimit: 1)
+            }
+        }
+        return message
     }
 
     private static func requiresExpandedStack(for message: ControllerMessage) -> Bool {
@@ -1185,6 +1232,9 @@ public enum ControllerWireCodec {
               message.gamepadCustomization == nil,
               message.gamepadProfiles == nil,
               message.virtualGamepadStatus == nil,
+              message.ownedPhoneEdit == nil,
+              message.ownedPhoneEditResult == nil,
+              message.configurationRevision == nil,
               message.skinPackages == nil,
               message.skinReference == nil,
               message.bindingPresentations == nil,
@@ -1336,7 +1386,7 @@ private extension ControllerMessageType {
         case .heartbeat: 3
         case .ping: 4
         case .pong: 5
-        case .hello, .pairingRequest, .pairingChallenge, .pairingAccepted, .pointer, .gamepadAnalog, .gamepadCustomization, .gamepadProfiles, .skinPackages, .skinPackageRemoval, .gamepadProfileSkinSelection, .gamepadProfileSelection, .gamepadDefaultProfile, .gamepadProfileOrientationPreferenceMutation, .launchProfileTarget, .profileArtifactAdoptionBegin, .profileArtifactAdoptionChunk, .profileArtifactAdoptionCommit, .profileArtifactAdoptionCancel, .profileArtifactAdoptionResult, .error: nil
+        case .ownedPhoneEdit, .ownedPhoneEditResult, .hello, .pairingRequest, .pairingChallenge, .pairingAccepted, .pointer, .gamepadAnalog, .gamepadCustomization, .gamepadProfiles, .skinPackages, .skinPackageRemoval, .gamepadProfileSkinSelection, .gamepadProfileSelection, .gamepadDefaultProfile, .gamepadProfileOrientationPreferenceMutation, .launchProfileTarget, .profileArtifactAdoptionBegin, .profileArtifactAdoptionChunk, .profileArtifactAdoptionCommit, .profileArtifactAdoptionCancel, .profileArtifactAdoptionResult, .error: nil
         }
     }
 

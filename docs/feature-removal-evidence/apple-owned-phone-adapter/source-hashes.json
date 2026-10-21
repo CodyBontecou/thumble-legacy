@@ -1,0 +1,13 @@
+{
+  "Sources/Shared/ControllerProtocol.swift": "fd7b0ee702a6065381a774d8a7635880a7d1fe6d5cecd3bfac761b2888984a04",
+  "Sources/Shared/PortableProfileArtifact.swift": "5d70c263e7c979fb696597ae6dabcbf2208423a22b740641c7c52e48f5d88ecd",
+  "Tests/StackSafetyRegressionTests.swift": "83702a2b7b04c914fa9f2386f131db933df84b363b6b88944778496794f32775",
+  "Thumble.xcodeproj/project.pbxproj": "191f576966cf03fa0cb2efb7477f47af08c3e9372553c92b522756052dc1814a",
+  "Sources/Shared/OwnedPhoneEdit.swift": "c240f5ae00c48c50a571e8f106e36b8a5050515635f3a8879e0486ad73940b22",
+  "Sources/Shared/OwnedPhoneEditJournal.swift": "e3c833d10794969ee72e34c774c503ead8e6acf78937448919f5c8d34629e2cc",
+  "Tests/OwnedPhoneEditTests.swift": "63c7f1d4ac20ef5519b90ac2efd5eaf3b178efe76e530bca6b2860970af8d228",
+  "docs/owned-phone-edit-contract.md": "0a7ea4bbbdcf5903d451daf16de859ace3ad90038238582268aac57c74d51295",
+  "docs/feature-removal-progress.md": "daa9e00440ac882ffc74fff062d96eafe0ed7d9dd7cede5a95ad7cf396f5527f",
+  "docs/feature-removal-inventory.md": "d480325b96fbe20715f393ad7d390929ec9203404a1369adf9a48f38e0d16b68",
+  "docs/cli-mcp-cutover.md": "cb0ff4f0ef0107b2d0b84a4f5f1b1ef050562c45e6329c5221795bfd4f9e0e60"
+}

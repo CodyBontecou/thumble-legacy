@@ -603,8 +603,8 @@ extension JSONDecoder {
         return try decode(type, from: data)
     }
 
-    static func validateUniqueKeys(in data: Data) throws {
-        try PortableJSONScanner(data: data, enforceSafeIntegers: false).scan()
+    static func validateUniqueKeys(in data: Data, integerKeys: Set<String> = [], integerKeyDepthLimit: Int = .max) throws {
+        try PortableJSONScanner(data: data, enforceSafeIntegers: false, integerKeys: integerKeys, integerKeyDepthLimit: integerKeyDepthLimit).scan()
     }
 }
 
@@ -617,6 +617,7 @@ private final class PortableJSONScanner {
         var state: State
         var count: Int
         var keys: Set<String>
+        var currentKey: String
     }
 
     private let bytes: [UInt8]
@@ -625,8 +626,12 @@ private final class PortableJSONScanner {
     private var rootComplete = false
     private let enforceSafeIntegers: Bool
     private let maximumStringBytes: Int
+    private let integerKeys: Set<String>
+    private let integerKeyDepthLimit: Int
 
-    init(data: Data, enforceSafeIntegers: Bool = true) {
+    init(data: Data, enforceSafeIntegers: Bool = true, integerKeys: Set<String> = [], integerKeyDepthLimit: Int = .max) {
+        self.integerKeys = integerKeys
+        self.integerKeyDepthLimit = integerKeyDepthLimit
         bytes = Array(data)
         self.enforceSafeIntegers = enforceSafeIntegers
         // Transport has its own bounded frame/chunk caps, which may exceed the
@@ -661,6 +666,7 @@ private final class PortableJSONScanner {
                 guard frames[frames.count - 1].keys.insert(key).inserted else {
                     throw PortableProfileArtifactError.duplicateObjectKey(offset: bounded(offset))
                 }
+                frames[frames.count - 1].currentKey = key
                 frames[frames.count - 1].state = .objectColon
             case .objectColon:
                 skipWhitespace()
@@ -733,7 +739,7 @@ private final class PortableJSONScanner {
         guard frames.count < 64 else {
             throw PortableProfileArtifactError.depthExceeded(offset: bounded(offset))
         }
-        frames.append(Frame(kind: kind, state: state, count: 0, keys: []))
+        frames.append(Frame(kind: kind, state: state, count: 0, keys: [], currentKey: ""))
     }
 
     private func closeContainer(expected: Kind) throws {
@@ -899,6 +905,9 @@ private final class PortableJSONScanner {
                 throw PortableProfileArtifactError.invalidNumber(offset: bounded(start))
             }
             while let digit = peek(), (0x30...0x39).contains(digit) { index += 1 }
+        }
+        if let frame = frames.last, frame.state == .objectValue, integerKeys.contains(frame.currentKey), frames.count <= integerKeyDepthLimit, !isInteger {
+            throw PortableProfileArtifactError.invalidNumber(offset: bounded(start))
         }
         let token = String(decoding: bytes[start..<index], as: UTF8.self)
         guard let value = Double(token), value.isFinite else {

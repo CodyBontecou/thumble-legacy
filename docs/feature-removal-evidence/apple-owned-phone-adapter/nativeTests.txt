@@ -1,0 +1,494 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/ApplePhoneDerivedData "-only-testing:ThumbleCLITests/OwnedPhoneEditTests" "-only-testing:ThumbleCLITests/OwnedConfigurationDocumentTests" "-only-testing:ThumbleCLITests/PortableProfileArtifactTests" "-only-testing:ThumbleCLITests/ProfileFormatPolicyTests" "-only-testing:ThumbleCLITests/RustHostInteropTests" "-only-testing:ThumbleCLITests/OrientationPreferenceTests" "-only-testing:ThumbleCLITests/KeypadBindingPresentationTests" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: eaf8ff34024829614f4e88c2782f1f33
+Build description path: /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/XCBuildData/eaf8ff34024829614f4e88c2782f1f33.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-apple-phone-zjmuu2ej/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+SwiftDriver ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/include -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-apple-phone-zjmuu2ej -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/OwnedPhoneEditTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/OwnedPhoneEditTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditJournal.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ PortableProfileArtifact.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ControllerProtocol.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling PortableProfileArtifact.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ControllerDesignSession.swift,\ FeatureRemovalBaselineTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ControllerDesignSession.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/FeatureRemovalBaselineTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/FeatureRemovalBaselineTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ AndroidLayoutEditOracleTests.swift,\ AppearanceEditOracleTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/AndroidLayoutEditOracleTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/AppearanceEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/AndroidLayoutEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/AppearanceEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceBankTests.swift,\ GamepadCustomization.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/GamepadAppearanceBankTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/GamepadAppearanceBankTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ MacConfigurationBindings.swift,\ MacRustAuthorityInterlockTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Mac/MacConfigurationBindings.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/MacRustAuthorityInterlockTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Mac/MacConfigurationBindings.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/MacRustAuthorityInterlockTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/MacRustAuthorityInterlockTests.swift:8:13: warning: variable 'first' was written to, but never read
+        var first: MacLegacyAuthorityLease? = try .acquire(stateDirectory: stateDirectory)
+            ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/MacRustAuthorityInterlockTests.swift:117:13: warning: variable 'socket' was written to, but never read
+        var socket: ThumbleNativeConfigurationSocket? = try .init(directory: directory) { data, reply in
+            ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/MacRustAuthorityInterlockTests.swift:214:18: warning: weak variable 'weakSocket' was never mutated; consider changing to 'let' constant
+        weak var weakSocket = socket
+             ~~~ ^
+             let
+
+SwiftCompile normal arm64 Compiling\ ProfileResourceCodecTests.swift,\ StackSafetyRegressionTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ProfileResourceCodecTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1346:33: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let customization = profile.customization
+                                ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1347:69: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            var artboard = try ThumbleSkinArtboard.capture(profile: profile, identifier: "stack-hit",
+                                                                    ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1380:72: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let barLabel = GamepadControlBarLabelContent.profile(name: profile.name, isDefault: true, compact: false)
+                                                                       ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1381:76: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let launchLabel = GamepadControlBarLabelContent.launch(target: profile.launchTarget, compact: true)
+                                                                           ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1382:37: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            guard barLabel.title == profile.name, barLabel.symbol == "star.fill",
+                                    ^
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/StackSafetyRegressionTests.swift:1386:55: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+                isDefaultProfile: false, profileName: profile.name, visibleItems: [.profileMenu, .settings],
+                                                      ^
+
+SwiftCompile normal arm64 Compiling\ IOSLocalKeypadUX.swift,\ KeypadConfigurationExport.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/iOS/IOSLocalKeypadUX.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/iOS/IOSLocalKeypadUX.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEdit.swift,\ ProfileFormatPolicy.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedPhoneEdit.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLIRuntimeBackend.swift,\ ThumbleCLISmokeTestSuite.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/CLI/ThumbleCLIRuntimeBackend.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleCLISmokeTestSuite.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleCLISmokeTestSuite.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ LegacyProfileMigration.swift,\ LegacyProfileMigrationTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/LegacyProfileMigration.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/LegacyProfileMigrationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/LegacyProfileMigrationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleConfigurationBridge.swift,\ ThumbleConfigurationBridgeTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleConfigurationBridge.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleNativeConfiguration.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLIBackend.swift,\ ThumbleCLIBackendTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/CLI/ThumbleCLIBackend.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleCLIBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleCLIBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+/tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleCLIBackendTests.swift:783:13: warning: variable 'changes' was never mutated; consider changing to 'let' constant
+        var changes = ThumbleCLIProfileBackend.ControlBarItemChanges()
+        ~~~ ^
+        let
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinCompiler.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleLinkSnapshot.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ OwnedConfigurationDocument.swift,\ OwnedConfigurationDocumentTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedConfigurationDocument.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/OwnedConfigurationDocumentTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/OwnedConfigurationDocumentTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackage.swift /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinWorkspaceTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleLinkSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinResolverTests.swift /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleSkinResolverTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-apple-phone-zjmuu2ej/Tests/ThumbleSkinResolverTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEdit.swift, ProfileFormatPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LegacyProfileMigration.swift, LegacyProfileMigrationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling IOSLocalKeypadUX.swift, KeypadConfigurationExport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacConfigurationBindings.swift, MacRustAuthorityInterlockTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedConfigurationDocument.swift, OwnedConfigurationDocumentTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerProtocol.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleNativeConfiguration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AndroidLayoutEditOracleTests.swift, AppearanceEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinResolverTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/include -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-apple-phone-zjmuu2ej -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileResourceCodecTests.swift, StackSafetyRegressionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+Copy /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLIRuntimeBackend.swift, ThumbleCLISmokeTestSuite.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerDesignSession.swift, FeatureRemovalBaselineTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLIBackend.swift, ThumbleCLIBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleConfigurationBridge.swift, ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceBankTests.swift, GamepadCustomization.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/include -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-apple-phone-zjmuu2ej -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests normal (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule @/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests -Xlinker -add_ast_path -Xlinker /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+CopySwiftLibs /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --module-name ThumbleCLITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F113 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.codybontecou.PocketPadCLITests --output /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --dependency-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat --stringsdata-file /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList --metadata-file-list /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList --static-metadata-file-list /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 01:22:38.477 appintentsmetadataprocessor[6378:85939288] Starting appintentsmetadataprocessor export
+2026-10-21 01:22:38.478 appintentsmetadataprocessor[6378:85939288] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessInfoPlistFile /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-apple-phone-zjmuu2ej
+    builtin-infoPlistUtility /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+Test Suite 'Selected tests' started at 2026-10-21 01:22:39.179.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 01:22:39.179.
+Test Suite 'KeypadBindingPresentationTests' started at 2026-10-21 01:22:39.179.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testCompactAndAccessibilityFormatting]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testCompactAndAccessibilityFormatting]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testControllerMessagePresentationRoundTrip]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testControllerMessagePresentationRoundTrip]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testControllerMessageWithoutPresentationsRemainsDecodable]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testControllerMessageWithoutPresentationsRemainsDecodable]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testKeyboardAuthoringVocabularyMatchesNativeAdaptersAndRejectsUnknownKeys]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testKeyboardAuthoringVocabularyMatchesNativeAdaptersAndRejectsUnknownKeys]' passed (0.005 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testOfflinePresentationPersistenceReplacesSnapshot]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testOfflinePresentationPersistenceReplacesSnapshot]' passed (0.005 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testOwnedOutputsOverrideStaleSidecars]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testOwnedOutputsOverrideStaleSidecars]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testPerProfilePresentationsAreIsolated]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testPerProfilePresentationsAreIsolated]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testPresentationsFilterOutputModeWithoutChangingOwnedBindings]' started.
+Test Case '-[ThumbleCLITests.KeypadBindingPresentationTests testPresentationsFilterOutputModeWithoutChangingOwnedBindings]' passed (0.001 seconds).
+Test Suite 'KeypadBindingPresentationTests' passed at 2026-10-21 01:22:39.202.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.020 (0.022) seconds
+Test Suite 'OrientationPreferenceTests' started at 2026-10-21 01:22:39.202.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testDeclaredProfileJSONDefaultsOrientationToAutomatic]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testDeclaredProfileJSONDefaultsOrientationToAutomatic]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testLegacyControllerMessageDecodesWithoutCapabilitiesOrMutation]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testLegacyControllerMessageDecodesWithoutCapabilitiesOrMutation]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationCLIParserSupportsGetAndSet]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationCLIParserSupportsGetAndSet]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationMutationMessageRoundTripsExplicitFields]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationMutationMessageRoundTripsExplicitFields]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationMutationRoutingRequiresAuthenticationCapabilityAndPayload]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationMutationRoutingRequiresAuthenticationCapabilityAndPayload]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationPreferenceRoundTripsAndSurvivesNormalizationAndCopy]' started.
+Test Case '-[ThumbleCLITests.OrientationPreferenceTests testOrientationPreferenceRoundTripsAndSurvivesNormalizationAndCopy]' passed (0.006 seconds).
+Test Suite 'OrientationPreferenceTests' passed at 2026-10-21 01:22:39.212.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.009 (0.010) seconds
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-21 01:22:39.212.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.343 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.057 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' passed (0.278 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' passed (2.824 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' passed (0.203 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.045 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.761 seconds).
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-21 01:22:43.724.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 4.510 (4.512) seconds
+Test Suite 'OwnedPhoneEditTests' started at 2026-10-21 01:22:43.724.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testChangedIntentIdentityCorruptRecoveryAndReceiptInvariantsAreRejected]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testChangedIntentIdentityCorruptRecoveryAndReceiptInvariantsAreRejected]' passed (0.037 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testFrozenWireReceiptsRetainHistoricalAndCurrentRevisions]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testFrozenWireReceiptsRetainHistoricalAndCurrentRevisions]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testJournalPersistsOriginalBytesAndDeduplicatesRecoveryAcrossAuthorities]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testJournalPersistsOriginalBytesAndDeduplicatesRecoveryAcrossAuthorities]' passed (0.111 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testJournalRejectsDuplicateRecordsUnknownFieldsAndUnreferencedRecovery]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testJournalRejectsDuplicateRecordsUnknownFieldsAndUnreferencedRecovery]' passed (0.114 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testOnlyMatchingAuthenticatedReceiptRetiresAnEditAndNeverDowngradesSnapshot]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testOnlyMatchingAuthenticatedReceiptRetiresAnEditAndNeverDowngradesSnapshot]' passed (0.074 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testReceiptCannotAcknowledgeAnotherProfileOrBaseRevision]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testReceiptCannotAcknowledgeAnotherProfileOrBaseRevision]' passed (0.036 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testSharedIntentMatrixMatchesRustWithoutActivatingPhoneOffers]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testSharedIntentMatrixMatchesRustWithoutActivatingPhoneOffers]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testSnapshotRevisionValidationDoesNotConstrainOpaqueNestedMetadata]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testSnapshotRevisionValidationDoesNotConstrainOpaqueNestedMetadata]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testUnsignedIntegerTokenKindsAndUnknownFieldsFailClosed]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneEditTests testUnsignedIntegerTokenKindsAndUnknownFieldsFailClosed]' passed (0.002 seconds).
+Test Suite 'OwnedPhoneEditTests' passed at 2026-10-21 01:22:44.104.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.379 (0.380) seconds
+Test Suite 'PortableProfileArtifactTests' started at 2026-10-21 01:22:44.104.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testBindingMapsMustReferenceDeclaredControlsNotJustUUIDs]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testBindingMapsMustReferenceDeclaredControlsNotJustUUIDs]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testCanonicalizerSortsIntegerLikeObjectKeysByUTF16CodeUnits]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testCanonicalizerSortsIntegerLikeObjectKeysByUTF16CodeUnits]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testIndependentOrientationDeclarationsSupportAll384BindingOwners]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testIndependentOrientationDeclarationsSupportAll384BindingOwners]' passed (0.093 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testReferencesBindingShapesForbiddenFieldsAndTypedFailuresFailClosed]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testReferencesBindingShapesForbiddenFieldsAndTypedFailuresFailClosed]' passed (0.004 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testRejectsOversizeBeforeParseAndStrictUTF8BOMAndTrailingGarbage]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testRejectsOversizeBeforeParseAndStrictUTF8BOMAndTrailingGarbage]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testRustGoldenCanonicalBytesAndHashMatchExactly]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testRustGoldenCanonicalBytesAndHashMatchExactly]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testScannerRejectsDecodedDuplicateKeysEscapesSurrogatesControlsAndUnsafeIntegers]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testScannerRejectsDecodedDuplicateKeysEscapesSurrogatesControlsAndUnsafeIntegers]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testScannerRejectsDepthEntryKeyAndDecodedStringBounds]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testScannerRejectsDepthEntryKeyAndDecodedStringBounds]' passed (0.057 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testTamperFailsBeforeTypedAdoption]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testTamperFailsBeforeTypedAdoption]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testWrapperInlineSizeBudget]' started.
+Test Case '-[ThumbleCLITests.PortableProfileArtifactTests testWrapperInlineSizeBudget]' passed (0.000 seconds).
+Test Suite 'PortableProfileArtifactTests' passed at 2026-10-21 01:22:44.270.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.164 (0.166) seconds
+Test Suite 'ProfileFormatPolicyTests' started at 2026-10-21 01:22:44.270.
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFormatMetadataCannotDisappearIntoCompactInputAndOrdinaryInputStaysCompact]' started.
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFormatMetadataCannotDisappearIntoCompactInputAndOrdinaryInputStaysCompact]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFutureSavedProfileFailsWithoutRewritingOriginalBytes]' started.
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFutureSavedProfileFailsWithoutRewritingOriginalBytes]' passed (0.004 seconds).
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFutureUnknownProfileIsRejectedBeforeTypedDecodeAndDuplicateTagsNeverDowngrade]' started.
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testFutureUnknownProfileIsRejectedBeforeTypedDecodeAndDuplicateTagsNeverDowngrade]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testSharedNegotiationAndFrameMatrix]' started.
+Test Case '-[ThumbleCLITests.ProfileFormatPolicyTests testSharedNegotiationAndFrameMatrix]' passed (0.001 seconds).
+Test Suite 'ProfileFormatPolicyTests' passed at 2026-10-21 01:22:44.277.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.007 (0.007) seconds
+Test Suite 'RustHostInteropTests' started at 2026-10-21 01:22:44.278.
+Test Case '-[ThumbleCLITests.RustHostInteropTests testCrossPlatformReceiverStatusDecodesInCurrentIOSModel]' started.
+Test Case '-[ThumbleCLITests.RustHostInteropTests testCrossPlatformReceiverStatusDecodesInCurrentIOSModel]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.RustHostInteropTests testRustHostWireFixturesMatchSwiftCodec]' started.
+Test Case '-[ThumbleCLITests.RustHostInteropTests testRustHostWireFixturesMatchSwiftCodec]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.RustHostInteropTests testRustMinimalProfileDecodesInCurrentSwiftModel]' started.
+Test Case '-[ThumbleCLITests.RustHostInteropTests testRustMinimalProfileDecodesInCurrentSwiftModel]' passed (0.001 seconds).
+Test Suite 'RustHostInteropTests' passed at 2026-10-21 01:22:44.281.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 01:22:44.281.
+	 Executed 47 tests, with 0 failures (0 unexpected) in 5.093 (5.102) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 01:22:44.281.
+	 Executed 47 tests, with 0 failures (0 unexpected) in 5.093 (5.102) seconds
+2026-10-21 01:22:44.571 xcodebuild[5929:85936989] [MT] IDETestOperationsObserverDebug: 5.987 elapsed -- Testing started completed.
+2026-10-21 01:22:44.571 xcodebuild[5929:85936989] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 01:22:44.571 xcodebuild[5929:85936989] [MT] IDETestOperationsObserverDebug: 5.987 sec, +5.987 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-apple-phone-zjmuu2ej/build/ApplePhoneDerivedData/Logs/Test/Test-ThumbleTests-2026.10.21_01-21-46--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

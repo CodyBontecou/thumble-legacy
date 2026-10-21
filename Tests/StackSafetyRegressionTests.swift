@@ -273,6 +273,35 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedPhoneIntentWireAndJournalFitConstrainedThread() throws {
+        assertInlineSize(OwnedPhoneEdit.self, atMost: 8)
+        assertInlineSize(OwnedPhoneEditJournal.self, atMost: 8)
+        assertInlineSize(OwnedPhoneEditResult.self, atMost: 160)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let bytes = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-phone-edits/v1/intent.json"))
+            let intent = try OwnedPhoneEdit(validating: bytes)
+            let recovery = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-element-sequences/v1/after-reset-and-hide.json"))
+            let journal = try OwnedPhoneEditJournal().recording(serverID: "stack-phone", edit: intent, updatedAt: 100, recoveryDocument: recovery)
+            let restored = try OwnedPhoneEditJournal(validating: journal.encoded())
+            let request = ControllerMessage(type: .ownedPhoneEdit, timestamp: 0, profileFormatVersion: 5, ownedPhoneEdit: intent)
+            let wire = try ControllerWireCodec.encode(request, using: JSONEncoder())
+            let decoded = try ControllerWireCodec.decode(wire, using: JSONDecoder())
+            var maximum = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+            maximum["removedControlIDs"] = [] as [String]
+            maximum["controlEdits"] = (1...128).map { index in
+                ["controlID": String(format: "ac000000-0000-0000-0000-%012d", index), "centerX": 0.6, "centerY": 0.4,
+                 "widthScale": 1.0, "heightScale": 1.0, "rotationDegrees": 10.0, "isHidden": false,
+                 "isLocationLocked": false, "zIndex": 10] as [String: Any]
+            }
+            let large = try OwnedPhoneEdit(validating: JSONSerialization.data(withJSONObject: maximum))
+            guard large.controlEdits.count == 128 else { throw StackTestError.unexpectedDecodedState }
+            guard restored.pending.first?.edit.originalData == bytes, decoded.ownedPhoneEdit == intent else {
+                throw StackTestError.unexpectedDecodedState
+            }
+        }
+    }
+
     func testOwnedConfigurationReaderFitsConstrainedThread() throws {
         assertInlineSize(ThumbleOwnedConfigurationDocument.self, atMost: 8)
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {

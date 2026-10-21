@@ -21,8 +21,10 @@
 		06A092484CAC9941259535E3 /* ThumbleLegacyAppearanceMaterializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F824818F577DED504FB2AA2A /* ThumbleLegacyAppearanceMaterializer.swift */; };
 		079F1C91CAD5CDD081CE0929 /* GamepadCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A91C0CCA23D63A11106CD8 /* GamepadCustomization.swift */; };
 		07D70C95CF43199BAD040BF3 /* ThumbleArtworkLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5231B0FDBCE915A59D76EBA /* ThumbleArtworkLayerView.swift */; };
+		07DCD6B6D660DD7F352F6F93 /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		07F04B233EE53274E2E2AC95 /* KeypadConfigurationExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EEF6D322B8B0EB07923C65 /* KeypadConfigurationExport.swift */; };
 		087932051DF1FEE2D212A70D /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 059C0985AED2F1670E779778 /* ZIPFoundation */; };
+		08EA2511FDDFB11EE8A30AA6 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		08FA68B5A9178E6A28CDE8EF /* ThumbleLinkImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEFB0A3D2EBA220441307F5 /* ThumbleLinkImport.swift */; };
 		093FEE81FD24D84507AB1B9C /* VirtualGamepadOutputPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8095D8C904A6623E001629C5 /* VirtualGamepadOutputPolicy.swift */; };
 		0A1B0F84A90331F5DBF480F6 /* KeypadConfigurationExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EEF6D322B8B0EB07923C65 /* KeypadConfigurationExport.swift */; };
@@ -35,6 +37,7 @@
 		0D950A659CF4A757E14A8987 /* ThumbleConfigurationBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203ED7A09090D979073E3B4 /* ThumbleConfigurationBridge.swift */; };
 		0DC54C4611A909E87C32227F /* ControllerRuntimeUX.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34DE7F2FC237A7747F02A7 /* ControllerRuntimeUX.swift */; };
 		0DF40AC8AEC5F3A9B34ED93D /* GamepadAppearanceBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F7F8FE1C99E0E98F06D643 /* GamepadAppearanceBank.swift */; };
+		0E96FF2DAAE5038B7CF009AD /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		0F55E52DA50FE15F7EE958B2 /* ThumbleCLIBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1B1BE7CC67BFE171BAF3BD /* ThumbleCLIBackend.swift */; };
 		0FC8E95CA643D65D269A3E3A /* ThumbleSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C28FC193386E1DFDFCBFE5 /* ThumbleSkin.swift */; };
 		0FEE530FEA9CC9C66B09580B /* ThumbleSkinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55618F7D37F55E262B353D8 /* ThumbleSkinStore.swift */; };
@@ -132,6 +135,7 @@
 		425775D974A5C87EACB9F020 /* ThumbleSkinPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761F8839E8DA1B7F8AFB9234 /* ThumbleSkinPackage.swift */; };
 		43965086E0D0A2336D9333E7 /* GamepadAppearanceEditMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FFD5B81DECEFB5FDC6312A /* GamepadAppearanceEditMerge.swift */; };
 		43CE248670FA1D36DDDE376C /* ThumbleLinkSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FEB4EFE7A30D0624A93AAC /* ThumbleLinkSnapshot.swift */; };
+		45D6240CF1C9980B37B16B26 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		45DF846D1B912AF8845CEAE7 /* ThumbleSkinCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63E6C04F59CAA138585500A /* ThumbleSkinCompatibility.swift */; };
 		45FD503F59F3978242FF770A /* ThumbleSkinPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761F8839E8DA1B7F8AFB9234 /* ThumbleSkinPackage.swift */; };
 		46A223A9A5FB2956F7CEF711 /* ThumbleLinkImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C7164F6BE44A0611EA285E /* ThumbleLinkImportView.swift */; };
@@ -204,6 +208,7 @@
 		6872D114A0FA022B13E15FBC /* IOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB7778B6693CFF76EECCC5 /* IOSContentView.swift */; };
 		68E47E8E08DC972BEC807ED9 /* GamepadAppearanceEditMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FFD5B81DECEFB5FDC6312A /* GamepadAppearanceEditMerge.swift */; };
 		68F56D19D14DABE97561824B /* ThumbleNativeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66292FD7273DCC55BB815350 /* ThumbleNativeConfiguration.swift */; };
+		6A28BA2A436F4464C11BB3DF /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		6B08087158F1F9BAFF6AD726 /* ThumbleMacSetupGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26697D46B1B657D2C3BFD2D9 /* ThumbleMacSetupGuide.swift */; };
 		6B2150575CD9DDB3E3E2C19B /* ThumbleSVGRasterizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F032EA624A966085B73A13FD /* ThumbleSVGRasterizer.swift */; };
 		6B477D40085B2F6A1F68150B /* ProfileArtifactAdoption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223FD9B514AF3C896FF23228 /* ProfileArtifactAdoption.swift */; };
@@ -211,6 +216,7 @@
 		6D3AAB36371D5FE4B4E08558 /* ThumbleInputLatencySimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F83DB2B9FB309CF3FB0367 /* ThumbleInputLatencySimulation.swift */; };
 		6D760D1BC232CD561C617A43 /* ThumbleCSSCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC60027A3BD6E36E1AEBB9 /* ThumbleCSSCompiler.swift */; };
 		6E4E6C841ADE8FB26598952F /* ThumbleLegacyAppearanceMaterializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F824818F577DED504FB2AA2A /* ThumbleLegacyAppearanceMaterializer.swift */; };
+		700B2DED8C1BC10418EA3757 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		70A5F3B45D9DF02F404DE3F4 /* VirtualGamepadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A211F1A0643070EAFA61ED /* VirtualGamepadStatus.swift */; };
 		70A9321BCC145D0AAE554456 /* GeistDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42888086CFE3092D63946C7 /* GeistDesign.swift */; };
 		70C9A4267C72FD761C9E3DDE /* PairingPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE871B280C48A0AA927F1B /* PairingPayload.swift */; };
@@ -225,6 +231,7 @@
 		739166B80020188DBCBDDA75 /* PendingProfileRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CECF8D877D600F79301E45C /* PendingProfileRecovery.swift */; };
 		73CD3A45B89A1705DEC5119C /* GamepadEditorDeviceCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E5175D4D0F8D54EE4324BA /* GamepadEditorDeviceCatalog.swift */; };
 		742160DC3DF250C1F8B5951A /* ThumbleCSSCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC60027A3BD6E36E1AEBB9 /* ThumbleCSSCompiler.swift */; };
+		7436D24DBA68FF8DEC7A1ECC /* OwnedPhoneEditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E399D2256EEC041EEB749FC8 /* OwnedPhoneEditTests.swift */; };
 		746127E76EB9F0D536260611 /* ThumbleMacSetupGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26697D46B1B657D2C3BFD2D9 /* ThumbleMacSetupGuide.swift */; };
 		75187F0F0858BFDF17EF5AF6 /* GamepadLayoutQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4F172EB8B6245807056D82 /* GamepadLayoutQuality.swift */; };
 		75677E05A5E8A5292B286731 /* ThumbleSkinCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E634A254AB9DDE331583C54 /* ThumbleSkinCompiler.swift */; };
@@ -287,6 +294,7 @@
 		9819215EE4C4942936B5EE4B /* MacConfigurationBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8D5318AC10B842779E5FB4 /* MacConfigurationBindings.swift */; };
 		98E924EBCB4A5018150441C7 /* ThumbleInputLatencySimulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F83DB2B9FB309CF3FB0367 /* ThumbleInputLatencySimulation.swift */; };
 		99108C85875290EB6AECAA7D /* ProfileOrientationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C05DF42265E846520E7687 /* ProfileOrientationSupport.swift */; };
+		9A999D48421DAEC73E5B40F2 /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		9AEC2A8DA6B7ACC09EAD8700 /* MacRustAuthorityInterlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33F8A8646202290892093 /* MacRustAuthorityInterlock.swift */; };
 		9B0D46E7E9C311A335A16156 /* ThumbleCLIRuntimeBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079351FE0C12BE733877AF09 /* ThumbleCLIRuntimeBackend.swift */; };
 		9B2F0FD7C33214FBB84C018E /* MacControlOutputBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C97FFBBD03EF776B734E44 /* MacControlOutputBinding.swift */; };
@@ -298,6 +306,7 @@
 		9DCB2B2DAD8BF18A44943A01 /* ThumbleVectorCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E61CD2D4EFC81FB15DA411F /* ThumbleVectorCompiler.swift */; };
 		9F0A2AE7529A3B06F2EC19B9 /* PairingPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBE871B280C48A0AA927F1B /* PairingPayload.swift */; };
 		A07E1C131DC85B535F5E6CFB /* GamepadProfileResourceCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EA86606C302B420B9B9498 /* GamepadProfileResourceCodec.swift */; };
+		A16F588B6209A1565EFDCE50 /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		A1BE7CEEFD0FED2CC2F85148 /* ThumbleNativeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66292FD7273DCC55BB815350 /* ThumbleNativeConfiguration.swift */; };
 		A208E4CB04D5D08FCF52F142 /* ThumbleSkinCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E634A254AB9DDE331583C54 /* ThumbleSkinCompiler.swift */; };
 		A279E35DF95B8EE90C110BDD /* ControllerDesignSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8D191377E9E0CB60F9D25E3 /* ControllerDesignSession.swift */; };
@@ -331,13 +340,16 @@
 		AD7D3C54BC5DAACECA7CD16F /* ThumbleMacSetupGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26697D46B1B657D2C3BFD2D9 /* ThumbleMacSetupGuide.swift */; };
 		ADDC993E1D82291FF70B2A54 /* ProfileFormatPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EC1F69E8E7E6472F87909F /* ProfileFormatPolicyTests.swift */; };
 		AE99E8AAEB6C7EBB232084BE /* PendingProfileRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CECF8D877D600F79301E45C /* PendingProfileRecovery.swift */; };
+		AF1641AEE2BD0FAC7C09B247 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		AF2AE7D596EBAB192C3E66BA /* GamepadAppearanceEditMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FFD5B81DECEFB5FDC6312A /* GamepadAppearanceEditMerge.swift */; };
 		AF595ED05957494418C60D16 /* GamepadCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A91C0CCA23D63A11106CD8 /* GamepadCustomization.swift */; };
+		AF6FDAF70632AA8F2F5AF52F /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		B007692463DFAA0084EBE5D5 /* GamepadEditorDeviceCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E5175D4D0F8D54EE4324BA /* GamepadEditorDeviceCatalog.swift */; };
 		B10E2796B0B5081CBCE91E55 /* ThumbleSkinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55618F7D37F55E262B353D8 /* ThumbleSkinStore.swift */; };
 		B308CE586952E3E659FBE59F /* PendingProfileRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 284A62834A13890D3A5DCD35 /* PendingProfileRecoveryTests.swift */; };
 		B375052858502D5E256A19EB /* GamepadOutputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E917F309E4E4EE0FD4B8652 /* GamepadOutputTypes.swift */; };
 		B495F8425B8C4F34320FADD7 /* VirtualGamepadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A211F1A0643070EAFA61ED /* VirtualGamepadStatus.swift */; };
+		B4B51694AC5455B6444E85B3 /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		B69A79DD877C35F138CB415C /* GameKeypadGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44916FAE61260FE7B7A18A7E /* GameKeypadGenerator.swift */; };
 		B6ED665787EA50E7F7B9ACDE /* ThumbleNativeSkinPreviewRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94763C4AAD2AE79C2AD9938B /* ThumbleNativeSkinPreviewRendererTests.swift */; };
 		B7672DAD984587F77B53DCF3 /* MacSkinLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E6E29E742284B6FBF67C73 /* MacSkinLibraryView.swift */; };
@@ -367,6 +379,7 @@
 		BEAEBFD8E2895700202F09CC /* TopBarActivationRegionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB69827923139AB4D987135 /* TopBarActivationRegionTests.swift */; };
 		C015D85EECC30D97A21CFC7D /* ThumbleArtworkLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5231B0FDBCE915A59D76EBA /* ThumbleArtworkLayerView.swift */; };
 		C0341D6FA993721E9E5A8ED5 /* GamepadAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD0DF41C9E1A4C9660080CC /* GamepadAppearance.swift */; };
+		C037D27621715CE53EB36D7D /* OwnedPhoneEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */; };
 		C1206BA6E714C4D7097133D7 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 3DFDC7906931F27933990754 /* ZIPFoundation */; };
 		C132886942D01407739EFB9B /* OwnedConfigurationDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B12D1B0377FECE3E29D95 /* OwnedConfigurationDocument.swift */; };
 		C37B023954F614879657A402 /* KeypadBindingPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF9B0E16D3BA71547B9160 /* KeypadBindingPresentation.swift */; };
@@ -402,6 +415,7 @@
 		D127C73F6679197B73254CDA /* ThumbleVectorCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E61CD2D4EFC81FB15DA411F /* ThumbleVectorCompiler.swift */; };
 		D134D012E77394FB2F046C36 /* ThumbleCSSCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC60027A3BD6E36E1AEBB9 /* ThumbleCSSCompiler.swift */; };
 		D1B7663BACADBEDB436AFA0A /* GamepadLayoutQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4F172EB8B6245807056D82 /* GamepadLayoutQuality.swift */; };
+		D1CC79A7A31221F080881E16 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		D2D0A93B737E27A735BE4C1A /* GamepadAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD0DF41C9E1A4C9660080CC /* GamepadAppearance.swift */; };
 		D2DA3BEA6635A1F5C20108FB /* ThumbleSkinQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18E4BB397E9FBAB30E65349 /* ThumbleSkinQuality.swift */; };
 		D3B2ED22B336191766ED454C /* ThumbleCLIBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1B1BE7CC67BFE171BAF3BD /* ThumbleCLIBackend.swift */; };
@@ -438,6 +452,7 @@
 		E1533170168C7ADA0694B73F /* GeistDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42888086CFE3092D63946C7 /* GeistDesign.swift */; };
 		E1B5D42B45C0933044639A17 /* MacConfigurationBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8D5318AC10B842779E5FB4 /* MacConfigurationBindings.swift */; };
 		E259AD700110554800C044E9 /* ThumbleSkinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55618F7D37F55E262B353D8 /* ThumbleSkinStore.swift */; };
+		E25C765EBD494EFF00283D21 /* OwnedPhoneEditJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */; };
 		E2BD69880145782B8B4FDB90 /* ThumbleSkinQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18E4BB397E9FBAB30E65349 /* ThumbleSkinQuality.swift */; };
 		E2C221E09759990BA6081097 /* ProfileFormatPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A216782BBFED30D8ED0A3AC5 /* ProfileFormatPolicy.swift */; };
 		E2E19DC2780927B31B618C93 /* GamepadProfileResourceCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EA86606C302B420B9B9498 /* GamepadProfileResourceCodec.swift */; };
@@ -539,6 +554,7 @@
 		53F9F98A9905C61284DF6F8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		546FEE2F7F173B5817871758 /* ControllerActiveInputStateSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerActiveInputStateSmokeTests.swift; sourceTree = "<group>"; };
 		54B2C341DE2DFCEB69940768 /* PointerInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerInjector.swift; sourceTree = "<group>"; };
+		579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedPhoneEdit.swift; sourceTree = "<group>"; };
 		57F30309134A29FDEEEF0247 /* StackSafetyRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackSafetyRegressionTests.swift; sourceTree = "<group>"; };
 		5857C60B46178E03A9325C29 /* ThumbleCLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbleCLI.swift; sourceTree = "<group>"; };
 		58ECA12CFC968CCD1A40E5CF /* VirtualGamepadInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGamepadInjector.swift; sourceTree = "<group>"; };
@@ -569,6 +585,7 @@
 		877B12D1B0377FECE3E29D95 /* OwnedConfigurationDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedConfigurationDocument.swift; sourceTree = "<group>"; };
 		87E5175D4D0F8D54EE4324BA /* GamepadEditorDeviceCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepadEditorDeviceCatalog.swift; sourceTree = "<group>"; };
 		89F4714337A0F3FB4D592AFB /* ThumbleSkinWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbleSkinWorkspace.swift; sourceTree = "<group>"; };
+		8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedPhoneEditJournal.swift; sourceTree = "<group>"; };
 		8E8D29A00DD14728A53B3E14 /* VirtualGamepadReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGamepadReportTests.swift; sourceTree = "<group>"; };
 		8F2979779AA61DA3FCE1B468 /* ProfileResourceCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResourceCodecTests.swift; sourceTree = "<group>"; };
 		942570CE8FBAD27482FEA0D0 /* GamepadSharedOperationsSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepadSharedOperationsSmokeTests.swift; sourceTree = "<group>"; };
@@ -617,6 +634,7 @@
 		DE1B1BE7CC67BFE171BAF3BD /* ThumbleCLIBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbleCLIBackend.swift; sourceTree = "<group>"; };
 		DF9A936664A624FB518600CB /* IOSBuildRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSBuildRecovery.swift; sourceTree = "<group>"; };
 		E31C57440A2A9DEBD0F4EB86 /* KeyMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyMap.swift; sourceTree = "<group>"; };
+		E399D2256EEC041EEB749FC8 /* OwnedPhoneEditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnedPhoneEditTests.swift; sourceTree = "<group>"; };
 		E56B43D7215FE29C75329176 /* MacRustAuthorityInterlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRustAuthorityInterlockTests.swift; sourceTree = "<group>"; };
 		E7C97FFBBD03EF776B734E44 /* MacControlOutputBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacControlOutputBinding.swift; sourceTree = "<group>"; };
 		E7F7F8FE1C99E0E98F06D643 /* GamepadAppearanceBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepadAppearanceBank.swift; sourceTree = "<group>"; };
@@ -834,6 +852,7 @@
 				D3E6225622DADC00A3423BD1 /* MacSharedKeypadImportTests.swift */,
 				1ED5370A7CC6D64718E8D11E /* OrientationPreferenceTests.swift */,
 				60D2C58E8452B58852BF6F8C /* OwnedConfigurationDocumentTests.swift */,
+				E399D2256EEC041EEB749FC8 /* OwnedPhoneEditTests.swift */,
 				284A62834A13890D3A5DCD35 /* PendingProfileRecoveryTests.swift */,
 				65A358A4646B21029B8E7664 /* PortableProfileArtifactTests.swift */,
 				3F2FD22AC2B22C54D3DB50C8 /* ProfileArtifactAdoptionTests.swift */,
@@ -893,6 +912,8 @@
 				63EEF6D322B8B0EB07923C65 /* KeypadConfigurationExport.swift */,
 				E96A8B32247DC44B4EFAA778 /* LegacyProfileMigration.swift */,
 				877B12D1B0377FECE3E29D95 /* OwnedConfigurationDocument.swift */,
+				579DFFB1F1C1A5BFA7BD4560 /* OwnedPhoneEdit.swift */,
+				8E7DFC0D32147575F95BEA87 /* OwnedPhoneEditJournal.swift */,
 				1BBE871B280C48A0AA927F1B /* PairingPayload.swift */,
 				1CECF8D877D600F79301E45C /* PendingProfileRecovery.swift */,
 				C11E738F239D2BA9E214FB88 /* PortableProfileArtifact.swift */,
@@ -1266,6 +1287,8 @@
 				9819215EE4C4942936B5EE4B /* MacConfigurationBindings.swift in Sources */,
 				9B2F0FD7C33214FBB84C018E /* MacControlOutputBinding.swift in Sources */,
 				54B12C682516A31FDD6BF04D /* OwnedConfigurationDocument.swift in Sources */,
+				07DCD6B6D660DD7F352F6F93 /* OwnedPhoneEdit.swift in Sources */,
+				08EA2511FDDFB11EE8A30AA6 /* OwnedPhoneEditJournal.swift in Sources */,
 				2D1E80BD8CFE6764EAB76241 /* PairingPayload.swift in Sources */,
 				DF203F6B86A542F521EEA3F7 /* PendingProfileRecovery.swift in Sources */,
 				7EACC33A7786553A56041BD8 /* PortableProfileArtifact.swift in Sources */,
@@ -1330,6 +1353,8 @@
 				E1B5D42B45C0933044639A17 /* MacConfigurationBindings.swift in Sources */,
 				57BBA40E959B8CC489ACEFA3 /* MacControlOutputBinding.swift in Sources */,
 				61964D4B5A93E69921FBBA7B /* OwnedConfigurationDocument.swift in Sources */,
+				B4B51694AC5455B6444E85B3 /* OwnedPhoneEdit.swift in Sources */,
+				D1CC79A7A31221F080881E16 /* OwnedPhoneEditJournal.swift in Sources */,
 				9F0A2AE7529A3B06F2EC19B9 /* PairingPayload.swift in Sources */,
 				AE99E8AAEB6C7EBB232084BE /* PendingProfileRecovery.swift in Sources */,
 				36483D97D929829A250BEC0A /* PortableProfileArtifact.swift in Sources */,
@@ -1403,6 +1428,8 @@
 				793D9B17FA2FF20B600C19A0 /* MacSharedKeypadImport.swift in Sources */,
 				B7672DAD984587F77B53DCF3 /* MacSkinLibraryView.swift in Sources */,
 				F60C9AEF32AD2110800B4BB1 /* OwnedConfigurationDocument.swift in Sources */,
+				A16F588B6209A1565EFDCE50 /* OwnedPhoneEdit.swift in Sources */,
+				700B2DED8C1BC10418EA3757 /* OwnedPhoneEditJournal.swift in Sources */,
 				70C9A4267C72FD761C9E3DDE /* PairingPayload.swift in Sources */,
 				FC564F5462B1CB9183B663ED /* PendingProfileRecovery.swift in Sources */,
 				36D3BC7ED9FC05221A1C5A11 /* PointerInjector.swift in Sources */,
@@ -1495,6 +1522,9 @@
 				2E78EFAE990AE2F18A4DBE09 /* OrientationPreferenceTests.swift in Sources */,
 				C132886942D01407739EFB9B /* OwnedConfigurationDocument.swift in Sources */,
 				CAFE502507A3672402363B7B /* OwnedConfigurationDocumentTests.swift in Sources */,
+				9A999D48421DAEC73E5B40F2 /* OwnedPhoneEdit.swift in Sources */,
+				AF6FDAF70632AA8F2F5AF52F /* OwnedPhoneEditJournal.swift in Sources */,
+				7436D24DBA68FF8DEC7A1ECC /* OwnedPhoneEditTests.swift in Sources */,
 				817EAF25E6EAB11B3719E5E5 /* PairingPayload.swift in Sources */,
 				90852B8D0C78C2F48C446852 /* PendingProfileRecovery.swift in Sources */,
 				B308CE586952E3E659FBE59F /* PendingProfileRecoveryTests.swift in Sources */,
@@ -1591,6 +1621,8 @@
 				0A1B0F84A90331F5DBF480F6 /* KeypadConfigurationExport.swift in Sources */,
 				C7336460F25E77AFBD92A65B /* LegacyProfileMigration.swift in Sources */,
 				B99BBD9B13E9586F4E31BA62 /* OwnedConfigurationDocument.swift in Sources */,
+				0E96FF2DAAE5038B7CF009AD /* OwnedPhoneEdit.swift in Sources */,
+				E25C765EBD494EFF00283D21 /* OwnedPhoneEditJournal.swift in Sources */,
 				142BBB8F7FA443471CE83DBF /* PairingPayload.swift in Sources */,
 				739166B80020188DBCBDDA75 /* PendingProfileRecovery.swift in Sources */,
 				564788E574B87D41631D4B16 /* PortableProfileArtifact.swift in Sources */,
@@ -1656,6 +1688,8 @@
 				8A03661CF9B9D18884101F24 /* MacConfigurationBindings.swift in Sources */,
 				17C31F8F954C1CFA5CFFFF9F /* MacControlOutputBinding.swift in Sources */,
 				BB89B245838FE0328009293F /* OwnedConfigurationDocument.swift in Sources */,
+				6A28BA2A436F4464C11BB3DF /* OwnedPhoneEdit.swift in Sources */,
+				45D6240CF1C9980B37B16B26 /* OwnedPhoneEditJournal.swift in Sources */,
 				186B514B29C16C156ECC323D /* PairingPayload.swift in Sources */,
 				96748CB92D65FBAA95258565 /* PendingProfileRecovery.swift in Sources */,
 				AACFE248FB10CE0E5F942AB9 /* PortableProfileArtifact.swift in Sources */,
@@ -1722,6 +1756,8 @@
 				BA7319A8B164B46EF0768982 /* MacConfigurationBindings.swift in Sources */,
 				712CD6FD8B78544CB82E3D2E /* MacControlOutputBinding.swift in Sources */,
 				51B098CD282FC9D4C2BC5222 /* OwnedConfigurationDocument.swift in Sources */,
+				C037D27621715CE53EB36D7D /* OwnedPhoneEdit.swift in Sources */,
+				AF1641AEE2BD0FAC7C09B247 /* OwnedPhoneEditJournal.swift in Sources */,
 				406449EFA247F8EF81F32301 /* PairingPayload.swift in Sources */,
 				D627C2D07785CB9541203FAA /* PendingProfileRecovery.swift in Sources */,
 				EB3888BBB8E64DD8C81D6764 /* PortableProfileArtifact.swift in Sources */,
