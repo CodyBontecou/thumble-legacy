@@ -62,7 +62,7 @@
     },
     "windowsDriver": {
       "status": "pending",
-      "reason": "Existing Windows SendInput backend has no virtual gamepad; driver and Windows test host required"
+      "reason": "Existing Windows SendInput backend has no virtual gamepad. Source research identifies an isolated HIDMaestro evaluation candidate; trusted driver distribution, Windows test host and actual device/gameplay proof remain required."
     },
     "independentConsumer": {
       "status": "pending",

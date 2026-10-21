@@ -86,3 +86,7 @@ python3 scripts/rewrite/capture_baseline.py --baseline c7456e2 \
 ```
 
 This reads only the selected package, never adjoining state/backups. It does not launch a receiver. See [launch-contract.json](launch-contract.json) and the generated [open-gate report](gates.json) for unresolved prerequisites. Do not weaken those records to begin M2: the plan explicitly makes unresolved native gamepad/signing failures block feature expansion.
+
+## Subsequent M1 preparation
+
+Added a bounded read-only native XInput witness and completed [Windows driver feasibility research](../../research/windows-native-gamepad-rewrite-2026-10-21.md). See the [M1 record](../m1/README.md#windows-consumer-witness-added-during-m1-preparation) for commands and verification boundaries. This advances the Windows evaluation tools; it does not close the native-driver or physical acceptance gates.

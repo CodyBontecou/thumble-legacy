@@ -1,0 +1,44 @@
+   Compiling thumble-receiver v0.1.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Host/crates/thumble-receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.22s
+     Running unittests src/lib.rs (/private/tmp/thumble-rewrite-native-target/debug/deps/thumble_receiver-ffe731d9827466c3)
+
+running 11 tests
+test input::failure_tests::fractional_scroll_preserves_total_distance_across_frames ... ok
+test input::keys::tests::translates_physical_codes_and_extended_keys ... ok
+test input::tests::unknown_key_and_gamepad_fail_instead_of_silently_succeeding ... ok
+test input::keys::tests::all_supported_semantic_keys_have_a_mapping_except_fn ... ok
+test input::failure_tests::release_failure_does_not_prevent_other_keys_from_releasing ... ok
+test input::tests::overlapping_chords_keep_shared_modifiers_until_last_release ... ok
+test input::failure_tests::partial_down_still_gets_released_and_failed_releases_are_retried ... ok
+test runtime::tests::scheduling_gap_retires_sessions_and_releases_physical_outputs ... ok
+test store::tests::symlink_and_world_readable_state_are_rejected ... ok
+test store::tests::identity_is_durable_and_corrupt_state_never_resets_it ... ok
+test store::tests::configuration_import_preserves_identity_and_rejects_live_mutation ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running unittests src/main.rs (/private/tmp/thumble-rewrite-native-target/debug/deps/thumble_receiver-2b3345211ba33752)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loopback.rs (/private/tmp/thumble-rewrite-native-target/debug/deps/loopback-31f67d7295ab293d)
+
+running 2 tests
+test local_control_rejects_wrong_credentials_and_oversized_frames ... ok
+test pairing_input_expiry_disconnect_and_durable_reconnect ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.68s
+
+     Running tests/native_delivery.rs (/private/tmp/thumble-rewrite-native-target/debug/deps/native_delivery-d1e49558e83ac8bb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_receiver
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

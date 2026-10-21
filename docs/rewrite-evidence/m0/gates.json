@@ -5,7 +5,7 @@
     "m0.compatibilityBuilds: Local provisional targets: Era 1.15.9.70003/ConsolePort 3.3.11 and Forever 1.60.1.70245; neither gameplay-certified; Windows builds unpinned",
     "m0.measuredBudgets: Only existing macOS package bytes measured; latency/load/build baselines and thresholds not frozen",
     "native.productionSigning: Development lab signature passes; Developer ID provisioning/final release acceptance not established",
-    "native.windowsDriver: Existing Windows SendInput backend has no virtual gamepad; driver and Windows test host required",
+    "native.windowsDriver: Existing Windows SendInput backend has no virtual gamepad. Source research identifies an isolated HIDMaestro evaluation candidate; trusted driver distribution, Windows test host and actual device/gameplay proof remain required.",
     "native.independentConsumer: macOS extended GameController enumerates neutral; full phone-driven and Windows semantics unverified",
     "native.gameEnumeration: Real Classic/Forever enumeration and gameplay evidence required on both hosts",
     "budgets.macos.coldBuildSeconds: measurement and threshold pending",

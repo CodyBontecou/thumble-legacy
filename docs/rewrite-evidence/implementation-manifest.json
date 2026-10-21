@@ -2,8 +2,11 @@
   "version": 1,
   "sourceBaselineCommit": "c7456e29dec4f732aa74bb1ab65f94e36d0149f1",
   "sourceManifestEncoding": "UTF-8 sorted compact JSON object mapping changed/new implementation source paths to SHA256",
-  "sourceChangeManifestSHA256": "f6fd85220233336ab56b2efc0e7571b5782d0b4fd40f72e5b19dd2ca63b8e884",
+  "sourceChangeManifestSHA256": "b58f5d51fcefc01a98869b8641c58eb0493a12cd813b5ead8038da736f006839",
   "sourceHashes": {
+    "Host/crates/thumble-receiver/Cargo.toml": "84ed042f69de02a5b2f2b943b5adc8a30043d5132f3c4086c099523977de1ac8",
+    "Host/crates/thumble-receiver/examples/probe_gamepad.rs": "53b29766ef4c2e8b3527a23009cda10948a7efa23d6564bbf33df86e9ff13e53",
+    "docs/research/windows-native-gamepad-rewrite-2026-10-21.md": "3a3fde31fe8d0015fd7d153a93e9b40e1a7e694e4e6d2e244bd7e36258c41f89",
     "docs/typescript-rewrite-plan.md": "823f6d9614619a3117ce098d9651003bc4498580aa68976189cd26e27e92d88a",
     "scripts/rewrite/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
     "scripts/rewrite/capture_baseline.py": "2ae3b46179697c55007e5de3fa39e08d8f0f6c501bc60cdf20439f5bac3a82ed",
@@ -12,24 +15,30 @@
     "scripts/rewrite/test_baseline.py": "433e6db1afbceaeda5f2abfbfa47b1a26dec9749c506793f57bd060fdc80eb69"
   },
   "evidenceHashes": {
-    "docs/rewrite-evidence/m0/README.md": "ec5a00812711e2b1c6df99f1f654cf59072b42f8f278b1e88c930e54303c25ea",
+    "docs/rewrite-evidence/m0/README.md": "665bb0e3741f0d04d615b673612848fe844ff60074af1413da581d6d87e5b69c",
     "docs/rewrite-evidence/m0/baseline.json": "243617f6b91cf32c7bc8dbc9923840bc7481bda4e4a54f330dc1d577e101279b",
     "docs/rewrite-evidence/m0/cli-parity.txt": "4109cfdc7576b686257e741f9f16b4d7a25d757f71d8f0556faf8f837c5f9a43",
     "docs/rewrite-evidence/m0/desktop-retirement-check.txt": "2953bebad1a8f7bca4ac69a40bb69e01fb5e3be1e14a69402ccb0de6ab8b6dd9",
     "docs/rewrite-evidence/m0/environment.json": "bd5714a9cc6284d17b04b8d7e974a71ab914ef90e22a63dbad208fbcb65fa231",
-    "docs/rewrite-evidence/m0/gates.json": "b2690107b56cf94aa83fb69b02535988c4e2247b480f7c608f53cff1f11b7e54",
+    "docs/rewrite-evidence/m0/gates.json": "41ad9b89b8447d53350f458ea49b63aa32b0a75c248601a8de918ced5ea6663b",
     "docs/rewrite-evidence/m0/installed-clients.json": "f2c8f341bcadf76d0b2dbd6c9ca7a9ef42d4e97b8799c7d33b7ea44a7ebeaebc",
     "docs/rewrite-evidence/m0/inventory-check.txt": "911497771aa792e1c5867857c4a4baab4ce561b8320e3c752f7a2deff7d57daf",
-    "docs/rewrite-evidence/m0/launch-contract.json": "62f758faeef038445afdb504dd1bb1532a3a46039c72f08c12fc134d3370351f",
+    "docs/rewrite-evidence/m0/launch-contract.json": "5328b936b5e700d3781dfdce4299ee5978681c51c6fc3e281e6e4caa4ba110a5",
     "docs/rewrite-evidence/m0/retained-operations.json": "5afcd01246d6b47929a39e44f2731d317ee81e6f4f1a667c112050b663b80db0",
     "docs/rewrite-evidence/m0/retained-wire-check.txt": "45c763472c9b5e8ad5e4c8ecb323d7e9b9b532046ab73697f81fdc9312cff1b7",
     "docs/rewrite-evidence/m0/retained-wire-diagnostic.txt": "7bdf98df99b30184b737216b0f7cb989dfb6c98dc1e612968f781f327a61a25b",
     "docs/rewrite-evidence/m0/scope-decisions.md": "43413cac85f1ea81d9b13889de668a1a072bd800628bb685f005c465a462a137",
-    "docs/rewrite-evidence/m0/tooling-tests.txt": "3a1c4cd02a1576f2aafd89a805ce14566da40f26587c010179bb2611fcfbc795",
-    "docs/rewrite-evidence/m1/README.md": "7cd93f326313f287baddd66c86490b0f317a21e20f5be0ebf11ae77e04354e8c",
+    "docs/rewrite-evidence/m0/tooling-tests.txt": "f1d3cbb20f163ae5e2fff4defbe5e5555b64befbe115d13f5522afb4216ccf1a",
+    "docs/rewrite-evidence/m1/README.md": "dfc34ee3afc1a26d254061e0e72d3e1bc0891b8c521577535400c795fc24f1f7",
     "docs/rewrite-evidence/m1/consumer-observation.json": "6b64a7a7f66a2e25752637c4578ae45000da145129865c7156ba5c01e9903b56",
     "docs/rewrite-evidence/m1/consumer-probe.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "docs/rewrite-evidence/m1/development-signing.txt": "9c04633e1e386177540b0e02eca557d1917224ae7bba21f60bfc315db3dcba5e"
+    "docs/rewrite-evidence/m1/development-signing.txt": "9c04633e1e386177540b0e02eca557d1917224ae7bba21f60bfc315db3dcba5e",
+    "docs/rewrite-evidence/m1/receiver-regression-tests.txt": "b69c245a11274df623dc43c2fb8d540f67ab36be00b930b01629826339d6e69a",
+    "docs/rewrite-evidence/m1/windows-probe-clippy.txt": "73113f4503e55f46b574672b00cbe109e754ab5c22bb89b25b9a0123ded427be",
+    "docs/rewrite-evidence/m1/windows-probe-cross-clippy.txt": "32ff3a2552cb7cacd7cc908f2bbbbcdafecd5d9f0723aadb4eb69d7ac317829c",
+    "docs/rewrite-evidence/m1/windows-probe-typecheck.txt": "e4d2f881613f3d31a8d9a892f81560b246dd7afdf6692f2606c3ebdeb5535302",
+    "docs/rewrite-evidence/m1/windows-probe-unavailable.json": "08b24452d4822bbcb22625a1f7f7d7b24568b115bb636e1e7a3eaa17e8acb6e8",
+    "docs/rewrite-evidence/m1/windows-probe-unit-tests.txt": "996ae3d564633d3cf9499bef0a8eda10fd559d772fcb415f6b251ddd5ca3ab94"
   },
-  "scope": "M0/M1 groundwork only; all package/compiler/runtime context in m0/baseline.json. Neither rewrite nor release acceptance complete."
+  "scope": "M0/M1 groundwork and Windows read-only consumer witness only; no Windows runtime/driver or physical gameplay acceptance. Runtime/compiler context in m0/baseline.json; Rust probe verification uses toolchain 1.88.0 and target x86_64-pc-windows-gnu. Rewrite/release acceptance incomplete."
 }

@@ -1,0 +1,11 @@
+   Compiling thumble-receiver v0.1.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Host/crates/thumble-receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running unittests examples/probe_gamepad.rs (/private/tmp/thumble-rewrite-native-target/debug/examples/probe_gamepad-5cca63e9b40242c2)
+
+running 4 tests
+test tests::either_trigger_or_axis_prevents_false_neutral ... ok
+test tests::raw_witness_preserves_both_triggers_and_axis_extremes ... ok
+test tests::failed_read_is_not_neutral_or_connected ... ok
+test tests::bounds_reject_unbounded_observations_and_invalid_slots ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

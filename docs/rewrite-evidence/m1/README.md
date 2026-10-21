@@ -28,3 +28,23 @@ Use the pinned host/phone/client/addon builds and a separately recorded package/
 Required live sync additionally needs independently launched signed-helper capture authorization, supported scaling/window behavior, frame identity/freshness, frozen/replayed-frame rejection and delivery to each physical phone. Lost observation must mark presentation stale without interrupting physical input. Snapshot/manual refresh remains available. This is a mandatory M5/M6 launch gate following the user's scope decision.
 
 `../m0/launch-contract.json` deliberately leaves all physical acceptance entries pending. Windows hardware/OS, its native driver, and its exact client builds still need to be supplied/established. The network-paired iPhones have no connected device tunnel in this session. The existing lab documentation remains historical evidence, not an M1 pass.
+
+## Windows consumer witness added during M1 preparation
+
+`Host/crates/thumble-receiver/examples/probe_gamepad.rs` is a bounded read-only XInput 1.4 witness. On the Windows acceptance machine:
+
+```powershell
+cargo +1.88.0 run --locked --manifest-path Host/Cargo.toml -p thumble-receiver `
+  --example probe_gamepad -- --slot 0 --duration-ms 30000 --interval-ms 20 `
+  > windows-gamepad-observation.json
+```
+
+Choose the actual XInput slot (0–3) only after independently establishing device ownership. XInput does not supply Thumble's VID/PID or signing identity; the report always leaves `deviceIdentityVerified` and `gameplayVerified` false. Record an off/on device baseline rather than mistaking a physical controller or another virtual driver for Thumble. The witness never calls device-creation, input-injection or vibration APIs.
+
+The report preserves raw buttons, separate left/right 0–255 triggers, signed 16-bit sticks and per-sample result/packet codes. Positive raw Y means up; semantic Thumble Y conversion belongs to the input adapter, not this observer. A failed read has null state/neutral fields, not a fabricated neutral state. Exit 0 means the observation serialized, including when no controller is connected. Non-Windows invocation returns `available: false` with exit 2. Observation offsets use one monotonic process clock and are not touch-to-game latency.
+
+For the trigger test, observe neutral, LT only, RT only, both at full pressure, then partial asymmetric holds and release. Microsoft documents independent XInput triggers and a combined DirectInput Z axis; a `joy.cpl` display cannot establish simultaneous-trigger correctness. See [XInputGetState](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate) and [XINPUT_GAMEPAD](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad).
+
+Verification here: four witness unit tests, retained receiver tests, Clippy on macOS, and Windows-GNU target typechecking/Clippy, all with Rust 1.88.0. Logs are adjacent. No Windows executable was run, no driver was installed, and no Windows gamepad acceptance is claimed. The Windows target standard library was installed for typechecking; a Windows linker/runtime was not supplied.
+
+[Windows driver feasibility research](../../research/windows-native-gamepad-rewrite-2026-10-21.md) pins candidate source and separates licensing/offline requirements from production signing and gameplay. It recommends an isolated HIDMaestro evaluation, with no adoption decision. A Windows machine/build and a trusted distribution path remain prerequisites; no driver or certificate was installed during this work.

@@ -1,0 +1,4 @@
+    Checking thumble-protocol v0.1.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Host/crates/thumble-protocol)
+    Checking thumble-core v0.1.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Host/crates/thumble-core)
+    Checking thumble-receiver v0.1.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Host/crates/thumble-receiver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.99s
