@@ -5718,121 +5718,76 @@ struct ThumbleCLI {
     }
 
     private static func setElement(arguments: [String]) throws {
-        try requireExplicitUnmigratedProfileAccess(operation: "element set")
-        guard let targetText = firstPositional(in: arguments) else { throw CLIError.message("Missing element id, button, or label") }
-        try mutateCustomization(profileTarget: optionValue("--profile", in: arguments), variant: try customizationVariant(in: arguments)) { customization in
-            let target = try resolveElementTarget(targetText, in: customization)
-            switch target {
-            case .builtin(let button):
-                if arguments.contains("--clear-label") {
-                    customization.setLabel("", for: button)
-                } else if let label = optionValue("--label", in: arguments) {
-                    customization.setLabel(label, for: button)
-                }
-                if arguments.contains("--clear-visual-role") || arguments.contains("--clear-skin-role") {
-                    if let index = customization.elements.firstIndex(where: { $0.defaultControlID == button }) {
-                        customization.elements[index].visualRole = nil
-                    }
-                } else if let role = try (optionValue("--visual-role", in: arguments) ?? optionValue("--skin-role", in: arguments)).map(parseVisualRole),
-                          let index = customization.elements.firstIndex(where: { $0.defaultControlID == button }) {
-                    customization.elements[index].visualRole = role
-                }
-                var layout = customization.buttonCustomization(for: button)
-                try applyLayoutOptions(arguments, to: &layout)
-                customization.setButtonCustomization(layout, for: button)
-            case .custom(let id):
-                guard let index = customization.customButtons.firstIndex(where: { $0.id == id }) else { throw CLIError.message("Custom element not found") }
-                let originalKind = customization.customButtons[index].controlKind
-                if arguments.contains("--clear-label") {
-                    customization.customButtons[index].label = customization.customButtons[index].controlKind == .text
-                        ? "Text"
-                        : customization.visualLabel(for: customization.customButtons[index].inputID)
-                } else if let label = optionValue("--text", in: arguments) ?? optionValue("--label", in: arguments) {
-                    customization.customButtons[index].label = normalizedLabel(label)
-                }
-                if let kind = optionValue("--kind", in: arguments) { customization.customButtons[index].controlKind = try parseCustomControlKind(kind) }
-                if arguments.contains("--clear-visual-role") || arguments.contains("--clear-skin-role") {
-                    customization.customButtons[index].visualRole = nil
-                } else if let role = try (optionValue("--visual-role", in: arguments) ?? optionValue("--skin-role", in: arguments)).map(parseVisualRole) {
-                    customization.customButtons[index].visualRole = role
-                }
-                let currentKind = customization.customButtons[index].controlKind
-                let hasJoystickOptions = hasAnyOption(joystickOptionNames, in: arguments)
-                    || (currentKind == .joystick && hasAnyOption(["--target", "--dead-zone", "--deadzone", "--sensitivity"], in: arguments))
-                let hasTriggerOptions = hasAnyOption(triggerOptionNames, in: arguments)
-                let hasTrackpadOptions = hasAnyOption(trackpadOptionNames, in: arguments)
-                if customization.customButtons[index].controlKind == .joystick || hasJoystickOptions {
-                    let converting = originalKind != .joystick
-                    customization.customButtons[index].controlKind = .joystick
-                    if converting || hasAnyOption(["--up", "--down", "--left", "--right"], in: arguments) {
-                        let unbound = GamepadJoystickMapping(up: .init(), down: .init(), left: .init(), right: .init())
-                        customization.customButtons[index].joystickMapping = try joystickMapping(from: arguments,
-                            fallback: customization.customButtons[index].joystickMapping ?? (converting ? .movement : unbound))
-                    }
-                    if converting || hasAnyOption(joystickOptionNames.filter { !["--joystick-style", "--stick-style", "--thumbstick", "--classic-joystick", "--up", "--down", "--left", "--right"].contains($0) } + ["--target", "--dead-zone", "--deadzone", "--sensitivity"], in: arguments) {
-                        customization.customButtons[index].joystickOutputSettings = try joystickOutputSettings(from: arguments, fallback: customization.customButtons[index].joystickOutputSettings ?? .defaultValue)
-                    }
-                    customization.customButtons[index].triggerSettings = nil
-                    customization.customButtons[index].trackpadSettings = nil
-                    if converting || customization.customButtons[index].layout.shape == nil { customization.customButtons[index].layout.shape = .circle }
-                } else if customization.customButtons[index].controlKind == .trigger || hasTriggerOptions {
-                    let converting = originalKind != .trigger
-                    customization.customButtons[index].controlKind = .trigger
-                    customization.customButtons[index].joystickMapping = nil
-                    customization.customButtons[index].joystickOutputSettings = nil
-                    if converting || hasTriggerOptions {
-                        customization.customButtons[index].triggerSettings = try triggerSettings(from: arguments, fallback: customization.customButtons[index].triggerSettings ?? .defaultValue)
-                    }
-                    customization.customButtons[index].trackpadSettings = nil
-                    if converting || customization.customButtons[index].layout.shape == nil { customization.customButtons[index].layout.shape = .capsule }
-                } else if customization.customButtons[index].controlKind == .trackpad || hasTrackpadOptions {
-                    let converting = originalKind != .trackpad
-                    customization.customButtons[index].controlKind = .trackpad
-                    customization.customButtons[index].joystickMapping = nil
-                    customization.customButtons[index].joystickOutputSettings = nil
-                    customization.customButtons[index].triggerSettings = nil
-                    customization.customButtons[index].layout.shape = customization.customButtons[index].layout.shape ?? .roundedRectangle
-                    if converting || hasTrackpadOptions {
-                        customization.customButtons[index].trackpadSettings = try trackpadSettings(from: arguments, fallback: customization.customButtons[index].trackpadSettings ?? .defaultValue)
-                    }
-                } else if customization.customButtons[index].controlKind == .text {
-                    customization.customButtons[index].joystickMapping = nil
-                    customization.customButtons[index].joystickOutputSettings = nil
-                    customization.customButtons[index].triggerSettings = nil
-                    customization.customButtons[index].trackpadSettings = nil
-                    if originalKind != .text || customization.customButtons[index].layout.shape == nil { customization.customButtons[index].layout.shape = .rectangle }
-                    customization.customButtons[index].layout.shadowStrength = 0
-                    if originalKind != .text { customization.customButtons[index].layout.showsIntegratedLabel = false }
-                } else if customization.customButtons[index].controlKind == .decoration {
-                    customization.customButtons[index].joystickMapping = nil
-                    customization.customButtons[index].joystickOutputSettings = nil
-                    customization.customButtons[index].triggerSettings = nil
-                    customization.customButtons[index].trackpadSettings = nil
-                    customization.customButtons[index].layout.shape = customization.customButtons[index].layout.shape ?? .roundedRectangle
-                    if originalKind != .decoration { customization.customButtons[index].layout.shadowStrength = 0 }
-                } else if customization.customButtons[index].controlKind == .button {
-                    customization.customButtons[index].joystickMapping = nil
-                    customization.customButtons[index].joystickOutputSettings = nil
-                    customization.customButtons[index].triggerSettings = nil
-                    customization.customButtons[index].trackpadSettings = nil
-                }
-                try applyLayoutOptions(arguments, to: &customization.customButtons[index].layout)
-            case .system(.topBarActivation):
-                if arguments.contains("--clear-label") || optionValue("--label", in: arguments) != nil || optionValue("--kind", in: arguments) != nil {
-                    throw CLIError.message("The control bar hotspot only supports layout options")
-                }
-                try applyLayoutOptions(arguments, to: &customization.topBarActivationRegion)
-            }
+        try validateAuthorityElementOptions(arguments, values: ["--changes-json", "--changes-file", "--x", "--y", "--width", "--height", "--rotation", "--label", "--kind", "--haptic", "--haptic-pattern", "--haptic-intensity", "--haptic-sharpness", "--haptic-duration"], flags: ["--hide", "--show", "--lock", "--unlock", "--clear-label", "--clear-haptic"])
+        guard let element = firstPositional(in: arguments) else { throw CLIError.message("Missing element id or label") }
+        guard positionals(in: arguments).count == 1 else { throw CLIError.message("Use one element selector") }
+        let changes = try authorityElementChanges(arguments)
+        let response = try profileBackend().perform(
+            .elementSet(.init(optionValue("--profile", in: arguments)), try authorityConfigurationVariant(in: arguments), element: element, changesJSON: changes),
+            invocationID: try profileInvocationID(in: arguments))
+        guard response.outcome != nil else { throw CLIError.message("Authority returned no element outcome") }
+        print("Updated element \(element).")
+        printProfileInvocation(response)
+    }
 
-            if hasAnyOption(elementOutputOptionNames, in: arguments) {
-                if case .custom(let id) = target,
-                   customization.customButtons.first(where: { $0.id == id })?.normalized.isDecoration == true {
-                    throw CLIError.message("Decoration elements do not send output")
-                }
-                try applyElementOutputOptions(arguments, target: target, to: &customization)
+    private static func validateAuthorityElementOptions(_ arguments: [String], values: Set<String>, flags: Set<String>) throws {
+        let common: Set<String> = ["--profile", "--variant", "--layout-variant", "--invocation-id"]
+        var index = 0
+        var seen: Set<String> = []
+        while index < arguments.count {
+            let option = arguments[index]
+            if option.hasPrefix("-") {
+                guard seen.insert(option).inserted else { throw CLIError.message("Element options cannot repeat") }
+            }
+            if common.contains(option) || values.contains(option) {
+                guard index + 1 < arguments.count else { throw CLIError.message("Missing value for \(option)") }
+                index += 2
+            } else if option.hasPrefix("--") {
+                guard flags.contains(option) else { throw CLIError.message("Unsupported element option \(option). Use --changes-file or --changes-json for typed appearance, behavior and output fields.") }
+                index += 1
+            } else { index += 1 }
+        }
+    }
+
+    private static func authorityElementChanges(_ arguments: [String]) throws -> String {
+        guard !(optionValue("--changes-json", in: arguments) != nil && optionValue("--changes-file", in: arguments) != nil) else { throw CLIError.message("Use one element changes source") }
+        let data: Data?
+        if let file = optionValue("--changes-file", in: arguments) {
+            data = Data(try readBoundedProfileArtifact(at: URL(fileURLWithPath: file)).utf8)
+        } else { data = optionValue("--changes-json", in: arguments).map { Data($0.utf8) } }
+        var fields: [String: ThumbleBridgeJSONValue] = [:]
+        if let data {
+            guard data.count <= 8 * 1024 * 1024, case .object(let decoded) = try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: data) else { throw CLIError.message("Element changes require an object of at most 8 MiB") }
+            fields = decoded
+        }
+        func insert(_ name: String, _ value: ThumbleBridgeJSONValue) throws {
+            guard fields[name] == nil else { throw CLIError.message("Conflicting element change for \(name)") }
+            fields[name] = value
+        }
+        for (flag, key) in [("--x", "centerX"), ("--y", "centerY"), ("--width", "widthScale"), ("--height", "heightScale"), ("--rotation", "rotationDegrees")] {
+            if let text = optionValue(flag, in: arguments) {
+                guard let value = Double(text), value.isFinite else { throw CLIError.message("Invalid \(flag)") }
+                try insert(key, .number(value))
             }
         }
-        print("Updated element \"\(targetText)\".")
+        for (flag, key) in [("--label", "label"), ("--kind", "kind")] {
+            if let value = optionValue(flag, in: arguments) { try insert(key, .string(value)) }
+        }
+        for (flag, key, value) in [("--hide", "isHidden", true), ("--show", "isHidden", false), ("--lock", "isLocationLocked", true), ("--unlock", "isLocationLocked", false), ("--clear-label", "clearLabel", true), ("--clear-haptic", "clearHaptic", true)] {
+            if arguments.contains(flag) { try insert(key, .bool(value)) }
+        }
+        var haptic: [String: ThumbleBridgeJSONValue] = [:]
+        if let value = optionValue("--haptic", in: arguments) { haptic["style"] = .string(try parseHapticStyle(value).rawValue) }
+        if let value = optionValue("--haptic-pattern", in: arguments) { haptic["pattern"] = .string(try parseHapticPattern(value).rawValue) }
+        for (flag, key) in [("--haptic-intensity", "intensity"), ("--haptic-sharpness", "sharpness")] {
+            if let value = optionValue(flag, in: arguments) { haptic[key] = .number(Double(try parseHapticUnitInterval(value, option: flag))) }
+        }
+        if let value = optionValue("--haptic-duration", in: arguments) { haptic["duration"] = .number(Double(try parseHapticDuration(value))) }
+        if !haptic.isEmpty { try insert("haptic", .object(haptic)) }
+        guard !fields.isEmpty else { throw CLIError.message("No element changes requested") }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        return String(decoding: try encoder.encode(ThumbleBridgeJSONValue.object(fields)), as: UTF8.self)
     }
 
     private static func applyElementOutputOptions(_ arguments: [String], target: ElementTarget, to customization: inout GamepadCustomization) throws {
@@ -5910,76 +5865,38 @@ struct ThumbleCLI {
     }
 
     private static func nudgeElement(arguments: [String]) throws {
-        try requireExplicitUnmigratedProfileAccess(operation: "element nudge")
+        try validateAuthorityElementOptions(arguments, values: ["--step", "--pixels", "--by", "--dx", "--dy"], flags: [])
         let positional = positionals(in: arguments)
-        guard let targetText = positional.first else {
-            throw CLIError.message("Usage: thumble element nudge <element> <left|right|up|down> [--step 1|10]")
-        }
-        let directionText = positional.dropFirst().first
-        let translation = try parseNudgeTranslation(arguments: arguments, directionText: directionText)
-        let canvasSize = try parseNudgeCanvasSize(arguments)
-
-        var store = try loadStore()
-        let profileIndex = try resolveProfileIndex(optionValue("--profile", in: arguments), in: store)
-        let variant = try customizationVariant(in: arguments)
-        let sourceCustomization = variant.map { store.profiles[profileIndex].customization(for: $0) } ?? store.profiles[profileIndex].customization
-        let target = try resolveElementTarget(targetText, in: sourceCustomization)
-        let identity: GamepadControlIdentity = switch target {
-        case .builtin(let button): .builtin(button)
-        case .custom(let id): .custom(id)
-        case .system(let control): .system(control)
-        }
-
-        guard let nudgedCustomization = sourceCustomization.nudgedControls([identity], by: translation, in: canvasSize) else {
-            print("Element \"\(targetText)\" could not move.")
-            return
-        }
-
-        let normalizedNudgedCustomization = nudgedCustomization.normalized
-        if let variant {
-            store.profiles[profileIndex].setCustomization(normalizedNudgedCustomization, for: variant)
-        } else {
-            store.profiles[profileIndex].setCustomization(
-                normalizedNudgedCustomization,
-                for: normalizedNudgedCustomization.deviceCanvas.editorDeviceFrame.orientation
-            )
-        }
-        store.profiles[profileIndex].updatedAt = Date.currentMilliseconds
-        try persistStore(store)
-        print("Nudged element \"\(targetText)\" by \(formatPixels(translation.width))px, \(formatPixels(translation.height))px.")
+        guard let element = positional.first else { throw CLIError.message("Missing element id or label") }
+        let translation = try parseNudgeTranslation(arguments: arguments, directionText: positional.dropFirst().first)
+        let response = try profileBackend().perform(
+            .elementNudge(.init(optionValue("--profile", in: arguments)), try authorityConfigurationVariant(in: arguments), element: element, deltaX: Double(translation.width), deltaY: Double(translation.height)),
+            invocationID: try profileInvocationID(in: arguments))
+        guard response.outcome != nil else { throw CLIError.message("Authority returned no element outcome") }
+        print("Nudged element \(element).")
+        printProfileInvocation(response)
     }
 
     private static func deleteElement(arguments: [String]) throws {
-        try requireExplicitUnmigratedProfileAccess(operation: "element delete")
-        guard let targetText = firstPositional(in: arguments) else { throw CLIError.message("Missing element id, button, or label") }
-        try mutateCustomization(profileTarget: optionValue("--profile", in: arguments), variant: try customizationVariant(in: arguments)) { customization in
-            let target = try resolveElementTarget(targetText, in: customization)
-            switch target {
-            case .builtin(let button):
-                var layout = customization.buttonCustomization(for: button)
-                layout.isHidden = true
-                customization.setButtonCustomization(layout, for: button)
-            case .custom(let id):
-                customization.removeCustomButton(id: id)
-            case .system(.topBarActivation):
-                customization.topBarActivationRegion.isHidden = true
-            }
-        }
-        print("Deleted/hidden element \"\(targetText)\".")
+        try validateAuthorityElementOptions(arguments, values: [], flags: [])
+        guard let element = firstPositional(in: arguments) else { throw CLIError.message("Missing element id or label") }
+        let response = try profileBackend().perform(
+            .elementDelete(.init(optionValue("--profile", in: arguments)), try authorityConfigurationVariant(in: arguments), element: element),
+            invocationID: try profileInvocationID(in: arguments))
+        guard response.outcome != nil else { throw CLIError.message("Authority returned no element outcome") }
+        print("Deleted element \(element).")
+        printProfileInvocation(response)
     }
 
     private static func resetElement(arguments: [String]) throws {
-        try requireExplicitUnmigratedProfileAccess(operation: "element reset")
-        guard let targetText = firstPositional(in: arguments) else { throw CLIError.message("Missing element id, button, or label") }
-        try mutateCustomization(profileTarget: optionValue("--profile", in: arguments), variant: try customizationVariant(in: arguments)) { customization in
-            let identity = switch try resolveElementTarget(targetText, in: customization) {
-            case .builtin(let button): GamepadControlIdentity.builtin(button)
-            case .custom(let id): GamepadControlIdentity.custom(id)
-            case .system(let control): GamepadControlIdentity.system(control)
-            }
-            try customization.resetControl(identity)
-        }
-        print("Reset element \"\(targetText)\".")
+        try validateAuthorityElementOptions(arguments, values: [], flags: [])
+        guard let element = firstPositional(in: arguments) else { throw CLIError.message("Missing element id or label") }
+        let response = try profileBackend().perform(
+            .elementReset(.init(optionValue("--profile", in: arguments)), try authorityConfigurationVariant(in: arguments), element: element),
+            invocationID: try profileInvocationID(in: arguments))
+        guard response.outcome != nil else { throw CLIError.message("Authority returned no element outcome") }
+        print("Reset element \(element).")
+        printProfileInvocation(response)
     }
 
     private static func applyLayoutOptions(_ arguments: [String], to layout: inout GamepadButtonCustomization) throws {
@@ -8210,7 +8127,7 @@ struct ThumbleCLI {
             "--two-finger-scroll", "--natural-scrolling", "--natural-scroll", "--digital", "--digital-button", "--digital-threshold", "--hold-ms",
             "--step", "--pixels", "--by", "--dx", "--dy", "--canvas", "--canvas-width", "--canvas-height",
             "--device", "--frame", "--size", "--device-size", "--orientation", "--device-orientation", "--variant", "--layout-variant",
-            "--id", "--style", "--style-id", "--icon", "--sf-symbol", "--icon-text", "--haptic",
+            "--changes-json", "--changes-file", "--id", "--style", "--style-id", "--icon", "--sf-symbol", "--icon-text", "--haptic",
             "--haptic-pattern", "--haptic-rhythm", "--haptic-intensity", "--haptic-strength", "--haptic-sharpness", "--haptic-duration", "--haptic-duration-ms",
             "--stroke", "--stroke-color", "--stroke-width", "--foreground", "--foreground-color", "--text-color",
             "--glow", "--glow-color", "--glow-radius", "--inner-shadow", "--inner-shadow-color", "--inner-shadow-radius", "--inner-shadow-x", "--inner-shadow-y",
@@ -8540,21 +8457,10 @@ struct ThumbleCLI {
           thumble element add trackpad --label Trackpad --x 0.5 --y 0.58 --width 1.4 --sensitivity 1.2 --tap-to-click true
           thumble element add text --text Z --x 0.5 --y 0.5 --width 1.2 --height 0.8 --text-color '#FFFFFF'
           thumble element add decoration --label Shell --material soft-white-plate --x 0.5 --y 0.5 --width 3.2 --height 1.5 --shape rounded_rectangle
-          thumble element set UUID --keyboard Space --gamepad south --hide-integrated-label
-          thumble element set "Text" --text Jump --text-color '#FFFFFF'
-          thumble element set UUID --clear-label
-          thumble element set UUID --skin-role primary-action --hit-insets 16
-          thumble element set "Menu" --visual-role menu --hit-insets 10,18,14,18
-          thumble element set UUID --clear-visual-role --clear-hit-insets
-          thumble element set UUID --variant portrait --label A --light-fill '#7C3AED' --dark-fill '#C4B5FD' --shape circle --width 1.2 --height 1.2 --z-index 10
-          thumble element set "Right Stick" --thumb-fill '#22C55E'
-          thumble element set UUID --fill-gradient '#000000,#666666' --gradient-angle 0
-          thumble element set UUID --fill-tile dots --tile-foreground '#FFFFFF' --tile-background '#111111'
-          thumble element set UUID --fill-image ./button-texture.png --image-mode fill
-          thumble element set UUID --icon sf:sparkles --haptic medium --haptic-pattern double --haptic-intensity 75% --haptic-duration 70ms --stroke '#38BDF8' --pressed-fill '#0EA5E9' --glow '#0EA5E9'
-          thumble element set UUID --text-color '#7C61A8' --inner-shadow '#B8B2C2' --inner-shadow-radius 5 --highlight '#FFFFFF' --highlight-opacity 45% --highlight-x -4 --highlight-y -4 --bevel-width 1.5
-          thumble element set UUID --material soft-white --shadow-layers '#FFFFFF,14,-7,-7,96%;#9B91AA,20,8,9,24%'
-          thumble element set control-bar --x 0.2 --y 0.08 --width 1.4 --height 1.1
+          thumble element set UUID --x 0.55 --y 0.4
+          thumble element set UUID --haptic light --haptic-pattern double --haptic-intensity 75% --haptic-duration 70ms
+          thumble element set UUID --changes-file element-changes.json
+          thumble element set UUID --changes-json '{"icon":{"source":"sf_symbol","value":"star.fill"}}'
           thumble element duplicate UUID [--offset 0.025] [--profile PROFILE] [--variant portrait]
           thumble element align top UUID1 UUID2 UUID3
           thumble element distribute horizontal-spacing UUID1 UUID2 UUID3 UUID4

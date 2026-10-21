@@ -1203,3 +1203,47 @@ final class ThumbleCLIBackendTests: XCTestCase {
         return helper
     }
 }
+
+
+import Testing
+
+struct NativeElementCommandEncodingTests {
+    @Test func typedElementCommandsRetainPayloadAndIdentity() throws {
+        let payload = "{\"centerX\":0.55,\"haptic\":{\"style\":\"light\",\"intensity\":0.42}}"
+        let command = ThumbleCLIProfileBackend.Command.elementSet(.active, .primary, element: "Coin", changesJSON: payload)
+        let object = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(command)) as? [String: Any])
+        #expect(object["type"] as? String == "element.set")
+        #expect(object["element"] as? String == "Coin")
+        #expect(object["changesJSON"] as? String == payload)
+    }
+    @Test func nudgeUsesPointDeltas() throws {
+        let command = ThumbleCLIProfileBackend.Command.elementNudge(.active, .primary, element: "Coin", deltaX: 4, deltaY: -2)
+        let object = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(command)) as? [String: Any])
+        #expect(object["deltaX"] as? Double == 4)
+        #expect(object["deltaY"] as? Double == -2)
+    }
+}
+
+struct OwnedElementSequenceTests {
+    @Test func deletingCustomControlAfterResetDoesNotBakePaintIntoPreset() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+        let source = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-element-sequences/v1/after-reset-and-hide.json"))
+        let initial = try ThumbleOwnedConfigurationDocument(validating: source)
+        let profile = try #require(initial.projectedProfiles.first)
+        let removedID = try #require(UUID(uuidString: "AC000000-0000-0000-0000-000000000002"))
+        let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion": 1,
+            "invocationID": UUID().uuidString, "ownedConfigurationCommand": "apply",
+            "documentData": source.base64EncodedString(), "nowMillis": profile.updatedAt + 1,
+            "operation": ["type": "element.delete", "profileID": profile.id.uuidString,
+                          "variant": "primary", "elementID": removedID.uuidString]])
+        let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes)
+        let response = try ThumbleOwnedOperationBridge.transform(request)
+        let result = try ThumbleOwnedConfigurationDocument(validating: #require(Data(base64Encoded: response.afterDocumentData)))
+        let after = try #require(result.projectedProfiles.first)
+        #expect(!after.customization.elements.contains { $0.id == removedID })
+        for element in profile.customization.elements where element.id != removedID {
+            #expect(after.customization.elements.first { $0.id == element.id } == element)
+        }
+        #expect(after.appearanceBank?.variants.count == 8)
+    }
+}

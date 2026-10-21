@@ -586,6 +586,10 @@ final class ThumbleCLIProfileBackend {
         case templateInstall(ControllerTemplate, name: String?, select: Bool, makeDefault: Bool)
         case customizationSet(ProfileSelector, ConfigurationVariant, [CustomizationChanges], frameID: String?)
         case customizationFix(ProfileSelector, ConfigurationVariant, LayoutRepairTarget, LayoutRepairCanvas, includeLocked: Bool)
+        case elementSet(ProfileSelector, ConfigurationVariant, element: String, changesJSON: String)
+        case elementNudge(ProfileSelector, ConfigurationVariant, element: String, deltaX: Double, deltaY: Double)
+        case elementDelete(ProfileSelector, ConfigurationVariant, element: String)
+        case elementReset(ProfileSelector, ConfigurationVariant, element: String)
         case styleList(ProfileSelector)
         case styleShow(ProfileSelector, styleID: String)
         case styleCreate(ProfileSelector, styleID: String, name: String, appearance: AuthorityStyleAppearance)
@@ -643,7 +647,7 @@ final class ThumbleCLIProfileBackend {
         private enum CodingKeys: String, CodingKey {
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
-            case specJSON, requestedGameName
+            case specJSON, requestedGameName, element, changesJSON
             case template, select, makeDefault, styleID, elementID, appearance
             case button, sequence, mode, keyboardEdit, gamepadEdit
             case variant, frameID, items, item, direction, changes
@@ -697,6 +701,29 @@ final class ThumbleCLIProfileBackend {
                 try container.encode(appendAsCopies, forKey: .appendAsCopies)
                 try container.encode(select, forKey: .select)
                 try container.encode(makeDefault, forKey: .makeDefault)
+            case .elementSet(let target, let variant, let element, let changesJSON):
+                try container.encode("element.set", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(element, forKey: .element)
+                try container.encode(changesJSON, forKey: .changesJSON)
+            case .elementNudge(let target, let variant, let element, let deltaX, let deltaY):
+                try container.encode("element.nudge", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(element, forKey: .element)
+                try container.encode(deltaX, forKey: .deltaX)
+                try container.encode(deltaY, forKey: .deltaY)
+            case .elementDelete(let target, let variant, let element):
+                try container.encode("element.delete", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(element, forKey: .element)
+            case .elementReset(let target, let variant, let element):
+                try container.encode("element.reset", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(element, forKey: .element)
             case .select(let target):
                 try container.encode("profile.select", forKey: .type)
                 try container.encode(target, forKey: .target)

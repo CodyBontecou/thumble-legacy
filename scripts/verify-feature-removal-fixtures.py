@@ -205,3 +205,19 @@ for name in contract["cases"]:
         assert source["defaultProfileID"] is None and destination["defaultProfileID"] is None
         assert source["activeProfileID"] != destination["activeProfileID"]
 print("Owned native edits verified:",len(contract["cases"]),"operations across eight appearance states")
+
+sequence_root = Path(__file__).resolve().parent.parent / "Host/fixtures/owned-element-sequences/v1"
+sequence_contract = json.loads((sequence_root / "manifest.json").read_text())
+sequence_bytes = (sequence_root / "after-reset-and-hide.json").read_bytes()
+assert sequence_contract["schemaVersion"] == 1
+assert hashlib.sha256(sequence_bytes).hexdigest() == sequence_contract["sourceSHA256"]
+sequence = json.loads(sequence_bytes)
+assert sequence["version"] == 5
+profile = sequence["profiles"][0]
+removed_id = sequence_contract["removedElementID"].lower()
+preset = next(e for e in profile["customization"]["elements"] if e["id"].lower().endswith("0109"))
+assert preset["layout"]["isHidden"] and "visualStyle" not in preset["layout"]
+assert any(e["id"].lower() == removed_id for e in profile["customization"]["elements"])
+assert len(profile["appearanceBank"]["variants"]) == 8
+assert all(removed_id in row["appearance"]["controls"] for row in profile["appearanceBank"]["variants"])
+print("Owned chained element fixture verified: reset/hide followed by custom removal")

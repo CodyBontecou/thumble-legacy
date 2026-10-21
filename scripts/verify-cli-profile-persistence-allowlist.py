@@ -25,7 +25,6 @@ EXPECTED = {
     "mutateProfileResources": (1, 1),
     "style": (1, 0),
     "asset": (3, 0),
-    "nudgeElement": (1, 1),
 }
 
 function = "<top-level>"
@@ -253,7 +252,6 @@ if "layerList" not in element_block or "loadStore(" in element_block:
     raise SystemExit(1)
 for function_name in (
     "duplicateElements", "alignElements", "distributeElements", "addElement",
-    "setElement", "nudgeElement", "deleteElement", "resetElement",
 ):
     function_block = SOURCE.read_text(encoding="utf-8").split(
         f"private static func {function_name}", 1
@@ -274,4 +272,10 @@ for command in ("deviceGet", "deviceSet"):
         print(f"Missing Rust-authoritative device routing: {command}", file=sys.stderr)
         raise SystemExit(1)
 
-print("CLI direct profile/orientation/binding/output/customization/style/layer/group/control-bar/device persistence allowlist passed.")
+
+for function, command in (("setElement", ".elementSet("), ("nudgeElement", ".elementNudge("), ("deleteElement", ".elementDelete("), ("resetElement", ".elementReset(")):
+    block = source_text.split("private static func " + function + "(", 1)[1].split("private static func ", 1)[0]
+    if command not in block or any(token in block for token in ("loadStore(", "persistStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess(")):
+        raise SystemExit("Element commands must use typed authority transactions: " + function)
+
+print("CLI direct profile/design/element persistence allowlist passed.")

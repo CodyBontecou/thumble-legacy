@@ -1,0 +1,75 @@
+{
+  "baseCommit": "e8cbc61151058a84d9c858c257b2cdd06224fb65",
+  "isolatedRustCheckout": "/private/tmp/thumble-native-elements-0fxj8c90",
+  "sourceSHA256": {
+    "Host/crates/thumble-host/src/cli_profile.rs": "c20e517db8f59b815ffd731d8bc5da589296447560be58e188738c4be9ba5627",
+    "Host/crates/thumble-host/src/cli_profile_owned.rs": "e71305f540118fc3445d43c627a8ccd9d29d4c4582ca422b03a986ab2fdfba4f",
+    "Sources/CLI/ThumbleCLI.swift": "dea8a1c3919e985887dc7b25462836be181958e684acfc29211d713d280dedb5",
+    "Sources/CLI/ThumbleCLIBackend.swift": "0855c4ba8bbf8dcd54397245d90c8a97bc8545ddcbf0cb3dd2ff6daef822b64a",
+    "Sources/Shared/GamepadAppearanceSnapshot.swift": "c641812bf2345590b282b5f7d55e53476dad06792c7f8d350f9ed537d61f6851",
+    "Sources/Shared/OwnedConfigurationDocument.swift": "2d590031aa7d6cbfa49ea3cbe74b54a1ed82c21ffe8a46521de927286fc320c8",
+    "Tests/ThumbleCLIBackendTests.swift": "347d90008a428ab210a02a897c12bf0c1f4b8419f38bde685b414e9dd68c5e27",
+    "scripts/verify-cli-profile-persistence-allowlist.py": "6b98cd396e8c47597c2ce550bd39a658e18e112d598e02b919c6cb78aacf9ea9",
+    "scripts/verify-feature-removal-fixtures.py": "401efa2836dfd7f86068f409ae5f3b6b15409713c6a98338d3abf692293da533",
+    "scripts/verify-owned-runtime-flow.py": "9955758879b97c43dddcc544d7cf2c9bd594fde446e925a22b9ca29adee6b0cc"
+  },
+  "logSHA256": {
+    "rust.txt": "6410047caedfc427ee23501aedb215e87adc5008bca93771ffc19e18339fd214",
+    "stack.txt": "d36546086e25099bbc0cea3c79546b0c271baf29a32202909aad8b220a210578",
+    "nativeFocused.txt": "af7d5431dbf5bbd9d4bea1b84b49a85115d562fcc1d725413c6fa3a21a87ee2c",
+    "nativeCLI.txt": "b2d56627d09f61b231d8b1e14a17f13651ddc9283802de12258307b59e3fad0d",
+    "nativeBridge.txt": "d4b0d851fc1b6842bf12648984ad52c8aac0c0cee1d80ea1cbc255862ffbee75",
+    "rustBuild.txt": "7534567e1a4b8c528bb37f4da46e28fa33260ea4aa16101383a81686283bac0d",
+    "process.txt": "913f1338ae53d95977539c910fb9ad21bf5f2627bf300fd5d738ebf5294bf278",
+    "oracles.txt": "20821424c088dabfb538f5e29819b91c4d2594a8a2e81ff8e803be5b18bca67c",
+    "fixtures.txt": "87dcb098ddc3e52361b154c7306e4db1749d65f06464d320bf2a52742810677b"
+  },
+  "binarySHA256": {
+    "host": "f87ec12f7a0b7a1baf80b67a3ac9f8c79d95d5dca7fc3329936ecfa6a4cff8e7",
+    "mcp": "7b872f0a3e67be3be2a49fafc173d9b597ae94911c9cadbcbc0565ee5b0b7e59",
+    "cliBridge": "e267c774d8ec3c0bcc800e6d9392f1cfa6813329581af0772af69062dfcda53b",
+    "nativeCLI": "f896e2554d3cc7a5c3fa06339ee7ecd50c386c83aef8528d7ba303c151758773",
+    "nativeBridge": "971df666a007ee4a543cf70f702b9aa3c0ac031257c6f7b96fa8ce7b9d892911"
+  },
+  "fixtureSHA256": "243d72ade32e2a7abebaf4aa5753918d97a9779a6e1c34d3dac18849aaade9ce",
+  "rust": {
+    "gateExitCode": 0,
+    "passed": 569,
+    "failed": 0,
+    "ignored": 3,
+    "newTests": 2
+  },
+  "apple": {
+    "stackTests": 41,
+    "existingOwnedTests": 7,
+    "swiftTestingCases": 3,
+    "macDebugBuild": true,
+    "iosDebugBuild": true,
+    "nativeCLIBuild": true,
+    "nativeBridgeBuild": true,
+    "gateExitCode": 0,
+    "comparedSources": 179,
+    "sourceManifestSHA256": "9da07f23cb2480f719ac81578671d39ffe23ad367346734b52a1305e5894fcf5"
+  },
+  "process": {
+    "cliNativeGeometry": true,
+    "mcpNativeHaptic": true,
+    "commitReplay": true,
+    "restartReplay": true,
+    "retainedAppearanceStates": 8,
+    "exactUnknownInteger": true,
+    "resourceTablePreserved": true,
+    "configurationRevision": 54,
+    "highLevelOnlineOffline": true,
+    "nativeCLIRenameAndDesign": true,
+    "exactDesignCapture": true,
+    "nativeElementSetNudgeResetDelete": true,
+    "desktopGUIRequired": false
+  },
+  "nativeOracles": "six exact responses; five unexpected inputs, portrait and legacy-document refusals",
+  "hostInputOrPaintGuardsChanged": false,
+  "automaticMigrationEnabled": false,
+  "ownedPortableInterchangeEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "physicalDeviceAcceptance": false
+}

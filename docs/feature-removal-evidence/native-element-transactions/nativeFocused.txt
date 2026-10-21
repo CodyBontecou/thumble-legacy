@@ -1,0 +1,114 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/StackSafetyDerivedData "-only-testing:ThumbleCLITests/NativeElementCommandEncodingTests" "-only-testing:ThumbleCLITests/OwnedElementSequenceTests" "-only-testing:ThumbleCLITests/OwnedConfigurationDocumentTests" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 4d4727c8bb8a4809595c9699e7be9601
+Build description path: /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/XCBuildData/4d4727c8bb8a4809595c9699e7be9601.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-owned-readers-l9kzb9pr/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+ProcessInfoPlistFile /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-readers-l9kzb9pr
+    builtin-infoPlistUtility /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+CopySwiftLibs /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-owned-readers-l9kzb9pr
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+Test Suite 'Selected tests' started at 2026-10-20 23:09:17.111.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-20 23:09:17.111.
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-20 23:09:17.111.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.343 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.056 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' passed (0.285 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' passed (2.830 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' passed (0.202 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.045 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.754 seconds).
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-20 23:09:21.627.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 4.514 (4.516) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-20 23:09:21.627.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 4.514 (4.516) seconds
+Test Suite 'Selected tests' passed at 2026-10-20 23:09:21.627.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 4.514 (4.516) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeElementCommandEncodingTests started.
+◇ Test typedElementCommandsRetainPayloadAndIdentity() started.
+✔ Test typedElementCommandsRetainPayloadAndIdentity() passed after 0.001 seconds.
+◇ Test nudgeUsesPointDeltas() started.
+✔ Test nudgeUsesPointDeltas() passed after 0.001 seconds.
+✔ Suite NativeElementCommandEncodingTests passed after 0.001 seconds.
+◇ Suite OwnedElementSequenceTests started.
+◇ Test deletingCustomControlAfterResetDoesNotBakePaintIntoPreset() started.
+✔ Test deletingCustomControlAfterResetDoesNotBakePaintIntoPreset() passed after 0.296 seconds.
+✔ Suite OwnedElementSequenceTests passed after 0.296 seconds.
+✔ Test run with 3 tests in 2 suites passed after 0.297 seconds.
+2026-10-20 23:09:22.215 xcodebuild[39550:85381022] [MT] IDETestOperationsObserverDebug: 5.375 elapsed -- Testing started completed.
+2026-10-20 23:09:22.215 xcodebuild[39550:85381022] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-20 23:09:22.215 xcodebuild[39550:85381022] [MT] IDETestOperationsObserverDebug: 5.375 sec, +5.375 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-owned-readers-l9kzb9pr/build/StackSafetyDerivedData/Logs/Test/Test-ThumbleTests-2026.10.20_23-09-16--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

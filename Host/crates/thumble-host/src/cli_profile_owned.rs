@@ -793,4 +793,86 @@ mod tests {
             before
         );
     }
+    #[test]
+    fn element_plans_resolve_exact_labels_and_validate_typed_changes() {
+        let (_temp, _lease, paths) = fixture();
+        let state = load(&paths);
+        let catalog = catalog_from_state(&state).unwrap();
+        let element = state.profiles[0]["customization"]["elements"][0]["label"]
+            .as_str()
+            .unwrap();
+        let command = CliProfileCommand::ElementSet {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            element: element.into(),
+            changes_json: r#"{"centerX":0.55,"haptic":{"style":"light","intensity":0.42}}"#.into(),
+        };
+        let plan = plan_transaction(&command, &catalog, &state.profiles, Uuid::new_v4()).unwrap();
+        assert!(
+            matches!(&plan.operations[0], ConfigurationOperation::ElementSet { element_id, changes, .. } if element_id.eq_ignore_ascii_case(state.profiles[0]["customization"]["elements"][0]["id"].as_str().unwrap()) && changes.center_x == Some(0.55))
+        );
+        let bad = request(CliProfileCommand::ElementSet {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            element: element.into(),
+            changes_json: r#"{"centerX":0.2,"centerX":0.3}"#.into(),
+        });
+        assert_eq!(
+            execute_offline_authority(&paths, &bad).error.unwrap().code,
+            "invalid_element_changes"
+        );
+        assert!(!paths.drafts_dir.exists());
+        let bad = request(CliProfileCommand::ElementSet {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            element: element.into(),
+            changes_json: r#"{"authToken":"forbidden"}"#.into(),
+        });
+        assert_eq!(
+            execute_offline_authority(&paths, &bad).error.unwrap().code,
+            "invalid_element_changes"
+        );
+        assert_eq!(load(&paths).configuration_revision, 41);
+    }
+    #[test]
+    fn element_nudge_delete_and_reset_plans_keep_the_selected_identity() {
+        let (_temp, _lease, paths) = fixture();
+        let state = load(&paths);
+        let catalog = catalog_from_state(&state).unwrap();
+        let id = state.profiles[0]["customization"]["elements"][0]["id"]
+            .as_str()
+            .unwrap();
+        for command in [
+            CliProfileCommand::ElementNudge {
+                target: ProfileSelector::Active,
+                variant: ConfigurationVariant::Primary,
+                element: id.into(),
+                delta_x: 4.,
+                delta_y: -2.,
+            },
+            CliProfileCommand::ElementDelete {
+                target: ProfileSelector::Active,
+                variant: ConfigurationVariant::Primary,
+                element: id.into(),
+            },
+            CliProfileCommand::ElementReset {
+                target: ProfileSelector::Active,
+                variant: ConfigurationVariant::Primary,
+                element: id.into(),
+            },
+        ] {
+            let plan =
+                plan_transaction(&command, &catalog, &state.profiles, Uuid::new_v4()).unwrap();
+            match &plan.operations[0] {
+                ConfigurationOperation::ElementNudge { element_ids, .. } => {
+                    assert!(element_ids[0].eq_ignore_ascii_case(id))
+                }
+                ConfigurationOperation::ElementDelete { element_id, .. }
+                | ConfigurationOperation::ElementReset { element_id, .. } => {
+                    assert!(element_id.eq_ignore_ascii_case(id))
+                }
+                _ => panic!("unexpected operation"),
+            }
+        }
+    }
 }

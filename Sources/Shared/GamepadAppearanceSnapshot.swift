@@ -172,6 +172,16 @@ public struct GamepadAppearanceSnapshot: Codable, Equatable, Sendable {
 
     var controlIDs: Set<String> { Set(storage.content.controls.keys) }
 
+    /// Removing a control must not bake resolved paint into other controls.
+    func retainingControlIDs(_ ids: Set<String>) -> Self {
+        var content = storage.content
+        content.controls = content.controls.filter { ids.contains($0.key) }
+        return Self(content: content)
+    }
+
+    private init(content: Content) { storage = Storage(content) }
+
+
     private final class EditWorkspace {
         let edited: Content
         let baseline: Content

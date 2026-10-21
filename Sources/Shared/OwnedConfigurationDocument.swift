@@ -271,6 +271,14 @@ public enum ThumbleOwnedOperationBridge {
         private func reconcileBank(_ profile: inout GamepadConfigurationProfile) throws {
             guard let bank = profile.appearanceBank,
                   bank.variants.first?.appearance.controlIDs != GamepadAppearanceSnapshot(profile.customization).controlIDs else { return }
+            let retainedIDs = GamepadAppearanceSnapshot(profile.customization).controlIDs
+            if retainedIDs.isSubset(of: bank.variants[0].appearance.controlIDs) {
+                profile.appearanceBank = try GamepadAppearanceBank(variants: bank.variants.map {
+                    .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet,
+                          appearance: $0.appearance.retainingControlIDs(retainedIDs))
+                })
+                return
+            }
             // Add/delete controls across all paint states, retaining each state's
             // resolved appearance and the canonical geometry/output owners.
             var variants: [GamepadAppearanceBank.Variant] = []

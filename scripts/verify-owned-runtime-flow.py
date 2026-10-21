@@ -20,6 +20,7 @@ def main():
     parser.add_argument('--bridge', type=Path, required=True)
     parser.add_argument('--cli-bridge', type=Path)
     parser.add_argument('--native-cli', type=Path)
+    parser.add_argument('--failure-dir', type=Path, help='Preserve temporary fixture state on native command failure')
     args = parser.parse_args()
     if bool(args.cli_bridge) != bool(args.native_cli):
         parser.error('--cli-bridge and --native-cli must be supplied together')
@@ -29,6 +30,10 @@ def main():
                for name in ('geometry', 'haptic')}
     document = json.loads(base64.b64decode(packets['geometry']['documentData']))
     geometry_destination = json.loads((fixtures / 'geometry-destination.json').read_text())
+    custom_element_id = None
+    if args.cli_bridge:
+        document = json.loads((fixtures / 'add-destination.json').read_text())
+        custom_element_id = json.loads((fixtures / 'add-request.json').read_text())['operation']['elementID']
     with tempfile.TemporaryDirectory(prefix='thumble-owned-flow-', dir='/private/tmp') as temp:
         root = Path(temp)
         install = root / 'bin'
@@ -101,6 +106,10 @@ def main():
                 save_args = ('configuration', 'save', draft_id, '--expected-draft-revision', '2',
                              '--expected-configuration-revision', '41', '--commit-id', str(uuid.uuid4()))
                 assert cli(*save_args)['save']['configurationRevision'] == 42
+                geometry_id = packets['geometry']['operation']['elementIDs'][0]
+                saved_geometry = next(item for item in json.loads(state_file.read_bytes())['profiles'][0]['customization']['elements'] if item['id'] == geometry_id)
+                expected_geometry = next(item for item in geometry_destination['profiles'][0]['customization']['elements'] if item['id'] == geometry_id)
+                assert saved_geometry['layout']['centerX'] == expected_geometry['layout']['centerX']
                 assert cli(*save_args)['save']['idempotentReplay']
 
                 mcp = subprocess.Popen([str(install / 'thumble-mcp'), '--allow-config-write'],
@@ -192,6 +201,12 @@ def main():
                     def native_cli(*arguments):
                         result = subprocess.run([str(install / 'thumble'), *arguments], env=env,
                                                 capture_output=True, text=True, timeout=30)
+                        if result.returncode and args.failure_dir:
+                            args.failure_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+                            shutil.copy2(state_file, args.failure_dir / 'state.json')
+                            if (state_dir / 'drafts').exists():
+                                shutil.copytree(state_dir / 'drafts', args.failure_dir / 'drafts', dirs_exist_ok=True)
+                            (args.failure_dir / 'command.json').write_text(json.dumps(list(arguments)))
                         assert result.returncode == 0, result.stderr[-700:]
                         return result.stdout
 
@@ -202,36 +217,61 @@ def main():
                     assert profile_request(rename, 43, invocation)['outcome']['idempotentReplay']
                     native_cli('profile', 'rename', 'High Level', 'Native CLI', '--invocation-id', str(uuid.uuid4()))
                     assert cli('configuration', 'status')['configuration']['configurationRevision'] == 45
-                    before_guard = state_file.read_bytes()
-                    guarded = subprocess.run([str(install / 'thumble'), 'element', 'set', element_id, '--profile', 'Native CLI', '--x', '0.55'], env=env, capture_output=True, text=True, timeout=30)
-                    assert guarded.returncode != 0 and 'operation_not_migrated' in guarded.stderr
-                    assert state_file.read_bytes() == before_guard
-                    native_cli('customization', 'set', '--profile', 'Native CLI', '--appearance', 'dark', '--invocation-id', str(uuid.uuid4()))
+                    changes_file = root / 'element-changes.json'
+                    changes_file.write_text(json.dumps(dict(haptic=dict(style='light', intensity=0.64))))
+                    set_args = ('element', 'set', element_id, '--profile', 'Native CLI', '--x', '0.55', '--changes-file', str(changes_file), '--invocation-id', str(uuid.uuid4()))
+                    native_cli(*set_args)
                     assert cli('configuration', 'status')['configuration']['configurationRevision'] == 46
+                    after_set = state_file.read_bytes()
+                    native_cli(*set_args)
+                    assert state_file.read_bytes() == after_set
+                    malformed = subprocess.run([str(install / 'thumble'), 'element', 'set', element_id, '--changes-json', '{"centerX":0.2,"centerX":0.3}'], env=env, capture_output=True, text=True, timeout=30)
+                    assert malformed.returncode != 0 and state_file.read_bytes() == after_set
+                    native_cli('customization', 'set', '--profile', 'Native CLI', '--appearance', 'dark', '--invocation-id', str(uuid.uuid4()))
+                    assert cli('configuration', 'status')['configuration']['configurationRevision'] == 47
                     host.terminate()
                     host.wait(timeout=10)
                     rename = dict(type='profile.rename', target=dict(kind='active'), name='Offline')
                     invocation = str(uuid.uuid4())
-                    saved = profile_request(rename, 46, invocation)
-                    assert saved['authorityMode'] == 'offline' and saved['outcome']['configurationRevision'] == 47
-                    assert profile_request(rename, 46, invocation)['outcome']['idempotentReplay']
+                    saved = profile_request(rename, 47, invocation)
+                    assert saved['authorityMode'] == 'offline' and saved['outcome']['configurationRevision'] == 48
+                    assert profile_request(rename, 47, invocation)['outcome']['idempotentReplay']
                     native_cli('profile', 'rename', 'Offline', 'Native Offline', '--invocation-id', str(uuid.uuid4()))
-                    capture = profile_request(dict(type='design.snapshot', target=dict(kind='active'), createDraft=True), 48)['designSnapshot']
+                    capture = profile_request(dict(type='design.snapshot', target=dict(kind='active'), createDraft=True), 49)['designSnapshot']
                     assert '0.12345678901234567890123456789' in capture['profileJSON']
                     assert capture['draftRevision'] == 1 and capture['draftID']
                     final = json.loads(state_file.read_bytes())
-                    assert final['configurationRevision'] == 48 and final['profiles'][0]['name'] == 'Native Offline'
+                    assert final['configurationRevision'] == 49 and final['profiles'][0]['name'] == 'Native Offline'
                     element = next(item for item in final['profiles'][0]['customization']['elements'] if item['id'] == element_id)
-                    expected_element = next(item for item in geometry_destination['profiles'][0]['customization']['elements'] if item['id'] == element_id)
-                    assert element['layout']['centerX'] == expected_element['layout']['centerX']
+                    assert element['layout']['centerX'] == 0.55
+                    assert element['layout']['hapticFeedback']['intensity'] == 0.64
                     assert final['profiles'][0]['customization']['colorSchemePreference'] == 'dark'
                     assert final['profiles'][0]['appearanceBank'] == document['profiles'][0]['appearanceBank']
+                    before_extra = state_file.read_bytes()
+                    native_cli('element', 'nudge', element_id, 'right', '--step', '4', '--invocation-id', str(uuid.uuid4()))
+                    nudged = json.loads(state_file.read_bytes())
+                    moved = next(item for item in nudged['profiles'][0]['customization']['elements'] if item['id'] == element_id)
+                    assert moved['layout']['centerX'] > 0.55
+                    native_cli('element', 'reset', element_id, '--invocation-id', str(uuid.uuid4()))
+                    native_cli('element', 'delete', element_id, '--invocation-id', str(uuid.uuid4()))
+                    hidden = next(item for item in json.loads(state_file.read_bytes())['profiles'][0]['customization']['elements'] if item['id'] == element_id)
+                    assert hidden['layout']['isHidden']
+                    native_cli('element', 'set', custom_element_id, '--haptic', 'light', '--haptic-intensity', '75%', '--haptic-duration', '70ms', '--invocation-id', str(uuid.uuid4()))
+                    custom = next(item for item in json.loads(state_file.read_bytes())['profiles'][0]['customization']['elements'] if item['id'] == custom_element_id)
+                    assert custom['layout']['hapticFeedback']['intensity'] == 0.75
+                    assert abs(custom['layout']['hapticFeedback']['duration'] - 0.07) < 1e-9
+                    native_cli('element', 'delete', custom_element_id, '--invocation-id', str(uuid.uuid4()))
+                    removed = json.loads(state_file.read_bytes())['profiles'][0]
+                    assert not any(item['id'] == custom_element_id for item in removed['customization']['elements'])
+                    assert all(custom_element_id not in row['appearance']['controls'] for row in removed['appearanceBank']['variants'])
+                    assert len(removed['appearanceBank']['variants']) == 8
+                    assert '0.12345678901234567890123456789' in state_file.read_text()
                     high_level = True
                 print(json.dumps(dict(cliNativeGeometry=True, mcpNativeHaptic=True,
                                       commitReplay=True, restartReplay=True, retainedAppearanceStates=8,
                                       exactUnknownInteger=True, resourceTablePreserved=True,
-                                      configurationRevision=48 if high_level else 43, highLevelOnlineOffline=high_level,
-                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, elementSetStillUnmigrated=high_level, desktopGUIRequired=False)))
+                                      configurationRevision=json.loads(state_file.read_bytes())['configurationRevision'], highLevelOnlineOffline=high_level,
+                                      nativeCLIRenameAndDesign=high_level, exactDesignCapture=high_level, nativeElementSetNudgeResetDelete=high_level, desktopGUIRequired=False)))
             finally:
                 if mcp is not None:
                     mcp.terminate()

@@ -194,6 +194,36 @@ pub enum CliProfileCommand {
         #[serde(rename = "includeLocked")]
         include_locked: bool,
     },
+    #[serde(rename = "element.set")]
+    ElementSet {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        element: String,
+        #[serde(rename = "changesJSON")]
+        changes_json: String,
+    },
+    #[serde(rename = "element.nudge")]
+    ElementNudge {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        element: String,
+        #[serde(rename = "deltaX")]
+        delta_x: f64,
+        #[serde(rename = "deltaY")]
+        delta_y: f64,
+    },
+    #[serde(rename = "element.delete")]
+    ElementDelete {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        element: String,
+    },
+    #[serde(rename = "element.reset")]
+    ElementReset {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        element: String,
+    },
     #[serde(rename = "style.list")]
     StyleList { target: ProfileSelector },
     #[serde(rename = "style.show")]
@@ -546,6 +576,10 @@ impl CliProfileCommand {
             Self::TemplateInstall { .. } => "template.install",
             Self::CustomizationSet { .. } => "customization.set",
             Self::CustomizationFix { .. } => "customization.fix",
+            Self::ElementSet { .. } => "element.set",
+            Self::ElementNudge { .. } => "element.nudge",
+            Self::ElementDelete { .. } => "element.delete",
+            Self::ElementReset { .. } => "element.reset",
             Self::StyleList { .. } => "style.list",
             Self::StyleShow { .. } => "style.show",
             Self::LayerList { .. } => "layer.list",
@@ -2292,6 +2326,28 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
             "expected configuration revision is accepted only for mutations",
         ));
     }
+    if let CliProfileCommand::ElementSet {
+        changes_json,
+        element,
+        ..
+    } = &request.command
+    {
+        validate_cli_element_selector(element)?;
+        let changes = decode_element_changes(changes_json)?;
+        ConfigurationOperation::ElementSet {
+            profile_id: Uuid::nil().to_string(),
+            variant: ConfigurationVariant::Primary,
+            element_id: Uuid::nil().to_string(),
+            changes: Box::new(changes),
+        }
+        .validate_bridge_input()
+        .map_err(|_| {
+            TransactionFailure::new(
+                "invalid_element_changes",
+                "element changes are outside the supported typed bounds",
+            )
+        })?;
+    }
     if let CliProfileCommand::DesignApply {
         draft_id,
         expected_draft_revision,
@@ -2589,6 +2645,78 @@ fn plan_transaction(
     invocation_id: Uuid,
 ) -> Result<PlannedTransaction, TransactionFailure> {
     match command {
+        CliProfileCommand::ElementSet {
+            target,
+            variant,
+            element,
+            changes_json,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let id = resolve_transaction_element_id(&profiles[selected.index], *variant, element)?;
+            let changes = decode_element_changes(changes_json)?;
+            let operation = ConfigurationOperation::ElementSet {
+                profile_id: selected.profile_id.to_string(),
+                variant: *variant,
+                element_id: id,
+                changes: Box::new(changes),
+            };
+            operation.validate_bridge_input().map_err(|_| {
+                TransactionFailure::new(
+                    "invalid_element_changes",
+                    "element changes are outside the supported typed bounds",
+                )
+            })?;
+            Ok(plan_one(operation, selected.name.clone()))
+        }
+        CliProfileCommand::ElementNudge {
+            target,
+            variant,
+            element,
+            delta_x,
+            delta_y,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let id = resolve_transaction_element_id(&profiles[selected.index], *variant, element)?;
+            validate_group_nudge(*delta_x, "deltaX")?;
+            validate_group_nudge(*delta_y, "deltaY")?;
+            Ok(plan_one(
+                ConfigurationOperation::ElementNudge {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_ids: vec![id],
+                    delta_x: *delta_x,
+                    delta_y: *delta_y,
+                },
+                selected.name.clone(),
+            ))
+        }
+        CliProfileCommand::ElementDelete {
+            target,
+            variant,
+            element,
+        }
+        | CliProfileCommand::ElementReset {
+            target,
+            variant,
+            element,
+        } => {
+            let selected = resolve_selector(target, catalog)?;
+            let id = resolve_transaction_element_id(&profiles[selected.index], *variant, element)?;
+            let operation = if matches!(command, CliProfileCommand::ElementDelete { .. }) {
+                ConfigurationOperation::ElementDelete {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_id: id,
+                }
+            } else {
+                ConfigurationOperation::ElementReset {
+                    profile_id: selected.profile_id.to_string(),
+                    variant: *variant,
+                    element_id: id,
+                }
+            };
+            Ok(plan_one(operation, selected.name.clone()))
+        }
         CliProfileCommand::DesignApply {
             target,
             package_base64,
@@ -3520,6 +3648,23 @@ fn validate_group_nudge(value: f64, _field: &str) -> Result<(), TransactionFailu
     Ok(())
 }
 
+fn decode_element_changes(
+    json: &str,
+) -> Result<crate::draft_operation::ElementChanges, TransactionFailure> {
+    if json.len() > 8 * 1024 * 1024 {
+        return Err(TransactionFailure::new(
+            "invalid_element_changes",
+            "element changes exceed 8 MiB",
+        ));
+    }
+    thumble_protocol::decode_unique_json(json.as_bytes()).map_err(|_| {
+        TransactionFailure::new(
+            "invalid_element_changes",
+            "element changes must be unambiguous typed JSON",
+        )
+    })
+}
+
 fn validate_cli_element_selector(value: &str) -> Result<(), TransactionFailure> {
     let trimmed = value.trim();
     if trimmed.is_empty() || trimmed.chars().count() > 128 || trimmed.chars().any(char::is_control)
@@ -3530,6 +3675,74 @@ fn validate_cli_element_selector(value: &str) -> Result<(), TransactionFailure> 
         ));
     }
     Ok(())
+}
+
+fn resolve_transaction_element_id(
+    profile: &Value,
+    variant: ConfigurationVariant,
+    input: &str,
+) -> Result<String, TransactionFailure> {
+    validate_cli_element_selector(input)?;
+    let key = match variant {
+        ConfigurationVariant::Primary => "customization",
+        ConfigurationVariant::Landscape => "landscapeCustomization",
+        ConfigurationVariant::Portrait => "portraitCustomization",
+    };
+    let customization = profile
+        .get(key)
+        .or_else(|| profile.get("customization"))
+        .ok_or_else(|| {
+            TransactionFailure::new("element_not_found", "profile has no selected layout")
+        })?;
+    let normalized = normalized_lookup(input);
+    let alias = match normalized.as_str() {
+        "up" => Some(1),
+        "down" => Some(2),
+        "left" => Some(3),
+        "right" => Some(4),
+        "jump" | "action1" => Some(5),
+        "attack" | "action2" => Some(6),
+        "dash" | "action3" => Some(7),
+        "focus" | "action4" => Some(8),
+        "map" | "menu" => Some(9),
+        "pause" => Some(10),
+        _ => None,
+    }
+    .map(|ordinal| KeypadElementID::preset(ordinal).to_string());
+    let requested = Uuid::parse_str(input).ok();
+    let elements = normalized_binding_elements(customization)?;
+    let mut ids = BTreeSet::new();
+    for element in elements {
+        let Some(id) = element
+            .get("id")
+            .and_then(Value::as_str)
+            .and_then(|id| Uuid::parse_str(id).ok())
+        else {
+            continue;
+        };
+        let id_match = requested == Some(id)
+            || alias
+                .as_ref()
+                .is_some_and(|alias| alias.eq_ignore_ascii_case(&id.to_string()));
+        let label_match = element
+            .get("label")
+            .and_then(Value::as_str)
+            .is_some_and(|label| normalized_lookup(label) == normalized);
+        if id_match || (requested.is_none() && label_match) {
+            ids.insert(id.to_string());
+        }
+    }
+    if ids.len() != 1 {
+        return Err(TransactionFailure::new(
+            if ids.is_empty() {
+                "element_not_found"
+            } else {
+                "ambiguous_element"
+            },
+            "element selector must identify one canonical control",
+        ));
+    }
+    Ok(ids.into_iter().next().unwrap())
 }
 
 fn resolve_cli_element_id(
@@ -5832,7 +6045,11 @@ fn replay_profile_names(
             .as_ref()
             .map(|name| name.trim().to_owned())
             .unwrap_or_else(|| template.display_name().to_owned())],
-        CliProfileCommand::CustomizationSet { target, .. }
+        CliProfileCommand::ElementSet { target, .. }
+        | CliProfileCommand::ElementNudge { target, .. }
+        | CliProfileCommand::ElementDelete { target, .. }
+        | CliProfileCommand::ElementReset { target, .. }
+        | CliProfileCommand::CustomizationSet { target, .. }
         | CliProfileCommand::StyleCreate { target, .. }
         | CliProfileCommand::StyleRename { target, .. }
         | CliProfileCommand::StyleApply { target, .. }
