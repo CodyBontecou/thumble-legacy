@@ -136,8 +136,8 @@
       "run": 39692579255,
       "id": 119542095074,
       "name": "portable (macos-latest)",
-      "status": "queued",
-      "conclusion": null,
+      "status": "completed",
+      "conclusion": "success",
       "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579255/job/119542095074"
     },
     {
@@ -186,9 +186,15 @@
       "result": "Passed",
       "totalCases": 1,
       "verifier": "explicit named non-skipped case required"
+    },
+    "macos": {
+      "rust": 56,
+      "typescript": 68,
+      "typescriptAssertions": 819,
+      "packageAssertions": 29
     }
   },
-  "remaining": "macOS host and iOS native/Keychain jobs still queued at this observation; no full-snapshot green claim",
+  "remaining": "Full portable Windows/macOS/Linux host matrix and Android native/Keystore pass. iOS native/Keychain remains unverified; see current job status.",
   "artifacts": [
     {
       "run": 39692579255,
@@ -236,6 +242,22 @@
       "name": "rewrite-mobile-android-native",
       "digest": "sha256:7e1d8ed5a0d835b3fc12838fb821a844b68394479319b8ede62f36847a4b14f0",
       "bytes": 162954,
+      "expired": false
+    },
+    {
+      "run": 39692579255,
+      "id": 12389577439,
+      "name": "rewrite-portable-tests-macos-latest",
+      "digest": "sha256:41f8c67646fa1c70837d925b4660c7586b830f3b4beaeeee67739d52409e0c5c",
+      "bytes": 3485,
+      "expired": false
+    },
+    {
+      "run": 39692579255,
+      "id": 12389213287,
+      "name": "rewrite-m2-recording-macos-latest",
+      "digest": "sha256:1b46668ae6d6dd45398d46cbf07ce28f78912d32d3df2db7e40ab009613ad9f9",
+      "bytes": 32750118,
       "expired": false
     }
   ]
