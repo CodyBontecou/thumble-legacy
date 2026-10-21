@@ -1,0 +1,40 @@
+{
+  "baseCommit": "927bb5f616306864ad0663c611b88c72735289ab",
+  "isolatedRustCheckout": "/private/tmp/thumble-owned-drafts-48awilfx",
+  "sourceSHA256": {
+    "Host/crates/thumble-host/src/owned_drafts.rs": "34f6899476eb4ece53cf3cf06f11ac4de1675a4bb4742c5c1e7953c428c9ff79",
+    "Host/crates/thumble-host/src/owned_rebase.rs": "b29ce370644729c0e798ea26af2c6d087bf91a87a96a84274f04f24fb1363893",
+    "Host/crates/thumble-host/src/lib.rs": "607e61d93a285f630acfebf814ddc36f5e1a32e2b7f3addf7f1ed6bc8ed44cc0"
+  },
+  "logSHA256": {
+    "rustIsolated.txt": "c9edb08b40130ff1881e9a6f2cea7371e6e0577ae00f0790a551395ccb9be9c7",
+    "rustSharedAttempt.txt": "167c6486ebb3f8b442935c85fe45d0974646120fe1869720f6828b107b886ee2",
+    "nativeStack.txt": "d09bfd36d40989be8b06e012fc57e03297bbfb67ed7a1f7c74709d8580291694",
+    "focusedShared.txt": "d041f2d89354c787bc8ccfe32f5e7b2c6c190f4992b3de4453a13d77d9ae33dd"
+  },
+  "isolatedRust": {
+    "passed": 556,
+    "failed": 0,
+    "ignored": 3,
+    "gateExitCode": 0,
+    "newTests": 10,
+    "scope": "committed base plus owned_drafts, owned_rebase and their module declarations"
+  },
+  "sharedRustAttempt": {
+    "gateExitCode": 101,
+    "failures": "two concurrent WoW MCP tool-count assertions: 29 actual, 28 expected"
+  },
+  "apple": {
+    "stackTests": 41,
+    "stackFailures": 0,
+    "macDebugBuild": true,
+    "iosDebugBuild": true,
+    "gateExitCode": 0,
+    "scope": "178 tracked native/test/project/script files match base; two absent process-verifier scripts unused by stack gate",
+    "sourceManifestSHA256": "5581a22a1087f8675378418558e99df003d209465c0c98eaa209245cda913d3a"
+  },
+  "ownedAuthorityDispatchEnabled": false,
+  "automaticMigrationEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "physicalAcceptance": false
+}

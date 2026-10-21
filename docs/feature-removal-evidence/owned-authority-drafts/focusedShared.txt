@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on build directory
+   Compiling thumble-host v0.1.0 (/Users/codybontecou/dev/Thumble/Host/crates/thumble-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.61s
+     Running unittests src/lib.rs (Host/target/debug/deps/thumble_host-526d2897b637c867)
+
+running 7 tests
+test owned_drafts::tests::unsafe_files_and_invalid_outcomes_cannot_replace_a_draft ... ok
+test owned_drafts::tests::no_op_replay_and_expiration_are_durable ... ok
+test owned_drafts::tests::simultaneous_revisions_allow_only_one_edit ... ok
+test owned_drafts::tests::restart_preserves_raw_numbers_and_replays_without_reapplying ... ok
+test owned_drafts::tests::conflicting_rebase_keeps_draft_and_authority_unchanged ... ok
+test owned_drafts::tests::commit_preserves_authority_metadata_and_replays_after_draft_cleanup ... ok
+test owned_drafts::tests::disjoint_rebase_preserves_raw_remote_metadata_and_local_name ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 241 filtered out; finished in 0.72s
+
