@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "scope": "Local native pairing owner and headless CLI/service listener integration",
+  "localSnapshot": "078ed3491d4d5a78c41bfb0551d68bbda4618bcb",
+  "dependsOnPhoneSnapshot": "8f216c9635c87cbd4ae44eb6be8de5bae9f12590",
+  "publicParent": "Resolve only after the separately pending phone/vault snapshot is approved and published",
+  "publication": "Not approved; this source is excluded from the frozen 25-file phone snapshot",
+  "files": [
+    {
+      "path": "GLOSSARY.md",
+      "bytes": 1666,
+      "sha256": "3c6b1065dc458e2574915b6c34d58a1093639f1d06e6122d61221c08c599ff5a"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "bytes": 8659,
+      "sha256": "0cae4feadaedb2adb36212475940e92e01c453159c7206bee2e0f9baa78ea1c4"
+    },
+    {
+      "path": "Rewrite/apps/service/src/native-pairing.ts",
+      "bytes": 1642,
+      "sha256": "27d18c36d4da765ba81d07bcbaea9a275a8a94eb7e25aa2844fd60bc4526f857"
+    },
+    {
+      "path": "Rewrite/apps/service/src/native-pipe.ts",
+      "bytes": 4422,
+      "sha256": "8afdf6c2cdf21327385935d03457d00e2c7735bf4d13e707f983be017f718b29"
+    },
+    {
+      "path": "Rewrite/apps/service/src/native-receiver.ts",
+      "bytes": 1233,
+      "sha256": "0f25c61e13b191f0c9cdfa75ab6ad58c88c7cbf0c791ecc71b6c9f3465839dce"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "bytes": 7181,
+      "sha256": "af4707a55265509c1eb17d412e2b0c9163fcec59ab0e114b6708f320340bf7b5"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/enrollment_probe.rs",
+      "bytes": 2800,
+      "sha256": "3958fa70423ea5b8c0b53aae2d3b7ada8f24136c148f092379b2ed7a0153b99e"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 27968,
+      "sha256": "b916693cc284bfa98abf71594b43cd1a93e7f50587e55f47f4352e480a3fecd0"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 417,
+      "sha256": "8bbc421cc0f5675526bccb298a9a7be53e47d4d559d8f2471ff757df15899ce8"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "bytes": 7107,
+      "sha256": "9cb5ad0161fcf4fa7ce144f2f1bc3ada8f5e8b979aca7a007405c757a497a6b6"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "bytes": 22628,
+      "sha256": "dd3da8e9a39f4c83a936a30b2ab563989991836d0ea520e9d2d1be328c4b576c"
+    },
+    {
+      "path": "Rewrite/packages/client/src/pairing.ts",
+      "bytes": 1264,
+      "sha256": "093a1fa6fd71766b577f64aba5d7c4cf0f253aff4e5d7a67406dbd647b30d2c5"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/pairing.ts",
+      "bytes": 8534,
+      "sha256": "564f9709d972c8033b58d697af82b369ff7c463fc9f995f1eea2cbf24735a43f"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "bytes": 5314,
+      "sha256": "21acd285f52767ebfc4803709d3f17070587ee2bb7cb3cea54fbbe1ebec9dea1"
+    },
+    {
+      "path": "Rewrite/tests/pairing.test.ts",
+      "bytes": 11594,
+      "sha256": "9aed3501a865e38ada4e81b719747529ae14859f7d64d2ef98fb227f017233f5"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "bytes": 22072,
+      "sha256": "c0853d2cacbb29b88383c0557113674a6694f9877ba1517dea7cef48ffbc6fcc"
+    },
+    {
+      "path": "Rewrite/tooling/check-pairing-listener.mjs",
+      "bytes": 4370,
+      "sha256": "77a4987acff0bad23b7852f06f586a2aafd85ba28c0d51834d24cc3448295a0e"
+    },
+    {
+      "path": "docs/adr/0005-rewrite-native-phone-trust.md",
+      "bytes": 6356,
+      "sha256": "fb0dc494f26366f603493aae7c8fa094c91d6de162bec4b23394682918a697a1"
+    },
+    {
+      "path": "docs/adr/0007-rewrite-native-pairing-owner.md",
+      "bytes": 990,
+      "sha256": "0fa019ed025eed53793569ad46ac55d767aa110b27415426a2283853b4c40434"
+    },
+    {
+      "path": "docs/rewrite-enrollment-v1.md",
+      "bytes": 7155,
+      "sha256": "b091b048008a45467dad211e6bbdf6247478e60cf96600fbbb195b17a70630d1"
+    },
+    {
+      "path": "docs/rewrite-headless-pairing.md",
+      "bytes": 5430,
+      "sha256": "0520e0ce621a4862dde384cefd0b6bdadb437973d3ab5a680a3bae6f36c4eb7f"
+    }
+  ],
+  "exclusions": [
+    "private baseline/history",
+    "real credentials",
+    "build products",
+    "local evidence",
+    "full private cutover/rewrite-plan documents"
+  ]
+}
