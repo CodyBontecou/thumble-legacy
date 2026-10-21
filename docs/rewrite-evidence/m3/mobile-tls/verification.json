@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "swiftTests": 19,
+  "androidJUnit": {
+    "tests": 33,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "iphoneSDK": "26.5 targeting iOS 17",
+  "simulatorSDK": "26.5 targeting iOS 17",
+  "rustClippy": "pass",
+  "sourceTests": 65,
+  "hostedClientTLS": "not published",
+  "androidProviderEvidence": "Host JDK 17 only; Android platform provider/physical device acceptance pending",
+  "regressions": [
+    "Swift C verification callback inherited MainActor; explicit @Sendable fixes executor assertion",
+    "JVM direct trusted leaf bypassed EKU; explicit serverAuth/anyExtendedKeyUsage check fixes client-only certificate admission"
+  ]
+}

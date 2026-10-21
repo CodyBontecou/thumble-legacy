@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.ControlTLSTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-21T20:37:23" hostname="MacBook-Pro.local" time="0.266">
+  <properties/>
+  <testcase name="malformedPinsAndUnresolvedRoutesFailBeforeConnecting" classname="com.thumble.rewrite.input.ControlTLSTest" time="0.011"/>
+  <testcase name="actualJVMPlatformTLSExchangesNativeFramesAndEncryptedInput" classname="com.thumble.rewrite.input.ControlTLSTest" time="0.164"/>
+  <testcase name="actualJVMPlatformTLSRejectsWrongPinBeforeControl" classname="com.thumble.rewrite.input.ControlTLSTest" time="0.02"/>
+  <testcase name="actualJVMPlatformPinDoesNotBypassCertificatePolicy" classname="com.thumble.rewrite.input.ControlTLSTest" time="0.069"/>
+  <testcase name="frameShapeBoundsAndImmutablePayload" classname="com.thumble.rewrite.input.ControlTLSTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

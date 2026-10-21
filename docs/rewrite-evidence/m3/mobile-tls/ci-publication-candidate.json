@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "scope": "Native phone pinned TLS libraries and synthetic interoperability only",
+  "requires": "publication of frozen host TLS source at local commit 1fb6c85 before this delta",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "bytes": 4166,
+      "sha256": "baff664d5e8458596867db3c61fde1f345058a7b6182870bc59327fdf1b3712a"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 8993,
+      "sha256": "e04a3451122454415bc22914bc9489b4f357534ba8623ea5625a88adb6a5e32e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/ControlTLS.kt",
+      "bytes": 9737,
+      "sha256": "6a818b59c32b191e43d13869cf92c873de0ad0dae58206a856f31c9908bb6732"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/ControlTLSTest.kt",
+      "bytes": 5983,
+      "sha256": "acf6df8787e1db3ee61f7a287ba1c07851a15b81adb7f56293c452a0ab167d55"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/ControlTLS.swift",
+      "bytes": 10369,
+      "sha256": "088d8349e009b5ccfc6b5a10de04ddf11649f515b6d8b68d3b2476cd2e0ca33c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/ControlTLSTests.swift",
+      "bytes": 9183,
+      "sha256": "bfde4aa213c3cbbc3353631cb6a04605146968d4fc4b2716a5b16ce13cf7ba3c"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/control_tls_probe.rs",
+      "bytes": 5176,
+      "sha256": "036c78d742b71e16b118a37f31fe8ff8e13aa4e50d5b9b608e6a1d6682fb98c2"
+    }
+  ]
+}
