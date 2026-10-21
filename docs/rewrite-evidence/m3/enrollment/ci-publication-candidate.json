@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "scope": "Persistent native host identity/CLI, SQLite phone trust and pinned TLS enrollment coordinator",
+  "localSnapshot": "7d511549353121617eb038809cee41d3bbc9667f",
+  "expectedPublicParent": "ac9cafeec2ae987d6d9d7125ce6e1793f047c675",
+  "files": [
+    {
+      "path": "GLOSSARY.md",
+      "bytes": 1496,
+      "sha256": "e45e9fdd85876f5660248f3d9d87b27abc47b7da966ae0c161af055827940e51"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "bytes": 6312,
+      "sha256": "31fbdc8c64233f9d1c4441660b9868661b1246ae02c1ff772a100577f4a1179f"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.lock",
+      "bytes": 25356,
+      "sha256": "dd7272e332e172c66f64fa94f9fc894dcee12373b0f932a72949dfb5b582362d"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "bytes": 928,
+      "sha256": "49a6997cea0288257bac8361c78c949d06566dad72ea6cb0fa799364ffefcd9a"
+    },
+    {
+      "path": "Rewrite/native/receiver/THIRD-PARTY-NOTICES.txt",
+      "bytes": 170126,
+      "sha256": "7ab1d4aff354f1aabf56d1a86d5b12943ac982c2bf49c8cb882f18cb112f5e96"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/control_tls.rs",
+      "bytes": 28544,
+      "sha256": "fea1238a66551242ccd20332ddff3976ad21a3f4a92edda376f0e59e7ed6109b"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 26383,
+      "sha256": "452aeb5e67c1c8403011faa78435347342b97f281db01f64b039f6017c7cfecc"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/host_identity.rs",
+      "bytes": 14240,
+      "sha256": "b99683705cca79d407219eb3e25490e3b73319e39b9975f0a6ee4517889993b8"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 394,
+      "sha256": "20da0e02949a6653fdda0d450efd45ba1b46444f273b1f5c30e0b94876e0d790"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "bytes": 6595,
+      "sha256": "0f905a53bcb55106ef4ad7c4308dcbfcc8ec494a7b4e29b6cb9238c43dd93202"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/phone_trust.rs",
+      "bytes": 25252,
+      "sha256": "ffc6c3468328502fdce358db149d3013add17565d73c6ee2c3f3f0a781b615fc"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/security.rs",
+      "bytes": 4246,
+      "sha256": "3a99bed8807245b1ed0f5eacd794bd12b9bcbdf4e44b97362edb0a24b048ff0f"
+    },
+    {
+      "path": "Rewrite/packages/contracts/package.json",
+      "bytes": 314,
+      "sha256": "a7d26816dd549ccb789ef25cd97a80dc4165d36e6f4de6932d62b58573a2e866"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/host-identity.ts",
+      "bytes": 1291,
+      "sha256": "ba956854aca67c4a01053576c284c6dba984865b350e87d68d40d4548f15111d"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/enrollment-v1.json",
+      "bytes": 1000,
+      "sha256": "6fad18f3eedb47fa91327e1d17c52523493e0ddb15d78268c7c01102f682dc40"
+    },
+    {
+      "path": "Rewrite/tests/host-identity.test.ts",
+      "bytes": 4369,
+      "sha256": "5157ab9be6815c52cf7f1c183f6638fe6eec6887cd49e99689c67309e1f7658e"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "bytes": 3903,
+      "sha256": "637b89f801a5994af13d1e596341b6deadfdc938c65816bab6978cdb8dd5872e"
+    },
+    {
+      "path": "Rewrite/tests/pairing.test.ts",
+      "bytes": 8641,
+      "sha256": "6866553aa3ad0c714efbfd7a28c5842bce66204ddea09be5d3c831987d386edf"
+    },
+    {
+      "path": "Rewrite/tooling/native-notices.ts",
+      "bytes": 4098,
+      "sha256": "a89e2e80908236cbd635acf758dda39459fc14819c12882a343fbf3b7da76cef"
+    },
+    {
+      "path": "docs/adr/0001-rewrite-pairing-and-input-transport.md",
+      "bytes": 4570,
+      "sha256": "c6118f38dbc153507357f125867eb9dfce564b0113bf0f6eb3b91a4e357d12aa"
+    },
+    {
+      "path": "docs/adr/0004-rewrite-persistent-host-identity.md",
+      "bytes": 4126,
+      "sha256": "c857f8a13b3ee1a775c062438201b6a72f19f101f272eb62d8d40505144af539"
+    },
+    {
+      "path": "docs/adr/0005-rewrite-native-phone-trust.md",
+      "bytes": 6063,
+      "sha256": "5355c45889680ceb04afe6318a075191c40be19bad51d62e47ec633f8492cd21"
+    },
+    {
+      "path": "docs/adr/0006-rewrite-native-enrollment.md",
+      "bytes": 912,
+      "sha256": "a9f32e99c45cefd3cf9b257e6df4cc45b7410ca9d4f11c2cd297d626b4c22555"
+    },
+    {
+      "path": "docs/rewrite-enrollment-v1.md",
+      "bytes": 4910,
+      "sha256": "83f6c7049bdce9ca16c396ecd0907a48fe8f34ea36b853156bf55126acd022cf"
+    }
+  ],
+  "exclusions": [
+    "private baseline/history",
+    "credentials",
+    "build products",
+    "local evidence"
+  ],
+  "publication": "requires separate scoped approval; earlier phone TLS approval excludes this source"
+}
