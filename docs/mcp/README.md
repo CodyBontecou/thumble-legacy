@@ -84,3 +84,5 @@ Controller authoring also exposes `inspect_controller_design` and
 `critique_controller_design`: inspect exact CSS aliases and semantic tags, then preserve
 structured issues against the current native render hashes. See
 [controller design workspaces](controller-design-v1.md) for the shared CLI contract.
+
+`edit_profile_asset` imports bounded Base64 artwork or changes/removes an owned profile asset using exact revision/invocation IDs and the existing configuration-write opt-in. It accepts a basename rather than a host path, pools bytes across all eight appearance states, and refuses removal of referenced assets. See [the asset contract](../owned-profile-assets.md).

@@ -293,3 +293,19 @@ for frame in frames[1:]:
 assert frames[2]["ownedPhoneEditResult"]["committedRevision"] == 42
 assert frames[2]["configurationRevision"] == 43
 print("Owned phone wire frames verified; historical receipts retain current authority revision")
+
+# Asset command identity, original-revision retries and migration activation stay explicit.
+asset_root = repo / "Host/fixtures/owned-assets/v1"
+asset_contract = json.loads((asset_root / "manifest.json").read_text())
+assert asset_contract["fixtureVersion"] == 1 and asset_contract["automaticMigrationActivated"] is False
+for name, digest in asset_contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((asset_root / name).read_bytes()).hexdigest() == digest
+asset_requests = json.loads((asset_root / "requests.json").read_text())
+assert len(asset_requests) == asset_contract["requestCount"] == 3
+assert [row["expectedConfigurationRevision"] for row in asset_requests] == [41, 42, 43]
+assert [row["command"]["type"] for row in asset_requests] == ["asset.import", "asset.set", "asset.remove"]
+assert all(row["schemaVersion"] == 8 for row in asset_requests)
+assert asset_requests[1]["command"]["assetID"] == asset_contract["importedAssetID"]
+assert asset_requests[2]["command"]["assetID"] == asset_contract["importedAssetID"]
+print("Owned asset import/set/remove fixture verified; public format activation unchanged")

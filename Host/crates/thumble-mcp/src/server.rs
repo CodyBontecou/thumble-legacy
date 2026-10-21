@@ -43,6 +43,59 @@ pub struct ImportProfilesParams {
 }
 
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "lowercase")]
+pub enum ProfileAssetRoleInput {
+    Background,
+    Icon,
+    Texture,
+    Reference,
+}
+impl ProfileAssetRoleInput {
+    fn as_str(&self) -> &'static str {
+        match self {
+            Self::Background => "background",
+            Self::Icon => "icon",
+            Self::Texture => "texture",
+            Self::Reference => "reference",
+        }
+    }
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(tag = "action", rename_all = "lowercase", deny_unknown_fields)]
+pub enum ProfileAssetEditInput {
+    Import {
+        name: String,
+        #[serde(rename = "fileName")]
+        file_name: Option<String>,
+        #[serde(rename = "contentType")]
+        content_type: String,
+        #[serde(rename = "dataBase64")]
+        data_base64: String,
+        role: ProfileAssetRoleInput,
+    },
+    Set {
+        #[serde(rename = "assetID")]
+        asset_id: String,
+        name: Option<String>,
+        role: Option<ProfileAssetRoleInput>,
+    },
+    Remove {
+        #[serde(rename = "assetID")]
+        asset_id: String,
+    },
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct EditProfileAssetParams {
+    #[serde(rename = "profileID")]
+    pub profile_id: String,
+    pub expected_configuration_revision: u64,
+    #[serde(rename = "invocationID")]
+    pub invocation_id: String,
+    pub edit: ProfileAssetEditInput,
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct LegacyPackageInput {
     pub profile_id: String,
@@ -4579,6 +4632,124 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Import, rename/change role, or remove a profile-owned asset through revision-safe local authority. Requires --allow-config-write and an owned configuration. Import accepts at most 2,500,000 decoded bytes and a basename, never a host path. It pools bytes across all eight appearance states. Referenced assets cannot be removed. Reuse the original invocationID, revision and content for retries. Responses contain transaction metadata and assetID, never imported bytes.",
+        annotations(
+            title = "Thumble profile asset edit",
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn edit_profile_asset(
+        &self,
+        Parameters(params): Parameters<EditProfileAssetParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            imported_asset_id, validate_profile_asset_command, CliProfileCommand,
+            CliProfileRequest, ProfileSelector, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        if !self.allow_config_write {
+            return Err("MCP configuration writes are disabled; restart thumble-mcp with --allow-config-write".into());
+        }
+        if params.expected_configuration_revision == 0 {
+            return Err("Expected a positive configuration revision".into());
+        }
+        let target = ProfileSelector::Id {
+            profile_id: params
+                .profile_id
+                .parse()
+                .map_err(|_| "profileID must be a canonical UUID")?,
+        };
+        if let ProfileSelector::Id { profile_id } = &target {
+            if profile_id.is_nil()
+                || !profile_id
+                    .to_string()
+                    .eq_ignore_ascii_case(&params.profile_id)
+            {
+                return Err("profileID must be a canonical nonnil UUID".into());
+            }
+        }
+        let requested_id = match &params.edit {
+            ProfileAssetEditInput::Set { asset_id, .. }
+            | ProfileAssetEditInput::Remove { asset_id } => Some(asset_id.clone()),
+            _ => None,
+        };
+        let command = match params.edit {
+            ProfileAssetEditInput::Import {
+                name,
+                file_name,
+                content_type,
+                data_base64,
+                role,
+            } => CliProfileCommand::AssetImport {
+                target,
+                name,
+                file_name,
+                content_type,
+                data_base64,
+                role: role.as_str().into(),
+            },
+            ProfileAssetEditInput::Set {
+                asset_id,
+                name,
+                role,
+            } => CliProfileCommand::AssetSet {
+                target,
+                asset_id,
+                name,
+                role: role.map(|value| value.as_str().into()),
+            },
+            ProfileAssetEditInput::Remove { asset_id } => {
+                CliProfileCommand::AssetRemove { target, asset_id }
+            }
+        };
+        validate_profile_asset_command(&command)?;
+        let request = CliProfileRequest {
+            schema_version: CLI_PROFILE_SCHEMA_VERSION,
+            invocation_id: Some(
+                params
+                    .invocation_id
+                    .parse()
+                    .map_err(|_| "invocationID must be a canonical UUID")?,
+            ),
+            expected_configuration_revision: Some(params.expected_configuration_revision),
+            command,
+        };
+        let invocation = request.invocation_id.ok_or("invocationID is required")?;
+        if invocation.is_nil()
+            || !invocation
+                .to_string()
+                .eq_ignore_ascii_case(&params.invocation_id)
+        {
+            return Err("invocationID must be a canonical nonnil UUID".into());
+        }
+        let asset_id = requested_id.unwrap_or_else(|| imported_asset_id(invocation).to_string());
+        let response = self
+            .request(
+                "edit_profile_asset",
+                ControlRequest::CliProfileTransaction { request },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no asset transaction response")?;
+        if result.invocation_id != invocation {
+            return Err("Asset response invocation did not match".into());
+        }
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Asset edit failed".into()));
+        }
+        let mut output =
+            serde_json::to_value(result).map_err(|_| "Asset response encoding failed")?;
+        output["assetID"] = Value::String(asset_id);
+        Ok(Json(output))
+    }
+
+    #[tool(
         description = "Return the authoritative configuration revision and bounded draft capability status. Use this revision when beginning revision-safe controller work.",
         annotations(
             title = "Thumble configuration status",
@@ -6023,7 +6194,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 31);
+        assert_eq!(tools.len(), 32);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6141,6 +6312,7 @@ mod tests {
                 "critique_controller_design",
                 "discard_configuration_draft",
                 "edit_configuration_draft",
+                "edit_profile_asset",
                 "export_controller_preview",
                 "export_profiles",
                 "get_configuration_draft",
@@ -6454,7 +6626,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 31);
+        assert_eq!(tools.len(), 32);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -6935,6 +7107,58 @@ mod tests {
         control_task.await.unwrap();
         remove_control_socket(&socket);
     }
+    #[tokio::test]
+    async fn asset_edit_opt_in_and_validation_precede_socket_access() {
+        let params = || EditProfileAssetParams {
+            profile_id: "ea000000-0000-0000-0000-000000000001".into(),
+            invocation_id: "aa000000-0000-0000-0000-000000000001".into(),
+            expected_configuration_revision: 41,
+            edit: ProfileAssetEditInput::Import {
+                name: "Fixture".into(),
+                file_name: Some("fixture.png".into()),
+                content_type: "image/png".into(),
+                data_base64: "Zml4dHVyZQ==".into(),
+                role: ProfileAssetRoleInput::Icon,
+            },
+        };
+        let disabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        assert!(disabled
+            .edit_profile_asset(Parameters(params()))
+            .await
+            .err()
+            .expect("asset edit must be refused")
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            true,
+        );
+        let mut bad = params();
+        bad.profile_id = "not-uuid".into();
+        let failure = enabled
+            .edit_profile_asset(Parameters(bad))
+            .await
+            .err()
+            .expect("asset edit must be refused");
+        assert!(failure.contains("UUID"));
+        assert!(!failure.contains("control.sock"));
+        let mut bad = params();
+        if let ProfileAssetEditInput::Import { file_name, .. } = &mut bad.edit {
+            *file_name = Some("/private/forbidden.png".into());
+        }
+        let failure = enabled
+            .edit_profile_asset(Parameters(bad))
+            .await
+            .err()
+            .expect("asset edit must be refused");
+        assert!(failure.contains("invalid_asset_edit"));
+        assert!(!failure.contains("control.sock"));
+    }
+
     #[tokio::test]
     async fn profile_import_gate_and_uuid_validation_precede_socket_access() {
         let params = || ImportProfilesParams {

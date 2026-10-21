@@ -1,0 +1,82 @@
+{
+  "baseCommit": "8906a5489c564f82e9029398efafad0b63aa2e7f",
+  "isolatedSource": "/private/tmp/thumble-owned-assets-muag5ses",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "native-source-hashes.json",
+  "helperSourceSHA256File": "helper-source-hashes.json",
+  "rawLogSHA256": {
+    "rust.txt": "2f9c9d9a040ef5dbd99619eddb21c427266dffd4ebc323fccdb8345d78b1e680",
+    "rustBuild.txt": "133819b90afa897319cacbecbcf647d708a12e880f9c9c60c22d5581b03c0c7c",
+    "nativeTests.txt": "c95c1024a97c53bfb186aacc43a82c8b31c886de542efe51806c012ec870aa33",
+    "stack.txt": "e01c070f41d65f45d6cf7b67d5f45e5c9f7b096af9f5cd73f69abe893ac59329",
+    "cliBuild.txt": "346a444a2113d9b12629eb845b0a2a2e5d26169c8b5410141b7f2229972e77ad",
+    "helperBuild.txt": "101dc4b28a9da42359e2780483e072a84c0999bc836c39aaf6ba63b83d91e5e1",
+    "process.txt": "b3679431807936c7d1f23f3ab2a940504643a5b26e3b3fe9a4724f68a4deb866"
+  },
+  "logSHA256": {
+    "rust.txt": "2f9c9d9a040ef5dbd99619eddb21c427266dffd4ebc323fccdb8345d78b1e680",
+    "rustBuild.txt": "133819b90afa897319cacbecbcf647d708a12e880f9c9c60c22d5581b03c0c7c",
+    "nativeTests.txt": "d46c0f519f859aa8388df8350d4ffd865112488ada73aaf4edc985c5b37c517d",
+    "stack.txt": "0b6ba4ce4f8568a7a44ce87fa1668567e5fa1d89009d9129d05c551165f5f4ae",
+    "cliBuild.txt": "843c99516e4ee1af2fb0575f8b89427c44108f1abf08b4f75d45741534c48308",
+    "helperBuild.txt": "643067acfc63453b3edad319c62d0cecca2863b73babbbc2f8f96090778505d4",
+    "process.txt": "b3679431807936c7d1f23f3ab2a940504643a5b26e3b3fe9a4724f68a4deb866"
+  },
+  "logNormalization": "Trailing whitespace and trailing blank lines stripped; raw hashes identify original /tmp logs.",
+  "binarySHA256": {
+    "thumble": "3c946bf506df06fc3e0631aa96a40bd6ac29bd03e648ee2a3fa8a95ff0c727fb",
+    "thumbconsole": "8179a967aca8d1e1cd9f88efab18b1c976b2366a55668f1b04f94ae2dc1d8b4a",
+    "thumble-bridge": "86537567ce0f4a280c7de8fafac2fe3a570c026c3a35dfffb81c24f0b168b873",
+    "thumble-host": "47089b15b29fea1ac09293a2b390a7a143dbc3bba548169fcda004e671f486b5",
+    "thumble-cli-bridge": "30f76433f093b75e659ebabe2a5ade55679ba95e14e7b7db551fc04b692f2751",
+    "thumble-mcp": "6e4bdd58cedec615be0646b30c98145f0c784885f91d2849e5c149169b283855"
+  },
+  "rust": {
+    "passed": 621,
+    "failed": 0,
+    "ignored": 3
+  },
+  "native": {
+    "passed": 42,
+    "failed": 0
+  },
+  "stack": {
+    "passed": 44,
+    "failed": 0,
+    "budgetsUnchanged": true,
+    "macAndIOSDebugBuilds": true
+  },
+  "process": {
+    "nativeCLIImportSetRemove": true,
+    "mcpImportSetRemove": true,
+    "privateFileGuards": true,
+    "pooledAcrossEightStates": true,
+    "referencedRemovalRefused": true,
+    "stableReplayAfterRestart": true,
+    "staleAndChangedRequestRefused": true,
+    "originalPaintBindingsAndMetadata": true,
+    "portableAssetRoundtrip": true,
+    "configurationRevision": 50,
+    "plainProfileMaterialization": true,
+    "eightNativePreviewsUnchanged": true,
+    "unavailableHelperRecovery": true,
+    "plainGeometryOutputsAndHapticSettingsPreserved": true,
+    "plainPreviewSHA256": [
+      "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+      "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+      "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+      "aaf21f4df5bd46cc9487b91f4a7bda0dd93ead33545a92c57bfb94a6b0129f3c",
+      "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+      "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+      "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+      "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43"
+    ],
+    "automaticMigrationActivated": false
+  },
+  "limits": [
+    "Explicit owned authority only; automatic migration and shipping phone format-5 activation remain disabled.",
+    "Asset library edits do not yet attach images/styles or apply a complete design workspace.",
+    "Physical haptics, latency and live WoW acceptance are not established by these checks.",
+    "Concurrent WoW, gamepad and phone changes remain separate from the tested commit."
+  ]
+}

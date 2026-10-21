@@ -1,0 +1,15 @@
+{
+  "fixtureVersion": 1,
+  "requestCount": 3,
+  "files": {
+    "requests.json": "8718066c76934b4831d72bf18aa8d6edfd4159f833561c3c8fbac107956dd666"
+  },
+  "importedAssetID": "a89204d8-5c3a-539f-a7e2-a6fcb279ba51",
+  "resultRevisions": [
+    42,
+    43,
+    44
+  ],
+  "appearanceStates": 8,
+  "automaticMigrationActivated": false
+}

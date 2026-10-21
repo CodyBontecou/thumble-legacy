@@ -1,7 +1,17 @@
 //! High-level planning on owned authorities never serializes a legacy document.
 use super::*;
+#[path = "cli_profile_owned_assets.rs"]
+mod assets;
 #[path = "cli_profile_owned_import.rs"]
 mod interchange;
+pub(super) fn is_asset_request(command: &CliProfileCommand) -> bool {
+    assets::is_asset(command)
+}
+pub(super) fn validate_asset_request(
+    command: &CliProfileCommand,
+) -> Result<(), TransactionFailure> {
+    assets::validate(command)
+}
 use crate::owned_drafts::{apply_document, authority_document, OwnedDraft, OwnedDraftStore};
 use serde_json::value::RawValue;
 use thumble_core::{OwnedConfigurationDocument, ProfileAppearanceBank};
@@ -404,9 +414,12 @@ where
         });
     }
     let imported = interchange::decode(&request.command, invocation_id)?;
-    let display = display_state(state)?;
-    if let Some(result) = read_projection(&display, &request.command, catalog)? {
-        return Ok(result);
+    // Asset writes operate on canonical libraries, never transient display paint.
+    if !assets::is_asset(&request.command) {
+        let display = display_state(state)?;
+        if let Some(result) = read_projection(&display, &request.command, catalog)? {
+            return Ok(result);
+        }
     }
     let draft_id = match &request.command {
         CliProfileCommand::DesignApply {
@@ -464,6 +477,13 @@ where
             .with_revision(expected, state.configuration_revision));
         }
     }
+    let asset_plan = assets::plan(
+        &authority_document(&source).map_err(draft_failure)?,
+        &request.command,
+        invocation_id,
+        catalog,
+        now_millis(),
+    )?;
     let import_plan = imported
         .as_ref()
         .map(|import| {
@@ -537,7 +557,14 @@ where
     } else {
         (catalog, state.profiles.as_slice())
     };
-    let plan = if let Some(import) = &import_plan {
+    let plan = if let Some(asset) = &asset_plan {
+        PlannedTransaction {
+            operations: vec![],
+            profile_names: asset.names.clone(),
+            destination: None,
+            removed_every_profile: false,
+        }
+    } else if let Some(import) = &import_plan {
         PlannedTransaction {
             operations: vec![],
             profile_names: import.names.clone(),
@@ -581,6 +608,36 @@ where
                     |_| Ok((import.document, import.outcome)),
                 )
                 .map_err(|e| with_draft(draft_failure(e), &draft))?
+                .draft;
+        }
+    }
+    if let Some(asset) = asset_plan {
+        let operation_id = deterministic_uuid(invocation_id, "asset.edit:operation:0").to_string();
+        if let Some(record) = draft
+            .operation_records()
+            .iter()
+            .find(|record| record.operation_id == operation_id)
+        {
+            if record.operation_digest != digest {
+                return Err(with_draft(
+                    TransactionFailure::new(
+                        "operation_id_conflict",
+                        "asset invocation changed after preparation",
+                    ),
+                    &draft,
+                ));
+            }
+        } else {
+            draft = store
+                .edit_with_descriptor(
+                    &draft.draft_id,
+                    draft.draft_revision,
+                    &operation_id,
+                    &digest,
+                    now_millis(),
+                    |_| Ok((asset.document, asset.outcome)),
+                )
+                .map_err(|error| with_draft(draft_failure(error), &draft))?
                 .draft;
         }
     }
@@ -1104,3 +1161,7 @@ mod tests {
 #[cfg(test)]
 #[path = "cli_profile_owned_interchange_tests.rs"]
 mod interchange_tests;
+
+#[cfg(test)]
+#[path = "cli_profile_owned_assets_tests.rs"]
+mod asset_tests;

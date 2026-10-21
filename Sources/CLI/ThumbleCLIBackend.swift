@@ -568,6 +568,9 @@ final class ThumbleCLIProfileBackend {
     }
 
     enum Command: Encodable {
+        case assetImport(ProfileSelector, name: String, fileName: String?, contentType: String, dataBase64: String, role: String)
+        case assetSet(ProfileSelector, assetID: String, name: String?, role: String?)
+        case assetRemove(ProfileSelector, assetID: String)
         case authorityStatus
         case list
         case export(ProfileSelector?)
@@ -649,6 +652,7 @@ final class ThumbleCLIProfileBackend {
         case controlBarItemReset(ProfileSelector, ConfigurationVariant, GamepadControlBarItem)
 
         private enum CodingKeys: String, CodingKey {
+            case assetID, fileName, contentType, dataBase64, role
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
             case specJSON, requestedGameName, element, changesJSON, elements, kind, alignment, distribution
@@ -675,6 +679,24 @@ final class ThumbleCLIProfileBackend {
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             switch self {
+            case .assetImport(let target, let name, let fileName, let contentType, let dataBase64, let role):
+                try container.encode("asset.import", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(name, forKey: .name)
+                try container.encodeIfPresent(fileName, forKey: .fileName)
+                try container.encode(contentType, forKey: .contentType)
+                try container.encode(dataBase64, forKey: .dataBase64)
+                try container.encode(role, forKey: .role)
+            case .assetSet(let target, let assetID, let name, let role):
+                try container.encode("asset.set", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(assetID, forKey: .assetID)
+                try container.encodeIfPresent(name, forKey: .name)
+                try container.encodeIfPresent(role, forKey: .role)
+            case .assetRemove(let target, let assetID):
+                try container.encode("asset.remove", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(assetID, forKey: .assetID)
             case .authorityStatus:
                 try container.encode("authority.status", forKey: .type)
             case .list:

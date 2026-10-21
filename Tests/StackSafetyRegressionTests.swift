@@ -273,6 +273,19 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testMaximumAssetRequestFitsConstrainedThread() throws {
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let bytes = Data(repeating: 42, count: GamepadAsset.maximumStoredBytes)
+            let command = ThumbleCLIProfileBackend.Command.assetImport(.active, name: "Large asset", fileName: "asset.bin",
+                contentType: "application/octet-stream", dataBase64: bytes.base64EncodedString(), role: "reference")
+            let encoded = try JSONEncoder().encode(command)
+            try JSONDecoder.validateUniqueKeys(in: encoded)
+            guard encoded.count > 3_000_000, encoded.count < ThumbleCLIProfileBackend.maximumRequestBytes else {
+                throw StackTestError.unexpectedDecodedState
+            }
+        }
+    }
+
     func testAuthorityInspectionProjectionFitsConstrainedThread() throws {
         assertInlineSize(ThumbleCLIProfileBackend.InspectionProfile.self, atMost: 512)
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {

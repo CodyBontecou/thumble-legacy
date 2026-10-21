@@ -1,0 +1,44 @@
+[
+  {
+    "schemaVersion": 8,
+    "invocationID": "aa000000-0000-0000-0000-000000000010",
+    "expectedConfigurationRevision": 41,
+    "command": {
+      "type": "asset.import",
+      "target": {
+        "kind": "active"
+      },
+      "name": "Fixture asset",
+      "fileName": "asset.png",
+      "contentType": "image/png",
+      "dataBase64": "Zml4dHVyZSBhc3NldCBieXRlcw==",
+      "role": "icon"
+    }
+  },
+  {
+    "schemaVersion": 8,
+    "invocationID": "aa000000-0000-0000-0000-000000000012",
+    "expectedConfigurationRevision": 42,
+    "command": {
+      "type": "asset.set",
+      "target": {
+        "kind": "active"
+      },
+      "assetID": "a89204d8-5c3a-539f-a7e2-a6fcb279ba51",
+      "name": "Edited fixture",
+      "role": "texture"
+    }
+  },
+  {
+    "schemaVersion": 8,
+    "invocationID": "aa000000-0000-0000-0000-000000000013",
+    "expectedConfigurationRevision": 43,
+    "command": {
+      "type": "asset.remove",
+      "target": {
+        "kind": "active"
+      },
+      "assetID": "a89204d8-5c3a-539f-a7e2-a6fcb279ba51"
+    }
+  }
+]

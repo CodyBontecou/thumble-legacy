@@ -54,6 +54,34 @@ pub struct CliProfileRequest {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", deny_unknown_fields)]
 pub enum CliProfileCommand {
+    #[serde(rename = "asset.import")]
+    AssetImport {
+        target: ProfileSelector,
+        name: String,
+        #[serde(rename = "fileName", default, skip_serializing_if = "Option::is_none")]
+        file_name: Option<String>,
+        #[serde(rename = "contentType")]
+        content_type: String,
+        #[serde(rename = "dataBase64")]
+        data_base64: String,
+        role: String,
+    },
+    #[serde(rename = "asset.set")]
+    AssetSet {
+        target: ProfileSelector,
+        #[serde(rename = "assetID")]
+        asset_id: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        name: Option<String>,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        role: Option<String>,
+    },
+    #[serde(rename = "asset.remove")]
+    AssetRemove {
+        target: ProfileSelector,
+        #[serde(rename = "assetID")]
+        asset_id: String,
+    },
     #[serde(rename = "authority.status")]
     AuthorityStatus,
     #[serde(rename = "profile.list")]
@@ -593,6 +621,9 @@ impl CliProfileCommand {
 
     fn kind(&self) -> &'static str {
         match self {
+            Self::AssetImport { .. } => "asset.import",
+            Self::AssetSet { .. } => "asset.set",
+            Self::AssetRemove { .. } => "asset.remove",
             Self::AuthorityStatus => "authority.status",
             Self::List => "profile.list",
             Self::Export { .. } => "profile.export",
@@ -1512,6 +1543,12 @@ where
         if state.schema_version == thumble_core::OWNED_SCHEMA_VERSION {
             return owned::execute(paths, state, request, invocation_id, &catalog, &mut save);
         }
+        if owned::is_asset_request(&request.command) {
+            return Err(TransactionFailure::new(
+                "owned_configuration_required",
+                "asset authority writes require an owned configuration",
+            ));
+        }
         if let CliProfileCommand::DesignSnapshot {
             target,
             draft_id,
@@ -2127,6 +2164,14 @@ pub fn execute_offline_authority(
     if let Err(failure) = preflight {
         return CliProfileResponse::failure(invocation_id, "offline", failure);
     }
+    if owned::is_asset_request(&request.command) && !paths.state_file.exists() {
+        return CliProfileResponse::transport_failure(
+            invocation_id,
+            "offline",
+            "owned_configuration_required",
+            "asset writes require an existing owned authority; no store was initialized",
+        );
+    }
     let state = match storage::load_or_migrate(paths) {
         Ok(state) => state,
         Err(_) => {
@@ -2303,6 +2348,7 @@ fn validate_request_credentials(
 }
 
 fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailure> {
+    owned::validate_asset_request(&request.command)?;
     if request.schema_version != CLI_PROFILE_SCHEMA_VERSION {
         return Err(TransactionFailure::new(
             "unsupported_schema_version",
@@ -3737,7 +3783,10 @@ fn plan_transaction(
                 profile.name.clone(),
             ))
         }
-        CliProfileCommand::List
+        CliProfileCommand::AssetImport { .. }
+        | CliProfileCommand::AssetSet { .. }
+        | CliProfileCommand::AssetRemove { .. }
+        | CliProfileCommand::List
         | CliProfileCommand::Export { .. }
         | CliProfileCommand::DesignSnapshot { .. }
         | CliProfileCommand::Import { .. }
@@ -6265,6 +6314,9 @@ fn replay_profile_names(
         | CliProfileCommand::BindingResetAll { target }
         | CliProfileCommand::OutputMode { target, .. }
         | CliProfileCommand::DesignApply { target, .. }
+        | CliProfileCommand::AssetImport { target, .. }
+        | CliProfileCommand::AssetSet { target, .. }
+        | CliProfileCommand::AssetRemove { target, .. }
         | CliProfileCommand::OutputSet { target, .. }
         | CliProfileCommand::OutputReset { target, .. }
         | CliProfileCommand::OutputResetAll { target }
@@ -6418,6 +6470,20 @@ pub(crate) fn now_millis() -> i64 {
         .duration_since(UNIX_EPOCH)
         .map(|duration| i64::try_from(duration.as_millis()).unwrap_or(i64::MAX))
         .unwrap_or(0)
+}
+
+/// Stable asset identity for one import invocation; shared by the local MCP adapter.
+pub fn imported_asset_id(invocation: Uuid) -> Uuid {
+    deterministic_uuid(invocation, "asset.import:asset")
+}
+
+/// Validate typed asset inputs before local MCP reaches the receiver socket.
+pub fn validate_profile_asset_command(command: &CliProfileCommand) -> Result<(), String> {
+    if !owned::is_asset_request(command) {
+        return Err("Expected an asset mutation".into());
+    }
+    owned::validate_asset_request(command)
+        .map_err(|error| format!("{}: {}", error.error.code, error.error.message))
 }
 
 #[cfg(test)]

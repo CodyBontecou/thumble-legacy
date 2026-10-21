@@ -1,0 +1,513 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Thumble.xcodeproj -scheme ThumbleBridge -configuration Debug -derivedDataPath build/OwnedAssets build
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00006050-0002381A0131401C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00006050-0002381A0131401C, name:My Mac }
+{ platform:macOS, name:Any Mac }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleBridge' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 4e17d43fc8b58bc91daf2cef5290b483
+Build description path: /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/XCBuildData/4e17d43fc8b58bc91daf2cef5290b483.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-owned-assets-muag5ses/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.DependencyStaticMetadataFileList (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.DependencyMetadataFileList (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-target-headers.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/Entitlements.plist (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/Entitlements.plist
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.LinkFileList (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.LinkFileList
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+'-std=gnu11' -fmodules -gmodules '-fmodules-cache-path=/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex' -fpascal-strings -O0 -fno-common '-DDEBUG=1' -g -iquote /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap -ivfsoverlay /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources-normal/arm64 -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/arm64 -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug '-fmodule-map-file=/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap'
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge-OutputFileMap.json (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge_const_extract_protocols.json (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.SwiftFileList (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    write-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.SwiftFileList
+
+ProcessProductPackaging "" /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+    Entitlements:
+
+    {
+    "com.apple.application-identifier" = "67KC823C9A.com.codybontecou.ThumbleBridge";
+    "com.apple.security.get-task-allow" = 1;
+}
+
+    builtin-productPackagingUtility -entitlements -format xml -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent
+
+ProcessProductPackagingDER /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent.der (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    /usr/bin/derq query -f xml -i /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent.der --raw
+
+SwiftDriver ThumbleBridge normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble_bridge -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ ControllerRuntimeUX.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerRuntimeUX.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GameKeypadGenerator.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearance.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GeistDesign.swift,\ KeyMap.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadProfileResourceCodec.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadSharedOperations.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GeistDesign.swift /tmp/thumble-owned-assets-muag5ses/Sources/Mac/KeyMap.swift (in target 'ThumbleBridge' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GeistDesign.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Mac/KeyMap.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ButtonPulseSequencer.swift,\ ControllerActiveInputState.swift,\ ControllerDesignSession.swift,\ ControllerProtocol.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ButtonPulseSequencer.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerActiveInputState.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerDesignSession.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleBridge' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift,\ GamepadLayoutQuality.swift,\ GamepadOutputTypes.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadDesignSystem.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadEditorDeviceCatalog.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadLayoutQuality.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleBridge' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ LegacyProfileMigration.swift,\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/LegacyProfileMigration.swift /tmp/thumble-owned-assets-muag5ses/Sources/Mac/MacConfigurationBindings.swift /tmp/thumble-owned-assets-muag5ses/Sources/Mac/MacControlOutputBinding.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Mac/MacConfigurationBindings.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Mac/MacControlOutputBinding.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceEditMerge.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceSnapshot.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadControllerPresentationRouting.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleBridge' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PortableProfileArtifact.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PairingPayload.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PendingProfileRecovery.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PairingPayload.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ OwnedConfigurationDocument.swift,\ OwnedPhoneEdit.swift,\ OwnedPhoneEditJournal.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedConfigurationDocument.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedPhoneEdit.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompiler.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkin.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinCompatibility.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackage.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinResolver.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinPackage.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinQuality.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileFormatPolicy.swift,\ ProfileOrientationSupport.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileArtifactAdoption.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileFormatPolicy.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ thumble_bridge (in target 'ThumbleBridge' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleConfigurationBridge.swift,\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleConfigurationBridge.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleInputLatencySimulation.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleSVGRasterizer.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleNativeConfiguration.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleArtworkLayerView.swift,\ ThumbleBridgeMain.swift,\ ThumbleCSSCompiler.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleArtworkLayerView.swift /tmp/thumble-owned-assets-muag5ses/Sources/Bridge/ThumbleBridgeMain.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Bridge/ThumbleBridgeMain.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+/tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleCSSCompiler.swift:2972:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadBindingPresentation.swift,\ KeypadConfigurationExport.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadAccessibility.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadBindingPresentation.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadStatus.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadOutputPolicy.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadReport.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStore.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleVectorCompiler.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinStore.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinWorkspace.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleLinkImport.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleMacSetupGuide.swift /tmp/thumble-owned-assets-muag5ses/Sources/Mac/ThumbleLinkImport.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleLinkSnapshot.swift /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Mac/ThumbleLinkImport.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftCompile normal arm64 /tmp/thumble-owned-assets-muag5ses/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadOutputPolicy.swift, VirtualGamepadReport.swift, VirtualGamepadStatus.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileFormatPolicy.swift, ProfileOrientationSupport.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling PairingPayload.swift, PendingProfileRecovery.swift, PortableProfileArtifact.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedConfigurationDocument.swift, OwnedPhoneEdit.swift, OwnedPhoneEditJournal.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LegacyProfileMigration.swift, MacConfigurationBindings.swift, MacControlOutputBinding.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerRuntimeUX.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for thumble_bridge (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleBridge normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble_bridge -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble_bridge-Swift.h /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-Swift.h (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-swiftHeaderTool -arch arm64 /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-Swift.h -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble_bridge-Swift.h
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.abi.json /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.abi.json (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.abi.json /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.swiftdoc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftdoc (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftdoc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.swiftmodule /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftsourceinfo (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftsourceinfo /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble_bridge.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+ScanDependencies /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+    Using response file: /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    builtin-ScanDependencies -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Index.noindex/DataStore @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.d --serialize-diagnostics /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.dia -c /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o -index-unit-output-path /Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o
+
+CompileC /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+    Using response file: /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -index-store-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Index.noindex/DataStore @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.d --serialize-diagnostics /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.dia -c /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/thumble-bridge_vers.c -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o -index-unit-output-path /Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_vers.o
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleLinkImport.swift, ThumbleLinkSnapshot.swift, ThumbleMacSetupGuide.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadBindingPresentation.swift, KeypadConfigurationExport.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleArtworkLayerView.swift, ThumbleBridgeMain.swift, ThumbleCSSCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GeistDesign.swift, KeyMap.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackage.swift, ThumbleSkinQuality.swift, ThumbleSkinResolver.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStore.swift, ThumbleSkinWorkspace.swift, ThumbleVectorCompiler.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleConfigurationBridge.swift, ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ButtonPulseSequencer.swift, ControllerActiveInputState.swift, ControllerDesignSession.swift, ControllerProtocol.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift, GamepadLayoutQuality.swift, GamepadOutputTypes.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift (in target 'ThumbleBridge' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleBridge normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble_bridge -Onone @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/ThumbleBridge_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-generated-files.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-own-target-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge-project-headers.hmap -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/include -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-Swift.h -working-directory /tmp/thumble-owned-assets-muag5ses -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge normal (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug -filelist /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble-bridge_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge.swiftmodule @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/Objects-normal/arm64/thumble_bridge-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -no_adhoc_codesign -o /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge -Xlinker -add_ast_path -Xlinker /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+CodeSign /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+
+    Signing Identity:     "Apple Development: Cody Russell Bontecou (GL679HC696)"
+
+    /usr/bin/codesign --force --sign 72EC98F26A4437F8E36926CFF31C3546F753BAA7 --entitlements /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleBridge.build/thumble-bridge.xcent --timestamp\=none --generate-entitlement-der /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge
+
+RegisterExecutionPolicyException /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge (in target 'ThumbleBridge' from project 'Thumble')
+    cd /tmp/thumble-owned-assets-muag5ses
+    builtin-RegisterExecutionPolicyException /tmp/thumble-owned-assets-muag5ses/build/OwnedAssets/Build/Products/Debug/thumble-bridge
+
+** BUILD SUCCEEDED **

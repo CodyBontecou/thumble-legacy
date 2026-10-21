@@ -1,0 +1,22 @@
+{
+  "Host/crates/thumble-host/src/cli_profile.rs": "d15bf72fb9f3ec8e28f87e0c14501fbac1f02e2b475320363847740228d166c8",
+  "Host/crates/thumble-host/src/cli_profile_owned.rs": "ee4e1b9f8ff1bd46473ff791ac720334d791cc2f52cb68d1ccb888a417395000",
+  "Host/crates/thumble-mcp/src/server.rs": "e3f2a2227614109facf8accc3ff10e9ee9c45b00677819d111758081569f97e6",
+  "README.md": "876ac6db3dc5514b14ef74ea24f7e9141e8bdff423e0fc662fa6276eb6bd1b8a",
+  "Sources/CLI/ThumbleCLI.swift": "74b18d3e490693e2d3f5350d3459404d58f7572316a09fffe90551694d7bc609",
+  "Sources/CLI/ThumbleCLIBackend.swift": "8d66e90dd5c222030308b68d8d30db34576f0b4958a55ddd5a7d799f6386cdda",
+  "Tests/StackSafetyRegressionTests.swift": "953ea2d2c1db95e866c122ea2ca10e8d7e5fa9987ff719a6c532bb6128bafc30",
+  "Tests/ThumbleCLIBackendTests.swift": "b9b8bfa116def74ed849a4599558758fe51d152d3edc2a84f5fcf69a8f14757c",
+  "docs/cli-mcp-cutover.md": "b57da5778c5a99446395e35dec8a172b383e3119276f5ac64551c2cef453ab00",
+  "docs/feature-removal-inventory.md": "6d766ad430d8438631612e2844060be0a1da71c01b96e06773dca86ab4b6aae8",
+  "docs/feature-removal-progress.md": "fcd8838f00874ac58bb8d4569d571e8da7e9550d6bd7f9f61bdfc84325cbc091",
+  "docs/mcp/README.md": "4eaf9482caa4a6fdb0a98edfe23c4e35f1b894eb4750c52b036eb01938d953e1",
+  "docs/mcp/cli-capabilities-v1.json": "53e8bd2db001f6e854c0c36955cd257a776439f41f590e6a2c748ef13127d376",
+  "scripts/verify-feature-removal-fixtures.py": "3d0d8b6bab5c08d319605f2bda1650bb75d73997dc7280bd7493e61337ded83c",
+  "Host/crates/thumble-host/src/cli_profile_owned_assets.rs": "6cb0e5e3d9636e3dfcec2a686571413e95e5974efe65ebf32c96099c3a0ed298",
+  "Host/crates/thumble-host/src/cli_profile_owned_assets_tests.rs": "c1485397c79aa449c16d4d98bf5f0dc9a57bd183894dcd7f362e77d24a22e16d",
+  "Host/fixtures/owned-assets/v1/requests.json": "8718066c76934b4831d72bf18aa8d6edfd4159f833561c3c8fbac107956dd666",
+  "Host/fixtures/owned-assets/v1/manifest.json": "6e7e43d6f85aa26d16c8245c641359271aa77f46e6e900fc3a0e1737cd91c213",
+  "scripts/verify-owned-assets.py": "30e5f84a26ce53b9e114783728a2c0324fe0de4ea4d0e0fce21af874ddd2f6ab",
+  "docs/owned-profile-assets.md": "03539a5c623dcb2049c4fd3ce9ce3a5613f13727e0ee62d62bb9257aa3898beb"
+}

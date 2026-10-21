@@ -1203,8 +1203,8 @@
           "cli": [
             "asset import"
           ],
-          "status": "planned",
-          "mcpTool": "transfer_artifact"
+          "status": "current",
+          "mcpTool": "edit_profile_asset"
         },
         {
           "id": "asset.set",
@@ -1213,8 +1213,8 @@
             "asset edit",
             "asset rename"
           ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
+          "status": "current",
+          "mcpTool": "edit_profile_asset"
         },
         {
           "id": "asset.remove",
@@ -1223,8 +1223,8 @@
             "asset delete",
             "asset rm"
           ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
+          "status": "current",
+          "mcpTool": "edit_profile_asset"
         }
       ]
     },

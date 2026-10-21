@@ -4370,11 +4370,17 @@ struct ThumbleCLI {
         case "import":
             guard let path = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble asset import <path> [--name NAME] [--role background|icon|texture]") }
             let url = URL(fileURLWithPath: path)
-            let data = try Data(contentsOf: url)
+            let data = try readAssetFile(url)
             guard data.count <= GamepadAsset.maximumStoredBytes else { throw CLIError.message("Assets must be under \(GamepadAsset.maximumStoredBytes) bytes") }
             let name = (optionValue("--name", in: rest) ?? url.deletingPathExtension().lastPathComponent).trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty else { throw CLIError.message("Asset name cannot be empty") }
             let role = try optionValue("--role", in: rest).map(parseAssetRole) ?? .reference
+            if let response = try ownedAssetResponse(.assetImport(.init(optionValue("--profile", in: rest)), name: name,
+                    fileName: url.lastPathComponent, contentType: contentType(for: url), dataBase64: data.base64EncodedString(), role: role.rawValue), arguments: rest) {
+                print("Imported asset \"\(name)\".")
+                printProfileInvocation(response)
+                return
+            }
             let asset = GamepadAsset(name: name, fileName: url.lastPathComponent, contentType: contentType(for: url), data: data, role: role)
             try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
                 var library = customization.assetLibrary.normalized
@@ -4391,6 +4397,12 @@ struct ThumbleCLI {
             let requestedRole = try optionValue("--role", in: rest).map(parseAssetRole)
             guard requestedName != nil || requestedRole != nil else { throw CLIError.message("asset set needs --name or --role") }
             if let requestedName, requestedName.isEmpty { throw CLIError.message("Asset name cannot be empty") }
+            if let response = try ownedAssetResponse(.assetSet(.init(optionValue("--profile", in: rest)), assetID: id,
+                    name: requestedName, role: requestedRole?.rawValue), arguments: rest) {
+                print("Updated asset \"\(id)\".")
+                printProfileInvocation(response)
+                return
+            }
             let assetStore = try loadStore()
             let assetProfile = try resolveProfile(optionValue("--profile", in: rest), in: assetStore)
             guard assetProfile.customization.assetLibrary.asset(id: id) != nil else { throw CLIError.message("Asset not found: \(id)") }
@@ -4403,6 +4415,11 @@ struct ThumbleCLI {
             print("Updated asset \"\(id)\".")
         case "remove", "delete", "rm":
             guard let id = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble asset remove <asset-id>") }
+            if let response = try ownedAssetResponse(.assetRemove(.init(optionValue("--profile", in: rest)), assetID: id), arguments: rest) {
+                print("Removed asset \"\(id)\".")
+                printProfileInvocation(response)
+                return
+            }
             try mutateProfileResources(profileTarget: optionValue("--profile", in: rest)) { customization in
                 customization.assetLibrary.assets.removeAll { $0.id == id }
             }
@@ -4410,6 +4427,42 @@ struct ThumbleCLI {
         default:
             throw CLIError.message("Unknown asset subcommand: \(subcommand)")
         }
+    }
+
+    private static func ownedAssetResponse(_ command: ThumbleCLIProfileBackend.Command, arguments: [String]) throws -> ThumbleCLIProfileBackend.Response? {
+        do {
+            let response = try profileBackend().perform(command, invocationID: try profileInvocationID(in: arguments))
+            guard response.outcome != nil else { throw CLIError.message("Authority returned no asset edit outcome") }
+            return response
+        } catch ThumbleCLIProfileBackend.BackendError.remote(let failure, _) where failure.code == "owned_configuration_required" {
+            // Only an explicit format refusal can reach the existing guarded
+            // native-owner path. Other failures never authorize a fallback.
+            return nil
+        }
+    }
+
+    /// Bounded descriptor-based IO; symbolic links, devices and FIFOs cannot enter an asset transaction.
+    private static func readAssetFile(_ url: URL) throws -> Data {
+        let descriptor = Darwin.open(url.path, O_RDONLY | O_NOFOLLOW | O_NONBLOCK)
+        guard descriptor >= 0 else { throw CLIError.message("Could not open asset as a regular file") }
+        defer { Darwin.close(descriptor) }
+        var info = stat()
+        guard Darwin.fstat(descriptor, &info) == 0, info.st_mode & S_IFMT == S_IFREG,
+              info.st_size >= 0, info.st_size <= GamepadAsset.maximumStoredBytes else {
+            throw CLIError.message("Asset must be a regular file under \(GamepadAsset.maximumStoredBytes) bytes")
+        }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 64 * 1024)
+        while true {
+            let count = buffer.withUnsafeMutableBytes { bytes in Darwin.read(descriptor, bytes.baseAddress, bytes.count) }
+            if count < 0 && errno == EINTR { continue }
+            guard count >= 0 else { throw CLIError.message("Could not read asset file") }
+            if count == 0 { break }
+            guard data.count + count <= GamepadAsset.maximumStoredBytes else { throw CLIError.message("Asset grew beyond its size limit") }
+            data.append(contentsOf: buffer.prefix(count))
+        }
+        guard data.count == info.st_size else { throw CLIError.message("Asset size changed while reading") }
+        return data
     }
 
     private struct LayerSummary: Codable {

@@ -54,6 +54,18 @@ final class ThumbleCLIBackendTests: XCTestCase {
         XCTAssertEqual(captured.sourceProfileData, Data(source.utf8))
     }
 
+    func testAssetWritesUseTypedContentAndStableCallerInvocation() throws {
+        let text = try encodedRequestText(.assetImport(.active, name: "Local art", fileName: "art.png", contentType: "image/png", dataBase64: "Zml4dHVyZQ==", role: "icon"))
+        let root = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any])
+        let command = try XCTUnwrap(root["command"] as? [String: Any])
+        XCTAssertEqual(command["type"] as? String, "asset.import")
+        XCTAssertEqual(command["dataBase64"] as? String, "Zml4dHVyZQ==")
+        XCTAssertEqual(command["fileName"] as? String, "art.png")
+        XCTAssertNil(command["path"])
+        XCTAssertTrue(try encodedRequestText(.assetSet(.active, assetID: "one", name: "Renamed", role: nil)).contains("asset.set"))
+        XCTAssertTrue(try encodedRequestText(.assetRemove(.active, assetID: "one")).contains("asset.remove"))
+    }
+
     func testCLITemplateCatalogMatchesSharedAuthority() {
         XCTAssertEqual(
             ThumbleCLIProfileBackend.ControllerTemplate.allCases.map(\.rawValue),
