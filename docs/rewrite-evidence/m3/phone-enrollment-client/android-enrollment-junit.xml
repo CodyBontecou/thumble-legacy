@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.PhoneEnrollmentTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-10-21T22:00:22" hostname="MacBook-Pro.local" time="0.053">
+  <properties/>
+  <testcase name="cancellationDuringStorageAndLateConnectAreTerminal" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.003"/>
+  <testcase name="expiryAndClockRollbackNeverSendProof" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.001"/>
+  <testcase name="sharedStrictJsonRejectsDuplicateDecodedKeysAndCoercions" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.001"/>
+  <testcase name="rejectsMalformedCredentialMetadataBeforeStorageOrAck" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.002"/>
+  <testcase name="rejectsHostMismatchOrUnsupportedVersionsBeforeSendingProof" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.002"/>
+  <testcase name="storageFailureCannotAcknowledgeAndCompletionFailurePreservesStorage" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.003"/>
+  <testcase name="malformedUtf16LabelsAndHostsNeverBecomeLossyUtf8ProofRequests" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.0"/>
+  <testcase name="sendsAckOnlyAfterSaveAndRequiresHostCompletion" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.001"/>
+  <testcase name="realNativePhoneEnrollsThroughPinnedTlsToRustTrustLedger" classname="com.thumble.rewrite.input.PhoneEnrollmentTest" time="0.04"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

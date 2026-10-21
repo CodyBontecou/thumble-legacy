@@ -1,0 +1,75 @@
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.76s
+     Running unittests src/lib.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-b82e341ae8479220)
+
+running 56 tests
+test control_tls::tests::certificate_pin_is_canonical_and_identity_is_fresh ... ok
+test enrollment::tests::native_windows_are_one_use_bounded_and_secret_free_in_status ... ok
+test enrollment::tests::shared_typescript_fixture_matches_native_verifier_and_control_shapes ... ok
+test control_tls::tests::wrong_pin_refuses_handshake_before_any_application_frame ... ok
+test control_tls::socket_mode_tests::accepted_and_client_nonblocking_sockets_are_normalized_before_tls ... ok
+test control_tls::tests::pinned_tls13_round_trip_control_and_exact_input_frames ... ok
+test control_tls::tests::unsupported_alpn_and_tls12_are_rejected ... ok
+test control_tls::tests::pin_does_not_bypass_expiry_future_dates_hostname_or_server_usage ... ok
+test control_tls::tests::framing_accepts_maximum_control_and_rejects_local_invalid_frames_terminally ... ok
+test control_tls::tests::malformed_remote_lengths_kinds_and_truncation_retire_connection ... ok
+test enrollment::tests::window_clock_and_authority_failures_do_not_retain_admission ... ok
+test gamepad::tests::retained_native_vectors ... ok
+test host_identity::tests::lengths_magic_trailing_bytes_wrong_keys_and_certificate_policy_fail ... ok
+test control_tls::tests::absolute_io_budget_cannot_be_extended_by_trickled_reads ... ok
+test control_tls::tests::read_byte_budget_and_unresponsive_peer_fail_closed ... ok
+test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+test host_identity::tests::complete_staged_creation_recovers_the_same_key_and_pin ... ok
+test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+test enrollment::tests::earlier_control_version_is_rejected_before_invitation_consumption ... ok
+test host_identity::tests::published_but_not_cleaned_creation_recovers_without_rotation ... ok
+test enrollment::tests::client_role_cannot_consume_native_enrollment_window ... ok
+test enrollment::tests::native_clock_failure_closes_window_before_any_credential_is_issued ... ok
+test host_identity::tests::exclusive_identity_owner_and_separate_runtime_namespaces ... ok
+test host_identity::tests::inspection_never_initializes_or_recovers_key_material ... ok
+test enrollment::tests::wrong_proof_spends_attempt_without_committing_trust ... ok
+test enrollment::tests::trust_clock_failure_after_consumption_does_not_restore_window ... ok
+test host_identity::tests::symlinks_and_external_hardlinks_are_rejected_without_changing_identity ... ok
+test host_identity::tests::stable_reload_and_distinct_isolated_hosts_keep_private_permissions ... ok
+test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+test runtime::tests::owner_lease_expires_even_without_samples ... ok
+test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+test host_identity::tests::corrupt_or_partial_records_never_regenerate_or_overwrite_material ... ok
+test phone_trust::tests::credential_database_symlinks_and_aliases_do_not_cross_native_storage ... ok
+test enrollment::tests::duplicate_or_unknown_json_fields_fail_before_proof_admission ... ok
+test enrollment::tests::real_tls_negotiates_versions_commits_then_requires_matching_storage_ack ... ok
+test enrollment::tests::local_cancel_or_replacement_during_tls_wait_prevents_enrollment ... ok
+test phone_trust::tests::sqlite_uses_pinned_native_engine_and_durable_bounded_private_storage ... ok
+test phone_trust::tests::expiry_and_native_clock_limits_fail_without_partial_mutations ... ok
+test phone_trust::tests::credential_commits_reloads_and_never_persists_plaintext_or_exports_it_as_metadata ... ok
+test phone_trust::tests::foreign_schemas_and_corruption_are_rejected_without_replacing_data ... ok
+test phone_trust::tests::failed_commit_rolls_back_verifier_epoch_and_observed_clock ... ok
+test phone_trust::tests::actual_tls_receives_only_after_native_commit_and_wrong_channel_cannot_export_secret ... ok
+test phone_trust::tests::exclusive_owner_and_host_identity_binding_are_enforced ... ok
+test enrollment::tests::lost_or_mismatched_ack_preserves_committed_trust_and_consumed_window ... ok
+test phone_trust::tests::reenrollment_rotates_old_credentials_and_revocation_survives_restart_and_clock_rollback ... ok
+test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+test phone_trust::tests::capacity_and_malformed_identities_are_bounded ... ok
+test enrollment::tests::unsupported_versions_and_wrong_phase_frames_never_consume_invitation ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+     Running unittests src/main.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-3a331690027b3d1b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_rewrite_receiver
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

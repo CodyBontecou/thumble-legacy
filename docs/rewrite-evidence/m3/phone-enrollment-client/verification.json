@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "scope": "Native phone control-v2 enrollment and prepared OS-provider CI",
+  "rustUnixTests": 56,
+  "expectedWindowsRustTests": 54,
+  "windowsDifference": "two cfg(unix) filesystem tests; new snapshot not hosted yet",
+  "swiftTests": 36,
+  "androidJUnit": {
+    "tests": 55,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "typescriptTests": 68,
+  "typescriptExplicitSkip": 1,
+  "standalonePackage": {
+    "tests": 1,
+    "assertions": 29
+  },
+  "clippy": "pass",
+  "bothIOSSDKs": "pass",
+  "iosTestBundle": "build-for-testing pass; runtime provider not executed",
+  "androidAARInstrumentationAPKAndLint": "pass",
+  "providerVerifierTests": 2,
+  "providerVerifierOptimizedPython": "pass",
+  "actualTLS": "Network.framework and JDK native phone clients enroll against Rust ledger; storage sink policy double",
+  "workflowActionlint": "pass",
+  "hostedNewSource": "not published",
+  "priorApprovedPublicHead": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+  "remaining": [
+    "real OS-provider CI execution",
+    "CLI/native pairing forwarding and product listener",
+    "owner/input-session authorization/revocation/reconnect",
+    "phone app integration",
+    "physical signing/gameplay/optical launch gates"
+  ],
+  "retainedStackSafety": "unverified after prior compiler macro-probe stall"
+}
