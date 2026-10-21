@@ -1,0 +1,21 @@
+{
+  "fixtureVersion": 1,
+  "cases": [
+    "plain",
+    "banked",
+    "plain-profile",
+    "banked-profile"
+  ],
+  "appearanceStates": 8,
+  "automaticMigrationActivated": false,
+  "files": {
+    "banked-profile-request.json": "4a3ad1a20831448c4a9b0fd2cc3efb45f0dc81140c615575ad520ed0e82eb7a1",
+    "banked-profile-response.json": "971e0d37ede79b5bc76355427b0799c3e488510c3cec9653918c178b2d0b462a",
+    "banked-request.json": "ae89ff766c3bc273b792ba7459225acdd24acedf53ba5964344868d8d332be2f",
+    "banked-response.json": "00a5622539a42ebc47cf865ea4d334fff2a1d5e723b9eab5bf764277556b7e8b",
+    "plain-profile-request.json": "6dca8ded86cedd58cd04595f2ce0553919f1fa2e1e3a71b980e57995b83a354f",
+    "plain-profile-response.json": "5f00a1e862017b9d90dc421d1067153cb5ba6b01e04cd997777969b13905ff06",
+    "plain-request.json": "88a9e46c923c51e1a4f6858e88b93dc5da634bdb2e11dc66edff72aa773bffe4",
+    "plain-response.json": "055fd94c7f685ed37e56d6fc45ca50333abbf8dae107c7a7a5d7e91c8beda045"
+  }
+}

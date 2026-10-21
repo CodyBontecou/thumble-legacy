@@ -1,0 +1,30 @@
+{
+  "files": {
+    "README.md": "75f83071607ea11f20c353f60c04c6415daf3445159563414a9f877432242182",
+    "cli-final-build.log.gz": "16116b138c7beaab87460a2895fb4d9490070c94af07a10ac73ccc0a002312f5",
+    "native-tests.log.gz": "21a0ebeef7bbc8fc9a73393e13cf984509b60a6ef30708673b8fd7f599e92305",
+    "result.json": "ac24ae727d803b9d1952ed02f23de8509ee33fb2e40845c2f5d7732ab2a9e139",
+    "rust-first-run.log.gz": "e391179d4223c6b22c3baea8027104d05fdcfe35e663602f80eeca60d060aaf9",
+    "rust-gate.log.gz": "eead8e9d4ef3f9c2d6855c8a263da4734c7c55cb91d6762dc0e042e3ce1e153a",
+    "stack-gate.log.gz": "4e2074d3b24589b6a6aecb99101c835ffcc0b08c7007ec008c28377d003fe899"
+  },
+  "sources": {
+    "Host/crates/thumble-core/src/profile_appearance.rs": "6b88eda9672cd6116be4fb26bb9b09b80b11aebb72473a25c101ac7e0e44d25d",
+    "Host/crates/thumble-host/src/owned_operation_bridge.rs": "8048a759c8195c31c26365bf1289bced0cdb17077eb56ba99c237282a3c9f8f2",
+    "Host/crates/thumble-host/src/cli_profile.rs": "7ed9927d5df054a92cde09b7bb08ab0d5ad9b862bc1af205a35015e8d14bd4f3",
+    "Sources/Shared/OwnedConfigurationDocument.swift": "19be39810956c0806e1a2cbd0c5efedcbe69d3aaf94fe57625f75488c53aa618",
+    "Sources/CLI/ThumbleCLI.swift": "400f6093546dab8f56775b9c0908b8128c92c174039043109e6d95c3105b06a0",
+    "Sources/CLI/ThumbleCLIBackend.swift": "bac542670d6585824ba3a17b75f9249a2b196c4096c67af5822f37471c00bcee",
+    "Tests/OwnedConfigurationDocumentTests.swift": "d97489fdb8e4c5f2eb80b7caf665c6d781f225b489a55faf08870cb94f7acc72",
+    "Tests/StackSafetyRegressionTests.swift": "b8a3d6e4ef5eb405813d93b61b75bb27d9c62c36074ffbd63bfe4cd1dea46082",
+    "scripts/verify-customization-reset.py": "b42445cf4eb4d8253a030aaadd247bbcd1086123853c65d501633b6bafc72268"
+  },
+  "binaries": {
+    "build/OwnedAssets/Build/Products/Debug/thumble": "12b0a2bb0e5ecc5e22c028c83c7ac3a240fe1e3bc92e0e16dce78199da972910",
+    "build/OwnedAssets/Build/Products/Debug/thumble-bridge": "3f46b8a4727a433323750c0d03fb15e32d59a2e3bd92041f466abaa58c6a99b1",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-host": "4272fd2ddd606644efa3fa2931cc27f40bf7e8ff78b5744addb6fbb2d6bc35dc",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-cli-bridge": "ca574ec3daef2f6cb48ac883f552b23affe3a0ef9ed927fb57a820da4799785a",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-mcp": "f20de66da162e45aac3b0b2c093fe4814ad24256e79e81171d93cea00aa854ed"
+  },
+  "automaticMigrationActivated": false
+}

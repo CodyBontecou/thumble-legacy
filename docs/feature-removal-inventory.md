@@ -38,3 +38,5 @@ Owned design capture/review/apply now uses explicit owned readers and profile-ow
 Reusable-style file import/export is now owned by native CLI transactions, local MCP and `GamepadStyleLibraryFile`, with pooled embedded resources and scoped raw catalog merging. It is retained appearance infrastructure, separate from skin package import/export. See `docs/owned-style-libraries.md`.
 
 Local theme application now routes native CLI apply/set through typed authority transactions and the retained native transformation. It shares the existing MCP draft operation and does not depend on desktop persistence. Built-in local presets remain appearance tools; skin package workflows still require retirement.
+
+Customization reset has moved to the typed native CLI authority path. Owned reset preparation is scoped to the requested profile and rebuilds all eight saved appearance states. Source-correlated Rust validation rejects leftover state paint; the existing MCP draft operations use this same helper. Customization show/export/import remain separate desktop dependencies.

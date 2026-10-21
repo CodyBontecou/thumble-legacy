@@ -3184,12 +3184,11 @@ struct ThumbleCLI {
         case "set":
             try setCustomization(arguments: rest)
         case "reset":
-            try requireExplicitUnmigratedProfileAccess(operation: "customization reset")
-            try mutateCustomization(
-                profileTarget: optionValue("--profile", in: rest),
-                variant: try customizationVariant(in: rest)
-            ) { $0 = .defaultValue }
+            let response = try profileBackend().perform(.customizationReset(.init(optionValue("--profile", in: rest)),
+                try authorityConfigurationVariant(in: rest)), invocationID: try profileInvocationID(in: rest))
+            guard response.outcome != nil else { throw CLIError.message("Authority returned no customization reset outcome") }
             print("Reset customization.")
+            printProfileInvocation(response)
         default:
             throw CLIError.message("Unknown customization subcommand: \(subcommand)")
         }

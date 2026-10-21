@@ -347,3 +347,17 @@ for _case in _style_manifest["cases"]:
     assert len(_target["appearanceBank"]["variants"]) == _style_manifest["appearanceStates"] == 8
     assert all(len(v["appearance"]["styleLibrary"]["styles"]) >= 2 for v in _target["appearanceBank"]["variants"])
 print("Native style-library imports verified: plain/banked eight-state catalogs")
+
+_reset_root = repo / "Host/fixtures/customization-reset/v1"
+_reset_manifest = json.loads((_reset_root / "manifest.json").read_bytes())
+assert _reset_manifest["automaticMigrationActivated"] is False
+for _name, _digest in _reset_manifest["files"].items():
+    assert Path(_name).name == _name
+    assert hashlib.sha256((_reset_root / _name).read_bytes()).hexdigest() == _digest
+for _case in _reset_manifest["cases"]:
+    _request = json.loads((_reset_root / (_case + "-request.json")).read_bytes())
+    _response = json.loads((_reset_root / (_case + "-response.json")).read_bytes())
+    assert _request["operation"]["type"] in ("customization.reset", "profile.reset")
+    assert _response["sourceSHA256"] == hashlib.sha256(base64.b64decode(_request["documentData"], validate=True)).hexdigest()
+    assert _request["invocationID"].lower() == _response["invocationID"].lower()
+print("Owned reset fixtures verified: plain/banked customization and profile reset")

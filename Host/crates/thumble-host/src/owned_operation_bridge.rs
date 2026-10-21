@@ -216,6 +216,31 @@ fn banks_preserved(
         else {
             continue;
         };
+        if let ConfigurationOperation::CustomizationReset { profile_id, .. }
+        | ConfigurationOperation::ProfileReset { profile_id } = operation
+        {
+            if profile["id"]
+                .as_str()
+                .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
+            {
+                if profile.get("appearanceBank").is_none() && next.get("appearanceBank").is_none() {
+                    continue;
+                }
+                if profile.get("appearanceBank").is_none() {
+                    return false;
+                }
+                let Ok(Some(bank)) = ProfileAppearanceBank::from_profile(next) else {
+                    return false;
+                };
+                if !bank
+                    .is_canonical_appearance(&next["customization"])
+                    .unwrap_or(false)
+                {
+                    return false;
+                }
+                continue;
+            }
+        }
         if profile.get("appearanceBank") == next.get("appearanceBank") {
             continue;
         }
@@ -618,6 +643,86 @@ mod banked_style_tests {
             if let Some(value) = forged.pointer_mut(path) { *value = json!(0.123); } else { continue; }
             if let Ok(forged) = OwnedConfigurationDocument::decode(&serde_json::to_vec(&forged).unwrap()) {
                 assert!(!banks_preserved(&before,&forged,&operation) || !valid_operation_delta(&operation_view(&before,before.default_profile_id().unwrap(),&operation).unwrap(),&operation_view(&forged,forged.default_profile_id().unwrap(),&operation).unwrap(),&operation),"{path}");
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod reset_tests {
+    use super::*;
+    #[test]
+    fn owned_resets_merge_exact_sources_and_refuse_leftover_state_paint() {
+        let cases: &[(&[u8], &[u8])] = &[
+            (
+                include_bytes!("../../../fixtures/customization-reset/v1/plain-request.json"),
+                include_bytes!("../../../fixtures/customization-reset/v1/plain-response.json"),
+            ),
+            (
+                include_bytes!("../../../fixtures/customization-reset/v1/banked-request.json"),
+                include_bytes!("../../../fixtures/customization-reset/v1/banked-response.json"),
+            ),
+            (
+                include_bytes!(
+                    "../../../fixtures/customization-reset/v1/plain-profile-request.json"
+                ),
+                include_bytes!(
+                    "../../../fixtures/customization-reset/v1/plain-profile-response.json"
+                ),
+            ),
+            (
+                include_bytes!(
+                    "../../../fixtures/customization-reset/v1/banked-profile-request.json"
+                ),
+                include_bytes!(
+                    "../../../fixtures/customization-reset/v1/banked-profile-response.json"
+                ),
+            ),
+        ];
+        for (request, response) in cases {
+            let request: Value = serde_json::from_slice(request).unwrap();
+            let response: Response = serde_json::from_slice(response).unwrap();
+            let operation: ConfigurationOperation =
+                serde_json::from_value(request["operation"].clone()).unwrap();
+            let source = projection(request["documentData"].as_str().unwrap()).unwrap();
+            let before = projection(&response.before_document_data).unwrap();
+            let after = projection(&response.after_document_data).unwrap();
+            assert!(banks_preserved(&before, &after, &operation));
+            assert!(valid_operation_delta(
+                &operation_view(&before, before.default_profile_id().unwrap(), &operation).unwrap(),
+                &operation_view(&after, after.default_profile_id().unwrap(), &operation).unwrap(),
+                &operation
+            ));
+            let merged = source.with_projected_changes(&before, &after).unwrap();
+            assert!(std::str::from_utf8(merged.original_bytes())
+                .unwrap()
+                .contains("0.12345678901234567890123456789"));
+            let target = request["operation"]["profileID"].as_str().unwrap();
+            let index = after
+                .profiles()
+                .iter()
+                .position(|p| p["id"].as_str().unwrap().eq_ignore_ascii_case(target))
+                .unwrap();
+            if after.profiles()[index].get("appearanceBank").is_none() {
+                continue;
+            }
+            for all in [false, true] {
+                let mut forged: Value = serde_json::from_slice(after.original_bytes()).unwrap();
+                let rows = forged["profiles"][index]["appearanceBank"]["variants"]
+                    .as_array_mut()
+                    .unwrap();
+                for row in rows.iter_mut().take(if all { 8 } else { 1 }) {
+                    row["appearance"]["controls"]["00000000-0000-0000-0000-000000000109"]
+                        ["cornerRadius"] = json!(44);
+                }
+                let forged =
+                    OwnedConfigurationDocument::decode(&serde_json::to_vec(&forged).unwrap())
+                        .unwrap();
+                assert!(!banks_preserved(&before, &forged, &operation));
+                assert!(
+                    !banks_preserved(&forged, &forged, &operation),
+                    "equal-bank shortcut must not bypass reset validation"
+                );
             }
         }
     }

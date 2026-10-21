@@ -287,6 +287,18 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedResetsFitConstrainedThread() throws {
+        let directory = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            .appendingPathComponent("Host/fixtures/customization-reset/v1")
+        let requests = try ["banked", "banked-profile"].map { try Data(contentsOf: directory.appendingPathComponent($0 + "-request.json")) }
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            for data in requests {
+                let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: data)
+                let result = try ThumbleOwnedOperationBridge.transform(request)
+                guard result.changed else { throw StackTestError.unexpectedDecodedState }
+            }
+        }
+    }
     func testOwnedStyleImportFitsConstrainedThread() throws {
         let file = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
             .appendingPathComponent("Host/fixtures/style-library/v1/plain-request.json")

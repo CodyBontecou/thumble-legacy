@@ -291,6 +291,7 @@ public enum ThumbleOwnedOperationBridge {
             let operation = try canonicalOperation()
             if try applyOwnedDesign(operation) { return }
             if try applyOwnedStyleImport(operation) { return }
+            if try applyOwnedReset(operation) { return }
             let object = try JSONSerialization.jsonObject(with: encoder.encode(operation))
             let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "nowMillis":request.nowMillis, "document":document, "operation":object], options: [.sortedKeys])
             let legacy = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: bytes)
@@ -298,6 +299,33 @@ public enum ThumbleOwnedOperationBridge {
             paths = response.changedPaths
             try captureResult(response.document, operation: operation)
         }
+        private func applyOwnedReset(_ operation: ThumbleBridgeJSONValue) throws -> Bool {
+            guard case .object(let fields) = operation,
+                  fields["type"] == .string("customization.reset") || fields["type"] == .string("profile.reset") else { return false }
+            let decoded = try JSONDecoder().decodeUnique(ThumbleBridgeOperation.self, from: encoder.encode(operation))
+            let targetID: String
+            switch decoded {
+            case .customizationReset(let id, _), .profileReset(let id): targetID = id
+            default: throw ThumbleOwnedOperationBridgeError.invalidRequest
+            }
+            guard let id = UUID(uuidString: targetID), let index = beforeProfiles.firstIndex(where: { $0.id == id }) else {
+                throw ThumbleOwnedOperationBridgeError.invalidRequest
+            }
+            var profile = beforeProfiles[index]
+            profile.customization = GamepadCustomization.defaultValue.normalized
+            if let bank = profile.appearanceBank {
+                let appearance = GamepadAppearanceSnapshot(profile.customization)
+                profile.appearanceBank = try GamepadAppearanceBank(variants: bank.variants.map {
+                    .init(colorScheme: $0.colorScheme, actionSet: $0.actionSet, appearance: appearance)
+                })
+            }
+            guard profile != beforeProfiles[index] else { after = before; paths = []; return true }
+            profile.updatedAt = request.nowMillis
+            var profiles = beforeProfiles; profiles[index] = profile
+            after = try projection(profiles); paths = ["/profiles/" + targetID]
+            return true
+        }
+
         private func applyOwnedStyleImport(_ operation: ThumbleBridgeJSONValue) throws -> Bool {
             guard case .object(let fields) = operation, fields["type"] == .string("style.import") else { return false }
             let decoded = try JSONDecoder().decodeUnique(ThumbleBridgeOperation.self, from: encoder.encode(operation))

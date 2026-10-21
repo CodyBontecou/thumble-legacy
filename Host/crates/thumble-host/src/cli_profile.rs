@@ -211,6 +211,11 @@ pub enum CliProfileCommand {
         variant: ConfigurationVariant,
         preset: String,
     },
+    #[serde(rename = "customization.reset")]
+    CustomizationReset {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+    },
     #[serde(rename = "customization.set")]
     CustomizationSet {
         target: ProfileSelector,
@@ -653,6 +658,7 @@ impl CliProfileCommand {
             Self::GenerationGenerate { .. } => "generation.generate",
             Self::GenerationPlanSpec { .. } => "generation.plan-spec",
             Self::TemplateInstall { .. } => "template.install",
+            Self::CustomizationReset { .. } => "customization.reset",
             Self::ThemeApply { .. } => "theme.apply",
             Self::CustomizationSet { .. } => "customization.set",
             Self::CustomizationFix { .. } => "customization.fix",
@@ -3118,6 +3124,16 @@ fn plan_transaction(
                 destination: None,
                 removed_every_profile: false,
             })
+        }
+        CliProfileCommand::CustomizationReset { target, variant } => {
+            let profile = resolve_selector(target, catalog)?;
+            Ok(plan_one(
+                ConfigurationOperation::CustomizationReset {
+                    profile_id: profile.profile_id.hyphenated().to_string(),
+                    variant: *variant,
+                },
+                profile.name.clone(),
+            ))
         }
         CliProfileCommand::ThemeApply {
             target,
@@ -6334,6 +6350,7 @@ fn replay_profile_names(
         | CliProfileCommand::ElementNudge { target, .. }
         | CliProfileCommand::ElementDelete { target, .. }
         | CliProfileCommand::ElementReset { target, .. }
+        | CliProfileCommand::CustomizationReset { target, .. }
         | CliProfileCommand::ThemeApply { target, .. }
         | CliProfileCommand::CustomizationSet { target, .. }
         | CliProfileCommand::StyleImport { target, .. }

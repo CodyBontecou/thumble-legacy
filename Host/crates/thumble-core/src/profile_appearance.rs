@@ -94,6 +94,23 @@ impl ProfileAppearanceBank {
         budget(current)?;
         applying(current, &snapshot(current)?)
     }
+    /// A reset must replace saved state-only paint, not merely hide it behind a
+    /// canonical edit. Ignore only redundant default control-bar records.
+    pub fn is_canonical_appearance(&self, current: &Value) -> Result<bool, ProfileAppearanceError> {
+        budget(current)?;
+        let expected = snapshot(current)?;
+        let empty = control_snapshot(&Value::Null);
+        for state in self.states.values() {
+            let mut state = state.clone();
+            if let Some(bars) = state["controlBar"].as_object_mut() {
+                bars.retain(|_, value| value != &empty);
+            }
+            if state != expected {
+                return Ok(false);
+            }
+        }
+        Ok(true)
+    }
     pub fn from_profile(profile: &Value) -> Result<Option<Self>, ProfileAppearanceError> {
         budget(profile)?;
         let resources = ProfileResourceTable::from_profile(profile)?;

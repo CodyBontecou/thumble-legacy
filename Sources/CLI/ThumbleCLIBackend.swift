@@ -587,6 +587,7 @@ final class ThumbleCLIProfileBackend {
         case generationGenerate(select: Bool, makeDefault: Bool)
         case generationPlanSpec(specJSON: String, requestedGameName: String?)
         case templateInstall(ControllerTemplate, name: String?, select: Bool, makeDefault: Bool)
+        case customizationReset(ProfileSelector, ConfigurationVariant)
         case themeApply(ProfileSelector, ConfigurationVariant, preset: String)
         case customizationSet(ProfileSelector, ConfigurationVariant, [CustomizationChanges], frameID: String?)
         case customizationFix(ProfileSelector, ConfigurationVariant, LayoutRepairTarget, LayoutRepairCanvas, includeLocked: Bool)
@@ -817,6 +818,10 @@ final class ThumbleCLIProfileBackend {
                 try container.encodeIfPresent(name, forKey: .name)
                 try container.encode(select, forKey: .select)
                 try container.encode(makeDefault, forKey: .makeDefault)
+            case .customizationReset(let target, let variant):
+                try container.encode("customization.reset", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
             case .themeApply(let target, let variant, let preset):
                 try container.encode("theme.apply", forKey: .type)
                 try container.encode(target, forKey: .target)

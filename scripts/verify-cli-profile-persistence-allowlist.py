@@ -273,4 +273,10 @@ for function, command in (("addElement", ".elementAdd("), ("duplicateElements", 
     if command not in block or any(token in block for token in ("loadStore(", "persistStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess(")):
         raise SystemExit("Element commands must use typed authority transactions: " + function)
 
+
+customization_block = source_text.split("private static func customization(arguments:", 1)[1].split("private static func setCustomization(", 1)[0]
+reset_block = customization_block.split('case "reset":', 1)[1].split("default:", 1)[0]
+if ".customizationReset(" not in reset_block or any(token in reset_block for token in ("requireExplicitUnmigratedProfileAccess", "mutateCustomization(", "loadStore(")):
+    raise SystemExit("Customization reset must use the typed authority transaction")
+
 print("CLI direct profile/design/element persistence allowlist passed.")

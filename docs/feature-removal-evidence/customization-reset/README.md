@@ -1,0 +1,11 @@
+# Customization reset evidence
+
+`result.json` records actual private-home CLI checks for customization/profile reset on legacy, plain-owned and banked-owned state. Banked sources contain a radius saved only in one dark/held-trigger state. All saved appearances become default, repeated resets are no-ops, committed retries run with the native helper parked, invalid owned portrait requests do not change authority, and profile selection, unrelated profiles and an exact decimal extension remain intact. Actual local MCP editing stays private until save and returns a stable committed-replay receipt.
+
+`native-tests.log.gz` records 58 passed (45 CLI backend, 13 owned). Native regressions cover the state-only radius, both reset operations, unrelated banks, later-clock no-ops and all four frozen request/response pairs. Rust validates correlated projections, exact-source merges and refusal of forged residual paint in one/all states, including an unchanged-bank shortcut attempt. The six historical native operation response objects were separately regenerated unchanged; their oracle bytes remain frozen and only test-source provenance hashes advance.
+
+`rust-gate.log.gz` records formatting, clippy, 628 passed/3 historical native-dependent ignored and retained all-target checks. The first run, retained in `rust-first-run.log.gz`, failed in IPv6 pairing because the accepted frame had no realtime token. A full fresh run passed; no claim about that intermittent failure's cause is made. `stack-gate.log.gz` records 48 constrained-stack cases and both Apple Debug builds under unchanged inline/frame budgets, including both full banked reset transforms on 512 KiB threads.
+
+Run `python3 scripts/verify-customization-reset.py --help` for the private process verifier. Frozen operation packets are under `Host/fixtures/customization-reset/v1`. This evidence does not establish physical haptic feel, device/network latency or live WoW acceptance, and does not activate migration or production profile-format offers.
+
+The standalone CLI was rebuilt after the shared reset fix; `cli-final-build.log.gz` records that final build. The actual CLI/MCP matrix was repeated against the final hashed executables before committing.

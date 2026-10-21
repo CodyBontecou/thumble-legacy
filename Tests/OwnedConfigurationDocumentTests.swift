@@ -2,6 +2,65 @@ import Foundation
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    func testResetLeavesUnrelatedOwnedBankUntouched() throws {
+        let source = try fixture("document")
+        let before = try ThumbleOwnedConfigurationDocument(validating: source)
+        let id = try XCTUnwrap(before.projectedProfiles.last).id.uuidString
+        for type in ["customization.reset", "profile.reset"] {
+            var operation: [String: Any] = ["type":type, "profileID":id]
+            if type == "customization.reset" { operation["variant"] = "primary" }
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source, operation))
+            let result = try ThumbleOwnedOperationBridge.transform(request)
+            let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: result.afterDocumentData)))
+            XCTAssertEqual(after.projectedProfiles.first, before.projectedProfiles.first)
+        }
+    }
+    func testCustomizationResetClearsStateOnlyAppearance() throws {
+        let original = try fixture("document")
+        var root = try XCTUnwrap(JSONSerialization.jsonObject(with: original) as? [String: Any])
+        var profiles = try XCTUnwrap(root["profiles"] as? [[String: Any]])
+        var bank = try XCTUnwrap(profiles[0]["appearanceBank"] as? [String: Any])
+        var variants = try XCTUnwrap(bank["variants"] as? [[String: Any]])
+        var appearance = try XCTUnwrap(variants[1]["appearance"] as? [String: Any])
+        var controls = try XCTUnwrap(appearance["controls"] as? [String: [String: Any]])
+        controls["00000000-0000-0000-0000-000000000109"]?["cornerRadius"] = 44
+        appearance["controls"] = controls; variants[1]["appearance"] = appearance
+        bank["variants"] = variants; profiles[0]["appearanceBank"] = bank; root["profiles"] = profiles
+        let source = try JSONSerialization.data(withJSONObject: root)
+        for type in ["customization.reset", "profile.reset"] {
+            var operation: [String: Any] = ["type":type, "profileID":profiles[0]["id"]!]
+            if type == "customization.reset" { operation["variant"] = "primary" }
+            let bytes = try operationRequest(source, operation)
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes)
+            let result = try ThumbleOwnedOperationBridge.transform(request)
+            let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: result.afterDocumentData)))
+            let profile = try XCTUnwrap(after.projectedProfiles.first)
+            let repeatedBytes = try operationRequest(XCTUnwrap(Data(base64Encoded: result.afterDocumentData)), operation, nowMillis: 3000)
+            let repeated = try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: repeatedBytes))
+            XCTAssertFalse(repeated.changed)
+            XCTAssertEqual(repeated.afterDocumentData, result.afterDocumentData)
+            let id = UUID(uuidString: "00000000-0000-0000-0000-000000000109")!
+            let expected = try XCTUnwrap(GamepadCustomization.defaultValue.elements.first(where: { $0.id == id }))
+            for scheme in ThumbleSkinColorScheme.allCases { for action in ThumbleActionSet.allCases {
+                let layout = profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                let control = try XCTUnwrap(layout.elements.first(where: { $0.id == id }))
+                XCTAssertEqual(control.layout.cornerRadius, expected.layout.cornerRadius, "\(scheme)/\(action)")
+                XCTAssertEqual(layout.artworkLayers, GamepadCustomization.defaultValue.artworkLayers)
+                XCTAssertEqual(layout.styleLibrary, GamepadCustomization.defaultValue.styleLibrary)
+            } }
+        }
+    }
+
+    func testOwnedResetMatchesFrozenNativeResponses() throws {
+        let directory = root.appendingPathComponent("Host/fixtures/customization-reset/v1")
+        for name in ["plain", "banked", "plain-profile", "banked-profile"] {
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: Data(contentsOf: directory.appendingPathComponent(name + "-request.json")))
+            let result = try ThumbleOwnedOperationBridge.transform(request)
+            let expected = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: directory.appendingPathComponent(name + "-response.json"))) as? [String: Any])
+            XCTAssertEqual(result.beforeDocumentData, expected["beforeDocumentData"] as? String)
+            XCTAssertEqual(result.afterDocumentData, expected["afterDocumentData"] as? String)
+        }
+    }
     func testStyleImportMatchesFrozenNativeResponse() throws {
         let directory = root.appendingPathComponent("Host/fixtures/style-library/v1")
         for name in ["plain", "banked"] {
@@ -39,8 +98,8 @@ final class OwnedConfigurationDocumentTests: XCTestCase {
     private func fixture(_ name: String) throws -> Data {
         try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/\(name).json"))
     }
-    private func operationRequest(_ source: Data, _ operation: [String: Any]) throws -> Data {
-        try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "invocationID":"AC000000-0000-0000-0000-000000000001", "ownedConfigurationCommand":"apply", "documentData":source.base64EncodedString(), "operation":operation, "nowMillis":2000], options: [.sortedKeys, .withoutEscapingSlashes])
+    private func operationRequest(_ source: Data, _ operation: [String: Any], nowMillis: Int = 2000) throws -> Data {
+        try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "invocationID":"AC000000-0000-0000-0000-000000000001", "ownedConfigurationCommand":"apply", "documentData":source.base64EncodedString(), "operation":operation, "nowMillis":nowMillis], options: [.sortedKeys, .withoutEscapingSlashes])
     }
     func testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs() throws {
         let directory = root.appendingPathComponent("Host/fixtures/owned-design/v1")

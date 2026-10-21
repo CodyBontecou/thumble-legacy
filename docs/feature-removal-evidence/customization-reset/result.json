@@ -1,0 +1,11 @@
+{
+  "legacyPlainAndBankedReset": true,
+  "helperFreeCommittedReplay": true,
+  "profileResetAlsoClearsStates": true,
+  "repeatedResetIsNoOp": true,
+  "profileSelectionAndUnrelatedProfilesPreserved": true,
+  "exactOpaqueProfileMetadata": true,
+  "ownedPortraitRefused": true,
+  "mcpPrivateDraftCommitReplay": true,
+  "automaticMigrationActivated": false
+}
