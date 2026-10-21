@@ -63,7 +63,7 @@ pub struct PhoneTrustStore {
 fn error(_: rusqlite::Error) -> &'static str {
     "phone_trust_storage_invalid"
 }
-fn validate_phone(id: &str, label: &str) -> Result<(), &'static str> {
+pub(crate) fn validate_phone(id: &str, label: &str) -> Result<(), &'static str> {
     if !runtime::identity(id)
         || label.is_empty()
         || label.len() > 128
@@ -120,6 +120,9 @@ fn metadata(row: &rusqlite::Row<'_>) -> rusqlite::Result<TrustedPhone> {
     })
 }
 impl PhoneTrustStore {
+    pub(crate) fn host_pin(&self) -> &str {
+        &self.host_pin
+    }
     pub fn open(identity_directory: &Path) -> Result<Self, &'static str> {
         let identity = host_identity::load_existing(identity_directory)?;
         let lease = security::file(&identity_directory.join("phone-trust.lock"), false)?;
@@ -229,7 +232,7 @@ impl PhoneTrustStore {
     }
     /// Trusted native operation only: a pinned TLS enrollment coordinator must consume a pairing window first.
     /// `now` is native wall-clock milliseconds, never a timestamp supplied by a peer.
-    pub fn enroll_after_pairing(
+    pub(crate) fn enroll_after_pairing(
         &mut self,
         id: &str,
         label: &str,

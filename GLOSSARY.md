@@ -20,7 +20,10 @@ The identity of a particular activated runtime configuration. Replacing it retir
 The native host's private TLS key, certificate and public certificate pin, retained across receiver restarts. It does not identify a temporary authority process or authorize a phone/input session.
 
 **Phone credential**:
-A native-generated bearer secret authenticating one opaque phone identifier to one pinned host. The host stores a verifier; phone OS secure storage must retain the secret before enrollment completes.
+A secret establishing one phone's trust relationship with one host. It is distinct from the temporary pairing secret and an input session key.
 
 **Credential epoch**:
 The monotonically increasing version of a phone's enrolled credential. Re-enrollment invalidates the previous credential; it does not reuse an activation generation or input sequence.
+
+**Enrollment acknowledgment**:
+The phone's confirmation that it retained its newly issued credential. It completes enrollment delivery without granting an input session.

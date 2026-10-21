@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "scope": "Native TLS enrollment coordinator and shared pairing fixture",
+  "rustTests": 55,
+  "typescriptTests": 68,
+  "typescriptExplicitSkips": 1,
+  "clippy": "pass",
+  "standalonePackage": {
+    "tests": 1,
+    "assertions": 29
+  },
+  "hostedNewSource": "not published",
+  "remaining": [
+    "service/CLI forwarding",
+    "product listener/native safety worker",
+    "phone secure storage/client enrollment",
+    "input grant and revocation integration",
+    "physical signing/gameplay acceptance"
+  ],
+  "retainedSwiftStackSafety": "unverified after prior compiler macro-probe stall"
+}
