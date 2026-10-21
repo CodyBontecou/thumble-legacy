@@ -7,6 +7,28 @@ import org.junit.Test
 
 class OwnedConfigurationDocumentTest {
     private fun fixture(name: String) = javaClass.classLoader!!.getResourceAsStream("owned-configuration/v1/$name.json")!!.use { it.readBytes() }
+    @Test fun ownedNativeOperationsRetainAllAppearanceStatesAndControlOutputs() {
+        for (name in listOf("nullable-select","geometry","haptic","add","delete","scheme")) {
+            fun data(suffix:String)=javaClass.classLoader!!.getResourceAsStream("owned-native-operations/v1/$name-$suffix.json")!!.use { it.readBytes() }
+            val bytes=data("destination")
+            val document=OwnedConfigurationDocument.decode(bytes)
+            val packet=JSONObject(data("response").toString(Charsets.UTF_8))
+            val reference=OwnedConfigurationDocument.decode(java.util.Base64.getDecoder().decode(packet.getString("afterDocumentData")))
+            assertArrayEquals(bytes,document.originalData())
+            assertEquals(reference.activeProfileID,document.activeProfileID)
+            assertEquals(reference.defaultProfileID,document.defaultProfileID)
+            val actual=document.projectedProfiles()
+            val expected=reference.projectedProfiles()
+            val repository=SkinRenderRepository { error("Owned native edits must not load packages") }
+            for (index in actual.indices) for (scheme in ProfileAppearanceBank.schemes) for (action in ProfileAppearanceBank.actions) {
+                val result=repository.resolve(actual[index],true,scheme=="dark",action)
+                val target=repository.resolve(expected[index],true,scheme=="dark",action)
+                assertNull(result.warning); assertNull(target.warning)
+                assertTrue("$name/$index/$scheme/$action",AppearanceJSON.same(result.profile!!.layout(true),target.profile!!.layout(true)))
+            }
+            assertArrayEquals(bytes,document.originalData())
+        }
+    }
     @Test fun actualLegacyConversionsRetainAppearanceOutputsAndOpaqueBytes() {
         for (name in listOf("plain","portrait-only","explicit-landscape","legacy-canvas-alias","missing-canvas")) {
             fun data(suffix: String) = javaClass.classLoader!!.getResourceAsStream("legacy-configuration-migration/v1/$name-$suffix.json")!!.use { it.readBytes() }

@@ -1,0 +1,1 @@
+Native owned editing verified: 6 exact responses, 5 mixed/unexpected requests, portrait and legacy-document rejection

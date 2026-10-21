@@ -6,6 +6,77 @@ final class OwnedConfigurationDocumentTests: XCTestCase {
     private func fixture(_ name: String) throws -> Data {
         try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/\(name).json"))
     }
+    private func operationRequest(_ source: Data, _ operation: [String: Any]) throws -> Data {
+        try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "invocationID":"AC000000-0000-0000-0000-000000000001", "ownedConfigurationCommand":"apply", "documentData":source.base64EncodedString(), "operation":operation, "nowMillis":2000], options: [.sortedKeys, .withoutEscapingSlashes])
+    }
+    func testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity() throws {
+        let source = try fixture("document")
+        let document = try ThumbleOwnedConfigurationDocument(validating: source)
+        let profile = try XCTUnwrap(document.projectedProfiles.first)
+        let element = try XCTUnwrap(profile.customization.elements.first)
+        let id = profile.id.uuidString
+        let newID = "AC000000-0000-0000-0000-000000000002"
+        let cases: [(String, [String: Any])] = [
+            ("nullable-select", ["type":"profile.select", "profileID":try XCTUnwrap(document.projectedProfiles.last).id.uuidString]),
+            ("geometry", ["type":"element.nudge", "profileID":id, "variant":"landscape", "elementIDs":[element.id.uuidString], "deltaX":0.02, "deltaY":0.03]),
+            ("haptic", ["type":"element.set", "profileID":id, "variant":"primary", "elementID":element.id.uuidString, "changes":["haptic":["style":"light", "intensity":0.42]]]),
+            ("add", ["type":"element.add", "profileID":id, "variant":"landscape", "elementID":newID, "kind":"button", "changes":["label":"New action"]]),
+            ("delete", ["type":"element.delete", "profileID":id, "variant":"primary", "elementID":newID]),
+            ("scheme", ["type":"customization.set", "profileID":id, "variant":"landscape", "changes":["colorScheme":"dark", "backgroundEdit":["action":"keep"]]])
+        ]
+        let output = root.appendingPathComponent("build/OwnedOperationBridge")
+        try FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
+        var addedSource: Data?
+        for (name, operation) in cases {
+            var input = name == "delete" ? try XCTUnwrap(addedSource) : source
+            if name == "nullable-select" {
+                input = Data(String(decoding:source,as:UTF8.self).replacingOccurrences(of: "\"defaultProfileID\"\\s*:\\s*\"[^\"]+\"", with: "\"defaultProfileID\":null", options:.regularExpression).utf8)
+            }
+            let expectedBefore = try ThumbleOwnedConfigurationDocument(validating: input)
+            let baseProfile = try XCTUnwrap(expectedBefore.projectedProfiles.first)
+            let requestBytes = try operationRequest(input, operation)
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: requestBytes)
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            XCTAssertTrue(response.changed, name)
+            XCTAssertEqual(response.sourceSHA256, ProfileArtifactAdoptionMetadata.sha256(input))
+            let before = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.beforeDocumentData)))
+            let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            XCTAssertEqual(before.projectedProfiles, expectedBefore.projectedProfiles, name)
+            XCTAssertEqual(after.projectedProfiles.count, before.projectedProfiles.count)
+            if name == "nullable-select" {
+                XCTAssertNil(before.defaultProfileID); XCTAssertNil(after.defaultProfileID)
+                XCTAssertEqual(after.activeProfileID,document.projectedProfiles.last?.id)
+            }
+            let updated = try XCTUnwrap(after.projectedProfiles.first)
+            let expected = name == "add" ? Set(profile.customization.elements.map(\.id)).union([UUID(uuidString:newID)!]) : (name == "delete" ? Set(baseProfile.customization.elements.map(\.id)).subtracting([UUID(uuidString:newID)!]) : Set(profile.customization.elements.map(\.id)))
+            XCTAssertEqual(Set(updated.customization.elements.map(\.id)), expected, name)
+            for scheme in ThumbleSkinColorScheme.allCases { for action in ThumbleActionSet.allCases {
+                let resolved = updated.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                XCTAssertEqual(Set(resolved.elements.map(\.id)), expected, name)
+                if name == "geometry" { XCTAssertEqual(resolved.elements.map(\.output), profile.customization.elements.map(\.output)) }
+                if name == "haptic" { XCTAssertEqual(resolved.elements.first?.layout.hapticFeedback?.intensity, 0.42) }
+            }}
+            if name == "add" { addedSource = Data(base64Encoded: response.afterDocumentData) }
+            try requestBytes.write(to: output.appendingPathComponent("\(name)-request.json"), options:.atomic)
+            let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+            let responseBytes = try encoder.encode(response)
+            try responseBytes.write(to:output.appendingPathComponent("\(name)-response.json"), options:.atomic)
+            let frozen = root.appendingPathComponent("Host/fixtures/owned-native-operations/v1")
+            XCTAssertEqual(requestBytes, try Data(contentsOf:frozen.appendingPathComponent("\(name)-request.json")), name)
+            XCTAssertEqual(responseBytes, try Data(contentsOf:frozen.appendingPathComponent("\(name)-response.json")), name)
+        }
+    }
+    func testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields() throws {
+        let source = try fixture("document")
+        let id = try ThumbleOwnedConfigurationDocument(validating: source).activeProfileID.uuidString
+        for op in [["type":"orientation.set", "profileID":id, "preference":"portrait"], ["type":"customization.reset", "profileID":id, "variant":"portrait"]] {
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source,op))
+            XCTAssertThrowsError(try ThumbleOwnedOperationBridge.transform(request))
+        }
+        var root = try XCTUnwrap(JSONSerialization.jsonObject(with: operationRequest(source,["type":"profile.select", "profileID":id])) as? [String:Any])
+        root["path"] = "/tmp/unused"
+        XCTAssertThrowsError(try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: root)))
+    }
     func testFrozenNativeEditProjectionsAndMergedDestination() throws {
         let directory = root.appendingPathComponent("Host/fixtures/owned-projection-merge/v1")
         let output = root.appendingPathComponent("build/OwnedProjectionMerge")

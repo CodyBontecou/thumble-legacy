@@ -155,3 +155,53 @@ for name in contract["convertedCases"]:
 for name in contract["recoveryCases"]:
     assert not (legacy / f"{name}-destination.json").exists()
 print("Legacy configuration preparation verified:", len(contract["convertedCases"]), "conversions,", len(contract["recoveryCases"]), "recovery case")
+
+owned_ops = root.parent.parent / "owned-native-operations/v1"
+contract = json.loads((owned_ops / "manifest.json").read_bytes())
+assert contract["fixtureVersion"] == 1
+repository = root.parents[3]
+for name, expected in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((owned_ops / name).read_bytes()).hexdigest() == expected, name
+for name, expected in contract["sources"].items():
+    assert hashlib.sha256((repository / name).read_bytes()).hexdigest() == expected, name
+for name in contract["cases"]:
+    request = json.loads((owned_ops/f"{name}-request.json").read_bytes())
+    response = json.loads((owned_ops/f"{name}-response.json").read_bytes())
+    source_data = base64.b64decode(request["documentData"], validate=True)
+    source = json.loads(source_data)
+    destination_data = (owned_ops/f"{name}-destination.json").read_bytes()
+    destination = json.loads(destination_data)
+    projection = json.loads(base64.b64decode(response["afterDocumentData"], validate=True))
+    assert response["sourceSHA256"] == hashlib.sha256(source_data).hexdigest()
+    assert response["invocationID"].lower() == request["invocationID"].lower()
+    assert response["changed"] and response["changedPaths"]
+    assert source["version"] == destination["version"] == projection["version"] == 5
+    assert [p["id"] for p in source["profiles"]] == [p["id"] for p in destination["profiles"]]
+    assert destination["activeProfileID"] == projection["activeProfileID"]
+    assert destination["defaultProfileID"] == projection["defaultProfileID"]
+    for key in ["futureRootMetadata"]:
+        if key in source:
+            assert destination[key] == source[key]
+    for key in ["keyBindings","outputBindings","profileKeyBindings","profileOutputBindings"]:
+        assert destination.get(key,{}) == projection.get(key,{})
+    for before, after, known in zip(source["profiles"],destination["profiles"],projection["profiles"]):
+        assert after["profileFormatVersion"] == 5
+        assert not set(after).intersection(["skinReference","landscapeCustomization","portraitCustomization","orientationPreference"])
+        if "futureProfileMetadata" in before:
+            assert after["futureProfileMetadata"] == before["futureProfileMetadata"]
+        assert after["customization"] == known["customization"]
+        assert after.get("appearanceBank") == known.get("appearanceBank")
+        if "appearanceBank" in after:
+            variants = after["appearanceBank"]["variants"]
+            assert len(variants) == 8
+            ids = {e["id"].lower() for e in after["customization"]["elements"]}
+            for variant in variants:
+                assert {key.lower() for key in variant["appearance"]["controls"]} == ids
+    for literal in [b"18446744073709551617",b"0.12345678901234567890123456789"]:
+        if literal in source_data:
+            assert literal in destination_data
+    if name == "nullable-select":
+        assert source["defaultProfileID"] is None and destination["defaultProfileID"] is None
+        assert source["activeProfileID"] != destination["activeProfileID"]
+print("Owned native edits verified:",len(contract["cases"]),"operations across eight appearance states")

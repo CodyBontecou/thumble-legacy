@@ -187,6 +187,7 @@ def is_shared_runtime_symbol(name: str) -> bool:
             ".PendingProfileRecovery.",
             ".ProfileFormatPolicy.",
             ".ThumbleOwnedConfigurationDocument.",
+            ".ThumbleOwnedOperationBridge",
             ".ThumbleLegacyProfileMigration.",
             ".ThumbleLegacyProfileBridge",
         )

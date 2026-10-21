@@ -116,3 +116,172 @@ public struct ThumbleOwnedConfigurationDocument {
         }
     }
 }
+
+/// Explicit owned editing boundary. Typed views describe an operation's changes;
+/// the caller merges them into the exact source and owns revision/persistence.
+public struct ThumbleOwnedOperationBridgeRequest: Decodable, Sendable {
+    public let schemaVersion: Int
+    public let invocationID: UUID
+    public let ownedConfigurationCommand: String
+    public let documentData: String
+    public let operation: ThumbleBridgeJSONValue
+    public let nowMillis: Int64
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: Key.self)
+        guard values.allKeys.allSatisfy({ ["schemaVersion", "invocationID", "ownedConfigurationCommand", "documentData", "operation", "nowMillis"].contains($0.stringValue) }) else { throw ThumbleOwnedOperationBridgeError.invalidRequest }
+        schemaVersion = try values.decode(Int.self, forKey: .init("schemaVersion"))
+        invocationID = try values.decode(UUID.self, forKey: .init("invocationID"))
+        ownedConfigurationCommand = try values.decode(String.self, forKey: .init("ownedConfigurationCommand"))
+        documentData = try values.decode(String.self, forKey: .init("documentData"))
+        operation = try values.decode(ThumbleBridgeJSONValue.self, forKey: .init("operation"))
+        nowMillis = try values.decode(Int64.self, forKey: .init("nowMillis"))
+    }
+    private struct Key: CodingKey {
+        let stringValue: String
+        var intValue: Int? { nil }
+        init(_ text: String) { stringValue = text }
+        init?(stringValue: String) { self.stringValue = stringValue }
+        init?(intValue: Int) { return nil }
+    }
+}
+public struct ThumbleOwnedOperationBridgeResponse: Encodable, Sendable {
+    public let schemaVersion = 1
+    public let invocationID: UUID
+    public let sourceSHA256: String
+    public let beforeDocumentData: String
+    public let afterDocumentData: String
+    public let changed: Bool
+    public let changedPaths: [String]
+}
+public enum ThumbleOwnedOperationBridgeError: String, Error {
+    case invalidRequest = "owned_invalid_request"
+    case invalidDocument = "owned_invalid_document"
+    case retiredOperation = "owned_retired_operation"
+    case invalidResult = "owned_invalid_result"
+    case tooLarge = "owned_too_large"
+}
+public enum ThumbleOwnedOperationBridge {
+    public static func transform(_ request: ThumbleOwnedOperationBridgeRequest) throws -> ThumbleOwnedOperationBridgeResponse {
+        try Workspace(request).run()
+    }
+    private final class Workspace {
+        let request: ThumbleOwnedOperationBridgeRequest
+        var source = Data()
+        var root: [String: Any] = [:]
+        var beforeProfiles: [GamepadConfigurationProfile] = []
+        var before = Data()
+        var after = Data()
+        var paths: [String] = []
+        let encoder: JSONEncoder = {
+            let value = JSONEncoder(); value.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]; return value
+        }()
+        init(_ request: ThumbleOwnedOperationBridgeRequest) { self.request = request }
+        func run() throws -> ThumbleOwnedOperationBridgeResponse {
+            try decodeSource()
+            before = try projection(beforeProfiles)
+            try applyOperation()
+            guard before.count <= ThumbleOwnedConfigurationDocument.maximumBytes,
+                  after.count <= ThumbleOwnedConfigurationDocument.maximumBytes else { throw ThumbleOwnedOperationBridgeError.tooLarge }
+            _ = try ThumbleOwnedConfigurationDocument(validating: before)
+            _ = try ThumbleOwnedConfigurationDocument(validating: after)
+            let changed = before != after
+            if changed && paths.isEmpty { paths = ["/defaultProfileID"] }
+            return ThumbleOwnedOperationBridgeResponse(invocationID: request.invocationID,
+                sourceSHA256: ProfileArtifactAdoptionMetadata.sha256(source),
+                beforeDocumentData: before.base64EncodedString(), afterDocumentData: after.base64EncodedString(),
+                changed: changed, changedPaths: changed ? paths : [])
+        }
+        private func decodeSource() throws {
+            guard request.schemaVersion == 1, request.ownedConfigurationCommand == "apply", request.nowMillis >= 0,
+                  request.documentData.utf8.count <= ((ThumbleOwnedConfigurationDocument.maximumBytes + 2) / 3) * 4,
+                  let bytes = Data(base64Encoded: request.documentData), bytes.base64EncodedString() == request.documentData,
+                  bytes.count <= ThumbleOwnedConfigurationDocument.maximumBytes else { throw ThumbleOwnedOperationBridgeError.invalidRequest }
+            source = bytes
+            let document = try ThumbleOwnedConfigurationDocument(validating: bytes)
+            guard let object = try JSONSerialization.jsonObject(with: bytes) as? [String: Any] else { throw ThumbleOwnedOperationBridgeError.invalidDocument }
+            let names = Set(["schema", "version", "exportedAt", "activeProfileID", "defaultProfileID", "keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"])
+            root = object.filter { names.contains($0.key) }
+            for key in ["keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"] where root[key] == nil { root[key] = [String: Any]() }
+            beforeProfiles = document.projectedProfiles
+        }
+        private func profileObject(_ profile: GamepadConfigurationProfile) throws -> [String: Any] {
+            // A legacy template may still refer to a package. Reject it rather
+            // than discarding that reference and silently losing its appearance.
+            guard profile.skinReference == nil else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+            guard var object = try JSONSerialization.jsonObject(with: encoder.encode(profile)) as? [String: Any] else { throw ThumbleOwnedOperationBridgeError.invalidResult }
+            for key in ["skinReference", "skinBaselineCustomization", "landscapeSkinBaselineCustomization", "portraitSkinBaselineCustomization", "landscapeCustomization", "portraitCustomization", "orientationPreference"] { object.removeValue(forKey: key) }
+            object["profileFormatVersion"] = 5
+            return object
+        }
+        private func projection(_ profiles: [GamepadConfigurationProfile]) throws -> Data {
+            var result = root
+            var records: [[String: Any]] = []
+            for profile in profiles { records.append(try profileObject(profile)) }
+            result["profiles"] = records
+            return try JSONSerialization.data(withJSONObject: result, options: [.sortedKeys, .withoutEscapingSlashes])
+        }
+        private func canonicalOperation() throws -> ThumbleBridgeJSONValue {
+            guard case .object(var fields) = request.operation, case .string(let type)? = fields["type"] else { throw ThumbleOwnedOperationBridgeError.invalidRequest }
+            guard !type.hasPrefix("orientation.") else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+            if let variant = fields["variant"] {
+                guard variant == .string("primary") || variant == .string("landscape") else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+                fields["variant"] = .string("primary")
+            }
+            return .object(fields)
+        }
+        private func applyOperation() throws {
+            // Internal native-model views can use the legacy model's orientation
+            // mirror. Those fields never enter the owned result or persistence.
+            var document = root
+            var profiles: [Any] = []
+            for profile in beforeProfiles { profiles.append(try JSONSerialization.jsonObject(with: encoder.encode(profile))) }
+            document["profiles"] = profiles
+            let active = document["activeProfileID"]
+            if document["defaultProfileID"] is NSNull { document["defaultProfileID"] = active }
+            for key in ["schema", "version", "exportedAt"] { document.removeValue(forKey: key) }
+            for key in ["keyBindings", "outputBindings", "profileKeyBindings", "profileOutputBindings"] where document[key] == nil { document[key] = [String: Any]() }
+            let operation = try canonicalOperation()
+            let object = try JSONSerialization.jsonObject(with: encoder.encode(operation))
+            let bytes = try JSONSerialization.data(withJSONObject: ["schemaVersion":1, "nowMillis":request.nowMillis, "document":document, "operation":object], options: [.sortedKeys])
+            let legacy = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: bytes)
+            let response = try ThumbleConfigurationBridge.transform(legacy)
+            paths = response.changedPaths
+            try captureResult(response.document, operation: operation)
+        }
+        private func captureResult(_ document: ThumbleBridgeConfigurationDocument, operation: ThumbleBridgeJSONValue) throws {
+            var result: [GamepadConfigurationProfile] = []
+            for raw in document.profiles {
+                var profile = try JSONDecoder().decode(GamepadConfigurationProfile.self, from: encoder.encode(raw))
+                profile.customization = profile.customization.normalized
+                profile.landscapeCustomization = nil; profile.portraitCustomization = nil
+                profile.orientationPreference = .landscape
+                try reconcileBank(&profile)
+                result.append(profile)
+            }
+            root["activeProfileID"] = document.activeProfileID
+            if !(root["defaultProfileID"] is NSNull) { root["defaultProfileID"] = document.defaultProfileID }
+            if case .object(let fields) = operation, (fields["type"] == .string("profile.default") || fields["makeDefault"] == .bool(true)) { root["defaultProfileID"] = document.defaultProfileID }
+            for (key, value) in [("keyBindings", document.keyBindings), ("outputBindings", document.outputBindings)] {
+                root[key] = try JSONSerialization.jsonObject(with: encoder.encode(value))
+            }
+            root["profileKeyBindings"] = try JSONSerialization.jsonObject(with: encoder.encode(document.profileKeyBindings))
+            root["profileOutputBindings"] = try JSONSerialization.jsonObject(with: encoder.encode(document.profileOutputBindings))
+            after = try projection(result)
+        }
+        private func reconcileBank(_ profile: inout GamepadConfigurationProfile) throws {
+            guard let bank = profile.appearanceBank,
+                  bank.variants.first?.appearance.controlIDs != GamepadAppearanceSnapshot(profile.customization).controlIDs else { return }
+            // Add/delete controls across all paint states, retaining each state's
+            // resolved appearance and the canonical geometry/output owners.
+            var variants: [GamepadAppearanceBank.Variant] = []
+            for scheme in ThumbleSkinColorScheme.allCases {
+                for action in ThumbleActionSet.allCases {
+                    let resolved = bank.resolve(profile.customization, colorScheme: scheme, actionSet: action)
+                    variants.append(.init(colorScheme: scheme, actionSet: action, appearance: .init(resolved)))
+                }
+            }
+            profile.customization = bank.resolve(profile.customization, colorScheme: .light, actionSet: .base)
+            profile.appearanceBank = try GamepadAppearanceBank(variants: variants)
+        }
+    }
+}

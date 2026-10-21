@@ -211,6 +211,22 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedOperationBridgeFitsConstrainedThread() throws {
+        assertInlineSize(ThumbleOwnedOperationBridgeRequest.self, atMost: 256)
+        assertInlineSize(ThumbleOwnedOperationBridgeResponse.self, atMost: 256)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let bytes = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-native-operations/v1/add-request.json"))
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: bytes)
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            XCTAssertTrue(response.changed)
+            XCTAssertEqual(after.projectedProfiles.first?.customization.elements.count, 2)
+            XCTAssertEqual(after.projectedProfiles.first?.appearanceBank?.variants.count, 8)
+            XCTAssertLessThanOrEqual(try JSONEncoder().encode(response).count, 24 * 1024 * 1024)
+        }
+    }
+
     func testLegacyPreparationBridgeFitsConstrainedThread() throws {
         assertInlineSize(ThumbleLegacyProfileBridgeRequest.self, atMost: 256)
         assertInlineSize(ThumbleLegacyProfileBridgeResponse.self, atMost: 256)

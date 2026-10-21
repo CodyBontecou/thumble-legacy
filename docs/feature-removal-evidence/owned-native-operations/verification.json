@@ -1,0 +1,57 @@
+{
+  "baseCommit": "9ce5dd705df2c0b9fe25e9689c5f55b69dc2c112",
+  "isolatedSourceOverlays": [
+    "Sources/Bridge/ThumbleBridgeMain.swift",
+    "Sources/Shared/OwnedConfigurationDocument.swift",
+    "Tests/OwnedConfigurationDocumentTests.swift",
+    "Tests/StackSafetyRegressionTests.swift",
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt",
+    "scripts/check-controller-stack-frames.py",
+    "scripts/verify-feature-removal-fixtures.py"
+  ],
+  "isolatedStackSourceSHA256": "d987b37e5a980bc160e673bd76b1066492d2a9d9f52621ee1b3c1ae7866c8610",
+  "sourceHashes": {
+    "Sources/Shared/OwnedConfigurationDocument.swift": "b6addc2f9970efaf5e22d697e9b7e6fbb5749216d0aba50df6fe73e9000d4907",
+    "Sources/Bridge/ThumbleBridgeMain.swift": "15bd5f2b56326397b701eaf6b2d1842a37290a64ef3df4aad3c018c030c8419b",
+    "Tests/OwnedConfigurationDocumentTests.swift": "84b462b07bd005d84e396d21a6c09951f66c43992f72270db6f6dc9b2ec3b828",
+    "scripts/check-controller-stack-frames.py": "e198445c2ff5e30393b705a8eea42f5cf39e927392999b5d4b6439166bb6a1a3",
+    "scripts/verify-feature-removal-fixtures.py": "81e806213c1ea7cbe662e2289775b613eaa6e1126dcfc04701e666848fff3802",
+    "Android/app/src/test/java/com/thumble/android/OwnedConfigurationDocumentTest.kt": "8d009d92b158e8e10c17c102446986de23bbd9694679118441187dbb73aff595",
+    "Host/crates/thumble-host/src/bridge.rs": "69c46e55e844dcf4b94837af7febe90635f6a206119a31771a72641e6a568385",
+    "Host/crates/thumble-host/src/owned_operation_bridge.rs": "98aad2a92e43346b6484ab2925bd48eac55ded29b71d22bdf2c3042ebf5d2d7f",
+    "Host/crates/thumble-host/tests/owned_operation_bridge.rs": "ceaa4b4107a9120b70c86d49b3155421f28eda0f6d92117796400bb2da172f07",
+    "scripts/verify-owned-operation-bridge.py": "54f902e9e6bb6d90c3b3baef5ad4bd6801b8a943c5770683368d35779cd096b4"
+  },
+  "logSHA256": {
+    "rust": "46fe613837d1ab39e68a2ffae6d4406babbff634f480100d71f53da58284544e",
+    "rustFocused": "ec691b8dc62232d9401a8aeebe48d7bf4bc4033f29fe29d7908b3c7bdf26a30c",
+    "nativeTests": "51e207fd3a8a44bb342ceac3754defc3de06224bb4ac6286785833df0bcba256",
+    "nativeStack": "062478e6f0a87f97af4786b4906f409a66c35d24cfc7967e2efe9d3577a5af8b",
+    "android": "1c584f1b67ff69d88e2de94518d8dc08bbfaa93aa49901932b611d171a9a2682",
+    "nativeProcess": "20821424c088dabfb538f5e29819b91c4d2594a8a2e81ff8e803be5b18bca67c"
+  },
+  "fixtureManifestSHA256": "d3c439537811ae6e4a983caba0d65a263402262042f96057b0184bc1782010c8",
+  "rust": {
+    "passed": 548,
+    "ignored": 3,
+    "scope": "full shared-tree Rust gate; includes concurrent unrelated changes"
+  },
+  "finalRustFocused": {
+    "passed": 3,
+    "note": "Final test-only subprocess sentinel strengthens the no-invocation assertion after the full gate; production Rust unchanged"
+  },
+  "nativeTests": 7,
+  "nativeStackTests": 41,
+  "android": {
+    "tests": 207,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "nativeProcess": "6 exact responses, 5 mixed/unexpected request rejections, portrait and legacy-document rejection",
+  "bridgeBinarySHA256": "3e9f852ba8b3d7abe4952bbef41db8f1131236678b022688cd910af407623367",
+  "ownedAuthorityEditDispatchEnabled": false,
+  "migrationActivationEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "physicalDeviceAcceptance": false
+}

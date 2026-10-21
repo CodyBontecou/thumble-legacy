@@ -1,3 +1,5 @@
+#[path = "owned_operation_bridge.rs"]
+mod owned_operation_bridge;
 use crate::draft_operation::{ConfigurationOperation, ConfigurationOperationOutcome};
 use base64::{engine::general_purpose::STANDARD, Engine};
 use sha2::{Digest, Sha256};
@@ -1680,7 +1682,8 @@ fn constrained_control_ownership_delta(
                 continue;
             }
             let equal = if key == "partOutputs" {
-                element_part_outputs(original) == element_part_outputs(next)
+                element_part_outputs(original.get("partOutputs").unwrap_or(&Value::Null))
+                    == element_part_outputs(next.get("partOutputs").unwrap_or(&Value::Null))
             } else {
                 json_semantically_equal(
                     original.get(key).unwrap_or(&Value::Null),

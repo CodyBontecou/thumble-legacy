@@ -1,0 +1,35 @@
+{
+  "fixtureVersion": 1,
+  "cases": [
+    "nullable-select",
+    "geometry",
+    "haptic",
+    "add",
+    "delete",
+    "scheme"
+  ],
+  "sources": {
+    "Tests/OwnedConfigurationDocumentTests.swift": "84b462b07bd005d84e396d21a6c09951f66c43992f72270db6f6dc9b2ec3b828",
+    "Host/crates/thumble-host/tests/owned_operation_bridge.rs": "ceaa4b4107a9120b70c86d49b3155421f28eda0f6d92117796400bb2da172f07"
+  },
+  "files": {
+    "add-destination.json": "36e731592c5d3ca5e0a8dd43ceaf62de2bed0ded72e79d4f0e89ab0a07839fe8",
+    "add-request.json": "5d29501e5b8c1739ca529541f87c26df7e412709e201ed4c77c7e9356c4cb2ad",
+    "add-response.json": "159817f531b1b62aaf733a929241a53a827ab445304aed2be1629a4634ee623c",
+    "delete-destination.json": "f945454f71dbd269240b522dbc44e5fb0ea37eb268cdb6e4dde8210e63dfe615",
+    "delete-request.json": "b6237a81648aa09a06fad5066af5d1646390b6036ff6019fc1fd3cb27cb2bf29",
+    "delete-response.json": "d4bf3ef9140f237589c9d9aedb3ad0749211f356910d55c177416921170ae026",
+    "geometry-destination.json": "472b4682077bc3e30dbef0a79cef4411599205b7fc86e7ef44ea7012a3fe32f8",
+    "geometry-request.json": "ab442a4baf02b0c057727fe24213d2456059de295e4dd276ae3b0fd567dd36ee",
+    "geometry-response.json": "a075dbaa2c402c361ea784781fd679a55748029a5d8629bb54d960b01876d794",
+    "haptic-destination.json": "c3d443dd6eea86b1e871e1a66ee496828faf6716bebf537cfa12000bf8bcb159",
+    "haptic-request.json": "c1095f586947ff6774ae9a71fd6e48da28089c260bd131c64c5819f7e1d78146",
+    "haptic-response.json": "c7825548daaaae5767b43414e704cb1c263075a4b1afacec2801a5a84e1b18b6",
+    "nullable-select-destination.json": "e06d54105631ba1c40a69b21c9d93c3702d5b320db5265519b0b1e54aa5fa598",
+    "nullable-select-request.json": "0f97a8bb792a77e0085b75827b8b4984509894c2f452a24899b7dcb1b95d8feb",
+    "nullable-select-response.json": "93e7f8c5e25d53e688fc4dc47c52a57be474db415d6662bb09a5c03d57efd619",
+    "scheme-destination.json": "7a2d7cb48096232b449a27262c2001b122267eaf7a86e2f90356ee54a7d144a4",
+    "scheme-request.json": "dfca41c69e84d690ae1ce0208f530aed76a6542ca4aa5e2417745ad238eadbbb",
+    "scheme-response.json": "4ef2d13d3b7c74c75a55471408419a4efa6837465907d45e7c6ba87b30275822"
+  }
+}
