@@ -2,8 +2,7 @@ import Foundation
 
 @main
 private enum ThumbleBridgeMain {
-    @MainActor
-    static func main() async {
+    static func main() {
         guard CommandLine.arguments.count == 1 else {
             emitFailure(code: "arguments_not_allowed", message: "thumble-bridge accepts no command-line arguments")
             exit(2)
@@ -11,15 +10,7 @@ private enum ThumbleBridgeMain {
         do {
             let requestData = try readSingleBoundedRequest()
             let probe = try JSONDecoder().decodeUnique(BridgeRequestKind.self, from: requestData)
-            if probe.wowLiveCommand != nil {
-                guard probe.ownedConfigurationCommand == nil, probe.legacyProfileCommand == nil,
-                      probe.profileArtifactCommand == nil, probe.skinCommand == nil,
-                      probe.phoneLayoutCommand == nil, requestData.count <= 1024 else {
-                    throw ThumbleBridgeInputError.multipleRequests
-                }
-                let request = try JSONDecoder().decodeUnique(WoWLiveCaptureRequest.self, from: requestData)
-                try emit(await WoWLiveCapture.perform(request), maximumBytes: 3 * 1024 * 1024)
-            } else if probe.ownedConfigurationCommand != nil {
+            if probe.ownedConfigurationCommand != nil {
                 guard probe.legacyProfileCommand == nil, probe.profileArtifactCommand == nil,
                       probe.skinCommand == nil, probe.phoneLayoutCommand == nil,
                       requestData.count <= 24 * 1024 * 1024 else { throw ThumbleBridgeInputError.tooLarge }
@@ -119,7 +110,6 @@ private enum ThumbleBridgeInputError: Error {
 }
 
 private struct BridgeRequestKind: Decodable {
-    let wowLiveCommand: String?
     let ownedConfigurationCommand: String?
     let legacyProfileCommand: String?
     let skinCommand: String?
