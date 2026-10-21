@@ -1,0 +1,29 @@
+{
+  "baseCommit": "3581c8abc25b89035697cdf097e0934cdc6ecea5",
+  "isolatedRustSource": "/private/tmp/thumble-owned-interchange-op6s9fea",
+  "nativeStackSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "apple-source-hashes.json",
+  "logSHA256": {
+    "rust.txt": "da6081bc3909f8ebac56961234ff617a71bf9a5168eea94815549724009ef46d",
+    "fixtures.txt": "e6f2ecd4b33948bccc498e26ba028ca54394b85f04fda4bf97942331ee08da34",
+    "stack.txt": "1a4048a3bfe5a855843315274ba7bd0438e225c561387b1f93f4e35d11e4e641"
+  },
+  "rustTests": {
+    "passed": 583,
+    "failed": 0,
+    "ignored": 3,
+    "newOwnedArtifactCases": 10
+  },
+  "stackTests": {
+    "passed": 41,
+    "failed": 0,
+    "macDebugBuild": true,
+    "iOSDebugBuild": true
+  },
+  "independentPythonFixtureHashVerified": true,
+  "publicOwnedImportExportEnabled": false,
+  "peerFormatFiveAdvertised": false,
+  "automaticMigrationEnabled": false,
+  "deployedServicesChanged": false
+}

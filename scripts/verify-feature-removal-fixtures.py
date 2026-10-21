@@ -225,3 +225,25 @@ for name, expected in sequence_contract.get("files", {}).items():
     assert Path(name).name == name
     assert hashlib.sha256((sequence_root / name).read_bytes()).hexdigest() == expected
 print("Owned duplication packets verified against native sequence fixture hashes")
+
+# Exact-byte owned portable artifacts are distinct from v4/JCS artifacts.
+portable = repo / "Host/fixtures/owned-profile-artifact/v1"
+contract = json.loads((portable / "manifest.json").read_text())
+assert contract["schemaVersion"] == 1 and contract["configurationVersion"] == 5
+source = portable / contract["source"]
+assert source.resolve().is_relative_to((repo / "Host/fixtures").resolve())
+assert hashlib.sha256(source.read_bytes()).hexdigest() == contract["sourceSHA256"]
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((portable / name).read_bytes()).hexdigest() == digest
+artifact_text = (portable / "artifact.json").read_text()
+artifact = json.loads(artifact_text)
+start = artifact_text.index('"document":') + len('"document":')
+_, end = json.JSONDecoder().raw_decode(artifact_text, start)
+assert hashlib.sha256(artifact_text[start:end].encode("utf-8")).hexdigest() == artifact["contentHash"]["value"]
+assert artifact["schema"] == "com.codybontecou.thumble.owned-profile-artifact"
+assert artifact["artifactVersion"] == 1
+assert artifact["contentHash"]["canonicalization"] == contract["hashEncoding"] == "exact-json-utf8"
+assert artifact["document"]["version"] == 5
+assert all("launchTarget" not in p for p in artifact["document"]["profiles"])
+print("Owned portable artifact fixture verified; activation remains gated")

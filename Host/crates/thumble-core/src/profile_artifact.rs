@@ -829,7 +829,7 @@ fn validate_portable_value(value: &Value, depth: usize) -> Result<(), ProfileArt
     Ok(())
 }
 
-fn is_forbidden_field_name(value: &str) -> bool {
+pub(crate) fn is_forbidden_field_name(value: &str) -> bool {
     const FORBIDDEN: &[&str] = &[
         "accountid",
         "apikey",

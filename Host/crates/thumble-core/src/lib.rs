@@ -13,7 +13,13 @@ pub use element_identity::ElementPresentation;
 mod gamepad;
 mod generation_spec;
 mod owned_configuration;
+mod owned_profile_artifact;
 pub use owned_configuration::{OwnedConfigurationDocument, OwnedConfigurationError};
+pub use owned_profile_artifact::{
+    OwnedProfileArtifact, OwnedProfileArtifactError, MAXIMUM_OWNED_PROFILE_ARTIFACT_BYTES,
+    OWNED_PROFILE_ARTIFACT_HASH_ENCODING, OWNED_PROFILE_ARTIFACT_SCHEMA,
+    OWNED_PROFILE_ARTIFACT_VERSION,
+};
 mod legacy_configuration_migration;
 pub use legacy_configuration_migration::{
     prepare_legacy_configuration, LegacyMigrationCandidate, LegacyMigrationError,

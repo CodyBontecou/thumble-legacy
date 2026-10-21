@@ -1,0 +1,9 @@
+{
+  "Host/crates/thumble-core/src/lib.rs": "629a66680afd8d9adcaec97f7f97dde4a350cd67fc663da49a67e7532efa705c",
+  "Host/crates/thumble-core/src/profile_artifact.rs": "856da136e7385f5e07fb805e578db3cd3c180a6333d46b478038ca6f4b02e3ce",
+  "Host/crates/thumble-core/src/owned_profile_artifact.rs": "11001c58a76c9c279a361add380f1e21d840c973308daf00d63ed76f868d3776",
+  "Host/crates/thumble-core/tests/owned_profile_artifact.rs": "1474c353fdb7c0982f239b661693e72af9284ed548f1de39e6c211aec3274213",
+  "scripts/verify-feature-removal-fixtures.py": "438af916636767341392501ee5b6af5c1ff576097783f8ec4ca1c4a7f6dc3562",
+  "Host/fixtures/owned-profile-artifact/v1/artifact.json": "0c7c32e02ef5ef26962da6e7c4426616abd5189b0e3838e430186e5d443fc7f9",
+  "Host/fixtures/owned-profile-artifact/v1/manifest.json": "64b2bb638666722e409a7879cdadbb6f49eee52d92cb833c623f1efbeee9e42b"
+}

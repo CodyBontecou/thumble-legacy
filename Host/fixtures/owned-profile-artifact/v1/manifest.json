@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "configurationVersion": 5,
+  "artifactVersion": 1,
+  "hashEncoding": "exact-json-utf8",
+  "source": "../../owned-configuration/v1/document.json",
+  "sourceSHA256": "0b0cd5d4335e278358e9320be05c882891fb8a305cb3f30d19f6f2c6b905fa3f",
+  "files": {
+    "artifact.json": "0c7c32e02ef5ef26962da6e7c4426616abd5189b0e3838e430186e5d443fc7f9"
+  },
+  "exportedAt": 123,
+  "activation": "Pure codec only; no authority migration, peer advertisement, or import route enabled."
+}
