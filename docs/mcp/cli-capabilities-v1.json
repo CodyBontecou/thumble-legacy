@@ -182,6 +182,16 @@
           "status": "planned",
           "mcpTool": "launch_profile_target",
           "gate": "app-action"
+        },
+        {
+          "id": "profile.prepare-import",
+          "cli": [
+            "thumble-host configuration prepare-import"
+          ],
+          "status": "partial",
+          "mcpTool": "prepare_legacy_profile_import",
+          "gate": "none",
+          "phoneEffect": "No phone or authority mutation; owned peer activation remains gated"
         }
       ]
     },

@@ -42,6 +42,20 @@ pub struct ImportProfilesParams {
     pub make_default: bool,
 }
 
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct LegacyPackageInput {
+    pub profile_id: String,
+    pub archive_path: String,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct PrepareLegacyImportParams {
+    pub source_json: String,
+    #[serde(default)]
+    pub packages: Vec<LegacyPackageInput>,
+}
+
 const THUMBLE_ICON_URL: &str = "https://pocketpad-site.pages.dev/assets/app-icon.png?v=6eae962e";
 const THUMBLE_WEBSITE_URL: &str = "https://pocketpad-site.pages.dev";
 
@@ -4407,6 +4421,51 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Prepare a version-4 local configuration/export as a portable owned artifact without writing files, authority state, trust or phone settings. Return exact-source checksums and per-profile landscape/recovery review. Supply original package archives by profile UUID when referenced; missing/invalid packages fail without a partial artifact. Explicitly import the returned artifactJSON in a separate revision-checked operation.",
+        annotations(
+            read_only_hint = true,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = false
+        )
+    )]
+    pub async fn prepare_legacy_profile_import(
+        &self,
+        Parameters(params): Parameters<PrepareLegacyImportParams>,
+    ) -> Result<Json<Value>, String> {
+        if params.source_json.len() > thumble_core::MAXIMUM_CONFIGURATION_DOCUMENT_BYTES
+            || params.packages.len() > 256
+        {
+            return Err("Legacy preparation exceeds its input bound".into());
+        }
+        let mut mappings = std::collections::BTreeMap::new();
+        for package in params.packages {
+            let id = package
+                .profile_id
+                .parse()
+                .map_err(|_| "Package profileId must be a UUID")?;
+            let path = PathBuf::from(package.archive_path);
+            if !path.is_absolute() || mappings.insert(id, path).is_some() {
+                return Err("Package paths must be absolute with unique profile IDs".into());
+            }
+        }
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map_err(|_| "System clock unavailable")?
+            .as_millis()
+            .try_into()
+            .map_err(|_| "System clock exceeds its bound")?;
+        let prepared = tokio::task::spawn_blocking(move || {
+            thumble_host::legacy_import::prepare(params.source_json.as_bytes(), &mappings, now)
+        })
+        .await
+        .map_err(|_| "Legacy preparation worker failed")??;
+        serde_json::to_value(prepared)
+            .map(Json)
+            .map_err(|_| "Legacy preparation encoding failed".into())
+    }
+
+    #[tool(
         description = "Export all profiles, or one profile UUID, as bounded portable JSON with a verified content checksum. Excludes credentials and local launch targets; owned profiles retain all appearance states and image resources. Returns artifactJSON without writing files or opening desktop UI.",
         annotations(
             read_only_hint = true,
@@ -5964,7 +6023,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 30);
+        assert_eq!(tools.len(), 31);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6091,6 +6150,7 @@ mod tests {
                 "list_controls",
                 "list_profiles",
                 "pairing_code",
+                "prepare_legacy_profile_import",
                 "press_control",
                 "preview_configuration_draft",
                 "preview_skin_workspace",
@@ -6394,7 +6454,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 30);
+        assert_eq!(tools.len(), 31);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -6908,6 +6968,23 @@ mod tests {
             .await
             .err()
             .expect("request must fail before socket access");
+        assert!(error.contains("UUID"));
+    }
+    #[tokio::test]
+    async fn legacy_preparation_rejects_ambiguous_package_mappings_before_native_work() {
+        let server = ThumbleMcp::new(PathBuf::from("/missing/control.sock"), false, false);
+        let params = PrepareLegacyImportParams {
+            source_json: "{}".into(),
+            packages: vec![LegacyPackageInput {
+                profile_id: "not-a-uuid".into(),
+                archive_path: "/private/tmp/unused".into(),
+            }],
+        };
+        let error = server
+            .prepare_legacy_profile_import(Parameters(params))
+            .await
+            .err()
+            .expect("invalid UUID must fail");
         assert!(error.contains("UUID"));
     }
 }

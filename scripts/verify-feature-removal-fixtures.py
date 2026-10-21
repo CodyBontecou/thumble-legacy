@@ -247,3 +247,16 @@ assert artifact["contentHash"]["canonicalization"] == contract["hashEncoding"] =
 assert artifact["document"]["version"] == 5
 assert all("launchTarget" not in p for p in artifact["document"]["profiles"])
 print("Owned portable artifact fixture verified; activation remains gated")
+
+# Portable legacy preparation is opt-in; old migration responses stay frozen.
+portable_legacy = repo / "Host/fixtures/legacy-portable-preparation/v1"
+contract = json.loads((portable_legacy / "manifest.json").read_text())
+assert contract["fixtureVersion"] == 1 and contract["portableMode"] is True
+assert contract["caseCount"] == 5 and len(contract["files"]) == 6
+for name, digest in contract["files"].items():
+    assert Path(name).name == name
+    assert hashlib.sha256((portable_legacy / name).read_bytes()).hexdigest() == digest
+for name, digest in contract["sources"].items():
+    assert not Path(name).is_absolute() and ".." not in Path(name).parts
+    assert hashlib.sha256((repo / name).read_bytes()).hexdigest() == digest
+print("Portable legacy preparation verified: five opt-in native responses; original fixtures unchanged")

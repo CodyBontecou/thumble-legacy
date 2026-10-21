@@ -289,7 +289,17 @@ fn validate_portable(
                         continue;
                     }
                 }
-                if crate::profile_artifact::is_forbidden_field_name(key) && !child.is_null() {
+                // `launch_target` is also a paint-owner ID in a validated
+                // appearance-bank control bar. It is not local launch metadata.
+                let launch_button = key == "launch_target"
+                    && {
+                        let segments: Vec<_> = path.split('/').collect();
+                        matches!(segments.as_slice(),["","profiles",profile,"appearanceBank","variants",variant,"appearance","controlBar"] if profile.parse::<usize>().is_ok() && variant.parse::<usize>().is_ok_and(|v|v<8))
+                    };
+                if crate::profile_artifact::is_forbidden_field_name(key)
+                    && !child.is_null()
+                    && !launch_button
+                {
                     return Err(invalid);
                 }
                 validate_portable(

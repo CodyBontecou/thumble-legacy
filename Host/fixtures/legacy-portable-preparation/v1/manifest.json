@@ -1,0 +1,26 @@
+{
+  "fixtureVersion": 1,
+  "portableMode": true,
+  "caseCount": 5,
+  "files": {
+    "plain-response.json": "01ce55948ecb95f535f22ab2ce3cf0866382bfbd48f4f63533b40229629659e1",
+    "portrait-only-response.json": "c659c11a95e067187d133c7f323c943a718a31b186b1b744c6ba2e0daf8e744a",
+    "explicit-landscape-response.json": "a70a68144a479dc580010bbbbce26c67ce2d6a0b91ecdb38c821999c3e84347c",
+    "legacy-canvas-alias-response.json": "fc34cdccfe6d8af0d3526434449046d9aa8abdf828541788f4d223021ad81225",
+    "missing-canvas-response.json": "72016960503432fa89dfe72c9b3a775a181676b585a386cb062f5138b23b4594",
+    "legacy-export.json": "0acc1a36cca4a1ceeccfe8b2c4cfcf1b3f3ad8f0e1d4069fad1b9aaa6d1161cc"
+  },
+  "sources": {
+    "Host/fixtures/legacy-configuration-migration/v1/plain-source.json": "3964a490283fd78ad7c64b7d0a4c1397a17819a03d0d6a2ff494c160ca5e5af8",
+    "Host/fixtures/legacy-configuration-migration/v1/plain-request.json": "7d43e6f985048917fca5408a2662c1c17476985a79a91147134bc7c836f06b3e",
+    "Host/fixtures/legacy-configuration-migration/v1/portrait-only-source.json": "dee8d284a29a0001f628ac5d47ddae127f85a2f9ea210864b8a58bb512263953",
+    "Host/fixtures/legacy-configuration-migration/v1/portrait-only-request.json": "73278cb86caef9a94e8c53d3cf104bf46b1cd90efa76189a0aa5b8255b38b182",
+    "Host/fixtures/legacy-configuration-migration/v1/explicit-landscape-source.json": "35ee053bdd21b5abad389cd3cdfda895b43bf93a7f4968a2232bb38be645ebba",
+    "Host/fixtures/legacy-configuration-migration/v1/explicit-landscape-request.json": "91d07f4f34779317fb7e1b497d7c21b22ac1c927afd0493abc7a86a993f390ad",
+    "Host/fixtures/legacy-configuration-migration/v1/legacy-canvas-alias-source.json": "463c2bd375952e29b37c5797ab9f274f87955637763fdf657ec7365964a1ef11",
+    "Host/fixtures/legacy-configuration-migration/v1/legacy-canvas-alias-request.json": "90128ac7bd1fe6b44d708bf4eb17e9b72c44df5e88ec427734e8aba56331138d",
+    "Host/fixtures/legacy-configuration-migration/v1/missing-canvas-source.json": "7d362301afb7b74c1dee09e1051913d26838c7e3d03b4ff22deccf7f20d05e90",
+    "Host/fixtures/legacy-configuration-migration/v1/missing-canvas-request.json": "c9e73552e3d2eb9a7bd58b4a9acc8a543f42c26b4f5f2f5be28e2f9f4086534a"
+  },
+  "legacyExport": "legacy-export.json"
+}

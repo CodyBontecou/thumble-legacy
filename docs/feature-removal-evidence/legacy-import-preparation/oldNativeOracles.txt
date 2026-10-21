@@ -1,0 +1,1 @@
+Native legacy preparation verified: 5 exact responses, missing-package and unknown-canvas recovery, 4 mixed/unexpected request rejections

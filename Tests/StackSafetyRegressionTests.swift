@@ -240,6 +240,16 @@ final class StackSafetyRegressionTests: XCTestCase {
                   result.reviewReasons.contains("portraitArranged"), profile.appearanceBank?.variants.count == 8,
                   profile.customization.deviceCanvas.editorDeviceFrame.isLandscape else { throw StackTestError.unexpectedDecodedState }
             _ = try JSONEncoder().encode(result)
+            let plain = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/legacy-configuration-migration/v1/plain-request.json"))
+            var portable = try XCTUnwrap(JSONSerialization.jsonObject(with: plain) as? [String: Any])
+            portable["materializeAllAppearance"] = true
+            let portableRequest = try JSONDecoder().decodeUnique(ThumbleLegacyProfileBridgeRequest.self, from: JSONSerialization.data(withJSONObject: portable))
+            let portableResult = try ThumbleLegacyProfileBridge.transform(portableRequest)
+            let portableProfile = try JSONDecoder().decode(GamepadConfigurationProfile.self, from: portableResult.afterProfileData)
+            guard portableProfile.appearanceBank?.variants.count == 8,
+                  portableProfile.customization.deviceCanvas.editorDeviceFrame.isLandscape else { throw StackTestError.unexpectedDecodedState }
+            _ = try JSONEncoder().encode(portableResult)
+
         }
     }
 

@@ -105,6 +105,24 @@ impl NativeLegacyPreparation {
         package_sha256: Option<&str>,
         response: &[u8],
     ) -> Result<Self, LegacyMigrationError> {
+        Self::decode_mode(source, invocation, package_sha256, response, false)
+    }
+    /// Explicit portable preparation requires a bank even for an unskinned profile.
+    pub fn decode_portable(
+        source: &[u8],
+        invocation: Uuid,
+        package_sha256: Option<&str>,
+        response: &[u8],
+    ) -> Result<Self, LegacyMigrationError> {
+        Self::decode_mode(source, invocation, package_sha256, response, true)
+    }
+    fn decode_mode(
+        source: &[u8],
+        invocation: Uuid,
+        package_sha256: Option<&str>,
+        response: &[u8],
+        materialize_all: bool,
+    ) -> Result<Self, LegacyMigrationError> {
         if source.len() > MAXIMUM || response.len() > 24 * 1024 * 1024 {
             return Err(LegacyMigrationError::TooLarge);
         }
@@ -156,7 +174,8 @@ impl NativeLegacyPreparation {
             .and_then(Value::as_str)
             .and_then(|id| Uuid::parse_str(id).ok())
             != Some(id)
-            || staged.get("appearanceBank").is_some_and(Value::is_object) != has_skin
+            || staged.get("appearanceBank").is_some_and(Value::is_object)
+                != (has_skin || materialize_all)
         {
             return Err(LegacyMigrationError::InvalidPreparation);
         }

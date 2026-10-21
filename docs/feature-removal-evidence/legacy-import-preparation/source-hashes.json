@@ -1,0 +1,16 @@
+{
+  "Host/crates/thumble-core/src/legacy_configuration_migration.rs": "fda7e308024e050a9322e51684e6ed0977a40f08e5f58fe34d54d67ed221383d",
+  "Host/crates/thumble-core/src/owned_profile_artifact.rs": "f1543d3fa855ac465e8d17112447e91ff65d837e1663b89ee4ed149bf54abc55",
+  "Host/crates/thumble-core/tests/owned_profile_artifact.rs": "bbd464403c34e178d48b0b5986b4e84f283bba8a0987d727799b637e97f1d8dd",
+  "Host/crates/thumble-host/src/bridge.rs": "bcd37850688bef3c5410fa46adfac3c3b78630818befcc1c8ece065836a92db5",
+  "Host/crates/thumble-host/src/cli_configuration.rs": "d9e9f916b017663f7fd2eff6eab1f0849340af9c1cfdeb04d4e027ea20002850",
+  "Host/crates/thumble-host/src/legacy_import.rs": "e72b81263a88af727becc95b0aa4c7d948446fe0fa8adf7e752e831a328b5957",
+  "Host/crates/thumble-host/src/lib.rs": "07c3bb143ce1487d5aee1a292c1786e98c73775bf3ca7adf1858fd33b86956c5",
+  "Host/crates/thumble-mcp/src/server.rs": "7cf72851cf0e71f418c1adb67970dec28ed4e07e4ed7868a003055aaf7c91971",
+  "Host/crates/thumble-mcp/src/main.rs": "dd7cedaec318bc0e15301bc6bf94575caf8bbe9239ed7a7cecb7c3e4ee5b0a14",
+  "Sources/Shared/LegacyProfileMigration.swift": "d686129815ac1ee5791611f231e9e9e8283bb82a5c5a2f78fd7401405c335913",
+  "Tests/StackSafetyRegressionTests.swift": "14202fef95617ad4a7b903b8ede216336549e19f473482f79b7758060d612a71",
+  "scripts/verify-feature-removal-fixtures.py": "74a13e71b94219297ceef54113e537a8c18bea9addc2a39e0077bb97b8895c9b",
+  "scripts/verify-legacy-import-flow.py": "a37e326b41a2fc1b41cac7475e1ec21bdb55dcbb49eafccb348b1392c47105b6",
+  "docs/mcp/cli-capabilities-v1.json": "fcd456a1919715430589fd27b4b324bffd9ba3817edc51c680c52859303619a2"
+}

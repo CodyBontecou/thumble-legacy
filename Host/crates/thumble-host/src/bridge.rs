@@ -151,6 +151,23 @@ impl ConfigurationBridge {
         package: Option<&[u8]>,
         invocation: Uuid,
     ) -> Result<thumble_core::NativeLegacyPreparation, thumble_core::LegacyMigrationError> {
+        self.prepare_legacy_profile_mode(profile, package, invocation, false)
+    }
+    pub fn prepare_portable_legacy_profile(
+        &self,
+        profile: &[u8],
+        package: Option<&[u8]>,
+        invocation: Uuid,
+    ) -> Result<thumble_core::NativeLegacyPreparation, thumble_core::LegacyMigrationError> {
+        self.prepare_legacy_profile_mode(profile, package, invocation, true)
+    }
+    fn prepare_legacy_profile_mode(
+        &self,
+        profile: &[u8],
+        package: Option<&[u8]>,
+        invocation: Uuid,
+        portable: bool,
+    ) -> Result<thumble_core::NativeLegacyPreparation, thumble_core::LegacyMigrationError> {
         use thumble_core::LegacyMigrationError as Error;
         if profile.len() > MAXIMUM_CONFIGURATION_DOCUMENT_BYTES
             || package.is_some_and(|archive| archive.len() > 40 * 1024 * 1024)
@@ -159,6 +176,9 @@ impl ConfigurationBridge {
         }
         let mut request = serde_json::json!({"schemaVersion":1,"invocationID":invocation,
             "legacyProfileCommand":"prepare","profileData":STANDARD.encode(profile)});
+        if portable {
+            request["materializeAllAppearance"] = true.into();
+        }
         if let Some(archive) = package {
             request["packageData"] = STANDARD.encode(archive).into();
         }
@@ -171,12 +191,21 @@ impl ConfigurationBridge {
             .execute_with_limits(input, 64 * 1024 * 1024, 24 * 1024 * 1024 + 1)
             .map_err(|_| Error::PreparationFailed)?;
         let package_hash = package.map(|archive| format!("{:x}", Sha256::digest(archive)));
-        thumble_core::NativeLegacyPreparation::decode(
-            profile,
-            invocation,
-            package_hash.as_deref(),
-            &response,
-        )
+        if portable {
+            thumble_core::NativeLegacyPreparation::decode_portable(
+                profile,
+                invocation,
+                package_hash.as_deref(),
+                &response,
+            )
+        } else {
+            thumble_core::NativeLegacyPreparation::decode(
+                profile,
+                invocation,
+                package_hash.as_deref(),
+                &response,
+            )
+        }
     }
 
     pub fn discover() -> Result<Self, ConfigurationBridgeError> {

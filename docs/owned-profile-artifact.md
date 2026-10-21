@@ -18,4 +18,6 @@ Safe root extensions merge by exact field name, with incoming values replacing m
 
 Owned imports require an existing schema-4 authority and a valid owned artifact. A version-4 artifact is not silently converted, and a valid version-5 artifact cannot initialize a fresh legacy authority or trigger migration. Legacy authorities keep their existing version-4 codec. MCP import additionally requires its existing configuration-write gate and the receiver's write authorization; export is read-only.
 
-Remaining integration: explicit legacy conversion, retained phone reconciliation and transfer format 5, file-backed artwork tools and automatic migration activation. These remain required before removing the remaining skin runtime and desktop UI.
+Explicit legacy file preparation is available through the [read-only CLI/MCP conversion step](legacy-import-preparation.md). The bounded portable policy also recognizes `launch_target` solely as a control-bar paint-owner key inside validated appearance-bank states, while still refusing local launch metadata elsewhere.
+
+Remaining integration: retained phone reconciliation and transfer format 5, file-backed artwork tools and automatic migration activation. These remain required before removing the remaining skin runtime and desktop UI.

@@ -1,0 +1,429 @@
+{
+  "schema": "com.codybontecou.pocketpad.keypad-configuration",
+  "version": 4,
+  "artifactVersion": 1,
+  "exportedAt": 100,
+  "profiles": [
+    {
+      "customization": {
+        "elements": [
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "dpadUp"
+              ],
+              "keyboard": {
+                "keyCode": 126,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000101",
+            "kind": "button",
+            "label": "Up",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "dpadUp"
+              ],
+              "keyboard": {
+                "keyCode": 126,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "dpadDown"
+              ],
+              "keyboard": {
+                "keyCode": 125,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000102",
+            "kind": "button",
+            "label": "Down",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "dpadDown"
+              ],
+              "keyboard": {
+                "keyCode": 125,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "dpadLeft"
+              ],
+              "keyboard": {
+                "keyCode": 123,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000103",
+            "kind": "button",
+            "label": "Left",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "dpadLeft"
+              ],
+              "keyboard": {
+                "keyCode": 123,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "dpadRight"
+              ],
+              "keyboard": {
+                "keyCode": 124,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000104",
+            "kind": "button",
+            "label": "Right",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "dpadRight"
+              ],
+              "keyboard": {
+                "keyCode": 124,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "south"
+              ],
+              "keyboard": {
+                "keyCode": 36,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000105",
+            "kind": "button",
+            "label": "Action 1",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "south"
+              ],
+              "keyboard": {
+                "keyCode": 36,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "east"
+              ],
+              "keyboard": {
+                "keyCode": 48,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000106",
+            "kind": "button",
+            "label": "Action 2",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "east"
+              ],
+              "keyboard": {
+                "keyCode": 48,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "west"
+              ],
+              "keyboard": {
+                "keyCode": 40,
+                "modifiersRawValue": 1
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000107",
+            "kind": "button",
+            "label": "Action 3",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "west"
+              ],
+              "keyboard": {
+                "keyCode": 40,
+                "modifiersRawValue": 1
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "north"
+              ],
+              "keyboard": {
+                "keyCode": 11,
+                "modifiersRawValue": 8
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000108",
+            "kind": "button",
+            "label": "Action 4",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "north"
+              ],
+              "keyboard": {
+                "keyCode": 11,
+                "modifiersRawValue": 8
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "select"
+              ],
+              "keyboard": {
+                "keyCode": 35,
+                "modifiersRawValue": 3
+              }
+            },
+            "id": "00000000-0000-0000-0000-000000000109",
+            "kind": "button",
+            "label": "Menu",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "select"
+              ],
+              "keyboard": {
+                "keyCode": 35,
+                "modifiersRawValue": 3
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          },
+          {
+            "defaultOutput": {
+              "gamepadButtons": [
+                "start"
+              ],
+              "keyboard": {
+                "keyCode": 53,
+                "modifiersRawValue": 0
+              }
+            },
+            "id": "00000000-0000-0000-0000-00000000010A",
+            "kind": "button",
+            "label": "Pause",
+            "layout": {},
+            "output": {
+              "gamepadButtons": [
+                "start"
+              ],
+              "keyboard": {
+                "keyCode": 53,
+                "modifiersRawValue": 0
+              }
+            },
+            "partOutputs": [],
+            "visualRole": "custom"
+          }
+        ]
+      },
+      "id": "00000000-0000-0000-0000-000000000201",
+      "name": "Default",
+      "orientationPreference": "automatic",
+      "outputMode": "keyboard",
+      "updatedAt": 0
+    }
+  ],
+  "activeProfileID": "00000000-0000-0000-0000-000000000201",
+  "defaultProfileID": "00000000-0000-0000-0000-000000000201",
+  "profileKeyBindings": {
+    "00000000-0000-0000-0000-000000000201": {
+      "00000000-0000-0000-0000-000000000101": {
+        "keyCode": 126,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000102": {
+        "keyCode": 125,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000103": {
+        "keyCode": 123,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000104": {
+        "keyCode": 124,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000105": {
+        "keyCode": 36,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000106": {
+        "keyCode": 48,
+        "modifiers": 0
+      },
+      "00000000-0000-0000-0000-000000000107": {
+        "keyCode": 40,
+        "modifiers": 1
+      },
+      "00000000-0000-0000-0000-000000000108": {
+        "keyCode": 11,
+        "modifiers": 8
+      },
+      "00000000-0000-0000-0000-000000000109": {
+        "keyCode": 35,
+        "modifiers": 3
+      },
+      "00000000-0000-0000-0000-00000000010A": {
+        "keyCode": 53,
+        "modifiers": 0
+      }
+    }
+  },
+  "profileOutputBindings": {
+    "00000000-0000-0000-0000-000000000201": {
+      "00000000-0000-0000-0000-000000000101": {
+        "gamepadButtons": [
+          "dpadUp"
+        ],
+        "keyboard": {
+          "keyCode": 126,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000102": {
+        "gamepadButtons": [
+          "dpadDown"
+        ],
+        "keyboard": {
+          "keyCode": 125,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000103": {
+        "gamepadButtons": [
+          "dpadLeft"
+        ],
+        "keyboard": {
+          "keyCode": 123,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000104": {
+        "gamepadButtons": [
+          "dpadRight"
+        ],
+        "keyboard": {
+          "keyCode": 124,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000105": {
+        "gamepadButtons": [
+          "south"
+        ],
+        "keyboard": {
+          "keyCode": 36,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000106": {
+        "gamepadButtons": [
+          "east"
+        ],
+        "keyboard": {
+          "keyCode": 48,
+          "modifiers": 0
+        }
+      },
+      "00000000-0000-0000-0000-000000000107": {
+        "gamepadButtons": [
+          "west"
+        ],
+        "keyboard": {
+          "keyCode": 40,
+          "modifiers": 1
+        }
+      },
+      "00000000-0000-0000-0000-000000000108": {
+        "gamepadButtons": [
+          "north"
+        ],
+        "keyboard": {
+          "keyCode": 11,
+          "modifiers": 8
+        }
+      },
+      "00000000-0000-0000-0000-000000000109": {
+        "gamepadButtons": [
+          "select"
+        ],
+        "keyboard": {
+          "keyCode": 35,
+          "modifiers": 3
+        }
+      },
+      "00000000-0000-0000-0000-00000000010A": {
+        "gamepadButtons": [
+          "start"
+        ],
+        "keyboard": {
+          "keyCode": 53,
+          "modifiers": 0
+        }
+      }
+    }
+  },
+  "catalogRevision": {
+    "controllerTemplates": 1,
+    "deviceFrames": 1,
+    "generationSpec": 1
+  },
+  "contentHash": {
+    "algorithm": "sha256",
+    "canonicalization": "rfc8785",
+    "value": "5572f763c47770fa7e888b0695f832100f988b3f697df2cf24832eb48640d5f0"
+  }
+}

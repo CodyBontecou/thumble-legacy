@@ -1,0 +1,1 @@
+{"preparedCases": 6, "mcpLargePreparation": true, "mcpLargeImport": true, "importReplay": true, "sourceFilesUntouched": true, "noImplicitAuthorityCreation": true, "retainedAppearanceStates": 8, "desktopGUIRequired": false}

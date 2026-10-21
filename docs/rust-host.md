@@ -571,3 +571,5 @@ binding resolution, including explicit part clears, legacy joystick mappings and
 output-mode filtering. Display strings never choose or execute input bindings.
 
 Explicit schema-4 authorities export/import the lossless owned artifact through `thumble profile export/import` and MCP `export_profiles`/`import_profiles`. Imports use revision-tagged drafts/commits, preserve local launch associations on replacement and derive copy IDs from the invocation. Raw root extensions persist in `ownedConfigurationExtensions`. No implicit authority initialization/migration or legacy-artifact conversion occurs. See [the artifact contract](owned-profile-artifact.md).
+
+Use `thumble-host configuration prepare-import --source-file /absolute/setup.json [--package PROFILE_UUID=/absolute/original.pocketpad]` for read-only legacy file conversion. MCP exposes the same operation as `prepare_legacy_profile_import` without requiring configuration-write permission. It returns an owned `artifactJSON` and review/checksum report; importing remains a separate revision-checked operation. See [the preparation contract](legacy-import-preparation.md).

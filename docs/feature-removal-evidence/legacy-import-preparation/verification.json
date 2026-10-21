@@ -1,0 +1,52 @@
+{
+  "baseCommit": "19a5407209e6c6934edd892590aba3504b7dbc9a",
+  "isolatedSource": "/private/tmp/thumble-legacy-import-enyn6143",
+  "nativeSource": "/private/tmp/thumble-owned-readers-l9kzb9pr",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "apple-source-hashes.json",
+  "logSHA256": {
+    "rust.txt": "0448dc5f111da471dcf933f9c3705ca92fb391e916b7cc4f7b7d26823d522111",
+    "rustBuild.txt": "0b752a36ebee5b3f3711fe9cb8dcf5c99cf1c3a6a49a28cd4aed89eb41064e92",
+    "fixtures.txt": "9e46527871cf2cd1f5ce8fc149907a8dbef6a37c00639f1bde8b064cff8a2f4b",
+    "parity.txt": "7586d4f5070932177b498aa70c8b725b396eb381b3e980be655204418e1d6463",
+    "process.txt": "c78df9b8118cf2db005b0fcd7eda860ef738d3e9000f3884345c9c901065b004",
+    "nativeBridge.txt": "96795bd597ec928f093f89a557e6030d7075b2947f7a4e5ab7615f2a314c27ab",
+    "stack.txt": "790b4f0e164dc4877db41e2f5a899b925c764c6d7e111487f8f27039edaa6c80",
+    "oldNativeOracles.txt": "dc8a1b784bf9966819c4524a591416f4365e1a7fb9f11156964ceeed3aaba845"
+  },
+  "binarySHA256": {
+    "thumble-host": "58410228e8d132ad29220c1ab4327be2b5f1292882a10a8a980aaf547a3b98af",
+    "thumble-mcp": "4ac81679928f89e7ac66990ec10a6a8122db3d583d58584ab1fc1ee553f16aeb",
+    "thumble-cli-bridge": "08ef204bb9170ce65622aca87d8e6c2fa94368dbba407f2d6764936e114184d4",
+    "thumble-bridge": "f83f6b0c2e475f72fa4da542589f711fd00d7b6e2290af45fe450f8d09ad0a62"
+  },
+  "rust": {
+    "passed": 597,
+    "failed": 0,
+    "ignored": 3,
+    "newCases": 6
+  },
+  "stack": {
+    "passed": 41,
+    "failed": 0,
+    "plainPortableModeOn512KiBThread": true,
+    "inlineBudgetsUnchanged": true,
+    "macAndIOSDebugBuilds": true
+  },
+  "oldNativeResponsesUnchanged": 5,
+  "newPortableNativeResponses": 5,
+  "process": {
+    "preparedCases": 6,
+    "mcpLargePreparation": true,
+    "mcpLargeImport": true,
+    "importReplay": true,
+    "sourceFilesUntouched": true,
+    "noImplicitAuthorityCreation": true,
+    "retainedAppearanceStates": 8,
+    "desktopGUIRequired": false
+  },
+  "automaticMigrationActivated": false,
+  "pairedFormatFiveActivated": false,
+  "desktopGUIRetired": false,
+  "physicalLatencyOrHapticsAcceptance": false
+}

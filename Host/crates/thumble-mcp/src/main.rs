@@ -23,14 +23,21 @@ fn decode_stdio_request(data: &[u8]) -> Result<RxJsonRpcMessage<RoleServer>, &'s
     }
     let value: serde_json::Value =
         thumble_protocol::decode_unique_json(data).map_err(|_| "ambiguous or invalid request")?;
-    let source_update = value.get("method").and_then(serde_json::Value::as_str)
+    let bounded_source_tool = value.get("method").and_then(serde_json::Value::as_str)
         == Some("tools/call")
         && value
             .get("params")
             .and_then(|params| params.get("name"))
             .and_then(serde_json::Value::as_str)
-            == Some("update_controller_design");
-    if data.len() > MAXIMUM_ORDINARY_MCP_REQUEST_BYTES && !source_update {
+            .is_some_and(|name| {
+                matches!(
+                    name,
+                    "update_controller_design"
+                        | "import_profiles"
+                        | "prepare_legacy_profile_import"
+                )
+            });
+    if data.len() > MAXIMUM_ORDINARY_MCP_REQUEST_BYTES && !bounded_source_tool {
         return Err("oversized ordinary request");
     }
     serde_json::from_value(value).map_err(|_| "invalid request")
@@ -139,7 +146,14 @@ mod stdio_request_tests {
             "params":{"name":"update_controller_design","arguments":{
                 "workspacePath":"/private/tmp/design","expectedRevision":1,
                 "edits":[{"path":"sources/texture.png","data":data}]}}});
-        assert!(decode_stdio_request(&serde_json::to_vec(&request).unwrap()).is_ok());
+        for name in [
+            "update_controller_design",
+            "import_profiles",
+            "prepare_legacy_profile_import",
+        ] {
+            request["params"]["name"] = json!(name);
+            assert!(decode_stdio_request(&serde_json::to_vec(&request).unwrap()).is_ok());
+        }
         request["params"]["name"] = json!("review_controller_design");
         assert_eq!(
             decode_stdio_request(&serde_json::to_vec(&request).unwrap()).unwrap_err(),

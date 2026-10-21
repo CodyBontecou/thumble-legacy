@@ -434,3 +434,25 @@ fn digest_covers_inner_whitespace_but_not_outer_whitespace() {
         OwnedProfileArtifactError::InvalidHash
     );
 }
+
+#[test]
+fn launch_target_paint_owner_is_portable_only_inside_a_validated_bank() {
+    let source = source();
+    let painted = edit(
+        &source,
+        "/profiles/0/appearanceBank/variants/0/appearance/controlBar/launch_target",
+        br#"{"shadowStrength":1}"#,
+    );
+    let portable = all(&painted).unwrap();
+    OwnedProfileArtifact::decode_json(&portable.encode_json().unwrap()).unwrap();
+    for pointer in ["/futureRoot", "/profiles/0/futureProfile"] {
+        let disguised=edit(&source,pointer,br#"{"appearanceBank":{"variants":[{"appearance":{"controlBar":{"launch_target":{"shadowStrength":1}}}}]}}"#);
+        assert!(all(&disguised).is_err());
+    }
+    let local = edit(
+        &source,
+        "/profiles/0/futureProfile",
+        br#"{"launch_target":{"path":"/private/secret"}}"#,
+    );
+    assert!(all(&local).is_err());
+}

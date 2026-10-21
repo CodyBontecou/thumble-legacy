@@ -37,8 +37,8 @@ public enum ThumbleLegacyProfileMigration {
             self.slot = slot; self.orientation = orientation; self.staging = staging; self.review = review
         }
     }
-    public static func prepare(profileData: Data, package: ThumbleSkinPackage?) throws -> Preparation {
-        try Workspace(profileData, package: package).prepare()
+    public static func prepare(profileData: Data, package: ThumbleSkinPackage?, materializeAllAppearance: Bool = false) throws -> Preparation {
+        try Workspace(profileData, package: package, materializeAllAppearance: materializeAllAppearance).prepare()
     }
     private struct Header: Decodable {
         let id: String
@@ -79,6 +79,7 @@ public enum ThumbleLegacyProfileMigration {
     private final class Workspace {
         let data: Data
         let package: ThumbleSkinPackage?
+        let materializeAllAppearance: Bool
         var original: GamepadConfigurationProfile?
         var header: Header?
         var source: GamepadCustomization?
@@ -87,7 +88,7 @@ public enum ThumbleLegacyProfileMigration {
         var orientation = GamepadEditorDeviceOrientation.landscape
         var slot = SourceLayout.primary
         var review: [ReviewReason] = []
-        init(_ data: Data, package: ThumbleSkinPackage?) { self.data = data; self.package = package }
+        init(_ data: Data, package: ThumbleSkinPackage?, materializeAllAppearance: Bool) { self.data = data; self.package = package; self.materializeAllAppearance = materializeAllAppearance }
         func prepare() throws -> Preparation {
             try decodeSource()
             try chooseSource()
@@ -190,7 +191,7 @@ public enum ThumbleLegacyProfileMigration {
             var staging = GamepadConfigurationProfile(id: original.id, name: original.name,
                 primaryCustomization: canonical, orientationPreference: .landscape, outputMode: original.outputMode,
                 launchTarget: original.launchTarget, updatedAt: original.updatedAt)
-            if original.skinReference != nil { staging.appearanceBank = try GamepadAppearanceBank(variants: variants) }
+            if original.skinReference != nil || materializeAllAppearance { staging.appearanceBank = try GamepadAppearanceBank(variants: variants) }
             return Preparation(Storage(data: data, original: original, source: source, slot: slot,
                 orientation: orientation, staging: staging, review: review))
         }
@@ -205,15 +206,17 @@ public struct ThumbleLegacyProfileBridgeRequest: Decodable, Sendable {
     public let legacyProfileCommand: String
     public let profileData: Data
     public let packageData: Data?
+    public let materializeAllAppearance: Bool
 
     public init(from decoder: Decoder) throws {
         let fields = try decoder.container(keyedBy: Field.self)
         guard Set(fields.allKeys.map(\.stringValue)).isSubset(of:
-            ["schemaVersion", "invocationID", "legacyProfileCommand", "profileData", "packageData"])
+            ["schemaVersion", "invocationID", "legacyProfileCommand", "profileData", "packageData", "materializeAllAppearance"])
         else { throw ThumbleLegacyProfileBridgeError.invalidRequest }
         schemaVersion = try fields.decode(Int.self, forKey: Field("schemaVersion"))
         invocationID = try fields.decode(UUID.self, forKey: Field("invocationID"))
         legacyProfileCommand = try fields.decode(String.self, forKey: Field("legacyProfileCommand"))
+        materializeAllAppearance = try fields.decodeIfPresent(Bool.self, forKey: Field("materializeAllAppearance")) ?? false
         profileData = try Self.data(fields.decode(String.self, forKey: Field("profileData")),
                                     maximum: ThumbleOwnedConfigurationDocument.maximumBytes)
         if let encoded = try fields.decodeIfPresent(String.self, forKey: Field("packageData")) {
@@ -272,7 +275,7 @@ public enum ThumbleLegacyProfileBridge {
             let package: ThumbleSkinPackage?
             do { package = try request.packageData.map { try ThumbleSkinPackageCodec.decode($0) } }
             catch { throw ThumbleLegacyProfileBridgeError.invalidPackage }
-            do { preparation = try ThumbleLegacyProfileMigration.prepare(profileData: request.profileData, package: package) }
+            do { preparation = try ThumbleLegacyProfileMigration.prepare(profileData: request.profileData, package: package, materializeAllAppearance: request.materializeAllAppearance) }
             catch ThumbleLegacyAppearanceMaterializer.RecoveryRequired.missingPackage { throw ThumbleLegacyProfileBridgeError.missingPackage }
             catch is ThumbleLegacyAppearanceMaterializer.RecoveryRequired { throw ThumbleLegacyProfileBridgeError.appearanceRecovery }
             catch { throw ThumbleLegacyProfileBridgeError.profileRecovery }

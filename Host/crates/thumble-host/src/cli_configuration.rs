@@ -16,6 +16,14 @@ pub struct ConfigurationArgs {
 #[derive(Debug, Subcommand)]
 pub enum ConfigurationCommand {
     Status,
+    /// Prepare an owned artifact from a legacy file without writing authority state.
+    PrepareImport {
+        #[arg(long)]
+        source_file: PathBuf,
+        /// Original package mapping: PROFILE_UUID=/absolute/archive.path.
+        #[arg(long)]
+        package: Vec<String>,
+    },
     Begin {
         #[arg(long)]
         expected_configuration_revision: u64,
@@ -75,6 +83,11 @@ pub enum ConfigurationCommand {
 impl ConfigurationCommand {
     pub(crate) fn request(self) -> Result<ControlRequest, String> {
         Ok(match self {
+            Self::PrepareImport { .. } => {
+                return Err(
+                    "legacy preparation is handled locally without a control request".into(),
+                )
+            }
             Self::Status => ControlRequest::ConfigurationStatus,
             Self::Begin {
                 expected_configuration_revision,
@@ -179,6 +192,41 @@ impl ConfigurationCommand {
     }
 }
 pub async fn run(paths: &HostPaths, args: ConfigurationArgs) -> Result<(), String> {
+    if let ConfigurationCommand::PrepareImport {
+        source_file,
+        package,
+    } = &args.action
+    {
+        let mut mappings = std::collections::BTreeMap::new();
+        for item in package {
+            let (id, path) = item
+                .split_once('=')
+                .ok_or("package must be PROFILE_UUID=/absolute/archive.path")?;
+            let id: uuid::Uuid = id
+                .parse()
+                .map_err(|_| "package profile ID must be a UUID")?;
+            if mappings.insert(id, PathBuf::from(path)).is_some() {
+                return Err("duplicate package profile ID".into());
+            }
+        }
+        let source = crate::legacy_import::read_file(
+            source_file,
+            thumble_core::MAXIMUM_CONFIGURATION_DOCUMENT_BYTES,
+        )?;
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map_err(|_| "system clock is unavailable")?
+            .as_millis()
+            .try_into()
+            .map_err(|_| "system clock exceeds its bound")?;
+        let result = crate::legacy_import::prepare(&source, &mappings, now)?;
+        println!(
+            "{}",
+            serde_json::to_string(&result)
+                .map_err(|_| "legacy preparation result could not be encoded")?
+        );
+        return Ok(());
+    }
     let request = args.action.request()?;
     let response = send_request(&paths.control_socket, &request).await?;
     println!(
