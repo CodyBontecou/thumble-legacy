@@ -1,0 +1,7 @@
+# Local receiver owner handoff checkpoint
+
+The actual recording receiver process now uses PacketRuntime for its existing private owner/configuration commands. Its trusted native attachment API can install a fresh encrypted packet source against the exact active revision/generation, with a neutral barrier and an independent packet session identity. Packet traffic and attachment cannot renew the configuration owner. Recorded samples cannot interleave an installed packet source. Retired session IDs are bounded and cannot be reinstalled in one activation; failed output barriers retire all input.
+
+Local checks pass: 71 Rust tests, all-target Clippy, 74 TypeScript tests/916 assertions and standalone packaging (one test, 53 assertions). New coverage verifies exact configuration matching, separate owner identity and lease, source sequence reset/neutralization, replay rejection, replacement, bounded 64-source history and output failure. The source suite skips its separate package-only test; that test passes independently. No retained Swift source or size budget changes are included.
+
+No new wire listener, grant/key field on the Bun pipe or authenticated broker route is added yet. Native control still reports input unavailable. Native-to-native grant/packet routing, revocation handoff, phone input binding and physical output remain open. This source is newer than the approved public phone snapshot 07da0e0, and its hosted/Windows checks do not validate these changes. The full rewrite goal remains active.

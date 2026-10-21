@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "scope": "Packet-aware actual safety process with exact-generation source attachment and independent configuration-owner lease",
+  "baseLocalCommit": "da3cdb9",
+  "publication": "Local only; not in approved 25-file phone snapshot 07da0e0",
+  "checks": {
+    "rust": 71,
+    "typescript": 74,
+    "typescriptAssertions": 916,
+    "typescriptSkippedPackageMode": 1,
+    "standalonePackageTests": 1,
+    "standalonePackageAssertions": 53,
+    "clippy": "all targets passed with warnings denied",
+    "windows": "not run for this source"
+  },
+  "remaining": "Authenticated native-to-native grant/packet handoff, phone input-engine binding, real output and launch acceptance remain pending. No grant material was added to Bun stdio.",
+  "files": [
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "bytes": 7199,
+      "sha256": "33b751c94bdbcb402bc6d309508198439970d189cee36eefdf395c7d7530956b"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/packet_runtime.rs",
+      "bytes": 22093,
+      "sha256": "58113adafd651ce61df824183136413371fae929f98e0166b0f34d62887b776e"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/runtime.rs",
+      "bytes": 12726,
+      "sha256": "9b654afd59ed410dc6f3c53de05c8c8eef33b7e47fc7fd8f6871fb01eec23cf0"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 13040,
+      "sha256": "61a005d6e89344dcf08488f6f4ee6169111bd247b53325d2e23b24cd884f6359"
+    },
+    {
+      "path": "docs/rewrite-receiver-session-handoff.md",
+      "bytes": 3411,
+      "sha256": "cb7914adbe3f25e2534ceadcb610baa215df3929e8b367e891f634dabd33af5b"
+    }
+  ]
+}
