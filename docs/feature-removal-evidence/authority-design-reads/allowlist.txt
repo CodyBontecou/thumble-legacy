@@ -1,0 +1,1 @@
+CLI direct profile/design/element persistence allowlist passed.

@@ -1,0 +1,1168 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/AuthorityDesignReads "-only-testing:ThumbleCLITests/ThumbleCLIBackendTests" "-only-testing:ThumbleCLITests/OwnedConfigurationDocumentTests" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 79a6a907bfecbc56fae00bc215ea274d
+Build description path: /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/XCBuildData/79a6a907bfecbc56fae00bc215ea274d.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-authority-design-reads-ql22v2yh/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+'-std=gnu11' -fmodules -gmodules '-fmodules-cache-path=/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex' -fpascal-strings -O0 -fno-common '-DDEBUG=1' -g -iquote /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -ivfsoverlay /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/include -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -F/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks '-fmodule-map-file=/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap'
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList
+
+WriteAuxiliaryFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    write-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c
+
+MkDir /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /bin/mkdir -p /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest
+
+MkDir /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /bin/mkdir -p /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents
+
+MkDir /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /bin/mkdir -p /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS
+
+MkDir /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /bin/mkdir -p /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+CpResource /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/warrior.txt /tmp/thumble-authority-design-reads-ql22v2yh/Tests/Fixtures/ThumbleLink/warrior.txt (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-authority-design-reads-ql22v2yh/Tests/Fixtures/ThumbleLink/warrior.txt /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+Copy /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+CpResource /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ThumbleLinkExporterTests.lua /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleLinkExporterTests.lua (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleLinkExporterTests.lua /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+SwiftDriver ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/include -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-authority-design-reads-ql22v2yh -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-infoPlistUtility /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-1WBLNUP1MAUKXPUERBH8PHQHV.pcm
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/Testing-3OQ7SPE9Y5QV0.swiftmodule
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-3IBM9G252RE0H.swiftmodule
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-D4LYULVL5XGTJHYSAZJ6RJLDF.pcm
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-1LPHW6N7Z9BDY.swiftmodule
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/_Testing_Foundation-2HKG1TIMSX2NL.swiftmodule
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackageTests.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinQualityTests.swift,\ ThumbleSkinResolver.swift,\ ThumbleSkinResolverTests.swift,\ ThumbleSkinStore.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinPackageTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinQuality.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinQualityTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinResolver.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinResolverTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinPackageTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinQualityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinResolverTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadInjectorTests.swift,\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadOutputPolicyTests.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadReportTests.swift,\ VirtualGamepadStatus.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadInjectorTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadOutputPolicy.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadOutputPolicyTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadReport.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadReportTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadInjectorTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadOutputPolicyTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/VirtualGamepadReportTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStoreTests.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleSkinWorkspaceTests.swift,\ ThumbleVectorCompiler.swift,\ TopBarActivationRegionTests.swift,\ VirtualGamepadInjector.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinStoreTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinWorkspace.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinWorkspaceTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleVectorCompiler.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/TopBarActivationRegionTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinStoreTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/TopBarActivationRegionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompatibilityTests.swift,\ ThumbleSkinCompiler.swift,\ ThumbleSkinCompilerTests.swift,\ ThumbleSkinPackage.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkin.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinCompatibility.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinCompatibilityTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinCompiler.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinCompilerTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinCompatibilityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleSkinCompilerTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleMacSetupGuide.swift,\ ThumbleMacSetupGuideTests.swift,\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleNativeSkinPreviewRendererTests.swift,\ ThumbleSVGRasterizer.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleMacSetupGuide.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleMacSetupGuideTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleNativeConfiguration.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleNativeSkinPreviewRendererTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleMacSetupGuideTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleNativeSkinPreviewRendererTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLIRuntimeBackendTests.swift,\ ThumbleCLISmokeTestSuite.swift,\ ThumbleCSSCompiler.swift,\ ThumbleCSSCompilerTests.swift,\ ThumbleConfigurationBridge.swift,\ ThumbleConfigurationBridgeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLIRuntimeBackendTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLISmokeTestSuite.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleCSSCompiler.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCSSCompilerTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleConfigurationBridge.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLIRuntimeBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLISmokeTestSuite.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+/tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleCSSCompiler.swift:2972:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCSSCompilerTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift,\ ThumbleLinkImport.swift,\ ThumbleLinkImportView.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleLinkTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleInputLatencySimulation.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/ThumbleLinkImport.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/ThumbleLinkImportView.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleLinkSnapshot.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/ThumbleLinkImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/ThumbleLinkImportView.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ MacSharedKeypadImportTests.swift,\ OrientationPreferenceTests.swift,\ OwnedConfigurationDocument.swift,\ OwnedConfigurationDocumentTests.swift,\ OwnedPhoneEdit.swift,\ OwnedPhoneEditJournal.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacSharedKeypadImportTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OrientationPreferenceTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedConfigurationDocument.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OwnedConfigurationDocumentTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedPhoneEdit.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacSharedKeypadImportTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OrientationPreferenceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OwnedConfigurationDocumentTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ RustHostInteropTests.swift,\ StackSafetyRegressionTests.swift,\ ThumbleArtworkLayerView.swift,\ ThumbleCLIBackend.swift,\ ThumbleCLIBackendTests.swift,\ ThumbleCLIRuntimeBackend.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/RustHostInteropTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleArtworkLayerView.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/CLI/ThumbleCLIBackend.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLIBackendTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/RustHostInteropTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1364:33: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let customization = profile.customization
+                                ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1365:69: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            var artboard = try ThumbleSkinArtboard.capture(profile: profile, identifier: "stack-hit",
+                                                                    ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1398:72: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let barLabel = GamepadControlBarLabelContent.profile(name: profile.name, isDefault: true, compact: false)
+                                                                       ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1399:76: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let launchLabel = GamepadControlBarLabelContent.launch(target: profile.launchTarget, compact: true)
+                                                                           ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1400:37: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            guard barLabel.title == profile.name, barLabel.symbol == "star.fill",
+                                    ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/StackSafetyRegressionTests.swift:1404:55: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+                isDefaultProfile: false, profileName: profile.name, visibleItems: [.profileMenu, .settings],
+                                                      ^
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLIBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/ThumbleCLIBackendTests.swift:834:13: warning: variable 'changes' was never mutated; consider changing to 'let' constant
+        var changes = ThumbleCLIProfileBackend.ControlBarItemChanges()
+        ~~~ ^
+        let
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ LegacyProfileMigrationTests.swift,\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift,\ MacRustAuthorityInterlock.swift,\ MacRustAuthorityInterlockTests.swift,\ MacSharedKeypadImport.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/LegacyProfileMigrationTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacConfigurationBindings.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacControlOutputBinding.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacRustAuthorityInterlock.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacRustAuthorityInterlockTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/LegacyProfileMigrationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacConfigurationBindings.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacControlOutputBinding.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacRustAuthorityInterlock.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacRustAuthorityInterlockTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacRustAuthorityInterlockTests.swift:8:13: warning: variable 'first' was written to, but never read
+        var first: MacLegacyAuthorityLease? = try .acquire(stateDirectory: stateDirectory)
+            ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacRustAuthorityInterlockTests.swift:117:13: warning: variable 'socket' was written to, but never read
+        var socket: ThumbleNativeConfigurationSocket? = try .init(directory: directory) { data, reply in
+            ^
+/tmp/thumble-authority-design-reads-ql22v2yh/Tests/MacRustAuthorityInterlockTests.swift:214:18: warning: weak variable 'weakSocket' was never mutated; consider changing to 'let' constant
+        weak var weakSocket = socket
+             ~~~ ^
+             let
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ GamepadLayoutQuality.swift,\ GamepadLayoutQualityErgonomicsTests.swift,\ GamepadLayoutResolverSmokeTests.swift,\ GamepadOutputTypes.swift,\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GamepadSharedOperationsSmokeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadLayoutQuality.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadLayoutQualityErgonomicsTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadLayoutResolverSmokeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadOutputTypes.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadProfileResourceCodec.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadSharedOperations.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadLayoutQualityErgonomicsTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadLayoutResolverSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditTests.swift,\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PendingProfileRecoveryTests.swift,\ PortableProfileArtifact.swift,\ PortableProfileArtifactTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OwnedPhoneEditTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PairingPayload.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PendingProfileRecovery.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/PendingProfileRecoveryTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PortableProfileArtifact.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/OwnedPhoneEditTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PairingPayload.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/PendingProfileRecoveryTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ControllerProtocol.swift,\ ControllerRuntimeUX.swift,\ ControllerRuntimeUXTests.swift,\ FeatureRemovalBaselineTests.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerProtocol.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerRuntimeUX.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ControllerRuntimeUXTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/FeatureRemovalBaselineTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GameKeypadGenerator.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearance.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ControllerRuntimeUXTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/FeatureRemovalBaselineTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ AndroidLayoutEditOracleTests.swift,\ AppearanceEditOracleTests.swift,\ ButtonPulseSequencer.swift,\ ButtonPulseSequencerSmokeTests.swift,\ ControllerActiveInputState.swift,\ ControllerActiveInputStateSmokeTests.swift,\ ControllerDesignSession.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/AndroidLayoutEditOracleTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/AppearanceEditOracleTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ButtonPulseSequencer.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ButtonPulseSequencerSmokeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerActiveInputState.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ControllerActiveInputStateSmokeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/AndroidLayoutEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/AppearanceEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ButtonPulseSequencerSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ControllerActiveInputStateSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceBankTests.swift,\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift,\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadAppearanceBankTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceEditMerge.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceSnapshot.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadControllerPresentationRouting.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadCustomization.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadDesignSystem.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/GamepadAppearanceBankTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ GeistDesign.swift,\ IOSBuildRecovery.swift,\ IOSLocalKeypadUX.swift,\ IOSLocalKeypadUXTests.swift,\ IOSPendingBuilderArtifactStoreTests.swift,\ InputLatencySimulationSmokeTests.swift,\ KeyMap.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GeistDesign.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/iOS/IOSBuildRecovery.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/iOS/IOSLocalKeypadUX.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/IOSLocalKeypadUXTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/IOSPendingBuilderArtifactStoreTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/InputLatencySimulationSmokeTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/GeistDesign.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/iOS/IOSBuildRecovery.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/iOS/IOSLocalKeypadUX.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/IOSLocalKeypadUXTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/IOSPendingBuilderArtifactStoreTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/InputLatencySimulationSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Mac/KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileArtifactAdoptionTests.swift,\ ProfileFormatPolicy.swift,\ ProfileFormatPolicyTests.swift,\ ProfileOrientationSupport.swift,\ ProfileResourceCodecTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileArtifactAdoption.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileArtifactAdoptionTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileFormatPolicy.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileFormatPolicyTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileOrientationSupport.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileArtifactAdoptionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileFormatPolicyTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadAccessibilityTests.swift,\ KeypadBindingPresentation.swift,\ KeypadBindingPresentationTests.swift,\ KeypadConfigurationExport.swift,\ LegacyIOSPendingBuilderArtifactStore.swift,\ LegacyProfileMigration.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadAccessibility.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/KeypadAccessibilityTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadBindingPresentation.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/KeypadBindingPresentationTests.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadConfigurationExport.swift /tmp/thumble-authority-design-reads-ql22v2yh/Tests/LegacyIOSPendingBuilderArtifactStore.swift /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/KeypadAccessibilityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/KeypadBindingPresentationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Tests/LegacyIOSPendingBuilderArtifactStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftCompile normal arm64 /tmp/thumble-authority-design-reads-ql22v2yh/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadInjectorTests.swift, VirtualGamepadOutputPolicy.swift, VirtualGamepadOutputPolicyTests.swift, VirtualGamepadReport.swift, VirtualGamepadReportTests.swift, VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileArtifactAdoptionTests.swift, ProfileFormatPolicy.swift, ProfileFormatPolicyTests.swift, ProfileOrientationSupport.swift, ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacSharedKeypadImportTests.swift, OrientationPreferenceTests.swift, OwnedConfigurationDocument.swift, OwnedConfigurationDocumentTests.swift, OwnedPhoneEdit.swift, OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift, ThumbleLinkImport.swift, ThumbleLinkImportView.swift, ThumbleLinkSnapshot.swift, ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LegacyProfileMigrationTests.swift, MacConfigurationBindings.swift, MacControlOutputBinding.swift, MacRustAuthorityInterlock.swift, MacRustAuthorityInterlockTests.swift, MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditTests.swift, PairingPayload.swift, PendingProfileRecovery.swift, PendingProfileRecoveryTests.swift, PortableProfileArtifact.swift, PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GeistDesign.swift, IOSBuildRecovery.swift, IOSLocalKeypadUX.swift, IOSLocalKeypadUXTests.swift, IOSPendingBuilderArtifactStoreTests.swift, InputLatencySimulationSmokeTests.swift, KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadAccessibilityTests.swift, KeypadBindingPresentation.swift, KeypadBindingPresentationTests.swift, KeypadConfigurationExport.swift, LegacyIOSPendingBuilderArtifactStore.swift, LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompatibilityTests.swift, ThumbleSkinCompiler.swift, ThumbleSkinCompilerTests.swift, ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/include -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-authority-design-reads-ql22v2yh -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests-Swift.h /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-swiftHeaderTool -arch arm64 /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests-Swift.h
+
+Copy /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftdoc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftdoc (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftdoc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+ScanDependencies /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+    Using response file: /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    builtin-ScanDependencies -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.d --serialize-diagnostics /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.dia -c /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o
+
+CompileC /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+
+    Using response file: /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.d --serialize-diagnostics /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.dia -c /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleMacSetupGuide.swift, ThumbleMacSetupGuideTests.swift, ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleNativeSkinPreviewRendererTests.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerProtocol.swift, ControllerRuntimeUX.swift, ControllerRuntimeUXTests.swift, FeatureRemovalBaselineTests.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackageTests.swift, ThumbleSkinQuality.swift, ThumbleSkinQualityTests.swift, ThumbleSkinResolver.swift, ThumbleSkinResolverTests.swift, ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadLayoutQuality.swift, GamepadLayoutQualityErgonomicsTests.swift, GamepadLayoutResolverSmokeTests.swift, GamepadOutputTypes.swift, GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AndroidLayoutEditOracleTests.swift, AppearanceEditOracleTests.swift, ButtonPulseSequencer.swift, ButtonPulseSequencerSmokeTests.swift, ControllerActiveInputState.swift, ControllerActiveInputStateSmokeTests.swift, ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStoreTests.swift, ThumbleSkinWorkspace.swift, ThumbleSkinWorkspaceTests.swift, ThumbleVectorCompiler.swift, TopBarActivationRegionTests.swift, VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RustHostInteropTests.swift, StackSafetyRegressionTests.swift, ThumbleArtworkLayerView.swift, ThumbleCLIBackend.swift, ThumbleCLIBackendTests.swift, ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLIRuntimeBackendTests.swift, ThumbleCLISmokeTestSuite.swift, ThumbleCSSCompiler.swift, ThumbleCSSCompilerTests.swift, ThumbleConfigurationBridge.swift, ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceBankTests.swift, GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift, GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/include -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-authority-design-reads-ql22v2yh -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests normal (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests -Xlinker -add_ast_path -Xlinker /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+CopySwiftLibs /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --module-name ThumbleCLITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F113 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.codybontecou.PocketPadCLITests --output /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --dependency-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat --stringsdata-file /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList --metadata-file-list /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList --static-metadata-file-list /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 01:44:55.978 appintentsmetadataprocessor[18992:86027006] Starting appintentsmetadataprocessor export
+2026-10-21 01:44:55.979 appintentsmetadataprocessor[18992:86027006] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+RegisterExecutionPolicyException /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    builtin-RegisterExecutionPolicyException /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest
+
+Touch /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-authority-design-reads-ql22v2yh
+    /usr/bin/touch -c /tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Build/Products/Debug/ThumbleCLITests.xctest
+
+Test Suite 'Selected tests' started at 2026-10-21 01:44:57.269.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 01:44:57.269.
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-21 01:44:57.269.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.335 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.057 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' passed (0.280 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' passed (2.831 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' passed (0.203 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.046 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.762 seconds).
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-21 01:45:01.785.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 4.514 (4.515) seconds
+Test Suite 'ThumbleCLIBackendTests' started at 2026-10-21 01:45:01.785.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' passed (1.132 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' started.
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Utility quality-of-service class. Investigate ways to avoid priority inversions
+PID: 19002, TID: 86027052
+Backtrace
+=================================================================
+0   ThumbleCLITests                     0x0000000112d61af4 $s15ThumbleCLITests0A17CLIProfileBackendC7execute33_5D0F5FD078676A937C3428050A5A2BA2LL5inputAC15ExecutionResultAELLV10Foundation4DataV_tKF + 3236
+1   ThumbleCLITests                     0x0000000112d5346c $s15ThumbleCLITests0A17CLIProfileBackendC7perform_12invocationID29expectedConfigurationRevisionAC8ResponseVAC7CommandO_10Foundation4UUIDVSgs6UInt64VSgtKF + 2080
+2   ThumbleCLITests                     0x0000000112e2e148 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0H0VyKXEfu_ + 568
+3   ThumbleCLITests                     0x0000000112e42710 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0H0VyKXEfu_TA + 28
+4   libXCTestSwiftSupport.dylib         0x0000000105f1b514 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_ + 156
+5   libXCTestSwiftSupport.dylib         0x0000000105f1b57c $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_TA + 24
+6   libXCTestSwiftSupport.dylib         0x0000000105f14d68 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEFyyXEfU_ + 44
+7   libXCTestSwiftSupport.dylib         0x0000000105f1c8bc $sIg_Ieg_TR + 28
+8   libXCTestSwiftSupport.dylib         0x0000000105f1c8e4 $sIeg_IyB_TR + 28
+9   XCTestCore                          0x00000001031c8b1c _XCTRunThrowableBlockBridge + 44
+10  libXCTestSwiftSupport.dylib         0x0000000105f14c98 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEF + 244
+11  libXCTestSwiftSupport.dylib         0x0000000105f1b130 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlF + 112
+12  libXCTestSwiftSupport.dylib         0x0000000105f1b088 $s6XCTest20XCTAssertThrowsError__4file4line_yxyKXK_SSyXKs12StaticStringVSuys0D0_pXEtlF + 44
+13  ThumbleCLITests                     0x0000000112e13e70 $s15ThumbleCLITests0A15CLIBackendTestsC31assertMalformedArtifactResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutF + 280
+14  ThumbleCLITests                     0x0000000112e147e0 $s15ThumbleCLITests0A15CLIBackendTestsC46testArtifactResponseRejectsInvalidHashMetadatayyKF + 1160
+15  ThumbleCLITests                     0x0000000112e148f8 $s15ThumbleCLITests0A15CLIBackendTestsC46testArtifactResponseRejectsInvalidHashMetadatayyKFTo + 56
+16  CoreFoundation                      0x000000018ffd7634 __invoking___ + 148
+17  CoreFoundation                      0x000000018ffd74c0 -[NSInvocation invoke] + 424
+18  XCTestCore                          0x00000001031cb4dc +[XCTFailableInvocation invokeErrorConventionInvocation:completion:] + 92
+19  XCTestCore                          0x00000001031cb478 __90+[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:]_block_invoke + 28
+20  XCTestCore                          0x00000001031cadb0 __81+[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:]_block_invoke + 364
+21  XCTestCore                          0x00000001031bb4cc __49+[XCTSwiftErrorObservation observeErrorsInBlock:]_block_invoke + 36
+22  XCTestCore                          0x00000001032444f4 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZ + 336
+23  XCTestCore                          0x0000000103244590 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZTo + 60
+24  XCTestCore                          0x00000001031bb3c4 +[XCTSwiftErrorObservation observeErrorsInBlock:] + 208
+25  XCTestCore                          0x00000001031cab44 +[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:] + 224
+26  XCTestCore                          0x00000001031cb264 +[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:] + 176
+27  XCTestCore                          0x00000001031cb7f0 +[XCTFailableInvocation invokeInvocation:lastObservedErrorIssue:] + 72
+28  XCTestCore                          0x00000001031f2ff0 -[XCTestCase invokeTestMethod:] + 64
+29  XCTestCore                          0x00000001031f3c28 __24-[XCTestCase invokeTest]_block_invoke_4 + 56
+30  XCTestCore                          0x0000000103221414 -[XCTMemoryChecker _assertInvalidObjectsDeallocatedAfterScope:] + 84
+31  XCTestCore                          0x00000001031f72e8 -[XCTestCase assertInvalidObjectsDeallocatedAfterScope:] + 92
+32  XCTestCore                          0x00000001031f3970 __24-[XCTestCase invokeTest]_block_invoke.112 + 696
+33  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+34  XCTestCore                          0x00000001031f32bc -[XCTestCase invokeTest] + 640
+35  XCTestCore                          0x00000001031f528c __26-[XCTestCase performTest:]_block_invoke.170 + 36
+36  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+37  XCTestCore                          0x00000001031f4c7c __26-[XCTestCase performTest:]_block_invoke.155 + 552
+38  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+39  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+40  XCTestCore                          0x00000001031f470c -[XCTestCase performTest:] + 308
+41  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+42  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+43  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+44  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+45  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+46  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+47  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+48  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+49  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+50  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+51  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+52  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+53  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+54  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+55  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+56  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+57  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+58  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+59  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+60  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+61  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+62  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+63  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+64  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+65  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+66  XCTestCore                          0x000000010321e140 __89-[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:]_block_invoke + 100
+67  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+68  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+69  XCTestCore                          0x000000010321dfe8 -[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:] + 340
+70  XCTestCore                          0x00000001032137a4 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke_2 + 156
+71  XCTestCore                          0x0000000103214804 __XCTAsyncEnumerateWithWaiter_block_invoke + 244
+72  XCTestCore                          0x00000001032149b8 __XCTAsyncEnumerate_block_invoke.117 + 64
+73  XCTestCore                          0x0000000103213600 XCTAsyncEnumerateWithWaiter + 568
+74  XCTestCore                          0x0000000103213378 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke + 148
+75  XCTestCore                          0x00000001032138e8 -[XCTExecutionWorker runWithError:] + 84
+76  XCTestCore                          0x0000000103211608 __25-[XCTestDriver _runTests]_block_invoke.400 + 56
+77  XCTestCore                          0x00000001032286b0 -[XCTestObservationCenter _observeTestExecutionForTestBundle:inBlock:] + 104
+78  XCTestCore                          0x0000000103210fe0 -[XCTestDriver _runTests] + 1192
+79  XCTestCore                          0x0000000103212ff8 _XCTestMain + 96
+80  xctest                              0x0000000102f5de44 $s10xctesttool6xctestO4mainyyFZ + 284
+81  dyld                                0x000000018fb7be00 start + 6992
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' passed (1.506 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' passed (0.358 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' passed (0.187 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' passed (0.169 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' started.
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Utility quality-of-service class. Investigate ways to avoid priority inversions
+PID: 19002, TID: 86027052
+Backtrace
+=================================================================
+0   ThumbleCLITests                     0x0000000112d61af4 $s15ThumbleCLITests0A17CLIProfileBackendC7execute33_5D0F5FD078676A937C3428050A5A2BA2LL5inputAC15ExecutionResultAELLV10Foundation4DataV_tKF + 3236
+1   ThumbleCLITests                     0x0000000112d5346c $s15ThumbleCLITests0A17CLIProfileBackendC7perform_12invocationID29expectedConfigurationRevisionAC8ResponseVAC7CommandO_10Foundation4UUIDVSgs6UInt64VSgtKF + 2080
+2   ThumbleCLITests                     0x0000000112e06a38 $s15ThumbleCLITests0A15CLIBackendTestsC61testBindingProjectionIsStrictBoundedSemanticAndRevisionTaggedyyKF + 996
+3   ThumbleCLITests                     0x0000000112e07bec $s15ThumbleCLITests0A15CLIBackendTestsC61testBindingProjectionIsStrictBoundedSemanticAndRevisionTaggedyyKFTo + 56
+4   CoreFoundation                      0x000000018ffd7634 __invoking___ + 148
+5   CoreFoundation                      0x000000018ffd74c0 -[NSInvocation invoke] + 424
+6   XCTestCore                          0x00000001031cb4dc +[XCTFailableInvocation invokeErrorConventionInvocation:completion:] + 92
+7   XCTestCore                          0x00000001031cb478 __90+[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:]_block_invoke + 28
+8   XCTestCore                          0x00000001031cadb0 __81+[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:]_block_invoke + 364
+9   XCTestCore                          0x00000001031bb4cc __49+[XCTSwiftErrorObservation observeErrorsInBlock:]_block_invoke + 36
+10  XCTestCore                          0x00000001032444f4 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZ + 336
+11  XCTestCore                          0x0000000103244590 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZTo + 60
+12  XCTestCore                          0x00000001031bb3c4 +[XCTSwiftErrorObservation observeErrorsInBlock:] + 208
+13  XCTestCore                          0x00000001031cab44 +[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:] + 224
+14  XCTestCore                          0x00000001031cb264 +[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:] + 176
+15  XCTestCore                          0x00000001031cb7f0 +[XCTFailableInvocation invokeInvocation:lastObservedErrorIssue:] + 72
+16  XCTestCore                          0x00000001031f2ff0 -[XCTestCase invokeTestMethod:] + 64
+17  XCTestCore                          0x00000001031f3c28 __24-[XCTestCase invokeTest]_block_invoke_4 + 56
+18  XCTestCore                          0x0000000103221414 -[XCTMemoryChecker _assertInvalidObjectsDeallocatedAfterScope:] + 84
+19  XCTestCore                          0x00000001031f72e8 -[XCTestCase assertInvalidObjectsDeallocatedAfterScope:] + 92
+20  XCTestCore                          0x00000001031f3970 __24-[XCTestCase invokeTest]_block_invoke.112 + 696
+21  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+22  XCTestCore                          0x00000001031f32bc -[XCTestCase invokeTest] + 640
+23  XCTestCore                          0x00000001031f528c __26-[XCTestCase performTest:]_block_invoke.170 + 36
+24  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+25  XCTestCore                          0x00000001031f4c7c __26-[XCTestCase performTest:]_block_invoke.155 + 552
+26  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+27  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+28  XCTestCore                          0x00000001031f470c -[XCTestCase performTest:] + 308
+29  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+30  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+31  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+32  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+33  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+34  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+35  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+36  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+37  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+38  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+39  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+40  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+41  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+42  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+43  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+44  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+45  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+46  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+47  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+48  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+49  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+50  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+51  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+52  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+53  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+54  XCTestCore                          0x000000010321e140 __89-[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:]_block_invoke + 100
+55  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+56  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+57  XCTestCore                          0x000000010321dfe8 -[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:] + 340
+58  XCTestCore                          0x00000001032137a4 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke_2 + 156
+59  XCTestCore                          0x0000000103214804 __XCTAsyncEnumerateWithWaiter_block_invoke + 244
+60  XCTestCore                          0x00000001032149b8 __XCTAsyncEnumerate_block_invoke.117 + 64
+61  XCTestCore                          0x0000000103213600 XCTAsyncEnumerateWithWaiter + 568
+62  XCTestCore                          0x0000000103213378 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke + 148
+63  XCTestCore                          0x00000001032138e8 -[XCTExecutionWorker runWithError:] + 84
+64  XCTestCore                          0x0000000103211608 __25-[XCTestDriver _runTests]_block_invoke.400 + 56
+65  XCTestCore                          0x00000001032286b0 -[XCTestObservationCenter _observeTestExecutionForTestBundle:inBlock:] + 104
+66  XCTestCore                          0x0000000103210fe0 -[XCTestDriver _runTests] + 1192
+67  XCTestCore                          0x0000000103212ff8 _XCTestMain + 96
+68  xctest                              0x0000000102f5de44 $s10xctesttool6xctestO4mainyyFZ + 284
+69  dyld                                0x000000018fb7be00 start + 6992
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' passed (0.173 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' passed (0.517 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' passed (0.193 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' passed (0.815 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.235 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' passed (0.179 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' passed (0.160 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' passed (0.177 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' passed (0.531 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' passed (0.170 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' started.
+Thread Performance Checker: Thread running at User-interactive quality-of-service class waiting on a lower QoS thread running at Utility quality-of-service class. Investigate ways to avoid priority inversions
+PID: 19002, TID: 86027052
+Backtrace
+=================================================================
+0   ThumbleCLITests                     0x0000000112d61af4 $s15ThumbleCLITests0A17CLIProfileBackendC7execute33_5D0F5FD078676A937C3428050A5A2BA2LL5inputAC15ExecutionResultAELLV10Foundation4DataV_tKF + 3236
+1   ThumbleCLITests                     0x0000000112d5346c $s15ThumbleCLITests0A17CLIProfileBackendC7perform_12invocationID29expectedConfigurationRevisionAC8ResponseVAC7CommandO_10Foundation4UUIDVSgs6UInt64VSgtKF + 2080
+2   ThumbleCLITests                     0x0000000112e2dc38 $s15ThumbleCLITests0A15CLIBackendTestsC37assertMalformedGenerationPlanResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0I0VyKXEfu_ + 584
+3   ThumbleCLITests                     0x0000000112e42b68 $s15ThumbleCLITests0A15CLIBackendTestsC37assertMalformedGenerationPlanResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutFAA0A17CLIProfileBackendC0I0VyKXEfu_TA + 28
+4   libXCTestSwiftSupport.dylib         0x0000000105f1b514 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_ + 156
+5   libXCTestSwiftSupport.dylib         0x0000000105f1b57c $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlFyyXEfU_TA + 24
+6   libXCTestSwiftSupport.dylib         0x0000000105f14d68 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEFyyXEfU_ + 44
+7   libXCTestSwiftSupport.dylib         0x0000000105f1c8bc $sIg_Ieg_TR + 28
+8   libXCTestSwiftSupport.dylib         0x0000000105f1c8e4 $sIeg_IyB_TR + 28
+9   XCTestCore                          0x00000001031c8b1c _XCTRunThrowableBlockBridge + 44
+10  libXCTestSwiftSupport.dylib         0x0000000105f14c98 $s6XCTest21_XCTRunThrowableBlockyAA013_XCTThrowableD6ResultOyyKXEF + 244
+11  libXCTestSwiftSupport.dylib         0x0000000105f1b130 $s6XCTest20XCTAssertThrowsError__4file4line12errorHandleryxyKXK_SSyXKs12StaticStringVSuys0D0_pKXEtKlF + 112
+12  libXCTestSwiftSupport.dylib         0x0000000105f1b088 $s6XCTest20XCTAssertThrowsError__4file4line_yxyKXK_SSyXKs12StaticStringVSuys0D0_pXEtlF + 44
+13  ThumbleCLITests                     0x0000000112e1a710 $s15ThumbleCLITests0A15CLIBackendTestsC37assertMalformedGenerationPlanResponse33_5A25C331555C083698EE2ED5DF3B7855LL_4file4liney10Foundation3URLV_s12StaticStringVSutF + 280
+14  ThumbleCLITests                     0x0000000112e1afa0 $s15ThumbleCLITests0A15CLIBackendTestsC68testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFieldsyyKF + 1864
+15  ThumbleCLITests                     0x0000000112e1bf74 $s15ThumbleCLITests0A15CLIBackendTestsC68testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFieldsyyKFTo + 56
+16  CoreFoundation                      0x000000018ffd7634 __invoking___ + 148
+17  CoreFoundation                      0x000000018ffd74c0 -[NSInvocation invoke] + 424
+18  XCTestCore                          0x00000001031cb4dc +[XCTFailableInvocation invokeErrorConventionInvocation:completion:] + 92
+19  XCTestCore                          0x00000001031cb478 __90+[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:]_block_invoke + 28
+20  XCTestCore                          0x00000001031cadb0 __81+[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:]_block_invoke + 364
+21  XCTestCore                          0x00000001031bb4cc __49+[XCTSwiftErrorObservation observeErrorsInBlock:]_block_invoke + 36
+22  XCTestCore                          0x00000001032444f4 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZ + 336
+23  XCTestCore                          0x0000000103244590 $sSo24XCTSwiftErrorObservationC10XCTestCoreE14_observeErrors33_4641E344ACA55A25D2B1EC985574C54DLL2inSo0abC6ResultCSgyyXE_tFZTo + 60
+24  XCTestCore                          0x00000001031bb3c4 +[XCTSwiftErrorObservation observeErrorsInBlock:] + 208
+25  XCTestCore                          0x00000001031cab44 +[XCTFailableInvocation invokeWithAsynchronousWait:lastObservedErrorIssue:block:] + 224
+26  XCTestCore                          0x00000001031cb264 +[XCTFailableInvocation invokeInvocation:withTestMethodConvention:lastObservedErrorIssue:] + 176
+27  XCTestCore                          0x00000001031cb7f0 +[XCTFailableInvocation invokeInvocation:lastObservedErrorIssue:] + 72
+28  XCTestCore                          0x00000001031f2ff0 -[XCTestCase invokeTestMethod:] + 64
+29  XCTestCore                          0x00000001031f3c28 __24-[XCTestCase invokeTest]_block_invoke_4 + 56
+30  XCTestCore                          0x0000000103221414 -[XCTMemoryChecker _assertInvalidObjectsDeallocatedAfterScope:] + 84
+31  XCTestCore                          0x00000001031f72e8 -[XCTestCase assertInvalidObjectsDeallocatedAfterScope:] + 92
+32  XCTestCore                          0x00000001031f3970 __24-[XCTestCase invokeTest]_block_invoke.112 + 696
+33  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+34  XCTestCore                          0x00000001031f32bc -[XCTestCase invokeTest] + 640
+35  XCTestCore                          0x00000001031f528c __26-[XCTestCase performTest:]_block_invoke.170 + 36
+36  XCTestCore                          0x00000001031f9da4 -[XCTestCase(XCTIssueHandling) _caughtUnhandledDeveloperExceptionPermittingControlFlowInterruptions:caughtInterruptionException:whileExecutingBlock:] + 168
+37  XCTestCore                          0x00000001031f4c7c __26-[XCTestCase performTest:]_block_invoke.155 + 552
+38  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+39  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+40  XCTestCore                          0x00000001031f470c -[XCTestCase performTest:] + 308
+41  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+42  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+43  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+44  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+45  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+46  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+47  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+48  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+49  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+50  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+51  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+52  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+53  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+54  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+55  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+56  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+57  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+58  XCTestCore                          0x0000000103200944 -[XCTestSuite runTestBasedOnRepetitionPolicy:testRun:] + 64
+59  XCTestCore                          0x0000000103200748 __27-[XCTestSuite performTest:]_block_invoke + 184
+60  XCTestCore                          0x00000001031ffce0 __59-[XCTestSuite _performProtectedSectionForTest:testSection:]_block_invoke + 48
+61  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+62  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+63  XCTestCore                          0x00000001031ffc50 -[XCTestSuite _performProtectedSectionForTest:testSection:] + 168
+64  XCTestCore                          0x00000001032001c8 -[XCTestSuite performTest:] + 236
+65  XCTestCore                          0x00000001031efc54 -[XCTest runTest] + 48
+66  XCTestCore                          0x000000010321e140 __89-[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:]_block_invoke + 100
+67  XCTestCore                          0x00000001031b816c +[XCTContext _runInChildOfContext:forTestCase:markAsReportingBase:block:] + 172
+68  XCTestCore                          0x00000001031b805c +[XCTContext runInContextForTestCase:markAsReportingBase:block:] + 100
+69  XCTestCore                          0x000000010321dfe8 -[XCTTestRunSession executeTestsWithIdentifiers:skippingTestsWithIdentifiers:completion:] + 340
+70  XCTestCore                          0x00000001032137a4 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke_2 + 156
+71  XCTestCore                          0x0000000103214804 __XCTAsyncEnumerateWithWaiter_block_invoke + 244
+72  XCTestCore                          0x00000001032149b8 __XCTAsyncEnumerate_block_invoke.117 + 64
+73  XCTestCore                          0x0000000103213600 XCTAsyncEnumerateWithWaiter + 568
+74  XCTestCore                          0x0000000103213378 __72-[XCTExecutionWorker enqueueTestIdentifiersToRun:testIdentifiersToSkip:]_block_invoke + 148
+75  XCTestCore                          0x00000001032138e8 -[XCTExecutionWorker runWithError:] + 84
+76  XCTestCore                          0x0000000103211608 __25-[XCTestDriver _runTests]_block_invoke.400 + 56
+77  XCTestCore                          0x00000001032286b0 -[XCTestObservationCenter _observeTestExecutionForTestBundle:inBlock:] + 104
+78  XCTestCore                          0x0000000103210fe0 -[XCTestDriver _runTests] + 1192
+79  XCTestCore                          0x0000000103212ff8 _XCTestMain + 96
+80  xctest                              0x0000000102f5de44 $s10xctesttool6xctestO4mainyyFZ + 284
+81  dyld                                0x000000018fb7be00 start + 6992
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' passed (1.401 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' passed (3.754 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' passed (2.219 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' passed (0.171 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' passed (0.370 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' passed (0.076 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.216 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' passed (0.005 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' passed (0.254 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' passed (0.297 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' passed (0.041 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.172 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' passed (0.053 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' passed (0.226 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' passed (0.321 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' passed (0.253 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' passed (0.203 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' passed (0.220 seconds).
+Test Suite 'ThumbleCLIBackendTests' passed at 2026-10-21 01:45:18.560.
+	 Executed 41 tests, with 0 failures (0 unexpected) in 16.765 (16.775) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 01:45:18.560.
+	 Executed 48 tests, with 0 failures (0 unexpected) in 21.279 (21.290) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 01:45:18.560.
+	 Executed 48 tests, with 0 failures (0 unexpected) in 21.279 (21.291) seconds
+2026-10-21 01:45:27.080 xcodebuild[18673:86025004] [MT] IDETestOperationsObserverDebug: 30.971 elapsed -- Testing started completed.
+2026-10-21 01:45:27.081 xcodebuild[18673:86025004] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 01:45:27.081 xcodebuild[18673:86025004] [MT] IDETestOperationsObserverDebug: 30.971 sec, +30.971 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-authority-design-reads-ql22v2yh/build/AuthorityDesignReads/Logs/Test/Test-ThumbleTests-2026.10.21_01-43-57--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

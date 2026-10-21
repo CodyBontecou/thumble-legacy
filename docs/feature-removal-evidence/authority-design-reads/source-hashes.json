@@ -1,0 +1,13 @@
+{
+  "Sources/CLI/ThumbleCLI.swift": "d75aa07dfdb4c330cf56655894d9efebe65bbbb69fab2ac39c8eeaa8ea793092",
+  "Sources/CLI/ThumbleCLIBackend.swift": "def94d1f2797a1893e8e538517d298fb8a6943b08c3d9ab0d13117f7341aea16",
+  "Tests/ThumbleCLIBackendTests.swift": "4baeb5f042739e5b2901b386fe3574b111ff9978bfef6e618aacb8d008967f8a",
+  "Tests/StackSafetyRegressionTests.swift": "8c24e4f009c3cf03e19b06e1e603a25dd246533f4072daedd2d49aaf1fc3b093",
+  "scripts/verify-cli-profile-persistence-allowlist.py": "acc40bcd5d0153347a6c2d30faf14df0be36bfa8b8623963cfead3b80e3aefbd",
+  "docs/mcp/cli-capabilities-v1.json": "dda2b3bdfa08675ab28695247fb06775ed1f1a905cd3bf64afcdf389ab8a9579",
+  "README.md": "d9b9f5e20e14bf2faba7b25e4e57d7e8c1e160c573fd498e427f96b2e0305ddf",
+  "docs/cli-mcp-cutover.md": "0bfb66b05e6ff80e1280eb9c98973a98185d6412254c0de565b0df1f05d6de92",
+  "docs/feature-removal-progress.md": "543e7e18b41d54323ef1d4380b0baf0af6297f9caa8dddeb2ffb2192af8f6dac",
+  "docs/feature-removal-inventory.md": "3e097bc23c3c5397710bcfa43450c1fe8db6acd1f65c43df342c60f3b1100171",
+  "scripts/verify-authority-design-reads.py": "4f954b5165b29eb0e87b7bcb4eb0632fa1919063b206b36ad759174ad9aed76b"
+}

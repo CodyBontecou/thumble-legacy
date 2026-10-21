@@ -19,12 +19,10 @@ EXPECTED = {
     "skin": (3, 2),
     "renderSkinPreview": (2, 0),  # mutually exclusive lazy reads; artifact previews need no store
     "customization": (2, 0),
-    "validateLayout": (1, 0),
-    "previewLayout": (1, 0),
     "mutateCustomization": (1, 1),
     "mutateProfileResources": (1, 1),
     "style": (1, 0),
-    "asset": (3, 0),
+    "asset": (1, 0),  # legacy asset metadata mutation only; reads use authority snapshots
 }
 
 function = "<top-level>"
@@ -51,6 +49,14 @@ if normalized != EXPECTED:
     raise SystemExit(1)
 
 source_text = SOURCE.read_text(encoding="utf-8")
+for method in ("validateLayout", "previewLayout"):
+    block = source_text.split(f"private static func {method}(", 1)[1].split("private static func ", 1)[0]
+    if "captureInspectionProfile" not in block or "loadStore(" in block or "persistStore(" in block:
+        raise SystemExit(f"{method} must use read-only authority capture without desktop persistence")
+asset_reads = source_text.split("private static func asset(arguments:", 1)[1].split('case "import":', 1)[0]
+if asset_reads.count("captureInspectionProfile") != 2 or "loadStore(" in asset_reads or "persistStore(" in asset_reads:
+    raise SystemExit("Asset list/show must use read-only authority capture")
+
 profile_block = source_text.split("private static func moveProfiles", 1)[0]
 for command in ("select", "set-default", "rename", "duplicate", "delete", "reset"):
     if f'"{command}"' not in profile_block:

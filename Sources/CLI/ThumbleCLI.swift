@@ -3566,9 +3566,10 @@ struct ThumbleCLI {
     }
 
     private static func validateLayout(arguments: [String]) throws {
-        let store = try loadStore()
-        let profile = try resolveProfile(layoutProfileTarget(in: arguments), in: store)
-        let resolvedCustomization = try customization(for: profile, arguments: arguments)
+        try validateInspectionOptions(arguments)
+        let captured = try profileBackend().captureInspectionProfile(target: .init(layoutProfileTarget(in: arguments)))
+        let profile = captured.profile
+        let resolvedCustomization = try inspectionCustomization(captured, arguments: arguments)
         let canvasSize = try parseLayoutCanvasSize(arguments, fallback: resolvedCustomization.deviceCanvas.editorDeviceFrame.screenRect.size)
         let report = resolvedCustomization.layoutQualityReport(profileName: profile.name, canvasSize: canvasSize)
 
@@ -3692,22 +3693,34 @@ struct ThumbleCLI {
     }
 
     private static func previewLayout(arguments: [String]) throws {
-        let store = try loadStore()
-        let profile = try resolveProfile(layoutProfileTarget(in: arguments), in: store)
-        let resolvedCustomization = try customization(for: profile, arguments: arguments)
+        try validateInspectionOptions(arguments)
+        let captured = try profileBackend().captureInspectionProfile(target: .init(layoutProfileTarget(in: arguments)))
+        let profile = captured.profile
+        let resolvedCustomization = try inspectionCustomization(captured, arguments: arguments)
         let canvasSize = try parseLayoutCanvasSize(arguments, fallback: resolvedCustomization.deviceCanvas.editorDeviceFrame.screenRect.size)
         let outputPath = optionValue("--output", in: arguments) ?? optionValue("-o", in: arguments) ?? optionValue("--path", in: arguments) ?? "thumble-layout-preview.png"
         let scale = try parsePreviewScale(arguments)
 
 #if os(macOS)
-        try GamepadLayoutPreviewRenderer.writePNG(
-            customization: resolvedCustomization,
-            profileName: profile.name,
-            canvasSize: canvasSize,
-            outputURL: URL(fileURLWithPath: outputPath),
-            scale: scale,
-            annotateIssues: !arguments.contains("--no-annotations")
-        )
+        if captured.owned && canvasSize.width < canvasSize.height {
+            throw CLIError.message("Owned profile previews require a landscape canvas.")
+        }
+        if arguments.contains("--native") {
+            guard canvasSize == resolvedCustomization.deviceCanvas.editorDeviceFrame.screenRect.size else {
+                throw CLIError.message("Native preview uses the saved device canvas; omit canvas/size overrides or use the diagnostic preview.")
+            }
+            let scheme: ThumbleSkinColorScheme = resolvedCustomization.colorSchemePreference == .dark ? .dark : .light
+            try MainActor.assumeIsolated {
+                try ThumbleNativeSkinPreviewRenderer.writePNG(item: .init(title: profile.name,
+                    customization: resolvedCustomization, colorScheme: scheme, state: .normal),
+                    outputURL: URL(fileURLWithPath: outputPath), scale: scale)
+            }
+        } else {
+            try GamepadLayoutPreviewRenderer.writePNG(
+                customization: resolvedCustomization, profileName: profile.name,
+                canvasSize: canvasSize, outputURL: URL(fileURLWithPath: outputPath), scale: scale,
+                annotateIssues: !arguments.contains("--no-annotations"))
+        }
         let report = resolvedCustomization.layoutQualityReport(profileName: profile.name, canvasSize: canvasSize)
         if arguments.contains("--json") {
             try printJSON(report)
@@ -3718,6 +3731,34 @@ struct ThumbleCLI {
 #else
         throw CLIError.message("Layout preview rendering is only available on macOS.")
 #endif
+    }
+
+    private static func validateInspectionOptions(_ arguments: [String]) throws {
+        for option in ["--appearance", "--action-set"] where arguments.contains(option) {
+            guard arguments.filter({ $0 == option }).count == 1,
+                  let index = arguments.firstIndex(of: option), index + 1 < arguments.count,
+                  !arguments[index + 1].hasPrefix("-") else {
+                throw CLIError.message("Provide \(option) once with an explicit value.")
+            }
+        }
+    }
+
+    private static func inspectionCustomization(_ captured: ThumbleCLIProfileBackend.InspectionProfile, arguments: [String]) throws -> GamepadCustomization {
+        let variant = try customizationVariant(in: arguments)
+        if captured.owned && variant == .portrait {
+            throw CLIError.message("Owned profiles have one landscape layout; portrait inspection is unavailable.")
+        }
+        let preferredScheme = captured.profile.customization.colorSchemePreference == .dark ? "dark" : "light"
+        let scheme = try parseSkinColorScheme(optionValue("--appearance", in: arguments) ?? preferredScheme)
+        let actionSet = try parseActionSet(optionValue("--action-set", in: arguments) ?? "base")
+        var resolved: GamepadCustomization
+        if captured.owned {
+            resolved = captured.profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: actionSet)
+        } else {
+            resolved = variant.map { captured.profile.customization(for: $0) } ?? captured.profile.customization
+        }
+        resolved.colorSchemePreference = scheme == .dark ? .dark : .light
+        return resolved
     }
 
     private static func layoutProfileTarget(in arguments: [String]) -> String? {
@@ -4318,14 +4359,12 @@ struct ThumbleCLI {
         let rest = Array(arguments.dropFirst())
         switch subcommand {
         case "list", "ls":
-            let store = try loadStore()
-            let profile = try resolveProfile(optionValue("--profile", in: rest), in: store)
+            let profile = try profileBackend().captureInspectionProfile(target: .init(optionValue("--profile", in: rest))).profile
             let assets = profile.customization.assetLibrary.normalized.assets
             if rest.contains("--json") { try printJSON(assets) } else { assets.forEach { print("\($0.id)\t\($0.name)\t\($0.role.rawValue)\t\($0.byteCount) bytes") } }
         case "show":
             guard let id = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble asset show <asset-id>") }
-            let store = try loadStore()
-            let profile = try resolveProfile(optionValue("--profile", in: rest), in: store)
+            let profile = try profileBackend().captureInspectionProfile(target: .init(optionValue("--profile", in: rest))).profile
             guard let asset = profile.customization.assetLibrary.asset(id: id) else { throw CLIError.message("Asset not found: \(id)") }
             try printJSON(asset)
         case "import":
@@ -7875,7 +7914,7 @@ struct ThumbleCLI {
         var values: [String] = []
         var skipNext = false
         let optionsWithValues: Set<String> = [
-            "--spec", "--from-spec", "--output", "-o", "--window-title", "--profile", "--name", "--template", "--from", "--identifier", "--artboard", "--build-directory", "--state", "--columns",
+            "--spec", "--from-spec", "--output", "-o", "--window-title", "--profile", "--name", "--template", "--from", "--identifier", "--artboard", "--build-directory", "--state", "--action-set", "--columns",
             "--layout-preview", "--preview-output", "--path", "--app", "--application", "--bundle-id", "--bundle", "--image-scale", "--render-scale",
             "--sequence", "--keyboard", "--key", "--gamepad-button", "--gamepad", "--part", "--input", "--modifiers", "--mods", "--layout", "--scale", "--control-scale",
             "--appearance", "--color-scheme", "--scheme", "--accent", "--color", "--labels", "--label", "--x", "--center-x", "--y", "--center-y",
@@ -8165,7 +8204,7 @@ struct ThumbleCLI {
           thumble orientation arrange portrait [--from landscape] [--profile PROFILE]
           thumble layout validate [PROFILE|--profile PROFILE] [--variant portrait|landscape] [--json|--strict]
           thumble layout fix|repair|autofix [all|small-control|control-overlap|expanded-hit-overlap|edge-hugging-control|thumb-reach|coverage] [--repair hit-targets|ergonomic] [--profile PROFILE] [--variant portrait|landscape] [--unlock] [--json]
-          thumble layout preview [PROFILE|--profile PROFILE] -o preview.png [--variant portrait|landscape] [--canvas iphone-17-pro-landscape]
+          thumble layout preview [PROFILE|--profile PROFILE] -o preview.png [--native] [--appearance light|dark] [--action-set base|left-trigger|right-trigger|both-triggers] [--variant portrait|landscape] [--canvas iphone-17-pro-landscape]
           thumble device list
           thumble device set iphone-17-pro --orientation landscape
           thumble device set custom --size 844x390

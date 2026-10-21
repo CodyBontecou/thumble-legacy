@@ -3,6 +3,57 @@ import Foundation
 import XCTest
 
 final class ThumbleCLIBackendTests: XCTestCase {
+    private func ownedInspectionSnapshot() throws -> ThumbleCLIProfileBackend.DesignSnapshot {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+        let document = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))) as? [String: Any])
+        let profile = try XCTUnwrap((document["profiles"] as? [[String: Any]])?.first)
+        let encoded = try XCTUnwrap(String(data: JSONSerialization.data(withJSONObject: profile), encoding: .utf8))
+        let source = String(encoded.dropLast()) + ",\"futureInspectionPrecision\":0.12345678901234567890123456789}"
+        return .init(configurationRevision: 41, draftID: nil, draftRevision: nil, profileJSON: source, bindingJSON: "{}")
+    }
+    func testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource() throws {
+        let snapshot = try ownedInspectionSnapshot()
+        let projection = try ThumbleCLIProfileBackend.inspectionProfile(snapshot, expectedRevision: 41)
+        XCTAssertTrue(projection.owned)
+        XCTAssertEqual(projection.sourceProfileData, Data(snapshot.profileJSON.utf8))
+        XCTAssertTrue(snapshot.profileJSON.contains("0.12345678901234567890123456789"))
+        XCTAssertEqual(projection.profile.appearanceBank?.variants.count, 8)
+        XCTAssertEqual(projection.profile.customization.assetLibrary.assets.first?.data, Data("fixture-image".utf8))
+        for scheme in ThumbleSkinColorScheme.allCases {
+            for action in ThumbleActionSet.allCases {
+                let layout = projection.profile.resolvedCustomization(for: .landscape, colorScheme: scheme, skinPackage: nil, actionSet: action)
+                XCTAssertFalse(layout.elements.isEmpty)
+                XCTAssertEqual(layout.assetLibrary.assets.first?.data, Data("fixture-image".utf8))
+            }
+        }
+        XCTAssertEqual(projection.sourceProfileData, Data(snapshot.profileJSON.utf8))
+    }
+    func testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources() throws {
+        let source = try ownedInspectionSnapshot()
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(source, expectedRevision: 42))
+        let draft = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 41, draftID: UUID(), draftRevision: 1, profileJSON: source.profileJSON, bindingJSON: "{}")
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(draft, expectedRevision: 41))
+        var raw = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(source.profileJSON.utf8)) as? [String: Any])
+        for version in [6, 0] {
+            raw["profileFormatVersion"] = version
+            let snapshot = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 41, draftID: nil, draftRevision: nil,
+                profileJSON: String(decoding: try JSONSerialization.data(withJSONObject: raw), as: UTF8.self), bindingJSON: "{}")
+            XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(snapshot, expectedRevision: 41))
+        }
+        raw["profileFormatVersion"] = 5; raw["appearanceResources"] = [:] as [String: String]
+        let missing = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 41, draftID: nil, draftRevision: nil,
+            profileJSON: String(decoding: try JSONSerialization.data(withJSONObject: raw), as: UTF8.self), bindingJSON: "{}")
+        XCTAssertThrowsError(try ThumbleCLIProfileBackend.inspectionProfile(missing, expectedRevision: 41))
+    }
+    func testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture() throws {
+        let profile = GamepadConfigurationProfile(name: "Legacy inspection", customization: .defaultValue)
+        let source = String(decoding: try JSONEncoder().encode(profile), as: UTF8.self)
+        let snapshot = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 2, draftID: nil, draftRevision: nil, profileJSON: source, bindingJSON: "{}")
+        let captured = try ThumbleCLIProfileBackend.inspectionProfile(snapshot, expectedRevision: 2)
+        XCTAssertFalse(captured.owned); XCTAssertEqual(captured.profile.id, profile.id)
+        XCTAssertEqual(captured.sourceProfileData, Data(source.utf8))
+    }
+
     func testCLITemplateCatalogMatchesSharedAuthority() {
         XCTAssertEqual(
             ThumbleCLIProfileBackend.ControllerTemplate.allCases.map(\.rawValue),

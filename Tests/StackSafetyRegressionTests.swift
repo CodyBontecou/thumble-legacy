@@ -273,6 +273,24 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testAuthorityInspectionProjectionFitsConstrainedThread() throws {
+        assertInlineSize(ThumbleCLIProfileBackend.InspectionProfile.self, atMost: 512)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let document = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))) as? [String: Any])
+            let profile = try XCTUnwrap((document["profiles"] as? [[String: Any]])?.first)
+            let bytes = try JSONSerialization.data(withJSONObject: profile)
+            let snapshot = ThumbleCLIProfileBackend.DesignSnapshot(configurationRevision: 41, draftID: nil, draftRevision: nil,
+                profileJSON: String(decoding: bytes, as: UTF8.self), bindingJSON: "{}")
+            let captured = try ThumbleCLIProfileBackend.inspectionProfile(snapshot, expectedRevision: 41)
+            guard captured.sourceProfileData == bytes, captured.owned,
+                  captured.profile.appearanceBank?.variants.count == 8,
+                  captured.profile.customization.assetLibrary.assets.first?.data == Data("fixture-image".utf8) else {
+                throw StackTestError.unexpectedDecodedState
+            }
+        }
+    }
+
     func testOwnedPhoneIntentWireAndJournalFitConstrainedThread() throws {
         assertInlineSize(OwnedPhoneEdit.self, atMost: 8)
         assertInlineSize(OwnedPhoneEditJournal.self, atMost: 8)

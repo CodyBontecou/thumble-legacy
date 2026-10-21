@@ -1362,6 +1362,57 @@ final class ThumbleCLIProfileBackend {
         var conflictPaths: [String]?
     }
 
+    /// Read-only projection. Exact capture bytes are retained and never become a
+    /// legacy write/export source merely because native rendering uses typed views.
+    struct InspectionProfile {
+        let profile: GamepadConfigurationProfile
+        let sourceProfileData: Data
+        let configurationRevision: UInt64
+        let owned: Bool
+    }
+
+    func captureInspectionProfile(target: ProfileSelector) throws -> InspectionProfile {
+        guard let catalog = try perform(.list).catalog else { throw BackendError.malformedResponse }
+        let response = try perform(.designSnapshot(target, draftID: nil, expectedDraftRevision: nil),
+            expectedConfigurationRevision: catalog.configurationRevision)
+        guard let snapshot = response.designSnapshot else { throw BackendError.malformedResponse }
+        let projection = try Self.inspectionProfile(snapshot, expectedRevision: catalog.configurationRevision)
+        guard let entry = catalog.profiles.first(where: { $0.profileID == projection.profile.id }) else { throw BackendError.malformedResponse }
+        let matches: Bool
+        switch target {
+        case .active: matches = entry.active
+        case .default: matches = entry.default
+        case .id(let id): matches = id == entry.profileID
+        case .name(let name): matches = entry.name.lowercased() == name.lowercased()
+        }
+        guard matches else { throw BackendError.malformedResponse }
+        return projection
+    }
+
+    static func inspectionProfile(_ snapshot: DesignSnapshot, expectedRevision: UInt64) throws -> InspectionProfile {
+        guard expectedRevision > 0, snapshot.configurationRevision == expectedRevision,
+              snapshot.draftID == nil, snapshot.draftRevision == nil else { throw BackendError.malformedResponse }
+        let data = Data(snapshot.profileJSON.utf8)
+        guard data.count <= maximumProfileArtifactBytes else { throw BackendError.responseTooLarge }
+        struct Header: Decodable { let id: UUID; let profileFormatVersion: Int? }
+        let header = try JSONDecoder().decodeUnique(Header.self, from: data)
+        let owned = header.profileFormatVersion == ProfileFormatPolicy.ownedAppearanceVersion
+        let profile: GamepadConfigurationProfile
+        if owned {
+            // Wrapping exact profile bytes avoids rounding unknown numeric fields.
+            // Only the reader's disposable typed projection is used below.
+            let prefix = "{\"schema\":\"" + ThumbleKeypadConfigurationExport.schemaIdentifier + "\",\"version\":5,\"activeProfileID\":\"" + header.id.uuidString + "\",\"defaultProfileID\":null,\"profiles\":["
+            let document = try ThumbleOwnedConfigurationDocument(validating: Data((prefix + snapshot.profileJSON + "]}").utf8))
+            guard document.projectedProfiles.count == 1, let projected = document.projectedProfiles.first else { throw BackendError.malformedResponse }
+            profile = projected
+        } else {
+            profile = try JSONDecoder().decodeUnique(GamepadConfigurationProfile.self, from: data)
+        }
+        guard profile.id == header.id else { throw BackendError.malformedResponse }
+        return InspectionProfile(profile: profile, sourceProfileData: data,
+            configurationRevision: snapshot.configurationRevision, owned: owned)
+    }
+
     struct DesignSnapshot: Codable, Equatable {
         let configurationRevision: UInt64
         let draftID: UUID?

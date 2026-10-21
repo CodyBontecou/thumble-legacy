@@ -183,6 +183,8 @@ thumble test tap UUID
 thumble release-all
 ```
 
+`thumble layout preview --native -o /tmp/keypad-preview.png` renders the selected saved appearance; omit `--native` for the diagnostic layout diagram. Use `--appearance light|dark` and `--action-set base|left-trigger|right-trigger|both-triggers` for owned appearances. These reads, `layout validate`, and `asset list/show` use revision-checked local authority snapshots, including explicit owned-format profiles, with the receiver stopped or running. Asset mutation commands still need cutover.
+
 `thumble layout preview -o /tmp/keypad-preview.png` renders the selected saved layout to an artifact without a desktop window or Screen Recording access. Desktop launch/quit, window capture, editor-view and onboarding replay commands are retired. Use `server start|stop|restart` for the receiver and `app setup-guide` for local setup.
 
 `thumble latency simulate` is a synthetic replay model for agent debugging, not an end-to-end device benchmark. It runs Hollow-Knight-style bursts, same-button mash bursts, and UDP recovery cases through the wire codec and sequence-buffer assumptions, then writes modeled per-edge timing. `thumble latency verify` validates those model assumptions. For production measurements, use `thumble monitor`: `input_pipeline` events report same-clock Mac decode, reorder wait, input processing, binding lookup, output injection, post-injection, deferred-output, and receive-to-processed timing. `thumble status` reports rolling pipeline and output-stage percentiles plus round-trip latency.
