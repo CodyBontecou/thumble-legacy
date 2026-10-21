@@ -1,0 +1,24 @@
+{
+  "files": {
+    "README.md": "2dcc427883f78ce2a79eb5f73f74065d6725beb69c9bc04331aa34efed48b395",
+    "native-tests.log.gz": "dffe7718f6d46f9ddcbddf58424388958a20d678c16c660e87ec05934320fa09",
+    "result.json": "ed1d907bc75cdaa97dbe59232097267e25028cc818ba277880cbae14c7997669",
+    "rust-gate.log.gz": "e9420fe34c6ebb201e60600d2cc74105516947f489192e2b4fc569b057980a30",
+    "stack-gate.log.gz": "8dbfd85aa393b55c3e16d8fe760d63b5824beaf1ce4e6c7a3a3026db4f22c864"
+  },
+  "sources": {
+    "Host/crates/thumble-host/src/cli_profile.rs": "8a3537dd542a33de105ad8dde56e6b75b67c8c38bb988de1a26a1a20d9d05cbc",
+    "Sources/CLI/ThumbleCLI.swift": "0bdf7c3f8f6be409c732984164c5541151d64f70f68e9fb31836c9d9073932ed",
+    "Sources/CLI/ThumbleCLIBackend.swift": "ec5a751a4d2c53b4bb17a537e8d3d4381421cc93cc979e6d036f966a97167fbf",
+    "Tests/ThumbleCLIBackendTests.swift": "151332a303e1e1bdda5bf00d2d77b157cff0333de2a9b7c1385654204a2dee3b",
+    "scripts/verify-local-themes.py": "315826ab519bcbbb17c0c4f73d3b3d95f64ba0eda5ac7c3a45ec692c29f8061b"
+  },
+  "binaries": {
+    "build/OwnedAssets/Build/Products/Debug/thumble": "ade1955557c75dd645893a06f4fae7ba55e33a5ae2de888544c4409bf33305eb",
+    "build/OwnedAssets/Build/Products/Debug/thumble-bridge": "3fe0cedb5501fc41b99edf79d54007d046ee22a22fd1a9476f966b6c4c60997c",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-host": "a07783fb76527e99d0db4fd6cdc3494764d40c3a91c8f7794dd991327a89cb33",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-cli-bridge": "c6d0386a8d105541d569e60e63e7ffe971c4f2a2a89c1d0a1df1eff530f4dd2c",
+    "/private/tmp/thumble-owned-assets-target/debug/thumble-mcp": "682150bfac732e57847787bca269bb81afbdcd15fc2d39cc65e9524213c6e737"
+  },
+  "automaticMigrationActivated": false
+}

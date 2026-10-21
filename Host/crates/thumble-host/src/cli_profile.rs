@@ -205,6 +205,12 @@ pub enum CliProfileCommand {
         #[serde(rename = "makeDefault")]
         make_default: bool,
     },
+    #[serde(rename = "theme.apply")]
+    ThemeApply {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        preset: String,
+    },
     #[serde(rename = "customization.set")]
     CustomizationSet {
         target: ProfileSelector,
@@ -647,6 +653,7 @@ impl CliProfileCommand {
             Self::GenerationGenerate { .. } => "generation.generate",
             Self::GenerationPlanSpec { .. } => "generation.plan-spec",
             Self::TemplateInstall { .. } => "template.install",
+            Self::ThemeApply { .. } => "theme.apply",
             Self::CustomizationSet { .. } => "customization.set",
             Self::CustomizationFix { .. } => "customization.fix",
             Self::ElementAdd { .. } => "element.add",
@@ -2527,6 +2534,14 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
                 "device frame is outside the checked-in safe catalog",
             ));
         }
+        CliProfileCommand::ThemeApply { preset, .. } => {
+            if !matches!(preset.as_str(), "cavern-glow" | "soft-white-controller") {
+                return Err(TransactionFailure::new(
+                    "unknown_theme",
+                    "theme preset is outside the local catalog",
+                ));
+            }
+        }
         CliProfileCommand::CustomizationSet {
             changes, frame_id, ..
         } => {
@@ -3103,6 +3118,21 @@ fn plan_transaction(
                 destination: None,
                 removed_every_profile: false,
             })
+        }
+        CliProfileCommand::ThemeApply {
+            target,
+            variant,
+            preset,
+        } => {
+            let profile = resolve_selector(target, catalog)?;
+            Ok(plan_one(
+                ConfigurationOperation::ThemeApply {
+                    profile_id: profile.profile_id.hyphenated().to_string(),
+                    variant: *variant,
+                    preset: preset.clone(),
+                },
+                profile.name.clone(),
+            ))
         }
         CliProfileCommand::CustomizationSet {
             target,
@@ -6304,6 +6334,7 @@ fn replay_profile_names(
         | CliProfileCommand::ElementNudge { target, .. }
         | CliProfileCommand::ElementDelete { target, .. }
         | CliProfileCommand::ElementReset { target, .. }
+        | CliProfileCommand::ThemeApply { target, .. }
         | CliProfileCommand::CustomizationSet { target, .. }
         | CliProfileCommand::StyleImport { target, .. }
         | CliProfileCommand::StyleCreate { target, .. }
@@ -6520,6 +6551,30 @@ pub fn validate_profile_asset_command(command: &CliProfileCommand) -> Result<(),
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn theme_request_is_catalog_bounded_and_plans_one_scoped_operation() {
+        let state = thumble_core::PersistentState::minimal("theme-test").unwrap();
+        let catalog = catalog_from_state(&state).unwrap();
+        let command = CliProfileCommand::ThemeApply {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Landscape,
+            preset: "cavern-glow".into(),
+        };
+        validate_request(&request(command.clone())).unwrap();
+        let plan = plan_transaction(&command, &catalog, &state.profiles, Uuid::new_v4()).unwrap();
+        assert!(
+            matches!(plan.operations.as_slice(),[ConfigurationOperation::ThemeApply { profile_id, variant: ConfigurationVariant::Landscape, preset }] if profile_id.eq_ignore_ascii_case(&state.active_profile_id) && preset == "cavern-glow")
+        );
+        let bad = CliProfileCommand::ThemeApply {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+            preset: "remote-or-future-theme".into(),
+        };
+        assert_eq!(
+            validate_request(&request(bad)).unwrap_err().error.code,
+            "unknown_theme"
+        );
+    }
     use super::*;
     use tempfile::tempdir;
 

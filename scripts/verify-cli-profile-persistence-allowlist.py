@@ -235,9 +235,8 @@ if "customizationSet" not in customization_set_block:
 theme_block = SOURCE.read_text(encoding="utf-8").split(
     "private static func theme(arguments:", 1
 )[1].split("private static func resolveThemePreset", 1)[0]
-if "requireExplicitUnmigratedProfileAccess" not in theme_block:
-    print("Unmigrated theme writes must fail closed under Rust authority", file=sys.stderr)
-    raise SystemExit(1)
+if ".themeApply(" not in theme_block or any(token in theme_block for token in ("requireExplicitUnmigratedProfileAccess", "mutateCustomization(", "loadStore(")):
+    raise SystemExit("Theme application must use the typed authority transaction")
 
 repair_block = SOURCE.read_text(encoding="utf-8").split(
     "private static func repairLayout(", 1

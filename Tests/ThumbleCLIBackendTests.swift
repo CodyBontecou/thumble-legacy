@@ -3,6 +3,14 @@ import Foundation
 import XCTest
 
 final class ThumbleCLIBackendTests: XCTestCase {
+    func testThemeCommandCarriesExplicitAuthorityTargetAndVariant() throws {
+        let bytes = try JSONEncoder().encode(ThumbleCLIProfileBackend.Command.themeApply(.active, .landscape, preset: "cavern-glow"))
+        let value = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])
+        XCTAssertEqual(value["type"] as? String, "theme.apply")
+        XCTAssertEqual(value["variant"] as? String, "landscape")
+        XCTAssertEqual(value["preset"] as? String, "cavern-glow")
+        XCTAssertEqual((value["target"] as? [String: String])?["kind"], "active")
+    }
     func testStyleImportCommandPreservesRawLibraryAndMergeIntent() throws {
         let text = "{\"styles\":[]}"
         let bytes = try JSONEncoder().encode(ThumbleCLIProfileBackend.Command.styleImport(.active, libraryJSON: text, merge: true))

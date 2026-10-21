@@ -587,6 +587,7 @@ final class ThumbleCLIProfileBackend {
         case generationGenerate(select: Bool, makeDefault: Bool)
         case generationPlanSpec(specJSON: String, requestedGameName: String?)
         case templateInstall(ControllerTemplate, name: String?, select: Bool, makeDefault: Bool)
+        case themeApply(ProfileSelector, ConfigurationVariant, preset: String)
         case customizationSet(ProfileSelector, ConfigurationVariant, [CustomizationChanges], frameID: String?)
         case customizationFix(ProfileSelector, ConfigurationVariant, LayoutRepairTarget, LayoutRepairCanvas, includeLocked: Bool)
         case elementAdd(ProfileSelector, ConfigurationVariant, kind: GamepadCustomControlKind, elementID: UUID?, changesJSON: String)
@@ -653,7 +654,7 @@ final class ThumbleCLIProfileBackend {
         case controlBarItemReset(ProfileSelector, ConfigurationVariant, GamepadControlBarItem)
 
         private enum CodingKeys: String, CodingKey {
-            case libraryJSON, merge
+            case preset, libraryJSON, merge
             case assetID, fileName, contentType, dataBase64, role
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
@@ -816,6 +817,11 @@ final class ThumbleCLIProfileBackend {
                 try container.encodeIfPresent(name, forKey: .name)
                 try container.encode(select, forKey: .select)
                 try container.encode(makeDefault, forKey: .makeDefault)
+            case .themeApply(let target, let variant, let preset):
+                try container.encode("theme.apply", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(preset, forKey: .preset)
             case .customizationSet(let target, let variant, let changes, let frameID):
                 try container.encode("customization.set", forKey: .type)
                 try container.encode(target, forKey: .target)

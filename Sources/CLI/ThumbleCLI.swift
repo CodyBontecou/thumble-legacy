@@ -1627,12 +1627,13 @@ struct ThumbleCLI {
             let preset = try resolveThemePreset(name)
             try printJSON(themeSummary(for: preset))
         case "apply", "set":
-            try requireExplicitUnmigratedProfileAccess(operation: "theme apply")
             guard let name = firstPositional(in: rest) else { throw CLIError.message("Usage: thumble theme apply <theme-id> [--profile PROFILE]") }
             let preset = try resolveThemePreset(name)
-            try mutateCustomization(profileTarget: optionValue("--profile", in: rest)) { customization in
-                preset.apply(to: &customization)
-            }
+            let response = try profileBackend().perform(.themeApply(.init(optionValue("--profile", in: rest)),
+                try authorityConfigurationVariant(in: rest), preset: preset.rawValue),
+                invocationID: try profileInvocationID(in: rest))
+            guard response.outcome != nil else { throw CLIError.message("Authority returned no theme outcome") }
+            printProfileInvocation(response)
             print("Applied theme \"\(preset.displayName)\".")
         default:
             throw CLIError.message("Unknown theme subcommand: \(subcommand)")

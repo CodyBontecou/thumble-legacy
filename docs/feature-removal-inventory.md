@@ -36,3 +36,5 @@ Apple hosted transport retirement: `BuilderArtifactFetch.swift`, `BuilderArtifac
 Owned design capture/review/apply now uses explicit owned readers and profile-owned eight-state materialization. `ControllerDesignSession`, shared renderer/CSS/artboard/diagnostic machinery and `ThumbleOwnedOperationBridge` are retained design infrastructure; the reviewed archive is a private intermediate and is not installed on owned apply. See `docs/owned-design-workspace.md` before removing package-named compiler dependencies.
 
 Reusable-style file import/export is now owned by native CLI transactions, local MCP and `GamepadStyleLibraryFile`, with pooled embedded resources and scoped raw catalog merging. It is retained appearance infrastructure, separate from skin package import/export. See `docs/owned-style-libraries.md`.
+
+Local theme application now routes native CLI apply/set through typed authority transactions and the retained native transformation. It shares the existing MCP draft operation and does not depend on desktop persistence. Built-in local presets remain appearance tools; skin package workflows still require retirement.
