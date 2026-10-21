@@ -1,0 +1,242 @@
+{
+  "version": 1,
+  "localSnapshot": "8f216c9635c87cbd4ae44eb6be8de5bae9f12590",
+  "approvedScope": "25-file frozen native phone enrollment and vault snapshot",
+  "publishedCommit": "07da0e0861838002f5eb9a040a3b736fa9152841",
+  "publicParent": "9e2f6434e1ff21e089a900ede7789c4b08a69fe5",
+  "publishedTree": "b42c9f28fb0408a81f54f9fa4c9efc44237ab403",
+  "publicationAudit": {
+    "commits": 1,
+    "parentCount": 1,
+    "files": [
+      {
+        "path": ".github/workflows/typescript-rewrite-mobile.yml",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/.gitignore",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/README.md",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/build.gradle.kts",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/androidTest/kotlin/com/thumble/rewrite/input/PhoneCredentialDeviceTest.kt",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/main/AndroidManifest.xml",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneCredential.kt",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneEnrollment.kt",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneCredentialTest.kt",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneEnrollmentTest.kt",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneCredential.swift",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneEnrollment.swift",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneCredentialTests.swift",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneEnrollmentTests.swift",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/receiver/examples/enrollment_probe.rs",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/native/receiver/src/enrollment.rs",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/packages/fixtures/enrollment-control-v2.json",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/packages/fixtures/enrollment-v1.json",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/packages/fixtures/phone-credential-v1.json",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/tooling/check_native_vault_results.py",
+        "status": "added"
+      },
+      {
+        "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+        "status": "modified"
+      },
+      {
+        "path": "Rewrite/tooling/test_native_vault_results.py",
+        "status": "added"
+      },
+      {
+        "path": "docs/adr/0006-rewrite-native-enrollment.md",
+        "status": "modified"
+      },
+      {
+        "path": "docs/rewrite-enrollment-v1.md",
+        "status": "modified"
+      },
+      {
+        "path": "docs/rewrite-phone-credentials-v1.md",
+        "status": "added"
+      }
+    ],
+    "frozenHashes": "all 25 matched candidate manifest before publication",
+    "newerLocalSource": "excluded",
+    "privateBaselineHistory": "excluded",
+    "remoteBlobHashes": "All 25 remote Git blob SHA-1s, modes and types matched the frozen capsule"
+  },
+  "jobs": [
+    {
+      "run": 39692579255,
+      "id": 119542094619,
+      "name": "portable (windows-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579255/job/119542094619"
+    },
+    {
+      "run": 39692579255,
+      "id": 119542094900,
+      "name": "portable (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579255/job/119542094900"
+    },
+    {
+      "run": 39692579255,
+      "id": 119542095074,
+      "name": "portable (macos-latest)",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579255/job/119542095074"
+    },
+    {
+      "run": 39692579200,
+      "id": 119542094167,
+      "name": "android-keystore",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579200/job/119542094167"
+    },
+    {
+      "run": 39692579200,
+      "id": 119542094486,
+      "name": "android-native",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579200/job/119542094486"
+    },
+    {
+      "run": 39692579200,
+      "id": 119542094509,
+      "name": "ios-native",
+      "status": "queued",
+      "conclusion": null,
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579200/job/119542094509"
+    }
+  ],
+  "completedChecks": {
+    "windows": {
+      "rust": 54,
+      "typescript": 68,
+      "typescriptAssertions": 817,
+      "packageAssertions": 29
+    },
+    "linux": {
+      "rust": 56,
+      "typescript": 68,
+      "typescriptAssertions": 819,
+      "packageAssertions": 29
+    },
+    "androidNative": "passed library/TLS/enrollment unit tests, AAR and lint",
+    "androidKeystore": {
+      "runner": "Ubuntu with headless API 35 emulator",
+      "test": "realAndroidKeystorePersistsAndDetectsTampering",
+      "provider": "Android Keystore",
+      "result": "Passed",
+      "totalCases": 1,
+      "verifier": "explicit named non-skipped case required"
+    }
+  },
+  "remaining": "macOS host and iOS native/Keychain jobs still queued at this observation; no full-snapshot green claim",
+  "artifacts": [
+    {
+      "run": 39692579255,
+      "id": 12389960272,
+      "name": "rewrite-portable-tests-windows-latest",
+      "digest": "sha256:8b67a9f904d725ef4cded2ac7abd783b221f9a7e4332970467ecc95edcb8247e",
+      "bytes": 3426,
+      "expired": false
+    },
+    {
+      "run": 39692579255,
+      "id": 12389426105,
+      "name": "rewrite-portable-tests-ubuntu-latest",
+      "digest": "sha256:8f9ae63aa24362db143284b1be469136d84285f6f894de87cb0b6543b6a3e5cc",
+      "bytes": 3414,
+      "expired": false
+    },
+    {
+      "run": 39692579255,
+      "id": 12389236611,
+      "name": "rewrite-m2-recording-ubuntu-latest",
+      "digest": "sha256:6bbf44d43b0fae1974e5caab41567f75ea2c20be027565d687777066606a85d2",
+      "bytes": 43551750,
+      "expired": false
+    },
+    {
+      "run": 39692579255,
+      "id": 12388204542,
+      "name": "rewrite-m2-recording-windows-latest",
+      "digest": "sha256:1827f593fb48c2f607c658296ce9ce51cb0aee511028d42741d9d91a1ef1acdd",
+      "bytes": 47082749,
+      "expired": false
+    },
+    {
+      "run": 39692579200,
+      "id": 12389401850,
+      "name": "rewrite-android-keystore-provider",
+      "digest": "sha256:a37e89984998418db25211acfbf9e86dc5b9400e5d07f0d62064913e5822b945",
+      "bytes": 13487,
+      "expired": false
+    },
+    {
+      "run": 39692579200,
+      "id": 12389142302,
+      "name": "rewrite-mobile-android-native",
+      "digest": "sha256:7e1d8ed5a0d835b3fc12838fb821a844b68394479319b8ede62f36847a4b14f0",
+      "bytes": 162954,
+      "expired": false
+    }
+  ]
+}
