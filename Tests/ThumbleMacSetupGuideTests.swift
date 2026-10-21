@@ -44,21 +44,15 @@ final class ThumbleMacSetupGuideTests: XCTestCase {
         }
     }
 
-    func testCLIGuideUsesEverySlideAndInstructionInOrder() throws {
+    func testCLIGuideUsesHeadlessSetupAndRetainsPhoneAndPermissionActions() {
         let text = ThumbleMacSetupGuide.text
-        var previousEnd = text.startIndex
-        for step in MacOnboardingStep.allCases {
-            let range = try XCTUnwrap(text.range(of: "\(step.tag) — \(step.headline)"))
-            XCTAssertGreaterThanOrEqual(range.lowerBound, previousEnd)
-            previousEnd = range.upperBound
-            XCTAssertTrue(text.contains(step.subtitle))
-            for instruction in step.instructions {
-                XCTAssertTrue(text.contains("\(instruction.title): \(instruction.text)"))
-            }
+        for command in ["server start", "status --json", "server addresses", "app ios-app", "app local-network-settings", "accessibility status", "accessibility open", "pairing payload", "profile list", "layout validate PROFILE --json", "layout preview PROFILE -o preview.png", "app setup-guide"] {
+            XCTAssertTrue(text.contains("thumble \(command)"), command)
         }
-        for command in ["app ios-app", "app local-network-settings", "accessibility open", "pairing payload", "app replay-onboarding"] {
-            XCTAssertTrue(text.contains("thumble \(command)"))
+        for retired in ["app open", "app screenshot", "app replay-onboarding", "app editor-view", "Mac toolbar"] {
+            XCTAssertFalse(text.contains(retired), retired)
         }
+        XCTAssertTrue(text.contains("private connection material"))
     }
 
     func testInstructionIdentifiersAreUniqueWithinEachSlide() {

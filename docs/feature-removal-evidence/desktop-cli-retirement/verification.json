@@ -1,0 +1,67 @@
+{
+  "baseCommit": "6005e9838823b11de9ead95f07fb9079de4b766c",
+  "isolatedSource": "/private/tmp/thumble-retire-gui-cli-4z0ugego",
+  "sourceSHA256File": "source-hashes.json",
+  "nativeSourceSHA256File": "native-source-hashes.json",
+  "nativeInputCount": 161,
+  "rawLogSHA256": {
+    "rust.txt": "3026e0fa5e37b9f1014d2d7738c5669ac125812921bf322c802fc069b4f9f922",
+    "nativeTests.txt": "70fb33ec6db436446b92fb2b1be598d147eef011d36763d5ab7647c05bd553bd",
+    "stack.txt": "0653ab83279d81fe202710ed52339490833e45e8ff43db19fb78f01e39e6d5a8",
+    "cliBuild.txt": "986112ec39880e1846013895058868f1ee91ec414fd2156c4cea4beddb0db9b6",
+    "process.txt": "43a2b379f9dc1f37f9402a6d2c74ad3c19f02a7c26b1cfbf50e82e0a76891699",
+    "alias.txt": "43a2b379f9dc1f37f9402a6d2c74ad3c19f02a7c26b1cfbf50e82e0a76891699"
+  },
+  "logSHA256": {
+    "rust.txt": "3026e0fa5e37b9f1014d2d7738c5669ac125812921bf322c802fc069b4f9f922",
+    "nativeTests.txt": "61b57945a8e85f655e014b4519ae012ac744e60f7d8d6a0c6c82bafef79e24f6",
+    "stack.txt": "4a4783c281c2451e489bec83753bc287ff01e15a5355126d77110f0db236eb38",
+    "cliBuild.txt": "8eff56cd372beecd2f66164bf392dc9163b5a2ed0bbaf8416d95e70bbd87b833",
+    "process.txt": "43a2b379f9dc1f37f9402a6d2c74ad3c19f02a7c26b1cfbf50e82e0a76891699",
+    "alias.txt": "43a2b379f9dc1f37f9402a6d2c74ad3c19f02a7c26b1cfbf50e82e0a76891699"
+  },
+  "logNormalization": "Trailing whitespace stripped; raw hashes identify original /tmp logs.",
+  "binarySHA256": {
+    "thumble": "8112e30a020f5c40ceaa6638efbc8ffd03ad6afefaaaac3ded2f91e98d4b5524",
+    "thumbconsole": "847e2308b8e6f7c78f5fa8d5a8ad7eb4e82d334e7cc0dbc46220a9131f9b6b15"
+  },
+  "rust": {
+    "passed": 612,
+    "failed": 0,
+    "ignored": 3
+  },
+  "nativeSetupTests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "stack": {
+    "passed": 42,
+    "failed": 0,
+    "budgetsUnchanged": true,
+    "macAndIOSDebugBuilds": true
+  },
+  "process": {
+    "process.txt": {
+      "capabilityLedger": true,
+      "headlessGuide": true,
+      "privateFixtureUnchanged": true,
+      "retainedHelp": true,
+      "retiredInvocationsRefused": 11,
+      "sourceRetirement": true
+    },
+    "alias.txt": {
+      "capabilityLedger": true,
+      "headlessGuide": true,
+      "privateFixtureUnchanged": true,
+      "retainedHelp": true,
+      "retiredInvocationsRefused": 11,
+      "sourceRetirement": true
+    }
+  },
+  "desktopCLIWindowCommandsRetired": true,
+  "desktopTargetAndLegacyAuthorityRetired": false,
+  "automaticMigrationActivated": false,
+  "shippingPhoneProfileFormats": [
+    4
+  ]
+}

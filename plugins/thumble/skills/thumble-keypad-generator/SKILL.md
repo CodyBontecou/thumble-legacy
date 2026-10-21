@@ -364,11 +364,10 @@ Use `--variant portrait|landscape` and `--profile PROFILE` as needed. A control-
 
 ## Runtime Mac helper commands
 
-Thumble Mac must be running for most runtime commands. `app open` launches it first.
+Thumble Mac must be running for most runtime commands. Use `server start` to run the headless receiver.
 
 ```bash
-"$THUMBLE_CLI" app open
-"$THUMBLE_CLI" app screenshot -o /tmp/thumble-window.png --json
+"$THUMBLE_CLI" layout preview -o /tmp/keypad-preview.png
 "$THUMBLE_CLI" status --json
 "$THUMBLE_CLI" server start
 "$THUMBLE_CLI" server stop
@@ -388,7 +387,7 @@ Thumble Mac must be running for most runtime commands. `app open` launches it fi
 "$THUMBLE_CLI" release-all
 ```
 
-For visual verification, agents must use `app screenshot` instead of activating Thumble, sending key events, running AppleScript, or taking a full-screen capture. It captures only the largest visible Thumble window and does not move focus or control the user's screen. Use `--window-title TEXT` to choose among multiple app windows. If Thumble is not running, ask the user to open it; do not launch it without permission because launching can change focus. If Screen Recording access is unavailable, stop and ask the user to grant it to the terminal or agent host; do not trigger permission UI or fall back to screen control.
+For visual verification, render the saved layout with `layout preview -o /tmp/keypad-preview.png` and inspect that artifact. It requires no Thumble desktop window or Screen Recording permission. Validate with `layout validate` and re-read saved state after changes; do not substitute a desktop window capture for the saved design.
 
 Use `latency simulate` before UI automation when investigating controller lag. It is headless and emits per-edge touch-to-injection timings; supported patterns are `hollow-knight`, `same-button-burst`, `udp-recovery`, and `udp-recovery-burst`, with modes `current`, `legacy-main-actor`, or `compare`. Use `latency verify` as the pass/fail gate for whether the current input path is below the configured lag budget.
 
@@ -427,6 +426,6 @@ If your in-game bindings differ, I can update the profile from the CLI or you ca
 - **Need a controller layout, not a game profile**: use `template install`.
 - **Unsupported key**: change `key` to a supported key name, then rerun `--dry-run`.
 - **Malformed JSON**: validate the file or rewrite it with strict JSON syntax.
-- **Profile does not appear on iPhone**: make sure Thumble Mac is running and the iPhone is paired; rerun the install command or restart Thumble Mac.
-- **Runtime status missing**: run `thumble app open`, then `thumble status` again.
+- **Profile does not appear on iPhone**: make sure the local receiver is running and the iPhone is paired; inspect `server addresses` and `pairing payload` before retrying.
+- **Runtime status missing**: run `thumble server start`, then `thumble status` again.
 - **Controls feel wrong in-game**: update the JSON/spec or use `binding set` / `element set` rather than asking the user to hand-edit everything.

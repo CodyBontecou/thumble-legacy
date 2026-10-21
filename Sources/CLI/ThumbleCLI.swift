@@ -79,21 +79,6 @@ struct ThumbleCLI {
         var pollInterval: TimeInterval = 0.05
     }
 
-    private struct AppWindowDescriptor {
-        var id: CGWindowID
-        var title: String?
-        var frame: CGRect
-    }
-
-    private struct AppScreenshotResult: Encodable {
-        var bundleIdentifier: String
-        var path: String
-        var pixelWidth: Int
-        var pixelHeight: Int
-        var windowID: CGWindowID
-        var windowTitle: String?
-    }
-
     private struct ProfileExportEnvelope: Encodable {
         let document: MacConfigurationBindings.KeypadExportEnvelope
         let bindingPresentations: [GamepadProfileBindingPresentations]?
@@ -6588,34 +6573,11 @@ struct ThumbleCLI {
 
     private static func app(arguments: [String]) throws {
         guard let subcommand = arguments.first else { throw CLIError.message("Missing app subcommand") }
-        let rest = Array(arguments.dropFirst())
+        let retired = ["open", "launch", "quit", "screenshot", "capture-window", "editor-view", "replay-onboarding", "onboarding", "reset-onboarding"]
+        guard !retired.contains(subcommand) else {
+            throw CLIError.message("Desktop UI commands are retired. Use thumble server start|stop|restart, thumble pairing payload, and thumble layout preview PROFILE -o preview.png.")
+        }
         switch subcommand {
-        case "open", "launch":
-            try openApp()
-            print("Opened Thumble Mac.")
-        case "quit":
-            try quitApp()
-            print("Requested Thumble Mac quit.")
-        case "screenshot", "capture-window":
-            try captureAppScreenshot(arguments: rest)
-        case "editor-view":
-            guard rest.count == 1, let mode = rest.first, ["clean", "edit", "status"].contains(mode) else {
-                throw CLIError.message("Usage: thumble app editor-view clean|edit|status")
-            }
-            guard let defaults = UserDefaults(suiteName: appDefaultsDomain) else {
-                throw CLIError.message("Could not open Thumble Mac preferences.")
-            }
-            if mode != "status" {
-                defaults.set(mode == "clean", forKey: ThumbleMacIPC.editorCleanPreviewDefaultsKey)
-                defaults.synchronize()
-                DistributedNotificationCenter.default().postNotificationName(
-                    Notification.Name(ThumbleMacIPC.editorPresentationChangedNotificationName), object: nil,
-                    userInfo: nil, deliverImmediately: true)
-            }
-            print("Editor view: \(defaults.bool(forKey: ThumbleMacIPC.editorCleanPreviewDefaultsKey) ? "clean" : "edit")")
-        case "replay-onboarding", "onboarding", "reset-onboarding":
-            try replayOnboarding()
-            print("Reset onboarding and opened Thumble Mac.")
         case "setup-guide":
             print(ThumbleMacSetupGuide.text)
         case "local-network-settings":
@@ -6634,105 +6596,6 @@ struct ThumbleCLI {
             print("Opened the Thumble for iPhone App Store listing.")
         default:
             throw CLIError.message("Unknown app subcommand: \(subcommand)")
-        }
-    }
-
-    private static func captureAppScreenshot(arguments: [String]) throws {
-        let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: appDefaultsDomain)
-            .filter { !$0.isTerminated }
-        guard !runningApps.isEmpty else {
-            throw CLIError.message("Thumble Mac is not running. Ask the user to open it, or run `thumble app open` only with their permission, then retry.")
-        }
-        guard CGPreflightScreenCaptureAccess() else {
-            throw CLIError.message(
-                "Screen Recording access is not available. Grant it to the terminal or agent host in System Settings > Privacy & Security > Screen & System Audio Recording, then retry. This command does not activate Thumble or send input events."
-            )
-        }
-
-        let requestedTitle = optionValue("--window-title", in: arguments)?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        let processIDs = Set(runningApps.map(\.processIdentifier))
-        guard let windowInfo = CGWindowListCopyWindowInfo(
-            [.optionOnScreenOnly, .excludeDesktopElements],
-            kCGNullWindowID
-        ) as? [[String: Any]] else {
-            throw CLIError.message("Could not enumerate Thumble Mac windows.")
-        }
-
-        let windows = windowInfo.compactMap { info -> AppWindowDescriptor? in
-            guard
-                let ownerPID = (info[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value,
-                processIDs.contains(ownerPID),
-                (info[kCGWindowLayer as String] as? NSNumber)?.intValue == 0,
-                ((info[kCGWindowAlpha as String] as? NSNumber)?.doubleValue ?? 1) > 0,
-                let windowNumber = (info[kCGWindowNumber as String] as? NSNumber)?.uint32Value,
-                let boundsDictionary = info[kCGWindowBounds as String] as? NSDictionary,
-                let frame = CGRect(dictionaryRepresentation: boundsDictionary)
-            else { return nil }
-            guard frame.width >= 160, frame.height >= 120 else { return nil }
-            let title = (info[kCGWindowName as String] as? String)?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            return AppWindowDescriptor(
-                id: windowNumber,
-                title: title?.isEmpty == false ? title : nil,
-                frame: frame
-            )
-        }
-
-        let matchingWindows: [AppWindowDescriptor]
-        if let requestedTitle, !requestedTitle.isEmpty {
-            matchingWindows = windows.filter {
-                $0.title?.range(of: requestedTitle, options: [.caseInsensitive, .diacriticInsensitive]) != nil
-            }
-        } else {
-            matchingWindows = windows
-        }
-        guard let target = matchingWindows.max(by: { lhs, rhs in
-            lhs.frame.width * lhs.frame.height < rhs.frame.width * rhs.frame.height
-        }) else {
-            if let requestedTitle, !requestedTitle.isEmpty {
-                let availableTitles = windows.compactMap(\.title).sorted().joined(separator: ", ")
-                let suffix = availableTitles.isEmpty ? "" : " Available window titles: \(availableTitles)."
-                throw CLIError.message("No visible Thumble Mac window matched \"\(requestedTitle)\".\(suffix)")
-            }
-            throw CLIError.message("No visible Thumble Mac window was found. Restore its window and retry.")
-        }
-
-        let rawOutputPath = optionValue("--output", in: arguments)
-            ?? optionValue("-o", in: arguments)
-            ?? "thumble-app-screenshot.png"
-        let expandedOutputPath = (rawOutputPath as NSString).expandingTildeInPath
-        let outputURL = URL(fileURLWithPath: expandedOutputPath).standardizedFileURL
-        try FileManager.default.createDirectory(
-            at: outputURL.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
-        try runProcess(
-            "/usr/sbin/screencapture",
-            arguments: ["-x", "-o", "-t", "png", "-l", String(target.id), outputURL.path]
-        )
-
-        guard
-            let imageData = try? Data(contentsOf: outputURL),
-            !imageData.isEmpty,
-            let representation = NSBitmapImageRep(data: imageData)
-        else {
-            throw CLIError.message("Thumble window capture did not produce a readable PNG at \(outputURL.path).")
-        }
-
-        let result = AppScreenshotResult(
-            bundleIdentifier: appDefaultsDomain,
-            path: outputURL.path,
-            pixelWidth: representation.pixelsWide,
-            pixelHeight: representation.pixelsHigh,
-            windowID: target.id,
-            windowTitle: target.title
-        )
-        if arguments.contains("--json") {
-            try printJSON(result)
-        } else {
-            let title = target.title.map { " \"\($0)\"" } ?? ""
-            print("Captured Thumble Mac\(title) to \(outputURL.path) (\(result.pixelWidth)x\(result.pixelHeight)).")
         }
     }
 
@@ -8165,51 +8028,6 @@ struct ThumbleCLI {
         }
     }
 
-    private static func replayOnboarding() throws {
-        resetOnboardingDefaults()
-        terminateRunningAppIfNeeded()
-        try openApp()
-    }
-
-    private static func resetOnboardingDefaults() {
-        var domain = loadAppDomain()
-        domain[ThumbleMacIPC.onboardingCompletedDefaultsKey] = false
-        domain[ThumbleMacIPC.editorFirstKeypadOnboardingCompletedDefaultsKey] = false
-        domain[ThumbleMacIPC.editorFirstKeypadOnboardingReplayRequestedDefaultsKey] = true
-        UserDefaults.standard.setPersistentDomain(domain, forName: appDefaultsDomain)
-        UserDefaults.standard.synchronize()
-    }
-
-    private static func terminateRunningAppIfNeeded() {
-        let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: appDefaultsDomain)
-        guard !runningApps.isEmpty else { return }
-        for app in runningApps {
-            app.terminate()
-        }
-
-        let deadline = Date().addingTimeInterval(2.0)
-        while Date() < deadline, runningApps.contains(where: { !$0.isTerminated }) {
-            Thread.sleep(forTimeInterval: 0.05)
-        }
-
-        for app in runningApps where !app.isTerminated {
-            app.forceTerminate()
-        }
-    }
-
-    private static func openApp() throws {
-        try runProcess("/usr/bin/open", arguments: ["-b", appDefaultsDomain])
-        Thread.sleep(forTimeInterval: 0.35)
-    }
-
-    private static func quitApp() throws {
-        let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: appDefaultsDomain)
-            .filter { !$0.isTerminated }
-        for runningApp in runningApps where !runningApp.terminate() {
-            throw CLIError.message("Could not request Thumble Mac to quit.")
-        }
-    }
-
     /// Compatibility cleanup only. Hosted relay creation and connections are retired.
     private static func relay(arguments: [String]) throws {
         guard arguments == ["uninstall"] else {
@@ -8390,12 +8208,9 @@ struct ThumbleCLI {
           thumble asset set ASSET_ID --name "Soul Orb" --role texture
 
         Runtime:
-          thumble app open|quit|replay-onboarding
-          thumble app editor-view clean|edit|status
           thumble app setup-guide
           thumble app local-network-settings
           thumble app ios-app
-          thumble app screenshot [-o thumble.png] [--window-title TITLE] [--json]
           thumble status [--json]
           thumble monitor [--jsonl] [--clear] [--from-start] [--duration seconds]
           thumble latency simulate [--pattern hollow-knight] [--mode compare] [--log report.json]

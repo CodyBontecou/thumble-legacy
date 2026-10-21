@@ -213,7 +213,7 @@ Handcrafted skin creation has a stricter art-direction, editable-source, native-
 Tell the agent about any stricter boundaries you want. The repository skill uses these defaults:
 
 - Prefer CLI inspection and mutation over clicking through the Mac or iPhone UI.
-- Use `thumble app screenshot` for visual verification. It captures a Thumble window without activating it or sending keyboard/mouse events.
+- Use `thumble layout preview -o /tmp/keypad-preview.png` for visual verification of the saved design. It needs no desktop window or Screen Recording permission.
 - Do not launch Thumble Mac, open System Settings, or trigger permission prompts without user permission because those actions can change focus or interrupt work.
 - Treat `test tap`, `test down`, and `test up` as real input: they invoke the selected control's configured output in the focused Mac app.
 - Use `release-all` if a test is interrupted or a held input is uncertain.
@@ -230,11 +230,11 @@ An agent cannot infer that physical iPhone input feels good from a rendered prev
 ## Troubleshooting an agent session
 
 - **`thumble: command not found`:** Give the agent the absolute binary path or let it build the CLI from the source checkout.
-- **The agent keeps trying to click the app:** Explicitly require `SKILL.md`, CLI-only operation, and `app screenshot` for visual checks.
+- **The agent keeps trying to click the app:** Explicitly require `SKILL.md`, CLI-only operation, and `layout preview` artifacts for visual checks.
 - **A new profile unexpectedly became the default:** Generation defaults to install + select + default. Request `--no-default` and optionally `--no-select`.
 - **An unknown game fails generation:** Ask the agent to research or infer controls and provide a JSON spec instead of inventing a hidden fallback.
 - **Changes do not appear on iPhone:** Saved changes can still be valid. Thumble Mac must be running and the iPhone paired for immediate sync.
-- **Screenshot verification fails:** Screen Recording access must already be granted to the terminal or agent host. Do not ask the agent to bypass the permission with screen-control automation.
+- **Preview rendering fails:** Inspect the profile, asset availability and the reported renderer error. Keep the saved design intact; window capture is not a substitute for a valid preview.
 - **Controller mode does not appear in a game:** System-visible virtual gamepad output requires Apple's virtual HID entitlement. Keyboard and pointer output can still work.
 
 For the full command reference and agent decision tree, use [`SKILL.md`](../SKILL.md). For ordinary app setup and editor usage, return to the [main README](../README.md) or the [website documentation](../Website/docs.html).

@@ -1,0 +1,836 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project Thumble.xcodeproj -scheme ThumbleTests -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath build/DesktopCLIRetirement "-only-testing:ThumbleCLITests/ThumbleMacSetupGuideTests" CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'ThumbleCLITests' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 4396f2a4a1a2cf37b25cd355d1ec8dd8
+Build description path: /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/XCBuildData/4396f2a4a1a2cf37b25cd355d1ec8dd8.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+    cd /tmp/thumble-retire-gui-cli-4z0ugego/Thumble.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache
+
+ProcessInfoPlistFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+'-std=gnu11' -fmodules -gmodules '-fmodules-cache-path=/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex' -fpascal-strings -O0 -fno-common '-DDEBUG=1' -g -iquote /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -ivfsoverlay /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/include -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -F/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks '-fmodule-map-file=/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap'
+
+WriteAuxiliaryFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    write-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c
+
+MkDir /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /bin/mkdir -p /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents
+
+MkDir /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /bin/mkdir -p /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest
+
+MkDir /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /bin/mkdir -p /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS
+
+MkDir /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /bin/mkdir -p /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+CpResource /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ThumbleLinkExporterTests.lua /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleLinkExporterTests.lua (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleLinkExporterTests.lua /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+CpResource /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/warrior.txt /tmp/thumble-retire-gui-cli-4z0ugego/Tests/Fixtures/ThumbleLink/warrior.txt (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-retire-gui-cli-4z0ugego/Tests/Fixtures/ThumbleLink/warrior.txt /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+Copy /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources
+
+SwiftDriver ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/include -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-retire-gui-cli-4z0ugego -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-infoPlistUtility /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/empty-ThumbleCLITests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-6V2T357LMOIYNX7JDJQOW79VX.pcm
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/Testing-TP20VDJE4U5K.swiftmodule
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-F19ZETE2CQT4H2FLGB2WNTF0V.pcm
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCUIAutomation-PGHASO5Y8KWF.swiftmodule
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/XCTest-1VJ3NNTEFUTXK.swiftmodule
+
+SwiftExplicitDependencyCompileModuleFromInterface arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules/_Testing_Foundation-296COQZAF4Y9K.swiftmodule
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStoreTests.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleSkinWorkspaceTests.swift,\ ThumbleVectorCompiler.swift,\ TopBarActivationRegionTests.swift,\ VirtualGamepadInjector.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinStoreTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinWorkspace.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinWorkspaceTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleVectorCompiler.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/TopBarActivationRegionTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinStoreTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinWorkspaceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/TopBarActivationRegionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift,\ ThumbleLinkImport.swift,\ ThumbleLinkImportView.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleLinkTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleInputLatencySimulation.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/ThumbleLinkImport.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/ThumbleLinkImportView.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleLinkSnapshot.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/ThumbleLinkImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/ThumbleLinkImportView.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadInjectorTests.swift,\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadOutputPolicyTests.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadReportTests.swift,\ VirtualGamepadStatus.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadInjectorTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadOutputPolicy.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadOutputPolicyTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadReport.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadReportTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadInjectorTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadOutputPolicyTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/VirtualGamepadReportTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ RustHostInteropTests.swift,\ StackSafetyRegressionTests.swift,\ ThumbleArtworkLayerView.swift,\ ThumbleCLIBackend.swift,\ ThumbleCLIBackendTests.swift,\ ThumbleCLIRuntimeBackend.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/RustHostInteropTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleArtworkLayerView.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/CLI/ThumbleCLIBackend.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLIBackendTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/RustHostInteropTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1346:33: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let customization = profile.customization
+                                ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1347:69: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            var artboard = try ThumbleSkinArtboard.capture(profile: profile, identifier: "stack-hit",
+                                                                    ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1380:72: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let barLabel = GamepadControlBarLabelContent.profile(name: profile.name, isDefault: true, compact: false)
+                                                                       ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1381:76: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            let launchLabel = GamepadControlBarLabelContent.launch(target: profile.launchTarget, compact: true)
+                                                                           ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1382:37: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+            guard barLabel.title == profile.name, barLabel.symbol == "star.fill",
+                                    ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/StackSafetyRegressionTests.swift:1386:55: warning: reference to captured var 'profile' in concurrently-executing code; this is an error in the Swift 6 language mode
+                isDefaultProfile: false, profileName: profile.name, visibleItems: [.profileMenu, .settings],
+                                                      ^
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLIBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLIBackendTests.swift:783:13: warning: variable 'changes' was never mutated; consider changing to 'let' constant
+        var changes = ThumbleCLIProfileBackend.ControlBarItemChanges()
+        ~~~ ^
+        let
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileArtifactAdoptionTests.swift,\ ProfileFormatPolicy.swift,\ ProfileFormatPolicyTests.swift,\ ProfileOrientationSupport.swift,\ ProfileResourceCodecTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileArtifactAdoption.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileArtifactAdoptionTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileFormatPolicy.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileFormatPolicyTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileOrientationSupport.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileArtifactAdoptionTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileFormatPolicyTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompatibilityTests.swift,\ ThumbleSkinCompiler.swift,\ ThumbleSkinCompilerTests.swift,\ ThumbleSkinPackage.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkin.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinCompatibility.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinCompatibilityTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinCompiler.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinCompilerTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinCompatibilityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinCompilerTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleMacSetupGuide.swift,\ ThumbleMacSetupGuideTests.swift,\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleNativeSkinPreviewRendererTests.swift,\ ThumbleSVGRasterizer.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleMacSetupGuide.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleMacSetupGuideTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleNativeConfiguration.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleNativeSkinPreviewRendererTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleMacSetupGuideTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleNativeSkinPreviewRendererTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadAccessibilityTests.swift,\ KeypadBindingPresentation.swift,\ KeypadBindingPresentationTests.swift,\ KeypadConfigurationExport.swift,\ LegacyIOSPendingBuilderArtifactStore.swift,\ LegacyProfileMigration.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadAccessibility.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/KeypadAccessibilityTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadBindingPresentation.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/KeypadBindingPresentationTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadConfigurationExport.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/LegacyIOSPendingBuilderArtifactStore.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/KeypadAccessibilityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/KeypadBindingPresentationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/LegacyIOSPendingBuilderArtifactStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ GamepadLayoutQuality.swift,\ GamepadLayoutQualityErgonomicsTests.swift,\ GamepadLayoutResolverSmokeTests.swift,\ GamepadOutputTypes.swift,\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GamepadSharedOperationsSmokeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadLayoutQuality.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadLayoutQualityErgonomicsTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadLayoutResolverSmokeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadOutputTypes.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadProfileResourceCodec.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadSharedOperations.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadLayoutQualityErgonomicsTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadLayoutResolverSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ LegacyProfileMigrationTests.swift,\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift,\ MacRustAuthorityInterlock.swift,\ MacRustAuthorityInterlockTests.swift,\ MacSharedKeypadImport.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/LegacyProfileMigrationTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacConfigurationBindings.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacControlOutputBinding.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacRustAuthorityInterlock.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacRustAuthorityInterlockTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/LegacyProfileMigrationTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacConfigurationBindings.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacControlOutputBinding.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacRustAuthorityInterlock.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacRustAuthorityInterlockTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacRustAuthorityInterlockTests.swift:8:13: warning: variable 'first' was written to, but never read
+        var first: MacLegacyAuthorityLease? = try .acquire(stateDirectory: stateDirectory)
+            ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacRustAuthorityInterlockTests.swift:117:13: warning: variable 'socket' was written to, but never read
+        var socket: ThumbleNativeConfigurationSocket? = try .init(directory: directory) { data, reply in
+            ^
+/tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacRustAuthorityInterlockTests.swift:214:18: warning: weak variable 'weakSocket' was never mutated; consider changing to 'let' constant
+        weak var weakSocket = socket
+             ~~~ ^
+             let
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ GeistDesign.swift,\ IOSBuildRecovery.swift,\ IOSLocalKeypadUX.swift,\ IOSLocalKeypadUXTests.swift,\ IOSPendingBuilderArtifactStoreTests.swift,\ InputLatencySimulationSmokeTests.swift,\ KeyMap.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GeistDesign.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/iOS/IOSBuildRecovery.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/iOS/IOSLocalKeypadUX.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/IOSLocalKeypadUXTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/IOSPendingBuilderArtifactStoreTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/InputLatencySimulationSmokeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GeistDesign.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/iOS/IOSBuildRecovery.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/iOS/IOSLocalKeypadUX.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/IOSLocalKeypadUXTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/IOSPendingBuilderArtifactStoreTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/InputLatencySimulationSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Mac/KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLIRuntimeBackendTests.swift,\ ThumbleCLISmokeTestSuite.swift,\ ThumbleCSSCompiler.swift,\ ThumbleCSSCompilerTests.swift,\ ThumbleConfigurationBridge.swift,\ ThumbleConfigurationBridgeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLIRuntimeBackendTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLISmokeTestSuite.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleCSSCompiler.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCSSCompilerTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleConfigurationBridge.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLIRuntimeBackendTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCLISmokeTestSuite.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+/tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleCSSCompiler.swift:2972:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleCSSCompilerTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditTests.swift,\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PendingProfileRecoveryTests.swift,\ PortableProfileArtifact.swift,\ PortableProfileArtifactTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OwnedPhoneEditTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PairingPayload.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PendingProfileRecovery.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/PendingProfileRecoveryTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PortableProfileArtifact.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OwnedPhoneEditTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PairingPayload.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/PendingProfileRecoveryTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ MacSharedKeypadImportTests.swift,\ OrientationPreferenceTests.swift,\ OwnedConfigurationDocument.swift,\ OwnedConfigurationDocumentTests.swift,\ OwnedPhoneEdit.swift,\ OwnedPhoneEditJournal.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacSharedKeypadImportTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OrientationPreferenceTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedConfigurationDocument.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OwnedConfigurationDocumentTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedPhoneEdit.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/MacSharedKeypadImportTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OrientationPreferenceTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/OwnedConfigurationDocumentTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceBankTests.swift,\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift,\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadAppearanceBankTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceEditMerge.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceSnapshot.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadControllerPresentationRouting.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadCustomization.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadDesignSystem.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/GamepadAppearanceBankTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ControllerProtocol.swift,\ ControllerRuntimeUX.swift,\ ControllerRuntimeUXTests.swift,\ FeatureRemovalBaselineTests.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerProtocol.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerRuntimeUX.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ControllerRuntimeUXTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/FeatureRemovalBaselineTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GameKeypadGenerator.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearance.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ControllerRuntimeUXTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/FeatureRemovalBaselineTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackageTests.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinQualityTests.swift,\ ThumbleSkinResolver.swift,\ ThumbleSkinResolverTests.swift,\ ThumbleSkinStore.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinPackageTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinQuality.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinQualityTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinResolver.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinResolverTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinPackageTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinQualityTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ThumbleSkinResolverTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 Compiling\ AndroidLayoutEditOracleTests.swift,\ AppearanceEditOracleTests.swift,\ ButtonPulseSequencer.swift,\ ButtonPulseSequencerSmokeTests.swift,\ ControllerActiveInputState.swift,\ ControllerActiveInputStateSmokeTests.swift,\ ControllerDesignSession.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/AndroidLayoutEditOracleTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/AppearanceEditOracleTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ButtonPulseSequencer.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ButtonPulseSequencerSmokeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerActiveInputState.swift /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ControllerActiveInputStateSmokeTests.swift /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/AndroidLayoutEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/AppearanceEditOracleTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ButtonPulseSequencerSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Tests/ControllerActiveInputStateSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftCompile normal arm64 /tmp/thumble-retire-gui-cli-4z0ugego/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadInjectorTests.swift, VirtualGamepadOutputPolicy.swift, VirtualGamepadOutputPolicyTests.swift, VirtualGamepadReport.swift, VirtualGamepadReportTests.swift, VirtualGamepadStatus.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileArtifactAdoptionTests.swift, ProfileFormatPolicy.swift, ProfileFormatPolicyTests.swift, ProfileOrientationSupport.swift, ProfileResourceCodecTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacSharedKeypadImportTests.swift, OrientationPreferenceTests.swift, OwnedConfigurationDocument.swift, OwnedConfigurationDocumentTests.swift, OwnedPhoneEdit.swift, OwnedPhoneEditJournal.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LegacyProfileMigrationTests.swift, MacConfigurationBindings.swift, MacControlOutputBinding.swift, MacRustAuthorityInterlock.swift, MacRustAuthorityInterlockTests.swift, MacSharedKeypadImport.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift, ThumbleLinkImport.swift, ThumbleLinkImportView.swift, ThumbleLinkSnapshot.swift, ThumbleLinkTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditTests.swift, PairingPayload.swift, PendingProfileRecovery.swift, PendingProfileRecoveryTests.swift, PortableProfileArtifact.swift, PortableProfileArtifactTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GeistDesign.swift, IOSBuildRecovery.swift, IOSLocalKeypadUX.swift, IOSLocalKeypadUXTests.swift, IOSPendingBuilderArtifactStoreTests.swift, InputLatencySimulationSmokeTests.swift, KeyMap.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadAccessibilityTests.swift, KeypadBindingPresentation.swift, KeypadBindingPresentationTests.swift, KeypadConfigurationExport.swift, LegacyIOSPendingBuilderArtifactStore.swift, LegacyProfileMigration.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for ThumbleCLITests (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/include -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-retire-gui-cli-4z0ugego -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests-Swift.h /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-swiftHeaderTool -arch arm64 /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests-Swift.h
+
+Copy /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.abi.json /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftdoc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftdoc (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftdoc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftsourceinfo /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+ScanDependencies /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+    Using response file: /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    builtin-ScanDependencies -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o.scan -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.d --serialize-diagnostics /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.dia -c /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o
+
+CompileC /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+
+    Using response file: /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp
+
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c -ivfsstatcache /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp -MMD -MT dependencies -MF /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.d --serialize-diagnostics /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.dia -c /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/ThumbleCLITests_vers.c -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_vers.o
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleMacSetupGuide.swift, ThumbleMacSetupGuideTests.swift, ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleNativeSkinPreviewRendererTests.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompatibilityTests.swift, ThumbleSkinCompiler.swift, ThumbleSkinCompilerTests.swift, ThumbleSkinPackage.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerProtocol.swift, ControllerRuntimeUX.swift, ControllerRuntimeUXTests.swift, FeatureRemovalBaselineTests.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackageTests.swift, ThumbleSkinQuality.swift, ThumbleSkinQualityTests.swift, ThumbleSkinResolver.swift, ThumbleSkinResolverTests.swift, ThumbleSkinStore.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadLayoutQuality.swift, GamepadLayoutQualityErgonomicsTests.swift, GamepadLayoutResolverSmokeTests.swift, GamepadOutputTypes.swift, GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GamepadSharedOperationsSmokeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStoreTests.swift, ThumbleSkinWorkspace.swift, ThumbleSkinWorkspaceTests.swift, ThumbleVectorCompiler.swift, TopBarActivationRegionTests.swift, VirtualGamepadInjector.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling AndroidLayoutEditOracleTests.swift, AppearanceEditOracleTests.swift, ButtonPulseSequencer.swift, ButtonPulseSequencerSmokeTests.swift, ControllerActiveInputState.swift, ControllerActiveInputStateSmokeTests.swift, ControllerDesignSession.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RustHostInteropTests.swift, StackSafetyRegressionTests.swift, ThumbleArtworkLayerView.swift, ThumbleCLIBackend.swift, ThumbleCLIBackendTests.swift, ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLIRuntimeBackendTests.swift, ThumbleCLISmokeTestSuite.swift, ThumbleCSSCompiler.swift, ThumbleCSSCompilerTests.swift, ThumbleConfigurationBridge.swift, ThumbleConfigurationBridgeTests.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceBankTests.swift, GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift, GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLITests' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleCLITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name ThumbleCLITests -Onone @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList -DDEBUG -D XCODEBUILD_TEST -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -F /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j18 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/SDKStatCaches.noindex/macosx26.5-25F70-688ef53f1462e2c8f657fdc38a81448fe082c4a02f00227109f4ed75e425c832.sdkstatcache -output-file-map /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -sdk-module-cache-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-generated-files.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-own-target-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests-project-headers.hmap -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/include -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources/arm64 -Xcc -I/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-Swift.h -working-directory /tmp/thumble-retire-gui-cli-4z0ugego -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests normal (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -F/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.swiftmodule @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests -Xlinker -add_ast_path -Xlinker /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+CopySwiftLibs /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --scan-folder /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --scan-folder /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/PlugIns --scan-folder /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Extensions --platform macosx --toolchain /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.utybFb/Metal.xctoolchain --module-name ThumbleCLITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk --xcode-version 17F113 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.codybontecou.PocketPadCLITests --output /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest/Contents/MacOS/ThumbleCLITests --dependency-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests_dependency_info.dat --stringsdata-file /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftFileList --metadata-file-list /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyMetadataFileList --static-metadata-file-list /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/ThumbleCLITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLITests.build/Objects-normal/arm64/ThumbleCLITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-21 01:31:18.247 appintentsmetadataprocessor[12584:85984023] Starting appintentsmetadataprocessor export
+2026-10-21 01:31:18.248 appintentsmetadataprocessor[12584:85984023] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+RegisterExecutionPolicyException /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    builtin-RegisterExecutionPolicyException /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest
+
+Touch /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest (in target 'ThumbleCLITests' from project 'Thumble')
+    cd /tmp/thumble-retire-gui-cli-4z0ugego
+    /usr/bin/touch -c /tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Build/Products/Debug/ThumbleCLITests.xctest
+
+Test Suite 'Selected tests' started at 2026-10-21 01:31:19.683.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 01:31:19.684.
+Test Suite 'ThumbleMacSetupGuideTests' started at 2026-10-21 01:31:19.684.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testAppStorePlaceholderHasNoNavigableURL]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testAppStorePlaceholderHasNoNavigableURL]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testCLIGuideUsesHeadlessSetupAndRetainsPhoneAndPermissionActions]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testCLIGuideUsesHeadlessSetupAndRetainsPhoneAndPermissionActions]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testInstructionIdentifiersAreUniqueWithinEachSlide]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testInstructionIdentifiersAreUniqueWithinEachSlide]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testLocalNetworkInstructionsCoverBothDevicesAndDeniedAccess]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testLocalNetworkInstructionsCoverBothDevicesAndDeniedAccess]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testPrerequisitesAppearBeforePairingAndEditor]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testPrerequisitesAppearBeforePairingAndEditor]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testSettingsDestinationFallsBackOnMacOS14]' started.
+Test Case '-[ThumbleCLITests.ThumbleMacSetupGuideTests testSettingsDestinationFallsBackOnMacOS14]' passed (0.000 seconds).
+Test Suite 'ThumbleMacSetupGuideTests' passed at 2026-10-21 01:31:19.689.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 01:31:19.690.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 01:31:19.690.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.004 (0.006) seconds
+2026-10-21 01:31:19.959 xcodebuild[12009:85979423] [MT] IDETestOperationsObserverDebug: 1.565 elapsed -- Testing started completed.
+2026-10-21 01:31:19.959 xcodebuild[12009:85979423] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-21 01:31:19.959 xcodebuild[12009:85979423] [MT] IDETestOperationsObserverDebug: 1.565 sec, +1.565 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/thumble-retire-gui-cli-4z0ugego/build/DesktopCLIRetirement/Logs/Test/Test-ThumbleTests-2026.10.21_01-29-55--0400.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

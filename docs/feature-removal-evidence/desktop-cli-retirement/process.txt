@@ -1,0 +1,1 @@
+{"capabilityLedger": true, "headlessGuide": true, "privateFixtureUnchanged": true, "retainedHelp": true, "retiredInvocationsRefused": 11, "sourceRetirement": true}

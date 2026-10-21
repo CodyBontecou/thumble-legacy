@@ -1,6 +1,7 @@
 import Foundation
 
-/// Shared setup copy keeps the desktop slides and the CLI guide in sync.
+/// Phone/platform links remain shared with the transitional desktop slides.
+/// The CLI guide describes the headless receiver and local configuration tools.
 enum ThumbleMacSetupGuide {
     // TODO: Replace nil with the real App Store URL once the iOS app launches.
     // Keep the placeholder non-navigable rather than sending users to a fake listing.
@@ -16,28 +17,34 @@ enum ThumbleMacSetupGuide {
     }
 
     static var text: String {
-        var sections = MacOnboardingStep.allCases.map { step in
-            var lines = ["\(step.tag) — \(step.headline)", step.subtitle]
-            lines += step.instructions.map { "- \($0.title): \($0.text)" }
-            switch step {
-            case .iPhoneApp:
-                lines.append(iOSAppStoreURL.map { "App Store: \($0.absoluteString)" } ?? iOSAppStorePlaceholder)
-                lines.append("CLI: thumble app ios-app")
-            case .localNetwork:
-                lines.append(localNetworkAvailabilityNote)
-                lines.append("CLI: thumble app local-network-settings")
-            case .permissions:
-                lines.append("CLI: thumble accessibility prompt | thumble accessibility open")
-            case .connect:
-                lines.append("CLI: thumble pairing code | thumble pairing payload")
-            case .welcome, .editor:
-                break
-            }
-            return lines.joined(separator: "\n")
-        }
-        sections.append("Reopen the slides from Setup Guide in the Mac toolbar, or run thumble app replay-onboarding.")
-        return sections.joined(separator: "\n\n")
+        """
+        Thumble local setup
+
+        1. Start the local receiver: thumble server start
+           Inspect it with thumble status --json and thumble server addresses.
+        2. Install/open Thumble on your phone. \(iOSAppStoreURL.map { "App Store: \($0.absoluteString)" } ?? iOSAppStorePlaceholder)
+           Listing shortcut: thumble app ios-app
+        3. Put both devices on the same local network and allow network access when prompted.
+           If denied, inspect Privacy & Security → Local Network on your Mac and iPhone.
+           The Mac entry may use the name of the terminal or signed receiver helper you run.
+           \(localNetworkAvailabilityNote)
+           Settings shortcut: thumble app local-network-settings
+        4. Inspect input permission with thumble accessibility status.
+           Grant Accessibility to the installed, signed receiver/helper that runs input.
+           Explicit permission actions: thumble accessibility prompt | thumble accessibility open
+        5. Run thumble pairing payload or thumble pairing code, then connect from the phone.
+           Pairing output contains private connection material; share it only with your phone.
+        6. Configure controls with your local agent through CLI/MCP.
+           Inspect: thumble profile list
+           Validate: thumble layout validate PROFILE --json
+           Render: thumble layout preview PROFILE -o preview.png
+           Pairing, previews and configuration do not require a Thumble desktop window.
+
+        Receiver lifecycle: thumble server stop | thumble server restart
+        Show this guide again: thumble app setup-guide
+        """
     }
+
 }
 
 enum MacOnboardingStep: String, CaseIterable, Identifiable, Hashable {

@@ -311,8 +311,8 @@ thumble element add joystick --label "Right Stick" --up custom1 --down custom2 -
 thumble element set jump --label A --shape circle --width 1.2 --height 1.2</code></pre>
 
           <h3>Runtime helper commands</h3>
-          <pre><code>thumble app open
-thumble app screenshot -o /tmp/thumble-window.png --json
+          <pre><code>thumble server start
+thumble layout preview -o /tmp/keypad-preview.png
 thumble status --json
 thumble server restart
 thumble pairing payload
@@ -320,7 +320,7 @@ thumble accessibility status
 thumble test tap jump
 thumble release-all</code></pre>
 
-          <p>When Thumble Mac is running, CLI profile, customization, and binding changes are pushed to the app via distributed notifications and then synced to the paired iPhone. <code>app screenshot</code> captures only the largest visible Thumble window without activating the app or sending input events; it requires Screen Recording access for the terminal or agent host.</p>
+          <p>Use the local receiver for pairing and input, and CLI/MCP for saved configuration. <code>layout preview</code> renders the saved layout to an artifact without a desktop window or Screen Recording access. Desktop window, editor-view and onboarding replay commands have been retired.</p>
         </section>
 
         <section id="agents" class="doc-section">
@@ -366,7 +366,7 @@ could be confirmed. Do not use UI automation.</code></pre>
           <h3>Safe boundaries to include</h3>
           <ul>
             <li>Use the CLI instead of clicking through the Mac or iPhone UI.</li>
-            <li>Use <code>thumble app screenshot</code> for visual checks; do not activate the app or send keyboard/mouse events.</li>
+            <li>Use <code>thumble layout preview -o preview.png</code> for visual checks of the saved design.</li>
             <li>Ask before launching apps, opening System Settings, triggering permission prompts, restarting the server, or sending test input.</li>
             <li>Treat <code>test tap|down|up</code> as real output to the currently focused Mac app, and use <code>release-all</code> if a test is interrupted.</li>
             <li>Inspect before deleting/resetting profiles, clearing bindings, or replacing output modes. Export all profiles before a broad migration or reset.</li>
@@ -422,7 +422,7 @@ could be confirmed. Do not use UI automation.</code></pre>
           </details>
           <details>
             <summary>Can I use it without the Mac app open?</summary>
-            <p>The iPhone can view saved keypads offline, but controlling the Mac requires Thumble Mac to be running and connected.</p>
+            <p>The iPhone can view saved keypads offline. Controlling the Mac requires the local receiver to be running and connected; start it with <code>thumble server start</code>. A desktop window is not required.</p>
           </details>
           <details>
             <summary>Can I back up my layouts?</summary>

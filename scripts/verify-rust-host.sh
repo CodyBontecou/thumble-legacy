@@ -11,6 +11,7 @@ python3 "$ROOT_DIR/scripts/verify-mcp-cli-parity.py"
 python3 "$ROOT_DIR/scripts/verify-feature-removal-fixtures.py"
 python3 "$ROOT_DIR/scripts/verify-retired-marketplace.py"
 python3 "$ROOT_DIR/scripts/verify-retired-hosted-runtime.py"
+python3 "$ROOT_DIR/scripts/verify-retired-desktop-cli.py"
 python3 "$ROOT_DIR/scripts/verify-cli-profile-persistence-allowlist.py"
 
 for script in \

@@ -1,0 +1,15 @@
+{
+  "Sources/CLI/ThumbleCLI.swift": "900cb21538ebe329035043b978740b7d83dccf38f052d42d33e8ae07b8ed2db1",
+  "Sources/Shared/ThumbleMacSetupGuide.swift": "c512b9725ca5c449c9968ff6890627a5e4e866d3143ea25985142bc9d6167391",
+  "Tests/ThumbleMacSetupGuideTests.swift": "ab25980d517d8fbf582a2ee74daf0c0bc9af826c415a8cbc53813b9a79b533e7",
+  "docs/mcp/cli-capabilities-v1.json": "db8d9041067fcaadeab7b986128432216e3292f89a70e863dcbdc60134d013e1",
+  "README.md": "1146c7ad0b10d1e3936aecb5b9ad62dfd8cef19725c79c484d480bd2d3cf4b46",
+  "plugins/thumble/skills/thumble-keypad-generator/SKILL.md": "31057a44bb735d71818c538790b621641e984c125a3173c7a7c5909f9996b82a",
+  "docs/agents.md": "3ad29cb3a6bd4341adca7c95098b10158b35e0a2d374c596da80e902724a2f99",
+  "Website/docs.html": "c69552b27c13be2d1e339d52f180062eb38cf10085bd0f24b8b311108e9c7379",
+  "scripts/verify-rust-host.sh": "61707d5f206bbe55c20f31237b6af6a0243f2c8d966456fb1a079f67c0869ed4",
+  "docs/cli-mcp-cutover.md": "ac8d260a57f269011cafa2ad76b5afc6f3f226344779cd32f6d198d831c8bca2",
+  "docs/feature-removal-progress.md": "29e680d40bdfc88c5fd269c1a955522ece8ebbad73eaa245931e99e58fdd8be8",
+  "docs/feature-removal-inventory.md": "4d2c5dfd3bc37ccb1805280e7b1247dc33591ba02798eb52bc8ee17a69b2e7ec",
+  "scripts/verify-retired-desktop-cli.py": "28a5ae5cce20690e20d55777a76e7d404d670adccd204d953884e758927772c7"
+}
