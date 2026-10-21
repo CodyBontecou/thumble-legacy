@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "destination": {
+    "repository": "CodyBontecou/Thumble",
+    "visibility": "public",
+    "branch": "codex/typescript-rewrite-headless-ci",
+    "expectedParentCommit": "970b74ffcd880226636ad5d955e78ee187a8a49d"
+  },
+  "purpose": "Run native-mobile workflow and portable/Windows regression CI for the M2 input-module implementation. No release or production OS input activation.",
+  "localBaseCommit": "f0751ca0038ced925ef35bb72a8187bfabde2d5f",
+  "approvalStatus": "pending-user-approval-after-automatic-review-rejection",
+  "excludes": [
+    "Unrelated preserved baseline sources",
+    "Private profile/trust/character/account data",
+    "Credentials and native signing identities",
+    "Build products and caches",
+    "Local evidence/diagnostic logs"
+  ],
+  "fileCount": 41,
+  "totalBytes": 234225,
+  "sourceManifestSHA256": "b0d05f70d188fef18fc99e6fd9bdaefb0a09c5c7432f7146936f6d4907c1d2e3",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "bytes": 3438,
+      "mode": "100644",
+      "sha256": "29acfb4063a8fcbe70cc372d3450f5a00d0df2c85e2e8c5faeca83418ca866e8"
+    },
+    {
+      "path": "Rewrite/.prettierignore",
+      "bytes": 135,
+      "mode": "100644",
+      "sha256": "780d635538b3c04aebc12fc33f44041adc1fb142a84a6d0397e44c4060be26af"
+    },
+    {
+      "path": "Rewrite/README.md",
+      "bytes": 4938,
+      "mode": "100644",
+      "sha256": "2f28cd64d804f3ab468d0e5e263b44fcf8fffa4354ee8dfc9439058cd7b78455"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/.gitignore",
+      "bytes": 120,
+      "mode": "100644",
+      "sha256": "63c55e09ff0fe411db9dcf1c525d5752995a38c9d25e67bbcbbfe1be4346c659"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 4889,
+      "mode": "100644",
+      "sha256": "fc2f5537f8fd6ff0e9a73ad0b5dfbf2b6e41fe05f638a3f2a52bb9e7c522d1ec"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/build.gradle.kts",
+      "bytes": 825,
+      "mode": "100644",
+      "sha256": "320b6757b697e4208c1e8cb731c206540323fc896d8be91a3ad9ee7f73ce7605"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradle.properties",
+      "bytes": 100,
+      "mode": "100644",
+      "sha256": "e2698033967b0f5466b26ca96077220f5f2f9db9a7b1864c9844acb8a074de3c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradle/wrapper/LICENSE.txt",
+      "bytes": 23622,
+      "mode": "100644",
+      "sha256": "9536d88ea948603d18e232a13f5958d67807cd80828036b082bff171d2cf0703"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradle/wrapper/NOTICE.txt",
+      "bytes": 868,
+      "mode": "100644",
+      "sha256": "c2de5fd9adc7ccc4e1382a0e1f38ec6e14f8ca6e28d3c20289fe80353b019aa1"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradle/wrapper/gradle-wrapper.jar",
+      "bytes": 43583,
+      "mode": "100644",
+      "sha256": "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradle/wrapper/gradle-wrapper.properties",
+      "bytes": 340,
+      "mode": "100644",
+      "sha256": "3256e6a4bacbb04787b346d74b418734b03246092a15703cf2acd926c4b00e90"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradlew",
+      "bytes": 8762,
+      "mode": "100755",
+      "sha256": "a3648413b47ef77af21d5ebc36c687c7d103aaef3e17f33de7d4f080a6f300a3"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/gradlew.bat",
+      "bytes": 2872,
+      "mode": "100644",
+      "sha256": "2209f919a22528af59a2af2ad97e8d056cca18e39f7d87aa3fd549a73b180150"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/settings.gradle.kts",
+      "bytes": 329,
+      "mode": "100644",
+      "sha256": "39bea3a51191bd443b84a1be5c32530bc4573d9b6f802e655cf9c675ff5f283b"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/AndroidManifest.xml",
+      "bytes": 72,
+      "mode": "100644",
+      "sha256": "343d5be1ac17cdd45d1a2f2ddc616c509290e655869125a9422a96d88aa66066"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/ControlMap.kt",
+      "bytes": 2305,
+      "mode": "100644",
+      "sha256": "89d2358f60adb4b81f67e8e9ac2772f07589cc86a9f9dca55f47cccc39c6ced2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/GamepadReport.kt",
+      "bytes": 3476,
+      "mode": "100644",
+      "sha256": "7b457f999bf20d3d14792ff43162b39798aac9594285075d98afa343033c811f"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/InputEngine.kt",
+      "bytes": 6829,
+      "mode": "100644",
+      "sha256": "a662f4b25f309b5f61a86ea85935d3fd1c06f89e08af6186741887913ca581c9"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/InputSurface.kt",
+      "bytes": 6408,
+      "mode": "100644",
+      "sha256": "d4cce46de5922f2881d5bb9c98186b805aed1d2be0e74064021f1d6bd9ec2913"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/InputFixturesTest.kt",
+      "bytes": 10283,
+      "mode": "100644",
+      "sha256": "09cea857472fe8ba3369a0bbfa84261ef3b67ac2515ebd91409ee734481246d6"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Package.swift",
+      "bytes": 731,
+      "mode": "100644",
+      "sha256": "eca1431f04ae94bd066248368cdf5ea45f5fac61d6b94509e0c73a8ca1230049"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/ControlMap.swift",
+      "bytes": 2778,
+      "mode": "100644",
+      "sha256": "6da4095ca8cc9b7fcf15b9014c346be8bfaf0c3c6610d9c196e7fcae8118a0f4"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/GamepadReport.swift",
+      "bytes": 2583,
+      "mode": "100644",
+      "sha256": "adfb9a5b44057b50c52b7edb2c2f2496013af4cb330019f0f4cc908e7df561b1"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/InputEngine.swift",
+      "bytes": 5797,
+      "mode": "100644",
+      "sha256": "8bf277ebef022ec19b500071d39cac2d7660e9b0a7f5ad8d648ba264b822da96"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputUIKit/InputSurface.swift",
+      "bytes": 4716,
+      "mode": "100644",
+      "sha256": "49be01bba15800eb28ebd7441be513ba57afe3f2622b518ba44f5fd0e199eb73"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/InputTests.swift",
+      "bytes": 8253,
+      "mode": "100644",
+      "sha256": "6bef5f87eecc6079dadc34c0b23ccf687fe3a0cd80e8d124d8920e1147865d7c"
+    },
+    {
+      "path": "Rewrite/package.json",
+      "bytes": 1494,
+      "mode": "100644",
+      "sha256": "114c1b1985399ba45241bb9ee0787715756ce1a89db961cb3556652ea21887bb"
+    },
+    {
+      "path": "Rewrite/packages/client/package.json",
+      "bytes": 284,
+      "mode": "100644",
+      "sha256": "161f1844407dbdb4f870e5b034f8f93eaab4a4ea1b411c815706d0b36d7ab294"
+    },
+    {
+      "path": "Rewrite/packages/client/src/mobile-input.ts",
+      "bytes": 2085,
+      "mode": "100644",
+      "sha256": "37c785405b5f094973235a1bcb840dabd3bf129780fbd097f610120c375c1338"
+    },
+    {
+      "path": "Rewrite/packages/contracts/generated/swift/GamepadStateV1.swift",
+      "bytes": 1259,
+      "mode": "100644",
+      "sha256": "3687edcc4bc8d81f0440f952dcd9b79e8fa4cf3a0eeb861424f93f0dc3c8d51e"
+    },
+    {
+      "path": "Rewrite/packages/contracts/generated/swift/Package.swift",
+      "bytes": 330,
+      "mode": "100644",
+      "sha256": "7926a379ebb7f810e2e4335bbe16b8232e15a76a74be04961b3d5869fd902928"
+    },
+    {
+      "path": "Rewrite/packages/contracts/package.json",
+      "bytes": 228,
+      "mode": "100644",
+      "sha256": "e72e8c6692739b7ab539d26e438f745c9f768a7532dc422358c8e5c996812134"
+    },
+    {
+      "path": "Rewrite/packages/contracts/schema/mobile-input-v1.schema.json",
+      "bytes": 2277,
+      "mode": "100644",
+      "sha256": "acb8c1e0d516f9a74eae60eb8d95857a6d83b720c335f2af7499308272178001"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/mobile-input.ts",
+      "bytes": 4277,
+      "mode": "100644",
+      "sha256": "54f832a0bb1d41fd405b344f24da9639104a6bacf00e633db1ac6522e5700fa7"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/mobile-input-v1.json",
+      "bytes": 58790,
+      "mode": "100644",
+      "sha256": "6ddb48f291c3b90bf6fba6ab51844c6c84b805f7999945f0135a0d97cf2897df"
+    },
+    {
+      "path": "Rewrite/tests/mobile-input.test.ts",
+      "bytes": 3880,
+      "mode": "100644",
+      "sha256": "416c324142efa1818506075617d60c1882ed87d2e76dc50ef2907be308b732a9"
+    },
+    {
+      "path": "Rewrite/tooling/check-boundaries.ts",
+      "bytes": 2452,
+      "mode": "100644",
+      "sha256": "e00610b6be26f4e527f7851a25b2d1cc3a8a41db222680d84c2bb595982f5f64"
+    },
+    {
+      "path": "Rewrite/tooling/check-mobile-ios.ts",
+      "bytes": 2675,
+      "mode": "100644",
+      "sha256": "e89bee757c576ffbe2d4ff291054bef9724612cce2a808cfbb853bc7665e6d44"
+    },
+    {
+      "path": "Rewrite/tooling/generate-contracts.ts",
+      "bytes": 4329,
+      "mode": "100644",
+      "sha256": "4675d55ca413c9367636ddbbbd30efc698ba74653d9f5bdf0d10f8ed53780616"
+    },
+    {
+      "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+      "bytes": 500,
+      "mode": "100644",
+      "sha256": "a72749e3f9a241cc13ce4019179c5971ba8c42258330268e0adc36a52708b624"
+    },
+    {
+      "path": "Rewrite/tsconfig.portable.json",
+      "bytes": 313,
+      "mode": "100644",
+      "sha256": "6cd07418d2bc4acc2f77ce2d9e9505c753d11e250a2c4b988c5652072fe9e7a6"
+    }
+  ]
+}

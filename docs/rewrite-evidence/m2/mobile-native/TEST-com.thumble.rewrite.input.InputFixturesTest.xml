@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.InputFixturesTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-21T19:02:14" hostname="MacBook-Pro.local" time="0.024">
+  <properties/>
+  <testcase name="nativeTouchLifecycle[both triggers and a face button remain independently held]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.005"/>
+  <testcase name="nativeTouchLifecycle[two sticks capture and release independently]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.002"/>
+  <testcase name="nativeTouchLifecycle[duplicate semantic buttons are reference counted]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[practice releases host input and never replays held touches]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.002"/>
+  <testcase name="nativeTouchLifecycle[touchCancelled retires touches before reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[background retires touches before reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[screenLock retires touches before reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[rotation retires touches before reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[disconnected retires touches before reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.002"/>
+  <testcase name="nativeTouchLifecycle[profile replacement is a neutral generation barrier]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[disposal cannot reconnect]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[duplicate pointer fails closed]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[stick ownership never transfers to a previously rejected finger]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <testcase name="nativeTouchLifecycle[last hit region wins overlaps]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.002"/>
+  <testcase name="nativeTouchLifecycle[stick diagonals remain circular and saturate outside the control]" classname="com.thumble.rewrite.input.InputFixturesTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

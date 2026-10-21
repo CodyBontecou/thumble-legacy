@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "scope": "M2 native mobile library engineering; no phone/gameplay/release acceptance",
+  "toolchains": {
+    "swift": "6.3.3",
+    "iOSSDK": "26.5",
+    "deploymentTarget": "iOS17",
+    "androidCompileSDK": 35,
+    "androidMinSDK": 26,
+    "java": "17.0.20",
+    "gradle": "8.11.1",
+    "agp": "8.9.1",
+    "kotlin": "2.1.20",
+    "bun": "1.4.3",
+    "typescript": "6.0.3"
+  },
+  "results": {
+    "portableTestsPassed": 53,
+    "portableTestsSkipped": 1,
+    "swiftTestFunctionsPassed": 7,
+    "swiftParameterizedScenariosPassed": 15,
+    "androidTestsPassed": 21,
+    "retainedCodecVectorsEachNativeLanguage": 34,
+    "sharedTouchEventExpectations": 102,
+    "iosSimulatorStaticModulesBuilt": 3,
+    "iPhoneStaticModulesBuilt": 3,
+    "androidAARBuilt": true,
+    "androidLintPassed": true,
+    "prettierPassed": true,
+    "strictAndPortableTypechecksPassed": true
+  },
+  "artifacts": {
+    "Rewrite/native/mobile-input/android/build/outputs/aar/ThumbleRewriteMobileInput-debug.aar": {
+      "bytes": 37923,
+      "sha256": "51f857eebc52935fbebbe57c2c6a74b3558261d0b5d6ff6a598eb40c88bb8193"
+    }
+  },
+  "incomplete": {
+    "retainedStackSafetyScript": "Started as required; Xcode compiler probe blocked in write with no application compilation. Sampled both live build and compiler; terminated only owned builds. No stack-safety pass claimed.",
+    "genericXcodePackageBuild": "Same local build-service/compiler-probe wait. Direct SDK builds of actual modules passed; generic Xcode check remains in the proposed hosted workflow.",
+    "hostedCI": "Not dispatched: automatic approval review rejected public source snapshot/workflow publication. Approval of a scoped mobile diff is required.",
+    "ReactNativeIntegration": "Native libraries and portable configuration interface exist; app/bridge and authenticated native transport are M3 work."
+  },
+  "physicalAcceptanceComplete": false
+}
