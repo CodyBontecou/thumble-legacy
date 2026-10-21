@@ -81,7 +81,7 @@ pub fn load(path: &Path) -> Result<PersistentState, String> {
 pub(crate) fn read_state_bytes(path: &Path) -> Result<Vec<u8>, String> {
     let file = OpenOptions::new()
         .read(true)
-        .custom_flags(libc::O_NOFOLLOW)
+        .custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK)
         .open(path)
         .map_err(|error| format!("read {}: {error}", path.display()))?;
     let metadata = file

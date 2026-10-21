@@ -1,0 +1,3 @@
+   Compiling thumble-host v0.1.0 (/private/tmp/thumble-owned-runtime-_cydm579/Host/crates/thumble-host)
+   Compiling thumble-mcp v0.1.0 (/private/tmp/thumble-owned-runtime-_cydm579/Host/crates/thumble-mcp)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.41s

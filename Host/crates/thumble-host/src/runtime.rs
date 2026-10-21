@@ -1,3 +1,5 @@
+#[path = "runtime_owned.rs"]
+mod owned_runtime;
 #[path = "runtime_skins.rs"]
 mod skin_runtime;
 use crate::authority::{
@@ -1084,6 +1086,9 @@ impl SharedRuntime {
         &self,
         expected_configuration_revision: u64,
     ) -> Result<ConfigurationDraftSummary, DraftError> {
+        if self.uses_owned_configuration() {
+            return self.owned_begin(expected_configuration_revision);
+        }
         let state = self
             .inner
             .lock()
@@ -1103,6 +1108,9 @@ impl SharedRuntime {
         &self,
         draft_id: &str,
     ) -> Result<ConfigurationDraftSummary, DraftError> {
+        if self.uses_owned_configuration() {
+            return self.owned_get(draft_id);
+        }
         let draft = DraftStore::new(&self.paths).get(draft_id, unix_millis())?;
         Ok(self.configuration_draft_summary(&draft))
     }
@@ -1121,6 +1129,9 @@ impl SharedRuntime {
         ),
         DraftError,
     > {
+        if self.uses_owned_configuration() {
+            return self.owned_edit(draft_id, expected_draft_revision, operation_id, operation);
+        }
         let now_millis = unix_millis();
         let store = DraftStore::new(&self.paths);
         let edit = if operation.requires_bridge() {
@@ -1172,6 +1183,14 @@ impl SharedRuntime {
         ),
         DraftError,
     > {
+        if self.uses_owned_configuration() {
+            return self.owned_rebase(
+                draft_id,
+                expected_draft_revision,
+                expected_configuration_revision,
+                rebase_id,
+            );
+        }
         let state = self
             .inner
             .lock()
@@ -1211,6 +1230,9 @@ impl SharedRuntime {
         draft_id: &str,
         expected_draft_revision: u64,
     ) -> Result<ConfigurationValidationSummary, DraftError> {
+        if self.uses_owned_configuration() {
+            return self.owned_validate(draft_id, expected_draft_revision);
+        }
         let draft = DraftStore::new(&self.paths).get_at_revision(
             draft_id,
             expected_draft_revision,
@@ -1240,6 +1262,9 @@ impl SharedRuntime {
         draft_id: &str,
         expected_draft_revision: u64,
     ) -> Result<(ConfigurationDraftSummary, ControllerSnapshot, String), DraftError> {
+        if self.uses_owned_configuration() {
+            return self.owned_preview(draft_id, expected_draft_revision);
+        }
         let draft = DraftStore::new(&self.paths).get_at_revision(
             draft_id,
             expected_draft_revision,
@@ -1289,6 +1314,15 @@ impl SharedRuntime {
         commit_id: &str,
         client_request_digest: Option<&str>,
     ) -> Result<ConfigurationSaveSummary, SaveConfigurationError> {
+        if self.uses_owned_configuration() {
+            return self.owned_save(crate::owned_drafts::OwnedCommitRequest {
+                draft_id,
+                draft_revision: expected_draft_revision,
+                expected: expected_configuration_revision,
+                commit_id,
+                request_digest: client_request_digest,
+            });
+        }
         if !self.configuration_write_enabled {
             return Err(SaveConfigurationError::Disabled);
         }
@@ -1349,6 +1383,9 @@ impl SharedRuntime {
         draft_id: &str,
         expected_draft_revision: u64,
     ) -> Result<String, DraftError> {
+        if self.uses_owned_configuration() {
+            return self.owned_discard(draft_id, expected_draft_revision);
+        }
         DraftStore::new(&self.paths).discard(draft_id, expected_draft_revision, unix_millis())?;
         Uuid::parse_str(draft_id)
             .map(|id| id.hyphenated().to_string())
@@ -2642,7 +2679,7 @@ mod tests {
     const STICK_ID: &str = "867b044c-34cd-433d-bef8-7d422b66540a";
     const DECORATION_ID: &str = "1dcae3f9-e2ba-4e73-9903-10883e53b04a";
 
-    fn failing_controller_runtime(paths: HostPaths) -> SharedRuntime {
+    pub(super) fn failing_controller_runtime(paths: HostPaths) -> SharedRuntime {
         let mut state = thumble_core::PersistentState::minimal("server").unwrap();
         state.profiles[0]["outputMode"] = serde_json::json!("custom");
         state.profiles[0]["customization"]["elements"] = serde_json::json!([{

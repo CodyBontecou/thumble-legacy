@@ -1,0 +1,53 @@
+{
+  "baseCommit": "53afe5e263c6d41c61cce7e6b372a43e3cfe122f",
+  "isolatedRustCheckout": "/private/tmp/thumble-owned-runtime-_cydm579",
+  "sourceSHA256": {
+    "Host/crates/thumble-host/src/runtime.rs": "0dc2807830c2bd6cec7440cad3372d9c4ebca7c388f6cbc05c37c684b459a94c",
+    "Host/crates/thumble-host/src/cli.rs": "de8507f1a8c2b3b5fc74f6bb6a554fafe81adc03f9bad3ebf4e014e511d9b19e",
+    "Host/crates/thumble-host/src/storage.rs": "7cf957e0456ba75e1a9c07e3d5de7b16bc82a9bb868ab50207fe7107ba0ab0f0",
+    "Host/crates/thumble-host/src/runtime_owned.rs": "1a6901bfe9e59cbf4ff82a5c5d1b650c88442924fd96227695ac59c202781583",
+    "Host/crates/thumble-host/src/cli_configuration.rs": "15ba76af5e3a7b525722c8bcb9a9eeb76a799a52941ebc53efa80665f205ab07",
+    "scripts/verify-owned-runtime-flow.py": "720bb6c0d88a4b2257a1e13a7794684cbef3a500a8b1d06ebf22ef2a1d2b4a66"
+  },
+  "binarySHA256": {
+    "host": "0a73f8612eafecd32cb73a095293e88eb6197a47636ec51f4c49903b4218a156",
+    "mcp": "fcfe404505a3058b3c0ce34b354f2f2f943f8decc06e6ee87f6684df17b2e732",
+    "nativeBridge": "3e9f852ba8b3d7abe4952bbef41db8f1131236678b022688cd910af407623367"
+  },
+  "logSHA256": {
+    "rust.txt": "2d894691796b8815b15fa20278a60219d5462f1b1d18d3f4e4e2d26ef28227f8",
+    "build.txt": "b33f6cc917031101b855d5713a040406cc89dd20c07e24c578adc9f745ad8824",
+    "process.txt": "113fba88d38d5cca86191d2aa37beda9c81b75e55ab9eb0abc21f0a8e0cd56e5",
+    "nativeStack.txt": "c86fb752d6d45a70bfe9d0b88e2b02a7d41840cdd767077ac2ff18f00be18197"
+  },
+  "rust": {
+    "gateExitCode": 0,
+    "passed": 563,
+    "ignored": 3,
+    "newTests": 7,
+    "scope": "isolated committed base plus this batch; concurrent WoW changes excluded"
+  },
+  "nativeStack": {
+    "gateExitCode": 0,
+    "passed": 41,
+    "macDebugBuild": true,
+    "iosDebugBuild": true,
+    "scope": "178 tracked native/test/project/script files match base; two process verifier scripts absent from isolated native checkout",
+    "sourceManifestSHA256": "5581a22a1087f8675378418558e99df003d209465c0c98eaa209245cda913d3a"
+  },
+  "process": {
+    "cliNativeGeometry": true,
+    "mcpNativeHaptic": true,
+    "commitReplay": true,
+    "restartReplay": true,
+    "retainedAppearanceStates": 8,
+    "exactUnknownInteger": true,
+    "resourceTablePreserved": true,
+    "configurationRevision": 43,
+    "desktopGUIRequired": false
+  },
+  "ownedAuthorityTransactionDispatchEnabled": true,
+  "automaticMigrationEnabled": false,
+  "phoneFormatFiveOffersEnabled": false,
+  "physicalDeviceAcceptance": false
+}

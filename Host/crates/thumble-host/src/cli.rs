@@ -1,3 +1,5 @@
+#[path = "cli_configuration.rs"]
+mod configuration;
 use crate::control::{
     send_request, AccessibilityAction, ControlRequest, ControlResponse, HostStatus,
 };
@@ -26,6 +28,8 @@ pub struct Cli {
 
 #[derive(Debug, Subcommand)]
 pub enum HostCommand {
+    /// Edit configuration through revision-checked local transactions (JSON output).
+    Configuration(configuration::ConfigurationArgs),
     /// Run the receiver in the foreground.
     Run(RuntimeArgs),
     /// Start a detached per-user receiver.
@@ -178,6 +182,7 @@ pub async fn execute(cli: Cli, paths: HostPaths) -> Result<(), String> {
         .command
         .unwrap_or(HostCommand::Run(RuntimeArgs::default()))
     {
+        HostCommand::Configuration(arguments) => configuration::run(&paths, arguments).await,
         HostCommand::Run(arguments) => run_runtime(paths, arguments.into()).await,
         HostCommand::Start(arguments) => detached_start(&paths, arguments.into()).await,
         HostCommand::Stop => stop(&paths).await,

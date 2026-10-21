@@ -1,0 +1,1 @@
+{"cliNativeGeometry": true, "mcpNativeHaptic": true, "commitReplay": true, "restartReplay": true, "retainedAppearanceStates": 8, "exactUnknownInteger": true, "resourceTablePreserved": true, "configurationRevision": 43, "desktopGUIRequired": false}
