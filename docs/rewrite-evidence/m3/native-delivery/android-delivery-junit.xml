@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.NativeTLSDeliveryTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-21T20:47:56" hostname="MacBook-Pro.local" time="0.035">
+  <properties/>
+  <testcase name="closingDuringConnectCannotAdmitLateTransportOrReplayInput" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.001"/>
+  <testcase name="closeRetiresImmediatelyEvenWhenPlatformShutdownBlocks" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.001"/>
+  <testcase name="controlQueueOverflowAndCloseAreTerminalAndDiscardPendingData" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.001"/>
+  <testcase name="malformedFramesAndConnectionFailureFailClosed" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.0"/>
+  <testcase name="inboundQueueOverflowAndWrongDirectionCloseWithoutUnboundedCallbacks" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.004"/>
+  <testcase name="stalledNativeWriteCoalescesInputWithoutBlockingOffersOrReencrypting" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.001"/>
+  <testcase name="actualFullDuplexWorkerDeliversWhileNativeReaderWaits" classname="com.thumble.rewrite.input.NativeTLSDeliveryTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

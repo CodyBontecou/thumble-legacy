@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "scope": "Combined native phone TLS clients and bounded delivery; excludes private history and local evidence",
+  "expectedPublicParent": "a73d432d0471195c2882827dc756260620931802",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "bytes": 4166,
+      "sha256": "baff664d5e8458596867db3c61fde1f345058a7b6182870bc59327fdf1b3712a"
+    },
+    {
+      "path": "Rewrite/.gitignore",
+      "bytes": 81,
+      "sha256": "1194823bf6a7385af99f46811037d45317611a2f94eef1c7d6f818e296337283"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "bytes": 9252,
+      "sha256": "026dd0d7d1292db4ab132552e910f7cc3a6426bd86d9f9fa255a5dd940f86fbe"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/ControlTLS.kt",
+      "bytes": 10219,
+      "sha256": "61d0e81300216ca22bdfa015de8d54a2e7ad475bb365be1ca90b84b1cc2fa12c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/NativeTLSDelivery.kt",
+      "bytes": 5817,
+      "sha256": "22f3be67331d5622cee4bd253aa4322c80954e88622abd133accbc14f7851ce2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/ControlTLSTest.kt",
+      "bytes": 5983,
+      "sha256": "acf6df8787e1db3ee61f7a287ba1c07851a15b81adb7f56293c452a0ab167d55"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/NativeTLSDeliveryTest.kt",
+      "bytes": 11487,
+      "sha256": "f88084a265949d9f7dcad29fe3add50d44dbbd1c3c05bd4ad43a5e38444a7ebd"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/ControlTLS.swift",
+      "bytes": 10369,
+      "sha256": "088d8349e009b5ccfc6b5a10de04ddf11649f515b6d8b68d3b2476cd2e0ca33c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/ControlTLSTests.swift",
+      "bytes": 12995,
+      "sha256": "401fc16206b781dbfe728b5224974eab5fbf7aec3a97302377aca42e69a45234"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/control_tls_probe.rs",
+      "bytes": 5176,
+      "sha256": "036c78d742b71e16b118a37f31fe8ff8e13aa4e50d5b9b608e6a1d6682fb98c2"
+    }
+  ]
+}

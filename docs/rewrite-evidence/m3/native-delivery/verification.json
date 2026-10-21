@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "androidJUnit": {
+    "tests": 40,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "swiftTests": 20,
+  "androidAAR": "pass",
+  "androidLint": "pass",
+  "inputPath": "Native touch engine -> packet encryption -> TLS -> Rust recording receiver",
+  "androidBackpressure": "one latest input slot; eight outbound controls; eight inbound controls; one writer plus one reader plus at most one transient closer",
+  "iosBackpressure": "one in-flight frame; eight controls; one latest input",
+  "hostedNewDelivery": "not published",
+  "remaining": [
+    "phone enrollment",
+    "persistent trust",
+    "product listener and grant issuance",
+    "UDP/reliable routing",
+    "reconnect",
+    "physical acceptance"
+  ]
+}

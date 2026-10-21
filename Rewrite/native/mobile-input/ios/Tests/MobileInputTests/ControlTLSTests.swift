@@ -201,4 +201,83 @@ import Testing
       #expect(!client.offer(try ControlTLSFrame(kind: .input, payload: packets[0])))
     }
   }
+  @Test(.enabled(if: ProcessInfo.processInfo.environment["THUMBLE_NATIVE_TLS_PROBE"] != nil))
+  @MainActor private func actualNativeTouchEngineDeliversMultitouchThroughTLSAndReleasesOnLoss()
+    async throws
+  {
+    try await withProbe { info in
+      let client = try ControlTLSClient(
+        host: "127.0.0.1", port: info.port, certificatePin: info.pin)
+      defer { client.close() }
+      try await client.connect()
+      let url = try #require(
+        Bundle.module.url(
+          forResource: "input-packet-v1", withExtension: "json", subdirectory: "Fixtures"))
+      let fixture = try #require(
+        JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
+      func bytes(_ name: String) throws -> Data {
+        let hex = try #require(fixture[name] as? String)
+        var data = Data()
+        for offset in stride(from: 0, to: hex.count, by: 2) {
+          let start = hex.index(hex.startIndex, offsetBy: offset)
+          data.append(try #require(UInt8(hex[start..<hex.index(start, offsetBy: 2)], radix: 16)))
+        }
+        return data
+      }
+      let generation = try #require(fixture["generation"] as? String)
+      let grant = try InputPacketGrant(
+        key: bytes("keyHex"), session: bytes("sessionHex"), noncePrefix: bytes("noncePrefixHex"),
+        generation: #require(UInt64(generation)))
+      let channel = try InputPacketChannel(
+        grant: grant,
+        send: { packet in
+          guard let frame = try? ControlTLSFrame(kind: .input, payload: packet) else {
+            return false
+          }
+          return client.offer(frame)
+        })
+      let engine = InputEngine(output: channel.submit)
+      try engine.activate(
+        ControlMap(
+          generation: generation, revision: "1",
+          controls: [
+            ControlRegion(id: "south", action: "south", x: 0.1, y: 0.1, width: 0.2, height: 0.2),
+            ControlRegion(id: "lt", action: "leftTrigger", x: 0.4, y: 0.1, width: 0.2, height: 0.2),
+            ControlRegion(
+              id: "rt", action: "rightTrigger", x: 0.7, y: 0.1, width: 0.2, height: 0.2),
+            ControlRegion(id: "ls", action: "leftStick", x: 0.1, y: 0.5, width: 0.3, height: 0.3),
+            ControlRegion(id: "rs", action: "rightStick", x: 0.6, y: 0.5, width: 0.3, height: 0.3),
+          ]))
+      @MainActor func verifyNativeState() async throws {
+        let response = try await client.receive()
+        let result = try #require(
+          JSONSerialization.jsonObject(with: response.payload) as? [String: Any])
+        #expect(result["ok"] as? Bool == true)
+        let snapshot = try #require(result["snapshot"] as? [String: Any])
+        let expected = GamepadReport.encode(engine.state).map { String(format: "%02x", $0) }
+          .joined()
+        #expect(snapshot["reportHex"] as? String == expected)
+        #expect(snapshot["inputEnabled"] as? Bool == false)
+      }
+      try engine.connect(generation: generation)
+      try await verifyNativeState()
+      for (id, x, y) in [
+        (UInt64(1), 0.2, 0.2), (2, 0.5, 0.2), (3, 0.8, 0.2), (4, 0.38, 0.65), (5, 0.75, 0.52),
+      ] {
+        #expect(engine.begin(id: id, generation: generation, x: x, y: y))
+        try await verifyNativeState()
+      }
+      #expect(engine.state.buttons.contains(.south))
+      #expect(engine.state.leftTrigger == 1 && engine.state.rightTrigger == 1)
+      #expect(engine.state.leftStickX != 0 && engine.state.rightStickY != 0)
+      client.close()
+      engine.tick()
+      #expect(!engine.connected && engine.state.buttons.isEmpty)
+      #expect(engine.state.leftTrigger == 0 && engine.state.rightTrigger == 0)
+      #expect(engine.lastRelease == .transportFailure)
+      #expect(throws: InputError.freshGenerationRequired) {
+        try engine.connect(generation: generation)
+      }
+    }
+  }
 #endif

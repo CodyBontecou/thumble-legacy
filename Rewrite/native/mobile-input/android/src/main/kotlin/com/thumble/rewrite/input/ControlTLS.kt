@@ -11,6 +11,7 @@ import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.net.ssl.SNIHostName
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLEngine
@@ -70,46 +71,56 @@ class ControlTLSFrame(val kind: Kind, payload: ByteArray) {
 }
 
 /**
- * Host-authenticated TLS only. Blocking operations belong on one bounded native network worker.
+ * Host-authenticated TLS only. Blocking operations require bounded native reader/writer workers.
  * Platform TLS 1.3/ALPN requires Android API 29; input core API 26 remains independent. A fresh
  * SSLContext per connection prevents resuming an old session. No early data is sent.
  */
 @TargetApi(29)
-class ControlTLSClient private constructor(private val socket: SSLSocket) : Closeable {
-    private val owner = Thread.currentThread()
+class ControlTLSClient private constructor(private val socket: SSLSocket, private val raw: Socket) :
+    Closeable {
+    private val sending = AtomicBoolean(false)
+    private val receiving = AtomicBoolean(false)
     @Volatile private var closed = false
 
-    private fun checkOwner() {
-        if (Thread.currentThread() !== owner) throw ControlTLSRejected()
-    }
-
-    private inline fun <T> operation(block: () -> T): T {
-        checkOwner()
-        if (closed) throw ControlTLSRejected()
-        val expiry = watchdog.schedule({ close() }, 2, TimeUnit.SECONDS)
-        return try {
-            block()
-        } catch (_: Exception) {
-            close()
-            throw ControlTLSRejected()
+    private inline fun <T> operation(direction: AtomicBoolean, block: () -> T): T {
+        if (!direction.compareAndSet(false, true)) throw ControlTLSRejected()
+        try {
+            if (closed) throw ControlTLSRejected()
+            val expiry = watchdog.schedule({ close() }, 2, TimeUnit.SECONDS)
+            return try {
+                block()
+            } catch (_: Exception) {
+                close()
+                throw ControlTLSRejected()
+            } finally {
+                expiry.cancel(false)
+            }
         } finally {
-            expiry.cancel(false)
+            direction.set(false)
         }
     }
 
-    fun send(frame: ControlTLSFrame) = operation {
-        socket.outputStream.write(frame.encode())
-        socket.outputStream.flush()
-    }
+    fun send(frame: ControlTLSFrame) =
+        operation(sending) {
+            socket.outputStream.write(frame.encode())
+            socket.outputStream.flush()
+        }
 
-    fun receive(): ControlTLSFrame = operation {
-        val prefix = exact(socket.inputStream, 4)
-        ControlTLSFrame.decodeBody(exact(socket.inputStream, ControlTLSFrame.bodyLength(prefix)))
-    }
+    fun receive(): ControlTLSFrame =
+        operation(receiving) {
+            val prefix = exact(socket.inputStream, 4)
+            ControlTLSFrame.decodeBody(
+                exact(socket.inputStream, ControlTLSFrame.bodyLength(prefix))
+            )
+        }
 
     /** Can be called from lifecycle/watchdog threads to interrupt blocked I/O. Terminal. */
     override fun close() {
         closed = true
+        // Abort TCP first so a stalled TLS writer cannot hold shutdown or the deadline watchdog.
+        try {
+            raw.close()
+        } catch (_: Exception) {}
         try {
             socket.close()
         } catch (_: Exception) {}
@@ -177,7 +188,7 @@ class ControlTLSClient private constructor(private val socket: SSLSocket) : Clos
                     throw ControlTLSRejected()
                 tls.session.invalidate()
                 tls.soTimeout = 2000
-                return ControlTLSClient(tls)
+                return ControlTLSClient(tls, raw)
             } catch (_: Exception) {
                 try {
                     tls?.close()
