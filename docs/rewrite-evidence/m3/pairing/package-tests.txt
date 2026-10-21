@@ -1,0 +1,10 @@
+$ bun tooling/ci-test.ts --package
+bun test v1.4.3 (c6da4a4d3)
+
+tests/package.test.ts:
+(pass) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH [2078.29ms]
+
+ 1 pass
+ 0 fail
+ 22 expect() calls
+Ran 1 test across 1 file. [2.08s]

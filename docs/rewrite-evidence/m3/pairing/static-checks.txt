@@ -1,0 +1,4 @@
+$ bun tooling/generate-contracts.ts --check
+$ bun tooling/check-boundaries.ts
+Portable contracts/domain import boundaries verified
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json

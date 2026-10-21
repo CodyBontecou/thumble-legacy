@@ -1,6 +1,6 @@
 # Thumble TypeScript rewrite plan
 
-Status: headless implementation underway in a dedicated worktree. M2 workspace/contracts are implemented; receiver/mobile seams remain pending. No acceptance milestones are complete. See [M2 evidence](rewrite-evidence/m2/README.md) and [the baseline](rewrite-evidence/m0/README.md).
+Status: headless implementation underway in a dedicated worktree. M2 workspace/contracts, recording receiver/service/CLI and native mobile library seams are implemented and pass hosted checks. M3 pairing-window groundwork is underway; native network enrollment/input and the React Native app remain pending. No acceptance milestones are complete. See [M2 evidence](rewrite-evidence/m2/README.md) and [the baseline](rewrite-evidence/m0/README.md).
 Created: 2026-10-21.
 
 ## Outcome and scope

@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "repository": "CodyBontecou/Thumble",
+  "visibility": "public",
+  "branch": "codex/typescript-rewrite-headless-ci",
+  "expectedPublicParent": "994ce1a21a428aa04c3a2cb9ea5f1800373af06c",
+  "scope": "M3 pairing window contracts, portable application/client, host CLI/service integration, tests and Rewrite README only",
+  "status": "pending-scoped-publication-approval",
+  "fileCount": 15,
+  "totalBytes": 62982,
+  "files": [
+    {
+      "path": "Rewrite/README.md",
+      "bytes": 6061,
+      "sha256": "70eb412a6040f6302c3a9777433f2be9dacfab7de85bc196dcabc74a2a1aa6d3"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "bytes": 5303,
+      "sha256": "2e6012aef5321e8b73c8e3fca2bdd24a4f02973a0d5b946619496473d77806ea"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "bytes": 7497,
+      "sha256": "3e6398928b7c5870a4e9990c89ba4596b9f28b2a4a98c07c262ab48c0c0f9bf4"
+    },
+    {
+      "path": "Rewrite/packages/application/package.json",
+      "bytes": 259,
+      "sha256": "0de2bc6097986438ad6296c22292c375487bac97c76890a197153b94439c2f34"
+    },
+    {
+      "path": "Rewrite/packages/application/src/pairing.ts",
+      "bytes": 3545,
+      "sha256": "f3c5621c071243fcef239bfe6c2716ef493f78f63d68fa1d09e7049fa2c7d3c2"
+    },
+    {
+      "path": "Rewrite/packages/client/package.json",
+      "bytes": 321,
+      "sha256": "da51ff4089a1868a84215b64c890c2fb9e2946609f9c3b208b4a95f126e67341"
+    },
+    {
+      "path": "Rewrite/packages/client/src/local.ts",
+      "bytes": 7064,
+      "sha256": "283ffb583d0d798daf4012b9a96d1cde04e69e2ec68ff70ba7d14f6d6b8b74b4"
+    },
+    {
+      "path": "Rewrite/packages/client/src/pairing.ts",
+      "bytes": 1238,
+      "sha256": "8a073b52af3fd7db1c1593409b3cc8fb0d901074597f2262a400b682a795fd19"
+    },
+    {
+      "path": "Rewrite/packages/contracts/package.json",
+      "bytes": 265,
+      "sha256": "8c2ca66a91975a0a3f39144d39757d672b66f1fd558e1f662399724ec7b8ab53"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/pairing.ts",
+      "bytes": 3693,
+      "sha256": "a51c36be63b47b36042fc45323c76f94f9809cba194486b36b41fa8eb134facb"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "bytes": 3518,
+      "sha256": "79a075c6dda314786605ac97048be90b345e848da402b360b5c6737411869fea"
+    },
+    {
+      "path": "Rewrite/tests/pairing.test.ts",
+      "bytes": 7439,
+      "sha256": "5a28fb71d7e197530284e2657624a1d2bc5f67dd1394ab9158aa1c4dbafe873d"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "bytes": 13947,
+      "sha256": "77af0d741fb2e318f2ec8e93f4592849b3734cca497b03b5d4491116f27e7b3d"
+    },
+    {
+      "path": "Rewrite/tooling/check-boundaries.ts",
+      "bytes": 2481,
+      "sha256": "df89cead0f146dec464d5d76e2bb403b039158e713bfe4db660f555eecf0ea5d"
+    },
+    {
+      "path": "Rewrite/tsconfig.portable.json",
+      "bytes": 351,
+      "sha256": "3443cbc793c1b91c1840c87ddd45993c57379543b581001997dea953ac64b0d5"
+    }
+  ],
+  "excluded": [
+    "Private baseline and history",
+    "Credentials and trust data",
+    "Build products",
+    "Local evidence logs",
+    "Unrelated retained sources"
+  ]
+}
