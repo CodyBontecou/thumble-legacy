@@ -1,0 +1,4 @@
+{
+  "integrationTestRust": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+  "requiredGateRust": "rustc 1.88.0 (6b00bc388 2025-06-23)"
+}
