@@ -1,6 +1,6 @@
 # Thumble TypeScript rewrite plan
 
-Status: proposed implementation plan; no rewrite milestones are complete.
+Status: implementation started in a dedicated worktree; M0 evidence in progress. No rewrite milestones are complete. See [the execution record](rewrite-evidence/m0/README.md).
 Created: 2026-10-21.
 
 ## Outcome and scope
@@ -12,14 +12,14 @@ This plan authorizes implementation sequencing, not a claim of compatibility or 
 | Dimension | Launch baseline | Expansion |
 | --- | --- | --- |
 | Phone platforms | iOS and Android, equal acceptance requirements | Tablets and additional form factors after phone acceptance |
-| Computer platform | macOS receiver; initial planning assumption | Windows/Linux need separate native-gamepad implementation and release gates |
+| Computer platform | macOS and Windows receivers; user confirmed 2026-10-21 | Linux needs separate native-gamepad implementation and release gates |
 | Classic | Classic Era + tested ConsolePort release | Other Classic branches require explicit adapters and gameplay evidence |
 | Forever | Native gamepad interface on a pinned supported build | ConsolePort on Forever is a separate certified combination |
 | Configuration | Local CLI, stdio MCP, phone editor | No required hosted configuration service |
 | Gameplay | Native sticks, triggers, buttons, keyboard/pointer where configured | Additional game integrations after launch gates |
-| Integration | Setup, character/build context, snapshot refresh, trigger-bank presentation | Live synchronization ships only after its independent acceptance gate |
+| Integration | Setup, character/build context, snapshot refresh, trigger-bank presentation, and optical live sync; user confirmed 2026-10-21 | Live sync must pass its independent acceptance gate before launch |
 
-Confirm the macOS-first computer scope at milestone M0. Adding Windows to launch changes the critical path; cross-compiling a TypeScript executable does not supply a virtual gamepad driver.
+Windows is included at launch by the user’s M0 decision. Its virtual gamepad driver, signing, clean installation/removal, and native gameplay acceptance are on the critical path; cross-compiling a TypeScript executable does not supply a virtual gamepad driver.
 
 Exclude desktop configuration windows, hosted relays, accounts, marketplaces, and a general plugin framework from the rewrite's launch scope. Preserve general-purpose controller editing and existing user data. Do not rebuild every historical implementation detail merely to reproduce the old module structure.
 
@@ -174,7 +174,7 @@ The current tree includes optical live-panel, capture, onboarding, and character
 
 To ship optical live sync, prove capture permission from the independently launched signed helper, supported window/scaling behavior, frame identity and freshness, frozen/replayed-frame rejection, and physical phone delivery. Treat captured pixels as untrusted observations. Loss of observation marks icons/context stale without interrupting physical input. State freshness is visible; cooldowns, ranks, forms, pets, and contextual pages are promised only where tested.
 
-Live sync is conditional launch scope: it may ship only when its gate passes, while manual import/refresh remains usable. Record a product decision at M0 if automatic character/icon sync is mandatory; that decision makes its gate a launch blocker.
+Live sync is mandatory launch scope by the user’s M0 decision on 2026-10-21. Its independent optical acceptance gate is a launch blocker. Manual import/refresh must remain usable when capture is unavailable or stale.
 
 ## Reuse and migration inventory
 
@@ -211,7 +211,7 @@ Complete when every retained CLI/MCP/phone operation maps to a replacement, expl
 
 Depends on M0. Use the current receiver before rebuilding broad UI. Verify the exact release identity, entitlement/provisioning scope, native device creation, independent GameController semantics, and actual game enumeration.
 
-Complete when physical iPhone and Android input passes movement, camera, buttons, both triggers, modifier combinations, target/interact/menu actions, disconnect neutralization, and reconnect in each launch game experience. Store build/package/descriptor hashes and recordings. Development HID success alone does not satisfy production signing or gameplay gates. An unresolved gamepad or entitlement failure blocks feature expansion.
+Complete when physical iPhone and Android input passes movement, camera, buttons, both triggers, modifier combinations, target/interact/menu actions, disconnect neutralization, and reconnect in each launch game experience on both macOS and Windows (eight combinations). Windows additionally requires a proven native virtual gamepad driver and signed installation/removal path. Store build/package/descriptor hashes and recordings. Development HID success alone does not satisfy production signing or gameplay gates. An unresolved gamepad or entitlement failure blocks feature expansion.
 
 ### M2 — Workspace, contracts, and receiver seam
 

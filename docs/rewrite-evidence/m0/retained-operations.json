@@ -1,0 +1,3476 @@
+{
+  "version": 1,
+  "note": "Replacement destinations are planned, not implemented or certified.",
+  "sourceHashes": {
+    "docs/mcp/cli-capabilities-v1.json": "827d2e9eb194cb2b557282ba13af659c8ca18e5e63598b6356c0bed9457ff6ce",
+    "Host/crates/thumble-mcp/src/server.rs": "6a8e922ad1738872435ed507cd1227532366316166c428f24819f04f9070da63",
+    "Sources/CLI/ThumbleCLI.swift": "621b9ea33d49a36b0ca82c9223750048a22f966ada515af8b87287f912fd24e5",
+    "Android/PARITY.md": "ab6bb8b763a83e91a337001c44f1ef8125c10eeb90324748ea5a4ef996f4f146",
+    "Sources/iOS/ControllerClient.swift": "2d4628160958c79f3e40bb598f9e15a22b2e6fb644dfb7d3a6fbc5831c7079dc",
+    "Sources/iOS/IOSContentView.swift": "8e6d80a39d42d60021ca1b3f935269799017f5023eb925535b500ad250f84033",
+    "Android/app/src/main/java/com/thumble/android/ControllerClient.kt": "9c9aace6071dcaa3967a2086226a73edd397b342b42f9e3b1c1e2d20f6a7ebf3",
+    "Android/app/src/main/java/com/thumble/android/ControllerSurface.kt": "64233fb5b5ffad47533c0d3955d360f14c461aaa596edfc2f7b55c723f39499a",
+    "Host/crates/thumble-host/src/cli.rs": "3cf42f0e42939ec620722b1aeb85bb7591d43915ec5e934c4d8d4a5ea6d2f647",
+    "Host/crates/thumble-host/src/cli_configuration.rs": "9f697e721d5095a968c3b6349e23434db1e4b40eeb6a67bba48bafb5e903f10d",
+    "Host/crates/thumble-host/src/migration_command.rs": "026a358dab2ca8108b71a81fc1a904ed8a741dd922c4742ed9eed1f3cd7512ab",
+    "Host/crates/thumble-receiver/src/main.rs": "4e8ad30cd7bc32600ef375ab9d8d66ffeef978999febbc140ce8522d45e4e5ed"
+  },
+  "operations": [
+    {
+      "id": "android:accessibility",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "labels, actions, scaling, contrast and screen-reader inspection",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:appearance",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "eight saved states, alternate layouts, styles, artwork and assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:editor",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "bindings, geometry, groups, layers, all control kinds and undo/cancel",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:feedback",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "native press/bank feedback independent of JS rendering",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:game-context",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "character/build, snapshot refresh and Base/LT/RT/LT+RT presentation",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:haptics",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "native per-control haptics and persistent intensity preferences",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:input",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "native multitouch, sticks, buttons, triggers and pointer",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:interchange",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "bounded profile/design import/export and local review",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:journals",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "durable original operation IDs, conflict receipts and offline recovery",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:lifecycle",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "background, lock, rotation, dispose, replacement and disconnect neutralize",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:live-sync",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "required signed capture, freshness, replay rejection and phone delivery",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:migration",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "all pending journals admitted or recoverable; trust/re-pairing preserved",
+      "milestone": "M6",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:pairing",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "discovery/manual address, code, trust, revoke and reconnect",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:practice",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "local feedback with no host output; release on entry",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:profiles",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "selection/default, create/duplicate/delete and A/B/A identity",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:settings",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/shared-application",
+      "behavior": "appearance, keep-awake, onboarding and recoverable diagnostics",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "android:transport",
+      "surface": "android",
+      "currentOwner": "Android/app",
+      "replacement": "mobile/native-input",
+      "behavior": "authenticated UDP with reliable fallback and loss repair",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:app.ios-app",
+      "surface": "cli",
+      "commands": [
+        "app ios-app"
+      ],
+      "currentOwner": "fixed-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "app-action",
+      "replacement": "application/setup",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:app.local-network-settings",
+      "surface": "cli",
+      "commands": [
+        "app local-network-settings"
+      ],
+      "currentOwner": "fixed-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "app-action",
+      "replacement": "application/setup",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:app.setup-guide",
+      "surface": "cli",
+      "commands": [
+        "app setup-guide"
+      ],
+      "currentOwner": "fixed-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "app-action",
+      "replacement": "application/setup",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:asset.import",
+      "surface": "cli",
+      "commands": [
+        "asset import"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:asset.list",
+      "surface": "cli",
+      "commands": [
+        "asset list",
+        "asset ls"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "host-cli-only",
+      "capability": "artifact-write",
+      "replacement": "application/assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:asset.remove",
+      "surface": "cli",
+      "commands": [
+        "asset remove",
+        "asset delete",
+        "asset rm"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:asset.set",
+      "surface": "cli",
+      "commands": [
+        "asset set",
+        "asset edit",
+        "asset rename"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:asset.show",
+      "surface": "cli",
+      "commands": [
+        "asset show"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "host-cli-only",
+      "capability": "artifact-write",
+      "replacement": "application/assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.clear",
+      "surface": "cli",
+      "commands": [
+        "binding clear",
+        "binding unset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.display",
+      "surface": "cli",
+      "commands": [
+        "binding display"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.list",
+      "surface": "cli",
+      "commands": [
+        "binding list",
+        "binding ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.reset",
+      "surface": "cli",
+      "commands": [
+        "binding reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.reset-all",
+      "surface": "cli",
+      "commands": [
+        "binding reset-all"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:binding.set",
+      "surface": "cli",
+      "commands": [
+        "binding set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.add",
+      "surface": "cli",
+      "commands": [
+        "control-bar add",
+        "control-bar append"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.item.reset",
+      "surface": "cli",
+      "commands": [
+        "control-bar item reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.item.set",
+      "surface": "cli",
+      "commands": [
+        "control-bar item set",
+        "control-bar item edit",
+        "control-bar item style"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.item.show",
+      "surface": "cli",
+      "commands": [
+        "control-bar item show",
+        "control-bar item get",
+        "control-bar item inspect"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.list",
+      "surface": "cli",
+      "commands": [
+        "control-bar list",
+        "control-bar ls",
+        "control-bar show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.move",
+      "surface": "cli",
+      "commands": [
+        "control-bar move"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.remove",
+      "surface": "cli",
+      "commands": [
+        "control-bar remove",
+        "control-bar rm",
+        "control-bar delete",
+        "control-bar hide"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.reset",
+      "surface": "cli",
+      "commands": [
+        "control-bar reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:control-bar.set",
+      "surface": "cli",
+      "commands": [
+        "control-bar set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.apply",
+      "surface": "cli",
+      "commands": [
+        "design apply"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.begin",
+      "surface": "cli",
+      "commands": [
+        "design begin"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.capabilities",
+      "surface": "cli",
+      "commands": [
+        "design capabilities"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "none",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.critique",
+      "surface": "cli",
+      "commands": [
+        "design critique"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.inspect",
+      "surface": "cli",
+      "commands": [
+        "design inspect"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "none",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.review",
+      "surface": "cli",
+      "commands": [
+        "design review"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:controller-design.update",
+      "surface": "cli",
+      "commands": [
+        "design update"
+      ],
+      "currentOwner": "swift-cli-through-mcp",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.export",
+      "surface": "cli",
+      "commands": [
+        "customization export"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.fix",
+      "surface": "cli",
+      "commands": [
+        "customization fix",
+        "customization repair",
+        "customization autofix",
+        "customization auto-fix",
+        "layout fix",
+        "layout repair",
+        "layout autofix",
+        "layout auto-fix"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.import",
+      "surface": "cli",
+      "commands": [
+        "customization import"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.preview",
+      "surface": "cli",
+      "commands": [
+        "customization preview",
+        "customization render",
+        "layout preview",
+        "layout render"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.reset",
+      "surface": "cli",
+      "commands": [
+        "customization reset",
+        "layout reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.set",
+      "surface": "cli",
+      "commands": [
+        "customization set",
+        "layout set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.show",
+      "surface": "cli",
+      "commands": [
+        "customization show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:customization.validate",
+      "surface": "cli",
+      "commands": [
+        "customization validate",
+        "customization check",
+        "customization lint",
+        "layout validate",
+        "layout check",
+        "layout lint"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "application/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:device.list",
+      "surface": "cli",
+      "commands": [
+        "device list",
+        "device ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/geometry",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:device.set",
+      "surface": "cli",
+      "commands": [
+        "device set",
+        "device select",
+        "device use"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/geometry",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:device.show",
+      "surface": "cli",
+      "commands": [
+        "device show",
+        "device current"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "design/geometry",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.add",
+      "surface": "cli",
+      "commands": [
+        "element add"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.align",
+      "surface": "cli",
+      "commands": [
+        "element align"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.delete",
+      "surface": "cli",
+      "commands": [
+        "element delete",
+        "element rm"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.distribute",
+      "surface": "cli",
+      "commands": [
+        "element distribute"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.duplicate",
+      "surface": "cli",
+      "commands": [
+        "element duplicate",
+        "element copy"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.list",
+      "surface": "cli",
+      "commands": [
+        "element list",
+        "element ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.nudge",
+      "surface": "cli",
+      "commands": [
+        "element nudge",
+        "element move"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.reset",
+      "surface": "cli",
+      "commands": [
+        "element reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:element.set",
+      "surface": "cli",
+      "commands": [
+        "element set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/controls",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:generation.generate",
+      "surface": "cli",
+      "commands": [
+        "generate"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/generation",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:generation.install-spec",
+      "surface": "cli",
+      "commands": [
+        "install-spec",
+        "import"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "host-cli-only",
+      "capability": "configuration-write",
+      "replacement": "application/generation",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.back",
+      "surface": "cli",
+      "commands": [
+        "group back",
+        "group send-back"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.backward",
+      "surface": "cli",
+      "commands": [
+        "group send-backward",
+        "group backward"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.create",
+      "surface": "cli",
+      "commands": [
+        "group create",
+        "group new"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.duplicate",
+      "surface": "cli",
+      "commands": [
+        "group duplicate",
+        "group copy"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.forward",
+      "surface": "cli",
+      "commands": [
+        "group bring-forward",
+        "group forward"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.front",
+      "surface": "cli",
+      "commands": [
+        "group front",
+        "group bring-front"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.hide",
+      "surface": "cli",
+      "commands": [
+        "group hide"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.list",
+      "surface": "cli",
+      "commands": [
+        "group list",
+        "group ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.lock",
+      "surface": "cli",
+      "commands": [
+        "group lock"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.nudge",
+      "surface": "cli",
+      "commands": [
+        "group nudge",
+        "group move"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.rename",
+      "surface": "cli",
+      "commands": [
+        "group rename"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.show",
+      "surface": "cli",
+      "commands": [
+        "group show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.ungroup",
+      "surface": "cli",
+      "commands": [
+        "group ungroup",
+        "group delete",
+        "group rm"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:group.unlock",
+      "surface": "cli",
+      "commands": [
+        "group unlock"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/groups",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.back",
+      "surface": "cli",
+      "commands": [
+        "layer back",
+        "layer send-back"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.backward",
+      "surface": "cli",
+      "commands": [
+        "layer send-backward",
+        "layer backward"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.forward",
+      "surface": "cli",
+      "commands": [
+        "layer bring-forward",
+        "layer forward"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.front",
+      "surface": "cli",
+      "commands": [
+        "layer front",
+        "layer bring-front"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.list",
+      "surface": "cli",
+      "commands": [
+        "layer list",
+        "layer ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:layer.move",
+      "surface": "cli",
+      "commands": [
+        "layer move"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layers",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:orientation.arrange",
+      "surface": "cli",
+      "commands": [
+        "orientation arrange"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "design/layout",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:orientation.copy",
+      "surface": "cli",
+      "commands": [
+        "orientation copy"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layout",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:orientation.get",
+      "surface": "cli",
+      "commands": [
+        "orientation get",
+        "orientation show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "design/layout",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:orientation.set",
+      "surface": "cli",
+      "commands": [
+        "orientation set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "design/layout",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:output.list",
+      "surface": "cli",
+      "commands": [
+        "output list",
+        "output ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:output.mode",
+      "surface": "cli",
+      "commands": [
+        "output mode",
+        "output preset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:output.reset",
+      "surface": "cli",
+      "commands": [
+        "output reset"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:output.reset-all",
+      "surface": "cli",
+      "commands": [
+        "output reset-all"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:output.set",
+      "surface": "cli",
+      "commands": [
+        "output set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/outputs",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.application-set",
+      "surface": "cli",
+      "commands": [
+        "profile attach-app",
+        "profile attach-application",
+        "profile app",
+        "profile application",
+        "profile detach-app",
+        "profile detach-application",
+        "profile clear-app",
+        "profile remove-app"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.create",
+      "surface": "cli",
+      "commands": [
+        "profile create",
+        "profile new"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.default",
+      "surface": "cli",
+      "commands": [
+        "profile default",
+        "profile set-default"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.delete",
+      "surface": "cli",
+      "commands": [
+        "profile delete",
+        "profile rm"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.duplicate",
+      "surface": "cli",
+      "commands": [
+        "profile duplicate",
+        "profile copy"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.export",
+      "surface": "cli",
+      "commands": [
+        "profile export"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.import",
+      "surface": "cli",
+      "commands": [
+        "profile import"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.launch",
+      "surface": "cli",
+      "commands": [
+        "profile launch",
+        "profile open-app"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "app-action",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.list",
+      "surface": "cli",
+      "commands": [
+        "profile list",
+        "profile ls"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.move",
+      "surface": "cli",
+      "commands": [
+        "profile move",
+        "profile reorder"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.prepare-import",
+      "surface": "cli",
+      "commands": [
+        "thumble-host configuration prepare-import"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "partial",
+      "capability": "none",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.rename",
+      "surface": "cli",
+      "commands": [
+        "profile rename"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "foundation",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.reset",
+      "surface": "cli",
+      "commands": [
+        "profile reset"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.select",
+      "surface": "cli",
+      "commands": [
+        "profile select",
+        "profile use"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:profile.show",
+      "surface": "cli",
+      "commands": [
+        "profile show"
+      ],
+      "currentOwner": "rust-host-and-swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/profiles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.accessibility.open",
+      "surface": "cli",
+      "commands": [
+        "accessibility open",
+        "accessibility settings"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "system-action",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.accessibility.prompt",
+      "surface": "cli",
+      "commands": [
+        "accessibility prompt",
+        "accessibility request"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "system-action",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.accessibility.refresh",
+      "surface": "cli",
+      "commands": [
+        "accessibility refresh"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.accessibility.status",
+      "surface": "cli",
+      "commands": [
+        "accessibility status"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "current",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.gamepad.retry",
+      "surface": "cli",
+      "commands": [
+        "gamepad retry"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "input",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.gamepad.status",
+      "surface": "cli",
+      "commands": [
+        "gamepad status",
+        "gamepad doctor"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "partial",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.gamepad.test",
+      "surface": "cli",
+      "commands": [
+        "gamepad test"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "partial",
+      "capability": "input",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.latency.simulate",
+      "surface": "cli",
+      "commands": [
+        "latency simulate"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.latency.verify",
+      "surface": "cli",
+      "commands": [
+        "latency verify"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.monitor",
+      "surface": "cli",
+      "commands": [
+        "monitor",
+        "capture"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.pairing.cancel",
+      "surface": "cli",
+      "commands": [
+        "pairing cancel"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.pairing.code",
+      "surface": "cli",
+      "commands": [
+        "pairing code"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "current",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.pairing.payload",
+      "surface": "cli",
+      "commands": [
+        "pairing payload"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.release-all",
+      "surface": "cli",
+      "commands": [
+        "release-all"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "current",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.server.addresses",
+      "surface": "cli",
+      "commands": [
+        "server addresses",
+        "server urls"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "partial",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.server.restart",
+      "surface": "cli",
+      "commands": [
+        "server restart"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "host-lifecycle",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.server.start",
+      "surface": "cli",
+      "commands": [
+        "server start"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "host-lifecycle",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.server.stop",
+      "surface": "cli",
+      "commands": [
+        "server stop"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "host-cli-only",
+      "capability": "host-lifecycle",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.status",
+      "surface": "cli",
+      "commands": [
+        "status",
+        "diagnostics",
+        "server status"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "partial",
+      "capability": "none",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.test.down",
+      "surface": "cli",
+      "commands": [
+        "test down"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "input",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.test.tap",
+      "surface": "cli",
+      "commands": [
+        "test tap"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "partial",
+      "capability": "input",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:runtime.test.up",
+      "surface": "cli",
+      "commands": [
+        "test up"
+      ],
+      "currentOwner": "rust-host-platform-adapter",
+      "currentStatus": "planned",
+      "capability": "input",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.apply",
+      "surface": "cli",
+      "commands": [
+        "skin apply",
+        "skin set"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.artboard.export",
+      "surface": "cli",
+      "commands": [
+        "skin artboard export"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.artboard.list",
+      "surface": "cli",
+      "commands": [
+        "skin artboard list",
+        "skin artboard ls"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.artboard.show",
+      "surface": "cli",
+      "commands": [
+        "skin artboard show",
+        "skin artboard inspect"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.compile",
+      "surface": "cli",
+      "commands": [
+        "skin compile",
+        "skin build"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.css.capabilities",
+      "surface": "cli",
+      "commands": [
+        "skin css capabilities",
+        "skin css profile"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.css.computed",
+      "surface": "cli",
+      "commands": [
+        "skin css computed"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.css.lint",
+      "surface": "cli",
+      "commands": [
+        "skin css lint",
+        "skin css check"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.detach",
+      "surface": "cli",
+      "commands": [
+        "skin detach",
+        "skin fork"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.export",
+      "surface": "cli",
+      "commands": [
+        "skin export",
+        "skin share"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.import",
+      "surface": "cli",
+      "commands": [
+        "skin import",
+        "skin install"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.inspect",
+      "surface": "cli",
+      "commands": [
+        "skin inspect",
+        "skin show"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.list",
+      "surface": "cli",
+      "commands": [
+        "skin list",
+        "skin ls"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.pack",
+      "surface": "cli",
+      "commands": [
+        "skin pack"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.preview",
+      "surface": "cli",
+      "commands": [
+        "skin preview",
+        "skin render"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "current",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.quality",
+      "surface": "cli",
+      "commands": [
+        "skin quality",
+        "skin qa"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.remove",
+      "surface": "cli",
+      "commands": [
+        "skin remove",
+        "skin delete",
+        "skin rm"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.scaffold",
+      "surface": "cli",
+      "commands": [
+        "skin scaffold",
+        "skin new"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.unpack",
+      "surface": "cli",
+      "commands": [
+        "skin unpack"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:skin.validate",
+      "surface": "cli",
+      "commands": [
+        "skin validate",
+        "skin check"
+      ],
+      "currentOwner": "swift-bridge-workspace",
+      "currentStatus": "planned",
+      "capability": "artifact-write",
+      "replacement": "application/design-interchange",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.apply",
+      "surface": "cli",
+      "commands": [
+        "style apply"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.create",
+      "surface": "cli",
+      "commands": [
+        "style create",
+        "style new",
+        "style set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.delete",
+      "surface": "cli",
+      "commands": [
+        "style delete",
+        "style rm"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.detach",
+      "surface": "cli",
+      "commands": [
+        "style detach",
+        "style clear"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.export",
+      "surface": "cli",
+      "commands": [
+        "style export"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.import",
+      "surface": "cli",
+      "commands": [
+        "style import"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.list",
+      "surface": "cli",
+      "commands": [
+        "style list",
+        "style ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.rename",
+      "surface": "cli",
+      "commands": [
+        "style rename"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:style.show",
+      "surface": "cli",
+      "commands": [
+        "style show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/styles",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:template.install",
+      "surface": "cli",
+      "commands": [
+        "template install",
+        "template create",
+        "template add"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/templates",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:template.list",
+      "surface": "cli",
+      "commands": [
+        "template list",
+        "template ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "application/templates",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:template.show",
+      "surface": "cli",
+      "commands": [
+        "template show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "partial",
+      "capability": "configuration-write",
+      "replacement": "application/templates",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:theme.apply",
+      "surface": "cli",
+      "commands": [
+        "theme apply",
+        "theme set"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "current",
+      "capability": "configuration-write",
+      "replacement": "domain/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:theme.list",
+      "surface": "cli",
+      "commands": [
+        "theme list",
+        "theme ls"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "domain/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:theme.show",
+      "surface": "cli",
+      "commands": [
+        "theme show"
+      ],
+      "currentOwner": "swift-bridge",
+      "currentStatus": "planned",
+      "capability": "configuration-write",
+      "replacement": "domain/appearance",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:wow.import",
+      "surface": "cli",
+      "commands": [
+        "wow import"
+      ],
+      "currentOwner": "swift-cli-and-rust-profile-authority",
+      "currentStatus": "host-cli-only",
+      "capability": "configuration-write",
+      "replacement": "game-wow/snapshots",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:wow.setup",
+      "surface": "cli",
+      "commands": [
+        "wow setup"
+      ],
+      "currentOwner": "rust-host",
+      "replacement": "game-wow/setup-and-live",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "cli:wow.sync",
+      "surface": "cli",
+      "commands": [
+        "wow sync"
+      ],
+      "currentOwner": "rust-host",
+      "replacement": "game-wow/setup-and-live",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:accessibility",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "labels, actions, scaling, contrast and screen-reader inspection",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:appearance",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "eight saved states, alternate layouts, styles, artwork and assets",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:editor",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "bindings, geometry, groups, layers, all control kinds and undo/cancel",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:feedback",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "native press/bank feedback independent of JS rendering",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:game-context",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "character/build, snapshot refresh and Base/LT/RT/LT+RT presentation",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:haptics",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "native per-control haptics and persistent intensity preferences",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:input",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "native multitouch, sticks, buttons, triggers and pointer",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:interchange",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "bounded profile/design import/export and local review",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:journals",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "durable original operation IDs, conflict receipts and offline recovery",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:lifecycle",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "background, lock, rotation, dispose, replacement and disconnect neutralize",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:live-sync",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "required signed capture, freshness, replay rejection and phone delivery",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:migration",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "all pending journals admitted or recoverable; trust/re-pairing preserved",
+      "milestone": "M6",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:pairing",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "discovery/manual address, code, trust, revoke and reconnect",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:practice",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "local feedback with no host output; release on entry",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:profiles",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "selection/default, create/duplicate/delete and A/B/A identity",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:settings",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/shared-application",
+      "behavior": "appearance, keep-awake, onboarding and recoverable diagnostics",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "ios:transport",
+      "surface": "ios",
+      "currentOwner": "Sources/iOS",
+      "replacement": "mobile/native-input",
+      "behavior": "authenticated UDP with reliable fallback and loss repair",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:accessibility_status",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:apply_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:begin_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:begin_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:configuration_status",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:controller_design_capabilities",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:critique_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:discard_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:edit_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:edit_profile_asset",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:export_controller_preview",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:export_customization",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:export_profiles",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:export_style_library",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:get_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:host_status",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:import_customization",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:import_profiles",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:import_style_library",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:inspect_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:launch_profile_application",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:list_controls",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:list_profiles",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:migrate_profile_authority",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/migration",
+      "milestone": "M6",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:pairing_code",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:prepare_legacy_profile_import",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:press_control",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:preview_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:preview_skin_workspace",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:query_catalog",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:rebase_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:release_all",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:render_controller",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:review_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:rollback_profile_authority",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/migration",
+      "milestone": "M6",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:save_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:select_profile",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:setup_wow_consoleport",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "game-wow/setup-and-live",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:update_controller_design",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/design-workspace",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:validate_configuration_draft",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "mcp:wow_sync",
+      "surface": "mcp",
+      "currentOwner": "rust-host-and-native-bridge",
+      "replacement": "game-wow/setup-and-live",
+      "milestone": "M5",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:AccessibilityCommand.Open",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "AccessibilityCommand.Open",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:AccessibilityCommand.Prompt",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "AccessibilityCommand.Prompt",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:AccessibilityCommand.Status",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "AccessibilityCommand.Status",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:GamepadCommand.Doctor",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "GamepadCommand.Doctor",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:GamepadCommand.Retry",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "GamepadCommand.Retry",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:GamepadCommand.Status",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "GamepadCommand.Status",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:GamepadCommand.Test",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "GamepadCommand.Test",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Accessibility",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Accessibility",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Configuration",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Configuration",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Controls",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Controls",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Gamepad",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Gamepad",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.LaunchProfile",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.LaunchProfile",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.PairingCode",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.PairingCode",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.PressControl",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.PressControl",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Profiles",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Profiles",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.ReleaseAll",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.ReleaseAll",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Restart",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Restart",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Run",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Run",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.SelectProfile",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.SelectProfile",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.SharedBuild",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.SharedBuild",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retire",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Skin",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Skin",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Start",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Start",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Status",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Status",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Stop",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Stop",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.Wow",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.Wow",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli.rs:HostCommand.WowSetup",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli.rs",
+      "declaredVariant": "HostCommand.WowSetup",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Begin",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Begin",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Discard",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Discard",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Edit",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Edit",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Get",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Get",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Migration",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Migration",
+      "replacement": "application/migration",
+      "milestone": "M6",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.PrepareImport",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.PrepareImport",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Preview",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Preview",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Rebase",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Rebase",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Save",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Save",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Status",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Status",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-host/src/cli_configuration.rs:ConfigurationCommand.Validate",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-host/src/cli_configuration.rs",
+      "declaredVariant": "ConfigurationCommand.Validate",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.ImportConfiguration",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.ImportConfiguration",
+      "replacement": "application/configuration",
+      "milestone": "M4",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.PairingCode",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.PairingCode",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.ReleaseAll",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.ReleaseAll",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.Run",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.Run",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.Status",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.Status",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "native-cli:Host/crates/thumble-receiver/src/main.rs:Command.Stop",
+      "surface": "native-cli",
+      "currentOwner": "Host/crates/thumble-receiver/src/main.rs",
+      "declaredVariant": "Command.Stop",
+      "replacement": "service/receiver-supervisor",
+      "milestone": "M3",
+      "disposition": "retain",
+      "acceptance": "pending"
+    },
+    {
+      "id": "retired:accounts-marketplace",
+      "surface": "legacy",
+      "disposition": "retire",
+      "milestone": "M6",
+      "behavior": "excluded from rewrite launch",
+      "replacement": "none",
+      "acceptance": "pending"
+    },
+    {
+      "id": "retired:desktop-windows",
+      "surface": "legacy",
+      "disposition": "retire",
+      "milestone": "M6",
+      "behavior": "retire configuration windows after tools-only replacement acceptance",
+      "replacement": "none",
+      "acceptance": "pending"
+    },
+    {
+      "id": "retired:hosted-relay",
+      "surface": "legacy",
+      "disposition": "retire",
+      "milestone": "M6",
+      "behavior": "retired; no replacement service",
+      "replacement": "none",
+      "acceptance": "pending"
+    }
+  ]
+}

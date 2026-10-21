@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/scripts/verify-owned-phone-wire.py", line 257, in <module>
+    main()
+  File "/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/scripts/verify-owned-phone-wire.py", line 162, in main
+    port = start()
+  File "/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/scripts/verify-owned-phone-wire.py", line 129, in start
+    assert process.poll() is None, (root / 'receiver.log').read_text()[-1200:]
+AssertionError

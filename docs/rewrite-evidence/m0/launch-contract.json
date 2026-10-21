@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "hostPlatforms": [
+    "macos",
+    "windows"
+  ],
+  "phonePlatforms": [
+    "ios",
+    "android"
+  ],
+  "liveSync": "required",
+  "decisions": [
+    {
+      "decision": "Windows included at launch",
+      "source": "User reply 2026-10-21: Include Windows at launch"
+    },
+    {
+      "decision": "Optical live sync required at launch",
+      "source": "User reply 2026-10-21: live sync is required at launch"
+    }
+  ],
+  "m0": {
+    "retainedOperations": {
+      "status": "passed",
+      "reviewedBy": "Codex source inventory review 2026-10-21",
+      "command": "python3 scripts/rewrite/inventory.py --check; python3 scripts/verify-mcp-cli-parity.py",
+      "evidence": [
+        {
+          "path": "docs/rewrite-evidence/m0/retained-operations.json",
+          "sha256": "5afcd01246d6b47929a39e44f2731d317ee81e6f4f1a667c112050b663b80db0"
+        }
+      ]
+    },
+    "deviceMatrix": {
+      "status": "pending",
+      "reason": "Pixel 7 API 37 available; physical iPhones paired over network but disconnected; Windows acceptance machine unspecified"
+    },
+    "compatibilityBuilds": {
+      "status": "pending",
+      "reason": "Local provisional targets: Era 1.15.9.70003/ConsolePort 3.3.11 and Forever 1.60.1.70245; neither gameplay-certified; Windows builds unpinned"
+    },
+    "scopeDecisions": {
+      "status": "passed",
+      "reviewedBy": "User, direct replies 2026-10-21",
+      "command": "Review exact implementation-chat replies retained in scope-decisions.md",
+      "evidence": [
+        {
+          "path": "docs/rewrite-evidence/m0/scope-decisions.md",
+          "sha256": "43413cac85f1ea81d9b13889de668a1a072bd800628bb685f005c465a462a137"
+        }
+      ]
+    },
+    "measuredBudgets": {
+      "status": "pending",
+      "reason": "Only existing macOS package bytes measured; latency/load/build baselines and thresholds not frozen"
+    }
+  },
+  "native": {
+    "productionSigning": {
+      "status": "pending",
+      "reason": "Development lab signature passes; Developer ID provisioning/final release acceptance not established"
+    },
+    "windowsDriver": {
+      "status": "pending",
+      "reason": "Existing Windows SendInput backend has no virtual gamepad; driver and Windows test host required"
+    },
+    "independentConsumer": {
+      "status": "pending",
+      "reason": "macOS extended GameController enumerates neutral; full phone-driven and Windows semantics unverified"
+    },
+    "gameEnumeration": {
+      "status": "pending",
+      "reason": "Real Classic/Forever enumeration and gameplay evidence required on both hosts"
+    }
+  },
+  "budgets": {
+    "macos": {
+      "coldBuildSeconds": null,
+      "coldStartupMs": null,
+      "downloadBytes": null,
+      "idleCPUPercent": null,
+      "idleRSSBytes": null,
+      "installedBytes": null,
+      "touchToReceiverP95Ms": null,
+      "touchToVisibleGameP95Ms": null,
+      "warmBuildSeconds": null
+    },
+    "windows": {
+      "coldBuildSeconds": null,
+      "coldStartupMs": null,
+      "downloadBytes": null,
+      "idleCPUPercent": null,
+      "idleRSSBytes": null,
+      "installedBytes": null,
+      "touchToReceiverP95Ms": null,
+      "touchToVisibleGameP95Ms": null,
+      "warmBuildSeconds": null
+    }
+  },
+  "gameplay": {
+    "macos/ios/classic-era-consoleport": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "macos/ios/forever-native": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "macos/android/classic-era-consoleport": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "macos/android/forever-native": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "windows/ios/classic-era-consoleport": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "windows/ios/forever-native": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "windows/android/classic-era-consoleport": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    },
+    "windows/android/forever-native": {
+      "status": "pending",
+      "reason": "Physical gameplay run with pinned builds and recordings required"
+    }
+  }
+}

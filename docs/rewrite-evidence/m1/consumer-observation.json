@@ -1,0 +1,388 @@
+{
+  "consumerTestsStillRequired" : [
+    "SDL raw joystick and mapped gamepad",
+    "Steam Input on\/off",
+    "actual games"
+  ],
+  "gameControllerControllers" : [
+    {
+      "axes" : {
+        "dpadX" : 0,
+        "dpadY" : 0,
+        "leftTrigger" : 0,
+        "leftX" : 0,
+        "leftY" : 0,
+        "rightTrigger" : 0,
+        "rightX" : 0,
+        "rightY" : 0
+      },
+      "axisCount" : 6,
+      "buttonCount" : 25,
+      "buttons" : {
+        "Button A" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button B" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button Home" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button Menu" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button Options" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button X" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Button Y" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Direction Pad Down" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Direction Pad Left" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Direction Pad Right" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Direction Pad Up" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Left Shoulder" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Left Thumbstick Button" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Left Thumbstick Down" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Left Thumbstick Left" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Left Thumbstick Right" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Left Thumbstick Up" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Left Trigger" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Right Shoulder" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Right Thumbstick Button" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Right Thumbstick Down" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Right Thumbstick Left" : {
+          "pressed" : false,
+          "value" : -0
+        },
+        "Right Thumbstick Right" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Right Thumbstick Up" : {
+          "pressed" : false,
+          "value" : 0
+        },
+        "Right Trigger" : {
+          "pressed" : false,
+          "value" : 0
+        }
+      },
+      "extendedGamepad" : true,
+      "productCategory" : "Xbox One",
+      "vendorName" : "Thumble Virtual Gamepad"
+    }
+  ],
+  "hidManagerOpenResult" : 0,
+  "macOS" : "Version 26.5.1 (Build 25F80)",
+  "note" : "Registry presence, supportsHIDDevice and enumeration are separate observations, not a gameplay pass.",
+  "observationSeconds" : 1,
+  "observedAt" : "2026-10-21T16:43:11Z",
+  "thumbleHIDDevices" : [
+    {
+      "descriptorSHA256" : "d535fef25264bf182f5c40841ef6871d64b480c05ce8ce4a17af3b8d4bd6f24d",
+      "gameControllerSupportsHIDDevice" : true,
+      "inputs" : [
+        {
+          "logicalMax" : 32767,
+          "logicalMin" : -32768,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 48,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 32767,
+          "logicalMin" : -32768,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 49,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 32767,
+          "logicalMin" : -32768,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 51,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 32767,
+          "logicalMin" : -32768,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 52,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 0,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 4294967295,
+          "usagePage" : 1,
+          "value" : 5120
+        },
+        {
+          "logicalMax" : 0,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 4294967295,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 0,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 4294967295,
+          "usagePage" : 1,
+          "value" : 20
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 63,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 59,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 12,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 13,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 14,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 15,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 9,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 10,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 7,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 8,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 5,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 6,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 11,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 1,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 2,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 3,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 1,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 4,
+          "usagePage" : 9,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 255,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 50,
+          "usagePage" : 1,
+          "value" : 0
+        },
+        {
+          "logicalMax" : 255,
+          "logicalMin" : 0,
+          "result" : 0,
+          "unit" : 0,
+          "usage" : 53,
+          "usagePage" : 1,
+          "value" : 0
+        }
+      ],
+      "Manufacturer" : "Thumble",
+      "PrimaryUsage" : 5,
+      "PrimaryUsagePage" : 1,
+      "Product" : "Thumble Virtual Gamepad",
+      "ProductID" : 654,
+      "registryID" : 4302990477,
+      "registryResult" : 0,
+      "Transport" : "Virtual",
+      "VendorID" : 1118,
+      "VersionNumber" : 1
+    }
+  ],
+  "thumbleInputChanges" : [
+
+  ]
+}

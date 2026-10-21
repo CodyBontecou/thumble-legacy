@@ -1,0 +1,40 @@
+{
+  "capturedAtUTC": "2026-10-21T16:49:30.632953+00:00",
+  "devices": [
+    {
+      "platform": "android",
+      "model": "Pixel 7",
+      "api": 37,
+      "connection": "USB device available"
+    },
+    {
+      "platform": "ios",
+      "model": "iPhone 17 Pro",
+      "os": "27.0.1",
+      "connection": "paired on local network, tunnel disconnected; not physically exercised"
+    },
+    {
+      "platform": "ios",
+      "model": "iPhone 13 Pro Max",
+      "os": "26.3.1",
+      "connection": "paired on local network, tunnel disconnected; fallback device untested"
+    }
+  ],
+  "windows": {
+    "machine": null,
+    "os": null,
+    "driver": null,
+    "status": "unresolved"
+  },
+  "retainedBuildMinimums": {
+    "ios": "17.0 (some configurations 18.0); project.yml",
+    "androidAPI": 26,
+    "androidCompileAndTargetAPI": 35
+  },
+  "rewriteSupportedMinimums": "not certified; retain existing supported data and verify Expo/native compatibility during M2",
+  "diagnosticWireArtifacts": {
+    "Host/target/debug/thumble-host": "f185d8ea5e1ab73ad2ff2b40686697dfd471036357856488c4acc799245d1d10",
+    "build/ConsolePortLab/Thumble Controller Lab.app/Contents/MacOS/thumble-bridge": "f50007ae328b50b285ff5e5290d5f70ed4a6a52e805b412ad6db0e84077de61e"
+  },
+  "sourceProvenance": "Existing binaries; not rebuilt from frozen worktree. Diagnostic no-input success is not physical, signing or gameplay acceptance."
+}
