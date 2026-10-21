@@ -1453,7 +1453,7 @@ pub enum ConfigurationOperationInput {
         #[serde(rename = "profileID")]
         profile_id: String,
         variant: ConfigurationVariantInput,
-        /// Exact frame ID returned by query_catalog(device-frames); custom dimensions are rejected.
+        /// Exact catalog ID or custom-WxH-orientation; integer dimensions must satisfy 240 <= W <= H <= 1800. Owned profiles require landscape.
         #[serde(rename = "frameID")]
         frame_id: String,
     },

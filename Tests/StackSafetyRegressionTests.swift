@@ -17,6 +17,23 @@ final class StackSafetyRegressionTests: XCTestCase {
         case generationPlanDecodeMismatch
     }
 
+    func testOwnedCustomCanvasWithPooledArtworkRunsOn512KiBStack() throws {
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let bytes = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))
+            let before = try ThumbleOwnedConfigurationDocument(validating: bytes)
+            let profile = before.projectedProfiles[0]
+            let input: [String: Any] = ["schemaVersion":1, "invocationID":UUID().uuidString,
+                "ownedConfigurationCommand":"apply", "documentData":bytes.base64EncodedString(), "nowMillis":2000,
+                "operation":["type":"device.set", "profileID":profile.id.uuidString, "variant":"primary", "frameID":"custom-390x844-landscape"]]
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: input))
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            let result = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            guard response.changed, result.projectedProfiles[0].customization.deviceCanvas.frameID == "custom-390x844-landscape",
+                  result.projectedProfiles[0].appearanceBank == profile.appearanceBank else { throw StackTestError.unexpectedDecodedState }
+        }
+    }
+
     func testPureRuntimeSkinBridgeFitsConstrainedThread() throws {
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {
             let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()

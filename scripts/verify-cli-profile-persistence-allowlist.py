@@ -283,4 +283,14 @@ for command in ("customizationExport", "customizationImport", "customizationRese
     if command not in customization_block or any(token in customization_block for token in ("loadStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess(")):
         raise SystemExit("Customization interchange and reset must use typed authority: " + command)
 
+
+# Custom sizing is a retained design operation, independent of rich paint's
+# remaining legacy route. It must never re-enter the desktop preference branch.
+custom_size_block = source_text.split("private static func setCustomization(", 1)[1].split("var scalar", 1)[0]
+if "requestsCustomDevice" in custom_size_block or "customDeviceOptions" in custom_size_block:
+    raise SystemExit("Custom canvas dimensions must use authority transactions")
+device_write = source_text.split("private static func setAuthoritativeDeviceFrame(", 1)[1].split("private static func resolveDeviceFrame(", 1)[0]
+if "future bounded configuration transaction" in device_write or ".deviceSet(" not in device_write:
+    raise SystemExit("Custom device selection must use the existing typed authority transaction")
+
 print("CLI direct profile/design/element persistence allowlist passed.")

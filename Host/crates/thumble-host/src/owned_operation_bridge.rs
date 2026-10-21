@@ -135,6 +135,13 @@ fn canonical_operation(
 
     let mut value =
         serde_json::to_value(operation).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
+    if value["type"] == "device.set"
+        && value["frameID"]
+            .as_str()
+            .is_some_and(|id| !id.ends_with("-landscape"))
+    {
+        return Err(ConfigurationBridgeError::OperationNotSupported);
+    }
     if value["type"]
         .as_str()
         .is_some_and(|kind| kind.starts_with("orientation."))
@@ -732,5 +739,34 @@ mod reset_tests {
                 );
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod custom_canvas_tests {
+    use super::*;
+    use crate::draft_operation::ConfigurationVariant;
+    #[test]
+    fn owned_canvas_targets_remain_landscape_even_in_primary_slot() {
+        for id in ["iphone-16-pro-portrait", "custom-390x844-portrait"] {
+            let operation = ConfigurationOperation::DeviceSet {
+                profile_id: Uuid::nil().to_string(),
+                variant: ConfigurationVariant::Primary,
+                frame_id: id.into(),
+            };
+            assert!(canonical_operation(&operation).is_err());
+        }
+        let operation = ConfigurationOperation::DeviceSet {
+            profile_id: Uuid::nil().to_string(),
+            variant: ConfigurationVariant::Landscape,
+            frame_id: "custom-390x844-landscape".into(),
+        };
+        assert!(matches!(
+            canonical_operation(&operation).unwrap(),
+            ConfigurationOperation::DeviceSet {
+                variant: ConfigurationVariant::Primary,
+                ..
+            }
+        ));
     }
 }

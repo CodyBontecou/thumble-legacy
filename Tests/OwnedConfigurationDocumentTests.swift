@@ -2,6 +2,31 @@ import Foundation
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    func testCustomCanvasTransactionPreservesOwnedControlsAndAppearance() throws {
+        let source = try fixture("document")
+        let before = try ThumbleOwnedConfigurationDocument(validating: source)
+        let selected = try XCTUnwrap(before.projectedProfiles.first)
+        let operation: [String: Any] = ["type":"device.set", "profileID":selected.id.uuidString, "variant":"primary", "frameID":"custom-390x844-landscape"]
+        let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source, operation))
+        let result = try ThumbleOwnedOperationBridge.transform(request)
+        let after = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: result.afterDocumentData)))
+        var expected = selected.customization
+        expected.deviceCanvas = GamepadDeviceCanvas(frameID: "custom-390x844-landscape")
+        XCTAssertEqual(after.projectedProfiles[0].customization, expected)
+        XCTAssertEqual(after.projectedProfiles[0].appearanceBank, selected.appearanceBank)
+        XCTAssertEqual(after.projectedProfiles[0].launchTarget, selected.launchTarget)
+        XCTAssertEqual(after.projectedProfiles[1], before.projectedProfiles[1])
+        let repeated = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(try XCTUnwrap(Data(base64Encoded: result.afterDocumentData)), operation, nowMillis: 9000))
+        let noOp = try ThumbleOwnedOperationBridge.transform(repeated)
+        XCTAssertFalse(noOp.changed)
+        XCTAssertTrue(noOp.beforeDocumentData == noOp.afterDocumentData)
+        for invalid in ["custom-844x390-landscape", "custom-239x844-landscape", "custom-0390x844-landscape", "custom-390x844-portrait"] {
+            var operation = operation; operation["frameID"] = invalid
+            let bad = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source, operation))
+            XCTAssertThrowsError(try ThumbleOwnedOperationBridge.transform(bad), invalid)
+        }
+    }
+
     private func legacyImportFixture() throws -> Data {
         try Data(contentsOf: root.appendingPathComponent("Host/fixtures/customization-interchange/v1/legacy-request.json"))
     }

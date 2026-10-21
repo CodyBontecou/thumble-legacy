@@ -3204,17 +3204,11 @@ struct ThumbleCLI {
             "--background-image", "--bg-image", "--light-background-image",
             "--background-light-image", "--dark-background-image", "--background-dark-image"
         ]
-        let customDeviceOptions = [
-            "--device-size", "--size", "--device-width", "--device-height"
-        ]
         let deviceTarget = optionValue("--device", in: arguments)
             ?? optionValue("--frame", in: arguments)
             ?? optionValue("--canvas", in: arguments)
-        let requestsCustomDevice = deviceTarget.map { normalizedLookup($0) == "custom" } ?? false
         if hasAnyOption(richBackgroundOptions, in: arguments)
             || hasAnyOption(imageBackgroundOptions, in: arguments)
-            || hasAnyOption(customDeviceOptions, in: arguments)
-            || requestsCustomDevice
         {
             try requireExplicitUnmigratedProfileAccess(
                 operation: "customization rich background or custom device",
@@ -3282,7 +3276,8 @@ struct ThumbleCLI {
         }
 
         let frameID: String?
-        if let deviceTarget {
+        let hasCustomDimensions = hasAnyOption(["--device-size", "--size", "--device-width", "--device-height"], in: arguments)
+        if let deviceTarget = deviceTarget ?? (hasCustomDimensions ? "custom" : nil) {
             let orientation = try (
                 optionValue("--orientation", in: arguments)
                     ?? optionValue("--device-orientation", in: arguments)
@@ -4938,9 +4933,6 @@ struct ThumbleCLI {
         _ frame: GamepadEditorDeviceFrame,
         arguments: [String]
     ) throws {
-        guard GamepadEditorDeviceCatalog.frames.contains(where: { $0.id == frame.id }) else {
-            throw CLIError.message("Custom device dimensions require a future bounded configuration transaction. Choose a frame from `thumble device list`.")
-        }
         let response = try profileBackend().perform(
             .deviceSet(
                 .init(optionValue("--profile", in: arguments)),

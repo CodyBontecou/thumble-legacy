@@ -1,0 +1,16 @@
+{
+  "Host/crates/thumble-host/src/cli_profile.rs": "2e1a784c0345e22f26321a2ea4a111b876a084a33bd7493aee62fea73df8c9e7",
+  "Host/crates/thumble-host/src/draft_operation.rs": "19fda553ea13290ecd0bf7b4248732926e87273ea4577b6843b6048967425d94",
+  "Host/crates/thumble-host/src/owned_operation_bridge.rs": "9101ac9979883f292eb43fc53114ce1ee4d86bf74d76d9f86c79bb48f9d19c23",
+  "Host/crates/thumble-mcp/src/server.rs": "97d8cb132d4628d12c0014f6905ea1dcca1f9d5451844f61aea3a981da9cfecf",
+  "Sources/CLI/ThumbleCLI.swift": "b39088e1d61e5d9e8a0733586871ec2f609917a74e0cf05031b03fc4278a5178",
+  "Sources/Shared/OwnedConfigurationDocument.swift": "4f2fd28372f1d4eb5bac8d1f4b74aad6dd36d87842537e04d2b4959a12aaafdb",
+  "Sources/Shared/ThumbleConfigurationBridge.swift": "2962f9b276b76eb03363078d5df61318bd77d76c5c7aa8cf8308f6ec13344efb",
+  "Tests/OwnedConfigurationDocumentTests.swift": "88d1d431db2c87ec76e0bd07eac33f5e39e46a76856bd28363af68d7a6d329af",
+  "Tests/StackSafetyRegressionTests.swift": "7ded7e8b855a4a6f1b4f77934fd96204f9998d86d191a5d7c434c96fbd6672ec",
+  "docs/mcp/configuration-operation-v1.schema.json": "fa0538b78a1a681002a810213ccf6ae2b4e2c5fb1ca8bee4c64feb9312b7f0b2",
+  "scripts/check-controller-stack-frames.py": "2675306ab4277a6231da5a522113b9c69e2ca0b930c8bc0c8d6d45580c53060f",
+  "scripts/verify-cli-profile-persistence-allowlist.py": "6e184dfdaab3146b9b19ffcf963db47dbd477ad9adac3d3ea4677e91a57ec3e5",
+  "scripts/verify-custom-canvases.py": "25cb90a8a5d6cc2c5c59085675d02ccff1b39ffcdc2e86ca7acb1db0238b1437",
+  "scripts/verify-mcp-cli-parity.py": "f639137564a9230ec485ff66ddb70623b4b3abc88efa1411318873ba1d0feb33"
+}

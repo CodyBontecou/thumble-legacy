@@ -2316,6 +2316,19 @@
           "maxLength": 128
         }
       }
+    },
+    "deviceTargetID": {
+      "description": "Exact catalog ID or canonical custom-WxH-orientation ID; integer portrait dimensions must satisfy 240 <= W <= H <= 1800. Owned profiles require landscape.",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/deviceFrameID"
+        },
+        {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^custom-(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)x(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)-(landscape|portrait)$"
+        }
+      ]
     }
   },
   "$id": "https://codybontecou.com/thumble/schemas/configuration-operation-v1.schema.json",
@@ -2712,8 +2725,8 @@
       "additionalProperties": false,
       "properties": {
         "frameID": {
-          "$ref": "#/$defs/deviceFrameID",
-          "description": "Exact frame ID returned by query_catalog(device-frames); custom dimensions are rejected."
+          "$ref": "#/$defs/deviceTargetID",
+          "description": "Exact catalog ID or canonical custom-WxH-orientation ID; integer portrait dimensions must satisfy 240 <= W <= H <= 1800. Owned profiles require landscape."
         },
         "profileID": {
           "type": "string"

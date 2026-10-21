@@ -1955,7 +1955,7 @@ impl ConfigurationOperation {
                 frame_id,
             } => {
                 validate_profile_id(profile_id)?;
-                if !is_supported_device_frame_id(frame_id)
+                if !is_supported_device_target(frame_id)
                     || matches!(variant, ConfigurationVariant::Landscape)
                         && !frame_id.ends_with("-landscape")
                     || matches!(variant, ConfigurationVariant::Portrait)
@@ -2642,6 +2642,32 @@ pub fn is_supported_device_frame_id(frame_id: &str) -> bool {
         .strip_suffix("-landscape")
         .or_else(|| frame_id.strip_suffix("-portrait"));
     base.is_some_and(|base| SUPPORTED_DEVICE_SPEC_IDS.contains(&base))
+}
+
+/// Transactions accept catalog IDs or exact native custom IDs. Unlike the
+/// legacy reader, this boundary never clamps, sorts or repairs caller input.
+pub fn is_supported_device_target(frame_id: &str) -> bool {
+    if is_supported_device_frame_id(frame_id) {
+        return true;
+    }
+    let Some(body) = frame_id.strip_prefix("custom-") else {
+        return false;
+    };
+    let Some(dimensions) = body
+        .strip_suffix("-landscape")
+        .or_else(|| body.strip_suffix("-portrait"))
+    else {
+        return false;
+    };
+    let Some((width, height)) = dimensions.split_once('x') else {
+        return false;
+    };
+    let canonical_side = |text: &str| {
+        text.parse::<u16>()
+            .ok()
+            .filter(|n| (240..=1800).contains(n) && n.to_string() == text)
+    };
+    matches!((canonical_side(width), canonical_side(height)), (Some(w), Some(h)) if w <= h)
 }
 
 fn validate_profile_id(profile_id: &str) -> Result<(), ConfigurationOperationError> {
@@ -3965,5 +3991,48 @@ mod tests {
             raw_key.validate_bridge_input(),
             Err(ConfigurationOperationError::UnsupportedSemanticKey)
         );
+    }
+}
+
+#[cfg(test)]
+mod custom_canvas_tests {
+    use super::*;
+    #[test]
+    fn custom_targets_are_exact_bounded_native_ids() {
+        for id in [
+            "custom-240x1800-landscape",
+            "custom-390x844-landscape",
+            "custom-777x999-portrait",
+            "custom-800x800-landscape",
+        ] {
+            assert!(is_supported_device_target(id), "{id}");
+            ConfigurationOperation::DeviceSet {
+                profile_id: Uuid::nil().to_string(),
+                variant: ConfigurationVariant::Primary,
+                frame_id: id.into(),
+            }
+            .validate_bridge_input()
+            .unwrap();
+        }
+        for id in [
+            "custom-239x844-landscape",
+            "custom-390x1801-landscape",
+            "custom-844x390-landscape",
+            "custom-0390x844-landscape",
+            "custom-390.0x844-landscape",
+            "custom-390x844-landscape/private",
+            "custom-NaNx844-landscape",
+            "custom-390x844",
+            "custom-390x844-landscape ",
+        ] {
+            assert!(!is_supported_device_target(id), "{id}");
+        }
+        assert!(ConfigurationOperation::DeviceSet {
+            profile_id: Uuid::nil().to_string(),
+            variant: ConfigurationVariant::Landscape,
+            frame_id: "custom-390x844-portrait".into()
+        }
+        .validate_bridge_input()
+        .is_err());
     }
 }

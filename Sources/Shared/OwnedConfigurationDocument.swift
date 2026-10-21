@@ -271,6 +271,9 @@ public enum ThumbleOwnedOperationBridge {
         private func canonicalOperation() throws -> ThumbleBridgeJSONValue {
             guard case .object(var fields) = request.operation, case .string(let type)? = fields["type"] else { throw ThumbleOwnedOperationBridgeError.invalidRequest }
             guard !type.hasPrefix("orientation.") else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+            if type == "device.set" {
+                guard case .string(let frameID)? = fields["frameID"], frameID.hasSuffix("-landscape") else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
+            }
             if let variant = fields["variant"] {
                 guard variant == .string("primary") || variant == .string("landscape") else { throw ThumbleOwnedOperationBridgeError.retiredOperation }
                 fields["variant"] = .string("primary")

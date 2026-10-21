@@ -245,6 +245,21 @@ def main() -> None:
     schema_frame_ids = operation_schema.get("$defs", {}).get("deviceFrameID", {}).get("enum")
     if schema_frame_ids != frame_ids:
         fail("device.set schema does not exactly match the checked-in frame catalog")
+    target = operation_schema.get("$defs", {}).get("deviceTargetID", {})
+    alternatives = target.get("anyOf", [])
+    if len(alternatives) != 2 or alternatives[0] != {"$ref": "#/$defs/deviceFrameID"}:
+        fail("device target must retain the exact built-in catalog alternative")
+    custom = alternatives[1]
+    if custom.get("type") != "string" or custom.get("maxLength") != 128:
+        fail("custom device target must be a bounded string")
+    pattern = re.compile(custom.get("pattern", "(?!)"))
+    for value in ["custom-240x1800-landscape", "custom-390x844-portrait", "custom-800x800-landscape"]:
+        if not pattern.fullmatch(value): fail("custom device schema rejects bounded native ID: " + value)
+    for value in ["custom-239x844-landscape", "custom-390x1801-landscape", "custom-0390x844-landscape", "custom-390.0x844-landscape", "custom-390x844-landscape/private"]:
+        if pattern.fullmatch(value): fail("custom device schema admits unsafe ID: " + value)
+    device_write = next(row for row in operation_schema["oneOf"] if row.get("properties", {}).get("type", {}).get("const") == "device.set")
+    if device_write["properties"]["frameID"].get("$ref") != "#/$defs/deviceTargetID":
+        fail("device.set must use the bounded catalog/custom target contract")
     repair_canvas_variants = (
         operation_schema.get("$defs", {})
         .get("LayoutRepairCanvasInput", {})

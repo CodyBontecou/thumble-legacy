@@ -2557,11 +2557,11 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
             }
         }
         CliProfileCommand::DeviceSet { frame_id, .. }
-            if !is_supported_device_frame_id(frame_id) =>
+            if !crate::draft_operation::is_supported_device_target(frame_id) =>
         {
             return Err(TransactionFailure::new(
                 "unsupported_device_frame",
-                "device frame is outside the checked-in safe catalog",
+                "device frame must be a catalog ID or a bounded canonical custom ID",
             ));
         }
         CliProfileCommand::CustomizationImport { artifact_json, .. } => {
@@ -2591,13 +2591,12 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
                     "customization request must contain one to five bounded changes",
                 ));
             }
-            if frame_id
-                .as_deref()
-                .is_some_and(|frame_id| !is_supported_device_frame_id(frame_id))
-            {
+            if frame_id.as_deref().is_some_and(|frame_id| {
+                !crate::draft_operation::is_supported_device_target(frame_id)
+            }) {
                 return Err(TransactionFailure::new(
                     "unsupported_device_frame",
-                    "device frame is outside the checked-in safe catalog",
+                    "device frame must be a catalog ID or a bounded canonical custom ID",
                 ));
             }
             for changes in changes {
@@ -8971,7 +8970,7 @@ mod tests {
             target: ProfileSelector::Active,
             variant: ConfigurationVariant::Primary,
             changes: Vec::new(),
-            frame_id: Some("custom-999x777-landscape".to_owned()),
+            frame_id: Some("custom-239x999-landscape".to_owned()),
         });
         assert_eq!(
             validate_request(&unsupported).unwrap_err().error.code,

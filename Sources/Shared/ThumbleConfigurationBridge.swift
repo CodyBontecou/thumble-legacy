@@ -1974,7 +1974,8 @@ public enum ThumbleConfigurationBridge {
             }
         case let .deviceSet(profileID, variant, frameID):
             guard frameID.utf8.count <= 128,
-                  let frame = GamepadEditorDeviceCatalog.frames.first(where: { $0.id == frameID }),
+                  let frame = GamepadEditorDeviceCatalog.frame(matching: frameID, preferredOrientation: nil),
+                  frame.id == frameID,
                   variant == .primary
                     || (variant == .landscape && frame.orientation == .landscape)
                     || (variant == .portrait && frame.orientation == .portrait)
@@ -1982,7 +1983,10 @@ public enum ThumbleConfigurationBridge {
             return try mutateProfile(profileID, in: &document, nowMillis: nowMillis, sourceVariant: variant) { profile in
                 var customization = customization(in: profile, variant: variant)
                 customization.deviceCanvas = GamepadDeviceCanvas(frameID: frame.id)
+                guard customization != profile.customization else { return }
+                let previousTimestamp = profile.updatedAt
                 setCustomization(customization, in: &profile, variant: variant)
+                profile.updatedAt = previousTimestamp
             }
         case let .controlBarSet(profileID, variant, items):
             guard !items.isEmpty, items.count <= GamepadControlBarItem.allCases.count,
@@ -3952,7 +3956,8 @@ public enum ThumbleConfigurationBridge {
         var overlaid = applyCanonicalChanges(raw: raw, before: beforeCanonical, after: afterCanonical)
         if let sourceVariant {
             overlaid = try preservingMirroredCustomizationSource(raw: raw, beforeProfile: beforeProfile,
-                after: afterCanonical, overlaid: overlaid, variant: sourceVariant)
+                beforeCanonical: beforeCanonical, after: afterCanonical, overlaid: overlaid, variant: sourceVariant,
+                afterOrientation: afterProfile.customization.deviceCanvas.editorDeviceFrame.orientation)
         }
         document.profiles[index] = compactAddedOrientationMirrors(
             raw: raw,
@@ -3968,8 +3973,8 @@ public enum ThumbleConfigurationBridge {
     /// metadata must follow that source too, not the previous primary or an
     /// empty destination variant which happens to have the same control UUID.
     private static func preservingMirroredCustomizationSource(raw: ThumbleBridgeJSONValue,
-        beforeProfile: GamepadConfigurationProfile, after: ThumbleBridgeJSONValue,
-        overlaid: ThumbleBridgeJSONValue, variant: ThumbleBridgeLayoutVariant) throws -> ThumbleBridgeJSONValue {
+        beforeProfile: GamepadConfigurationProfile, beforeCanonical: ThumbleBridgeJSONValue, after: ThumbleBridgeJSONValue,
+        overlaid: ThumbleBridgeJSONValue, variant: ThumbleBridgeLayoutVariant, afterOrientation: GamepadEditorDeviceOrientation) throws -> ThumbleBridgeJSONValue {
         guard case .object(let rawFields) = raw, case .object(let afterFields) = after,
               case .object(var result) = overlaid, let afterPrimary = afterFields["customization"] else {
             throw ThumbleConfigurationBridgeError.invalidProfile
@@ -3977,11 +3982,17 @@ public enum ThumbleConfigurationBridge {
         let sourceKey = variant == .landscape ? "landscapeCustomization" : (variant == .portrait ? "portraitCustomization" : "customization")
         let selected = rawFields[sourceKey]
         guard let source = (selected == .null ? nil : selected) ?? rawFields["customization"] else { throw ThumbleConfigurationBridgeError.invalidProfile }
-        let beforeSource = try encodedJSONValue(customization(in: beforeProfile, variant: variant))
+        let beforeSource: ThumbleBridgeJSONValue
+        if case .object(let fields) = beforeCanonical, fields["appearanceResources"] != nil {
+            let selected = fields[sourceKey]
+            guard let value = (selected == .null ? nil : selected) ?? fields["customization"] else { throw ThumbleConfigurationBridgeError.invalidProfile }
+            beforeSource = value
+        } else {
+            beforeSource = try encodedJSONValue(customization(in: beforeProfile, variant: variant))
+        }
         let carried = applyCanonicalChanges(raw: source, before: beforeSource, after: afterPrimary)
         result["customization"] = carried
-        let typedAfter: GamepadCustomization = try decoded(afterPrimary)
-        let targetKey = typedAfter.deviceCanvas.editorDeviceFrame.orientation == .landscape ? "landscapeCustomization" : "portraitCustomization"
+        let targetKey = afterOrientation == .landscape ? "landscapeCustomization" : "portraitCustomization"
         if afterFields[targetKey] == afterPrimary { result[targetKey] = carried }
         return .object(result)
     }
@@ -4881,7 +4892,7 @@ public enum ThumbleConfigurationBridgeError: String, LocalizedError, Sendable {
         case .invalidGeometry: "Geometry value is outside allowed bounds"
         case .invalidOutputEdit: "Output edit is invalid"
         case .invalidCustomizationChanges: "Customization changes are empty or invalid"
-        case .invalidDeviceFrame: "Device frame is not in the built-in catalog"
+        case .invalidDeviceFrame: "Device frame must be a catalog ID or a bounded canonical custom ID"
         case .invalidControlBar: "Control bar items are invalid"
         case .invalidLayerDestination: "Layer destination is invalid"
         case .invalidGroup: "Layer group is missing, duplicated, or invalid"

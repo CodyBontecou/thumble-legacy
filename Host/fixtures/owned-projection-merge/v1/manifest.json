@@ -6,7 +6,7 @@
     "destination.json": "d3205ae4a2173b4d4e45525d38391d046ef8ee55de31f19e87625cde5dc1d239"
   },
   "sources": {
-    "Tests/OwnedConfigurationDocumentTests.swift": "65676dad861ed11e3361395444bacaa593959459865fa8d29766d0b9cd895604",
+    "Tests/OwnedConfigurationDocumentTests.swift": "88d1d431db2c87ec76e0bd07eac33f5e39e46a76856bd28363af68d7a6d329af",
     "Host/crates/thumble-core/tests/owned_configuration_writes.rs": "b00f5916b22f3fea9105bed83fb2074a357b3a4abeb4f561e3eb427bd338f851",
     "Host/fixtures/owned-configuration-edits/v1/input.json": "86b7ad365fb0a406b197274bf57ae8ef66c577849ba80d725e5fa30fd15e0838",
     "Host/fixtures/owned-configuration-edits/v1/destination.json": "2655928a34014e312abb7d2128da14cc8b01084c0aab19c824df271d99142586"
