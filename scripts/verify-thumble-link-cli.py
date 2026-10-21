@@ -20,7 +20,10 @@ with tempfile.TemporaryDirectory(prefix="thumble-link-cli-") as temporary:
     private_home = Path(temporary) / "account"
     private_home.mkdir(mode=0o700)
     # Only test subprocesses see this home; the caller's shell and real account are unchanged.
-    environment = dict(os.environ, HOME=str(private_home))
+    authority = private_home / "Library/Application Support/ThumbleHost"
+    environment = dict(os.environ, HOME=str(private_home),
+                       THUMBLE_HOST_STATE_DIR=str(authority),
+                       THUMBLE_HOST_CONTROL_SOCKET=str(authority / "control.sock"))
 
     def run(*arguments, data=None, success=True):
         result = subprocess.run([str(binary), *arguments], input=data, text=True,
@@ -37,6 +40,7 @@ with tempfile.TemporaryDirectory(prefix="thumble-link-cli-") as temporary:
     initial = export()
     review = json.loads(run("wow", "import", str(fixture), "--dry-run", "--json").stdout)
     assert not review["imported"] and not review["isRefresh"]
+    assert review["layout"] == "controller"
     assert initial["profiles"] == export()["profiles"], "dry run changed profiles"
     imported = json.loads(run("wow", "import", "-", "--no-select", "--json", data=fixture.read_text()).stdout)
     assert imported["imported"] and not imported["isRefresh"]
@@ -79,7 +83,37 @@ with tempfile.TemporaryDirectory(prefix="thumble-link-cli-") as temporary:
     assert updated_element["output"]["keyboard"]["keyCode"] == 14
     assert updated_element["label"] == "New Ability"
     assert after["defaultProfileID"] == initial["defaultProfileID"]
+    era_fixture = root / "Tests/Fixtures/ThumbleLink/warrior-classic-era.txt"
+    era_review = json.loads(run("wow", "import", str(era_fixture), "--dry-run", "--json").stdout)
+    assert era_review["client"] == "Classic Era" and not era_review["isRefresh"]
+    era_import = json.loads(run("wow", "import", str(era_fixture), "--json").stdout)
+    assert era_import["imported"] and era_import["profileID"] != imported["profileID"]
+    converted = json.loads(run("wow", "import", str(era_fixture), "--layout", "grid", "--json").stdout)
+    assert converted["isRefresh"] and converted["layout"] == "grid"
+    era_refresh = json.loads(run("wow", "import", str(era_fixture), "--json").stdout)
+    assert era_refresh["isRefresh"] and era_refresh["layout"] == "grid"
+    after = export()
+    assert len(after["profiles"]) == len(first["profiles"]) + 1
     run("wow", "import", "-", data="x" * (256 * 1024 + 1), success=False)
     run("wow", "import", "-", data="{}", success=False)
     assert export()["profiles"] == after["profiles"], "invalid import changed profiles"
+    # Existing local artwork need not be portable for an unrelated WoW import.
+    # Seed a valid saved-domain fixture in this private account only.
+    state_path = private_home / "Library/Application Support/ThumbleHost/state.json"
+    state = json.loads(state_path.read_text())
+    artwork_owner = state["profiles"][0]
+    artwork_owner["customization"]["assetLibrary"] = {"assets": [{
+        "id": "local-review-icon", "name": "Local review icon", "fileName": "icon.png",
+        "contentType": "image/png", "role": "icon", "byteCount": 1,
+        "data": "AA==", "hash": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"}]}
+    expected_library = artwork_owner["customization"]["assetLibrary"]
+    state_path.write_text(json.dumps(state))
+    run("profile", "export", "--all", success=False)
+    local_review = json.loads(run("wow", "import", str(era_fixture), "--dry-run", "--json").stdout)
+    assert local_review["isRefresh"] and not local_review["imported"]
+    local_import = json.loads(run("wow", "import", str(era_fixture), "--json").stdout)
+    assert local_import["isRefresh"] and local_import["imported"]
+    saved = json.loads(state_path.read_text())
+    owner_after = next(p for p in saved["profiles"] if p["id"] == artwork_owner["id"])
+    assert owner_after["customization"]["assetLibrary"] == expected_library
 print("Thumble Link CLI checks passed: review, file/stdin import, selection, refresh, geometry, metadata, and invalid input.")

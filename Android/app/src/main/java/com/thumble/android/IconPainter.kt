@@ -9,7 +9,8 @@ internal class IconPainter(private val icon: ControlIcon, private val assets: As
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private var raster: RasterAsset? = null
     private var rasterSize = -1
-    fun draw(canvas: Canvas, centerX: Float, centerY: Float, size: Float, foreground: Int) {
+    private val maskPath = Path()
+    fun draw(canvas: Canvas, centerX: Float, centerY: Float, size: Float, foreground: Int, mask: String = "none") {
         if (size <= 0) return
         val tint = rgbaColor(icon.tint, foreground)
         paint.color = tint; paint.alpha = Color.alpha(tint); paint.shader = null; paint.colorFilter = null
@@ -25,7 +26,17 @@ internal class IconPainter(private val icon: ControlIcon, private val assets: As
                 val width = bitmap.width * scale; val height = bitmap.height * scale
                 paint.alpha = 255
                 if (icon.renderingMode == "template") paint.colorFilter = PorterDuffColorFilter(tint, PorterDuff.Mode.SRC_IN)
-                canvas.drawBitmap(bitmap, null, RectF(centerX - width / 2, centerY - height / 2, centerX + width / 2, centerY + height / 2), paint)
+                val saved = if (mask == "circle") canvas.save() else null
+                try {
+                    if (saved != null) {
+                        maskPath.reset()
+                        maskPath.addCircle(centerX, centerY, size / 2, Path.Direction.CW)
+                        canvas.clipPath(maskPath)
+                    }
+                    canvas.drawBitmap(bitmap, null, RectF(centerX - width / 2, centerY - height / 2, centerX + width / 2, centerY + height / 2), paint)
+                } finally {
+                    if (saved != null) canvas.restoreToCount(saved)
+                }
             } else placeholder(canvas, centerX, centerY, size)
         } else if (icon.source == "text") text(canvas, icon.value, centerX, centerY, size)
         else symbol(canvas, centerX, centerY, size)

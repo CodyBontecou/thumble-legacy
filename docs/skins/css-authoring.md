@@ -13,6 +13,22 @@ stroke widths use `-thumble-joystick-ring-stroke-width` and
 and disabled rules, inherit normal paint, and preserve native interaction. Unspecified
 properties retain native defaults. Use `thumble skin css capabilities` for live syntax.
 
+`-thumble-label-placement: above` places a native legend outside the control's top
+edge. Its gap is `-thumble-label-padding`; the renderer accounts for half the font
+height so a large centered icon cannot overlap it. Existing `top` placement stays
+inside the control. Swift and Android use the same geometry. Leave enough space
+between controls for both these legends and the native expanded touch targets.
+
+`-thumble-icon-placement` and `-thumble-icon-scale` also work without declaring an
+icon asset or symbol. They style the control's inherited icon and keep its source
+identity live. Use this form for WoW ability pictures; declaring `-thumble-icon`
+instead deliberately replaces the picture. Removing an inherited icon does not
+create a placeholder image.
+
+`-thumble-icon-mask: circle` clips the icon artwork to its circular image boundary
+without changing the source image, control geometry, or legend. The default `none`
+preserves the original square artwork. This also works with inherited live icons.
+
 ```bash
 thumble skin scaffold "My Skin" --identifier com.me.my-skin --css
 thumble skin css capabilities

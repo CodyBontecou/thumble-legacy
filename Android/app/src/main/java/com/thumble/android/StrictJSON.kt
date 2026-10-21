@@ -10,11 +10,43 @@ import java.nio.charset.CodingErrorAction
 internal class StrictJSONException(message: String): IllegalArgumentException(message)
 
 internal object StrictJSON {
-    fun objectValue(bytes: ByteArray, portable: Boolean = false): JSONObject {
+    fun objectValue(bytes: ByteArray, portable: Boolean = false, exactNumbers: Boolean = false): JSONObject {
         val text = Charsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
             .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(bytes)).toString()
-        return Reader(text,portable).read() as? JSONObject ?: throw StrictJSONException("invalid-json")
+        return Reader(text,portable,exactNumbers).read() as? JSONObject ?: throw StrictJSONException("invalid-json")
     }
+    /** org.json's writer can round an exact Number to a nearby integer.
+     * Owned caches use this writer to preserve every numeric token. */
+    fun data(value: JSONObject, maximumBytes: Int = WireCodec.MAX_PAYLOAD): ByteArray {
+        val output=StringBuilder()
+        fun write(node: Any?, depth: Int) {
+            require(depth<=128)
+            when(node) {
+                null,JSONObject.NULL -> output.append("null")
+                is JSONObject -> {
+                    output.append('{')
+                    node.keys().asSequence().forEachIndexed { index,key ->
+                        if(index>0) output.append(',')
+                        require(isWellFormed(key));output.append(JSONObject.quote(key)).append(':');write(node.get(key),depth+1)
+                    }
+                    output.append('}')
+                }
+                is JSONArray -> {
+                    output.append('[')
+                    repeat(node.length()) { index -> if(index>0) output.append(',');write(node.get(index),depth+1) }
+                    output.append(']')
+                }
+                is String -> { require(isWellFormed(node));output.append(JSONObject.quote(node)) }
+                is Boolean -> output.append(node)
+                is Number -> { require(node.toDouble().isFinite());output.append(node.toString()) }
+                else -> error("Unsupported JSON value")
+            }
+            require(output.length<=maximumBytes) { "JSON exceeds storage bound" }
+        }
+        write(value,0)
+        return output.toString().toByteArray(Charsets.UTF_8).also { require(it.size<=maximumBytes) }
+    }
+    fun objectCopy(value: JSONObject): JSONObject = objectValue(data(value),exactNumbers=true)
     private fun canonicalKey(value: String): String = if (value.all { it.code < 128 }) value else
         java.text.Normalizer.normalize(value, java.text.Normalizer.Form.NFC)
     private fun isWellFormed(value: String): Boolean {
@@ -27,7 +59,18 @@ internal object StrictJSON {
         }
         return true
     }
-    private class Reader(private val text: String,private val portable: Boolean) {
+    /** Keep revision integers and their JSON token kind exact for versioned
+     * control messages. The default parser remains unchanged for old callers. */
+    private class ExactNumber(private val token: String): Number() {
+        override fun toByte() = toInt().toByte()
+        override fun toShort() = toInt().toShort()
+        override fun toInt() = token.toBigDecimal().toInt()
+        override fun toLong() = token.toBigDecimal().toLong()
+        override fun toFloat() = token.toFloat()
+        override fun toDouble() = token.toDouble()
+        override fun toString() = token
+    }
+    private class Reader(private val text: String,private val portable: Boolean,private val exactNumbers: Boolean) {
         private var at = 0
         private fun bad(): Nothing = throw StrictJSONException("invalid-json")
         private fun space() { while (at < text.length && text[at] in " \t\n\r") at++ }
@@ -73,7 +116,8 @@ internal object StrictJSON {
                         val magnitude=number.removePrefix("-")
                         if(magnitude.length>16 || magnitude.length==16 && magnitude>"9007199254740991") bad()
                     }
-                    number.toLongOrNull() ?: number.toDoubleOrNull()?.takeIf { it.isFinite() } ?: bad()
+                    if (!number.toDouble().isFinite()) bad()
+                    if (exactNumbers) ExactNumber(number) else number.toLongOrNull() ?: number.toDoubleOrNull()?.takeIf { it.isFinite() } ?: bad()
                 }
             }
         }

@@ -1342,13 +1342,14 @@ final class ThumbleCLISmokeTestSuite: XCTestCase {
         let specializedControls = specialized.profile.customization.customButtons.map(\.normalized)
         XCTAssertEqual(specializedControls.filter(\.isJoystick).count, 2)
         XCTAssertEqual(specializedControls.filter(\.isTrigger).count, 2)
-        XCTAssertEqual(specializedControls.filter(\.isTrackpad).count, 1)
+        XCTAssertEqual(specializedControls.filter(\.isTrackpad).count, 2)
         XCTAssertEqual(Set(specializedControls.map { $0.id.uuidString.lowercased() }), Set([
             "fc6d4ea4-3619-5bd3-84cc-7609d5f64e07",
             "28d6a0ad-5cf7-5a27-9a63-e0364bc887f2",
             "1ff04475-6d1e-57d5-8a41-4d454d78c7ee",
             "7b6afa3f-81e3-5b0b-930d-d82a3ec9529e",
-            "1a539c00-8d79-55cb-a9ac-45372b6e737d"
+            "1a539c00-8d79-55cb-a9ac-45372b6e737d",
+            "57b14212-a263-57d3-a10c-200bed91a017"
         ]))
         XCTAssertEqual(specializedControls.first(where: \.isJoystick)?.joystickMapping, .movement)
         XCTAssertEqual(

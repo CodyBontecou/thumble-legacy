@@ -441,6 +441,10 @@ struct TrackpadSettings {
     tap_to_click: bool,
     two_finger_scroll: bool,
     natural_scrolling: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    click_button: Option<&'static str>,
+    #[serde(skip_serializing_if = "TrackpadSettings::cursor_enabled")]
+    moves_cursor: bool,
 }
 
 impl Default for TrackpadSettings {
@@ -451,19 +455,31 @@ impl Default for TrackpadSettings {
             tap_to_click: true,
             two_finger_scroll: true,
             natural_scrolling: true,
+            click_button: None,
+            moves_cursor: true,
         }
     }
 }
 
 impl TrackpadSettings {
+    fn cursor_enabled(value: &bool) -> bool {
+        *value
+    }
     fn value(self) -> Value {
-        json!({
+        let mut result = json!({
             "sensitivity": self.sensitivity,
             "scrollSensitivity": self.scroll_sensitivity,
             "tapToClick": self.tap_to_click,
             "twoFingerScroll": self.two_finger_scroll,
             "naturalScrolling": self.natural_scrolling
-        })
+        });
+        if let Some(button) = self.click_button {
+            result["clickButton"] = json!(button);
+        }
+        if !self.moves_cursor {
+            result["movesCursor"] = json!(false);
+        }
+        result
     }
 }
 
@@ -562,7 +578,7 @@ pub fn plan_generation_spec(
         let specialized_capacity = match kind {
             Kind::Joystick => Some((joystick_count, 2usize)),
             Kind::Trigger => Some((trigger_count, 2usize)),
-            Kind::Trackpad => Some((trackpad_count, 1usize)),
+            Kind::Trackpad => Some((trackpad_count, 3usize)),
             _ => None,
         };
         if specialized_capacity.is_some_and(|(count, maximum)| count >= maximum) {
@@ -2321,10 +2337,35 @@ fn parse_trackpad_settings(
                     "tapToClick",
                     "twoFingerScroll",
                     "naturalScrolling",
+                    "clickButton",
+                    "movesCursor",
                 ],
             )?;
             let defaults = TrackpadSettings::default();
+            let click_button = match settings
+                .get("clickButton")
+                .filter(|v| !v.is_null())
+                .and_then(Value::as_str)
+            {
+                Some("left") => Some("left"),
+                Some("right") => Some("right"),
+                Some("middle") => Some("middle"),
+                None if settings.get("clickButton").is_none_or(Value::is_null) => None,
+                _ => {
+                    return Err(invalid_type(
+                        &format!("{path}.trackpadSettings.clickButton"),
+                        "left, right, or middle",
+                    ))
+                }
+            };
             Some(TrackpadSettings {
+                click_button,
+                moves_cursor: optional_bool(
+                    settings,
+                    "movesCursor",
+                    &format!("{path}.trackpadSettings.movesCursor"),
+                )?
+                .unwrap_or(true),
                 sensitivity: first_number(
                     settings,
                     &["sensitivity"],
@@ -2393,6 +2434,8 @@ fn parse_trackpad_settings(
     }
     let base = explicit.unwrap_or_default();
     let settings = TrackpadSettings {
+        click_button: base.click_button,
+        moves_cursor: base.moves_cursor,
         sensitivity: sensitivity.unwrap_or(base.sensitivity),
         scroll_sensitivity: scroll.unwrap_or(base.scroll_sensitivity),
         tap_to_click: tap.unwrap_or(base.tap_to_click),

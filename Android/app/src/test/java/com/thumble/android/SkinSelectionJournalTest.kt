@@ -23,6 +23,18 @@ class SkinSelectionJournalTest {
         assertFalse(detached.request().has("skinReference"))
         assertTrue(SkinSelectionJournal.acknowledge(listOf(detached),snapshot(null),"mac-a").isEmpty())
     }
+    @Test fun sameProfileIdentityOnDifferentMacsKeepsBothIntentsAndUnscopedEditsStayLocal() {
+        val id=UUID.randomUUID()
+        val a=PendingSkinSelection(id,null,1,"mac-a")
+        val b=PendingSkinSelection(id,null,2,"mac-b")
+        val local=PendingSkinSelection(id,null,3)
+        val values=SkinSelectionJournal.replacing(SkinSelectionJournal.replacing(listOf(a),b),local)
+        assertEquals(listOf(a,b,local),values)
+        assertEquals(values,SkinSelectionJournal.decode(SkinSelectionJournal.encode(values)))
+        val snapshot=ProfileSnapshot(listOf(ControllerProfile(id,"Fixture",JSONObject())),id)
+        assertEquals(listOf(a,local),SkinSelectionJournal.acknowledge(values,snapshot,"mac-b"))
+        assertEquals(values,SkinSelectionJournal.acknowledge(values,snapshot,null))
+    }
     @Test fun malformedOrDuplicatePendingIntentsAreRejectedInsteadOfLost() {
         val valid=PendingSkinSelection(UUID.randomUUID(),null,123).json()
         for(array in listOf(JSONArray().put(valid).put(valid),JSONArray().put(JSONObject(valid.toString()).put("updatedAt",1.5)),

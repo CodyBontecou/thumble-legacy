@@ -28,6 +28,7 @@ internal fun iconLayout(control: Control, width: Double, height: Double, content
         && (control.kind in setOf("joystick", "trackpad") || icon?.placement != "center" || ControlTypography.shortLegend(legend)))
     val padding = content?.finite("labelPadding", defaultLabelPadding(control)) ?: defaultLabelPadding(control)
     val labelOffset = if (content?.has("labelPlacement") == true) when (content.optString("labelPlacement")) {
+        "above" -> Vector(0.0, -(height / 2 + (ControlTypography.resolve(control, width, height, content).size ?: 14.0) / 2 + padding))
         "top" -> Vector(0.0, -height * .32 + padding); "bottom" -> Vector(0.0, height * .32 - padding)
         "leading" -> Vector(-width * .28 + padding, 0.0); "trailing" -> Vector(width * .28 - padding, 0.0); else -> Vector()
     } else if (control.kind == "joystick") Vector(0.0, height * .34)

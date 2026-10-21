@@ -91,7 +91,7 @@ pub fn validate_element_identities(profile: &Value) -> bool {
         if elements.len() > 128 {
             return false;
         }
-        for (kind, limit) in [("joystick", 2), ("trigger", 2), ("trackpad", 1)] {
+        for (kind, limit) in [("joystick", 2), ("trigger", 2), ("trackpad", 3)] {
             if elements
                 .iter()
                 .filter(|element| element.get("kind").and_then(Value::as_str) == Some(kind))
@@ -335,7 +335,7 @@ fn normalized_settings(field: &str, value: Option<&Value>) -> Option<Value> {
                 Value::from(value.as_f64()?.clamp(lower, upper))
             } else {
                 let allowed: &[&str] = match key.as_str() {
-                    "analogTarget" => &["none", "left_stick", "right_stick"],
+                    "analogTarget" => &["none", "left_stick", "right_stick", "mouse_look"],
                     "target" => &["left", "right"],
                     "orientation" => &["vertical", "horizontal"],
                     _ => return None,
@@ -350,6 +350,25 @@ fn normalized_settings(field: &str, value: Option<&Value>) -> Option<Value> {
     }
     if field == "joystickOutputSettings" && defaults["analogTarget"] == "none" {
         defaults["sendsDigitalDirections"] = Value::Bool(true);
+    }
+    if field == "joystickOutputSettings" && defaults["analogTarget"] == "mouse_look" {
+        defaults["sendsDigitalDirections"] = Value::Bool(false);
+    }
+    if field == "trackpadSettings" {
+        if let Some(object) = value.and_then(Value::as_object) {
+            if let Some(button) = object.get("clickButton").filter(|v| !v.is_null()) {
+                let button = button.as_str()?;
+                if !["left", "right", "middle"].contains(&button) {
+                    return None;
+                }
+                defaults["clickButton"] = Value::String(button.to_owned());
+            }
+            if let Some(moves) = object.get("movesCursor").filter(|v| !v.is_null()) {
+                if !moves.as_bool()? {
+                    defaults["movesCursor"] = Value::Bool(false);
+                }
+            }
+        }
     }
     Some(defaults)
 }

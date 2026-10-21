@@ -51,6 +51,15 @@ internal object ControlPresentation {
             result.put("hapticFeedback",KeypadHaptic.parse(style.optJSONObject("hapticFeedback"),style.optString("hapticStyle")).json())
         }
         normalize(result)
+        // Placement and size belong to appearance, independently of the current live icon identity.
+        val content = result.optJSONObject("content")
+        result.optJSONObject("icon")?.let { selected ->
+            val icon = JSONObject(selected.toString())
+            content?.optString("iconPlacement")?.takeIf { it in setOf("leading", "trailing", "top", "bottom", "center", "background") }
+                ?.let { icon.put("placement", it) }
+            if (content?.has("iconScale") == true) icon.put("scale", content.getDouble("iconScale"))
+            result.put("icon", icon)
+        }
         return result
     }
     private fun apply(result: JSONObject, visual: JSONObject, state: PresentationState) {
@@ -95,7 +104,7 @@ internal object ControlPresentation {
             "bevelWidth" to (0.0 to 24.0),"indexWidth" to (0.0 to 12.0))
         for ((key, range) in ranges) if (result.has(key)) result.put(key, result.finite(key, range.first).coerceIn(range.first, range.second))
         result.optJSONObject("content")?.let { content ->
-            for ((key, range) in mapOf("fontSize" to (8.0 to 72.0), "tracking" to (-4.0 to 12.0), "labelPadding" to (0.0 to 32.0))) {
+            for ((key, range) in mapOf("iconScale" to (.2 to 3.0), "fontSize" to (8.0 to 72.0), "tracking" to (-4.0 to 12.0), "labelPadding" to (0.0 to 32.0))) {
                 if (content.has(key)) content.put(key, content.finite(key, range.first).coerceIn(range.first, range.second))
             }
             if (content.has("lineLimit")) content.put("lineLimit", content.optInt("lineLimit", 1).coerceIn(1, 4))

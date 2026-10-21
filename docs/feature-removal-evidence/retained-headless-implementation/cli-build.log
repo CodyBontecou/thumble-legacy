@@ -1,0 +1,1259 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build -project Thumble.xcodeproj -scheme ThumbleCLI -configuration Debug -destination platform=macOS,arch=arm64 -derivedDataPath /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData -jobs 4 CC=/private/tmp/thumble-clang-probe CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    CC = /private/tmp/thumble-clang-probe
+    CODE_SIGNING_ALLOWED = NO
+    COMPILER_INDEX_STORE_ENABLE = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ScrawlKit: https://github.com/kitlangton/scrawl @ 6d4fa33
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+Build Preparation
+Build task concurrency set to 4 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (6 targets)
+    Target 'ThumbleLegacyThumbConsoleCLI' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ThumbleLegacyCLI' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ThumbleCLI' in project 'Thumble'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 42a8aa428089a4eed44817794b272ba3
+Build description path: /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/XCBuildData/42a8aa428089a4eed44817794b272ba3.xcbuilddata
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp'
+
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp'
+
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/7187679823f38a2a940e0043cdf9d637-common-args.resp'
+
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_vers.o.scan'
+
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_vers.o.scan'
+
+note: Removed stale file '/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_vers.o.scan'
+
+ProcessInfoPlistFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.SwiftFileList (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.SwiftFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.LinkFileList (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.LinkFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI-OutputFileMap.json (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.SwiftFileList (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.SwiftFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.LinkFileList (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.LinkFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI-OutputFileMap.json (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.SwiftFileList (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.SwiftFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.LinkFileList (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.LinkFileList
+
+WriteAuxiliaryFile /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI-OutputFileMap.json (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    write-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI-OutputFileMap.json
+
+SwiftDriver ThumbleLegacyThumbConsoleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumbconsole -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver ThumbleLegacyCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name pocketpad -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver ThumbleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift,\ GamepadLayoutQuality.swift,\ GamepadOutputTypes.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 Compiling\ ButtonPulseSequencer.swift,\ ControllerActiveInputState.swift,\ ControllerDesignSession.swift,\ ControllerProtocol.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ thumbconsole (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ pocketpad (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for thumbconsole (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleLegacyThumbConsoleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumbconsole -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ButtonPulseSequencer.swift, ControllerActiveInputState.swift, ControllerDesignSession.swift, ControllerProtocol.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ thumble (in target 'ThumbleCLI' from project 'Thumble')
+
+EmitSwiftModule normal arm64 (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift, GamepadLayoutQuality.swift, GamepadOutputTypes.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftdoc (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.abi.json (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftsourceinfo (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLI.swift,\ ThumbleCLIBackend.swift,\ ThumbleCLIRuntimeBackend.swift,\ ThumbleCSSCompiler.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+/Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift:2975:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for pocketpad (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftDriver\ Compilation\ Requirements ThumbleLegacyCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name pocketpad -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneSnapshot.swift,\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PortableProfileArtifact.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for thumble (in target 'ThumbleCLI' from project 'Thumble')
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftdoc (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.abi.json (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftsourceinfo (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+SwiftDriver\ Compilation\ Requirements ThumbleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift,\ GamepadLayoutQuality.swift,\ GamepadOutputTypes.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.swiftmodule
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneSnapshot.swift, PairingPayload.swift, PendingProfileRecovery.swift, PortableProfileArtifact.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftdoc (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftdoc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.swiftdoc
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.abi.json (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.abi.json /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftsourceinfo (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftsourceinfo /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditJournal.swift,\ OwnedPhoneLayoutAdapter.swift,\ OwnedPhoneReceivedFrame.swift,\ OwnedPhoneSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 Compiling\ ThumbleConfigurationBridge.swift,\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditJournal.swift, OwnedPhoneLayoutAdapter.swift, OwnedPhoneReceivedFrame.swift, OwnedPhoneSession.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ButtonPulseSequencer.swift,\ ControllerActiveInputState.swift,\ ControllerDesignSession.swift,\ ControllerProtocol.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift, GamepadLayoutQuality.swift, GamepadOutputTypes.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GeistDesign.swift,\ KeyMap.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleConfigurationBridge.swift, ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileFormatPolicy.swift,\ ProfileOrientationSupport.swift,\ ThumbleArtworkLayerView.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GeistDesign.swift, KeyMap.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadStatus.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileFormatPolicy.swift, ProfileOrientationSupport.swift, ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleLinkImport.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleMacSetupGuide.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadOutputPolicy.swift, VirtualGamepadReport.swift, VirtualGamepadStatus.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleSVGRasterizer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLI.swift, ThumbleCLIBackend.swift, ThumbleCLIRuntimeBackend.swift, ThumbleCSSCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadBindingPresentation.swift,\ KeypadConfigurationExport.swift,\ LegacyProfileMigration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ButtonPulseSequencer.swift, ControllerActiveInputState.swift, ControllerDesignSession.swift, ControllerProtocol.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift,\ OwnedConfigurationDocument.swift,\ OwnedPhoneEdit.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleLinkImport.swift, ThumbleLinkSnapshot.swift, ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackage.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinResolver.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadBindingPresentation.swift, KeypadConfigurationExport.swift, LegacyProfileMigration.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStore.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleVectorCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ControllerRuntimeUX.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacConfigurationBindings.swift, MacControlOutputBinding.swift, OwnedConfigurationDocument.swift, OwnedPhoneEdit.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerRuntimeUX.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileFormatPolicy.swift,\ ProfileOrientationSupport.swift,\ ThumbleArtworkLayerView.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackage.swift, ThumbleSkinQuality.swift, ThumbleSkinResolver.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleSVGRasterizer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileFormatPolicy.swift, ProfileOrientationSupport.swift, ThumbleArtworkLayerView.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleLinkImport.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleMacSetupGuide.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStore.swift, ThumbleSkinWorkspace.swift, ThumbleVectorCompiler.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLI.swift,\ ThumbleCLIBackend.swift,\ ThumbleCLIRuntimeBackend.swift,\ ThumbleCSSCompiler.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+/Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift:2975:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleLinkImport.swift, ThumbleLinkSnapshot.swift, ThumbleMacSetupGuide.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleConfigurationBridge.swift,\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GeistDesign.swift,\ KeyMap.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleConfigurationBridge.swift, ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GeistDesign.swift, KeyMap.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift,\ OwnedConfigurationDocument.swift,\ OwnedPhoneEdit.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackage.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinResolver.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacConfigurationBindings.swift, MacControlOutputBinding.swift, OwnedConfigurationDocument.swift, OwnedPhoneEdit.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneSnapshot.swift,\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PortableProfileArtifact.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLI.swift, ThumbleCLIBackend.swift, ThumbleCLIRuntimeBackend.swift, ThumbleCSSCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadBindingPresentation.swift,\ KeypadConfigurationExport.swift,\ LegacyProfileMigration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackage.swift, ThumbleSkinQuality.swift, ThumbleSkinResolver.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditJournal.swift,\ OwnedPhoneLayoutAdapter.swift,\ OwnedPhoneReceivedFrame.swift,\ OwnedPhoneSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneSnapshot.swift, PairingPayload.swift, PendingProfileRecovery.swift, PortableProfileArtifact.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStore.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleVectorCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadBindingPresentation.swift, KeypadConfigurationExport.swift, LegacyProfileMigration.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ControllerRuntimeUX.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditJournal.swift, OwnedPhoneLayoutAdapter.swift, OwnedPhoneReceivedFrame.swift, OwnedPhoneSession.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadStatus.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerRuntimeUX.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinPackage.swift,\ ThumbleSkinQuality.swift,\ ThumbleSkinResolver.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinPackage.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinQuality.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinResolver.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadOutputPolicy.swift, VirtualGamepadReport.swift, VirtualGamepadStatus.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleConfigurationBridge.swift,\ ThumbleInputLatencySimulation.swift,\ ThumbleLegacyAppearanceMaterializer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleConfigurationBridge.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleInputLatencySimulation.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStore.swift, ThumbleSkinWorkspace.swift, ThumbleVectorCompiler.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleCLI.swift,\ ThumbleCLIBackend.swift,\ ThumbleCLIRuntimeBackend.swift,\ ThumbleCSSCompiler.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLI.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIBackend.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/CLI/ThumbleCLIRuntimeBackend.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+/Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleCSSCompiler.swift:2975:17: warning: variable 'ignored' was never mutated; consider changing to 'let' constant
+            var ignored: [ThumbleCSSIssue] = []
+            ~~~ ^
+            let
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinPackage.swift, ThumbleSkinQuality.swift, ThumbleSkinResolver.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkin.swift,\ ThumbleSkinCompatibility.swift,\ ThumbleSkinCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkin.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompatibility.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleConfigurationBridge.swift, ThumbleInputLatencySimulation.swift, ThumbleLegacyAppearanceMaterializer.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleLinkImport.swift,\ ThumbleLinkSnapshot.swift,\ ThumbleMacSetupGuide.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/ThumbleLinkImport.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleLinkSnapshot.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleMacSetupGuide.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkin.swift, ThumbleSkinCompatibility.swift, ThumbleSkinCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ControllerRuntimeUX.swift,\ GameKeypadGenerator.swift,\ GamepadAppearance.swift,\ GamepadAppearanceBank.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerRuntimeUX.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GameKeypadGenerator.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearance.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceBank.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleLinkImport.swift, ThumbleLinkSnapshot.swift, ThumbleMacSetupGuide.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneSnapshot.swift,\ PairingPayload.swift,\ PendingProfileRecovery.swift,\ PortableProfileArtifact.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSnapshot.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PairingPayload.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PendingProfileRecovery.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/PortableProfileArtifact.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ControllerRuntimeUX.swift, GameKeypadGenerator.swift, GamepadAppearance.swift, GamepadAppearanceBank.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ OwnedPhoneEditJournal.swift,\ OwnedPhoneLayoutAdapter.swift,\ OwnedPhoneReceivedFrame.swift,\ OwnedPhoneSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEditJournal.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneLayoutAdapter.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneReceivedFrame.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneSession.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneSnapshot.swift, PairingPayload.swift, PendingProfileRecovery.swift, PortableProfileArtifact.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ButtonPulseSequencer.swift,\ ControllerActiveInputState.swift,\ ControllerDesignSession.swift,\ ControllerProtocol.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ButtonPulseSequencer.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerActiveInputState.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerDesignSession.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ControllerProtocol.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling OwnedPhoneEditJournal.swift, OwnedPhoneLayoutAdapter.swift, OwnedPhoneReceivedFrame.swift, OwnedPhoneSession.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleSkinStore.swift,\ ThumbleSkinWorkspace.swift,\ ThumbleVectorCompiler.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinStore.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSkinWorkspace.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleVectorCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleCLI.swift, ThumbleCLIBackend.swift, ThumbleCLIRuntimeBackend.swift, ThumbleCSSCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ MacConfigurationBindings.swift,\ MacControlOutputBinding.swift,\ OwnedConfigurationDocument.swift,\ OwnedPhoneEdit.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacConfigurationBindings.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/MacControlOutputBinding.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedConfigurationDocument.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/OwnedPhoneEdit.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ButtonPulseSequencer.swift, ControllerActiveInputState.swift, ControllerDesignSession.swift, ControllerProtocol.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ VirtualGamepadOutputPolicy.swift,\ VirtualGamepadReport.swift,\ VirtualGamepadStatus.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadOutputPolicy.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadReport.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/VirtualGamepadStatus.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling MacConfigurationBindings.swift, MacControlOutputBinding.swift, OwnedConfigurationDocument.swift, OwnedPhoneEdit.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ KeypadAccessibility.swift,\ KeypadBindingPresentation.swift,\ KeypadConfigurationExport.swift,\ LegacyProfileMigration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadAccessibility.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadBindingPresentation.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/KeypadConfigurationExport.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/LegacyProfileMigration.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleSkinStore.swift, ThumbleSkinWorkspace.swift, ThumbleVectorCompiler.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadProfileResourceCodec.swift,\ GamepadSharedOperations.swift,\ GeistDesign.swift,\ KeyMap.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadProfileResourceCodec.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadSharedOperations.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GeistDesign.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/NativeHost/KeyMap.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling VirtualGamepadOutputPolicy.swift, VirtualGamepadReport.swift, VirtualGamepadStatus.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadDesignSystem.swift,\ GamepadEditorDeviceCatalog.swift,\ GamepadLayoutQuality.swift,\ GamepadOutputTypes.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadDesignSystem.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadEditorDeviceCatalog.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadLayoutQuality.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadOutputTypes.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling KeypadAccessibility.swift, KeypadBindingPresentation.swift, KeypadConfigurationExport.swift, LegacyProfileMigration.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ThumbleNativeConfiguration.swift,\ ThumbleNativeSkinPreviewRenderer.swift,\ ThumbleSVGRasterizer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeConfiguration.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleNativeSkinPreviewRenderer.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleSVGRasterizer.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadProfileResourceCodec.swift, GamepadSharedOperations.swift, GeistDesign.swift, KeyMap.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ GamepadAppearanceEditMerge.swift,\ GamepadAppearanceSnapshot.swift,\ GamepadControllerPresentationRouting.swift,\ GamepadCustomization.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLI' from project 'Thumble')
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceEditMerge.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadAppearanceSnapshot.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadControllerPresentationRouting.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/GamepadCustomization.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThumbleNativeConfiguration.swift, ThumbleNativeSkinPreviewRenderer.swift, ThumbleSVGRasterizer.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 Compiling\ ProfileArtifactAdoption.swift,\ ProfileFormatPolicy.swift,\ ProfileOrientationSupport.swift,\ ThumbleArtworkLayerView.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileArtifactAdoption.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileFormatPolicy.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ProfileOrientationSupport.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftCompile normal arm64 /Users/codybontecou/dev/Thumble/Sources/Shared/ThumbleArtworkLayerView.swift (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadDesignSystem.swift, GamepadEditorDeviceCatalog.swift, GamepadLayoutQuality.swift, GamepadOutputTypes.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ProfileArtifactAdoption.swift, ProfileFormatPolicy.swift, ProfileOrientationSupport.swift, ThumbleArtworkLayerView.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+CompileC /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_vers.o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/thumbconsole_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /private/tmp/thumble-clang-probe -x c -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -std\=gnu11 -fmodules -gmodules -fmodules-cache-path\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -fpascal-strings -O0 -fno-common -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -DDEBUG\=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -g -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-generated-files.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-own-target-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-all-non-framework-target-headers.hmap -ivfsoverlay /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-project-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources-normal/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -fmodule-map-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap -MMD -MT dependencies -MF /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_vers.d --serialize-diagnostics /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_vers.dia -c /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/thumbconsole_vers.c -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_vers.o
+
+CompileC /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_vers.o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/pocketpad_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /private/tmp/thumble-clang-probe -x c -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -std\=gnu11 -fmodules -gmodules -fmodules-cache-path\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -fpascal-strings -O0 -fno-common -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -DDEBUG\=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -g -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-generated-files.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-own-target-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-all-non-framework-target-headers.hmap -ivfsoverlay /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-project-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources-normal/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -fmodule-map-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap -MMD -MT dependencies -MF /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_vers.d --serialize-diagnostics /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_vers.dia -c /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/pocketpad_vers.c -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_vers.o
+
+CompileC /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_vers.o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/thumble_vers.c normal arm64 c com.apple.compilers.llvm.clang.1_0.compiler (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /private/tmp/thumble-clang-probe -x c -target arm64-apple-macos14.0 -fmessage-length\=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit\=0 -fno-color-diagnostics -std\=gnu11 -fmodules -gmodules -fmodules-cache-path\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -fmodules-prune-interval\=86400 -fmodules-prune-after\=345600 -fbuild-session-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -fmodules-validate-once-per-build-session -Wnon-modular-include-in-framework-module -Werror\=non-modular-include-in-framework-module -Wno-trigraphs -fpascal-strings -O0 -fno-common -Wno-missing-field-initializers -Wno-missing-prototypes -Werror\=return-type -Wdocumentation -Wunreachable-code -Wquoted-include-in-framework-header -Werror\=deprecated-objc-isa-usage -Werror\=objc-root-class -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wno-float-conversion -Wnon-literal-null-conversion -Wobjc-literal-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-implicit-fallthrough -DDEBUG\=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -fstrict-aliasing -Wdeprecated-declarations -g -Wno-sign-conversion -Winfinite-recursion -Wcomma -Wblock-capture-autoreleasing -Wstrict-prototypes -Wno-semicolon-before-method-body -Wunguarded-availability -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-generated-files.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-own-target-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-all-non-framework-target-headers.hmap -ivfsoverlay /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -iquote /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-project-headers.hmap -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources-normal/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/arm64 -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -fmodule-map-file\=/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap -MMD -MT dependencies -MF /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_vers.d --serialize-diagnostics /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_vers.dia -c /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/thumble_vers.c -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_vers.o
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift (in target 'ThumbleLegacyCLI' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleLegacyCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name pocketpad -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/ThumbleLegacyCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/pocketpad-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad normal (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -filelist /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyCLI.build/Objects-normal/arm64/pocketpad-linker-args.resp -Wl,-no_warn_duplicate_libraries -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad (in target 'ThumbleLegacyCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/pocketpad
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleLegacyThumbConsoleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumbconsole -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/ThumbleLegacyThumbConsoleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/thumbconsole-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole normal (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -filelist /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleLegacyThumbConsoleCLI.build/Objects-normal/arm64/thumbconsole-linker-args.resp -Wl,-no_warn_duplicate_libraries -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumbconsole
+
+SwiftDriverJobDiscovery normal arm64 Compiling GamepadAppearanceEditMerge.swift, GamepadAppearanceSnapshot.swift, GamepadControllerPresentationRouting.swift, GamepadCustomization.swift (in target 'ThumbleCLI' from project 'Thumble')
+
+SwiftDriver\ Compilation ThumbleCLI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name thumble -Onone @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -c -j18 -enable-batch-mode -incremental -output-file-map /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/ThumbleCLI_const_extract_protocols.json -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-generated-files.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-own-target-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/Thumble-a66321ecec075d342a2fa30dd8db144d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/thumble-project-headers.hmap -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/include -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources-normal/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources/arm64 -Xcc -I/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble-Swift.h -working-directory /Users/codybontecou/dev/Thumble -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble normal (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk -O0 -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -F/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug -filelist /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/Thumble.build/Debug/ThumbleCLI.build/Objects-normal/arm64/thumble-linker-args.resp -Wl,-no_warn_duplicate_libraries -o /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble -Xlinker -add_ast_path -Xlinker /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation.swiftmodule @/Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation.build/Objects-normal/arm64/ZIPFoundation-linker-args.resp
+
+RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble (in target 'ThumbleCLI' from project 'Thumble')
+    cd /Users/codybontecou/dev/Thumble
+    builtin-RegisterExecutionPolicyException /Users/codybontecou/dev/Thumble/build/StackSafetyDerivedData/Build/Products/Debug/thumble
+
+note: Explicit modules is enabled but the compiler was not recognized; disable explicit modules with CLANG_ENABLE_EXPLICIT_MODULES=NO, or use C_COMPILER_LAUNCHER with CLANG_ENABLE_EXPLICIT_MODULES_WITH_COMPILER_LAUNCHER=YES if using a compatible launcher (in target 'ThumbleLegacyThumbConsoleCLI' from project 'Thumble')
+note: Explicit modules is enabled but the compiler was not recognized; disable explicit modules with CLANG_ENABLE_EXPLICIT_MODULES=NO, or use C_COMPILER_LAUNCHER with CLANG_ENABLE_EXPLICIT_MODULES_WITH_COMPILER_LAUNCHER=YES if using a compatible launcher (in target 'ThumbleLegacyCLI' from project 'Thumble')
+note: Explicit modules is enabled but the compiler was not recognized; disable explicit modules with CLANG_ENABLE_EXPLICIT_MODULES=NO, or use C_COMPILER_LAUNCHER with CLANG_ENABLE_EXPLICIT_MODULES_WITH_COMPILER_LAUNCHER=YES if using a compatible launcher (in target 'ThumbleCLI' from project 'Thumble')
+** BUILD SUCCEEDED **

@@ -36,6 +36,54 @@ class AdvancedControlTest {
             router.handle(phase, changed, points.map { Contact(it.first, Vector(it.second, it.third)) }, time)
     }
 
+    @Test fun `camera held deflection repeats relative motion and cancels independently of keyboard movement`() {
+        val camera=control("joystick",JSONObject().put("joystickOutputSettings",JSONObject().put("analogTarget","mouse_look")))
+        val move=control("joystick")
+        val h=Harness(listOf(camera,move))
+        h.event(TouchPhase.DOWN,1,0,Triple(1,95.0,50.0))
+        h.event(TouchPhase.DOWN,2,1,Triple(1,95.0,50.0),Triple(2,250.0,5.0))
+        h.router.advanceCamera(.016);h.router.advanceCamera(.016)
+        assertEquals(listOf(true),h.pointers.filter { it.kind=="button" }.map { it.down })
+        assertEquals("right",h.pointers.first().button)
+        assertEquals(2,h.pointers.count { it.kind=="move" && it.delta.x>0 && it.delta.y==0.0 })
+        assertTrue(h.sticks.isEmpty())
+        assertEquals(listOf(move.id),h.edges.filter { it.down }.map { it.id })
+        h.router.cancel()
+        assertEquals(listOf(true,false),h.pointers.filter { it.kind=="button" }.map { it.down })
+        assertFalse(h.router.hasCameraMotion)
+        val count=h.pointers.size;h.router.advanceCamera(.016);h.router.cancel()
+        assertEquals(count,h.pointers.size)
+        assertTrue(h.edges.last().part==InputPart.JOYSTICK_UP && !h.edges.last().down)
+    }
+
+    @Test fun `returning camera to dead zone releases right button and a click cannot steal camera ownership`() {
+        val camera=control("joystick",JSONObject().put("joystickOutputSettings",JSONObject().put("analogTarget","mouse_look").put("invertX",true)))
+        val h=Harness(listOf(camera))
+        h.event(TouchPhase.DOWN,1,0,Triple(1,95.0,50.0));h.router.advanceCamera(.016)
+        assertTrue(h.pointers.last().delta.x<0)
+        val count=h.pointers.size;h.router.click("right");assertEquals(count,h.pointers.size)
+        h.router.click("left");assertEquals(listOf(true,false),h.pointers.takeLast(2).map { it.down })
+        h.event(TouchPhase.MOVE,1,10,Triple(1,50.0,50.0))
+        assertEquals(false,h.pointers.last().down);assertEquals("right",h.pointers.last().button)
+        assertFalse(h.router.hasCameraMotion)
+        h.event(TouchPhase.UP,1,20,Triple(1,50.0,50.0))
+        assertEquals(1,h.pointers.count { it.button=="right" && it.down==false })
+    }
+
+    @Test fun `explicit left and right click pads click their configured button without moving cursor`() {
+        for(button in listOf("left","right")) {
+            val pad=control("trackpad",JSONObject().put("trackpadSettings",JSONObject().put("clickButton",button).put("movesCursor",false).put("twoFingerScroll",false)))
+            val h=Harness(listOf(pad))
+            h.event(TouchPhase.DOWN,1,0,Triple(1,50.0,50.0))
+            h.event(TouchPhase.MOVE,1,10,Triple(1,52.0,50.0))
+            h.event(TouchPhase.UP,1,20,Triple(1,52.0,50.0))
+            assertEquals(listOf(true,false),h.pointers.map { it.down })
+            assertTrue(h.pointers.all { it.kind=="button" && it.button==button })
+            h.event(TouchPhase.DOWN,2,30,Triple(2,50.0,50.0))
+            h.router.cancel();assertEquals(2,h.pointers.size)
+        }
+    }
+
     @Test fun `canonical output settings match Swift normalization and transformations`() {
         val joystick = JoystickSettings.parse(JSONObject("""{"analogTarget":"leftStick","sendsDigitalDirections":false,"sensitivity":2,"invertX":true,"snapToCardinal":true}"""))
         assertEquals("left", joystick.target); assertFalse(joystick.digital)

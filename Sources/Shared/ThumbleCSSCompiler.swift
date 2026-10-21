@@ -39,7 +39,7 @@ public enum ThumbleCSSProfile {
         "border", "border-width", "border-color", "border-radius",
         "box-shadow", "opacity", "transform", "filter",
         "-thumble-glow-color", "-thumble-glow-radius", "-thumble-knob-color", "-thumble-haptic-style",
-        "-thumble-icon", "-thumble-icon-symbol", "-thumble-icon-placement", "-thumble-icon-scale", "-thumble-icon-tint", "-thumble-icon-rendering", "-thumble-legend", "font-size", "font-weight", "-thumble-font-design", "letter-spacing", "-thumble-line-limit", "text-align", "-thumble-label-padding", "-thumble-label-placement", "-thumble-trackpad-frame", "-thumble-trackpad-cursor", "-thumble-trackpad-indicators", "-thumble-joystick-ring", "-thumble-joystick-knob-ratio", "-thumble-joystick-knob-stroke-width",
+        "-thumble-icon", "-thumble-icon-symbol", "-thumble-icon-placement", "-thumble-icon-scale", "-thumble-icon-mask", "-thumble-icon-tint", "-thumble-icon-rendering", "-thumble-legend", "font-size", "font-weight", "-thumble-font-design", "letter-spacing", "-thumble-line-limit", "text-align", "-thumble-label-padding", "-thumble-label-placement", "-thumble-trackpad-frame", "-thumble-trackpad-cursor", "-thumble-trackpad-indicators", "-thumble-joystick-ring", "-thumble-joystick-knob-ratio", "-thumble-joystick-knob-stroke-width",
         "-thumble-trackpad-frame-color", "-thumble-trackpad-cursor-color", "-thumble-trackpad-indicator-color", "-thumble-trackpad-secondary-indicator-color", "-thumble-joystick-ring-color", "-thumble-joystick-knob-fill", "-thumble-joystick-knob-stroke", "-thumble-trackpad-frame-stroke-width", "-thumble-joystick-ring-stroke-width"
     ]
 
@@ -1708,6 +1708,7 @@ struct ThumbleCSSParsedValues {
     var iconSymbol: String?
     var iconPlacement: GamepadControlIconPlacement?
     var iconScale: CGFloat?
+    var iconMask: GamepadControlContentStyle.IconMask?
     var iconTint: GamepadRGBAColor?
     var iconRendering: GamepadControlIconRenderingMode?
     var nativeIcon: GamepadControlIcon? {
@@ -1784,6 +1785,8 @@ enum ThumbleCSSValueParser {
             if tokens.count == 1, case .ident(let name) = tokens[0].kind { values.iconPlacement = GamepadControlIconPlacement(rawValue: name) }
         case "-thumble-icon-scale":
             values.iconScale = parseNumberOrPercent(tokens, range: 0.2...3)
+        case "-thumble-icon-mask":
+            if tokens.count == 1, case .ident(let name) = tokens[0].kind { values.iconMask = GamepadControlContentStyle.IconMask(rawValue: name) }
         case "-thumble-icon-tint":
             values.iconTint = parseColor(tokens, currentColor: currentColor)
         case "-thumble-icon-rendering":
@@ -2993,6 +2996,9 @@ public enum ThumbleCSSCompiler {
                 blurRadius: values.blurRadius,
                 content: GamepadControlContentStyle(
                     icon: values.nativeIcon,
+                    iconPlacement: values.iconPlacement,
+                    iconScale: values.iconScale,
+                    iconMask: values.iconMask,
                     legend: values.legend,
                     fontSize: values.fontSize,
                     fontWeight: values.fontWeight,
@@ -3093,6 +3099,8 @@ public enum ThumbleCSSCompiler {
             guard tokens.count == 1, case .ident(let name) = tokens[0].kind, GamepadControlIconPlacement(rawValue: name) != nil else { return [error("invalid-value", "Invalid native icon placement.")] }
         case "-thumble-icon-scale":
             guard let value = ThumbleCSSValueParser.parseNumberOrPercent(tokens, range: 0.2...3), value.isFinite, (0.2...3).contains(value) else { return [error("invalid-value", "Native icon scale requires 0.2...3.")] }
+        case "-thumble-icon-mask":
+            guard tokens.count == 1, case .ident(let name) = tokens[0].kind, GamepadControlContentStyle.IconMask(rawValue: name) != nil else { return [error("invalid-value", "Native icon mask requires none or circle.")] }
         case "-thumble-icon-tint":
             guard ThumbleCSSValueParser.parseColor(tokens, currentColor: currentColor) != nil else { return [error("invalid-value", "Native icon tint requires a color.")] }
         case "-thumble-icon-rendering":
@@ -3132,8 +3140,8 @@ public enum ThumbleCSSCompiler {
                 return [error("invalid-value", "`-thumble-label-padding` requires a pixel length between 0 and 32. ")]
             }
         case "-thumble-label-placement":
-            guard tokens.count == 1, case .ident(let name) = tokens[0].kind, ["center", "top", "bottom", "leading", "trailing"].contains(name) else {
-                return [error("invalid-value", "`-thumble-label-placement` requires center, top, bottom, leading, trailing.")]
+            guard tokens.count == 1, case .ident(let name) = tokens[0].kind, ["center", "top", "bottom", "leading", "trailing", "above"].contains(name) else {
+                return [error("invalid-value", "`-thumble-label-placement` requires center, top, bottom, leading, trailing, above.")]
             }
         case "-thumble-trackpad-frame-color", "-thumble-trackpad-cursor-color", "-thumble-trackpad-indicator-color", "-thumble-trackpad-secondary-indicator-color", "-thumble-joystick-ring-color", "-thumble-joystick-knob-fill", "-thumble-joystick-knob-stroke":
             guard ThumbleCSSValueParser.parseColor(tokens, currentColor: currentColor) != nil else {
@@ -3283,6 +3291,7 @@ public struct ThumbleCSSCapabilities: Codable, Sendable {
             PropertyCapability(name: "-thumble-icon-symbol", syntax: "quoted SF Symbol name", appliesTo: "native icons"),
             PropertyCapability(name: "-thumble-icon-placement", syntax: "leading | trailing | top | bottom | center | background", appliesTo: "native icons"),
             PropertyCapability(name: "-thumble-icon-scale", syntax: "0.2...3", appliesTo: "native icons"),
+            PropertyCapability(name: "-thumble-icon-mask", syntax: "none | circle", appliesTo: "native icons"),
             PropertyCapability(name: "-thumble-icon-tint", syntax: "color", appliesTo: "native icons"),
             PropertyCapability(name: "-thumble-icon-rendering", syntax: "template | multicolor | original", appliesTo: "native icons"),
             PropertyCapability(name: "-thumble-legend", syntax: "quoted text, 1...64 characters", appliesTo: "native visual legends; preserves accessibility and routing"),
@@ -3293,7 +3302,7 @@ public struct ThumbleCSSCapabilities: Codable, Sendable {
             PropertyCapability(name: "-thumble-line-limit", syntax: "1...4", appliesTo: "native legends"),
             PropertyCapability(name: "text-align", syntax: "leading | center | trailing", appliesTo: "native legends"),
             PropertyCapability(name: "-thumble-label-padding", syntax: "0...32px", appliesTo: "native legends"),
-            PropertyCapability(name: "-thumble-label-placement", syntax: "center | top | bottom | leading | trailing", appliesTo: "native legends"),
+            PropertyCapability(name: "-thumble-label-placement", syntax: "center | top | bottom | leading | trailing | above", appliesTo: "native legends"),
             PropertyCapability(name: "-thumble-trackpad-frame-color", syntax: "color", appliesTo: "trackpad"),
             PropertyCapability(name: "-thumble-trackpad-cursor-color", syntax: "color", appliesTo: "trackpad"),
             PropertyCapability(name: "-thumble-trackpad-indicator-color", syntax: "color", appliesTo: "trackpad"),

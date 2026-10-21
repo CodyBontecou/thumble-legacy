@@ -29,3 +29,5 @@ pub mod skin_command;
 pub mod skins;
 pub mod storage;
 pub mod three_way_merge;
+pub mod wow_live;
+pub mod wow_setup;

@@ -37,6 +37,21 @@ internal class ControlGestures(
     private val triggerTokens = mutableMapOf<UUID, Long>()
     private val triggerControls = mutableMapOf<UUID, Control>()
     val joystickVectors = mutableMapOf<UUID, Vector>()
+    private val cameraVectors = mutableMapOf<UUID, Vector>()
+    val hasCameraMotion get() = cameraVectors.isNotEmpty()
+
+    /** Frame-clock driven velocity; stationary held deflection keeps rotating. */
+    fun advanceCamera(seconds: Double) {
+        if (!seconds.isFinite() || seconds <= 0 || cameraVectors.isEmpty()) return
+        val vector = Vector(cameraVectors.values.sumOf { it.x }, cameraVectors.values.sumOf { it.y }).radialClamp()
+        val distance = 360.0 * seconds.coerceAtMost(.05)
+        pointer("move", vector.x * distance, vector.y * distance, null, null)
+    }
+    private fun cameraVector(id: UUID, vector: Vector) {
+        val wasMoving = hasCameraMotion
+        if (vector.neutral) cameraVectors.remove(id) else cameraVectors[id] = vector
+        if (wasMoving != hasCameraMotion) pointer("button", 0.0, 0.0, "right", hasCameraMotion)
+    }
     val triggerValues = mutableMapOf<UUID, Double>()
     private var nextPress = 0L
     private data class Pad(val control: Control, val starts: MutableMap<Int, Vector>, val began: Long,
@@ -72,7 +87,7 @@ internal class ControlGestures(
                         val scale = settings.scrollSensitivity * if (settings.natural) 1 else -1
                         pointer("scroll", delta.x * scale, delta.y * scale, null, null)
                     }
-                } else pointer("move", delta.x * settings.sensitivity, delta.y * settings.sensitivity, null, null)
+                } else if (settings.movesCursor) pointer("move", delta.x * settings.sensitivity, delta.y * settings.sensitivity, null, null)
             }
             pad.previous = center
         }
@@ -120,7 +135,8 @@ internal class ControlGestures(
         }
         settings.target?.let { target ->
             val transformed = settings.transform(vector)
-            stick(target, transformed.x, transformed.y, vector.neutral)
+            if (target == "mouse_look") cameraVector(control.id, transformed)
+            else stick(target, transformed.x, transformed.y, vector.neutral)
         }
     }
 
@@ -162,7 +178,9 @@ internal class ControlGestures(
         }
         settings.target?.let { target ->
             val vector = settings.transform(raw)
-            stick(target, vector.x, vector.y, false); stick(target, 0.0, 0.0, true)
+            if (target == "mouse_look") {
+                cameraVector(control.id, vector);advanceCamera(.05);cameraVector(control.id, Vector())
+            } else { stick(target, vector.x, vector.y, false); stick(target, 0.0, 0.0, true) }
         }
     }
     fun accessibilityTrigger(control: Control, value: Double) {
@@ -176,6 +194,8 @@ internal class ControlGestures(
         }
     }
     fun click(button: String) {
+        // A discrete click cannot release a button owned by camera look.
+        if (button == "right" && hasCameraMotion) return
         pointer("button", 0.0, 0.0, button, true); pointer("button", 0.0, 0.0, button, false)
     }
     fun accessibilityClick(control: Control, button: String) {
@@ -191,7 +211,9 @@ internal class ControlGestures(
             "joystick" -> {
                 joystickTokens.remove(control.id)?.forEach { (part, token) -> element(control.id, part, false, token) }
                 joystickVectors.remove(control.id)
-                JoystickSettings.parse(control.source.optJSONObject("joystickOutputSettings")).target?.let { stick(it, 0.0, 0.0, true) }
+                JoystickSettings.parse(control.source.optJSONObject("joystickOutputSettings")).target?.let {
+                    if (it == "mouse_look") cameraVector(control.id, Vector()) else stick(it, 0.0, 0.0, true)
+                }
             }
             "trigger" -> updateTrigger(control, 0.0, false)
             "trackpad" -> pads[control.id]?.let { pad ->
@@ -201,7 +223,7 @@ internal class ControlGestures(
                 if (owners.values.none { it.id == control.id }) {
                     val settings = TrackpadSettings.parse(control.source.optJSONObject("trackpadSettings"))
                     if (allowsTap && settings.tap && !pad.moved && time - pad.began <= 320) {
-                        click(if (pad.maximum >= 2) "right" else "left")
+                        click(settings.clickButton ?: if (pad.maximum >= 2) "right" else "left")
                         feedback(control.id)
                     }
                     pads.remove(control.id)

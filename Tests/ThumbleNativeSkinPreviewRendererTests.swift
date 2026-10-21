@@ -447,6 +447,72 @@ final class ThumbleNativeSkinPreviewRendererTests: XCTestCase {
             customization: customization, state: .normal, scheme: .dark, canvasSize: canvas, scale: 1, surfaces: ["unknown"]))
     }
 
+    func testCircularIconMaskClipsOnlyPresentationAndPreservesLiveAsset() throws {
+        let asset = GamepadAsset(id: "live-red", name: "Live icon", contentType: "image/png", data: try solidPNG(color: .red), role: .icon)
+        var customization = GamepadCustomization.blankCanvas
+        customization.assetLibrary = GamepadAssetLibrary(assets: [asset])
+        let canvas = customization.deviceCanvas.editorDeviceFrame.screenRect.size
+        func image(mask: String) throws -> (NSBitmapImageRep, GamepadResolvedControl) {
+            let content = try JSONDecoder().decode(GamepadControlContentStyle.self,
+                from: Data(("{\"iconMask\":\"" + mask + "\"}").utf8))
+            customization.elements = [KeypadElement(id: UUID(), label: "A", kind: .button,
+                layout: GamepadButtonCustomization(visualStyle: GamepadControlVisualStyle(normal: GamepadControlStateStyle(content: content)),
+                    icon: GamepadControlIcon(source: .asset, value: "live-red", placement: .center, scale: 2.7, renderingMode: .original)))]
+            let control = try XCTUnwrap(customization.resolvedControls(in: canvas).first { $0.elementID != nil })
+            let view = ZStack(alignment: .topLeading) {
+                GamepadRenderedControlFace(control: control, customization: customization, state: .normal,
+                    surfaceMask: GamepadControlSurfaceMask(surface: "icon")).position(control.center)
+            }.environment(\.colorScheme, .dark).frame(width: canvas.width, height: canvas.height)
+            let renderer = ImageRenderer(content: view)
+            renderer.proposedSize = ProposedViewSize(canvas); renderer.scale = 1; renderer.isOpaque = false
+            let raster = try ThumbleNativeSkinPreviewRenderer.clearedRaster(renderer, scale: 1, title: "icon mask")
+            return (NSBitmapImageRep(cgImage: raster), control)
+        }
+        let (square, control) = try image(mask: "none")
+        let (circle, _) = try image(mask: "circle")
+        let size = min(control.size.width, control.size.height) * 0.34 * 2.7
+        let x = Int(control.center.x + size * 0.42), y = Int(control.center.y + size * 0.42)
+        XCTAssertGreaterThan(try XCTUnwrap(square.colorAt(x: x, y: y)).alphaComponent, 0.9)
+        XCTAssertLessThan(try XCTUnwrap(circle.colorAt(x: x, y: y)).alphaComponent, 0.05)
+        XCTAssertGreaterThan(try XCTUnwrap(circle.colorAt(x: Int(control.center.x), y: Int(control.center.y))).alphaComponent, 0.9)
+        XCTAssertEqual(customization.assetLibrary.asset(id: "live-red")?.data, asset.data)
+    }
+
+    func testInheritedIconPresentationFollowsUpdatedAndRemovedAbilityIdentity() throws {
+        var customization = GamepadCustomization.blankCanvas
+        let content = GamepadControlContentStyle(iconPlacement: .center, iconScale: 2.2,
+            legend: "A", fontSize: 12, labelPlacement: .above)
+        var layout = GamepadButtonCustomization(visualStyle: GamepadControlVisualStyle(normal: GamepadControlStateStyle(content: content)))
+        for identity in ["wow-live-icon-133972", "wow-live-icon-132282"] {
+            layout.icon = GamepadControlIcon(source: .asset, value: identity, placement: .top, scale: 1, renderingMode: .original)
+            for state in GamepadControlPresentationState.allCases {
+                let icon = try XCTUnwrap(customization.resolvedPresentation(for: layout, state: state, scheme: .dark).icon)
+                XCTAssertEqual(icon.value, identity)
+                XCTAssertEqual(icon.source, .asset)
+                XCTAssertEqual(icon.placement, .center)
+                XCTAssertEqual(icon.scale, 2.2)
+                XCTAssertEqual(icon.renderingMode, .original)
+            }
+        }
+        layout.icon = nil
+        XCTAssertNil(customization.resolvedPresentation(for: layout, scheme: .dark).icon)
+    }
+
+    func testAboveLegendClearsLargeCenteredAbilityIcon() throws {
+        let content = try JSONDecoder().decode(GamepadControlContentStyle.self,
+            from: Data(#"{"legend":"A","fontSize":12,"labelPlacement":"above","labelPadding":2}"#.utf8))
+        var customization = GamepadCustomization.blankCanvas
+        customization.elements = [KeypadElement(id: UUID(), label: "Jump", kind: .button,
+            layout: GamepadButtonCustomization(visualStyle: GamepadControlVisualStyle(normal: GamepadControlStateStyle(content: content)),
+                icon: GamepadControlIcon(source: .text, value: "A", placement: .center, scale: 2.2)))]
+        let size = customization.deviceCanvas.editorDeviceFrame.screenRect.size
+        let control = try XCTUnwrap(customization.resolvedControls(in: size).first { $0.elementID != nil })
+        let native = GamepadNativeContentPresentation(control: control, showsButtonLabels: true, content: content, icon: control.layoutCustomization.icon)
+        XCTAssertTrue(native.legendVisible)
+        XCTAssertEqual(native.labelOffset.height, -(control.size.height / 2 + 6 + 2), accuracy: 0.001)
+        XCTAssertEqual(native.labelOffset.width, 0)
+    }
+
     func testAuthoredShortLegendRemainsVisibleWithCenteredIconAndLongProfileLabel() throws {
         var customization = GamepadCustomization.blankCanvas
         customization.elements = [KeypadElement(id: UUID(), label: "Long name", kind: .button,

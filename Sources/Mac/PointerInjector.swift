@@ -6,6 +6,7 @@ import Foundation
 final class PointerInjector {
     private let source: CGEventSource?
     private var cachedAccessibilityTrusted = AXIsProcessTrusted()
+    private var heldButtons = Set<ControllerPointerButton>()
 
     init() {
         source = CGEventSource(stateID: .hidSystemState)
@@ -23,7 +24,7 @@ final class PointerInjector {
     }
 
     func moveBy(deltaX: Double, deltaY: Double) {
-        guard cachedAccessibilityTrusted,
+        guard cachedAccessibilityTrusted, deltaX.isFinite, deltaY.isFinite,
               abs(deltaX) >= 0.01 || abs(deltaY) >= 0.01
         else { return }
 
@@ -35,12 +36,17 @@ final class PointerInjector {
             )
         )
 
-        CGEvent(
+        let button: ControllerPointerButton? = heldButtons.contains(.left) ? .left : heldButtons.contains(.right) ? .right : heldButtons.contains(.middle) ? .middle : nil
+        let type = Self.movementEventType(heldButtons: heldButtons)
+        let event = CGEvent(
             mouseEventSource: source,
-            mouseType: .mouseMoved,
+            mouseType: type,
             mouseCursorPosition: target,
-            mouseButton: .left
-        )?.post(tap: .cghidEventTap)
+            mouseButton: button.map(cgMouseButton(for:)) ?? .left
+        )
+        event?.setIntegerValueField(.mouseEventDeltaX, value: Int64(deltaX.rounded()))
+        event?.setIntegerValueField(.mouseEventDeltaY, value: Int64(deltaY.rounded()))
+        event?.post(tap: .cghidEventTap)
     }
 
     func scrollBy(deltaX: Double, deltaY: Double) {
@@ -63,6 +69,7 @@ final class PointerInjector {
     }
 
     func setButton(_ button: ControllerPointerButton, pressed: Bool) {
+        if pressed { heldButtons.insert(button) } else { heldButtons.remove(button) }
         guard cachedAccessibilityTrusted else { return }
         let mouseButton = cgMouseButton(for: button)
         guard let mouseType = mouseEventType(for: button, pressed: pressed) else { return }
@@ -83,6 +90,13 @@ final class PointerInjector {
     func click(_ button: ControllerPointerButton) {
         setButton(button, pressed: true)
         setButton(button, pressed: false)
+    }
+
+    static func movementEventType(heldButtons: Set<ControllerPointerButton>) -> CGEventType {
+        if heldButtons.contains(.left) { return .leftMouseDragged }
+        if heldButtons.contains(.right) { return .rightMouseDragged }
+        if heldButtons.contains(.middle) { return .otherMouseDragged }
+        return .mouseMoved
     }
 
     private func currentMouseLocation() -> CGPoint {

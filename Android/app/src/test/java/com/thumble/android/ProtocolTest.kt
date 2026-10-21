@@ -93,6 +93,17 @@ class ProtocolTest {
         session.edge(id, true, 8)
         assertEquals(1L, field(packets.last(), 32)); assertEquals(92L, field(packets.last(), 24))
     }
+    @Test fun `native canonical service discovery fields work without cached URLs or a server ID`() {
+        val target=PairingTarget.parse("""{"type":"pocketpad-pair","urls":[],"serviceName":"Thumble Mac","serviceType":"_pocketpad._tcp.","serviceDomain":"local.","pairingCode":"123456"}""")
+        assertEquals("Thumble Mac",target.serviceName)
+        assertNull(target.serverID);assertTrue(target.urls.isEmpty())
+    }
+    @Test fun `native canonical unsupported discovery types and domains are rejected`() {
+        for(field in listOf("\"serviceType\":\"_ssh._tcp\"","\"serviceDomain\":\"example.com\"")) {
+            val payload="""{"type":"pocketpad-pair","urls":[],"serverID":"fixture",$field}"""
+            assertTrue(runCatching { PairingTarget.parse(payload) }.isFailure)
+        }
+    }
     @Test fun `service-only pairing requires a specific supported Mac advertisement`() {
         val target = PairingTarget.parse("""{"type":"pocketpad-pair","urls":[],"serverID":"fixture","bonjourServiceType":"_pocketpad._tcp.","pairingCode":"123456"}""")
         assertTrue(target.urls.isEmpty())

@@ -9,7 +9,8 @@ data class ControllerProfile(val id: UUID, val name: String, val source: JSONObj
     val launchTargetName: String? get() = source.optJSONObject("launchTarget")?.takeIf {
         it.optString("kind","application") == "application"
     }?.optString("displayName")?.trim()?.ifBlank { "Application" }?.take(160)
-    val orientationPreference: String get() = source.optString("orientationPreference", "automatic")
+    val isOwned: Boolean get() = source.opt("profileFormatVersion").let { it is Number && it.toDouble()==5.0 }
+    val orientationPreference: String get() = if(isOwned) "landscape" else source.optString("orientationPreference", "automatic")
         .takeIf { it in setOf("automatic", "portrait", "landscape") } ?: "automatic"
     fun layout(landscape: Boolean): JSONObject = source.optJSONObject(
         if (landscape) "landscapeCustomization" else "portraitCustomization"
@@ -65,6 +66,15 @@ data class ControllerProfile(val id: UUID, val name: String, val source: JSONObj
     }
     companion object {
         fun parse(json: JSONObject): ControllerProfile {
+            if(json.opt("profileFormatVersion").let { it is Number && it.toDouble()==5.0 }) {
+                // Use the explicit owned validator, then retain the canonical
+                // source. Its renderer projection alone is never a saved profile.
+                val envelope=JSONObject().put("schema","com.codybontecou.pocketpad.keypad-configuration").put("version",5)
+                    .put("activeProfileID",json.getString("id")).put("defaultProfileID",JSONObject.NULL)
+                    .put("profiles",JSONArray().put(json))
+                val projection=OwnedConfigurationDocument.decode(StrictJSON.data(envelope)).projectedProfiles().single()
+                return projection.copy(source=StrictJSON.objectCopy(json))
+            }
             ProfileFramePolicy.validateStoredProfile(json)
             val id = UUID.fromString(json.getString("id"))
             require(json.has("customization")) { "Profile is missing its layout." }
@@ -103,9 +113,10 @@ internal fun JSONObject.swiftMap(key: String): Map<String, Any> {
 }
 
 data class ProfileSnapshot(val profiles: List<ControllerProfile> = emptyList(), val selectedID: UUID? = null,
-    val defaultID: UUID? = null, val bindingPresentations: List<ProfileBindingPresentations> = emptyList()) {
+    val defaultID: UUID? = null, val bindingPresentations: List<ProfileBindingPresentations> = emptyList(), val serverID: String? = null,
+    val configurationRevision: java.math.BigInteger? = null) {
     val selected: ControllerProfile? get() = profiles.firstOrNull { it.id == selectedID }
-    fun applying(message: JSONObject): ProfileSnapshot {
+    fun applying(message: JSONObject, replaceServer: Boolean = false): ProfileSnapshot {
         val array = message.optJSONArray("gamepadProfiles")
         require(array == null || array.length() <= 256) { "Host sent too many profiles." }
         val incoming = array?.let { (0 until it.length()).map { index -> ControllerProfile.parse(it.getJSONObject(index)) } } ?: profiles
@@ -119,7 +130,15 @@ data class ProfileSnapshot(val profiles: List<ControllerProfile> = emptyList(), 
         } else incoming
         val default = if (message.has("defaultGamepadProfileID")) message.optString("defaultGamepadProfileID")
             .takeIf { it.isNotBlank() && it != "null" }?.let(UUID::fromString) else defaultID
-        val bindings=message.optJSONArray("bindingPresentations")?.let(BindingPresentations::decode) ?: bindingPresentations
-        return ProfileSnapshot(next, selected, default?.takeIf { id -> next.any { it.id == id } }, bindings)
+        val owner=if(message.has("serverID")) {
+            if(message.isNull("serverID")) null else message.getString("serverID").also {
+                require(it.isNotBlank() && it.length<=512) { "Invalid cached Mac identity." }
+            }
+        } else if(replaceServer) null else serverID
+        val bindings=message.optJSONArray("bindingPresentations")?.let(BindingPresentations::decode)
+            ?: if(owner==serverID && (!replaceServer || owner!=null)) bindingPresentations else emptyList()
+        val revision=if(message.has("configurationRevision")) OwnedPhoneEdit.revision(message.opt("configurationRevision"))
+            else if(owner==serverID && !replaceServer) configurationRevision else null
+        return ProfileSnapshot(next, selected, default?.takeIf { id -> next.any { it.id == id } }, bindings, owner, revision)
     }
 }

@@ -27,6 +27,17 @@ class BindingPresentationTest {
         wire.getJSONArray("entries").getJSONObject(0).getJSONObject("input").put("part","joystick_up")
         assertEquals("joystick_up",BindingPresentations.decode(JSONArray().put(wire)).first().entries.first().part)
     }
+    @Test fun `cached identity survives partial updates and changing Mac clears stale binding hints`() {
+        val initial=ProfileSnapshot(bindingPresentations=listOf(ProfileBindingPresentations(profile,null,listOf(entry()))),serverID="mac-a")
+        assertEquals(initial,initial.applying(JSONObject()))
+        assertEquals(initial,initial.applying(JSONObject().put("serverID","mac-a")))
+        val changed=initial.applying(JSONObject().put("serverID","mac-b"))
+        assertEquals("mac-b",changed.serverID);assertTrue(changed.bindingPresentations.isEmpty())
+        assertNull(initial.applying(JSONObject().put("serverID",JSONObject.NULL)).serverID)
+        val unidentified=initial.applying(JSONObject(),replaceServer=true)
+        assertNull(unidentified.serverID);assertTrue(unidentified.bindingPresentations.isEmpty())
+        assertTrue(initial.copy(serverID=null).applying(JSONObject(),replaceServer=true).bindingPresentations.isEmpty())
+    }
     @Test fun `visual duplicate comparison uses authored label and text icon with case diacritic whitespace folding`() {
         assertNull(BindingPresentations.visibleHint(" É \u00a0","e",null))
         assertEquals("⌘A",BindingPresentations.visibleHint("  ⌘A  ","Launch",null))

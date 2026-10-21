@@ -11,7 +11,7 @@ struct ThumbleCLI {
     private static let trackpadOptionNames = [
         "--sensitivity", "--cursor-sensitivity", "--pointer-sensitivity",
         "--scroll-sensitivity", "--tap-to-click", "--two-finger-scroll",
-        "--natural-scrolling", "--natural-scroll"
+        "--natural-scrolling", "--natural-scroll", "--click-button", "--moves-cursor"
     ]
     private static let triggerOptionNames = [
         "--target", "--trigger", "--orientation", "--dead-zone", "--deadzone",
@@ -226,7 +226,19 @@ struct ThumbleCLI {
         case "profile", "profiles":
             try profile(arguments: rest)
         case "wow":
-            try importThumbleLink(arguments: rest)
+            if rest.first == "setup" {
+                let output = try ThumbleCLIRuntimeBackend.runWoWSetup(arguments: Array(rest.dropFirst()))
+                try FileHandle.standardOutput.write(contentsOf: output)
+            } else if rest.first == "sync" {
+                let arguments = Array(rest.dropFirst())
+                let json = arguments.contains("--json")
+                let actions = arguments.filter { $0 != "--json" }
+                guard actions.count <= 1, arguments.filter({ $0 == "--json" }).count <= 1 else {
+                    throw CLIError.message("Usage: thumble wow sync status|start|stop|request-permission [--json]")
+                }
+                let output = try ThumbleCLIRuntimeBackend.runWoWSync(action: actions.first ?? "status", json: json)
+                try FileHandle.standardOutput.write(contentsOf: output)
+            } else { try importThumbleLink(arguments: rest) }
         case "template", "templates":
             try template(arguments: rest)
         case "theme", "themes":
@@ -1015,11 +1027,44 @@ struct ThumbleCLI {
         try writeRawProfileArtifact(artifact.artifactJSON, to: parsed.outputPath)
     }
 
+    /// Local planning reads editor snapshots rather than exporting unrelated setups.
+    /// Existing artwork may be valid locally without being a portable artifact.
+    private static func thumbleLinkPlanningConfiguration(backend: ThumbleCLIProfileBackend) throws -> (data: Data, revision: UInt64) {
+        guard let catalog = try backend.perform(.list).catalog,
+              let active = catalog.profiles.first(where: { $0.active }) else {
+            throw CLIError.message("Profile authority returned no current setup catalog.")
+        }
+        var profiles: [Any] = []
+        var keys: [String: Any] = [:]
+        var outputs: [String: Any] = [:]
+        for entry in catalog.profiles {
+            let response = try backend.perform(.designSnapshot(.id(entry.profileID), draftID: nil, expectedDraftRevision: nil),
+                expectedConfigurationRevision: catalog.configurationRevision)
+            guard let snapshot = response.designSnapshot, snapshot.configurationRevision == catalog.configurationRevision,
+                  snapshot.draftID == nil, snapshot.draftRevision == nil,
+                  let bindings = try JSONSerialization.jsonObject(with: Data(snapshot.bindingJSON.utf8)) as? [String: Any] else {
+                throw CLIError.message("Your setups changed during import review. Review this export again.")
+            }
+            profiles.append(try JSONSerialization.jsonObject(with: Data(snapshot.profileJSON.utf8)))
+            keys[entry.profileID.uuidString] = bindings["keyBindings"] ?? [String: Any]()
+            outputs[entry.profileID.uuidString] = bindings["outputBindings"] ?? [String: Any]()
+        }
+        var envelope: [String: Any] = ["schema": ThumbleKeypadConfigurationExport.schemaIdentifier,
+            "version": ThumbleKeypadConfigurationExport.currentVersion, "exportedAt": Date.currentMilliseconds,
+            "profiles": profiles, "activeProfileID": active.profileID.uuidString,
+            "profileKeyBindings": keys, "profileOutputBindings": outputs]
+        if let fallback = catalog.profiles.first(where: { $0.default }) {
+            envelope["defaultProfileID"] = fallback.profileID.uuidString
+        }
+        return (try JSONSerialization.data(withJSONObject: envelope), catalog.configurationRevision)
+    }
+
     private static func importThumbleLink(arguments: [String]) throws {
-        let usage = "Usage: thumble wow import <export.txt|->|--clipboard [--name NAME] [--dry-run] [--json] [--no-select]"
+        let usage = "Usage: thumble wow import <export.txt|->|--clipboard [--name NAME] [--layout controller|grid] [--dry-run] [--json] [--no-select]"
         guard arguments.first == "import" else { throw CLIError.message(usage) }
         var path: String?
         var name: String?
+        var layout: ThumbleLinkImport.Layout?
         var clipboard = false
         var dryRun = false
         var json = false
@@ -1032,6 +1077,11 @@ struct ThumbleCLI {
             case "--dry-run": dryRun = true
             case "--json": json = true
             case "--no-select": select = false
+            case "--layout":
+                index += 1
+                guard index < arguments.count, layout == nil,
+                      let choice = ThumbleLinkImport.Layout(rawValue: arguments[index]) else { throw CLIError.message(usage) }
+                layout = choice
             case "--name":
                 index += 1
                 guard index < arguments.count, name == nil else { throw CLIError.message(usage) }
@@ -1061,14 +1111,13 @@ struct ThumbleCLI {
         // Validate the untrusted export before contacting the profile authority.
         _ = try ThumbleLinkSnapshot.parse(text)
         let backend = try profileBackend()
-        let response = try backend.perform(.export(nil))
-        guard let artifact = response.artifact else { throw CLIError.message("Profile authority returned no current configuration.") }
-        let plan = try ThumbleLinkImport.prepare(text: text, currentConfiguration: Data(artifact.artifactJSON.utf8), name: name)
+        let current = try thumbleLinkPlanningConfiguration(backend: backend)
+        let plan = try ThumbleLinkImport.prepare(text: text, currentConfiguration: current.data, name: name, layout: layout)
         var imported = false
         if !dryRun {
             _ = try backend.perform(.import(artifactJSON: String(decoding: plan.configurationData, as: UTF8.self),
                 appendAsCopies: false, select: select, makeDefault: false),
-                expectedConfigurationRevision: artifact.configurationRevision)
+                expectedConfigurationRevision: current.revision)
             imported = true
         }
         if json {
@@ -1078,10 +1127,13 @@ struct ThumbleCLI {
             }
             let data = try JSONSerialization.data(withJSONObject: ["profileName": plan.profileName,
                 "profileID": plan.snapshot.profileID.uuidString, "isRefresh": plan.isRefresh,
-                "imported": imported, "rows": rows, "warnings": plan.warnings], options: [.prettyPrinted, .sortedKeys])
+                "imported": imported, "client": plan.snapshot.client.displayName,
+                "layout": plan.layout.rawValue, "rows": rows, "warnings": plan.warnings], options: [.prettyPrinted, .sortedKeys])
             print(String(decoding: data, as: UTF8.self))
         } else {
             print("\(dryRun ? "Review" : "Imported"): \(plan.profileName)\(plan.isRefresh ? " (refresh)" : " (new setup)")")
+            print("Client: \(plan.snapshot.client.displayName) \(plan.snapshot.client.version)")
+            print("Layout: \(plan.layout.title)")
             for row in plan.rows {
                 print("  \(row.label): \(row.key ?? row.issue ?? "Skipped")\(row.note.map { " (\($0))" } ?? "")")
             }
@@ -6685,6 +6737,18 @@ struct ThumbleCLI {
         if let value = optionValue("--tap-to-click", in: arguments) {
             settings.tapToClick = try parseBool(value)
         }
+        if let value = optionValue("--click-button", in: arguments) {
+            switch value.lowercased() {
+            case "automatic", "none": settings.clickButton = nil
+            case "left": settings.clickButton = .left
+            case "right": settings.clickButton = .right
+            case "middle": settings.clickButton = .middle
+            default: throw CLIError.message("Unknown click button: \(value). Use automatic, left, right, or middle.")
+            }
+        }
+        if let value = optionValue("--moves-cursor", in: arguments) {
+            settings.movesCursor = try parseBool(value)
+        }
         if let value = optionValue("--two-finger-scroll", in: arguments) {
             settings.twoFingerScroll = try parseBool(value)
         }
@@ -6883,7 +6947,8 @@ struct ThumbleCLI {
         case "none", "digital", "digitaldirections", "off": return .none
         case "left", "leftstick", "lstick", "ls": return .leftStick
         case "right", "rightstick", "rstick", "rs": return .rightStick
-        default: throw CLIError.message("Unknown joystick analog target: \(text). Use none, left-stick, or right-stick.")
+        case "camera", "mouselook": return .mouseLook
+        default: throw CLIError.message("Unknown joystick analog target: \(text). Use none, left-stick, right-stick, or camera.")
         }
     }
 
@@ -7018,7 +7083,7 @@ struct ThumbleCLI {
             "--corner", "--radius", "--corner-tl", "--corner-tr", "--corner-br", "--corner-bl", "--shadow",
             "--shadow-strength", "--kind", "--up", "--down", "--left", "--right", "--target", "--trigger", "--dead-zone", "--deadzone", "--sensitivity",
             "--analog", "--analog-stick", "--stick", "--sends-digital-directions", "--joystick-style", "--stick-style",
-            "--cursor-sensitivity", "--pointer-sensitivity", "--scroll-sensitivity", "--tap-to-click",
+            "--cursor-sensitivity", "--pointer-sensitivity", "--scroll-sensitivity", "--tap-to-click", "--click-button", "--moves-cursor",
             "--two-finger-scroll", "--natural-scrolling", "--natural-scroll", "--digital", "--digital-button", "--digital-threshold", "--hold-ms",
             "--step", "--pixels", "--by", "--dx", "--dy", "--canvas", "--canvas-width", "--canvas-height",
             "--device", "--frame", "--size", "--device-size", "--orientation", "--device-orientation", "--variant", "--layout-variant",
@@ -7228,7 +7293,9 @@ struct ThumbleCLI {
           thumble profile launch [NAME|UUID|active|default|--profile PROFILE] [--json]
           thumble profile export [NAME|UUID|--all] [-o file.json] [--invocation-id UUID]
           thumble profile import file.json [--append] [--no-select] [--default] [--name NAME] [--invocation-id UUID]
-          thumble wow import <export.txt|->|--clipboard [--name NAME] [--dry-run] [--json] [--no-select]
+          thumble wow setup --client-root PATH --consoleport-source PATH [--apply --expected-plan-sha256 HASH] [--replace-addons] [--replace-bindings] [--no-live] [--json]
+          thumble wow sync status|start|stop|request-permission [--json]
+          thumble wow import <export.txt|->|--clipboard [--name NAME] [--layout controller|grid] [--dry-run] [--json] [--no-select]
 
         Templates:
           thumble template list

@@ -33,6 +33,30 @@ struct AndroidLayoutEditOracleTests {
         let noop = try ThumblePhoneLayoutBridge.transform(phoneRequest(repeated))
         #expect(!noop.changed && noop.profile == raw)
     }
+    @Test func newPhoneOrientationSlotRetainsSubmittedLayoutExtensions() throws {
+        var profile = GamepadConfigurationProfile(id: UUID(), name: "Legacy phone", primaryCustomization: .defaultValue)
+        let rawProfile = try JSONSerialization.jsonObject(with: JSONEncoder().encode(profile))
+        var layout = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(profile.customization)) as? [String: Any])
+        layout["deviceCanvas"] = ["frameID": "iphone-17-pro-landscape"]
+        layout["futureLayoutMetadata"] = ["owner": "phone", "retained": true]
+        layout["colorSchemePreference"] = "dark"
+        let fields: [String: Any] = ["schemaVersion": 1, "invocationID": UUID().uuidString, "phoneLayoutCommand": "replace",
+            "profileID": profile.id.uuidString, "profile": rawProfile, "customization": layout, "nowMillis": 100]
+        let result = try ThumblePhoneLayoutBridge.transform(phoneRequest(fields))
+        #expect(result.changed)
+        let responseProfile = try #require(result.profile)
+        let raw = try #require(JSONSerialization.jsonObject(with: JSONEncoder().encode(responseProfile)) as? [String: Any])
+        let primary = try #require(raw["customization"] as? [String: Any])
+        let variant = try #require(raw["landscapeCustomization"] as? [String: Any])
+        #expect(primary["futureLayoutMetadata"] as? [String: AnyHashable] == ["owner": "phone", "retained": true])
+        #expect(variant["futureLayoutMetadata"] as? [String: AnyHashable] == primary["futureLayoutMetadata"] as? [String: AnyHashable])
+        #expect(variant["updatedAt"] as? Int == 100)
+        profile = try JSONDecoder().decode(GamepadConfigurationProfile.self, from: JSONEncoder().encode(responseProfile))
+        #expect(profile.customization(for: .landscape).colorSchemePreference == .dark)
+        var repeated = fields
+        repeated["profile"] = raw; repeated["customization"] = variant; repeated["nowMillis"] = 101
+        #expect(!(try ThumblePhoneLayoutBridge.transform(phoneRequest(repeated))).changed)
+    }
     @Test func phoneLayoutRecoveryAndStrictCapabilities() throws {
         let id = UUID()
         let customization = try JSONSerialization.jsonObject(with: JSONEncoder().encode(GamepadCustomization.defaultValue))

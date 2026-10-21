@@ -31,12 +31,15 @@ public enum ProfileFormatPolicy {
     }
     /// Inspect only the format header before a future profile can fail typed
     /// decoding or be flattened into an older snapshot. Compact input is unchanged.
-    public static func validateIncoming(_ data: Data) throws {
+    public static func validateIncoming(_ data: Data, offered: [Int] = supportedFormats) throws {
+        guard let required = try requiredVersion(in: data) else { return }
+        _ = try negotiate(required: required, offered: offered)
+    }
+    public static func requiredVersion(in data: Data) throws -> Int? {
         guard data.count <= ControllerWireCodec.maximumInboundPayloadSize else { throw Failure.updateRequired }
-        if data.count >= 2, data[data.startIndex] == 80, data[data.startIndex + 1] == 80 { return }
+        if data.count >= 2, data[data.startIndex] == 80, data[data.startIndex + 1] == 80 { return nil }
         let header = try JSONDecoder().decodeUnique(Header.self, from: data)
-        guard header.hasProfiles else { return }
-        _ = try negotiate(required: header.required, offered: supportedFormats)
+        return header.hasProfiles ? header.required : nil
     }
     private struct Header: Decodable {
         let hasProfiles: Bool

@@ -1,7 +1,7 @@
 import Foundation
 
-/// Canonical v1 input report shared by both receiver implementations. Y grows
-/// downwards on the HID wire; consumer APIs may expose a different convention.
+/// Canonical v2 input report shared by both receiver implementations. Semantic
+/// coordinates grow downwards; the Xbox HID encoder converts Y to upwards.
 public struct VirtualGamepadReportState: Equatable, Sendable {
     public var buttons: Set<VirtualGamepadButton> = []
     public var leftStickX: Double = 0
@@ -23,53 +23,47 @@ public struct VirtualGamepadReportState: Equatable, Sendable {
         for button in buttons {
             if let bit = Self.bitIndex(button) { mask |= UInt16(1) << bit }
         }
-        return [
-            VirtualGamepadReport.reportID,
-            UInt8(truncatingIfNeeded: mask), UInt8(truncatingIfNeeded: mask >> 8),
-            Self.hat(buttons),
-            Self.signedAxis(leftStickX), Self.signedAxis(leftStickY),
-            Self.signedAxis(rightStickX), Self.signedAxis(rightStickY),
-            Self.triggerAxis(effectiveLeftTrigger), Self.triggerAxis(effectiveRightTrigger)
-        ]
+        // Opposing directions cancel independently on each D-pad axis.
+        let opposites: [(VirtualGamepadButton, VirtualGamepadButton, Int, Int)] = [(.dpadUp, .dpadDown, 0, 1), (.dpadLeft, .dpadRight, 2, 3)]
+        for (first, second, firstBit, secondBit) in opposites {
+            if buttons.contains(first) && buttons.contains(second) { mask &= ~((1 << firstBit) | (1 << secondBit)) }
+        }
+        var bytes = [UInt8](repeating: 0, count: VirtualGamepadReport.byteCount)
+        bytes[1] = UInt8(VirtualGamepadReport.byteCount)
+        bytes[2] = UInt8(truncatingIfNeeded: mask); bytes[3] = UInt8(truncatingIfNeeded: mask >> 8)
+        bytes[4] = Self.triggerAxis(effectiveLeftTrigger); bytes[5] = Self.triggerAxis(effectiveRightTrigger)
+        // Phone/API coordinates grow downwards; Xbox HID Y grows upwards.
+        for (offset, value) in [(6, leftStickX), (8, -leftStickY), (10, rightStickX), (12, -rightStickY)] {
+            let axis = UInt16(bitPattern: Self.signedAxis(value))
+            bytes[offset] = UInt8(truncatingIfNeeded: axis); bytes[offset + 1] = UInt8(truncatingIfNeeded: axis >> 8)
+        }
+        return bytes
     }
 
     private static func bitIndex(_ button: VirtualGamepadButton) -> UInt16? {
         switch button {
-        case .south: 0
-        case .east: 1
-        case .west: 2
-        case .north: 3
-        case .leftShoulder: 4
-        case .rightShoulder: 5
-        case .leftTriggerButton: 6
-        case .rightTriggerButton: 7
-        case .select: 8
-        case .start: 9
+        case .dpadUp: 0
+        case .dpadDown: 1
+        case .dpadLeft: 2
+        case .dpadRight: 3
+        case .start: 4
+        case .select: 5
+        case .leftStickPress: 6
+        case .rightStickPress: 7
+        case .leftShoulder: 8
+        case .rightShoulder: 9
         case .home: 10
-        case .leftStickPress: 11
-        case .rightStickPress: 12
-        case .dpadUp, .dpadDown, .dpadLeft, .dpadRight: nil
+        case .south: 12
+        case .east: 13
+        case .west: 14
+        case .north: 15
+        case .leftTriggerButton, .rightTriggerButton: nil
         }
     }
 
-    private static func hat(_ buttons: Set<VirtualGamepadButton>) -> UInt8 {
-        switch (buttons.contains(.dpadUp), buttons.contains(.dpadDown),
-                buttons.contains(.dpadLeft), buttons.contains(.dpadRight)) {
-        case (true, false, false, false): 0
-        case (true, false, false, true): 1
-        case (false, false, false, true): 2
-        case (false, true, false, true): 3
-        case (false, true, false, false): 4
-        case (false, true, true, false): 5
-        case (false, false, true, false): 6
-        case (true, false, true, false): 7
-        default: 8 // Opposing directions cancel to the descriptor's null value.
-        }
-    }
-
-    private static func signedAxis(_ value: Double) -> UInt8 {
-        let finite = value.isFinite ? value : 0
-        return UInt8(bitPattern: Int8((min(1, max(-1, finite)) * 127).rounded()))
+    private static func signedAxis(_ value: Double) -> Int16 {
+        let finite = value.isFinite ? min(1, max(-1, value)) : 0
+        return Int16((finite * (finite < 0 ? 32768 : 32767)).rounded())
     }
 
     private static func triggerAxis(_ value: Double) -> UInt8 {
@@ -79,27 +73,29 @@ public struct VirtualGamepadReportState: Equatable, Sendable {
 }
 
 public enum VirtualGamepadReport {
-    public static let reportID: UInt8 = 1
-    public static let byteCount = 10
-    public static let vendorID = 0xCB01
-    public static let productID = 0x5050
+    // Xbox 360 compatibility identity/USB layout. Product/manufacturer remain
+    // Thumble. Identity alone enumerates but does not make generic reports work.
+    public static let reportID: UInt8 = 0
+    public static let byteCount = 20
+    public static let vendorID = 0x045E
+    public static let productID = 0x028E
 
-    /// Thirteen buttons, three reserved constant bits, hat with eight directions
-    /// and a null state, signed X/Y/Rx/Ry, independent unsigned Z/Rz triggers.
-    /// Reset all angular globals before the axes (HID globals are sticky).
+    /// Apple Xbox userspace-driver descriptor, pinned from steam-controller-bridge.
+    /// Copyright (c) 2026 Lynxware; MIT, see ThirdParty/SteamControllerBridge-LICENSE.txt.
     public static let descriptor: [UInt8] = [
-        0x05, 0x01, 0x09, 0x05, 0xA1, 0x01, 0x85, 0x01,
-        0x05, 0x09, 0x19, 0x01, 0x29, 0x0D, 0x15, 0x00, 0x25, 0x01,
-        0x75, 0x01, 0x95, 0x0D, 0x81, 0x02,
-        0x95, 0x03, 0x81, 0x03,
-        0x05, 0x01, 0x09, 0x39, 0x15, 0x00, 0x25, 0x07,
-        0x35, 0x00, 0x46, 0x3B, 0x01, 0x65, 0x14,
-        0x75, 0x04, 0x95, 0x01, 0x81, 0x42,
-        0x75, 0x04, 0x95, 0x01, 0x81, 0x03,
-        0x35, 0x00, 0x45, 0x00, 0x65, 0x00, 0x55, 0x00,
-        0x09, 0x30, 0x09, 0x31, 0x09, 0x33, 0x09, 0x34,
-        0x15, 0x81, 0x25, 0x7F, 0x75, 0x08, 0x95, 0x04, 0x81, 0x02,
-        0x09, 0x32, 0x09, 0x35, 0x15, 0x00, 0x26, 0xFF, 0x00,
-        0x75, 0x08, 0x95, 0x02, 0x81, 0x02, 0xC0
+        0x05, 0x01, 0x09, 0x05, 0xA1, 0x01, 0x05, 0x01, 0x09, 0x3A, 0xA1, 0x02, 0x75, 0x08, 0x95, 0x02,
+        0x05, 0x01, 0x09, 0x3F, 0x09, 0x3B, 0x81, 0x01, 0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00,
+        0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x19, 0x0C, 0x29, 0x0F, 0x81, 0x02, 0x75, 0x01, 0x15, 0x00,
+        0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x09, 0x09, 0x09, 0x0A, 0x09, 0x07,
+        0x09, 0x08, 0x81, 0x02, 0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x03,
+        0x05, 0x09, 0x09, 0x05, 0x09, 0x06, 0x09, 0x0B, 0x81, 0x02, 0x75, 0x01, 0x95, 0x01, 0x81, 0x01,
+        0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x19, 0x01,
+        0x29, 0x04, 0x81, 0x02, 0x75, 0x08, 0x15, 0x00, 0x26, 0xFF, 0x00, 0x35, 0x00, 0x46, 0xFF, 0x00,
+        0x95, 0x02, 0x05, 0x01, 0x09, 0x32, 0x09, 0x35, 0x81, 0x02, 0x75, 0x10, 0x16, 0x00, 0x80, 0x26,
+        0xFF, 0x7F, 0x36, 0x00, 0x80, 0x46, 0xFF, 0x7F, 0x05, 0x01, 0x09, 0x01, 0xA1, 0x00, 0x95, 0x02,
+        0x05, 0x01, 0x09, 0x30, 0x09, 0x31, 0x81, 0x02, 0xC0, 0x05, 0x01, 0x09, 0x01, 0xA1, 0x00, 0x95,
+        0x02, 0x05, 0x01, 0x09, 0x33, 0x09, 0x34, 0x81, 0x02, 0xC0, 0x75, 0x08, 0x95, 0x06, 0x81, 0x01,
+        0x06, 0x00, 0xFF, 0x15, 0x00, 0x26, 0xFF, 0x00, 0x85, 0x31, 0x09, 0x01, 0x75, 0x08, 0x95, 0x4D,
+        0x91, 0x02, 0xC0, 0xC0,
     ]
 }

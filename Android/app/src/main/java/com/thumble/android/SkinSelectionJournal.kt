@@ -19,22 +19,25 @@ internal object SkinSelectionJournal {
     fun decode(array: JSONArray?): List<PendingSkinSelection> {
         if (array == null) return emptyList()
         require(array.length() <= 256)
-        val seen=hashSetOf<UUID>()
+        val seen=hashSetOf<Pair<String?,UUID>>()
         return (0 until array.length()).map { index ->
             val o=array.getJSONObject(index);val id=UUID.fromString(o.getString("profileID"))
-            require(seen.add(id))
             val stamp=o.get("updatedAt") as? Number ?: error("Invalid pending skin timestamp")
             val timestamp=try { java.math.BigDecimal(stamp.toString()).longValueExact() } catch(e:ArithmeticException) { throw IllegalArgumentException("Invalid pending skin timestamp",e) }
             val server=if(o.isNull("serverID") || !o.has("serverID")) null else o.getString("serverID").also { require(it.isNotBlank() && it.length<=512) }
+            require(seen.add(server to id))
             val reference=if(o.isNull("skinReference") || !o.has("skinReference")) null else SkinReference.parse(o.getJSONObject("skinReference"))
             PendingSkinSelection(id,reference,timestamp,server)
         }
     }
-    fun encode(values: List<PendingSkinSelection>) = JSONArray().also { a -> values.forEach { a.put(it.json()) } }
+    fun encode(values: List<PendingSkinSelection>) = JSONArray().also { a ->
+        require(values.size<=256 && values.map { it.serverID to it.profileID }.distinct().size==values.size)
+        values.forEach { a.put(it.json()) }
+    }
     fun replacing(values: List<PendingSkinSelection>, value: PendingSkinSelection): List<PendingSkinSelection> =
-        (values.filterNot { it.profileID==value.profileID }+value).also { require(it.size<=256) }
+        (values.filterNot { it.profileID==value.profileID && it.serverID==value.serverID }+value).also { require(it.size<=256) }
     fun acknowledge(values: List<PendingSkinSelection>, snapshot: ProfileSnapshot, serverID: String?): List<PendingSkinSelection> = values.filterNot { pending ->
-        if(pending.serverID!=null && pending.serverID!=serverID) false else {
+        if(pending.serverID==null || pending.serverID!=serverID) false else {
             val profile=snapshot.profiles.firstOrNull { it.id==pending.profileID }
             profile!=null && (if(!profile.source.has("skinReference") || profile.source.isNull("skinReference")) null
                 else SkinReference.parse(profile.source.getJSONObject("skinReference")))==pending.reference

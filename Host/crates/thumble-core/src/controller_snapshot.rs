@@ -1744,7 +1744,7 @@ fn sanitize_joystick_settings(value: Option<&Value>) -> (Option<Value>, bool) {
     let Some(target) = object
         .get("analogTarget")
         .and_then(Value::as_str)
-        .filter(|value| matches!(*value, "none" | "left_stick" | "right_stick"))
+        .filter(|value| matches!(*value, "none" | "left_stick" | "right_stick" | "mouse_look"))
     else {
         return (None, true);
     };
@@ -1782,7 +1782,7 @@ fn sanitize_joystick_settings(value: Option<&Value>) -> (Option<Value>, bool) {
     });
     (
         Some(
-            serde_json::json!({"analogTarget":target,"sendsDigitalDirections":digital,"deadZone":dead_zone,"sensitivity":sensitivity,"invertX":invert_x,"invertY":invert_y,"snapToCardinal":snap}),
+            serde_json::json!({"analogTarget":target,"sendsDigitalDirections":(digital && target != "mouse_look"),"deadZone":dead_zone,"sensitivity":sensitivity,"invertX":invert_x,"invertY":invert_y,"snapToCardinal":snap}),
         ),
         omitted,
     )
@@ -1852,6 +1852,23 @@ fn sanitize_trackpad_settings(value: Option<&Value>) -> (Option<Value>, bool) {
     ) else {
         return (None, true);
     };
+    let button = match object.get("clickButton").filter(|v| !v.is_null()) {
+        Some(value) => match value
+            .as_str()
+            .filter(|v| ["left", "right", "middle"].contains(v))
+        {
+            Some(button) => Some(button),
+            None => return (None, true),
+        },
+        None => None,
+    };
+    let moves = match object.get("movesCursor").filter(|v| !v.is_null()) {
+        Some(value) => match value.as_bool() {
+            Some(moves) => moves,
+            None => return (None, true),
+        },
+        None => true,
+    };
     let omitted = object.keys().any(|key| {
         !matches!(
             key.as_str(),
@@ -1860,14 +1877,18 @@ fn sanitize_trackpad_settings(value: Option<&Value>) -> (Option<Value>, bool) {
                 | "tapToClick"
                 | "twoFingerScroll"
                 | "naturalScrolling"
+                | "clickButton"
+                | "movesCursor"
         )
     });
-    (
-        Some(
-            serde_json::json!({"sensitivity":sensitivity,"scrollSensitivity":scroll,"tapToClick":tap,"twoFingerScroll":two_finger,"naturalScrolling":natural}),
-        ),
-        omitted,
-    )
+    let mut safe = serde_json::json!({"sensitivity":sensitivity,"scrollSensitivity":scroll,"tapToClick":tap,"twoFingerScroll":two_finger,"naturalScrolling":natural});
+    if let Some(button) = button {
+        safe["clickButton"] = Value::String(button.to_owned());
+    }
+    if !moves {
+        safe["movesCursor"] = Value::Bool(false);
+    }
+    (Some(safe), omitted)
 }
 
 fn sanitize_element_outputs(
@@ -3087,6 +3108,25 @@ mod tests {
     use super::*;
     use crate::{minimal_default_customization, PersistentState, TrustedClient};
     use serde_json::json;
+
+    #[test]
+    fn camera_and_discrete_click_settings_survive_safe_projection() {
+        let camera = json!({"analogTarget":"mouse_look","sendsDigitalDirections":true,"deadZone":0.12,"sensitivity":1.0,"invertX":false,"invertY":false,"snapToCardinal":false});
+        let (safe, omitted) = sanitize_joystick_settings(Some(&camera));
+        assert!(!omitted);
+        assert_eq!(safe.unwrap()["sendsDigitalDirections"], false);
+        let click = json!({"sensitivity":1.2,"scrollSensitivity":0.85,"tapToClick":true,"twoFingerScroll":false,"naturalScrolling":true,"clickButton":"right","movesCursor":false});
+        let (safe, omitted) = sanitize_trackpad_settings(Some(&click));
+        assert!(!omitted);
+        assert_eq!(safe.unwrap(), click);
+        let mut invalid = click.clone();
+        invalid["clickButton"] = json!("execute");
+        assert_eq!(sanitize_trackpad_settings(Some(&invalid)), (None, true));
+        let mut old = click;
+        old.as_object_mut().unwrap().remove("clickButton");
+        old.as_object_mut().unwrap().remove("movesCursor");
+        assert_eq!(sanitize_trackpad_settings(Some(&old)), (Some(old), false));
+    }
 
     fn state_with_profile(profile: Value) -> PersistentState {
         let mut state = PersistentState::minimal("server").unwrap();

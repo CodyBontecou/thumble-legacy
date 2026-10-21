@@ -1,6 +1,20 @@
 import XCTest
 
 final class VirtualGamepadOutputPolicyTests: XCTestCase {
+    func testCameraAndClickSettingsRoundTripWithoutChangingOldTrackpads() throws {
+        let old = Data(#"{"sensitivity":1.2,"scrollSensitivity":0.85,"tapToClick":true,"twoFingerScroll":true,"naturalScrolling":true}"#.utf8)
+        let decoder = JSONDecoder()
+        let original = try decoder.decode(GamepadTrackpadSettings.self, from: old)
+        XCTAssertNil(original.clickButton)
+        XCTAssertTrue(original.movesCursor)
+        let click = GamepadTrackpadSettings(clickButton: .right, movesCursor: false)
+        XCTAssertEqual(try decoder.decode(GamepadTrackpadSettings.self, from: JSONEncoder().encode(click)), click)
+        let camera = GamepadJoystickOutputSettings(analogTarget: .mouseLook, sendsDigitalDirections: true).normalized
+        XCTAssertFalse(camera.sendsDigitalDirections)
+        XCTAssertNil(camera.analogTarget.stick)
+        XCTAssertEqual(try decoder.decode(GamepadJoystickOutputSettings.self, from: JSONEncoder().encode(camera)), camera)
+    }
+
     func testKeyboardModeGatesDirectOutputsTriggersAndAnalogControls() {
         var customization = GamepadCustomization.defaultValue
         customization.elements.append(KeypadElement(output: .init(gamepadButtons: [.south])))

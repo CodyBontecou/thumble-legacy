@@ -1,20 +1,33 @@
-//! Portable v1 gamepad codec and lifecycle. Readiness means successful HID report
+//! Portable v2 gamepad codec and lifecycle. Readiness means successful HID report
 //! submission, not recognition by any game or controller framework.
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 use thumble_core::VirtualGamepadButton;
 use thumble_protocol::{VirtualGamepadStick, VirtualGamepadTrigger};
 
-pub const REPORT_ID: u8 = 1;
-pub const NEUTRAL_REPORT: [u8; 10] = [1, 0, 0, 8, 0, 0, 0, 0, 0, 0];
+pub const REPORT_ID: u8 = 0;
+pub const REPORT_LENGTH: usize = 20;
+pub const VENDOR_ID: i64 = 0x045e;
+pub const PRODUCT_ID: i64 = 0x028e;
+pub const NEUTRAL_REPORT: [u8; REPORT_LENGTH] =
+    [0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+// Apple Xbox userspace-driver descriptor, pinned from steam-controller-bridge.
+// Copyright (c) 2026 Lynxware; MIT, see ThirdParty/SteamControllerBridge-LICENSE.txt.
 pub const REPORT_DESCRIPTOR: &[u8] = &[
-    0x05, 0x01, 0x09, 0x05, 0xa1, 0x01, 0x85, 0x01, 0x05, 0x09, 0x19, 0x01, 0x29, 0x0d, 0x15, 0x00,
-    0x25, 0x01, 0x75, 0x01, 0x95, 0x0d, 0x81, 0x02, 0x95, 0x03, 0x81, 0x03, 0x05, 0x01, 0x09, 0x39,
-    0x15, 0x00, 0x25, 0x07, 0x35, 0x00, 0x46, 0x3b, 0x01, 0x65, 0x14, 0x75, 0x04, 0x95, 0x01, 0x81,
-    0x42, 0x75, 0x04, 0x95, 0x01, 0x81, 0x03, 0x35, 0x00, 0x45, 0x00, 0x65, 0x00, 0x55, 0x00, 0x09,
-    0x30, 0x09, 0x31, 0x09, 0x33, 0x09, 0x34, 0x15, 0x81, 0x25, 0x7f, 0x75, 0x08, 0x95, 0x04, 0x81,
-    0x02, 0x09, 0x32, 0x09, 0x35, 0x15, 0x00, 0x26, 0xff, 0x00, 0x75, 0x08, 0x95, 0x02, 0x81, 0x02,
-    0xc0,
+    0x05, 0x01, 0x09, 0x05, 0xa1, 0x01, 0x05, 0x01, 0x09, 0x3a, 0xa1, 0x02, 0x75, 0x08, 0x95, 0x02,
+    0x05, 0x01, 0x09, 0x3f, 0x09, 0x3b, 0x81, 0x01, 0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00,
+    0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x19, 0x0c, 0x29, 0x0f, 0x81, 0x02, 0x75, 0x01, 0x15, 0x00,
+    0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x09, 0x09, 0x09, 0x0a, 0x09, 0x07,
+    0x09, 0x08, 0x81, 0x02, 0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x03,
+    0x05, 0x09, 0x09, 0x05, 0x09, 0x06, 0x09, 0x0b, 0x81, 0x02, 0x75, 0x01, 0x95, 0x01, 0x81, 0x01,
+    0x75, 0x01, 0x15, 0x00, 0x25, 0x01, 0x35, 0x00, 0x45, 0x01, 0x95, 0x04, 0x05, 0x09, 0x19, 0x01,
+    0x29, 0x04, 0x81, 0x02, 0x75, 0x08, 0x15, 0x00, 0x26, 0xff, 0x00, 0x35, 0x00, 0x46, 0xff, 0x00,
+    0x95, 0x02, 0x05, 0x01, 0x09, 0x32, 0x09, 0x35, 0x81, 0x02, 0x75, 0x10, 0x16, 0x00, 0x80, 0x26,
+    0xff, 0x7f, 0x36, 0x00, 0x80, 0x46, 0xff, 0x7f, 0x05, 0x01, 0x09, 0x01, 0xa1, 0x00, 0x95, 0x02,
+    0x05, 0x01, 0x09, 0x30, 0x09, 0x31, 0x81, 0x02, 0xc0, 0x05, 0x01, 0x09, 0x01, 0xa1, 0x00, 0x95,
+    0x02, 0x05, 0x01, 0x09, 0x33, 0x09, 0x34, 0x81, 0x02, 0xc0, 0x75, 0x08, 0x95, 0x06, 0x81, 0x01,
+    0x06, 0x00, 0xff, 0x15, 0x00, 0x26, 0xff, 0x00, 0x85, 0x31, 0x09, 0x01, 0x75, 0x08, 0x95, 0x4d,
+    0x91, 0x02, 0xc0, 0xc0,
 ];
 
 /// Pure encoder accepts arbitrary floats: nonfinite values encode as neutral.
@@ -31,65 +44,62 @@ pub struct GamepadReportState {
 }
 
 impl GamepadReportState {
-    pub fn report_bytes(&self) -> [u8; 10] {
+    pub fn report_bytes(&self) -> [u8; REPORT_LENGTH] {
         use VirtualGamepadButton::*;
         let order = [
-            South,
-            East,
-            West,
-            North,
-            LeftShoulder,
-            RightShoulder,
-            LeftTriggerButton,
-            RightTriggerButton,
-            Select,
-            Start,
-            Home,
-            LeftStickPress,
-            RightStickPress,
+            (DpadUp, 0),
+            (DpadDown, 1),
+            (DpadLeft, 2),
+            (DpadRight, 3),
+            (Start, 4),
+            (Select, 5),
+            (LeftStickPress, 6),
+            (RightStickPress, 7),
+            (LeftShoulder, 8),
+            (RightShoulder, 9),
+            (Home, 10),
+            (South, 12),
+            (East, 13),
+            (West, 14),
+            (North, 15),
         ];
-        let mask = order.iter().enumerate().fold(0u16, |mask, (bit, button)| {
-            mask | if self.buttons.contains(button) {
-                1 << bit
-            } else {
-                0
-            }
-        });
         let has = |button| self.buttons.contains(&button);
-        let hat = match (has(DpadUp), has(DpadDown), has(DpadLeft), has(DpadRight)) {
-            (true, false, false, false) => 0,
-            (true, false, false, true) => 1,
-            (false, false, false, true) => 2,
-            (false, true, false, true) => 3,
-            (false, true, false, false) => 4,
-            (false, true, true, false) => 5,
-            (false, false, true, false) => 6,
-            (true, false, true, false) => 7,
-            _ => 8,
-        };
+        let mut mask = order.iter().fold(0u16, |mask, (button, bit)| {
+            mask | if has(*button) { 1 << bit } else { 0 }
+        });
+        for (first, second, bits) in [(DpadUp, DpadDown, 3), (DpadLeft, DpadRight, 12)] {
+            if has(first) && has(second) {
+                mask &= !bits;
+            }
+        }
         let finite = |v: f64| if v.is_finite() { v } else { 0.0 };
-        let axis = |v| (finite(v).clamp(-1.0, 1.0) * 127.0).round() as i8 as u8;
+        let axis = |v| {
+            let v = finite(v).clamp(-1.0, 1.0);
+            (v * if v < 0.0 { 32768.0 } else { 32767.0 }).round() as i16
+        };
         let trigger = |v| (finite(v).clamp(0.0, 1.0) * 255.0).round() as u8;
-        [
-            REPORT_ID,
-            mask as u8,
-            (mask >> 8) as u8,
-            hat,
-            axis(self.left_stick_x),
-            axis(self.left_stick_y),
-            axis(self.right_stick_x),
-            axis(self.right_stick_y),
-            trigger(if has(LeftTriggerButton) {
-                1.0
-            } else {
-                self.left_trigger
-            }),
-            trigger(if has(RightTriggerButton) {
-                1.0
-            } else {
-                self.right_trigger
-            }),
-        ]
+        let mut bytes = NEUTRAL_REPORT;
+        bytes[2..4].copy_from_slice(&mask.to_le_bytes());
+        bytes[4] = trigger(if has(LeftTriggerButton) {
+            1.0
+        } else {
+            self.left_trigger
+        });
+        bytes[5] = trigger(if has(RightTriggerButton) {
+            1.0
+        } else {
+            self.right_trigger
+        });
+        // Semantic Y grows downwards; Xbox HID Y grows upwards.
+        for (offset, value) in [
+            (6, self.left_stick_x),
+            (8, -self.left_stick_y),
+            (10, self.right_stick_x),
+            (12, -self.right_stick_y),
+        ] {
+            bytes[offset..offset + 2].copy_from_slice(&axis(value).to_le_bytes());
+        }
+        bytes
     }
 }
 
@@ -116,7 +126,7 @@ pub struct GamepadSnapshot {
 pub(crate) trait HidBackend: Send {
     fn entitlement(&mut self) -> Result<bool, String>;
     fn start(&mut self) -> Result<(), String>;
-    fn report(&mut self, bytes: [u8; 10]) -> Result<(u32, u64), String>;
+    fn report(&mut self, bytes: [u8; REPORT_LENGTH]) -> Result<(u32, u64), String>;
     /// Requests neutralization/retirement. The OS owner retains the device through
     /// cancel completion, even when the caller's bounded wait times out.
     fn stop(&mut self);
@@ -372,7 +382,7 @@ impl GamepadOutput {
         snapshot
     }
 
-    pub fn report_bytes(&self) -> [u8; 10] {
+    pub fn report_bytes(&self) -> [u8; REPORT_LENGTH] {
         self.state.report_bytes()
     }
 }
@@ -395,7 +405,7 @@ pub(crate) const UNSUPPORTED: u32 = 0xe00002c7;
 /// constructing its slice. Invalid requests never modify buffer contents.
 #[cfg(any(target_os = "macos", test))]
 pub(crate) fn get_report(
-    cached: [u8; 10],
+    cached: [u8; REPORT_LENGTH],
     report_type: u32,
     id: u32,
     buffer: &mut [u8],
@@ -403,11 +413,11 @@ pub(crate) fn get_report(
     if report_type != 0 || id != u32::from(REPORT_ID) {
         return Err(UNSUPPORTED);
     }
-    if buffer.len() < 10 {
+    if buffer.len() < REPORT_LENGTH {
         return Err(NO_SPACE);
     }
-    buffer[..10].copy_from_slice(&cached);
-    Ok(10)
+    buffer[..REPORT_LENGTH].copy_from_slice(&cached);
+    Ok(REPORT_LENGTH)
 }
 
 #[cfg(test)]
@@ -425,13 +435,13 @@ mod tests {
     #[test]
     fn canonical_fixtures() {
         let fixture: serde_json::Value =
-            serde_json::from_str(include_str!("../../../fixtures/gamepad/v1.json")).unwrap();
+            serde_json::from_str(include_str!("../../../fixtures/gamepad/v2.json")).unwrap();
         assert_eq!(
             REPORT_DESCRIPTOR,
             unhex(fixture["descriptorHex"].as_str().unwrap())
         );
         assert_eq!(fixture["reportID"], REPORT_ID);
-        assert_eq!(fixture["reportLength"], 10);
+        assert_eq!(fixture["reportLength"], REPORT_LENGTH);
         for vector in fixture["vectors"].as_array().unwrap() {
             let mut state = GamepadReportState::default();
             if let Some(buttons) = vector["buttons"].as_array() {
@@ -500,14 +510,14 @@ mod tests {
         output
             .set_button(VirtualGamepadButton::LeftTriggerButton, true)
             .unwrap();
-        assert_eq!(output.report_bytes()[8], 255);
+        assert_eq!(output.report_bytes()[4], 255);
         output
             .set_trigger(VirtualGamepadTrigger::Left, 0.5)
             .unwrap();
         output
             .set_button(VirtualGamepadButton::LeftTriggerButton, false)
             .unwrap();
-        assert_eq!(output.report_bytes()[8], 128);
+        assert_eq!(output.report_bytes()[4], 128);
         output.reset().unwrap();
         assert_eq!(output.report_bytes(), NEUTRAL_REPORT);
         let status = output.snapshot();
@@ -528,28 +538,34 @@ mod tests {
 
     #[test]
     fn callback_policy() {
-        let mut buffer = [0xaa; 12];
-        assert_eq!(get_report(NEUTRAL_REPORT, 0, 1, &mut buffer), Ok(10));
-        assert_eq!(&buffer[..10], &NEUTRAL_REPORT);
-        assert_eq!(&buffer[10..], &[0xaa; 2]);
+        let mut buffer = [0xaa; 24];
+        assert_eq!(
+            get_report(NEUTRAL_REPORT, 0, 0, &mut buffer),
+            Ok(REPORT_LENGTH)
+        );
+        assert_eq!(&buffer[..REPORT_LENGTH], &NEUTRAL_REPORT);
+        assert_eq!(&buffer[REPORT_LENGTH..], &[0xaa; 4]);
         for (kind, id, capacity, error) in [
             (1, 1, 12, UNSUPPORTED),
             (2, 1, 12, UNSUPPORTED),
-            (0, 0, 12, UNSUPPORTED),
+            (0, 1, 24, UNSUPPORTED),
             (0, 2, 12, UNSUPPORTED),
-            (0, 1, 9, NO_SPACE),
+            (0, 0, 19, NO_SPACE),
         ] {
-            let mut buffer = [0xaa; 12];
+            let mut buffer = [0xaa; 24];
             assert_eq!(
                 get_report(NEUTRAL_REPORT, kind, id, &mut buffer[..capacity]),
                 Err(error)
             );
-            assert_eq!(buffer, [0xaa; 12]);
+            assert_eq!(buffer, [0xaa; 24]);
         }
         let mut state = GamepadReportState::default();
         state.buttons.insert(VirtualGamepadButton::South);
-        assert_eq!(get_report(state.report_bytes(), 0, 1, &mut buffer), Ok(10));
-        assert_eq!(buffer[1], 1);
+        assert_eq!(
+            get_report(state.report_bytes(), 0, 0, &mut buffer),
+            Ok(REPORT_LENGTH)
+        );
+        assert_eq!(buffer[3], 0x10);
     }
 
     #[derive(Default)]
@@ -577,7 +593,7 @@ mod tests {
             s.active = true;
             Ok(())
         }
-        fn report(&mut self, bytes: [u8; 10]) -> Result<(u32, u64), String> {
+        fn report(&mut self, bytes: [u8; REPORT_LENGTH]) -> Result<(u32, u64), String> {
             let mut s = self.0.lock().unwrap();
             assert!(s.active);
             s.events.push(

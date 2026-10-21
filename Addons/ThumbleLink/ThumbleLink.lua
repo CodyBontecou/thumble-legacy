@@ -94,7 +94,12 @@ local function actionLabel(kind, id, slot, fallback)
     elseif kind == "macro" and id and GetMacroInfo then
         return text(GetMacroInfo(id), fallback) -- Name only; never export macro bodies.
     end
-    if GetActionText then return text(GetActionText(slot), fallback) end
+    -- Utility bindings (Jump, targeting, menus) have no action-bar slot.
+    -- Modern Classic aliases GetActionText to a strict C_ActionBar API.
+    local actionText = C_ActionBar and C_ActionBar.GetActionText or GetActionText
+    if actionText and type(slot) == "number" and slot > 0 and slot % 1 == 0 then
+        return text(actionText(slot), fallback)
+    end
     return fallback
 end
 
@@ -106,7 +111,10 @@ function addon.snapshot(options)
         error("This client is missing required binding/action APIs.")
     end
     local version, build, _, interface = GetBuildInfo()
-    if interface ~= 16001 then error("This version supports WoW Forever interface 16001 only.") end
+    local flavor
+    if interface == 16001 then flavor = "forever"
+    elseif interface == 11509 then flavor = "classic-era"
+    else error("This version supports WoW Forever interface 16001 and Classic Era interface 11509 only.") end
     local characterID = text(UnitGUID("player"), nil, 96)
     local characterName = text(UnitName("player"), nil, 96)
     local realm = text(GetRealmName(), nil, 96)
@@ -158,7 +166,7 @@ function addon.snapshot(options)
     if #actions == 0 then error("No actions found. Select a populated bar or utility controls.") end
     if #actions > MAX_ACTIONS then error("Too many actions. Select fewer bars.") end
     local result = { schema = "thumble.wow-link", version = 1,
-        client = { flavor = "forever", version = tostring(version), build = tostring(build), interface = interface },
+        client = { flavor = flavor, version = tostring(version), build = tostring(build), interface = interface },
         character = { id = characterID, name = characterName, realm = realm, classTag = classToken },
         exportedAt = time(), actions = actions, warnings = warnings }
     local encoded = "THUMBLELINK1:" .. json(result)
@@ -229,6 +237,12 @@ end
 
 SLASH_THUMBLELINK1 = "/thumble"
 SlashCmdList.THUMBLELINK = showWindow
+
+-- Shared, read-only codecs for the optional live bridge. No game state is changed.
+addon.codec = { json = json, array = array, text = text, number = number, accessible = accessible }
+addon.actionLabel = actionLabel
+addon.bars = bars
+_G.ThumbleLink = addon
 
 -- The chunk return is ignored by WoW and lets the mocked Lua tests exercise the exporter.
 return addon

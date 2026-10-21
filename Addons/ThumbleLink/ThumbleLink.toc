@@ -1,6 +1,11 @@
-## Interface: 16001
+## Interface: 16001, 11509
 ## Title: Thumble Link
-## Notes: Export your existing keyboard bindings for a Thumble phone keypad.
+## Notes: Export bindings and opt-in live character/action/icon synchronization for Thumble.
 ## Author: Thumble
-## Version: 0.1.0
+## Version: 0.3.0
+## OptionalDeps: ConsolePort
+## SavedVariables: ThumbleLinkSettings
 ThumbleLink.lua
+ThumbleLinkLive.lua
+ThumbleLinkSetup.lua
+ThumbleLinkOnboarding.lua

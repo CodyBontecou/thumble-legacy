@@ -377,13 +377,18 @@ public final class GamepadPointingPaint: Codable, Equatable, Sendable {
 /// Bounded native content presentation. Immutable reference storage keeps typography and
 /// pointing-surface chrome out of the inline stack footprint of every control state.
 public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
+    public enum IconMask: String, Codable, Sendable { case none, circle }
     public enum Weight: String, Codable, Sendable { case regular, medium, semibold, bold }
     public enum Design: String, Codable, Sendable { case system, rounded, serif, monospaced }
     public enum Alignment: String, Codable, Sendable { case leading, center, trailing }
-    public enum Placement: String, Codable, Sendable { case center, top, bottom, leading, trailing }
+    public enum Placement: String, Codable, Sendable { case center, top, bottom, leading, trailing, above }
     /// Presentation-only legend; routing and accessibility keep the profile label.
     public let pointing: GamepadPointingPaint?
     public let icon: GamepadControlIcon?
+    /// Style an inherited live icon without replacing its source identity.
+    public let iconPlacement: GamepadControlIconPlacement?
+    public let iconScale: CGFloat?
+    public let iconMask: IconMask?
     public let legend: String?
     public let fontSize: CGFloat?
     public let fontWeight: Weight?
@@ -401,6 +406,9 @@ public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
     public let joystickKnobStrokeWidth: CGFloat?
     public init(
         icon: GamepadControlIcon? = nil,
+        iconPlacement: GamepadControlIconPlacement? = nil,
+        iconScale: CGFloat? = nil,
+        iconMask: IconMask? = nil,
         legend: String? = nil,
         fontSize: CGFloat? = nil,
         fontWeight: Weight? = nil,
@@ -420,6 +428,9 @@ public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
     ) {
         self.pointing = pointing
         self.icon = icon
+        self.iconPlacement = iconPlacement
+        self.iconScale = iconScale
+        self.iconMask = iconMask
         self.legend = legend
         self.fontSize = fontSize
         self.fontWeight = fontWeight
@@ -439,6 +450,9 @@ public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
     public static func == (lhs: GamepadControlContentStyle, rhs: GamepadControlContentStyle) -> Bool {
         lhs.pointing == rhs.pointing
             && lhs.icon == rhs.icon
+            && lhs.iconPlacement == rhs.iconPlacement
+            && lhs.iconScale == rhs.iconScale
+            && lhs.iconMask == rhs.iconMask
             && lhs.legend == rhs.legend
             && lhs.fontSize == rhs.fontSize
             && lhs.fontWeight == rhs.fontWeight
@@ -455,11 +469,14 @@ public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
             && lhs.joystickKnobRatio == rhs.joystickKnobRatio
             && lhs.joystickKnobStrokeWidth == rhs.joystickKnobStrokeWidth
     }
-    var isEmpty: Bool { (pointing?.isEmpty ?? true) && icon == nil && legend == nil && fontSize == nil && fontWeight == nil && fontDesign == nil && tracking == nil && lineLimit == nil && alignment == nil && labelPadding == nil && labelPlacement == nil && trackpadFrameVisible == nil && trackpadCursorVisible == nil && trackpadIndicatorsVisible == nil && joystickRingVisible == nil && joystickKnobRatio == nil && joystickKnobStrokeWidth == nil }
+    var isEmpty: Bool { (pointing?.isEmpty ?? true) && icon == nil && iconPlacement == nil && iconScale == nil && iconMask == nil && legend == nil && fontSize == nil && fontWeight == nil && fontDesign == nil && tracking == nil && lineLimit == nil && alignment == nil && labelPadding == nil && labelPlacement == nil && trackpadFrameVisible == nil && trackpadCursorVisible == nil && trackpadIndicatorsVisible == nil && joystickRingVisible == nil && joystickKnobRatio == nil && joystickKnobStrokeWidth == nil }
     var hasTypography: Bool { legend != nil || fontSize != nil || fontWeight != nil || fontDesign != nil || tracking != nil || lineLimit != nil || alignment != nil || labelPadding != nil || labelPlacement != nil }
     var normalized: GamepadControlContentStyle {
         GamepadControlContentStyle(
             icon: icon?.normalized,
+            iconPlacement: iconPlacement,
+            iconScale: iconScale.map { $0.isFinite ? min(max($0, 0.2), 3) : 1 },
+            iconMask: iconMask,
             legend: legend.map { String(String($0.unicodeScalars.filter { !CharacterSet.controlCharacters.contains($0) }).prefix(64)) },
             fontSize: fontSize.map { $0.isFinite ? min(max($0, 8), 72) : 8 },
             fontWeight: fontWeight,
@@ -481,6 +498,9 @@ public final class GamepadControlContentStyle: Codable, Equatable, Sendable {
     func merged(over base: GamepadControlContentStyle?) -> GamepadControlContentStyle {
         GamepadControlContentStyle(
             icon: icon ?? base?.icon,
+            iconPlacement: iconPlacement ?? base?.iconPlacement,
+            iconScale: iconScale ?? base?.iconScale,
+            iconMask: iconMask ?? base?.iconMask,
             legend: legend ?? base?.legend,
             fontSize: fontSize ?? base?.fontSize,
             fontWeight: fontWeight ?? base?.fontWeight,
@@ -825,6 +845,7 @@ public final class GamepadNativeContentPresentation: Codable, Sendable {
         labelPadding = content?.labelPadding ?? (control.isText ? 2 : control.isTrackpad ? 0 : control.isTrigger ? 8 : 4)
         if let placement = content?.labelPlacement {
             switch placement {
+            case .above: labelOffset = .init(width: 0, height: -(size.height / 2 + (fontSize ?? fallbackSize) / 2 + labelPadding))
             case .top: labelOffset = .init(width: 0, height: -size.height * 0.32 + labelPadding)
             case .bottom: labelOffset = .init(width: 0, height: size.height * 0.32 - labelPadding)
             case .leading: labelOffset = .init(width: -size.width * 0.28 + labelPadding, height: 0)
@@ -2842,6 +2863,11 @@ extension GamepadCustomization {
         }
         if let icon = layout.icon?.normalized { presentation.icon = icon }
         if let icon = presentation.content?.icon?.normalized { presentation.icon = icon }
+        if var icon = presentation.icon {
+            icon.placement = presentation.content?.iconPlacement ?? icon.placement
+            icon.scale = presentation.content?.iconScale ?? icon.scale
+            presentation.icon = icon.normalized
+        }
         if let hapticFeedback = layout.hapticFeedback?.normalized {
             presentation.hapticFeedback = hapticFeedback
             presentation.hapticStyle = hapticFeedback.style

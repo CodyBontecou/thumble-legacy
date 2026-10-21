@@ -1,9 +1,10 @@
 //! IOHID boundary. CF objects and blocks are created, used, and released only
 //! on the owned HID worker. Callers exchange owned Rust messages; there is no
 //! unsafe Send implementation. Kernel callbacks use a distinct serial queue and
-//! an independent ten-byte cache, never the owner/channel/executor lock.
+//! an independent fixed-size report cache, never the owner/channel/executor lock.
 use crate::gamepad::{
-    get_report, HidBackend, BAD_ARGUMENT, NEUTRAL_REPORT, NO_SPACE, REPORT_DESCRIPTOR, UNSUPPORTED,
+    get_report, HidBackend, BAD_ARGUMENT, NEUTRAL_REPORT, NO_SPACE, PRODUCT_ID, REPORT_DESCRIPTOR,
+    REPORT_ID, REPORT_LENGTH, UNSUPPORTED, VENDOR_ID,
 };
 use block2::RcBlock;
 use core_foundation::{
@@ -76,7 +77,10 @@ fn is_boolean_true(value: &CFType) -> bool {
 enum Command {
     Entitlement(mpsc::SyncSender<Result<bool, String>>),
     Start(mpsc::SyncSender<Result<(), String>>),
-    Report([u8; 10], mpsc::SyncSender<Result<(u32, u64), String>>),
+    Report(
+        [u8; REPORT_LENGTH],
+        mpsc::SyncSender<Result<(u32, u64), String>>,
+    ),
     Stop(mpsc::SyncSender<()>),
     Shutdown,
 }
@@ -136,7 +140,7 @@ impl HidBackend for MacHidBackend {
     fn start(&mut self) -> Result<(), String> {
         self.request(Command::Start, Duration::from_secs(1))?
     }
-    fn report(&mut self, bytes: [u8; 10]) -> Result<(u32, u64), String> {
+    fn report(&mut self, bytes: [u8; REPORT_LENGTH]) -> Result<(u32, u64), String> {
         self.request(
             |reply| Command::Report(bytes, reply),
             Duration::from_millis(100),
@@ -200,7 +204,7 @@ fn worker_loop(receiver: mpsc::Receiver<Command>) {
 type GetBlock = RcBlock<dyn Fn(IOHIDReportType, u32, NonNull<u8>, NonNull<isize>) -> i32>;
 type SetBlock = RcBlock<dyn Fn(IOHIDReportType, u32, NonNull<u8>, isize) -> i32>;
 
-fn report_blocks(callback_cache: Arc<Mutex<[u8; 10]>>) -> (GetBlock, SetBlock) {
+fn report_blocks(callback_cache: Arc<Mutex<[u8; REPORT_LENGTH]>>) -> (GetBlock, SetBlock) {
     let get = RcBlock::new(
         move |kind: IOHIDReportType, id: u32, buffer: NonNull<u8>, length: NonNull<isize>| -> i32 {
             // IOKit supplies valid nonnull pointers for this invocation. Inspect
@@ -208,22 +212,22 @@ fn report_blocks(callback_cache: Arc<Mutex<[u8; 10]>>) -> (GetBlock, SetBlock) {
             unsafe {
                 let capacity = *length.as_ptr();
                 *length.as_ptr() = 0;
-                if kind != IOHIDReportType::Input || id != 1 {
+                if kind != IOHIDReportType::Input || id != u32::from(REPORT_ID) {
                     return UNSUPPORTED as i32;
                 }
                 if capacity < 0 {
                     return BAD_ARGUMENT as i32;
                 }
-                if capacity < 10 {
-                    *length.as_ptr() = 10;
+                if capacity < REPORT_LENGTH as isize {
+                    *length.as_ptr() = REPORT_LENGTH as isize;
                     return NO_SPACE as i32;
                 }
-                // Only ten bytes are accessed, even if the caller advertises a
+                // Only the fixed report length is accessed, even if the caller advertises a
                 // huge capacity. Cache guard is gone before returning to IOKit.
                 let cached = *callback_cache
                     .lock()
                     .unwrap_or_else(|poison| poison.into_inner());
-                let buffer = std::slice::from_raw_parts_mut(buffer.as_ptr(), 10);
+                let buffer = std::slice::from_raw_parts_mut(buffer.as_ptr(), REPORT_LENGTH);
                 match get_report(cached, kind.0, id, buffer) {
                     Ok(count) => {
                         *length.as_ptr() = count as isize;
@@ -245,7 +249,7 @@ fn report_blocks(callback_cache: Arc<Mutex<[u8; 10]>>) -> (GetBlock, SetBlock) {
 struct OwnedDevice {
     device: CFRetained<IOHIDUserDevice>,
     queue: DispatchRetained<DispatchQueue>,
-    cache: Arc<Mutex<[u8; 10]>>,
+    cache: Arc<Mutex<[u8; REPORT_LENGTH]>>,
     cancelled: mpsc::Receiver<()>,
     // Retain blocks ourselves too, until all callbacks have completed.
     _get: GetBlock,
@@ -262,11 +266,11 @@ impl OwnedDevice {
             ),
             (
                 CFString::new("VendorID"),
-                CFNumber::from(0xcb01_i64).as_CFType(),
+                CFNumber::from(VENDOR_ID).as_CFType(),
             ),
             (
                 CFString::new("ProductID"),
-                CFNumber::from(0x5050_i64).as_CFType(),
+                CFNumber::from(PRODUCT_ID).as_CFType(),
             ),
             (
                 CFString::new("VersionNumber"),
@@ -274,7 +278,15 @@ impl OwnedDevice {
             ),
             (
                 CFString::new("SerialNumber"),
-                CFString::new("PocketPad-Gamepad-1").as_CFType(),
+                CFString::new("Thumble-Gamepad-2").as_CFType(),
+            ),
+            (
+                CFString::new("PhysicalDeviceUniqueID"),
+                CFString::new("Thumble-Gamepad-2").as_CFType(),
+            ),
+            (
+                CFString::new("LocationID"),
+                CFNumber::from(0x54485002_i64).as_CFType(),
             ),
             (
                 CFString::new("PrimaryUsagePage"),
@@ -292,10 +304,7 @@ impl OwnedDevice {
                 CFString::new("Manufacturer"),
                 CFString::new("Thumble").as_CFType(),
             ),
-            (
-                CFString::new("Transport"),
-                CFString::new("Virtual").as_CFType(),
-            ),
+            (CFString::new("Transport"), CFString::new("USB").as_CFType()),
         ]);
         // Both wrappers refer to the same CoreFoundation ABI object. The borrow
         // stays within properties' lifetime; its keys/values are valid CF types.
@@ -336,7 +345,7 @@ impl OwnedDevice {
     // libc's stable Darwin ABI bindings avoid another crate solely for these
     // three Mach clock declarations (deprecated upstream in favor of mach2).
     #[allow(deprecated)]
-    fn report(&mut self, mut bytes: [u8; 10]) -> (u32, u64) {
+    fn report(&mut self, mut bytes: [u8; REPORT_LENGTH]) -> (u32, u64) {
         // Never hold the cache lock across a synchronous IOKit call; callbacks
         // can run independently while the owner is blocked in HandleReport.
         *self
@@ -358,7 +367,7 @@ impl OwnedDevice {
             self.device.handle_report_with_time_stamp(
                 ticks,
                 NonNull::new(bytes.as_mut_ptr()).unwrap(),
-                10,
+                bytes.len() as isize,
             )
         };
         (result as u32, uptime)
@@ -475,17 +484,17 @@ mod tests {
         let cache = Arc::new(Mutex::new(NEUTRAL_REPORT));
         let (get, set) = report_blocks(cache.clone());
         for (kind, id, capacity, expected) in [
-            (IOHIDReportType::Input, 1, 10, 0),
-            (IOHIDReportType::Input, 1, 20, 0),
-            (IOHIDReportType::Input, 1, isize::MAX, 0),
-            (IOHIDReportType::Input, 1, 9, NO_SPACE),
-            (IOHIDReportType::Input, 1, -1, BAD_ARGUMENT),
-            (IOHIDReportType::Input, 0, 20, UNSUPPORTED),
+            (IOHIDReportType::Input, 0, 20, 0),
+            (IOHIDReportType::Input, 0, 32, 0),
+            (IOHIDReportType::Input, 0, isize::MAX, 0),
+            (IOHIDReportType::Input, 0, 19, NO_SPACE),
+            (IOHIDReportType::Input, 0, -1, BAD_ARGUMENT),
+            (IOHIDReportType::Input, 1, 20, UNSUPPORTED),
             (IOHIDReportType::Input, 2, 20, UNSUPPORTED),
             (IOHIDReportType::Output, 1, 20, UNSUPPORTED),
             (IOHIDReportType::Feature, 1, 20, UNSUPPORTED),
         ] {
-            let mut buffer = [0xaa; 20];
+            let mut buffer = [0xaa; 32];
             let mut length = capacity;
             let result = get.call((
                 kind,
@@ -495,23 +504,30 @@ mod tests {
             ));
             assert_eq!(result as u32, expected);
             if expected == 0 {
-                assert_eq!(length, 10);
-                assert_eq!(&buffer[..10], &NEUTRAL_REPORT);
+                assert_eq!(length, REPORT_LENGTH as isize);
+                assert_eq!(&buffer[..REPORT_LENGTH], &NEUTRAL_REPORT);
             } else {
-                assert_eq!(length, if expected == NO_SPACE { 10 } else { 0 });
-                assert_eq!(&buffer[..10], &[0xaa; 10]);
+                assert_eq!(
+                    length,
+                    if expected == NO_SPACE {
+                        REPORT_LENGTH as isize
+                    } else {
+                        0
+                    }
+                );
+                assert_eq!(&buffer[..REPORT_LENGTH], &[0xaa; REPORT_LENGTH]);
             }
-            assert_eq!(&buffer[10..], &[0xaa; 10]);
+            assert_eq!(&buffer[REPORT_LENGTH..], &[0xaa; 12]);
         }
         let mut current = NEUTRAL_REPORT;
         current[1] = 1;
         *cache.lock().unwrap() = current;
-        let mut buffer = [0; 10];
-        let mut length = 10;
+        let mut buffer = [0; REPORT_LENGTH];
+        let mut length = REPORT_LENGTH as isize;
         assert_eq!(
             get.call((
                 IOHIDReportType::Input,
-                1,
+                0,
                 NonNull::new(buffer.as_mut_ptr()).unwrap(),
                 NonNull::from(&mut length)
             )),

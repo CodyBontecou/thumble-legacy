@@ -153,7 +153,10 @@ targets:
       - path: Sources/CLI/ThumbleCLIRuntimeBackend.swift
       - path: Sources/iOS/IOSLocalKeypadUX.swift
       - path: Sources/iOS/IOSBuildRecovery.swift
+      - path: Sources/Bridge/WoWLiveProfile.swift
       - path: Tests
+        excludes:
+          - iOS/**
     dependencies:
       - package: ZIPFoundation
     settings:
@@ -165,6 +168,23 @@ targets:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: 67KC823C9A
         MACOSX_DEPLOYMENT_TARGET: "14.0"
+  ThumbleiOSProtocolTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Tests/iOS
+      - path: Host/fixtures/owned-configuration/v1/document.json
+        buildPhase: resources
+    dependencies:
+      - target: ThumbleiOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codybontecou.Thumble.iOSProtocolTests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Thumble.app/Thumble"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        DEVELOPMENT_TEAM: 67KC823C9A
   ThumbleiOS:
     type: application
     platform: iOS
@@ -208,6 +228,16 @@ targets:
               --object-root "${OBJECT_FILE_DIR_normal:-$OBJECT_FILE_DIR}"
           fi
 schemes:
+  ThumbleiOSProtocolTests:
+    build:
+      targets:
+        ThumbleiOS: all
+        ThumbleiOSProtocolTests: [test]
+    test:
+      environmentVariables:
+        THUMBLE_DISABLE_STARTUP_SMART_CONNECT: "1"
+      targets:
+        - ThumbleiOSProtocolTests
   ThumbleTests:
     build:
       targets:

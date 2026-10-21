@@ -868,6 +868,7 @@ final class ControllerClient: ObservableObject {
 
     @Published private(set) var actionSet: ThumbleActionSet = .base
     private var actionSetInputs = ThumbleActionSetInputState()
+    private var cameraLookCount = 0
 
     @Published private(set) var state: ConnectionState = .disconnected
     @Published private(set) var lastSentEvent = "None"
@@ -884,6 +885,19 @@ final class ControllerClient: ObservableObject {
     @Published private(set) var hasSavedKeypadSnapshot = false
     @Published private(set) var smartConnectStatus: String?
     @Published private(set) var isPracticeModeEnabled: Bool
+
+    @Published private(set) var pendingOwnedPhoneEditCount = 0
+    private let enableOwnedPhoneEdits: Bool
+    private let allowSmartConnectDuringTests: Bool
+    private let ownedPhoneCacheURL: URL
+    private var ownedPhoneSession = OwnedPhoneSession(cache: .init(snapshot: nil, journal: .init()))
+    private var isDisplayingOwnedSnapshot = false
+    private var stagedOwnedSnapshot: OwnedPhoneSnapshot?
+    private var currentOfferedProfileFormats = ProfileFormatPolicy.supportedFormats
+    private var ownedInFlight: UUID?
+    private var ownedConflicts: [UUID: ControllerMessage] = [:]
+    private var ownedDeferredReceipts: [UUID: ControllerMessage] = [:]
+    private var ownedBlocked: Set<UUID> = []
 
     private let networkQueue = DispatchQueue(label: "Thumble.iOS.Network", qos: .userInteractive)
     private let skinStore: ThumbleSkinStore
@@ -986,7 +1000,7 @@ final class ControllerClient: ObservableObject {
     }
 
     var hasPendingKeypadLayoutEdits: Bool {
-        !pendingKeypadLayoutEdits.isEmpty
+        !pendingKeypadLayoutEdits.isEmpty || pendingOwnedPhoneEditCount > 0
     }
 
     var selectedGamepadProfileOrientationPreference: GamepadProfileOrientationPreference {
@@ -994,14 +1008,41 @@ final class ControllerClient: ObservableObject {
     }
 
     var supportsGamepadProfileOrientationPreferenceMutation: Bool {
-        isConnected && serverCapabilities.contains(.gamepadProfileOrientationPreferenceMutation)
+        isConnected && !isDisplayingOwnedSnapshot && serverCapabilities.contains(.gamepadProfileOrientationPreferenceMutation)
     }
 
-    init() throws {
-        // Validate configuration before skin/startup work can save any state.
-        let savedCustomization = try GamepadCustomizationPersistence.load()
-        let loadedProfileState = try GamepadConfigurationProfilePersistence.load(activeCustomization: savedCustomization)
+    static let ownedPhoneEditsEnabled = true
+
+    convenience init() throws {
+        try self.init(enableOwnedPhoneEdits: Self.ownedPhoneEditsEnabled, ownedCacheURL: nil)
+    }
+
+    init(enableOwnedPhoneEdits: Bool, ownedCacheURL: URL? = nil, allowSmartConnectDuringTests: Bool = false) throws {
+        self.enableOwnedPhoneEdits = enableOwnedPhoneEdits
+        self.allowSmartConnectDuringTests = allowSmartConnectDuringTests
+        let cacheURL = try ownedCacheURL ?? Self.defaultOwnedPhoneCacheURL()
+        ownedPhoneCacheURL = cacheURL
+        let loadedOwnedCache = FileManager.default.fileExists(atPath: cacheURL.path)
+            ? try OwnedPhoneCache.load(from: cacheURL) : OwnedPhoneCache(snapshot: nil, journal: .init())
+        let loadedOwnedSession = OwnedPhoneSession(cache: loadedOwnedCache)
+        ownedPhoneSession = loadedOwnedSession
+        pendingOwnedPhoneEditCount = loadedOwnedCache.journal.pending.count
+        let savedTrustedMacCredential = Self.loadTrustedMacCredential()
+        let displaysOwned = loadedOwnedCache.snapshot.map { savedTrustedMacCredential == nil || savedTrustedMacCredential?.serverID == $0.serverID } ?? false
+        isDisplayingOwnedSnapshot = displaysOwned
+        // Validate both journals before skin/startup work can save any state.
         let loadedPendingLayouts = try PendingKeypadLayoutPersistence.load()
+        let loadedSkinMutations = try Self.loadPendingSkinSelectionMutations()
+        let loadedSkinRemovals = try Self.loadPendingSkinRemovals()
+        let loadedProfileState: GamepadConfigurationProfilePersistence.LoadedState
+        if displaysOwned, let snapshot = loadedOwnedCache.snapshot {
+            loadedProfileState = .init(profiles: loadedOwnedSession.profiles,
+                activeProfileID: loadedOwnedCache.localSelection ?? snapshot.activeProfileID,
+                defaultProfileID: loadedOwnedCache.localDefault ?? snapshot.defaultProfileID ?? Self.noDefaultOwnedProfileID)
+        } else {
+            let savedCustomization = try GamepadCustomizationPersistence.load()
+            loadedProfileState = try GamepadConfigurationProfilePersistence.load(activeCustomization: savedCustomization)
+        }
         inputTransport = ControllerInputTransport(networkQueue: networkQueue)
         let loadedSkinStore = Self.makeSkinStore()
         try? loadedSkinStore.installBundledSkinsIfNeeded()
@@ -1011,32 +1052,45 @@ final class ControllerClient: ObservableObject {
         skinPackagesByReference = Dictionary(uniqueKeysWithValues: loadedSkins.compactMap { installed in
             (try? loadedSkinStore.package(for: installed.reference)).map { (installed.reference, $0) }
         })
-        pendingSkinSelectionMutations = Self.loadPendingSkinSelectionMutations()
-        pendingSkinRemovals = Self.loadPendingSkinRemovals()
+        pendingSkinSelectionMutations = loadedSkinMutations
+        pendingSkinRemovals = loadedSkinRemovals
         isPracticeModeEnabled = IOSRetiredBuildPracticeRecovery.recoverPracticeModeValue(
             storedValue: UserDefaults.standard.bool(forKey: IOSKeypadPreferenceKeys.practiceMode)
         )
-        let savedTrustedMacCredential = Self.loadTrustedMacCredential()
-        let startupProfile = loadedProfileState.defaultProfile ?? loadedProfileState.activeProfile ?? loadedProfileState.profiles[0]
+        let startupProfile = (displaysOwned ? loadedProfileState.activeProfile : loadedProfileState.defaultProfile)
+            ?? loadedProfileState.activeProfile ?? loadedProfileState.profiles[0]
         let startupCustomization = startupProfile.customization.normalized
 
         gamepadCustomization = startupCustomization
         gamepadProfiles = loadedProfileState.profiles
-        bindingPresentations = KeypadBindingPresentationPersistence.load()
+        bindingPresentations = displaysOwned ? (loadedOwnedCache.snapshot?.bindingPresentations ?? []) : KeypadBindingPresentationPersistence.load()
         pendingKeypadLayoutEdits = loadedPendingLayouts
         selectedGamepadProfileID = startupProfile.id
         defaultGamepadProfileID = loadedProfileState.defaultProfileID
-        GamepadCustomizationPersistence.save(startupCustomization)
-        GamepadConfigurationProfilePersistence.save(
-            loadedProfileState.profiles,
-            activeProfileID: startupProfile.id,
-            defaultProfileID: loadedProfileState.defaultProfileID
-        )
+        if !displaysOwned {
+            GamepadCustomizationPersistence.save(startupCustomization)
+            GamepadConfigurationProfilePersistence.save(
+                loadedProfileState.profiles,
+                activeProfileID: startupProfile.id,
+                defaultProfileID: loadedProfileState.defaultProfileID
+            )
+        }
         trustedMacCredential = savedTrustedMacCredential
-        hasSavedKeypadSnapshot = Self.loadHasSavedKeypadSnapshot() || savedTrustedMacCredential != nil
+        hasSavedKeypadSnapshot = displaysOwned || Self.loadHasSavedKeypadSnapshot() || savedTrustedMacCredential != nil
         if hasSavedKeypadSnapshot {
             UserDefaults.standard.set(true, forKey: Self.hasSavedKeypadSnapshotDefaultsKey)
         }
+    }
+
+    private static let noDefaultOwnedProfileID = UUID(uuid: (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
+    private static func defaultOwnedPhoneCacheURL() throws -> URL {
+        guard let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { throw CocoaError(.fileNoSuchFile) }
+        return root.appendingPathComponent("ThumblePhone", isDirectory: true).appendingPathComponent("owned-sync-v1.json")
+    }
+    private enum OwnedAdmissionError: Error { case pendingLegacyEdits }
+    private var offeredProfileFormats: [Int] {
+        enableOwnedPhoneEdits && pendingKeypadLayoutEdits.isEmpty && pendingSkinSelectionMutations.isEmpty && pendingSkinRemovals.isEmpty
+            ? [4, 5] : ProfileFormatPolicy.supportedFormats
     }
 
     func skinPackage(for reference: ThumbleSkinReference?) -> ThumbleSkinPackage? {
@@ -1066,7 +1120,9 @@ final class ControllerClient: ObservableObject {
         _ reference: ThumbleSkinReference,
         colorScheme: ThumbleSkinColorScheme
     ) throws {
-
+        guard !isDisplayingOwnedSnapshot else {
+            throw NSError(domain: "ThumblePhone", code: 5, userInfo: [NSLocalizedDescriptionKey: "This controller owns its appearance. Change its design through your agent."])
+        }
         guard let index = gamepadProfiles.firstIndex(where: { $0.id == selectedGamepadProfileID }),
               let package = skinPackage(for: reference)
         else { throw ThumbleSkinStoreError.skinNotInstalled(reference) }
@@ -1108,6 +1164,9 @@ final class ControllerClient: ObservableObject {
         }
         try skinStore.remove(reference)
         reloadInstalledSkins()
+        // Owned profiles contain their own paint/resources. Removing an unused
+        // legacy package from this phone does not mutate the receiver's source.
+        guard !isDisplayingOwnedSnapshot else { return }
         if !pendingSkinRemovals.contains(reference) {
             pendingSkinRemovals.append(reference)
             persistPendingSkinRemovals()
@@ -1189,6 +1248,11 @@ final class ControllerClient: ObservableObject {
     }
 
     func startSmartConnect() {
+        #if DEBUG
+        // Hosted protocol tests instantiate their own isolated clients. The app
+        // shell must not reconnect a saved real receiver in that test process.
+        if !allowSmartConnectDuringTests, ProcessInfo.processInfo.environment["THUMBLE_DISABLE_STARTUP_SMART_CONNECT"] == "1" { return }
+        #endif
         guard state != .connected, state != .connecting, state != .pairingCodeRequired else { return }
         guard let credential = trustedMacCredential ?? Self.loadTrustedMacCredential() else {
             smartConnectStatus = "Pair once with the Mac QR code to enable Smart Connect."
@@ -1332,6 +1396,7 @@ final class ControllerClient: ObservableObject {
         currentServiceResolution = target.serviceResolution
         currentAuthToken = authToken?.nilIfBlank
         currentExpectedServerID = expectedServerID?.nilIfBlank
+        currentOfferedProfileFormats = offeredProfileFormats
         inputTransport.setReliableConnection(nil, resetSequence: true, inputProtocolVersion: 1)
 
         let deviceName = UIDevice.current.name
@@ -1357,11 +1422,13 @@ final class ControllerClient: ObservableObject {
     }
 
     private func closeConnection(sendReleaseAll: Bool) {
+        ownedInFlight = nil; ownedConflicts.removeAll(); ownedDeferredReceipts.removeAll(); ownedBlocked.removeAll(); stagedOwnedSnapshot = nil
         virtualGamepadStatus = nil
         if sendReleaseAll {
             releaseAll()
         }
         resetActionSet()
+        cameraLookCount = 0
         inputTransport.disconnect()
         stopRealtimeDatagram()
         lastSentEventUpdateTask?.cancel()
@@ -1382,7 +1449,7 @@ final class ControllerClient: ObservableObject {
 
         lastError = nil
         updateLastSentEvent("pairing code sent", immediately: true)
-        send(.init(type: .hello, timestamp: 0, pairingCode: normalizedCode, clientName: UIDevice.current.name, supportedProfileFormats: ProfileFormatPolicy.supportedFormats, clientDeviceInfo: Self.currentDeviceInfo()))
+        send(.init(type: .hello, timestamp: 0, pairingCode: normalizedCode, clientName: UIDevice.current.name, supportedProfileFormats: currentOfferedProfileFormats, clientDeviceInfo: Self.currentDeviceInfo()))
     }
 
     func setButton(_ button: KeypadElementID, pressed: Bool, pressIdentifier: UInt64? = nil, orientation: GamepadEditorDeviceOrientation? = nil) {
@@ -1483,6 +1550,7 @@ final class ControllerClient: ObservableObject {
     }
 
     func sendPointerClick(_ button: ControllerPointerButton) {
+        guard button != .right || cameraLookCount == 0 else { return }
         setPointerButton(button, pressed: true)
         setPointerButton(button, pressed: false)
     }
@@ -1491,6 +1559,17 @@ final class ControllerClient: ObservableObject {
         guard permitsOutgoingInput(.pointerButton) else { return }
         let state: ButtonPressState = pressed ? .down : .up
         sendPointer(kind: .button, pointerButton: button, state: state, mirrorsReliably: true)
+    }
+
+    func beginCameraLook() {
+        cameraLookCount += 1
+        if cameraLookCount == 1 { setPointerButton(.right, pressed: true) }
+    }
+
+    func endCameraLook() {
+        guard cameraLookCount > 0 else { return }
+        cameraLookCount -= 1
+        if cameraLookCount == 0 { setPointerButton(.right, pressed: false) }
     }
 
     private func sendPointer(
@@ -1525,6 +1604,7 @@ final class ControllerClient: ObservableObject {
     }
 
     func releaseAll() {
+        cameraLookCount = 0
         resetActionSet()
         guard inputTransport.releaseAll() else { return }
         updateLastSentEvent("release_all", immediately: true)
@@ -1550,6 +1630,13 @@ final class ControllerClient: ObservableObject {
     }
 
     func selectGamepadProfile(_ profileID: UUID) {
+        if isDisplayingOwnedSnapshot {
+            do {
+                try installOwnedPhoneSession(ownedPhoneSession.selecting(profileID))
+                if isConnected { send(.init(type: .gamepadProfileSelection, timestamp: 0, gamepadProfileID: profileID)) }
+            } catch { lastError = "Could not save this controller selection. Your saved controller is unchanged." }
+            return
+        }
         guard let profile = gamepadProfiles.first(where: { $0.id == profileID }) else { return }
         releaseAll()
         selectedGamepadProfileID = profile.id
@@ -1560,6 +1647,13 @@ final class ControllerClient: ObservableObject {
     }
 
     func setDefaultGamepadProfile(_ profileID: UUID) {
+        if isDisplayingOwnedSnapshot {
+            do {
+                try installOwnedPhoneSession(ownedPhoneSession.selecting(profileID, makeDefault: true))
+                if isConnected { send(.init(type: .gamepadDefaultProfile, timestamp: 0, gamepadProfileID: profileID, defaultGamepadProfileID: profileID)) }
+            } catch { lastError = "Could not save this default controller. Your saved controller is unchanged." }
+            return
+        }
         guard gamepadProfiles.contains(where: { $0.id == profileID }) else { return }
         defaultGamepadProfileID = profileID
         persistGamepadProfiles()
@@ -1625,6 +1719,24 @@ final class ControllerClient: ObservableObject {
         orientation: GamepadEditorDeviceOrientation,
         sendsToMac: Bool
     ) {
+        if isDisplayingOwnedSnapshot {
+            guard orientation == .landscape else { lastError = "This controller uses its saved landscape layout."; return }
+            let canonical = canonicalKeypadLayoutEdit(customization, orientation: orientation)
+            if !sendsToMac {
+                gamepadCustomization = canonical
+                if let index = gamepadProfiles.firstIndex(where: { $0.id == selectedGamepadProfileID }) { gamepadProfiles[index].customization = canonical }
+                return
+            }
+            do {
+                let next = try ownedPhoneSession.recording(profileID: selectedGamepadProfileID, customization: canonical, nowMillis: Date.currentMilliseconds)
+                try installOwnedPhoneSession(next)
+                flushOwnedPhoneEdits()
+            } catch {
+                publishOwnedPhoneSession(ownedPhoneSession)
+                lastError = "Could not save this controller edit. Your saved controller and recovery data have been kept."
+            }
+            return
+        }
         var stampedCustomization = Self.customization(customization, matching: orientation).stampedForLocalUpdate
         stampedCustomization = canonicalKeypadLayoutEdit(stampedCustomization, orientation: orientation)
         if let profile = selectedGamepadProfile,
@@ -1663,6 +1775,91 @@ final class ControllerClient: ObservableObject {
             isConnected ? "keypad layout saved; awaiting Mac confirmation" : "keypad layout saved locally; sync pending",
             immediately: true
         )
+    }
+
+    private func installOwnedPhoneSession(_ next: OwnedPhoneSession) throws {
+        try FileManager.default.createDirectory(at: ownedPhoneCacheURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try next.cache.save(to: ownedPhoneCacheURL)
+        publishOwnedPhoneSession(next)
+        markSavedKeypadSnapshotAvailable()
+    }
+
+    private func publishOwnedPhoneSession(_ next: OwnedPhoneSession) {
+        guard let snapshot = next.cache.snapshot else { return }
+        let selected = next.cache.localSelection ?? snapshot.activeProfileID
+        let customization = next.profiles.first(where: { $0.id == selected })?.customization
+        let releasesInputs = selected != selectedGamepadProfileID || customization != gamepadCustomization
+        ownedPhoneSession = next
+        isDisplayingOwnedSnapshot = true
+        pendingOwnedPhoneEditCount = next.cache.journal.pending.count
+        gamepadProfiles = next.profiles
+        selectedGamepadProfileID = selected
+        defaultGamepadProfileID = next.cache.localDefault ?? snapshot.defaultProfileID ?? Self.noDefaultOwnedProfileID
+        bindingPresentations = snapshot.bindingPresentations
+        if let customization { gamepadCustomization = customization }
+        if releasesInputs { TouchCaptureUIView.deactivateAllRegisteredTouches(); releaseAll() }
+        lastError = next.profilesNeedingReview.isEmpty ? nil : "Some controller edits need review. Their recovery data has been kept."
+    }
+
+    private func handleOwnedPhoneReceipt(_ message: ControllerMessage) {
+        guard isConnected, isDisplayingOwnedSnapshot, let server = currentKeypadSyncServerID,
+              let receipt = message.ownedPhoneEditResult,
+              ownedPhoneSession.cache.journal.pending.contains(where: { $0.serverID == server && $0.edit.editID == receipt.editID &&
+                  $0.edit.profileID == receipt.profileID && $0.edit.baseConfigurationRevision == receipt.baseConfigurationRevision }) else { return }
+        do {
+            if receipt.status == .applied || receipt.status == .replayed {
+                let next = try ownedPhoneSession.acknowledging(message, fromAuthenticatedServerID: server)
+                try installOwnedPhoneSession(next)
+                ownedDeferredReceipts[receipt.editID] = nil
+                ownedConflicts[receipt.editID] = nil; ownedBlocked.remove(receipt.editID)
+            } else if receipt.status == .conflict {
+                ownedConflicts[receipt.editID] = message
+                send(.init(type: .gamepadProfiles, timestamp: 0, profileFormatVersion: 5))
+            } else {
+                ownedBlocked.insert(receipt.editID)
+                lastError = "The Mac could not apply a controller edit. Your edit and recovery data have been kept."
+            }
+            if ownedInFlight == receipt.editID { ownedInFlight = nil }
+            flushOwnedPhoneEdits()
+        } catch OwnedPhoneSession.Failure.awaitingSnapshot {
+            ownedDeferredReceipts[receipt.editID] = message
+            send(.init(type: .gamepadProfiles, timestamp: 0, profileFormatVersion: 5))
+        } catch {
+            ownedDeferredReceipts[receipt.editID] = message
+            lastError = "Could not save the controller receipt. Your pending edit has been kept."
+        }
+    }
+
+    private func flushOwnedPhoneEdits() {
+        guard enableOwnedPhoneEdits, isConnected, isDisplayingOwnedSnapshot, serverCapabilities.contains(.ownedPhoneEditV1),
+              ownedInFlight == nil, let server = currentKeypadSyncServerID,
+              let snapshot = ownedPhoneSession.cache.snapshot, snapshot.serverID == server else { return }
+        for pending in ownedPhoneSession.cache.journal.uploads(forAuthenticatedServerID: server, negotiatedProfileFormat: 5) {
+            guard !ownedBlocked.contains(pending.edit.editID), !ownedPhoneSession.profilesNeedingReview.contains(pending.edit.profileID) else { continue }
+            var outgoing = pending
+            if let conflict = ownedConflicts[pending.edit.editID] {
+                guard let receipt = conflict.ownedPhoneEditResult,
+                      snapshot.configurationRevision >= receipt.configurationRevision,
+                      snapshot.configurationRevision > pending.edit.baseConfigurationRevision else { continue }
+                do {
+                    guard let index = ownedPhoneSession.cache.journal.pending.firstIndex(where: { $0.serverID == server && $0.edit.editID == pending.edit.editID }) else { continue }
+                    let next = try ownedPhoneSession.retryingConflict(conflict, fromAuthenticatedServerID: server)
+                    try installOwnedPhoneSession(next)
+                    outgoing = next.cache.journal.pending[index]
+                    ownedConflicts[pending.edit.editID] = nil
+                } catch {
+                    ownedBlocked.insert(pending.edit.editID)
+                    lastError = "A controller changed on the Mac. Your pending edit has been kept for review."
+                    continue
+                }
+            }
+            do {
+                let bytes = try OwnedPhoneSession.wireData(for: outgoing)
+                ownedInFlight = outgoing.edit.editID
+                sendData(bytes)
+            } catch { lastError = "Could not send this controller edit. It is still saved on this iPhone." }
+            return
+        }
     }
 
     private var currentKeypadSyncServerID: String? {
@@ -1724,6 +1921,16 @@ final class ControllerClient: ObservableObject {
     }
 
     func setKeypadColorSchemePreference(_ preference: GamepadColorSchemePreference) {
+        if isDisplayingOwnedSnapshot {
+            do {
+                guard let profile = ownedPhoneSession.profiles.first(where: { $0.id == selectedGamepadProfileID }) else { return }
+                var customization = profile.customization
+                customization.colorSchemePreference = preference
+                try installOwnedPhoneSession(ownedPhoneSession.recording(profileID: profile.id, customization: customization, nowMillis: Date.currentMilliseconds))
+                flushOwnedPhoneEdits()
+            } catch { lastError = "Could not save controller appearance. Your saved controller is unchanged." }
+            return
+        }
         var nextCustomization = gamepadCustomization
         guard nextCustomization.colorSchemePreference != preference else { return }
         nextCustomization.colorSchemePreference = preference
@@ -1770,14 +1977,33 @@ final class ControllerClient: ObservableObject {
         let normalizedCustomization = customization.normalized
         guard normalizedCustomization != gamepadCustomization else { return }
         gamepadCustomization = normalizedCustomization
-        GamepadCustomizationPersistence.save(normalizedCustomization)
+        if !isDisplayingOwnedSnapshot { GamepadCustomizationPersistence.save(normalizedCustomization) }
     }
 
     private func applyGamepadCustomizationFromMac(_ customization: GamepadCustomization) {
         applyLocalGamepadCustomization(customization)
     }
 
-    private func applyGamepadProfileStateFromMac(_ message: ControllerMessage) {
+    @discardableResult
+    private func applyGamepadProfileStateFromMac(_ message: ControllerMessage) -> Bool {
+        if message.profileFormatVersion == 5, let snapshot = stagedOwnedSnapshot {
+            stagedOwnedSnapshot = nil
+            do {
+                try installOwnedPhoneSession(ownedPhoneSession.receiving(snapshot))
+                applyServerProfileMetadata(message)
+                for receipt in Array(ownedDeferredReceipts.values) { handleOwnedPhoneReceipt(receipt) }
+                flushOwnedPhoneEdits()
+                return true
+            } catch {
+                lastError = "Could not save the received controller. Your saved setups and edits have been kept."
+                state = .failed(lastError!); closeConnection(sendReleaseAll: true); return false
+            }
+        }
+        if isDisplayingOwnedSnapshot, message.gamepadProfiles == nil, message.gamepadCustomization == nil {
+            applyServerProfileMetadata(message)
+            return true
+        }
+        isDisplayingOwnedSnapshot = false
         installSyncedSkinPackages(message.skinPackages)
         applyServerProfileMetadata(message)
 
@@ -1791,10 +2017,11 @@ final class ControllerClient: ObservableObject {
             if let customization = workspace.incomingCustomization {
                 applyGamepadCustomizationFromMac(customization)
             }
-            return
+            return true
         }
         workspace.reconcile()
         commitIncomingProfileState(workspace)
+        return true
     }
 
     private func installSyncedSkinPackages(_ packageData: [Data]?) {
@@ -1817,7 +2044,7 @@ final class ControllerClient: ObservableObject {
         if let incomingPresentations = message.bindingPresentations {
             // A sync payload is authoritative, including an explicitly empty list.
             bindingPresentations = incomingPresentations
-            KeypadBindingPresentationPersistence.save(incomingPresentations)
+            if !isDisplayingOwnedSnapshot { KeypadBindingPresentationPersistence.save(incomingPresentations) }
         }
     }
 
@@ -1929,6 +2156,7 @@ final class ControllerClient: ObservableObject {
     }
 
     private func persistGamepadProfiles() {
+        guard !isDisplayingOwnedSnapshot else { return }
         GamepadConfigurationProfilePersistence.save(
             gamepadProfiles,
             activeProfileID: selectedGamepadProfileID,
@@ -1965,11 +2193,11 @@ final class ControllerClient: ObservableObject {
             receiveNext(on: stateConnection)
 
             if let authToken {
-                send(.init(type: .hello, timestamp: 0, clientName: clientName, authToken: authToken, serverID: expectedServerID, supportedProfileFormats: ProfileFormatPolicy.supportedFormats, clientDeviceInfo: Self.currentDeviceInfo()))
+                send(.init(type: .hello, timestamp: 0, clientName: clientName, authToken: authToken, serverID: expectedServerID, supportedProfileFormats: currentOfferedProfileFormats, clientDeviceInfo: Self.currentDeviceInfo()))
             } else if let pairingCode {
-                send(.init(type: .hello, timestamp: 0, pairingCode: pairingCode, clientName: clientName, supportedProfileFormats: ProfileFormatPolicy.supportedFormats, clientDeviceInfo: Self.currentDeviceInfo()))
+                send(.init(type: .hello, timestamp: 0, pairingCode: pairingCode, clientName: clientName, supportedProfileFormats: currentOfferedProfileFormats, clientDeviceInfo: Self.currentDeviceInfo()))
             } else {
-                send(.init(type: .pairingRequest, timestamp: 0, clientName: clientName, supportedProfileFormats: ProfileFormatPolicy.supportedFormats, clientDeviceInfo: Self.currentDeviceInfo()))
+                send(.init(type: .pairingRequest, timestamp: 0, clientName: clientName, supportedProfileFormats: currentOfferedProfileFormats, clientDeviceInfo: Self.currentDeviceInfo()))
             }
 
         case .waiting(let error):
@@ -1981,7 +2209,8 @@ final class ControllerClient: ObservableObject {
         case .cancelled:
             guard connection === stateConnection else { return }
             resetActionSet()
-            inputTransport.disconnect()
+            cameraLookCount = 0
+        inputTransport.disconnect()
             stopRealtimeDatagram()
             lastSentEventUpdateTask?.cancel()
             lastSentEventUpdateTask = nil
@@ -2160,17 +2389,29 @@ final class ControllerClient: ObservableObject {
 
     private func handleIncoming(_ data: Data, from messageConnection: NWConnection) {
         guard connection === messageConnection else { return }
-        do { try ProfileFormatPolicy.validateIncoming(data) }
-        catch {
+        let decoded: ControllerMessage
+        do {
+            if let required = try ProfileFormatPolicy.requiredVersion(in: data) {
+                _ = try ProfileFormatPolicy.negotiate(required: required, offered: currentOfferedProfileFormats)
+                if required == 5 {
+                    guard offeredProfileFormats.contains(5) else { throw OwnedAdmissionError.pendingLegacyEdits }
+                    let received = try OwnedPhoneReceivedFrame(wireData: data, expectedServerID: currentExpectedServerID?.nilIfBlank ?? (currentAuthToken == nil ? nil : trustedMacCredential?.serverID))
+                    stagedOwnedSnapshot = received.snapshot
+                    decoded = received.message
+                } else { decoded = try ControllerWireCodec.decode(data, using: decoder) }
+            } else { decoded = try ControllerWireCodec.decode(data, using: decoder) }
+        } catch {
             autoReconnectEnabled = false
             reconnectTask?.cancel(); reconnectTask = nil
             stopSmartDiscovery(); stopPairingDiscovery()
-            lastError = ProfileFormatPolicy.updateMessage
-            state = .failed(ProfileFormatPolicy.updateMessage)
+            let message = error is OwnedAdmissionError
+                ? "Pending older controller edits need reconciliation before migration. Your saved data has been kept."
+                : ProfileFormatPolicy.updateMessage
+            lastError = message
+            state = .failed(message)
             closeConnection(sendReleaseAll: true)
             return
         }
-        guard let decoded = try? ControllerWireCodec.decode(data, using: decoder) else { return }
         if let status = decoded.virtualGamepadStatus,
            state == .connected || decoded.type == .pairingAccepted || decoded.type == .hello {
             virtualGamepadStatus = status
@@ -2191,7 +2432,11 @@ final class ControllerClient: ObservableObject {
             state = .pairingCodeRequired
             updateLastSentEvent(message.message ?? "pairing request accepted", immediately: true)
         case .pairingAccepted, .hello:
-            applyGamepadProfileStateFromMac(message)
+            if message.profileFormatVersion == 5, message.inputProtocolVersion != ControllerWireCodec.currentInputProtocolVersion {
+                lastError = "Update the receiver to use this controller's input protocol."
+                state = .failed(lastError!); closeConnection(sendReleaseAll: true); return true
+            }
+            guard applyGamepadProfileStateFromMac(message) else { return true }
             finishPairing(
                 on: messageConnection,
                 message: message.message,
@@ -2217,15 +2462,17 @@ final class ControllerClient: ObservableObject {
     private func handleProfileStateMessage(_ message: ControllerMessage) -> Bool {
         switch message.type {
         case .gamepadCustomization:
-            applyGamepadProfileStateFromMac(message)
+            guard applyGamepadProfileStateFromMac(message) else { return true }
             if message.gamepadCustomization != nil {
                 updateLastSentEvent("keypad customization updated", immediately: true)
             }
         case .gamepadProfiles:
-            applyGamepadProfileStateFromMac(message)
+            guard applyGamepadProfileStateFromMac(message) else { return true }
             updateLastSentEvent("keypad setups updated", immediately: true)
         case .skinPackages:
             applyGamepadProfileStateFromMac(message)
+        case .ownedPhoneEditResult:
+            if isConnected { handleOwnedPhoneReceipt(message) }
         case .profileArtifactAdoptionResult:
             break // Ignore retired phone-upload replies without changing profile state.
         case .skinPackageRemoval, .gamepadProfileSelection, .gamepadProfileSkinSelection,
@@ -2242,6 +2489,7 @@ final class ControllerClient: ObservableObject {
         switch message.type {
         case .releaseAll:
             resetActionSet()
+            cameraLookCount = 0
             _ = inputTransport.releaseAll(adoptingGeneration: message.inputGeneration)
             updateLastSentEvent("release_all from Mac", immediately: true)
         case .ping:
@@ -2272,6 +2520,7 @@ final class ControllerClient: ObservableObject {
         reconnectTask = nil
         autoReconnectEnabled = trustedMacCredential != nil
         state = .connected
+        flushOwnedPhoneEdits()
         flushPendingKeypadLayoutEdits()
         flushPendingSkinRemovals()
         flushPendingSkinSelectionMutations()
@@ -2397,6 +2646,7 @@ final class ControllerClient: ObservableObject {
     private func handleSocketError(_ error: Error, for failedConnection: NWConnection) {
         guard connection === failedConnection else { return }
         resetActionSet()
+        cameraLookCount = 0
         inputTransport.disconnect()
         lastError = error.localizedDescription
         stopRealtimeDatagram()
@@ -2536,9 +2786,10 @@ final class ControllerClient: ObservableObject {
         UserDefaults.standard.bool(forKey: hasSavedKeypadSnapshotDefaultsKey)
     }
 
-    private static func loadPendingSkinSelectionMutations() -> [PendingSkinSelectionMutation] {
-        guard let data = UserDefaults.standard.data(forKey: pendingSkinSelectionDefaultsKey) else { return [] }
-        return (try? JSONDecoder().decode([PendingSkinSelectionMutation].self, from: data)) ?? []
+    private static func loadPendingSkinSelectionMutations() throws -> [PendingSkinSelectionMutation] {
+        guard let raw = UserDefaults.standard.object(forKey: pendingSkinSelectionDefaultsKey) else { return [] }
+        guard let data = raw as? Data, data.count <= ControllerWireCodec.maximumInboundPayloadSize else { throw CocoaError(.fileReadCorruptFile) }
+        return try JSONDecoder().decodeUnique([PendingSkinSelectionMutation].self, from: data)
     }
 
     private func persistPendingSkinSelectionMutations() {
@@ -2546,9 +2797,10 @@ final class ControllerClient: ObservableObject {
         UserDefaults.standard.set(data, forKey: Self.pendingSkinSelectionDefaultsKey)
     }
 
-    private static func loadPendingSkinRemovals() -> [ThumbleSkinReference] {
-        guard let data = UserDefaults.standard.data(forKey: pendingSkinRemovalDefaultsKey) else { return [] }
-        return (try? JSONDecoder().decode([ThumbleSkinReference].self, from: data)) ?? []
+    private static func loadPendingSkinRemovals() throws -> [ThumbleSkinReference] {
+        guard let raw = UserDefaults.standard.object(forKey: pendingSkinRemovalDefaultsKey) else { return [] }
+        guard let data = raw as? Data, data.count <= ControllerWireCodec.maximumInboundPayloadSize else { throw CocoaError(.fileReadCorruptFile) }
+        return try JSONDecoder().decodeUnique([ThumbleSkinReference].self, from: data)
     }
 
     private func persistPendingSkinRemovals() {

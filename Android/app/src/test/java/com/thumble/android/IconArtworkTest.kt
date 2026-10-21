@@ -20,6 +20,15 @@ class IconArtworkTest {
         val top = iconLayout(control(), 200.0, 100.0, JSONObject().put("labelPlacement", "top"), icon("leading"), true)
         assertEquals(Vector(0.0, -28.0), top.labelOffset)
     }
+    @Test fun `above legend clears centered large ability image without moving its target`() {
+        val content = JSONObject().put("legend", "A").put("fontSize", 12).put("labelPadding", 2).put("labelPlacement", "above")
+        val largeIcon = icon("center").copy(scale = 2.2)
+        val layout = iconLayout(control(label = "A"), 64.0, 64.0, content, largeIcon, true)
+        assertEquals(Vector(0.0, -40.0), layout.labelOffset)
+        assertEquals(Vector(), layout.offset)
+        assertEquals(47.872, layout.size, 0.001)
+        assertTrue(layout.legendVisible)
+    }
     @Test fun `native centered icons hide long legends while preserving short and explicit text legends`() {
         assertFalse(iconLayout(control(), 100.0, 100.0, null, icon("center"), true).legendVisible)
         assertTrue(iconLayout(control(label = "A"), 100.0, 100.0, null, icon("center"), true).legendVisible)

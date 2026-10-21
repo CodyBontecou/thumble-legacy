@@ -89,6 +89,41 @@ public struct OwnedPhoneEditJournal: Sendable {
             !(value.serverID == serverID && value.edit.editID == receipt.editID && value.edit.profileID == receipt.profileID && value.edit.baseConfigurationRevision == receipt.baseConfigurationRevision)
         })
     }
+    /// Replace an uncertain request only after an authenticated conflict proves
+    /// it did not commit, and a newer full snapshot provides the retry base.
+    public func retryingConflict(_ message: ControllerMessage, fromAuthenticatedServerID serverID: String,
+                                using snapshot: OwnedPhoneSnapshot, editID: UUID = UUID()) throws -> Self {
+        guard message.type == .ownedPhoneEditResult else { throw OwnedPhoneCoding.Failure.invalidReceipt }
+        _ = try acknowledging(message, fromAuthenticatedServerID: serverID, negotiatedProfileFormat: 5)
+        guard let receipt = message.ownedPhoneEditResult, receipt.status == .conflict,
+              receipt.errorCode == "owned_phone_revision_conflict" || receipt.errorCode == "owned_phone_source_changed"
+        else { throw OwnedPhoneCoding.Failure.invalidReceipt }
+        guard let index = pending.firstIndex(where: { $0.serverID == serverID && $0.edit.editID == receipt.editID &&
+            $0.edit.profileID == receipt.profileID && $0.edit.baseConfigurationRevision == receipt.baseConfigurationRevision }) else { return self }
+        guard snapshot.serverID == serverID, snapshot.configurationRevision >= receipt.configurationRevision,
+              snapshot.configurationRevision > receipt.baseConfigurationRevision, editID != receipt.editID,
+              !pending.contains(where: { $0.serverID == serverID && $0.edit.editID == editID }) else { throw OwnedPhoneCoding.Failure.invalidReceipt }
+        let original = pending[index]
+        var fields = try JSONDecoder.rawObjectFields(in: original.edit.originalData,
+            named: ["schemaVersion", "editID", "profileID", "baseConfigurationRevision", "controlEdits", "removedControlIDs", "colorScheme"])
+        fields["editID"] = try JSONEncoder().encode(editID)
+        fields["baseConfigurationRevision"] = try JSONEncoder().encode(snapshot.configurationRevision)
+        var bytes = Data([123])
+        for (i, key) in fields.keys.sorted().enumerated() {
+            if i > 0 { bytes.append(44) }
+            bytes.append(try JSONEncoder().encode(key)); bytes.append(58); bytes.append(fields[key]!)
+        }
+        bytes.append(125)
+        let retry = try OwnedPhoneEdit(validating: bytes)
+        guard var profile = snapshot.profiles.first(where: { $0.id == retry.profileID }) else { throw OwnedPhoneLayoutAdapter.Failure.missingControl }
+        for value in pending where value.serverID == serverID && value.edit.profileID == retry.profileID {
+            let operation = value.edit.editID == original.edit.editID ? retry : value.edit
+            profile.customization = try OwnedPhoneLayoutAdapter.applying(operation, to: profile.customization)
+        }
+        var next = pending
+        next[index] = Pending(serverID: serverID, edit: retry, updatedAt: original.updatedAt, recoveryDocument: snapshot.documentData)
+        let result = Self(next); _ = try result.encoded(); return result
+    }
     public func encoded() throws -> Data {
         guard pending.count <= Self.maximumEdits else { throw OwnedPhoneCoding.Failure.tooLarge }
         var recovery: [String: Data] = [:]

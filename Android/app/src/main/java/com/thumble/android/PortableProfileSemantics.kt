@@ -55,6 +55,7 @@ internal object PortableProfileSemantics {
             "joystickOutputSettings" -> {
                 s("analogTarget","none");b("sendsDigitalDirections",true)
                 if(result.getString("analogTarget")=="none") result.put("sendsDigitalDirections",true)
+                if(result.getString("analogTarget")=="mouse_look") result.put("sendsDigitalDirections",false)
                 n("deadZone",.12,0.0,.85);n("sensitivity",1.0,.2,3.0)
                 b("invertX",false);b("invertY",false);b("snapToCardinal",false)
             }
@@ -65,6 +66,10 @@ internal object PortableProfileSemantics {
             else -> {
                 n("sensitivity",1.2,.2,4.0);n("scrollSensitivity",.85,.1,4.0)
                 b("tapToClick",true);b("twoFingerScroll",true);b("naturalScrolling",true)
+                raw?.let { source ->
+                    optional(source,"clickButton")?.let { result.put("clickButton",enumerate(it,setOf("left","right","middle"))) }
+                    optional(source,"movesCursor")?.let { if(!bool(it)) result.put("movesCursor",false) }
+                }
             }
         }
         return result

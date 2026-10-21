@@ -2,8 +2,8 @@ import Foundation
 import XCTest
 
 final class VirtualGamepadReportTests: XCTestCase {
-    func testNeutralReportUsesHatNullRatherThanAZeroFilledDirection() {
-        XCTAssertEqual(VirtualGamepadReportState().reportBytes, [1, 0, 0, 8, 0, 0, 0, 0, 0, 0])
+    func testNeutralReportHasNoPressedDirectionOrTrigger() {
+        XCTAssertEqual(VirtualGamepadReportState().reportBytes, [0, 20] + Array(repeating: 0, count: 18))
     }
 
     func testCanonicalCrossLanguageFixtures() throws {
@@ -19,7 +19,7 @@ final class VirtualGamepadReportTests: XCTestCase {
             let vectors: [Vector]
         }
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
-        let data = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/gamepad/v1.json"))
+        let data = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/gamepad/v2.json"))
         let fixtures = try JSONDecoder().decode(Fixtures.self, from: data)
         XCTAssertEqual(VirtualGamepadReport.reportID, fixtures.reportID)
         XCTAssertEqual(VirtualGamepadReport.byteCount, fixtures.reportLength)
@@ -38,9 +38,9 @@ final class VirtualGamepadReportTests: XCTestCase {
         var state = VirtualGamepadReportState()
         state.leftTrigger = 0.25
         state.buttons.insert(.leftTriggerButton)
-        XCTAssertEqual(state.reportBytes[8], 255)
+        XCTAssertEqual(state.reportBytes[4], 255)
         state.buttons.remove(.leftTriggerButton)
-        XCTAssertEqual(state.reportBytes[8], 64)
+        XCTAssertEqual(state.reportBytes[4], 64)
     }
 
     func testNonfiniteAxesFailNeutralRatherThanThrowingOrMovingFullScale() {
@@ -48,17 +48,17 @@ final class VirtualGamepadReportTests: XCTestCase {
         state.leftStickX = .nan; state.leftStickY = .infinity
         state.rightStickX = -.infinity; state.rightStickY = .nan
         state.leftTrigger = .nan; state.rightTrigger = .infinity
-        XCTAssertEqual(state.reportBytes, [1, 0, 0, 8, 0, 0, 0, 0, 0, 0])
+        XCTAssertEqual(state.reportBytes, [0, 20] + Array(repeating: 0, count: 18))
     }
 
-    func testDescriptorGlobalsAreUnitlessForAxesAndHatHasEightDirections() {
+    func testDescriptorMatchesTheRecognizedXboxInputLayout() {
         var globals: [Int: Int] = [:]
         var usagePage = 0
         var usages: [Int] = []
         var cursor = 0
         var inputBits = 0
-        var sawHat = false
-        var axisUsages: [Int] = []
+        var axes: [Int] = []
+        var outputReportID: Int?
         let bytes = VirtualGamepadReport.descriptor
         while cursor < bytes.count {
             let prefix = Int(bytes[cursor]); cursor += 1
@@ -70,27 +70,30 @@ final class VirtualGamepadReportTests: XCTestCase {
             if type == 1 {
                 globals[tag] = value
                 if tag == 0 { usagePage = value }
-            } else if type == 2 && tag == 0 {
-                usages.append(value)
-            } else if type == 0 {
+            } else if type == 2 && tag == 0 { usages.append(value) }
+            else if type == 0 {
                 if tag == 8 {
+                    // No input Report ID: the first two bytes are fixed Xbox
+                    // type/length, followed by buttons, triggers and 16-bit sticks.
+                    XCTAssertNil(globals[8])
                     inputBits += (globals[7] ?? 0) * (globals[9] ?? 0)
-                    if usagePage == 1 && usages.contains(0x39) {
-                        XCTAssertEqual(globals[1], 0); XCTAssertEqual(globals[2], 7)
-                        XCTAssertNotEqual(value & 0x40, 0)
-                        sawHat = true
-                    } else if usagePage == 1 && !usages.isEmpty {
-                        XCTAssertEqual(globals[3], 0); XCTAssertEqual(globals[4], 0)
-                        XCTAssertEqual(globals[5], 0); XCTAssertEqual(globals[6], 0)
-                        axisUsages.append(contentsOf: usages)
+                    if usagePage == 1 && value & 1 == 0 {
+                        axes.append(contentsOf: usages)
+                        if usages.contains(0x30) || usages.contains(0x33) {
+                            XCTAssertEqual(globals[7], 16)
+                            XCTAssertEqual(globals[1], 0x8000)
+                            XCTAssertEqual(globals[2], 0x7FFF)
+                        }
                     }
-                }
+                } else if tag == 9 { outputReportID = globals[8] }
                 usages.removeAll()
             }
         }
-        XCTAssertTrue(sawHat)
-        XCTAssertEqual(inputBits, 72)
-        XCTAssertEqual(axisUsages, [0x30, 0x31, 0x33, 0x34, 0x32, 0x35])
+        XCTAssertEqual(inputBits, 160)
+        XCTAssertEqual(axes, [0x32, 0x35, 0x30, 0x31, 0x33, 0x34])
+        XCTAssertEqual(outputReportID, 0x31) // Enumerated, safely rejected by the input-only backend.
+        XCTAssertEqual(VirtualGamepadReport.vendorID, 0x045E)
+        XCTAssertEqual(VirtualGamepadReport.productID, 0x028E)
     }
 
     private static func hexBytes(_ text: String) throws -> [UInt8] {

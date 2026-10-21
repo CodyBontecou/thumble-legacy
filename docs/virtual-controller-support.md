@@ -1,6 +1,35 @@
 # Virtual controller support: implementation and acceptance gates
 
-## Implementation follow-up (2026-10-03)
+## Current HID contract (2026-10-21)
+
+The signed development lab now uses the Xbox-compatible 20-byte input layout in
+[the v2 fixture](../Host/fixtures/gamepad/v2.json) and both Rust/Swift encoders.
+It configures VID `045e`, PID `028e`, transport `USB`, and retains Thumble product,
+manufacturer and stable serial/physical/location identity. macOS may report the
+underlying virtual service's transport as `Virtual`; inspect actual properties.
+There is no input Report ID (GetReport ID `0`): bytes `0,20` are the Xbox type/size
+header, followed by the button mask, independent 8-bit triggers, signed 16-bit
+sticks and six reserved zero bytes. Semantic Y grows downwards and is inverted
+on the Xbox wire. Opposing D-pad directions cancel per axis. Digital trigger
+buttons drive the corresponding trigger axis and restore an independent analog
+hold on release. Output/feature requests remain unsupported.
+
+A signed, provisioned diagnostic on this normal-security Mac compared the old
+generic identity, the known identity with the old descriptor, and the complete
+compatible contract. The generic identity did not enumerate through GameController.
+Identity alone enumerated but all 30 tested report samples read neutral. The full
+contract delivered each of 18 tested face/shoulder/stick-click/D-pad/trigger/stick
+samples to GameController with the expected semantic value. Home/Menu/Options
+were excluded from automated system input. This is local development evidence,
+not a guarantee for other OS versions or a WoW gameplay result.
+
+The descriptor is pinned from the MIT-licensed
+[steam-controller-bridge contract](https://github.com/tkubicz/steam-controller-bridge/blob/main/crates/host/virtual-gamepad/src/contract.rs).
+The [license](../ThirdParty/SteamControllerBridge-LICENSE.txt) ships in the headless
+macOS package's resources. The previous v1 fixture and the dated notes below are
+retained as historical evidence; they do not describe the current wire format.
+
+## Historical implementation follow-up (2026-10-03)
 
 The approved implementation is now present in both receivers. **This is not yet a signed-device or game-compatibility certification.** Read-only inspection found no local provisioning profile authorizing `com.apple.developer.hid.virtual.device` for either `com.codybontecou.PocketPadMac` or `com.codybontecou.ThumbleHost`. Apple approval must be confirmed for the exact App ID and distribution scope; the two receivers are separate provisioning identities.
 
@@ -258,7 +287,7 @@ Steam Input detection, generic-controller configuration, game-specific remapping
 
 ## 4. Current descriptor: concrete review findings
 
-`Sources/Mac/VirtualGamepadInjector.swift` currently sends a ten-byte input report: report ID `1`; sixteen button bits; four-bit hat plus four padding bits; signed X/Y/Z/Rz; unsigned Rx/Ry. It has no declared Output or Feature reports. This is a generic layout, not an Xbox/XInput protocol implementation.
+The historical v1 `Sources/Mac/VirtualGamepadInjector.swift` sent a ten-byte input report: report ID `1`; sixteen button bits; four-bit hat plus four padding bits; signed X/Y/Z/Rz; unsigned Rx/Ry. It has no declared Output or Feature reports. This is a generic layout, not an Xbox/XInput protocol implementation.
 
 **Two concrete descriptor issues should be resolved before compatibility conclusions:**
 

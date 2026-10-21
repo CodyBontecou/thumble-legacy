@@ -15,13 +15,37 @@ guard arguments.count <= 1,
 }
 let duration = arguments.first.flatMap(Double.init) ?? 3
 let manager = IOHIDManagerCreate(kCFAllocatorDefault, 0)
-IOHIDManagerSetDeviceMatching(manager, [
-    kIOHIDVendorIDKey as String: 0xCB01,
-    kIOHIDProductIDKey as String: 0x5050
-] as CFDictionary)
+IOHIDManagerSetDeviceMatchingMultiple(manager, [
+    [kIOHIDVendorIDKey as String: 0xCB01, kIOHIDProductIDKey as String: 0x5050],
+    [kIOHIDVendorIDKey as String: 0x045E, kIOHIDProductIDKey as String: 0x028E,
+     kIOHIDProductKey as String: "Thumble Virtual Gamepad"]
+] as CFArray)
 IOHIDManagerScheduleWithRunLoop(manager, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)
 let openResult = IOHIDManagerOpen(manager, 0)
 GCController.shouldMonitorBackgroundEvents = true
+// Consumer-side events establish actual interpreted input, beyond IOHID success.
+// Observe only Thumble devices, cap records, and dispatch all writes on main.
+var changes: [[String: Any]] = []
+func attach(_ controller: GCController) {
+    guard controller.vendorName?.hasPrefix("Thumble") == true, let gamepad = controller.extendedGamepad else { return }
+    controller.handlerQueue = .main
+    gamepad.valueChangedHandler = { pad, _ in
+        guard changes.count < 512 else { return }
+        let buttons: [String: Float] = ["south":pad.buttonA.value,"east":pad.buttonB.value,"west":pad.buttonX.value,"north":pad.buttonY.value,
+            "leftShoulder":pad.leftShoulder.value,"rightShoulder":pad.rightShoulder.value,
+            "leftStickPress":pad.leftThumbstickButton?.value ?? 0,"rightStickPress":pad.rightThumbstickButton?.value ?? 0,
+            "start":pad.buttonMenu.value,"select":pad.buttonOptions?.value ?? 0]
+        let axes: [String: Float] = ["leftX":pad.leftThumbstick.xAxis.value,"leftY":pad.leftThumbstick.yAxis.value,
+            "rightX":pad.rightThumbstick.xAxis.value,"rightY":pad.rightThumbstick.yAxis.value,
+            "leftTrigger":pad.leftTrigger.value,"rightTrigger":pad.rightTrigger.value,
+            "dpadX":pad.dpad.xAxis.value,"dpadY":pad.dpad.yAxis.value]
+        changes.append(["uptime":ProcessInfo.processInfo.systemUptime,"buttons":buttons,"axes":axes])
+    }
+}
+let connectionObserver = NotificationCenter.default.addObserver(forName: .GCControllerDidConnect, object: nil, queue: .main) {
+    if let controller = $0.object as? GCController { attach(controller) }
+}
+GCController.controllers().forEach(attach)
 RunLoop.main.run(until: Date().addingTimeInterval(duration))
 
 func property(_ device: IOHIDDevice, _ name: String) -> Any? {
@@ -88,11 +112,13 @@ let report: [String: Any] = [
     "hidManagerOpenResult": UInt32(bitPattern: openResult),
     "thumbleHIDDevices": hid,
     "gameControllerControllers": controllers,
+    "thumbleInputChanges": changes,
     "consumerTestsStillRequired": ["SDL raw joystick and mapped gamepad", "Steam Input on/off", "actual games"],
     "note": "Registry presence, supportsHIDDevice and enumeration are separate observations, not a gameplay pass."
 ]
 let data = try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
 FileHandle.standardOutput.write(data)
 FileHandle.standardOutput.write(Data([10]))
+NotificationCenter.default.removeObserver(connectionObserver)
 IOHIDManagerClose(manager, 0)
 IOHIDManagerUnscheduleFromRunLoop(manager, CFRunLoopGetMain(), CFRunLoopMode.defaultMode.rawValue)

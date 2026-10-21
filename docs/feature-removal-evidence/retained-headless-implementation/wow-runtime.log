@@ -1,0 +1,6 @@
+Isolated receiver started
+Character A created and selected through authority
+Character B created and selected automatically
+Switch back reused character A profile
+Same-character action refresh committed
+PASS: swaps, reuse, icons, manual selection, frozen frames and stop isolation

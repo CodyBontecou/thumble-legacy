@@ -4,6 +4,7 @@ struct ThumbleLinkImportView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var text = ""
     @State private var name = ""
+    @State private var layout: ThumbleLinkImport.Layout?
     @State private var plan: ThumbleLinkImport.Plan?
     @State private var errorMessage: String?
     @State private var successMessage: String?
@@ -15,13 +16,13 @@ struct ThumbleLinkImportView: View {
             Text("Thumble Link").font(.title2.weight(.semibold))
             if let successMessage {
                 Label(successMessage, systemImage: "checkmark.circle")
-                Text("Your setup is ready in the editor and will be delivered to your paired iPhone.")
+                Text("Your setup is ready in the editor and will be delivered to your paired phone.")
                     .foregroundStyle(.secondary)
                 Button("Done") { dismiss() }.keyboardShortcut(.defaultAction)
             } else if let plan {
                 review(plan)
             } else {
-                Text("In WoW Forever, type /thumble, generate an export, and copy the code. Paste it here to create or refresh your character’s phone setup.")
+                Text("In WoW Forever or Classic Era, type /thumble, generate an export, and copy the code. Paste it here to create or refresh your character’s phone setup.")
                     .foregroundStyle(.secondary)
                 TextEditor(text: $text)
                     .font(.system(.body, design: .monospaced))
@@ -29,6 +30,14 @@ struct ThumbleLinkImportView: View {
                     .border(.secondary.opacity(0.3))
                     .accessibilityLabel("WoW Thumble Link export")
                 TextField("Setup name (optional)", text: $name)
+                Picker("Layout", selection: $layout) {
+                    Text("Automatic").tag(Optional<ThumbleLinkImport.Layout>.none)
+                    ForEach(ThumbleLinkImport.Layout.allCases) { choice in
+                        Text(choice.title).tag(Optional(choice))
+                    }
+                }
+                Text("New setups use Controller layout for up to 24 bound commands. Automatic keeps an existing layout; choosing a layout rebuilds its positions and appearance.")
+                    .font(.caption).foregroundStyle(.secondary)
                 Text("Version 1 imports existing keyboard bindings from Blizzard action bars and utility controls. Pictures and cooldowns are not synchronized.")
                     .font(.callout).foregroundStyle(.secondary)
                 HStack {
@@ -48,7 +57,8 @@ struct ThumbleLinkImportView: View {
     private func review(_ plan: ThumbleLinkImport.Plan) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("\(plan.isRefresh ? "Refresh" : "Create") \(plan.profileName)").font(.headline)
-            Text("\(plan.snapshot.character.classTag) · Forever \(plan.snapshot.client.version) · Exported \(Date(timeIntervalSince1970: TimeInterval(plan.snapshot.exportedAt)).formatted())")
+            Text("\(plan.layout.title) · Keyboard controls").font(.subheadline)
+            Text("\(plan.snapshot.character.classTag) · \(plan.snapshot.client.displayName) \(plan.snapshot.client.version) · Exported \(Date(timeIntervalSince1970: TimeInterval(plan.snapshot.exportedAt)).formatted())")
                 .font(.caption).foregroundStyle(.secondary)
             List(plan.rows) { row in
                 HStack {
@@ -84,7 +94,7 @@ struct ThumbleLinkImportView: View {
     private func prepare() {
         do {
             plan = try ThumbleLinkImport.prepare(text: text, currentConfiguration: currentConfiguration(),
-                name: name.isEmpty ? nil : name)
+                name: name.isEmpty ? nil : name, layout: layout)
             errorMessage = nil
         } catch { errorMessage = error.localizedDescription }
     }

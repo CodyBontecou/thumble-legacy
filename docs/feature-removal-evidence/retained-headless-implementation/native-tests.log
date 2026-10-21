@@ -1,0 +1,397 @@
+Test Suite 'Selected tests' started at 2026-10-21 13:19:44.478.
+Test Suite 'ThumbleCLITests.xctest' started at 2026-10-21 13:19:44.479.
+Test Suite 'OwnedConfigurationDocumentTests' started at 2026-10-21 13:19:44.479.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testCustomCanvasTransactionPreservesOwnedControlsAndAppearance]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testCustomCanvasTransactionPreservesOwnedControlsAndAppearance]' passed (1.392 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testCustomizationResetClearsStateOnlyAppearance]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testCustomizationResetClearsStateOnlyAppearance]' passed (0.532 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testDuplicateKeysInvalidUTF8AndExactDocumentLimit]' passed (0.363 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testExactSourceAndAllStatesSurviveNativeProjectionWithoutPackageLookup]' passed (0.068 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testFrozenNativeEditProjectionsAndMergedDestination]' passed (0.300 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testIssueSpecificRepairKeepsPaintAndRespectsLocks]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testIssueSpecificRepairKeepsPaintAndRespectsLocks]' passed (1.311 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testLegacyCustomizationImportMatchesCapturedResponse]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testLegacyCustomizationImportMatchesCapturedResponse]' passed (0.071 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testLegacyCustomizationImportRetainsBindingExtensionsAndRefusesTheirDeletion]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testLegacyCustomizationImportRetainsBindingExtensionsAndRefusesTheirDeletion]' passed (0.078 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedApplicationAttachmentPreservesPaintAndLaterClockNoOps]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedApplicationAttachmentPreservesPaintAndLaterClockNoOps]' passed (1.341 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedCreationPreservesAllSourceAppearanceAndSelectionOptions]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedCreationPreservesAllSourceAppearanceAndSelectionOptions]' passed (1.879 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedDefaultCreationPreservesLowercaseBindingMapKeys]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedDefaultCreationPreservesLowercaseBindingMapKeys]' passed (0.692 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeEditsGeometryHapticsAndControlIdentity]' passed (2.696 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedOperationBridgeRejectsPortraitAndUnexpectedFields]' passed (0.188 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedResetMatchesFrozenNativeResponses]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testOwnedResetMatchesFrozenNativeResponses]' passed (0.564 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testResetLeavesUnrelatedOwnedBankUntouched]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testResetLeavesUnrelatedOwnedBankUntouched]' passed (0.397 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testReviewedOwnedDesignCreatesEightStatesWithoutChangingFeedbackOrOutputs]' passed (1.551 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRichBackgroundFillsReplaceRequestedScopeAcrossAllOwnedStates]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRichBackgroundFillsReplaceRequestedScopeAcrossAllOwnedStates]' passed (7.306 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testRustWrittenDestinationRetainsEditablePaintGeometryAndHaptics]' passed (0.049 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testSharedVersionFiveContractAndRejectedMutations]' passed (0.752 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testStyleFilePoolsRepeatedMaximumImagesAndRetainsRichStates]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testStyleFilePoolsRepeatedMaximumImagesAndRetainsRichStates]' passed (0.742 seconds).
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testStyleImportMatchesFrozenNativeResponse]' started.
+Test Case '-[ThumbleCLITests.OwnedConfigurationDocumentTests testStyleImportMatchesFrozenNativeResponse]' passed (0.476 seconds).
+Test Suite 'OwnedConfigurationDocumentTests' passed at 2026-10-21 13:20:07.231.
+	 Executed 21 tests, with 0 failures (0 unexpected) in 22.747 (22.752) seconds
+Test Suite 'OwnedDesignTokenReplacementTests' started at 2026-10-21 13:20:07.231.
+Test Case '-[ThumbleCLITests.OwnedDesignTokenReplacementTests testReviewedDesignReplacesCollidingTokensAndRetainsLiveIcons]' started.
+Test Case '-[ThumbleCLITests.OwnedDesignTokenReplacementTests testReviewedDesignReplacesCollidingTokensAndRetainsLiveIcons]' passed (0.001 seconds).
+Test Suite 'OwnedDesignTokenReplacementTests' passed at 2026-10-21 13:20:07.232.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'OwnedPhoneSnapshotTests' started at 2026-10-21 13:20:07.232.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testAdapterOnlyAcceptsScalarGeometryAndKeepsBankOutputsAndPaint]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testAdapterOnlyAcceptsScalarGeometryAndKeepsBankOutputsAndPaint]' passed (0.040 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testAtomicCacheRestoresSourceAndEditsAndRefusesToOverwriteCorruption]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testAtomicCacheRestoresSourceAndEditsAndRefusesToOverwriteCorruption]' passed (0.270 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testCacheUnknownFieldsAndPartialSnapshotAreNotSilentlyRewritten]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testCacheUnknownFieldsAndPartialSnapshotAreNotSilentlyRewritten]' passed (0.044 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testMissingControlKeepsRecoveryAndCannotBeRecreatedByRetry]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testMissingControlKeepsRecoveryAndCannotBeRecreatedByRetry]' passed (0.143 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testOfflineSelectionAndDefaultStayLocalAndResetToServerOnRefresh]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testOfflineSelectionAndDefaultStayLocalAndResetToServerOnRefresh]' passed (0.081 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testReceivedFrameSeparatesPairingMetadataFromCanonicalCache]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testReceivedFrameSeparatesPairingMetadataFromCanonicalCache]' passed (0.185 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testRemovedPresetUsesNativeHideWhileCustomRemovalDeletes]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testRemovedPresetUsesNativeHideWhileCustomRemovalDeletes]' passed (0.039 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testRootTokenExtractionKeepsOpaqueNumbersEscapesAndWhitespace]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testRootTokenExtractionKeepsOpaqueNumbersEscapesAndWhitespace]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSessionKeepsSnapshotsSeparateFromAcknowledgmentsAndRetriesOnlyAfterConflict]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSessionKeepsSnapshotsSeparateFromAcknowledgmentsAndRetriesOnlyAfterConflict]' passed (0.290 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSnapshotRejectsLegacyScalarAndFloatingRevision]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSnapshotRejectsLegacyScalarAndFloatingRevision]' passed (0.028 seconds).
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSnapshotRetainsCanonicalRecordsAndNeverCachesAuthentication]' started.
+Test Case '-[ThumbleCLITests.OwnedPhoneSnapshotTests testSnapshotRetainsCanonicalRecordsAndNeverCachesAuthentication]' passed (0.131 seconds).
+Test Suite 'OwnedPhoneSnapshotTests' passed at 2026-10-21 13:20:08.484.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 1.251 (1.252) seconds
+Test Suite 'ThumbleCLIBackendTests' started at 2026-10-21 13:20:08.484.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsArtifactLargerThanEightMiB]' passed (1.329 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsInvalidHashMetadata]' passed (1.011 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsUnknownArtifactAndHashFields]' passed (0.392 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongArtifactJSONCasing]' passed (0.211 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testArtifactResponseRejectsWrongSchemaVersion]' passed (0.211 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testAssetWritesUseTypedContentAndStableCallerInvocation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testAssetWritesUseTypedContentAndStableCallerInvocation]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionIsStrictBoundedSemanticAndRevisionTagged]' passed (0.327 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsLiteralAndEscapedDuplicateFieldsBeforeProjection]' passed (0.712 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionRejectsUnknownNestedFields]' passed (0.238 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testBindingProjectionSupportsTheThreeCanvasOwnershipUnion]' passed (1.174 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCLITemplateCatalogMatchesSharedAuthority]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarItemProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.202 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionIsStrictBoundedAndRevisionTagged]' passed (0.202 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testControlBarProjectionRejectsUnknownNestedFieldsAndInvalidOrder]' passed (0.299 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCreationAttachmentAndIssueRepairHaveTypedAuthorityPayloads]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testCreationAttachmentAndIssueRepairHaveTypedAuthorityPayloads]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testDeviceProjectionIsStrictCatalogTypedAndRevisionTagged]' passed (0.321 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testExportRequestJSONExactlyMatchesOmittedAndExplicitTargetProtocol]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanAcceptsTwentyIndependentUUIDsAndRejectsNamedOrMismatchedIdentities]' passed (0.619 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseIsStrictTypedBoundedAndPreservesRawJSON]' passed (0.295 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsAcronymCasingAndUnknownNestedFields]' passed (2.107 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsBoundsCountsHashesRevisionsAndDuplicates]' passed (4.072 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanResponseRejectsEitherOutputLargerThanEightMiB]' passed (2.406 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecBoundsAreRejectedBeforeHelperLaunch]' passed (0.003 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGenerationPlanSpecRequestJSONExactlyMatchesOmittedAndExplicitNameProtocol]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testGroupProjectionIsStrictSanitizedVariantScopedAndRevisionTagged]' passed (0.213 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportRequestJSONHasExactKeysAndPreservesRawArtifactString]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testImportSurfacesTypedUnsupportedArtifactFailuresInsteadOfFakeSuccess]' passed (0.454 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testInspectionRefusesStaleDraftUnsupportedFormatAndMissingResources]' passed (0.068 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLayerProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.171 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyInspectionRemainsExplicitlyLegacyAndPreservesItsCapture]' passed (0.006 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOrientationProjectionIsStrictTypedAndRevisionTagged]' passed (0.269 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOversizedResponseIsRejectedAndStderrIsNeverSurfaced]' passed (0.377 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedDesignCaptureRequiresExactDraftIdentityAndRevision]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedDesignCaptureRequiresExactDraftIdentityAndRevision]' passed (0.035 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testOwnedInspectionHydratesResourcesKeepsEightAppearancesAndExactSource]' passed (0.039 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSelectorEncodingUsesTypedUUIDAndNeverRawPathsOrProfiles]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleImportCommandPreservesRawLibraryAndMergeIntent]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleImportCommandPreservesRawLibraryAndMergeIntent]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testStyleProjectionIsStrictSanitizedAndRevisionTagged]' passed (0.185 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testSymlinkAndWritableSiblingValidationFailClosed]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testThemeCommandCarriesExplicitAuthorityTargetAndVariant]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testThemeCommandCarriesExplicitAuthorityTargetAndVariant]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTimeoutKillsHelperProcessGroup]' passed (0.056 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testTypedHelperAcceptsOneStrictBoundedResponseAndPreservesInvocation]' passed (0.251 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testUnknownAndMultilineResponsesFailClosed]' passed (0.337 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponseCanExceedFormer256KiBFrameCap]' passed (0.227 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidArtifactResponsePreservesPrettyUnknownNestedJSONBytes]' passed (0.179 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIBackendTests testValidGenerationPlanResponseCanExceedFormer256KiBFrameCap]' passed (0.225 seconds).
+Test Suite 'ThumbleCLIBackendTests' passed at 2026-10-21 13:20:27.714.
+	 Executed 46 tests, with 0 failures (0 unexpected) in 19.228 (19.230) seconds
+Test Suite 'ThumbleCLIRuntimeBackendTests' started at 2026-10-21 13:20:27.714.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testAbsentAndLegacyCandidatesNeverReadDesktopStatus]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testAbsentAndLegacyCandidatesNeverReadDesktopStatus]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testAmbiguousLockMayOnlyUseVerifiedLegacyStatus]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testAmbiguousLockMayOnlyUseVerifiedLegacyStatus]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testEnvelopeTypesAndUnexpectedFieldsFailClosed]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testEnvelopeTypesAndUnexpectedFieldsFailClosed]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testExecutableValidationRejectsMissingBridgeBeforeLaunching]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testExecutableValidationRejectsMissingBridgeBeforeLaunching]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testGamepadReadinessProjectionIsTypedAndRangeBounded]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testGamepadReadinessProjectionIsTypedAndRangeBounded]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testHeadlessPairingPayloadUsesVerifiedReceiverWithoutLegacyStatus]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testHeadlessPairingPayloadUsesVerifiedReceiverWithoutLegacyStatus]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testHeadlessStatusDistinguishesStoppedMissingAndUnreachableAuthority]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testHeadlessStatusDistinguishesStoppedMissingAndUnreachableAuthority]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testIncompleteHeadlessPairingCannotCreatePayloadOrConsultDesktop]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testIncompleteHeadlessPairingCannotCreatePayloadOrConsultDesktop]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverLifecycleAcceptsOnlyKnownOptionsAndBoundsThePort]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverLifecycleAcceptsOnlyKnownOptionsAndBoundsThePort]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverLifecycleUsesValidatedSiblingProcessAndReportsFailure]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverLifecycleUsesValidatedSiblingProcessAndReportsFailure]' passed (0.236 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverOwnedHeldTestsUseTypedBoundedControlRequests]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testReceiverOwnedHeldTestsUseTypedBoundedControlRequests]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRequestIsSeparateTaggedBoundedEnvelope]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRequestIsSeparateTaggedBoundedEnvelope]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRustRouteNeverReadsLegacyAndRequiresAcknowledgement]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRustRouteNeverReadsLegacyAndRequiresAcknowledgement]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRustTapNeedsMatchingControlAcknowledgementAndNeverFallsBack]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testRustTapNeedsMatchingControlAcknowledgementAndNeverFallsBack]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testStrictResponseFramingBoundsAndCorrelation]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testStrictResponseFramingBoundsAndCorrelation]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testUnreachableRustNeverInvokesLegacyFallback]' started.
+Test Case '-[ThumbleCLITests.ThumbleCLIRuntimeBackendTests testUnreachableRustNeverInvokesLegacyFallback]' passed (0.000 seconds).
+Test Suite 'ThumbleCLIRuntimeBackendTests' passed at 2026-10-21 13:20:27.954.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.240 (0.240) seconds
+Test Suite 'ThumbleCSSCompilerTests' started at 2026-10-21 13:20:27.954.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testAboveLegendPlacementCompilesAndRoundTrips]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testAboveLegendPlacementCompilesAndRoundTrips]' passed (0.433 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testActionSetCSSCompilesEveryBankAndDoesNotLeakBetweenBanks]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testActionSetCSSCompilesEveryBankAndDoesNotLeakBetweenBanks]' passed (1.612 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testBorderShorthandAndLonghandRespectStateSpecificityAndDeclarationOrder]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testBorderShorthandAndLonghandRespectStateSpecificityAndDeclarationOrder]' passed (0.431 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testBoundedNativeTypographyAndPointingChromeLowerAndMergeAcrossStates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testBoundedNativeTypographyAndPointingChromeLowerAndMergeAcrossStates]' passed (0.474 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCircularInheritedIconMaskCompilesWithoutReplacingSource]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCircularInheritedIconMaskCompilesWithoutReplacingSource]' passed (0.564 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCommittedExampleCompilesToGoldenPackage]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCommittedExampleCompilesToGoldenPackage]' passed (1.181 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCompiledCSSPackageAppliesToProfileThroughResolver]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCompiledCSSPackageAppliesToProfileThroughResolver]' passed (0.503 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCompileLowersCSSIntoDeterministicPackageWithRoleAndButtonRules]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCompileLowersCSSIntoDeterministicPackageWithRoleAndButtonRules]' passed (1.085 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testComputedStyleAppliesSpecificitySourceOrderStatesAndVariables]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testComputedStyleAppliesSpecificitySourceOrderStatesAndVariables]' passed (0.122 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testComputedStyleInspectionIsDeterministicAcrossRuns]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testComputedStyleInspectionIsDeterministicAcrossRuns]' passed (0.704 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCSSWorkspaceDecodingRoundTripsAndOmitsEmptyStylesheets]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCSSWorkspaceDecodingRoundTripsAndOmitsEmptyStylesheets]' passed (0.002 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCustomPropertyCycleIsRejected]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testCustomPropertyCycleIsRejected]' passed (0.238 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testExactPointingSelectorsAndNativeIconsLowerWithoutChangingIdentity]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testExactPointingSelectorsAndNativeIconsLowerWithoutChangingIdentity]' passed (0.065 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testImageFillViaURLEmbedsRasterizedAssetAndValidates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testImageFillViaURLEmbedsRasterizedAssetAndValidates]' passed (0.830 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInheritedIconPresentationCompilesWithoutFreezingAbilityIdentity]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInheritedIconPresentationCompilesWithoutFreezingAbilityIdentity]' passed (0.447 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInsetBoxShadowLowersToInnerShadow]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInsetBoxShadowLowersToInnerShadow]' passed (0.472 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInvalidActionSetSelectorIsAnError]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testInvalidActionSetSelectorIsAnError]' passed (0.245 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testJoystickKnobColorLowersThroughRoleRule]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testJoystickKnobColorLowersThroughRoleRule]' passed (0.450 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testLintRejectsUnsupportedConstructsWithStrictDiagnostics]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testLintRejectsUnsupportedConstructsWithStrictDiagnostics]' passed (1.100 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testLintWarnsWhenSelectorMatchesNothing]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testLintWarnsWhenSelectorMatchesNothing]' passed (0.130 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testMaterialWorkspacesStillCompileIdentically]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testMaterialWorkspacesStillCompileIdentically]' passed (2.420 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testMultipleStylesheetsCascadeInDeclaredOrder]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testMultipleStylesheetsCascadeInDeclaredOrder]' passed (0.141 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testNativePresentationRejectsValuesOutsideItsDeclaredBounds]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testNativePresentationRejectsValuesOutsideItsDeclaredBounds]' passed (1.100 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testParserAcceptsSelectorsMediaCustomPropertiesAndStates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testParserAcceptsSelectorsMediaCustomPropertiesAndStates]' passed (0.150 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testPointingPaintLowersAndInheritsIndependentlyAcrossNativeStates]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testPointingPaintLowersAndInheritsIndependentlyAcrossNativeStates]' passed (1.064 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testScaffolderWritesCSSStarterWorkspaceThatCompilesStrictly]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testScaffolderWritesCSSStarterWorkspaceThatCompilesStrictly]' passed (0.669 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSemanticSelectorsUseExactAppearanceMetadataAndPreserveInputIdentity]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSemanticSelectorsUseExactAppearanceMetadataAndPreserveInputIdentity]' passed (0.108 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSyntheticStyleControlsHaveNoInventedInputUUID]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSyntheticStyleControlsHaveNoInventedInputUUID]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSystemControlDoesNotMatchAnElementBindingSelector]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testSystemControlDoesNotMatchAnElementBindingSelector]' passed (0.123 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testUndefinedVariableWithoutFallbackIsAnError]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testUndefinedVariableWithoutFallbackIsAnError]' passed (0.357 seconds).
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testValidatorAcceptsSchemaTwoAndRejectsUnsafeStylesheetPaths]' started.
+Test Case '-[ThumbleCLITests.ThumbleCSSCompilerTests testValidatorAcceptsSchemaTwoAndRejectsUnsafeStylesheetPaths]' passed (0.469 seconds).
+Test Suite 'ThumbleCSSCompilerTests' passed at 2026-10-21 13:20:45.647.
+	 Executed 31 tests, with 0 failures (0 unexpected) in 17.688 (17.693) seconds
+Test Suite 'ThumbleLinkTests' started at 2026-10-21 13:20:45.647.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testClassicEraImportRefreshAndClientIsolation]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testClassicEraImportRefreshAndClientIsolation]' passed (0.326 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testControllerImportGroupsActualBindingsAndKeepsFullLegends]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testControllerImportGroupsActualBindingsAndKeepsFullLegends]' passed (0.400 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testControllerOverflowKeepsEveryBindingAndRemainsNonOverlapping]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testControllerOverflowKeepsEveryBindingAndRemainsNonOverlapping]' passed (0.800 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testCreateProfileSelectsSupportedAlternateAndSkipsUnboundOrOverridden]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testCreateProfileSelectsSupportedAlternateAndSkipsUnboundOrOverridden]' passed (0.105 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testExplicitControllerConversionPreservesBindingsAndOrdinaryRefreshPreservesLayout]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testExplicitControllerConversionPreservesBindingsAndOrdinaryRefreshPreservesLayout]' passed (1.145 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testMissingBindingClearsPreviouslyImportedOutput]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testMissingBindingClearsPreviouslyImportedOutput]' passed (0.174 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testNoUsableBindingsDoesNotProduceAnImport]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testNoUsableBindingsDoesNotProduceAnImport]' passed (0.008 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testPreviouslyUnboundActionIsAddedWhenItGetsAKeyboardBinding]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testPreviouslyUnboundActionIsAddedWhenItGetsAKeyboardBinding]' passed (0.193 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testRefreshPreservesUserLabelsOutputsAndDeletedControls]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testRefreshPreservesUserLabelsOutputsAndDeletedControls]' passed (0.188 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testRefreshUpdatesBindingsAndNamesPreservingGeometryAndMetadata]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testRefreshUpdatesBindingsAndNamesPreservingGeometryAndMetadata]' passed (0.258 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testReviewDetectsConcurrentEditsAndNameCollisions]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testReviewDetectsConcurrentEditsAndNameCollisions]' passed (0.111 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testSnapshotBoundsVersionsAndDuplicateKeys]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testSnapshotBoundsVersionsAndDuplicateKeys]' passed (0.004 seconds).
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testWoWKeyVocabularyUsesPhysicalKeysAndModifierChords]' started.
+Test Case '-[ThumbleCLITests.ThumbleLinkTests testWoWKeyVocabularyUsesPhysicalKeysAndModifierChords]' passed (0.000 seconds).
+Test Suite 'ThumbleLinkTests' passed at 2026-10-21 13:20:49.360.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 3.712 (3.713) seconds
+Test Suite 'ThumbleNativeSkinPreviewRendererTests' started at 2026-10-21 13:20:49.360.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testAboveLegendClearsLargeCenteredAbilityIcon]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testAboveLegendClearsLargeCenteredAbilityIcon]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testAuthoredShortLegendRemainsVisibleWithCenteredIconAndLongProfileLabel]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testAuthoredShortLegendRemainsVisibleWithCenteredIconAndLongProfileLabel]' passed (0.039 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testBindingHintReviewMeasuresSeparateNativeInkAndRejectsUnknownTargets]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testBindingHintReviewMeasuresSeparateNativeInkAndRejectsUnknownTargets]' passed (0.111 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testCircularIconMaskClipsOnlyPresentationAndPreservesLiveAsset]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testCircularIconMaskClipsOnlyPresentationAndPreservesLiveAsset]' passed (0.021 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testComputedTrackpadSurfacesFollowAuthoredChromeAndRetainNativeFlowLimits]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testComputedTrackpadSurfacesFollowAuthoredChromeAndRetainNativeFlowLimits]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testContactSheetContainsEveryRequestedState]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testContactSheetContainsEveryRequestedState]' passed (0.185 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testDiagnosticOverlaysAreExplicitDeterministicAndPreserveCanvas]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testDiagnosticOverlaysAreExplicitDeterministicAndPreserveCanvas]' passed (0.151 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testDrawerSurfaceUsesSafeAreasAndPinnedVisibility]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testDrawerSurfaceUsesSafeAreasAndPinnedVisibility]' passed (0.180 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testInheritedIconPresentationFollowsUpdatedAndRemovedAbilityIdentity]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testInheritedIconPresentationFollowsUpdatedAndRemovedAbilityIdentity]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testMixedStateReviewUsesExactTargetsAndRejectsUnknownControls]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testMixedStateReviewUsesExactTargetsAndRejectsUnknownControls]' passed (0.051 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarAssetIconsUsePayloadRenderingModeTintAndScale]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarAssetIconsUsePayloadRenderingModeTintAndScale]' passed (0.032 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarLayoutMeasuresVisibleItemsWithoutChangingPixels]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarLayoutMeasuresVisibleItemsWithoutChangingPixels]' passed (0.020 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarLeavesFollowCompactLabelsAndLaunchPayloadBranches]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarLeavesFollowCompactLabelsAndLaunchPayloadBranches]' passed (0.037 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarPaintCapturesOverrideAndDisabledFallbackFromActualViews]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeBarPaintCapturesOverrideAndDisabledFallbackFromActualViews]' passed (0.008 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeCaptionChangesPixelsWhileAccessibilityNameDoesNot]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeCaptionChangesPixelsWhileAccessibilityNameDoesNot]' passed (0.036 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeControlBarUsesSharedLabelsAndRuntimeContext]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeControlBarUsesSharedLabelsAndRuntimeContext]' passed (0.088 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativePointingPaintChangesPuckAndFramePixelsPerState]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativePointingPaintChangesPuckAndFramePixelsPerState]' passed (0.005 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeRendererIsDeterministicAndUsesImagePayloads]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeRendererIsDeterministicAndUsesImagePayloads]' passed (0.028 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeSurfaceInkMeasuresSeparateGlyphsInCanvasCoordinates]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testNativeSurfaceInkMeasuresSeparateGlyphsInCanvasCoordinates]' passed (0.551 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testResolvedPointingPaintPreservesDefaultsAndTouchFeedback]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testResolvedPointingPaintPreservesDefaultsAndTouchFeedback]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeButtonUsesExactOwnedIdentityAndAuthoredNativePresentation]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeButtonUsesExactOwnedIdentityAndAuthoredNativePresentation]' passed (0.015 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimePointingUsesExactAuthoredNativeFaceAndMotion]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimePointingUsesExactAuthoredNativeFaceAndMotion]' passed (0.015 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeRevealUsesTheExactAuthoredNativeFaceAndState]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeRevealUsesTheExactAuthoredNativeFaceAndState]' passed (0.009 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeTriggerUsesAuthoredFaceAndExactValueFillEvidence]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testRuntimeTriggerUsesAuthoredFaceAndExactValueFillEvidence]' passed (0.025 seconds).
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testSettledNativeStateScaleIsDrawnAndReportedWithoutChangingHitGeometry]' started.
+Test Case '-[ThumbleCLITests.ThumbleNativeSkinPreviewRendererTests testSettledNativeStateScaleIsDrawnAndReportedWithoutChangingHitGeometry]' passed (0.005 seconds).
+Test Suite 'ThumbleNativeSkinPreviewRendererTests' passed at 2026-10-21 13:20:50.976.
+	 Executed 25 tests, with 0 failures (0 unexpected) in 1.615 (1.616) seconds
+Test Suite 'VirtualGamepadInjectorTests' started at 2026-10-21 13:20:50.976.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testCreationFailureWithEntitlementIsNotMisreportedAsMissingEntitlement]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testCreationFailureWithEntitlementIsNotMisreportedAsMissingEntitlement]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testGetReportReturnsCurrentStateAndRejectsInvalidTypeIDAndShortBuffer]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testGetReportReturnsCurrentStateAndRejectsInvalidTypeIDAndShortBuffer]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testInitialReportFailureNeverPublishesReadyAndCancelsDevice]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testInitialReportFailureNeverPublishesReadyAndCancelsDevice]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testMissingEntitlementDoesNotAttemptDeviceCreationAndLatchesRetries]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testMissingEntitlementDoesNotAttemptDeviceCreationAndLatchesRetries]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testNeverStartedDeviceDoesNotClaimAvailability]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testNeverStartedDeviceDoesNotClaimAvailability]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testStopNeutralizesAllOutputsBeforeCancellationAndReleaseDoesNotRecreate]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadInjectorTests testStopNeutralizesAllOutputsBeforeCancellationAndReleaseDoesNotRecreate]' passed (0.000 seconds).
+Test Suite 'VirtualGamepadInjectorTests' passed at 2026-10-21 13:20:50.976.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'VirtualGamepadOutputPolicyTests' started at 2026-10-21 13:20:50.976.
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testCameraAndClickSettingsRoundTripWithoutChangingOldTrackpads]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testCameraAndClickSettingsRoundTripWithoutChangingOldTrackpads]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testControllerModeExplicitlyRequestsDeviceEvenWithoutBindings]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testControllerModeExplicitlyRequestsDeviceEvenWithoutBindings]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testKeyboardModeFiltersDirectMixedBindingsBeforeTheyAreCaptured]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testKeyboardModeFiltersDirectMixedBindingsBeforeTheyAreCaptured]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testKeyboardModeGatesDirectOutputsTriggersAndAnalogControls]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadOutputPolicyTests testKeyboardModeGatesDirectOutputsTriggersAndAnalogControls]' passed (0.000 seconds).
+Test Suite 'VirtualGamepadOutputPolicyTests' passed at 2026-10-21 13:20:50.977.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'VirtualGamepadReportTests' started at 2026-10-21 13:20:50.977.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testCanonicalCrossLanguageFixtures]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testCanonicalCrossLanguageFixtures]' passed (0.001 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testDescriptorMatchesTheRecognizedXboxInputLayout]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testDescriptorMatchesTheRecognizedXboxInputLayout]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testDigitalTriggerReleaseRestoresIndependentAnalogHold]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testDigitalTriggerReleaseRestoresIndependentAnalogHold]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testNeutralReportHasNoPressedDirectionOrTrigger]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testNeutralReportHasNoPressedDirectionOrTrigger]' passed (0.000 seconds).
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testNonfiniteAxesFailNeutralRatherThanThrowingOrMovingFullScale]' started.
+Test Case '-[ThumbleCLITests.VirtualGamepadReportTests testNonfiniteAxesFailNeutralRatherThanThrowingOrMovingFullScale]' passed (0.000 seconds).
+Test Suite 'VirtualGamepadReportTests' passed at 2026-10-21 13:20:50.978.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ThumbleCLITests.xctest' passed at 2026-10-21 13:20:50.978.
+	 Executed 179 tests, with 0 failures (0 unexpected) in 66.484 (66.499) seconds
+Test Suite 'Selected tests' passed at 2026-10-21 13:20:50.978.
+	 Executed 179 tests, with 0 failures (0 unexpected) in 66.484 (66.500) seconds

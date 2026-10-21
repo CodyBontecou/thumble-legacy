@@ -174,7 +174,16 @@ public enum ThumbleOwnedOperationBridge {
         var result: GamepadCustomization
         init(_ source: GamepadCustomization, package: ThumbleSkinPackage, scheme: ThumbleSkinColorScheme, actionSet: ThumbleActionSet) {
             self.source = source
-            result = source.applying(skinPackage: package, orientation: .landscape, colorScheme: scheme,
+            // A reviewed design replaces the preceding owned design. Generated token IDs
+            // are stable, so the old library must not shadow their newly reviewed values.
+            // Retain unrelated tokens and all live icon assets in the source.
+            var input = source
+            let replacementIDs = Set(package.skin?.appearance(orientation: .landscape,
+                colorScheme: scheme, actionSet: actionSet).styleLibrary.styles.map(\.id) ?? [])
+            input.styleLibrary = GamepadStyleLibrary(styles: source.styleLibrary.styles.filter {
+                !replacementIDs.contains($0.id)
+            })
+            result = input.applying(skinPackage: package, orientation: .landscape, colorScheme: scheme,
                 options: .replacingAppearance, actionSet: actionSet)
         }
         private func restoring(_ layout: GamepadButtonCustomization, from original: GamepadButtonCustomization) -> GamepadButtonCustomization {

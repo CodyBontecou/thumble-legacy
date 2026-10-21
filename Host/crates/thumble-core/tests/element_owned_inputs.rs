@@ -53,7 +53,7 @@ fn imported_declarations_enforce_total_and_specialized_capacities() {
         ("button", 129),
         ("joystick", 3),
         ("trigger", 3),
-        ("trackpad", 2),
+        ("trackpad", 4),
     ] {
         assert!(
             !thumble_core::validate_element_identities(&profile(kind, count)),

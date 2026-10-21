@@ -54,6 +54,31 @@ final class ThumbleCLIRuntimeBackend {
         }
     }
 
+    static func runWoWSetup(arguments: [String], executableURL: URL? = nil) throws -> Data {
+        guard arguments.count <= 24, arguments.allSatisfy({ $0.utf8.count <= 4096 && !$0.contains("\0") }) else {
+            throw BackendError.receiverFailed("WoW setup arguments exceed bounds")
+        }
+        let url = executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0]).standardizedFileURL
+            .deletingLastPathComponent().appendingPathComponent("thumble-host")
+        let (status, output, diagnostics) = try execute(Data(), at: url, timeout: 60, arguments: ["wow-setup"] + arguments)
+        guard status == 0 else { throw BackendError.receiverFailed(String(decoding: diagnostics, as: UTF8.self)) }
+        return output
+    }
+
+    static func runWoWSync(action: String, json: Bool, executableURL: URL? = nil) throws -> Data {
+        guard ["status", "start", "stop", "request-permission"].contains(action) else {
+            throw BackendError.receiverFailed("Usage: thumble wow sync status|start|stop|request-permission [--json]")
+        }
+        let url = executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0]).standardizedFileURL
+            .deletingLastPathComponent().appendingPathComponent("thumble-host")
+        let arguments = ["wow", action] + (json ? ["--json"] : [])
+        let (status, output, diagnostics) = try execute(Data(), at: url, timeout: 10, arguments: arguments)
+        guard status == 0 else {
+            throw BackendError.receiverFailed(String(decoding: diagnostics, as: UTF8.self))
+        }
+        return output
+    }
+
     /// Lifecycle belongs to the packaged receiver executable, not GUI IPC or
     /// the short-lived profile helper. Host start/stop retain its authority lock.
     static func runReceiver(_ command: ReceiverCommand, executableURL: URL? = nil,

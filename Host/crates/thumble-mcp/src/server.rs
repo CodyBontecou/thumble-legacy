@@ -4436,6 +4436,40 @@ pub struct SaveConfigurationDraftResult {
     pub phone_sync_queued: bool,
 }
 
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WoWSetupParams {
+    pub client_root: PathBuf,
+    pub console_port_source: PathBuf,
+    #[serde(default)]
+    pub replace_bindings: bool,
+    #[serde(default)]
+    pub replace_addons: bool,
+    #[serde(default = "wow_enable_live")]
+    pub enable_live: bool,
+    #[serde(default)]
+    pub apply: bool,
+    #[serde(rename = "expectedPlanSHA256")]
+    pub expected_plan_sha256: Option<String>,
+}
+fn wow_enable_live() -> bool {
+    true
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "kebab-case")]
+pub enum WoWSyncAction {
+    Status,
+    Start,
+    Stop,
+    RequestPermission,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct WoWSyncParams {
+    pub action: WoWSyncAction,
+}
+
 #[derive(Clone)]
 pub struct ThumbleMcp {
     tool_router: ToolRouter<Self>,
@@ -4483,6 +4517,80 @@ impl ThumbleMcp {
             allow_config_write,
             press_limiter: Arc::new(Mutex::new(PressRateLimiter::new())),
         }
+    }
+
+    #[tool(
+        description = "Plan or apply a local ConsolePort 3.3.11 and embedded Thumble Link installation for Classic Era/Forever. clientRoot is the actual _classic_era_ or _forever_ folder; consolePortSource is an extracted release folder containing all nine ConsolePort addon directories. Default is read-only planning. Apply requires the exact planSHA256 as expectedPlanSHA256, closed WoW client and MCP --allow-config-write. Existing differing ConsolePort files require explicit replaceAddons; all replaced addons and relevant WTF binding/SavedVariables files are backed up privately. Character preset setup keeps existing controller bindings unless replaceBindings is explicit. Does not install a desktop GUI or bypass native HID/Screen Recording or phone-format requirements.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn setup_wow_consoleport(
+        &self,
+        Parameters(params): Parameters<WoWSetupParams>,
+    ) -> Result<Json<Value>, String> {
+        if params.apply && !self.allow_config_write {
+            return Err("WoW addon installation requires MCP --allow-config-write".into());
+        }
+        if params.apply != params.expected_plan_sha256.is_some() {
+            return Err("Apply requires expectedPlanSHA256 from a fresh setup plan; omit it for a read-only plan".into());
+        }
+        let request = thumble_host::wow_setup::SetupRequest {
+            client_root: params.client_root,
+            consoleport_source: params.console_port_source,
+            replace_bindings: params.replace_bindings,
+            replace_addons: params.replace_addons,
+            enable_live: params.enable_live,
+        };
+        let result = tokio::task::spawn_blocking(move || {
+            thumble_host::wow_setup::execute(&request, params.expected_plan_sha256.as_deref())
+        })
+        .await
+        .map_err(|_| "WoW setup worker failed")??;
+        Ok(Json(
+            serde_json::to_value(result).map_err(|e| e.to_string())?,
+        ))
+    }
+
+    #[tool(
+        description = "Inspect, enable or stop local WoW ConsolePort live sync, or explicitly request macOS Screen Recording permission for its native capture helper. Start requires --allow-config-write on MCP and receiver. The opt-in /thumblelive addon panel supplies character GUID, controller bindings and cropped game icons; swaps use separate character profiles. No desktop GUI is required. Sync runs only for this receiver session.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn wow_sync(
+        &self,
+        Parameters(params): Parameters<WoWSyncParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::wow_live::SyncAction;
+        let action = match params.action {
+            WoWSyncAction::Status => SyncAction::Status,
+            WoWSyncAction::Start => SyncAction::Start,
+            WoWSyncAction::Stop => SyncAction::Stop,
+            WoWSyncAction::RequestPermission => SyncAction::RequestPermission,
+        };
+        if matches!(action, SyncAction::Start | SyncAction::RequestPermission)
+            && !self.allow_config_write
+        {
+            return Err(
+                "WoW sync enable/permission requests require MCP --allow-config-write".into(),
+            );
+        }
+        let response = self
+            .request("wow_sync", ControlRequest::WowLive { action })
+            .await?;
+        let status = response
+            .wow_live
+            .ok_or("Receiver returned no WoW sync status")?;
+        Ok(Json(
+            serde_json::to_value(status).map_err(|e| e.to_string())?,
+        ))
     }
 
     #[tool(
@@ -6865,7 +6973,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 40);
+        assert_eq!(tools.len(), 42);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -7012,8 +7120,10 @@ mod tests {
                 "rollback_profile_authority",
                 "save_configuration_draft",
                 "select_profile",
+                "setup_wow_consoleport",
                 "update_controller_design",
                 "validate_configuration_draft",
+                "wow_sync",
             ]
         );
     }
@@ -7066,6 +7176,43 @@ mod tests {
         assert!(ConfigurationOperation::from(out_of_bounds)
             .validate_bridge_input()
             .is_err());
+    }
+
+    #[tokio::test]
+    async fn wow_setup_apply_requires_write_authorization_before_filesystem_access() {
+        let server = ThumbleMcp::new(PathBuf::from("/missing/control.sock"), false, false);
+        let params = WoWSetupParams {
+            client_root: PathBuf::from("/missing/client"),
+            console_port_source: PathBuf::from("/missing/source"),
+            replace_bindings: false,
+            replace_addons: false,
+            enable_live: true,
+            apply: true,
+            expected_plan_sha256: Some("a".repeat(64)),
+        };
+        let error = match server.setup_wow_consoleport(Parameters(params)).await {
+            Err(error) => error,
+            Ok(_) => panic!("Installer ran without authorization"),
+        };
+        assert!(error.contains("--allow-config-write"));
+        assert!(!error.contains("filesystem"));
+    }
+
+    #[tokio::test]
+    async fn wow_sync_enable_and_permission_require_write_authorization_before_socket_access() {
+        let server = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        for action in [WoWSyncAction::Start, WoWSyncAction::RequestPermission] {
+            let error = match server.wow_sync(Parameters(WoWSyncParams { action })).await {
+                Err(error) => error,
+                Ok(_) => panic!("WoW sync started without write authorization"),
+            };
+            assert!(error.contains("--allow-config-write"));
+            assert!(!error.contains("control.sock"));
+        }
     }
 
     #[tokio::test]
@@ -7305,7 +7452,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 40);
+        assert_eq!(tools.len(), 42);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -8015,7 +8162,6 @@ mod tests {
             .await
             .is_err());
     }
-
     #[tokio::test]
     async fn authority_rollback_requires_write_opt_in_and_exact_local_channel() {
         let request = || RollbackAuthorityParams {

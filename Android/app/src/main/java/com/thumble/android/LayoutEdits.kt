@@ -17,7 +17,7 @@ internal enum class LayoutOrientation(val wireValue: String, val slot: String) {
 /** Immutable canonical layout bytes. Editing must never alias a received profile,
  * an undo entry, or another orientation's mutable JSONObject. */
 internal class LayoutSnapshot private constructor(private val bytes: String) {
-    fun json() = JSONObject(bytes)
+    fun json() = StrictJSON.objectValue(bytes.toByteArray(),exactNumbers=true)
     override fun equals(other: Any?) = other is LayoutSnapshot && bytes == other.bytes
     override fun hashCode() = bytes.hashCode()
     val orientation: LayoutOrientation get() = LayoutOrientation.of(json())
@@ -35,7 +35,7 @@ internal class LayoutSnapshot private constructor(private val bytes: String) {
 
     companion object {
         fun capture(raw: JSONObject): LayoutSnapshot {
-            val bytes = raw.toString()
+            val bytes = StrictJSON.data(raw).toString(Charsets.UTF_8)
             require(bytes.toByteArray(Charsets.UTF_8).size <= WireCodec.MAX_PAYLOAD) { "Layout is too large" }
             val copy = PackageJSON.objectValue(bytes.toByteArray(Charsets.UTF_8))
             // Reuse renderer parsing; these are canonical model snapshots, not
@@ -123,7 +123,7 @@ internal class LayoutRecoveryProfile private constructor(private val bytes: Stri
     fun json(): JSONObject = profile().source
     companion object {
         fun capture(raw: JSONObject): LayoutRecoveryProfile {
-            val bytes = raw.toString()
+            val bytes = StrictJSON.data(raw).toString(Charsets.UTF_8)
             require(bytes.toByteArray(Charsets.UTF_8).size <= WireCodec.MAX_PAYLOAD) { "Recovery profile is too large" }
             val copy = StrictJSON.objectValue(bytes.toByteArray(Charsets.UTF_8))
             val profile = ControllerProfile.parse(copy)

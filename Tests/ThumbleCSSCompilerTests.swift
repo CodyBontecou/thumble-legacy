@@ -626,6 +626,43 @@ extension ThumbleCSSCompilerTests {
         }
     }
 
+    func testCircularInheritedIconMaskCompilesWithoutReplacingSource() throws {
+        let source = try makeCSSWorkspace(css: "control { -thumble-icon-placement: center; -thumble-icon-scale: 2.7; -thumble-icon-mask: circle; }")
+        let result = try ThumbleSkinCompiler.compile(source: source)
+        let appearance = try XCTUnwrap(result.package.skin?.variants.first?.appearance)
+        let styleID = try XCTUnwrap(appearance.defaultControl?.styleID)
+        let content = try XCTUnwrap(appearance.styleLibrary.style(id: styleID)?.visualStyle.stateStyle(for: .normal).content)
+        XCTAssertEqual(content.iconMask, .circle)
+        XCTAssertEqual(content.iconScale, 2.7)
+        XCTAssertNil(content.icon)
+        XCTAssertEqual(try JSONDecoder().decode(GamepadControlContentStyle.self, from: JSONEncoder().encode(content)), content)
+        let invalid = try makeCSSWorkspace(css: "control { -thumble-icon-mask: squareish; }")
+        XCTAssertFalse(ThumbleCSSCompiler.lint(workspace: try loadWorkspace(invalid), sourceRoot: invalid).errors.isEmpty)
+    }
+
+    func testInheritedIconPresentationCompilesWithoutFreezingAbilityIdentity() throws {
+        let source = try makeCSSWorkspace(css: "control { -thumble-icon-placement: center; -thumble-icon-scale: 2.2; -thumble-label-placement: above; font-size: 12px; }")
+        let result = try ThumbleSkinCompiler.compile(source: source)
+        let appearance = try XCTUnwrap(result.package.skin?.variants.first?.appearance)
+        let styleID = try XCTUnwrap(appearance.defaultControl?.styleID)
+        let style = try XCTUnwrap(appearance.styleLibrary.style(id: styleID)?.visualStyle)
+        let content = try XCTUnwrap(style.stateStyle(for: .normal).content)
+        XCTAssertNil(content.icon)
+        XCTAssertEqual(content.iconPlacement, .center)
+        XCTAssertEqual(content.iconScale, 2.2)
+        XCTAssertEqual(try JSONDecoder().decode(GamepadControlContentStyle.self, from: JSONEncoder().encode(content)), content)
+    }
+
+    func testAboveLegendPlacementCompilesAndRoundTrips() throws {
+        let source = try makeCSSWorkspace(css: "control { -thumble-label-placement: above; -thumble-label-padding: 2px; font-size: 12px; }")
+        let result = try ThumbleSkinCompiler.compile(source: source)
+        let appearance = try XCTUnwrap(result.package.skin?.variants.first?.appearance)
+        let styleID = try XCTUnwrap(appearance.defaultControl?.styleID)
+        let style = try XCTUnwrap(appearance.styleLibrary.style(id: styleID)?.visualStyle)
+        XCTAssertEqual(style.stateStyle(for: .normal).content?.labelPlacement?.rawValue, "above")
+        XCTAssertEqual(try JSONDecoder().decode(GamepadControlVisualStyle.self, from: JSONEncoder().encode(style)), style)
+    }
+
     func testBoundedNativeTypographyAndPointingChromeLowerAndMergeAcrossStates() throws {
         let source = try makeCSSWorkspace(css: """
         control { -thumble-legend: "Q"; font-size: 22px; font-weight: medium; -thumble-font-design: monospaced;

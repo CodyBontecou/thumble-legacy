@@ -1573,6 +1573,28 @@
           ],
           "status": "host-cli-only",
           "mcpTool": "edit_configuration_draft"
+        },
+        {
+          "id": "wow.setup",
+          "cli": [
+            "wow setup",
+            "thumble-host wow-setup"
+          ],
+          "status": "current",
+          "mcpTool": "setup_wow_consoleport",
+          "gate": "configuration-write",
+          "phoneEffect": "Reviewed local addon installation; no profile activation or physical input claim"
+        },
+        {
+          "id": "wow.sync",
+          "cli": [
+            "wow sync",
+            "thumble-host wow"
+          ],
+          "status": "current",
+          "mcpTool": "wow_sync",
+          "gate": "configuration-write",
+          "phoneEffect": "Local status/stop; explicit opt-in for enabling addon capture or permission requests"
         }
       ]
     }
