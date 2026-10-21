@@ -18,7 +18,6 @@ EXPECTED = {
     "launchAttachedApplication": (1, 0),
     "skin": (3, 2),
     "renderSkinPreview": (2, 0),  # mutually exclusive lazy reads; artifact previews need no store
-    "customization": (2, 0),
     "mutateCustomization": (1, 1),
     "mutateProfileResources": (1, 1),
     "asset": (1, 0),  # legacy asset metadata mutation only; reads use authority snapshots
@@ -278,5 +277,10 @@ customization_block = source_text.split("private static func customization(argum
 reset_block = customization_block.split('case "reset":', 1)[1].split("default:", 1)[0]
 if ".customizationReset(" not in reset_block or any(token in reset_block for token in ("requireExplicitUnmigratedProfileAccess", "mutateCustomization(", "loadStore(")):
     raise SystemExit("Customization reset must use the typed authority transaction")
+
+
+for command in ("customizationExport", "customizationImport", "customizationReset"):
+    if command not in customization_block or any(token in customization_block for token in ("loadStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess(")):
+        raise SystemExit("Customization interchange and reset must use typed authority: " + command)
 
 print("CLI direct profile/design/element persistence allowlist passed.")

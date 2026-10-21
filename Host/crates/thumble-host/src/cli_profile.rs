@@ -211,6 +211,18 @@ pub enum CliProfileCommand {
         variant: ConfigurationVariant,
         preset: String,
     },
+    #[serde(rename = "customization.export")]
+    CustomizationExport {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+    },
+    #[serde(rename = "customization.import")]
+    CustomizationImport {
+        target: ProfileSelector,
+        variant: ConfigurationVariant,
+        #[serde(rename = "artifactJSON")]
+        artifact_json: String,
+    },
     #[serde(rename = "customization.reset")]
     CustomizationReset {
         target: ProfileSelector,
@@ -658,6 +670,8 @@ impl CliProfileCommand {
             Self::GenerationGenerate { .. } => "generation.generate",
             Self::GenerationPlanSpec { .. } => "generation.plan-spec",
             Self::TemplateInstall { .. } => "template.install",
+            Self::CustomizationExport { .. } => "customization.export",
+            Self::CustomizationImport { .. } => "customization.import",
             Self::CustomizationReset { .. } => "customization.reset",
             Self::ThemeApply { .. } => "theme.apply",
             Self::CustomizationSet { .. } => "customization.set",
@@ -1569,6 +1583,16 @@ where
                 "owned_configuration_required",
                 "asset authority writes require an owned configuration",
             ));
+        }
+        if let CliProfileCommand::CustomizationExport { target, variant } = &request.command {
+            return export_customization(
+                paths,
+                state,
+                target,
+                *variant,
+                &catalog,
+                authority_mode == "native",
+            );
         }
         if let CliProfileCommand::DesignSnapshot {
             target,
@@ -2540,6 +2564,16 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
                 "device frame is outside the checked-in safe catalog",
             ));
         }
+        CliProfileCommand::CustomizationImport { artifact_json, .. } => {
+            thumble_core::CustomizationArtifact::decode(artifact_json.as_bytes()).map_err(
+                |_| {
+                    TransactionFailure::new(
+                        "invalid_customization_artifact",
+                        "customization file is invalid or exceeds 8 MiB",
+                    )
+                },
+            )?;
+        }
         CliProfileCommand::ThemeApply { preset, .. } => {
             if !matches!(preset.as_str(), "cavern-glow" | "soft-white-controller") {
                 return Err(TransactionFailure::new(
@@ -3124,6 +3158,35 @@ fn plan_transaction(
                 destination: None,
                 removed_every_profile: false,
             })
+        }
+        CliProfileCommand::CustomizationExport { .. } => Err(TransactionFailure::new(
+            "customization_adapter_required",
+            "customization interchange requires the scoped document adapter",
+        )),
+        CliProfileCommand::CustomizationImport {
+            target,
+            variant,
+            artifact_json,
+        } => {
+            let artifact = thumble_core::CustomizationArtifact::decode(artifact_json.as_bytes())
+                .map_err(|_| {
+                    TransactionFailure::new(
+                        "invalid_customization_artifact",
+                        "invalid customization file",
+                    )
+                })?;
+            if artifact.is_pooled() || !artifact.legacy_numbers_are_supported() {
+                return Err(TransactionFailure::new("owned_configuration_required","precise or pooled customization files require an owned authority; prepare and migrate the destination first"));
+            }
+            let profile = resolve_selector(target, catalog)?;
+            Ok(plan_one(
+                ConfigurationOperation::CustomizationImport {
+                    profile_id: profile.profile_id.to_string(),
+                    variant: *variant,
+                    customization_json: artifact_json.clone(),
+                },
+                profile.name.clone(),
+            ))
         }
         CliProfileCommand::CustomizationReset { target, variant } => {
             let profile = resolve_selector(target, catalog)?;
@@ -6350,6 +6413,8 @@ fn replay_profile_names(
         | CliProfileCommand::ElementNudge { target, .. }
         | CliProfileCommand::ElementDelete { target, .. }
         | CliProfileCommand::ElementReset { target, .. }
+        | CliProfileCommand::CustomizationExport { target, .. }
+        | CliProfileCommand::CustomizationImport { target, .. }
         | CliProfileCommand::CustomizationReset { target, .. }
         | CliProfileCommand::ThemeApply { target, .. }
         | CliProfileCommand::CustomizationSet { target, .. }
@@ -6566,8 +6631,102 @@ pub fn validate_profile_asset_command(command: &CliProfileCommand) -> Result<(),
         .map_err(|error| format!("{}: {}", error.error.code, error.error.message))
 }
 
+fn exact_selected_profile(
+    paths: &HostPaths,
+    state: &PersistentState,
+    selected: &CliProfileSummary,
+) -> Result<Vec<u8>, TransactionFailure> {
+    let fail = || {
+        TransactionFailure::new(
+            "customization_capture_failed",
+            "exact authoritative customization could not be captured",
+        )
+    };
+    let bytes = storage::read_state_bytes(&paths.state_file).map_err(|_| fail())?;
+    let mut stored: PersistentState =
+        thumble_protocol::decode_unique_json(&bytes).map_err(|_| fail())?;
+    stored.normalize().map_err(|_| fail())?;
+    if &stored != state {
+        return Err(fail());
+    }
+    let root: BTreeMap<String, Box<serde_json::value::RawValue>> =
+        serde_json::from_slice(&bytes).map_err(|_| fail())?;
+    let profiles: Vec<Box<serde_json::value::RawValue>> =
+        serde_json::from_str(root["profiles"].get()).map_err(|_| fail())?;
+    let raw = profiles.get(selected.index).ok_or_else(fail)?;
+    let value: Value = serde_json::from_str(raw.get()).map_err(|_| fail())?;
+    if value["id"].as_str().and_then(|s| Uuid::parse_str(s).ok()) != Some(selected.profile_id) {
+        return Err(fail());
+    }
+    Ok(raw.get().as_bytes().to_vec())
+}
+fn export_customization(
+    paths: &HostPaths,
+    state: &PersistentState,
+    target: &ProfileSelector,
+    variant: ConfigurationVariant,
+    catalog: &CliProfileCatalog,
+    native_snapshot: bool,
+) -> Result<TransactionResult, TransactionFailure> {
+    let selected = resolve_selector(target, catalog)?;
+    // The guarded native owner supplies an authenticated in-memory document;
+    // Rust owners must capture their exact persisted bytes without fallback.
+    let bytes = if native_snapshot {
+        serde_json::to_vec(&state.profiles[selected.index]).map_err(|_| {
+            TransactionFailure::new(
+                "customization_capture_failed",
+                "native snapshot could not be encoded",
+            )
+        })?
+    } else {
+        exact_selected_profile(paths, state, selected)?
+    };
+    let variant = match variant {
+        ConfigurationVariant::Primary => "primary",
+        ConfigurationVariant::Landscape => "landscape",
+        ConfigurationVariant::Portrait => "portrait",
+    };
+    let artifact = thumble_core::CustomizationArtifact::from_profile(
+        &bytes,
+        variant,
+        state.schema_version == 4,
+    )
+    .map_err(|e| TransactionFailure::new("customization_export_failed", &e.to_string()))?;
+    Ok(TransactionResult {
+        artifact: Some(CliProfileArtifact {
+            configuration_revision: state.configuration_revision,
+            artifact_json: String::from_utf8(artifact.original_bytes().to_vec()).map_err(|_| {
+                TransactionFailure::new("customization_export_failed", "invalid UTF-8")
+            })?,
+            content_hash: ProfileArtifactContentHash {
+                algorithm: "sha256".into(),
+                canonicalization: "exact-json-utf8".into(),
+                value: format!("{:x}", Sha256::digest(artifact.original_bytes())),
+            },
+        }),
+        ..Default::default()
+    })
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn customization_export_uses_guarded_native_snapshot_without_a_state_file() {
+        let state = PersistentState::minimal("native-customization-read").unwrap();
+        let document = ConfigurationDocument::from_state(&state).unwrap();
+        let request = request(CliProfileCommand::CustomizationExport {
+            target: ProfileSelector::Active,
+            variant: ConfigurationVariant::Primary,
+        });
+        let (response, candidate) = crate::native_configuration::evaluate(&document, 12, &request);
+        assert!(response.ok, "{:?}", response.error);
+        assert!(candidate.is_none());
+        assert!(thumble_core::CustomizationArtifact::decode(
+            response.artifact.unwrap().artifact_json.as_bytes()
+        )
+        .is_ok());
+    }
+
     #[test]
     fn theme_request_is_catalog_bounded_and_plans_one_scoped_operation() {
         let state = thumble_core::PersistentState::minimal("theme-test").unwrap();

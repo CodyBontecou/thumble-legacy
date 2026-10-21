@@ -126,6 +126,13 @@ fn projection(encoded: &str) -> Result<OwnedConfigurationDocument, Configuration
 fn canonical_operation(
     operation: &ConfigurationOperation,
 ) -> Result<ConfigurationOperation, ConfigurationBridgeError> {
+    if matches!(
+        operation,
+        ConfigurationOperation::CustomizationImport { .. }
+    ) {
+        return Err(ConfigurationBridgeError::OperationNotSupported);
+    }
+
     let mut value =
         serde_json::to_value(operation).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
     if value["type"]

@@ -1,0 +1,20 @@
+{
+  "Host/crates/thumble-core/src/customization_artifact.rs": "b0b009736cf5c67808280f48263e0b0654f36281627bf497ef4d89a3feaf642d",
+  "Host/crates/thumble-core/src/lib.rs": "dc7d77f6268476a47e1653bf174fd5a1cf1da4128e1d5664c8f439684394c975",
+  "Host/crates/thumble-host/src/bridge.rs": "2215a919c785dab8b2700127cee1d46410a6ac6f36e4585b2577ba7bf632155e",
+  "Host/crates/thumble-host/src/cli_profile.rs": "562187997eb039ce8a7dddcfd5f01269cbd32516b2977bee27f1a629291c21d5",
+  "Host/crates/thumble-host/src/cli_profile_owned.rs": "a1fb87225fc00beb5f8d65558bbd94c3338f0492ddd0cdf835d8c8e13109790c",
+  "Host/crates/thumble-host/src/cli_profile_owned_customization.rs": "f33022502447de089c77a157a18a9ede576bd1d533f598c2fd7ab7b6e7f29e91",
+  "Host/crates/thumble-host/src/draft_operation.rs": "7c793b3a9e11262d88cbba221aa2f36e0078f19e2864937e6e00c3f0241e3d25",
+  "Host/crates/thumble-host/src/owned_operation_bridge.rs": "632c331e590f15d1c38a6bcebc15eb2989345c171e8dab7fdf0989caa16f33f5",
+  "Host/crates/thumble-mcp/src/server.rs": "4ae2492a3db143327bdb2611bb2c753860b89d6eace3906aaee420e42570da4b",
+  "Sources/CLI/ThumbleCLI.swift": "c5608d112f96b8f7e678fecb9d0aa375cd656ba8fb45614efe59674e1bc83319",
+  "Sources/CLI/ThumbleCLIBackend.swift": "eecca582588d6f547de27d6698f22e87418523278f06b4d769dc68554ebd6057",
+  "Sources/Shared/ThumbleConfigurationBridge.swift": "657d4364a12bc660a3d82d32c39da9cbddd6325ed42c28f8c92689a536ba9db7",
+  "Tests/OwnedConfigurationDocumentTests.swift": "65676dad861ed11e3361395444bacaa593959459865fa8d29766d0b9cd895604",
+  "Tests/StackSafetyRegressionTests.swift": "53a8ba5f9d51437f1703767337c6b1059d5cbec162e7b1ba09af07f139220c66",
+  "scripts/check-controller-stack-frames.py": "4cf4364b3e06549064969be21af244f05fbdab705ed2de45e120f7b492aeee19",
+  "scripts/verify-cli-profile-persistence-allowlist.py": "c376d3e7573eadb82de609c5d6523048c95af38142d0ccaa75128a2d9ae921b5",
+  "scripts/verify-customization-interchange.py": "96cfa8277d9b78e72c1991b8c5b9cf257a0364e043d06feaf3b1483ef469ff73",
+  "scripts/verify-feature-removal-fixtures.py": "997eb95491bf0c6feb3f8c906dba48e75420508b6757dd7af7a7bc1fb1dc2656"
+}

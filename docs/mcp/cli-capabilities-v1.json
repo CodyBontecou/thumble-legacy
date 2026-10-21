@@ -570,24 +570,24 @@
           "cli": [
             "customization show"
           ],
-          "status": "planned",
-          "mcpTool": "get_configuration_draft"
+          "status": "current",
+          "mcpTool": "export_customization"
         },
         {
           "id": "customization.export",
           "cli": [
             "customization export"
           ],
-          "status": "planned",
-          "mcpTool": "export_configuration_draft"
+          "status": "current",
+          "mcpTool": "export_customization"
         },
         {
           "id": "customization.import",
           "cli": [
             "customization import"
           ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
+          "status": "current",
+          "mcpTool": "import_customization"
         },
         {
           "id": "customization.validate",

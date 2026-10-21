@@ -3155,26 +3155,24 @@ struct ThumbleCLI {
         guard let subcommand = arguments.first else { throw CLIError.message("Missing customization subcommand") }
         let rest = Array(arguments.dropFirst())
         switch subcommand {
-        case "show":
-            let store = try loadStore()
-            let profile = try resolveProfile(optionValue("--profile", in: rest), in: store)
-            try printJSON(customizationSource(for: profile, store: store, arguments: rest))
-        case "export":
-            let outputPath = optionValue("--output", in: rest) ?? optionValue("-o", in: rest)
-            let store = try loadStore()
-            let profile = try resolveProfile(optionValue("--profile", in: rest), in: store)
-            try writeJSON(customizationSource(for: profile, store: store, arguments: rest), to: outputPath)
+        case "show", "export":
+            let response = try profileBackend().perform(.customizationExport(.init(optionValue("--profile", in: rest)), try authorityConfigurationVariant(in: rest)))
+            guard let artifact = response.artifact else { throw CLIError.message("Authority returned no customization artifact") }
+            let data = Data(artifact.artifactJSON.utf8)
+            try JSONDecoder.validateUniqueKeys(in: data)
+            guard ProfileArtifactAdoptionMetadata.sha256(data) == artifact.contentHash.value else { throw CLIError.message("Customization artifact hash mismatch") }
+            let path = subcommand == "export" ? (optionValue("--output", in: rest) ?? optionValue("-o", in: rest)) : nil
+            if let path, path != "-" { try data.write(to: URL(fileURLWithPath: path), options: .atomic) }
+            else { FileHandle.standardOutput.write(data + Data([0x0a])) }
         case "import":
             guard let path = firstPositional(in: rest) else { throw CLIError.message("Missing customization JSON path") }
-            let data = try Data(contentsOf: URL(fileURLWithPath: path))
-            let customization = try GamepadCustomizationPersistence.decodeSavedCustomization(data)
-            let source = try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: data)
-            try requireExplicitUnmigratedProfileAccess(
-                operation: "customization import",
-                artifactRequired: true
-            )
-            try mutateCustomization(profileTarget: optionValue("--profile", in: rest), variant: try customizationVariant(in: rest), preserving: source) { $0 = customization }
+            let data = try readBoundedResourceFile(URL(fileURLWithPath: path), maximumBytes: 8 * 1024 * 1024)
+            try JSONDecoder.validateUniqueKeys(in: data)
+            let response = try profileBackend().perform(.customizationImport(.init(optionValue("--profile", in: rest)),
+                try authorityConfigurationVariant(in: rest), artifactJSON: String(decoding: data, as: UTF8.self)), invocationID: try profileInvocationID(in: rest))
+            guard response.outcome != nil else { throw CLIError.message("Authority returned no customization import outcome") }
             print("Imported customization.")
+            printProfileInvocation(response)
         case "validate", "check", "lint":
             try validateLayout(arguments: rest)
         case "fix", "repair", "autofix", "auto-fix":
@@ -3913,24 +3911,7 @@ struct ThumbleCLI {
         return profile.customization
     }
 
-    private static func customizationSource(for profile: GamepadConfigurationProfile, store: ProfileStore, arguments: [String]) throws -> ThumbleBridgeJSONValue {
-        guard let value = try MacConfigurationBindings.profileValues([profile], preserving: store.profileSources).first,
-              case .object(var fields) = value,
-              let primarySource = fields["customization"] else {
-            throw GamepadSavedConfigurationError.invalid("profile must contain its declared customization source")
-        }
-        var selectedProfile = profile
-        selectedProfile.customization = try customization(for: profile, arguments: arguments)
-        let variantSource = try customizationVariant(in: arguments).flatMap { fields[$0.rawValue + "Customization"] }
-        fields["customization"] = variantSource.flatMap { $0 == .null ? nil : $0 } ?? primarySource
-        guard case .object(let selectedFields) = try ThumbleConfigurationBridge.preservingProfileMetadata(.object(fields), after: selectedProfile),
-              let source = selectedFields["customization"] else {
-            throw GamepadSavedConfigurationError.invalid("selected customization must retain its declared source")
-        }
-        return source
-    }
-
-    private static func mutateCustomization(profileTarget: String?, variant: GamepadEditorDeviceOrientation? = nil, preserving incomingSource: ThumbleBridgeJSONValue? = nil, mutate: (inout GamepadCustomization) throws -> Void) throws {
+    private static func mutateCustomization(profileTarget: String?, variant: GamepadEditorDeviceOrientation? = nil, mutate: (inout GamepadCustomization) throws -> Void) throws {
         var store = try loadStore()
         let index = try resolveProfileIndex(profileTarget, in: store)
         let previous = store.profiles[index]
@@ -3939,19 +3920,6 @@ struct ThumbleCLI {
         let normalizedCustomization = customization.normalized
         let orientation = variant ?? normalizedCustomization.deviceCanvas.editorDeviceFrame.orientation
         store.profiles[index].setCustomization(normalizedCustomization, for: orientation)
-        if let incomingSource {
-            let source = try store.profileSources[previous.id] ?? JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: JSONEncoder().encode(previous))
-            guard case .object(var fields) = source, let previousPrimarySource = fields["customization"] else {
-                throw GamepadSavedConfigurationError.invalid("customization source must belong to the edited profile")
-            }
-            let previousOrientation = previous.customization.deviceCanvas.editorDeviceFrame.orientation
-            if previousOrientation != orientation, !previous.hasCustomizationVariant(for: previousOrientation) {
-                fields[previousOrientation.rawValue + "Customization"] = previousPrimarySource
-            }
-            fields["customization"] = incomingSource
-            fields[orientation.rawValue + "Customization"] = incomingSource
-            store.profileSources[previous.id] = .object(fields)
-        }
         store.profiles[index].updatedAt = Date.currentMilliseconds
         removeDeletedOwnerReferences(previous: previous, current: store.profiles[index], from: &store)
         try persistStore(store)

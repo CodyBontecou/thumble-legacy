@@ -176,6 +176,66 @@ fn style_import_delta(
     }
 }
 
+fn customization_import_delta(
+    before: &ConfigurationDocument,
+    after: &ConfigurationDocument,
+    id: &str,
+    variant: crate::draft_operation::ConfigurationVariant,
+) -> bool {
+    let mut masked = after.clone();
+    masked.key_bindings = before.key_bindings.clone();
+    masked.output_bindings = before.output_bindings.clone();
+    masked.profile_key_bindings = before.profile_key_bindings.clone();
+    masked.profile_output_bindings = before.profile_output_bindings.clone();
+    if !customization_operation_delta(before, &masked, id, variant) {
+        return false;
+    }
+    let Some(index) = profile_position(after, id) else {
+        return false;
+    };
+    let outputs = thumble_core::profile_owned_outputs(&after.profiles[index]);
+    let mut keys = thumble_core::ButtonBindings::default();
+    for (id, output) in outputs.iter_ids() {
+        if let Some(key) = &output.keyboard {
+            keys.insert(id, key.clone());
+        }
+    }
+    let mut a = before.profile_key_bindings.clone();
+    let mut b = after.profile_key_bindings.clone();
+    a.retain(|k, _| !k.eq_ignore_ascii_case(id));
+    b.retain(|k, _| !k.eq_ignore_ascii_case(id));
+    if a != b {
+        return false;
+    }
+    let mut a = before.profile_output_bindings.clone();
+    let mut b = after.profile_output_bindings.clone();
+    a.retain(|k, _| !k.eq_ignore_ascii_case(id));
+    b.retain(|k, _| !k.eq_ignore_ascii_case(id));
+    if a != b {
+        return false;
+    }
+    if after
+        .profile_key_bindings
+        .iter()
+        .find(|(k, _)| k.eq_ignore_ascii_case(id))
+        .map(|(_, v)| v)
+        != Some(&keys)
+        || after
+            .profile_output_bindings
+            .iter()
+            .find(|(k, _)| k.eq_ignore_ascii_case(id))
+            .map(|(_, v)| v)
+            != Some(&outputs)
+    {
+        return false;
+    }
+    if after.active_profile_id.eq_ignore_ascii_case(id) {
+        after.key_bindings == keys && after.output_bindings == outputs
+    } else {
+        after.key_bindings == before.key_bindings && after.output_bindings == before.output_bindings
+    }
+}
+
 #[cfg(test)]
 #[test]
 fn numeric_projection_preserves_exact_values_without_rounding_large_integers() {
@@ -517,7 +577,9 @@ fn validate_operation_bounds(
         serde_json::to_vec(&value).map_err(|_| ConfigurationBridgeError::EncodingFailed)?;
     if matches!(
         operation,
-        ConfigurationOperation::DesignApply { .. } | ConfigurationOperation::StyleImport { .. }
+        ConfigurationOperation::DesignApply { .. }
+            | ConfigurationOperation::StyleImport { .. }
+            | ConfigurationOperation::CustomizationImport { .. }
     ) {
         // The typed operation validator bounds the archive and hash fields. Ordinary
         // scalar-edit budgets cannot describe an embedded reviewed package.
@@ -603,6 +665,17 @@ fn allowed_failure_code(code: &str) -> bool {
 
 fn allowed_changed_path(operation: &ConfigurationOperation, path: &str) -> bool {
     match operation {
+        ConfigurationOperation::CustomizationImport { profile_id, .. } => {
+            path.eq_ignore_ascii_case(&format!("/profiles/{}", escape_json_pointer(profile_id)))
+                || matches!(
+                    path,
+                    "/keyBindings"
+                        | "/outputBindings"
+                        | "/profileKeyBindings"
+                        | "/profileOutputBindings"
+                )
+        }
+
         ConfigurationOperation::BindingSet { profile_id, .. }
         | ConfigurationOperation::BindingClear { profile_id, .. }
         | ConfigurationOperation::BindingReset { profile_id, .. }
@@ -707,6 +780,12 @@ fn valid_operation_delta(
         return true;
     }
     match operation {
+        ConfigurationOperation::CustomizationImport {
+            profile_id,
+            variant,
+            ..
+        } => customization_import_delta(before, after, profile_id, *variant),
+
         ConfigurationOperation::BindingSet { profile_id, .. }
         | ConfigurationOperation::BindingClear { profile_id, .. }
         | ConfigurationOperation::BindingReset { profile_id, .. } => {

@@ -587,6 +587,8 @@ final class ThumbleCLIProfileBackend {
         case generationGenerate(select: Bool, makeDefault: Bool)
         case generationPlanSpec(specJSON: String, requestedGameName: String?)
         case templateInstall(ControllerTemplate, name: String?, select: Bool, makeDefault: Bool)
+        case customizationExport(ProfileSelector, ConfigurationVariant)
+        case customizationImport(ProfileSelector, ConfigurationVariant, artifactJSON: String)
         case customizationReset(ProfileSelector, ConfigurationVariant)
         case themeApply(ProfileSelector, ConfigurationVariant, preset: String)
         case customizationSet(ProfileSelector, ConfigurationVariant, [CustomizationChanges], frameID: String?)
@@ -818,6 +820,15 @@ final class ThumbleCLIProfileBackend {
                 try container.encodeIfPresent(name, forKey: .name)
                 try container.encode(select, forKey: .select)
                 try container.encode(makeDefault, forKey: .makeDefault)
+            case .customizationExport(let target, let variant):
+                try container.encode("customization.export", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+            case .customizationImport(let target, let variant, let artifactJSON):
+                try container.encode("customization.import", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(variant, forKey: .variant)
+                try container.encode(artifactJSON, forKey: .artifactJSON)
             case .customizationReset(let target, let variant):
                 try container.encode("customization.reset", forKey: .type)
                 try container.encode(target, forKey: .target)

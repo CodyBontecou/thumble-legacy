@@ -1,0 +1,28 @@
+{
+  "exactCLIInspectionExportImport": true,
+  "localMCPInterchange": true,
+  "eightStateAndResourceTransfer": true,
+  "inlineBankNativeRoundtrip": true,
+  "preciseMetadata": true,
+  "identitySelectionAndUnrelatedProfiles": true,
+  "privateUnusedResourcesExcluded": true,
+  "destinationLaunchAssociationPreserved": true,
+  "classicNativePreparation": true,
+  "eightNativePreviewSHA256": [
+    "d7f4b9bbd2e0ca687288d0e25dc444532109a327232047906cc84b63b51ddf6a",
+    "d7f4b9bbd2e0ca687288d0e25dc444532109a327232047906cc84b63b51ddf6a",
+    "d7f4b9bbd2e0ca687288d0e25dc444532109a327232047906cc84b63b51ddf6a",
+    "d7f4b9bbd2e0ca687288d0e25dc444532109a327232047906cc84b63b51ddf6a",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43",
+    "57c502c0b18934186c93f559553c2cfef1b97dc175b0b80a9ff957d36ec99e43"
+  ],
+  "readOnlyMCPExportWithoutOptIn": true,
+  "helperFreeReplay": true,
+  "identicalImportNoOp": true,
+  "boundedFileGuards": true,
+  "legacyClassicInterchange": true,
+  "pooledToLegacyRefused": true,
+  "automaticMigrationActivated": false
+}

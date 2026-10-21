@@ -2,6 +2,43 @@ import Foundation
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    private func legacyImportFixture() throws -> Data {
+        try Data(contentsOf: root.appendingPathComponent("Host/fixtures/customization-interchange/v1/legacy-request.json"))
+    }
+    func testLegacyCustomizationImportMatchesCapturedResponse() throws {
+        let request = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: legacyImportFixture())
+        let actual = try ThumbleConfigurationBridge.transform(request)
+        let expected = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeResponse.self, from: Data(contentsOf: root.appendingPathComponent("Host/fixtures/customization-interchange/v1/legacy-response.json")))
+        XCTAssertEqual(actual, expected)
+    }
+    func testLegacyCustomizationImportRetainsBindingExtensionsAndRefusesTheirDeletion() throws {
+        var request = try XCTUnwrap(JSONSerialization.jsonObject(with: legacyImportFixture()) as? [String: Any])
+        var document = try XCTUnwrap(request["document"] as? [String: Any])
+        let profiles = try XCTUnwrap(document["profiles"] as? [[String: Any]])
+        let profile = try JSONDecoder().decodeUnique(GamepadConfigurationProfile.self, from: JSONSerialization.data(withJSONObject: profiles[0]))
+        let outputs = profile.initialMacOutputBindings
+        var raw = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(MacConfigurationBindings.rawOutputs(outputs))) as? [String: [String: Any]])
+        let id = try XCTUnwrap(raw.keys.first(where: { !$0.hasPrefix("00000000") }))
+        var value = try XCTUnwrap(raw.removeValue(forKey: id)); value["futureRetained"] = "keep binding metadata"
+        raw[id.lowercased()] = value
+        let keys = try JSONSerialization.jsonObject(with: JSONEncoder().encode(MacConfigurationBindings.rawKeyBindings(outputs.keyboardBindings)))
+        document["profileOutputBindings"] = [profile.id.uuidString:raw]; document["outputBindings"] = raw
+        document["profileKeyBindings"] = [profile.id.uuidString:keys]; document["keyBindings"] = keys
+        request["document"] = document
+        let decoded = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: request))
+        let result = try ThumbleConfigurationBridge.transform(decoded)
+        guard case .object(let map)? = result.document.profileOutputBindings[profile.id.uuidString],
+              case .object(let row)? = map[id.lowercased()] else { return XCTFail("binding key/metadata disappeared") }
+        XCTAssertEqual(row["futureRetained"], .string("keep binding metadata"))
+        var operation = try XCTUnwrap(request["operation"] as? [String: Any])
+        var layout = try XCTUnwrap(JSONSerialization.jsonObject(with: Data((operation["customizationJSON"] as! String).utf8)) as? [String: Any])
+        var elements = try XCTUnwrap(layout["elements"] as? [[String: Any]])
+        elements.removeAll { ($0["id"] as? String)?.lowercased() == id.lowercased() }; layout["elements"] = elements
+        if var customs = layout["customButtons"] as? [[String: Any]] { customs.removeAll { ($0["id"] as? String)?.lowercased() == id.lowercased() }; layout["customButtons"] = customs }
+        operation["customizationJSON"] = String(decoding: try JSONSerialization.data(withJSONObject: layout), as: UTF8.self); request["operation"] = operation
+        let deletion = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: request))
+        XCTAssertThrowsError(try ThumbleConfigurationBridge.transform(deletion))
+    }
     func testResetLeavesUnrelatedOwnedBankUntouched() throws {
         let source = try fixture("document")
         let before = try ThumbleOwnedConfigurationDocument(validating: source)

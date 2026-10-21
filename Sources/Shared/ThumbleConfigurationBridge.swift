@@ -1299,6 +1299,7 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
     case outputResetAll(profileID: String)
     case profileReset(profileID: String)
     case customizationSet(profileID: String, variant: ThumbleBridgeLayoutVariant, changes: ThumbleBridgeCustomizationChanges)
+    case customizationImport(profileID: String, variant: ThumbleBridgeLayoutVariant, customizationJSON: String)
     case customizationReset(profileID: String, variant: ThumbleBridgeLayoutVariant)
     case customizationFix(ThumbleBridgeCustomizationFixInput)
     case orientationSet(profileID: String, preference: GamepadProfileOrientationPreference)
@@ -1426,6 +1427,11 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
                 variant: try container.decode(ThumbleBridgeLayoutVariant.self, forKey: .init("variant")),
                 changes: try container.decode(ThumbleBridgeCustomizationChanges.self, forKey: .init("changes"))
             )
+        case "customization.import":
+            try container.requireOnly(["type", "profileID", "variant", "customizationJSON"])
+            self = .customizationImport(profileID: try container.decode(String.self, forKey: .init("profileID")),
+                variant: try container.decode(ThumbleBridgeLayoutVariant.self, forKey: .init("variant")),
+                customizationJSON: try container.decode(String.self, forKey: .init("customizationJSON")))
         case "customization.reset":
             try container.requireOnly(["type", "profileID", "variant"])
             self = .customizationReset(
@@ -1941,6 +1947,12 @@ public enum ThumbleConfigurationBridge {
                 }
                 setCustomization(customization, in: &profile, variant: variant)
             }
+        case let .customizationImport(profileID, variant, customizationJSON):
+            #if os(macOS)
+            return try importCustomization(profileID: profileID, variant: variant, text: customizationJSON, document: &document, nowMillis: nowMillis)
+            #else
+            throw ThumbleConfigurationBridgeError.unsupportedOperation
+            #endif
         case let .customizationReset(profileID, variant):
             return try mutateProfile(profileID, in: &document, nowMillis: nowMillis) { profile in
                 setCustomization(.defaultValue, in: &profile, variant: variant)
@@ -2702,6 +2714,63 @@ public enum ThumbleConfigurationBridge {
     }
 
     #if os(macOS)
+    private static func overlayImportedBindings<T: Codable>(_ raw: ThumbleBridgeJSONValue?, after: ThumbleBridgeJSONValue, type: T.Type) throws -> ThumbleBridgeJSONValue {
+        let original = raw ?? .object([:])
+        let decoded: [String: T] = try self.decoded(original)
+        let before = try encodedJSONValue(decoded)
+        guard case .object(let old) = original, case .object(let known) = before, case .object(let incoming) = after else { throw ThumbleConfigurationBridgeError.invalidProfile }
+        var aligned: [String: ThumbleBridgeJSONValue] = [:]
+        for (id, value) in incoming { aligned[old.keys.first(where: { idsEqual($0, id) }) ?? id] = value }
+        for (id, value) in old where aligned[id] == nil {
+            if containsUnknownFields(raw: value, canonical: known[id] ?? .null) { throw ThumbleConfigurationBridgeError.invalidProfile }
+        }
+        return applyCanonicalChanges(raw: original, before: before, after: .object(aligned))
+    }
+
+    private static func importCustomization(profileID: String, variant: ThumbleBridgeLayoutVariant, text: String,
+        document: inout ThumbleBridgeConfigurationDocument, nowMillis: Int64) throws -> [String] {
+        guard text.utf8.count <= 8 * 1024 * 1024 else { throw ThumbleConfigurationBridgeError.invalidCustomizationChanges }
+        let data = Data(text.utf8)
+        let imported = try GamepadCustomizationPersistence.decodeSavedCustomization(data)
+        let source = try JSONDecoder().decodeUnique(ThumbleBridgeJSONValue.self, from: data)
+        let index = try profileIndex(profileID, in: document)
+        let original = document.profiles[index]
+        let old: GamepadConfigurationProfile = try decoded(original)
+        var profile = old
+        setCustomization(imported, in: &profile, variant: variant)
+        profile.updatedAt = old.updatedAt
+        let selected = profile.customization
+        let carried = applyCanonicalChanges(raw: source, before: try encodedJSONValue(imported), after: try encodedJSONValue(selected))
+        var overlaid = applyCanonicalChanges(raw: original, before: try encodedJSONValue(old), after: try encodedJSONValue(profile))
+        guard case .object(var fields) = overlaid else { throw ThumbleConfigurationBridgeError.invalidProfile }
+        fields["customization"] = carried
+        let slot = selected.deviceCanvas.editorDeviceFrame.orientation.rawValue + "Customization"
+        fields[slot] = carried
+        overlaid = .object(fields)
+        let outputs = try rawElementOutputs(in: overlaid, usesDefaults: true)
+        let keys = try encodedJSONValue(MacConfigurationBindings.rawKeyBindings(outputs.keyboardBindings))
+        let values = try encodedJSONValue(MacConfigurationBindings.rawOutputs(outputs))
+        let canonicalID = try original.requiredString(forKey: "id")
+        let oldKeys = bindingValue(for: canonicalID, in: document.profileKeyBindings)
+        let oldOutputs = bindingValue(for: canonicalID, in: document.profileOutputBindings)
+        let nextKeys = try overlayImportedBindings(oldKeys, after: keys, type: MacKeyBinding.self)
+        let nextOutputs = try overlayImportedBindings(oldOutputs, after: values, type: MacControlOutputBinding.self)
+        if overlaid == original && oldKeys == nextKeys && oldOutputs == nextOutputs { return [] }
+        fields["updatedAt"] = .integer(nowMillis)
+        document.profiles[index] = .object(fields)
+        removeBindingMap(for: canonicalID, from: &document.profileKeyBindings)
+        removeBindingMap(for: canonicalID, from: &document.profileOutputBindings)
+        document.profileKeyBindings[canonicalID] = nextKeys
+        document.profileOutputBindings[canonicalID] = nextOutputs
+        var paths = ["/profiles/" + canonicalID, "/profileKeyBindings", "/profileOutputBindings"]
+        if idsEqual(document.activeProfileID, canonicalID) {
+            document.keyBindings = try overlayImportedBindings(document.keyBindings, after: keys, type: MacKeyBinding.self)
+            document.outputBindings = try overlayImportedBindings(document.outputBindings, after: values, type: MacControlOutputBinding.self)
+            paths += ["/keyBindings", "/outputBindings"]
+        }
+        return paths
+    }
+
     private static func installGeneratedProfile(
         _ inputProfile: GamepadConfigurationProfile,
         keyBindings: [KeypadElementID: MacKeyBinding],

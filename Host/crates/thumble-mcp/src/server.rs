@@ -97,6 +97,25 @@ pub struct EditProfileAssetParams {
 
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ExportCustomizationParams {
+    #[serde(rename = "profileID")]
+    pub profile_id: String,
+    pub variant: Option<ConfigurationVariantInput>,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ImportCustomizationParams {
+    #[serde(rename = "profileID")]
+    pub profile_id: String,
+    #[serde(rename = "invocationID")]
+    pub invocation_id: String,
+    pub expected_configuration_revision: u64,
+    #[serde(rename = "artifactJSON")]
+    pub artifact_json: String,
+    pub variant: Option<ConfigurationVariantInput>,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ImportStyleLibraryParams {
     #[serde(rename = "profileID")]
     pub profile_id: String,
@@ -4777,6 +4796,120 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Export exact reusable customization JSON from one profile. Banked profiles include all eight saved appearances and only their required resource blobs; plain layouts retain the classic bare JSON format. Includes the source configuration revision and SHA-256. No desktop GUI or write opt-in is required.",
+        annotations(
+            read_only_hint = true,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn export_customization(
+        &self,
+        Parameters(params): Parameters<ExportCustomizationParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            CliProfileCommand, CliProfileRequest, ProfileSelector, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        let profile_id = style_profile_id(&params.profile_id)?;
+        let response = self
+            .request(
+                "export_customization",
+                ControlRequest::CliProfileTransaction {
+                    request: CliProfileRequest {
+                        schema_version: CLI_PROFILE_SCHEMA_VERSION,
+                        invocation_id: None,
+                        expected_configuration_revision: None,
+                        command: CliProfileCommand::CustomizationExport {
+                            target: ProfileSelector::Id { profile_id },
+                            variant: params
+                                .variant
+                                .unwrap_or(ConfigurationVariantInput::Primary)
+                                .into(),
+                        },
+                    },
+                },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no customization response")?;
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Customization export failed".into()));
+        }
+        serde_json::to_value(result)
+            .map(Json)
+            .map_err(|_| "Customization encoding failed".into())
+    }
+    #[tool(
+        description = "Replace one profile's customization using bounded classic or pooled JSON. Owned imports retain all eight file appearances, geometry, outputs, assets and exact metadata, and preserve the destination identity/selection/local launch association. Requires write opt-in, expected revision and a stable invocation UUID. Portrait conversion requires explicit preparation; this does not migrate the authority.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn import_customization(
+        &self,
+        Parameters(params): Parameters<ImportCustomizationParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::cli_profile::{
+            CliProfileCommand, CliProfileRequest, ProfileSelector, CLI_PROFILE_SCHEMA_VERSION,
+        };
+        if !self.allow_config_write {
+            return Err("MCP configuration writes are disabled; restart thumble-mcp with --allow-config-write".into());
+        }
+        let profile_id = style_profile_id(&params.profile_id)?;
+        let invocation_id = style_profile_id(&params.invocation_id)
+            .map_err(|_| "invocationID must be a non-nil UUID".to_owned())?;
+        if params.expected_configuration_revision == 0 {
+            return Err("expectedConfigurationRevision must be positive".into());
+        }
+        thumble_core::CustomizationArtifact::decode(params.artifact_json.as_bytes())
+            .map_err(|e| e.to_string())?;
+        let response = self
+            .request(
+                "import_customization",
+                ControlRequest::CliProfileTransaction {
+                    request: CliProfileRequest {
+                        schema_version: CLI_PROFILE_SCHEMA_VERSION,
+                        invocation_id: Some(invocation_id),
+                        expected_configuration_revision: Some(
+                            params.expected_configuration_revision,
+                        ),
+                        command: CliProfileCommand::CustomizationImport {
+                            target: ProfileSelector::Id { profile_id },
+                            variant: params
+                                .variant
+                                .unwrap_or(ConfigurationVariantInput::Primary)
+                                .into(),
+                            artifact_json: params.artifact_json,
+                        },
+                    },
+                },
+            )
+            .await?;
+        let result = response
+            .cli_profile
+            .ok_or("Host returned no customization response")?;
+        if !result.ok {
+            return Err(result
+                .error
+                .map(|e| format!("{}: {}", e.code, e.message))
+                .unwrap_or("Customization import failed".into()));
+        }
+        if result.invocation_id != invocation_id {
+            return Err("Customization response invocation mismatch".into());
+        }
+        serde_json::to_value(result)
+            .map(Json)
+            .map_err(|_| "Customization encoding failed".into())
+    }
+    #[tool(
         description = "Export a profile's reusable styles through exact local authority inspection. Embedded image bytes use a content-addressed style-file envelope. No desktop GUI or configuration write is required.",
         annotations(
             read_only_hint = true,
@@ -6298,7 +6431,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 34);
+        assert_eq!(tools.len(), 36);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6418,10 +6551,12 @@ mod tests {
                 "edit_configuration_draft",
                 "edit_profile_asset",
                 "export_controller_preview",
+                "export_customization",
                 "export_profiles",
                 "export_style_library",
                 "get_configuration_draft",
                 "host_status",
+                "import_customization",
                 "import_profiles",
                 "import_style_library",
                 "inspect_controller_design",
@@ -6732,7 +6867,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 34);
+        assert_eq!(tools.len(), 36);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -7213,6 +7348,50 @@ mod tests {
         control_task.await.unwrap();
         remove_control_socket(&socket);
     }
+    #[tokio::test]
+    async fn customization_import_gates_and_validation_precede_socket_access() {
+        let params = || ImportCustomizationParams {
+            profile_id: "ea000000-0000-0000-0000-000000000001".into(),
+            invocation_id: "aa000000-0000-0000-0000-000000000001".into(),
+            expected_configuration_revision: 41,
+            artifact_json: "{\"elements\":[]}".into(),
+            variant: None,
+        };
+        let disabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        assert!(disabled
+            .import_customization(Parameters(params()))
+            .await
+            .err()
+            .unwrap()
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            true,
+        );
+        let mut bad = params();
+        bad.artifact_json = "{\"elements\":[],\"elements\":[]}".into();
+        assert!(!enabled
+            .import_customization(Parameters(bad))
+            .await
+            .err()
+            .unwrap()
+            .contains("control.sock"));
+        assert!(disabled
+            .export_customization(Parameters(ExportCustomizationParams {
+                profile_id: "invalid".into(),
+                variant: None
+            }))
+            .await
+            .err()
+            .unwrap()
+            .contains("UUID"));
+    }
+
     #[tokio::test]
     async fn style_import_opt_in_and_validation_precede_socket_access() {
         let params = || ImportStyleLibraryParams {

@@ -1,0 +1,11 @@
+{
+  "fixtureVersion": 1,
+  "appearanceStates": 8,
+  "automaticMigrationActivated": false,
+  "files": {
+    "banked.json": "efdd3275ed95648e24fb00dc5e463fdde11c3917654a6e4b862e07b5a738e315",
+    "classic.json": "de9682ea2236e324dfd0d95ee2ff47933abe3c5a67220b4739885a0a68c313b2",
+    "legacy-request.json": "82aebeb5f2ab22559538fa5c754a242e3c81f17f4fef4dfd63cd1c52e41f263a",
+    "legacy-response.json": "f68527885b4c884e7c93d2da1f27a25b7a0ff427402ccb744774177446e78833"
+  }
+}

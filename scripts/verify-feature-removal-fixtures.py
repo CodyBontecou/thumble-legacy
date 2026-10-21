@@ -361,3 +361,14 @@ for _case in _reset_manifest["cases"]:
     assert _response["sourceSHA256"] == hashlib.sha256(base64.b64decode(_request["documentData"], validate=True)).hexdigest()
     assert _request["invocationID"].lower() == _response["invocationID"].lower()
 print("Owned reset fixtures verified: plain/banked customization and profile reset")
+
+_customization_root = repo / "Host/fixtures/customization-interchange/v1"
+_customization_manifest = json.loads((_customization_root / "manifest.json").read_bytes())
+for _name,_digest in _customization_manifest["files"].items():
+    assert Path(_name).name == _name
+    assert hashlib.sha256((_customization_root / _name).read_bytes()).hexdigest() == _digest
+_customization_file = json.loads((_customization_root / "banked.json").read_bytes())
+assert _customization_file["schema"] == "com.codybontecou.thumble.customization"
+assert len(_customization_file["appearanceBank"]["variants"]) == _customization_manifest["appearanceStates"] == 8
+assert _customization_manifest["automaticMigrationActivated"] is False
+print("Customization interchange fixtures verified: pooled graph and native legacy operation")

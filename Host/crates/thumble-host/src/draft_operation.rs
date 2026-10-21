@@ -107,6 +107,14 @@ pub enum ConfigurationOperation {
         variant: ConfigurationVariant,
         changes: CustomizationChanges,
     },
+    #[serde(rename = "customization.import")]
+    CustomizationImport {
+        #[serde(rename = "profileID")]
+        profile_id: String,
+        variant: ConfigurationVariant,
+        #[serde(rename = "customizationJSON")]
+        customization_json: String,
+    },
     #[serde(rename = "customization.reset")]
     CustomizationReset {
         #[serde(rename = "profileID")]
@@ -1790,6 +1798,18 @@ pub(crate) fn decode_design_layout_plan(
 
 impl ConfigurationOperation {
     pub fn validate_bridge_input(&self) -> Result<(), ConfigurationOperationError> {
+        if let Self::CustomizationImport {
+            customization_json, ..
+        } = self
+        {
+            let artifact =
+                thumble_core::CustomizationArtifact::decode(customization_json.as_bytes())
+                    .map_err(|_| ConfigurationOperationError::InvalidStyle)?;
+            if artifact.is_pooled() || !artifact.legacy_numbers_are_supported() {
+                return Err(ConfigurationOperationError::InvalidStyle);
+            }
+        }
+
         match self {
             Self::DesignApply {
                 profile_id,
@@ -2255,6 +2275,7 @@ impl ConfigurationOperation {
                 | Self::OutputResetAll { .. }
                 | Self::ProfileReset { .. }
                 | Self::CustomizationSet { .. }
+                | Self::CustomizationImport { .. }
                 | Self::CustomizationReset { .. }
                 | Self::CustomizationFix { .. }
                 | Self::OrientationSet { .. }
@@ -2359,6 +2380,7 @@ impl ConfigurationOperation {
             | Self::OutputResetAll { profile_id }
             | Self::ProfileReset { profile_id }
             | Self::CustomizationSet { profile_id, .. }
+            | Self::CustomizationImport { profile_id, .. }
             | Self::CustomizationReset { profile_id, .. }
             | Self::CustomizationFix { profile_id, .. }
             | Self::OrientationSet { profile_id, .. }

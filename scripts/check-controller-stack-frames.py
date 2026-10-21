@@ -17,6 +17,7 @@ DEFAULT_MAC_MAX_BYTES = 32 * KIB
 DEFAULT_IOS_RUNTIME_MAX_BYTES = 32 * KIB
 CONTROLLER_OBJECT_NAMES = ("IOSContentView.o",)
 MAC_RUNTIME_OBJECT_NAMES = (
+    "ThumbleConfigurationBridge.o",
     "GamepadCustomization.o",
     "ControllerProtocol.o",
     "MacControllerServer.o",
@@ -174,6 +175,10 @@ def is_controller_symbol(name: str) -> bool:
 
 
 def is_shared_runtime_symbol(name: str) -> bool:
+    if ".ThumbleConfigurationBridge." in name and any(
+        method in name for method in ("importCustomization", "overlayImportedBindings")
+    ):
+        return True
     if any(
         owner in name
         for owner in (

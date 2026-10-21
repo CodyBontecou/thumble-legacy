@@ -2,6 +2,8 @@
 use super::*;
 #[path = "cli_profile_owned_assets.rs"]
 mod assets;
+#[path = "cli_profile_owned_customization.rs"]
+mod customization;
 #[path = "cli_profile_owned_import.rs"]
 mod interchange;
 pub(super) fn is_asset_request(command: &CliProfileCommand) -> bool {
@@ -370,6 +372,9 @@ where
     let source = source(paths, state)?;
     authority_document(&source).map_err(draft_failure)?;
     reject_portrait_read(&request.command)?;
+    if let CliProfileCommand::CustomizationExport { target, variant } = &request.command {
+        return export_customization(paths, state, target, *variant, catalog, false);
+    }
     if matches!(request.command, CliProfileCommand::DesignSnapshot { .. }) {
         return design_snapshot(paths, state, request, &source);
     }
@@ -484,6 +489,16 @@ where
         catalog,
         now_millis(),
     )?;
+    let asset_plan = match asset_plan {
+        Some(plan) => Some(plan),
+        None => customization::plan(
+            &authority_document(&source).map_err(draft_failure)?,
+            &request.command,
+            invocation_id,
+            catalog,
+            now_millis(),
+        )?,
+    };
     let import_plan = imported
         .as_ref()
         .map(|import| {

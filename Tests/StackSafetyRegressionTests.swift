@@ -287,6 +287,22 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testCustomizationImportFitsConstrainedThread() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+        let data = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/customization-interchange/v1/legacy-request.json"))
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let small = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: data)
+            guard try ThumbleConfigurationBridge.transform(small).changed else { throw StackTestError.unexpectedDecodedState }
+            var customization = GamepadCustomization.defaultValue
+            customization.backgroundFillStyle = .image(.init(data: Data(repeating: 42, count: GamepadImageFill.maximumStoredBytes)))
+            var packet = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+            var operation = packet["operation"] as! [String: Any]
+            operation["customizationJSON"] = String(decoding: try JSONEncoder().encode(customization), as: UTF8.self)
+            packet["operation"] = operation
+            let request = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: JSONSerialization.data(withJSONObject: packet))
+            guard try ThumbleConfigurationBridge.transform(request).changed else { throw StackTestError.unexpectedDecodedState }
+        }
+    }
     func testOwnedResetsFitConstrainedThread() throws {
         let directory = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
             .appendingPathComponent("Host/fixtures/customization-reset/v1")
