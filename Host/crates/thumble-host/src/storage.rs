@@ -15,6 +15,8 @@ use uuid::Uuid;
 // These legacy defaults identifiers are an interoperability contract with
 // existing Thumble installations. They intentionally retain their pre-rename
 // values so migration preserves server identity, pairing, and profiles.
+const MAXIMUM_STATE_BYTES: usize = 16 * 1024 * 1024;
+
 const DEFAULTS_DOMAIN: &str = "com.codybontecou.PocketPadMac";
 const SERVER_ID_KEY: &str = "PocketPadMac.serverIdentity.v1";
 const TRUSTED_CLIENTS_KEY: &str = "PocketPadMac.trustedClients.v1";
@@ -70,7 +72,13 @@ fn install_initial_state(
 }
 
 pub fn load(path: &Path) -> Result<PersistentState, String> {
-    const MAXIMUM_STATE_BYTES: u64 = 16 * 1024 * 1024;
+    let data = read_state_bytes(path)?;
+    thumble_protocol::decode_unique_json(&data)
+        .map_err(|_| "persistent state could not be decoded".to_owned())
+}
+
+/// The exact private source is needed by migration backups and lossless saves.
+pub(crate) fn read_state_bytes(path: &Path) -> Result<Vec<u8>, String> {
     let file = OpenOptions::new()
         .read(true)
         .custom_flags(libc::O_NOFOLLOW)
@@ -82,7 +90,7 @@ pub fn load(path: &Path) -> Result<PersistentState, String> {
     if !metadata.is_file()
         || metadata.uid() != unsafe { libc::geteuid() }
         || metadata.permissions().mode() & 0o077 != 0
-        || metadata.len() > MAXIMUM_STATE_BYTES
+        || metadata.len() > MAXIMUM_STATE_BYTES as u64
     {
         return Err(format!(
             "state file {} failed ownership, mode, type, or size validation",
@@ -90,17 +98,16 @@ pub fn load(path: &Path) -> Result<PersistentState, String> {
         ));
     }
     let mut data = Vec::with_capacity(usize::try_from(metadata.len()).unwrap_or(0));
-    file.take(MAXIMUM_STATE_BYTES.saturating_add(1))
+    file.take(MAXIMUM_STATE_BYTES.saturating_add(1) as u64)
         .read_to_end(&mut data)
         .map_err(|error| format!("read {}: {error}", path.display()))?;
-    if data.len() as u64 > MAXIMUM_STATE_BYTES {
+    if data.len() > MAXIMUM_STATE_BYTES {
         return Err(format!(
             "state file {} exceeds its size limit",
             path.display()
         ));
     }
-    thumble_protocol::decode_unique_json(&data)
-        .map_err(|error| format!("decode {}: {error}", path.display()))
+    Ok(data)
 }
 
 pub fn redact_known_auth_tokens(path: &Path, text: &str) -> String {
@@ -116,7 +123,24 @@ pub fn redact_known_auth_tokens(path: &Path, text: &str) -> String {
         })
 }
 
+/// Callers hold runtime.lock (or the runtime mutex under its owner). Preserve
+/// raw fields across typed writes; the final reread catches unexpected external
+/// changes but does not replace the authority lock's writer exclusion.
 pub fn save_atomic(path: &Path, state: &PersistentState) -> Result<(), String> {
+    let expected = match fs::symlink_metadata(path) {
+        Ok(_) => Some(read_state_bytes(path)?),
+        Err(error) if error.kind() == io::ErrorKind::NotFound => None,
+        Err(_) => return Err("persistent state could not be inspected".to_owned()),
+    };
+    save_atomic_against(path, state, expected.as_deref(), || Ok(()))
+}
+
+fn save_atomic_against(
+    path: &Path,
+    state: &PersistentState,
+    expected: Option<&[u8]>,
+    before_install: impl FnOnce() -> io::Result<()>,
+) -> Result<(), String> {
     let parent = path
         .parent()
         .ok_or_else(|| format!("state path {} has no parent", path.display()))?;
@@ -141,8 +165,37 @@ pub fn save_atomic(path: &Path, state: &PersistentState) -> Result<(), String> {
         return Err("state directory failed ownership or permission validation".to_owned());
     }
 
-    let data = serde_json::to_vec_pretty(state)
-        .map_err(|error| format!("encode persistent state: {error}"))?;
+    let after = serde_json::to_vec_pretty(state)
+        .map_err(|_| "persistent state could not be encoded".to_owned())?;
+    if after.len() > MAXIMUM_STATE_BYTES {
+        return Err("persistent state exceeds its size limit".to_owned());
+    }
+    let data = if let Some(source) = expected {
+        let before: PersistentState = thumble_protocol::decode_unique_json(source)
+            .map_err(|_| "persistent source could not be decoded".to_owned())?;
+        let before = serde_json::to_vec_pretty(&before)
+            .map_err(|_| "persistent source could not be projected".to_owned())?;
+        let before = preserve_selection_aliases(source, before)?;
+        let after = preserve_selection_aliases(source, after)?;
+        let merged =
+            thumble_protocol::merge_json_projection(source, &before, &after, MAXIMUM_STATE_BYTES)
+                .map_err(|_| {
+                "persistent write would lose source data or exceed its bounds".to_owned()
+            })?;
+        let decoded: PersistentState = thumble_protocol::decode_unique_json(&merged)
+            .map_err(|_| "persistent result could not be decoded".to_owned())?;
+        if &decoded != state {
+            return Err("persistent result does not match its requested state".to_owned());
+        }
+        merged
+    } else {
+        let mut data = after;
+        data.push(b'\n');
+        if data.len() > MAXIMUM_STATE_BYTES {
+            return Err("persistent state exceeds its size limit".to_owned());
+        }
+        data
+    };
     let temporary = parent.join(format!(
         ".{}.{}.tmp",
         path.file_name()
@@ -157,8 +210,18 @@ pub fn save_atomic(path: &Path, state: &PersistentState) -> Result<(), String> {
             .mode(0o600)
             .open(&temporary)?;
         file.write_all(&data)?;
-        file.write_all(b"\n")?;
         file.sync_all()?;
+        before_install()?;
+        let unchanged = match (expected, fs::symlink_metadata(path)) {
+            (None, Err(error)) if error.kind() == io::ErrorKind::NotFound => true,
+            (Some(source), Ok(_)) => read_state_bytes(path)
+                .map(|current| current == source)
+                .unwrap_or(false),
+            _ => false,
+        };
+        if !unchanged {
+            return Err(io::Error::other("persistent source changed before install"));
+        }
         fs::rename(&temporary, path)?;
         fs::set_permissions(path, fs::Permissions::from_mode(0o600))?;
         File::open(parent)?.sync_all()?;
@@ -168,6 +231,48 @@ pub fn save_atomic(path: &Path, state: &PersistentState) -> Result<(), String> {
         let _ = fs::remove_file(&temporary);
     }
     result.map_err(|error| format!("atomically write {}: {error}", path.display()))
+}
+
+// These are explicit PersistentState decoding aliases, not arbitrary key
+// guesses. Keep their original spelling in both projections so changing a
+// selection cannot create a second semantic owner in old receiver state.
+fn preserve_selection_aliases(source: &[u8], mut projection: Vec<u8>) -> Result<Vec<u8>, String> {
+    use serde_json::value::RawValue;
+    let raw: BTreeMap<String, &RawValue> = serde_json::from_slice(source)
+        .map_err(|_| "persistent source is not an object".to_owned())?;
+    for (canonical, aliases) in [
+        (
+            "activeProfileID",
+            ["activeProfileId", "activeGamepadProfileID"],
+        ),
+        (
+            "defaultProfileID",
+            ["defaultProfileId", "defaultGamepadProfileID"],
+        ),
+    ] {
+        let Some(alias) = aliases.iter().find(|alias| raw.contains_key(**alias)) else {
+            continue;
+        };
+        let fields: BTreeMap<String, &RawValue> = serde_json::from_slice(&projection)
+            .map_err(|_| "persistent projection is not an object".to_owned())?;
+        let value = fields[canonical].get().as_bytes().to_vec();
+        projection = thumble_protocol::edit_json_values(
+            &projection,
+            &[
+                thumble_protocol::JsonValueEdit {
+                    pointer: &format!("/{canonical}"),
+                    value: None,
+                },
+                thumble_protocol::JsonValueEdit {
+                    pointer: &format!("/{alias}"),
+                    value: Some(&value),
+                },
+            ],
+            MAXIMUM_STATE_BYTES,
+        )
+        .map_err(|_| "persistent selection alias could not be projected".to_owned())?;
+    }
+    Ok(projection)
 }
 
 pub fn migrate_plist_file(path: &Path, generated_id: &str) -> Result<PersistentState, String> {
@@ -1063,5 +1168,159 @@ mod tests {
             fs::metadata(path).unwrap().permissions().mode() & 0o777,
             0o600
         );
+    }
+    fn opaque_saved_state(path: &Path) -> Vec<u8> {
+        let state = PersistentState::minimal("server").unwrap();
+        save_atomic(path, &state).unwrap();
+        let raw = String::from_utf8(fs::read(path).unwrap()).unwrap();
+        let raw = raw.replacen('{', "{\n  \"futureState\": {\"large\":18446744073709551617,\"precise\":0.12345678901234567890123456789},", 1);
+        let raw = raw.replacen(
+            "\"name\": ",
+            "\"futureProfile\": 18446744073709551617, \"name\": ",
+            1,
+        );
+        fs::write(path, raw.as_bytes()).unwrap();
+        raw.into_bytes()
+    }
+
+    #[test]
+    fn receiver_saves_preserve_opaque_bytes_through_pairing_and_profile_changes() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let original = opaque_saved_state(&path);
+        let mut state = load(&path).unwrap();
+        save_atomic(&path, &state).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), original);
+        state.configuration_revision += 1;
+        state.profiles[0]["name"] = json!("Changed through CLI");
+        state.trusted_clients.insert(
+            "private-token".to_owned(),
+            TrustedClient {
+                name: "Phone".to_owned(),
+                created_at: 1,
+                last_seen_at: 2,
+            },
+        );
+        save_atomic(&path, &state).unwrap();
+        let saved = fs::read_to_string(&path).unwrap();
+        assert!(saved.contains("\"large\":18446744073709551617"));
+        assert!(saved.contains("\"precise\":0.12345678901234567890123456789"));
+        assert!(saved.contains("\"futureProfile\": 18446744073709551617"));
+        assert_eq!(load(&path).unwrap(), state);
+        assert_eq!(
+            fs::metadata(&path).unwrap().permissions().mode() & 0o777,
+            0o600
+        );
+    }
+
+    #[test]
+    fn state_save_detects_source_replacement_and_removes_staging_file() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let original = opaque_saved_state(&path);
+        let mut candidate = load(&path).unwrap();
+        candidate.configuration_revision += 1;
+        let external = [original.as_slice(), b" "].concat();
+        let result = save_atomic_against(&path, &candidate, Some(&original), || {
+            fs::write(&path, &external)
+        });
+        assert!(result.unwrap_err().contains("source changed"));
+        assert_eq!(fs::read(&path).unwrap(), external);
+        assert_eq!(fs::read_dir(directory.path()).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn state_save_interruption_before_rename_leaves_original_intact() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let original = opaque_saved_state(&path);
+        let candidate = load(&path).unwrap();
+        assert!(save_atomic_against(&path, &candidate, Some(&original), || {
+            Err(io::Error::other("simulated interruption"))
+        })
+        .is_err());
+        assert_eq!(fs::read(&path).unwrap(), original);
+        assert_eq!(fs::read_dir(directory.path()).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn state_save_rejects_ambiguous_source_without_exposing_contents() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let candidate = PersistentState::minimal("server").unwrap();
+        save_atomic(&path, &candidate).unwrap();
+        let original = b"{\"trustedClients\":\"private-token\",\"trustedClients\":null}";
+        fs::write(&path, original).unwrap();
+        let error = save_atomic(&path, &candidate).unwrap_err();
+        assert!(!error.contains("private-token"));
+        assert_eq!(fs::read(&path).unwrap(), original);
+        assert_eq!(fs::read_dir(directory.path()).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn state_save_rejects_symlinks_and_initial_install_races() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let target = directory.path().join("target.json");
+        let candidate = PersistentState::minimal("server").unwrap();
+        fs::write(&target, b"private-original").unwrap();
+        std::os::unix::fs::symlink(&target, &path).unwrap();
+        assert!(save_atomic(&path, &candidate).is_err());
+        assert_eq!(fs::read(&target).unwrap(), b"private-original");
+        fs::remove_file(&path).unwrap();
+        assert!(save_atomic_against(&path, &candidate, None, || {
+            fs::write(&path, b"external-writer")
+        })
+        .is_err());
+        assert_eq!(fs::read(&path).unwrap(), b"external-writer");
+        assert_eq!(fs::read_dir(directory.path()).unwrap().count(), 2);
+    }
+    #[test]
+    fn legacy_selection_aliases_do_not_create_duplicate_fields_on_save() {
+        for (active, default) in [
+            ("activeProfileId", "defaultProfileId"),
+            ("activeGamepadProfileID", "defaultGamepadProfileID"),
+        ] {
+            let directory = tempdir().unwrap();
+            let path = directory.path().join("state.json");
+            let raw = String::from_utf8(opaque_saved_state(&path))
+                .unwrap()
+                .replace("activeProfileID", active)
+                .replace("defaultProfileID", default);
+            fs::write(&path, raw.as_bytes()).unwrap();
+            let mut candidate = load(&path).unwrap();
+            save_atomic(&path, &candidate).unwrap();
+            assert_eq!(fs::read(&path).unwrap(), raw.as_bytes());
+            let mut second = candidate.profiles[0].clone();
+            let second_id = Uuid::new_v4().to_string();
+            second["id"] = json!(second_id);
+            candidate.profiles.push(second);
+            candidate.active_profile_id = second_id.clone();
+            candidate.default_profile_id = second_id;
+            save_atomic(&path, &candidate).unwrap();
+            assert_eq!(load(&path).unwrap(), candidate);
+            let saved = fs::read_to_string(&path).unwrap();
+            assert!(!saved.contains("\"activeProfileID\""));
+            assert!(!saved.contains("\"defaultProfileID\""));
+        }
+    }
+    #[test]
+    fn complete_raw_state_limit_includes_unknown_fields_and_framing() {
+        let directory = tempdir().unwrap();
+        let path = directory.path().join("state.json");
+        let mut source = opaque_saved_state(&path);
+        source.resize(MAXIMUM_STATE_BYTES, b' ');
+        fs::write(&path, &source).unwrap();
+        let mut state = load(&path).unwrap();
+        save_atomic(&path, &state).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), source);
+        state.profiles[0]["name"] = json!("A much longer profile name than before");
+        assert!(save_atomic(&path, &state).is_err());
+        assert_eq!(fs::read(&path).unwrap(), source);
+        source.push(b' ');
+        fs::write(&path, &source).unwrap();
+        assert!(save_atomic(&path, &state).is_err());
+        assert_eq!(fs::read(&path).unwrap(), source);
+        assert_eq!(fs::read_dir(directory.path()).unwrap().count(), 1);
     }
 }

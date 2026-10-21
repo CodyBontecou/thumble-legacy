@@ -1,0 +1,22 @@
+{
+  "baseCommit": "47e8e74347d74056cc41154bbbb1f6bfa089f551",
+  "sourceHashes": {
+    "Host/crates/thumble-host/src/storage.rs": "07ae4b322f45c400b34e40cb25872c5985982b7cf08727b7f063ebe8f9eba098",
+    "Host/crates/thumble-host/tests/lossless_authority_storage.rs": "0096be75279ee809f7d7fa7e9baf116a09e5bce369c964a24fe3e58d66a48810"
+  },
+  "logSHA256": {
+    "rust": "569e2da0edb932340e97be45f8fd53d9a2e9f4eb1a71b4ba1d4bd16610728ab9",
+    "nativeStack": "bfc74a3842c906826d6100e492c6b4cf47c01185cdf9724b2335fa2bc9354f4f"
+  },
+  "rust": {
+    "passed": 535,
+    "ignored": 3,
+    "scope": "complete shared-tree Rust gate; includes concurrent unrelated changes"
+  },
+  "newTests": 8,
+  "storageTests": 19,
+  "standaloneCliCommitReplay": true,
+  "nativeStackTests": 40,
+  "nativeScope": "same isolated Apple source overlays as legacy-configuration-migration/verification.json; no Apple changes in this batch",
+  "activatedMigration": false
+}

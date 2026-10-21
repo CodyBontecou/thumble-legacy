@@ -50,6 +50,8 @@ Reconcile pending edits in their source coordinate system first. Edits for a dif
 4. Mark the migration complete only when the committed digest matches the validated destination. On startup, inspect the receipt and committed data to finish or roll back an interrupted transaction; the mere presence of a staging file is not success.
 5. Preserve the original backup and unresolved profiles for explicit recovery. Rollback restores document and resources together and clears the committed migration marker. Never overwrite a backup with an already migrated snapshot.
 
+The current receiver save boundary now preserves exact raw state metadata through typed edits and checks the source again immediately before atomic rename. It validates the merged typed result, retains supported selection aliases and enforces the complete 16 MiB state limit. This protects ordinary CLI/CAS commits and pairing saves; the existing authority lease remains required for writer exclusion. See [storage evidence](feature-removal-evidence/lossless-authority-storage/README.md). It does not create migration backups/receipts or activate owned-state loading, transaction recovery or rollback.
+
 Tests must cover interruption before backup completion, after staging, before commit, and after commit but before receipt acknowledgement; concurrent edits; corrupt/missing resources; repeat invocation; and rollback. These checks belong to the real persistence/authority integration, beyond a pure-transform unit test.
 
 ## Protocol and compatibility
