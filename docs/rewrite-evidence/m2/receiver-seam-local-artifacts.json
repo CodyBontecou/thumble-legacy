@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "scope": "unsigned M2 development recording package; OS input disabled",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "bun": "1.4.3",
+  "rust": "1.88.0",
+  "performanceBudgetAcceptance": false,
+  "artifacts": {
+    "Rewrite/dist/README.txt": {
+      "bytes": 263,
+      "sha256": "0911670f534f148930c5ef65f216fbfaa87a8f0b2307fdc919a2bc513a28afd4"
+    },
+    "Rewrite/dist/SteamControllerBridge-LICENSE.txt": {
+      "bytes": 1234,
+      "sha256": "f3b592ee3a1c9ce42bdc9d14f0aea069b1276e5d304aaae932feb7338fdf4da3"
+    },
+    "Rewrite/dist/thumble-rewrite": {
+      "bytes": 70878962,
+      "sha256": "0b68ee50be46c35992bf3f783e60863ddd9cb6f349c3bd180adbe465e2df5ebc"
+    },
+    "Rewrite/dist/thumble-rewrite-receiver": {
+      "bytes": 808176,
+      "sha256": "e0ef616ca1b957f4d090cea3c3a1c2d7c2a4c46e8f048986f0a35505d37dc88b"
+    }
+  }
+}

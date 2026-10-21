@@ -21,6 +21,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: Rewrite
@@ -31,11 +32,31 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
+      - uses: dtolnay/rust-toolchain@1.88.0
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: Rewrite/native/receiver
       - run: bun install --frozen-lockfile
       - run: bun run check:generated
       - run: bun run check:boundaries
+      - run: bun x --no-install prettier --check .
+      - run: cargo fmt --manifest-path native/receiver/Cargo.toml -- --check
+      - run: cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+      - run: bun run native:test
+      - run: bun run native:build
       - run: bun run typecheck
       - run: bun run test:ci
+        timeout-minutes: 2
+      - run: bun run build
+      - run: bun run test:package:ci
+        timeout-minutes: 2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rewrite-m2-recording-${{ matrix.os }}
+          path: Rewrite/dist/
+          if-no-files-found: error
       - name: Typecheck generated Swift DTOs
         if: runner.os == 'macOS'
         run: swiftc -typecheck packages/contracts/generated/swift/GamepadStateV1.swift
@@ -43,5 +64,5 @@ jobs:
         if: always()
         with:
           name: rewrite-portable-tests-${{ matrix.os }}
-          path: Rewrite/reports/junit.xml
+          path: Rewrite/reports/*junit.xml
           if-no-files-found: error

@@ -1,0 +1,197 @@
+$ bun --version
+1.4.3
+$ cargo +1.88.0 --version
+cargo 1.88.0 (873a06493 2025-05-10)
+$ cargo +1.88.0 fmt --manifest-path native/receiver/Cargo.toml -- --check
+$ cargo +1.88.0 clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+$ bun run native:test
+$ cargo +1.88.0 test --locked --manifest-path native/receiver/Cargo.toml
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running unittests src/main.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-3038cdde5f5edbc2)
+
+running 6 tests
+test runtime::tests::owner_lease_expires_even_without_samples ... ok
+test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+test gamepad::tests::retained_native_vectors ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+$ bun run native:build
+$ cargo +1.88.0 build --locked --manifest-path native/receiver/Cargo.toml
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.00s
+$ bun run verify
+$ bun run check:generated && bun run check:boundaries && bun run typecheck && bun test
+$ bun tooling/generate-contracts.ts --check
+$ bun tooling/check-boundaries.ts
+Portable contracts/domain import boundaries verified
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json
+bun test v1.4.3 (c6da4a4d3)
+
+tests/receiver-seam.test.ts:
+(pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [541.28ms]
+(pass) service death neutralizes the independent receiver within the owner lease [166.81ms]
+(pass) JS stalls do not stall native expiry [918.62ms]
+(pass) only one service owns a runtime directory; unrelated state is refused [86.80ms]
+(pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [84.98ms]
+(pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [2.74ms]
+
+tests/package.test.ts:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.51ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > east [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > west
+(pass) retained Swift/Rust v2 native report vectors > north [0.14ms]
+(pass) retained Swift/Rust v2 native report vectors > left shoulder [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right shoulder [0.02ms]
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > select
+(pass) retained Swift/Rust v2 native report vectors > start
+(pass) retained Swift/Rust v2 native report vectors > home
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up
+(pass) retained Swift/Rust v2 native report vectors > up right
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > down
+(pass) retained Swift/Rust v2 native report vectors > down left
+(pass) retained Swift/Rust v2 native report vectors > left
+(pass) retained Swift/Rust v2 native report vectors > up left [0.18ms]
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.06ms]
+(pass) digital trigger release restores independent analog hold [0.02ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.06ms]
+(pass) decoded state has independent immutable ownership [0.02ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.01ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [2.94ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.83ms]
+
+tests/client.test.ts:
+(pass) typed local client handles repeated success and rejection without leaking connections [10.45ms]
+
+1 tests skipped:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+ 48 pass
+ 1 skip
+ 0 fail
+ 215 expect() calls
+Ran 49 tests across 5 files. [1.89s]
+$ bun run test:ci
+$ bun tooling/ci-test.ts
+bun test v1.4.3 (c6da4a4d3)
+
+tests/receiver-seam.test.ts:
+(pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [159.65ms]
+(pass) service death neutralizes the independent receiver within the owner lease [166.75ms]
+(pass) JS stalls do not stall native expiry [922.45ms]
+(pass) only one service owns a runtime directory; unrelated state is refused [85.18ms]
+(pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [83.47ms]
+(pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.09ms]
+
+tests/package.test.ts:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.18ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > east [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > west
+(pass) retained Swift/Rust v2 native report vectors > north [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > left shoulder
+(pass) retained Swift/Rust v2 native report vectors > right shoulder
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > select
+(pass) retained Swift/Rust v2 native report vectors > start
+(pass) retained Swift/Rust v2 native report vectors > home
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up
+(pass) retained Swift/Rust v2 native report vectors > up right
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right
+(pass) retained Swift/Rust v2 native report vectors > down [0.06ms]
+(pass) retained Swift/Rust v2 native report vectors > down left [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > left
+(pass) retained Swift/Rust v2 native report vectors > up left [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.07ms]
+(pass) digital trigger release restores independent analog hold [0.03ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.07ms]
+(pass) decoded state has independent immutable ownership [0.02ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.01ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [3.26ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.33ms]
+
+tests/client.test.ts:
+(pass) typed local client handles repeated success and rejection without leaking connections [11.35ms]
+
+1 tests skipped:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+ 48 pass
+ 1 skip
+ 0 fail
+ 215 expect() calls
+Ran 49 tests across 5 files. [1.50s]
+$ bun run build
+$ bun tooling/build.ts
+    Finished `release` profile [optimized] target(s) in 0.01s
+   [9ms]  bundle  10 modules
+ [144ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime
+$ bun run test:package:ci
+$ bun tooling/ci-test.ts --package
+bun test v1.4.3 (c6da4a4d3)
+
+tests/package.test.ts:
+(pass) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH [1962.27ms]
+
+ 1 pass
+ 0 fail
+ 11 expect() calls
+Ran 1 test across 1 file. [1.97s]
+$ bun x --no-install prettier --check .
+Checking formatting...
+[warn] tooling/check-boundaries.ts
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.
+$ bun x --no-install prettier --write tooling/check-boundaries.ts
+tooling/check-boundaries.ts 21ms
+$ bun x --no-install prettier --check .
+Checking formatting...
+All matched files use Prettier code style!

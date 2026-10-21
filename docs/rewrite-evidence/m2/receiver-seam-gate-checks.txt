@@ -1,0 +1,50 @@
+$ python3 scripts/rewrite/test_baseline.py
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.013s
+
+OK
+$ python3 scripts/rewrite/inventory.py --check
+Rewrite inventory verified: 277 mapped operations
+$ python3 scripts/rewrite/check_gates.py --development
+{
+  "implementationAllowed": true,
+  "m0m1AcceptanceComplete": false,
+  "openGates": [
+    "m0.deviceMatrix: Physical phone/device matrix remains beta acceptance; Windows automation uses GitHub-hosted runners, not a local Windows machine",
+    "m0.compatibilityBuilds: Local provisional targets: Era 1.15.9.70003/ConsolePort 3.3.11 and Forever 1.60.1.70245; neither gameplay-certified; Windows builds unpinned",
+    "m0.measuredBudgets: Only existing macOS package bytes measured; latency/load/build baselines and thresholds not frozen",
+    "native.productionSigning: Development lab signature passes; Developer ID provisioning/final release acceptance not established",
+    "native.windowsDriver: Driver candidate evaluation, signing/install and actual gamepad delivery remain beta/release gates; build and contract automation will run headlessly in GitHub Actions",
+    "native.independentConsumer: macOS extended GameController enumerates neutral; full phone-driven and Windows semantics unverified",
+    "native.gameEnumeration: Real Classic/Forever enumeration and gameplay evidence required on both hosts",
+    "budgets.macos.coldBuildSeconds: measurement and threshold pending",
+    "budgets.macos.coldStartupMs: measurement and threshold pending",
+    "budgets.macos.downloadBytes: measurement and threshold pending",
+    "budgets.macos.idleCPUPercent: measurement and threshold pending",
+    "budgets.macos.idleRSSBytes: measurement and threshold pending",
+    "budgets.macos.installedBytes: measurement and threshold pending",
+    "budgets.macos.touchToReceiverP95Ms: measurement and threshold pending",
+    "budgets.macos.touchToVisibleGameP95Ms: measurement and threshold pending",
+    "budgets.macos.warmBuildSeconds: measurement and threshold pending",
+    "budgets.windows.coldBuildSeconds: measurement and threshold pending",
+    "budgets.windows.coldStartupMs: measurement and threshold pending",
+    "budgets.windows.downloadBytes: measurement and threshold pending",
+    "budgets.windows.idleCPUPercent: measurement and threshold pending",
+    "budgets.windows.idleRSSBytes: measurement and threshold pending",
+    "budgets.windows.installedBytes: measurement and threshold pending",
+    "budgets.windows.touchToReceiverP95Ms: measurement and threshold pending",
+    "budgets.windows.touchToVisibleGameP95Ms: measurement and threshold pending",
+    "budgets.windows.warmBuildSeconds: measurement and threshold pending",
+    "gameplay.macos/ios/classic-era-consoleport: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.macos/ios/forever-native: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.macos/android/classic-era-consoleport: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.macos/android/forever-native: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.windows/ios/classic-era-consoleport: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.windows/ios/forever-native: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.windows/android/classic-era-consoleport: Physical gameplay run with pinned builds and recordings required",
+    "gameplay.windows/android/forever-native: Physical gameplay run with pinned builds and recordings required"
+  ],
+  "note": "Physical/signing/live-sync acceptance remains required for release; hosted runner results do not certify gameplay."
+}
+$ /opt/homebrew/bin/actionlint .github/workflows/typescript-rewrite.yml
