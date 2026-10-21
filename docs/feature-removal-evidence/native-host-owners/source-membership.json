@@ -1,0 +1,46 @@
+{
+  "ThumbleLegacyThumbConsoleCLI": {
+    "nativeHostSources": [
+      "Sources/NativeHost/KeyMap.swift",
+      "Sources/NativeHost/MacConfigurationBindings.swift",
+      "Sources/NativeHost/MacControlOutputBinding.swift",
+      "Sources/NativeHost/ThumbleLinkImport.swift"
+    ],
+    "desktopSources": [],
+    "targetDependencies": [],
+    "totalSources": 61
+  },
+  "ThumbleBridge": {
+    "nativeHostSources": [
+      "Sources/NativeHost/KeyMap.swift",
+      "Sources/NativeHost/MacConfigurationBindings.swift",
+      "Sources/NativeHost/MacControlOutputBinding.swift",
+      "Sources/NativeHost/ThumbleLinkImport.swift"
+    ],
+    "desktopSources": [],
+    "targetDependencies": [],
+    "totalSources": 59
+  },
+  "ThumbleCLI": {
+    "nativeHostSources": [
+      "Sources/NativeHost/KeyMap.swift",
+      "Sources/NativeHost/MacConfigurationBindings.swift",
+      "Sources/NativeHost/MacControlOutputBinding.swift",
+      "Sources/NativeHost/ThumbleLinkImport.swift"
+    ],
+    "desktopSources": [],
+    "targetDependencies": [],
+    "totalSources": 61
+  },
+  "ThumbleLegacyCLI": {
+    "nativeHostSources": [
+      "Sources/NativeHost/KeyMap.swift",
+      "Sources/NativeHost/MacConfigurationBindings.swift",
+      "Sources/NativeHost/MacControlOutputBinding.swift",
+      "Sources/NativeHost/ThumbleLinkImport.swift"
+    ],
+    "desktopSources": [],
+    "targetDependencies": [],
+    "totalSources": 61
+  }
+}

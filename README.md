@@ -268,7 +268,7 @@ thumble element nudge UUID right --step 10 --canvas iphone-17-pro-landscape
 
 The Mac helper shows a shortcut field in the Keypad editor's **Action & Label** inspector. Click the field for the selected button/shape, press one or more Mac keystrokes, then pause; the shortcut saves automatically. Thumble records held modifiers, so pressing `Control+B` saves `⌃B`; pressing `Control+B`, releasing it, then pressing `H` saves `⌃B H` for Herdr/tmux-style prefix bindings. Modifier-only shortcuts save when you press and release the modifier key. Friendly control labels remain independent from these bindings: Mac publishes compact and VoiceOver-friendly presentation metadata per profile/orientation, while iPhone can render the compact binding as a smaller optional subtitle. Inspect the same resolved metadata with `thumble binding display [--profile PROFILE] [--json]`, or remove only a friendly override with `thumble element set CONTROL --clear-label`.
 
-Starter defaults are defined in `Sources/Mac/KeyMap.swift`:
+Starter defaults are defined in `Sources/NativeHost/KeyMap.swift`:
 
 - Navigation pad: arrow keys
 - Action 1: Return

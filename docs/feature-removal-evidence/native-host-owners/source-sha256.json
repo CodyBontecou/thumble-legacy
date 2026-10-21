@@ -1,0 +1,12 @@
+{
+  "Sources/NativeHost/KeyMap.swift": "22663819368595d80c5e5b04b3bd7d36c90e89d9ea29b1b61ed16a47eeb193ea",
+  "Sources/NativeHost/MacControlOutputBinding.swift": "e41db481d29205aa407436666583e5dff30e4ea42626f1aa8e921b93150cbcab",
+  "Sources/NativeHost/MacConfigurationBindings.swift": "5ac64d74a387387ac7d78192ebf9ef0127297f4f7700c9b51d17887f9afe250b",
+  "Sources/NativeHost/ThumbleLinkImport.swift": "d18dbef9561d7ad0184701c9b916351951e9b637086ee85107eb1536c6868181",
+  "project.yml": "0130758a55333d8871e8a8e3151ecd434475a4d9d3e73e950d82dfa7868f80a5",
+  "Thumble.xcodeproj/project.pbxproj": "fe68703c7442aebdeca070230bd67e0fbd128276ee059de8cdc4608b794faba3",
+  "README.md": "fa9c799fd45b13c8c070784e197e6d10a26a80f4215ff8027e73f86e18b14a5e",
+  "docs/virtual-controller-support.md": "1c7619ba16d693a458701c1e3ee8624ee0f04f2d0cb31bfad7f44c6e8302041e",
+  "docs/cli-mcp-cutover.md": "e563c97497d42e19aeb614a29fc91f65e9480bf2392f1766828d07380048fb06",
+  ".github/workflows/rust-host.yml": "802c01d2fc6f0943b9844e6d1015ca2a569994695717794d2f4d542548985a93"
+}

@@ -26,6 +26,7 @@ targets:
     sources:
       - path: Sources/Shared
       - path: Sources/Mac
+      - path: Sources/NativeHost
       - path: Resources/Mac/Assets.xcassets
     dependencies:
       - package: ZIPFoundation
@@ -56,10 +57,10 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: Sources/Shared
-      - path: Sources/Mac/KeyMap.swift
-      - path: Sources/Mac/MacControlOutputBinding.swift
-      - path: Sources/Mac/MacConfigurationBindings.swift
-      - path: Sources/Mac/ThumbleLinkImport.swift
+      - path: Sources/NativeHost/KeyMap.swift
+      - path: Sources/NativeHost/MacControlOutputBinding.swift
+      - path: Sources/NativeHost/MacConfigurationBindings.swift
+      - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/CLI
     dependencies:
       - package: ZIPFoundation
@@ -77,10 +78,10 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: Sources/Shared
-      - path: Sources/Mac/KeyMap.swift
-      - path: Sources/Mac/MacControlOutputBinding.swift
-      - path: Sources/Mac/MacConfigurationBindings.swift
-      - path: Sources/Mac/ThumbleLinkImport.swift
+      - path: Sources/NativeHost/KeyMap.swift
+      - path: Sources/NativeHost/MacControlOutputBinding.swift
+      - path: Sources/NativeHost/MacConfigurationBindings.swift
+      - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/Bridge
     dependencies:
       - package: ZIPFoundation
@@ -98,10 +99,10 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: Sources/Shared
-      - path: Sources/Mac/KeyMap.swift
-      - path: Sources/Mac/MacControlOutputBinding.swift
-      - path: Sources/Mac/MacConfigurationBindings.swift
-      - path: Sources/Mac/ThumbleLinkImport.swift
+      - path: Sources/NativeHost/KeyMap.swift
+      - path: Sources/NativeHost/MacControlOutputBinding.swift
+      - path: Sources/NativeHost/MacConfigurationBindings.swift
+      - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/CLI
     dependencies:
       - package: ZIPFoundation
@@ -119,10 +120,10 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: Sources/Shared
-      - path: Sources/Mac/KeyMap.swift
-      - path: Sources/Mac/MacControlOutputBinding.swift
-      - path: Sources/Mac/MacConfigurationBindings.swift
-      - path: Sources/Mac/ThumbleLinkImport.swift
+      - path: Sources/NativeHost/KeyMap.swift
+      - path: Sources/NativeHost/MacControlOutputBinding.swift
+      - path: Sources/NativeHost/MacConfigurationBindings.swift
+      - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/CLI
     dependencies:
       - package: ZIPFoundation
@@ -140,10 +141,10 @@ targets:
     deploymentTarget: "14.0"
     sources:
       - path: Sources/Shared
-      - path: Sources/Mac/KeyMap.swift
-      - path: Sources/Mac/MacControlOutputBinding.swift
-      - path: Sources/Mac/MacConfigurationBindings.swift
-      - path: Sources/Mac/ThumbleLinkImport.swift
+      - path: Sources/NativeHost/KeyMap.swift
+      - path: Sources/NativeHost/MacControlOutputBinding.swift
+      - path: Sources/NativeHost/MacConfigurationBindings.swift
+      - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/Mac/ThumbleLinkImportView.swift
       - path: Sources/Mac/MacRustAuthorityInterlock.swift
       - path: Sources/Mac/MacSharedKeypadImport.swift
