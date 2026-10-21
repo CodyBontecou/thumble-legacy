@@ -205,6 +205,7 @@ pub fn enroll(
     channel: &mut ControlChannel,
     windows: &Mutex<PairingWindows>,
     store: &Mutex<PhoneTrustStore>,
+    policy_mutation: &Mutex<()>,
     mut now: impl FnMut() -> Result<u64, &'static str>,
 ) -> Result<TrustedPhone, &'static str> {
     let result = (|| {
@@ -243,29 +244,34 @@ pub fn enroll(
             return Err("enrollment_message_invalid");
         }
         crate::phone_trust::validate_phone(&request.phone_id, &request.label)?;
-        let proof_time = match now() {
-            Ok(time) => time,
-            Err(error) => {
-                windows
-                    .lock()
-                    .map_err(|_| "pairing_owner_unavailable")?
-                    .cancel();
-                return Err(error);
-            }
+        let issued = {
+            let _mutation = policy_mutation
+                .lock()
+                .map_err(|_| "phone_trust_owner_unavailable")?;
+            let proof_time = match now() {
+                Ok(time) => time,
+                Err(error) => {
+                    windows
+                        .lock()
+                        .map_err(|_| "pairing_owner_unavailable")?
+                        .cancel();
+                    return Err(error);
+                }
+            };
+            windows
+                .lock()
+                .map_err(|_| "pairing_owner_unavailable")?
+                .consume(
+                    &request.authority_instance_id,
+                    &request.window_id,
+                    &request.proof,
+                    proof_time,
+                )?;
+            store
+                .lock()
+                .map_err(|_| "phone_trust_owner_unavailable")?
+                .enroll_after_pairing(&request.phone_id, &request.label, now()?)?
         };
-        windows
-            .lock()
-            .map_err(|_| "pairing_owner_unavailable")?
-            .consume(
-                &request.authority_instance_id,
-                &request.window_id,
-                &request.proof,
-                proof_time,
-            )?;
-        let issued = store
-            .lock()
-            .map_err(|_| "phone_trust_owner_unavailable")?
-            .enroll_after_pairing(&request.phone_id, &request.label, now()?)?;
         issued.send_enrollment(channel)?;
         let ack: Acknowledgment =
             receive(channel).map_err(|_| "phone_credential_delivery_unconfirmed")?;
@@ -369,7 +375,7 @@ mod tests {
             let store = Mutex::new(PhoneTrustStore::open(&path).unwrap());
             let (stream, _) = listener.accept().unwrap();
             let mut channel = ControlChannel::accept_unenrolled(stream, &identity).unwrap();
-            let result = enroll(&mut channel, &windows, &store, clock);
+            let result = enroll(&mut channel, &windows, &store, &Mutex::new(()), clock);
             (result, windows.lock().unwrap().status(102).unwrap())
         });
         let mut channel = ControlChannel::connect_pinned(address, pin).unwrap();
@@ -594,7 +600,7 @@ mod tests {
         w.open(100).unwrap();
         let w = Mutex::new(w);
         assert_eq!(
-            enroll(&mut client, &w, &store, || Ok(101)).err(),
+            enroll(&mut client, &w, &store, &Mutex::new(()), || Ok(101)).err(),
             Some("enrollment_host_mismatch")
         );
         assert_eq!(w.lock().unwrap().status(102).unwrap().attempts_remaining, 5);

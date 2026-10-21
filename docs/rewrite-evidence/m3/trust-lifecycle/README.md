@@ -1,0 +1,7 @@
+# Local native trust lifecycle checkpoint
+
+Phone list and revoke run through the headless CLI/service and native trust owner. Revocation releases recording output before native RPC, cancels bootstrap windows, closes peers, and commits a durable verifier removal under the same mutation lock used for enrollment proof consumption and commit. No TLS I/O holds this lock. A blocked-storage race verifies enrollment cannot restore trust after revocation completes; native and CLI restart checks preserve the tombstone. CLI tests also verify held recording output is neutral when revocation returns `phone_not_found`.
+
+The 62 Rust tests, 74 TypeScript tests, portable typecheck, all-target Clippy and standalone package pass are local macOS evidence. The standalone package test runs without repository/Bun PATH access and includes list/revoke after independent Node TLS enrollment. TypeScript source verification skips that package-only test; it passes separately with 52 assertions. No Windows result or native OS-provider runtime result is claimed for this source. The previous retained Swift compiler probe has no passing stack-safety result; these changes do not modify retained Swift sources.
+
+This source is newer than the frozen 25-file phone enrollment/vault candidate from 8f216c9. It has not been published and is excluded from prior public CI approvals. The rewrite goal remains active: authenticated control, input grants/routing, physical output, mobile UI, optical sync and release acceptance remain open.

@@ -128,6 +128,8 @@ export async function serve(
             operation.startsWith("pairing-")
           ) {
             const command = decodePairingCommand(envelope.body);
+            if (command.command === "pairing-revoke")
+              await controller.execute({ command: "release" });
             result = await pairing.request(command);
           } else {
             const command = decodeLocalCommand(envelope.body);

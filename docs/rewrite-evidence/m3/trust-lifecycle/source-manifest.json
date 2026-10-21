@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "scope": "Native trust inventory and durable revocation with in-flight enrollment commit fencing",
+  "baseLocalCommit": "c3b874d",
+  "publication": "Local only; excluded from frozen phone-vault candidate 8f216c9 and earlier enrollment approval",
+  "checks": {
+    "rust": 62,
+    "typescript": 74,
+    "typescriptSkippedPackageMode": 1,
+    "typescriptAssertions": 915,
+    "standalonePackageTests": 1,
+    "standalonePackageAssertions": 52,
+    "clippy": "passed all targets with warnings denied",
+    "portableTypecheck": "passed",
+    "windows": "not run for this source",
+    "retainedSwiftStackSafety": "no new pass; earlier compiler probe stalled"
+  },
+  "remaining": "Authenticated control and per-phone input-session revocation, native packet routing and launch acceptance remain pending. Real output remains disabled.",
+  "files": [
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "bytes": 8953,
+      "sha256": "ed9fe1ee2da291ff363e71c3bd43e5bc1f81fbefb08b6d5a6536e300c1f77915"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "bytes": 7299,
+      "sha256": "61ddd2227ae5b9f2a739b435a636fd44d4398165def1dbe4fc1eb90f99ed86a2"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/enrollment_probe.rs",
+      "bytes": 2864,
+      "sha256": "d2fa76cfd888d85084fe2f4d43e3b65abc2cae3995c9536ab03434ab7acd9ec6"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "bytes": 28279,
+      "sha256": "bb01f0ce17fff38d41b40d7995a27ee747b8860719e72684bacac17caacf4c97"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "bytes": 26859,
+      "sha256": "17e57b0917c430f3811d372afb79c939da29ecf9b36a194a64ec0c1be6980c5e"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/pairing.ts",
+      "bytes": 11117,
+      "sha256": "26a3127f8f837001d3f14a05d66d89ec7791dac6f2b29f063bf47c56fb8b84a2"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "bytes": 5814,
+      "sha256": "dec60f866cfe2bd365c58e66bc168485253bb1c960c6f8e52bf3e493abff6aac"
+    },
+    {
+      "path": "Rewrite/tests/pairing.test.ts",
+      "bytes": 13498,
+      "sha256": "efb220ddb17083fbe1312a4b70b52e27f341a3cfe603dc7bc2b23be1e196aa77"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "bytes": 24827,
+      "sha256": "0c817c43849a7c3917492009b2f520a6c21cf8848217e646a4e3fbfbc6063c73"
+    },
+    {
+      "path": "docs/rewrite-headless-pairing.md",
+      "bytes": 7544,
+      "sha256": "276791aacfcd48475685eca7e632f0833d5bc8b18791da4334b1ecbe6a3f6117"
+    }
+  ]
+}

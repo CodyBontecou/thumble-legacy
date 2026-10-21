@@ -40,6 +40,10 @@ struct Request {
 pub enum Command {
     PairingOpen {},
     PairingStatus {},
+    PairingList {},
+    PairingRevoke {
+        phone_id: String,
+    },
     PairingCancel {},
     PairingListen {
         bind_address: String,
@@ -96,6 +100,7 @@ pub struct Host {
     windows: Arc<Mutex<PairingWindows>>,
     store: Option<Arc<Mutex<PhoneTrustStore>>>,
     listener: Option<Listener>,
+    policy_mutation: Arc<Mutex<()>>,
     jobs: mpsc::SyncSender<Job>,
     _lease: File,
 }
@@ -120,6 +125,7 @@ impl Host {
             .transpose()?
             .map(|store| Arc::new(Mutex::new(store)));
         let windows = Arc::new(Mutex::new(PairingWindows::new(authority, identity.pin())?));
+        let policy_mutation = Arc::new(Mutex::new(()));
         let (jobs, incoming) = mpsc::sync_channel::<Job>(4);
         let incoming = Arc::new(Mutex::new(incoming));
         if let Some(store) = &store {
@@ -128,6 +134,7 @@ impl Host {
                 let identity = identity.clone();
                 let windows = windows.clone();
                 let store = store.clone();
+                let policy_mutation = policy_mutation.clone();
                 thread::spawn(move || loop {
                     let job = match incoming.lock() {
                         Ok(receiver) => match receiver.recv() {
@@ -141,7 +148,13 @@ impl Host {
                             ControlChannel::accept_unenrolled(job.stream, &identity)
                         {
                             if !job.stop.load(Ordering::SeqCst) {
-                                let _ = enrollment::enroll(&mut channel, &windows, &store, now);
+                                let _ = enrollment::enroll(
+                                    &mut channel,
+                                    &windows,
+                                    &store,
+                                    &policy_mutation,
+                                    now,
+                                );
                             }
                             channel.close();
                         }
@@ -158,6 +171,7 @@ impl Host {
             windows,
             store,
             listener: None,
+            policy_mutation,
             jobs,
             _lease: lease,
         })
@@ -191,9 +205,25 @@ impl Host {
             }
             value
         });
+        let phones = match &self.store {
+            Some(store) => store
+                .lock()
+                .map_err(|_| "phone_trust_owner_unavailable")?
+                .list()?,
+            None => Vec::new(),
+        };
         Ok(
-            json!({"authorityInstanceId":self.authority,"pairing":status,"offer":offer,"transport":self.transport()}),
+            json!({"authorityInstanceId":self.authority,"pairing":status,"offer":offer,"transport":self.transport(),"phones":phones}),
         )
+    }
+    fn close_peers(&self) {
+        if let Some(listener) = &self.listener {
+            if let Ok(peers) = listener.peers.lock() {
+                for peer in peers.values() {
+                    let _ = peer.shutdown(Shutdown::Both);
+                }
+            }
+        }
     }
     fn stop(&mut self) {
         if let Ok(mut windows) = self.windows.lock() {
@@ -289,7 +319,32 @@ impl Host {
                     .map_err(|_| "pairing_owner_unavailable")?
                     .open(now()?)?,
             ),
-            Command::PairingStatus {} => None,
+            Command::PairingStatus {} | Command::PairingList {} => None,
+            Command::PairingRevoke { phone_id } => {
+                if !runtime::identity(&phone_id) {
+                    return Err("phone_identity_invalid");
+                }
+                self.windows
+                    .lock()
+                    .map_err(|_| "pairing_owner_unavailable")?
+                    .cancel();
+                self.close_peers();
+                let result = (|| {
+                    let _mutation = self
+                        .policy_mutation
+                        .lock()
+                        .map_err(|_| "phone_trust_owner_unavailable")?;
+                    self.store
+                        .as_ref()
+                        .ok_or("pairing_persistent_identity_required")?
+                        .lock()
+                        .map_err(|_| "phone_trust_owner_unavailable")?
+                        .revoke(&phone_id, now()?)
+                })();
+                self.close_peers();
+                result?;
+                None
+            }
             Command::PairingCancel {} => {
                 self.windows
                     .lock()
@@ -404,7 +459,7 @@ pub fn run(
 mod tests {
     use super::*;
     use crate::control_tls::{CertificatePin, FrameKind};
-    use std::{fs, path::PathBuf, sync::atomic::AtomicU64};
+    use std::{fs, path::PathBuf, sync::atomic::AtomicU64, time::Instant};
     static NEXT: AtomicU64 = AtomicU64::new(0);
     struct Root(PathBuf);
     impl Root {
@@ -560,6 +615,59 @@ mod tests {
         assert_eq!(stop["pairing"]["networkEnabled"], false);
         assert!(stop["transport"]["port"].is_null());
         assert!(channel.receive().is_err());
+    }
+    #[test]
+    fn revocation_fences_an_enrollment_already_waiting_to_commit_and_survives_restart() {
+        let root = Root::new();
+        let runtime = root.0.join("runtime");
+        let identity = root.0.join("identity");
+        let mut host = Host::new(&runtime, "authority-a", Some(&identity)).unwrap();
+        let value = listen(&mut host);
+        let mut channel = connect(&value);
+        hello(&mut channel);
+        let store = host.store.as_ref().unwrap().clone();
+        let guard = store.lock().unwrap();
+        send(&mut channel, proof(&value));
+        let deadline = Instant::now() + Duration::from_secs(1);
+        while host
+            .windows
+            .lock()
+            .unwrap()
+            .status(now().unwrap())
+            .unwrap()
+            .state
+            != "closed"
+        {
+            assert!(Instant::now() < deadline);
+            thread::sleep(Duration::from_millis(1));
+        }
+        assert!(host.policy_mutation.try_lock().is_err());
+        let revoker = thread::spawn(move || {
+            let reply = host
+                .execute(Command::PairingRevoke {
+                    phone_id: "phone-a".into(),
+                })
+                .unwrap();
+            assert_eq!(reply["phones"][0]["active"], false);
+            assert_eq!(reply["pairing"]["state"], "closed");
+            assert_eq!(reply["transport"]["listening"], true);
+            host
+        });
+        // Revocation closes native TLS peers before waiting for the database transaction.
+        assert!(channel.receive().is_err());
+        drop(guard);
+        let mut host = revoker.join().unwrap();
+        assert_eq!(
+            host.execute(Command::PairingList {}).unwrap()["phones"][0]["active"],
+            false
+        );
+        drop(host);
+        drop(store);
+        let mut restarted = Host::new(&runtime, "authority-b", Some(&identity)).unwrap();
+        let inventory = restarted.execute(Command::PairingList {}).unwrap();
+        assert_eq!(inventory["phones"][0]["phoneId"], "phone-a");
+        assert_eq!(inventory["phones"][0]["active"], false);
+        assert!(!inventory.to_string().contains("credential\""));
     }
     #[test]
     fn bounded_acceptance_and_stop_close_all_stalled_sockets_without_more_workers() {

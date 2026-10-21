@@ -6,8 +6,13 @@ export type PairingCommand =
       command:
         | "pairing-open"
         | "pairing-status"
+        | "pairing-list"
         | "pairing-cancel"
         | "pairing-stop-listening";
+    }>
+  | Readonly<{
+      command: "pairing-revoke";
+      phoneId: string;
     }>
   | Readonly<{
       command: "pairing-listen";
@@ -45,11 +50,19 @@ export type PairingTransport = Readonly<{
   controlVersion: 2;
   inputEnabled: false;
 }>;
+export type TrustedPhone = Readonly<{
+  phoneId: string;
+  label: string;
+  credentialEpoch: string;
+  active: boolean;
+  expiresAt: number;
+}>;
 export type PairingReply = Readonly<{
   authorityInstanceId: string;
   pairing: PairingStatus;
   offer: PairingOffer | PairingInvitation | null;
   transport?: PairingTransport;
+  phones?: readonly TrustedPhone[];
 }>;
 function data(
   value: unknown,
@@ -104,13 +117,24 @@ function bind(value: unknown): string {
 }
 export function decodePairingCommand(value: unknown): PairingCommand {
   const raw = record(value),
+    withPhone = Object.hasOwn(raw, "phoneId"),
     withAddress =
       Object.hasOwn(raw, "bindAddress") || Object.hasOwn(raw, "advertiseHost");
   const d = data(
     value,
-    withAddress ? ["command", "bindAddress", "advertiseHost"] : ["command"],
+    withAddress
+      ? ["command", "bindAddress", "advertiseHost"]
+      : withPhone
+        ? ["command", "phoneId"]
+        : ["command"],
   );
-  if (d.command === "pairing-listen") {
+  if (d.command === "pairing-revoke" && withPhone) {
+    return Object.freeze({
+      command: "pairing-revoke",
+      phoneId: identity(d.phoneId),
+    });
+  }
+  if (d.command === "pairing-listen" && withAddress) {
     return Object.freeze({
       command: "pairing-listen",
       bindAddress: bind(d.bindAddress),
@@ -119,8 +143,10 @@ export function decodePairingCommand(value: unknown): PairingCommand {
   }
   if (
     withAddress ||
+    withPhone ||
     (d.command !== "pairing-open" &&
       d.command !== "pairing-status" &&
+      d.command !== "pairing-list" &&
       d.command !== "pairing-cancel" &&
       d.command !== "pairing-stop-listening")
   )
@@ -188,14 +214,75 @@ function transport(value: unknown): PairingTransport {
     inputEnabled: false,
   });
 }
-export function decodePairingReply(value: unknown): PairingReply {
-  const withTransport = Object.hasOwn(record(value), "transport");
-  const d = data(
-    value,
-    withTransport
-      ? ["authorityInstanceId", "pairing", "offer", "transport"]
-      : ["authorityInstanceId", "pairing", "offer"],
+function utf8Size(value: string): number {
+  let count = 0;
+  for (const character of value) {
+    const point = character.codePointAt(0)!;
+    count += point < 0x80 ? 1 : point < 0x800 ? 2 : point < 0x10000 ? 3 : 4;
+  }
+  return count;
+}
+function phones(value: unknown): readonly TrustedPhone[] {
+  if (
+    !Array.isArray(value) ||
+    Object.getPrototypeOf(value) !== Array.prototype ||
+    value.length > 32
+  )
+    throw new Error("invalid_trusted_phones");
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  if (
+    Reflect.ownKeys(value).length !== value.length + 1 ||
+    Object.values(descriptors).some((d) => !("value" in d))
+  )
+    throw new Error("invalid_trusted_phones");
+  let previous = "";
+  return Object.freeze(
+    Array.from({ length: value.length }, (_, index) => {
+      if (!Object.hasOwn(descriptors, index))
+        throw new Error("invalid_trusted_phones");
+      const d = data(descriptors[String(index)]!.value, [
+        "phoneId",
+        "label",
+        "credentialEpoch",
+        "active",
+        "expiresAt",
+      ]);
+      const phoneId = identity(d.phoneId);
+      if (
+        phoneId <= previous ||
+        typeof d.label !== "string" ||
+        !d.label.length ||
+        utf8Size(d.label) > 128 ||
+        /[\p{Cc}\p{Cs}]/u.test(d.label) ||
+        typeof d.credentialEpoch !== "string" ||
+        !/^[1-9][0-9]{0,18}$/.test(d.credentialEpoch) ||
+        BigInt(d.credentialEpoch) > 9223372036854775807n ||
+        typeof d.active !== "boolean" ||
+        timestamp(d.expiresAt) === 0
+      )
+        throw new Error("invalid_trusted_phone");
+      previous = phoneId;
+      return Object.freeze({
+        phoneId,
+        label: d.label,
+        credentialEpoch: d.credentialEpoch,
+        active: d.active,
+        expiresAt: timestamp(d.expiresAt),
+      });
+    }),
   );
+}
+export function decodePairingReply(value: unknown): PairingReply {
+  const raw = record(value),
+    withTransport = Object.hasOwn(raw, "transport"),
+    withPhones = Object.hasOwn(raw, "phones");
+  const d = data(value, [
+    "authorityInstanceId",
+    "pairing",
+    "offer",
+    ...(withTransport ? ["transport"] : []),
+    ...(withPhones ? ["phones"] : []),
+  ]);
   const authorityInstanceId = identity(d.authorityInstanceId),
     connection = withTransport ? transport(d.transport) : undefined;
   const p = data(d.pairing, [
@@ -288,5 +375,6 @@ export function decodePairingReply(value: unknown): PairingReply {
     pairing,
     offer,
     ...(connection ? { transport: connection } : {}),
+    ...(withPhones ? { phones: phones(d.phones) } : {}),
   });
 }

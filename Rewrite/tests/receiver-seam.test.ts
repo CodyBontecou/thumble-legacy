@@ -542,9 +542,93 @@ test("headless CLI native listener pairs through independent pinned TLS and canc
     } finally {
       if (stalled.child.exitCode === null) stalled.child.kill();
     }
+    const inventory = await command(directory, "pairing", "list");
+    expect(inventory.code).toBe(0);
+    expect(inventory.value.result.phones).toHaveLength(1);
+    expect(inventory.value.result.phones[0].phoneId).toBe("oracle-phone");
+    expect(inventory.value.result.phones[0].active).toBe(true);
+    const endpoint = readEndpoint(directory, executable);
+    const active = await request(endpoint, {
+      command: "activate",
+      expectedRevision: "0",
+      profileId: "revocation-check",
+    });
+    await request(endpoint, {
+      command: "sample",
+      expectedGeneration: active.receiver.snapshot.generation,
+      sequence: "1",
+      state: held,
+      allowRecordedInput: true,
+    });
+    const revoked = await command(
+      directory,
+      "pairing",
+      "revoke",
+      "--phone-id",
+      "oracle-phone",
+    );
+    const released = await request(endpoint, { command: "status" });
+    expect(released.receiver.snapshot.active).toBe(false);
+    expect(released.receiver.snapshot.reportHex).toBe(neutral);
+    expect(revoked.code).toBe(0);
+    expect(revoked.value.result.phones[0].active).toBe(false);
+    expect(revoked.value.result.pairing.state).toBe("closed");
+    expect(revoked.value.result.transport.listening).toBe(true);
+    const next = await request(endpoint, {
+      command: "activate",
+      expectedRevision: released.receiver.snapshot.revision,
+      profileId: "failed-revocation-check",
+    });
+    await request(endpoint, {
+      command: "sample",
+      expectedGeneration: next.receiver.snapshot.generation,
+      sequence: "1",
+      state: held,
+      allowRecordedInput: true,
+    });
+    const missing = await command(
+      directory,
+      "pairing",
+      "revoke",
+      "--phone-id",
+      "missing-phone",
+    );
+    expect(missing.value.error).toBe("phone_not_found");
+    expect(
+      (await request(endpoint, { command: "status" })).receiver.snapshot
+        .reportHex,
+    ).toBe(neutral);
+    expect(
+      (await request(endpoint, { command: "status" })).receiver.snapshot.active,
+    ).toBe(false);
     const stopped = await command(directory, "pairing", "stop-listening");
     expect(stopped.value.result.pairing.networkEnabled).toBe(false);
     expect(stopped.value.result.transport.port).toBe(null);
+    expect((await command(directory, "service", "stop")).code).toBe(0);
+    await waitFor(() => {
+      try {
+        readEndpoint(directory, executable);
+        return false;
+      } catch {
+        return true;
+      }
+    });
+    expect(
+      (
+        await command(
+          directory,
+          "service",
+          "start",
+          "--identity-dir",
+          identityDirectory,
+        )
+      ).code,
+    ).toBe(0);
+    const persisted = await command(directory, "pairing", "list");
+    expect(persisted.value.result.phones[0].active).toBe(false);
+    expect(persisted.value.result.phones[0].credentialEpoch).toBe(
+      inventory.value.result.phones[0].credentialEpoch,
+    );
     expect(
       (await command(directory, "receiver", "status")).value.result.receiver
         .snapshot.inputEnabled,

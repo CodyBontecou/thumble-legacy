@@ -130,6 +130,19 @@ packageTest(
       expect((await invoke("status", "pairing")).result.pairing.state).toBe(
         "closed",
       );
+      const phones = (await invoke("list", "pairing")).result.phones;
+      expect(phones).toHaveLength(1);
+      expect(phones[0].phoneId).toBe("oracle-phone");
+      expect(phones[0].active).toBe(true);
+      const revoked = await invoke(
+        "revoke",
+        "pairing",
+        "--phone-id",
+        "oracle-phone",
+      );
+      expect(revoked.result.phones[0].active).toBe(false);
+      expect(revoked.result.offer).toBe(null);
+      expect(revoked.result.transport.listening).toBe(true);
       expect(
         (await invoke("stop-listening", "pairing")).result.transport.listening,
       ).toBe(false);

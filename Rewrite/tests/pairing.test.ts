@@ -351,3 +351,65 @@ test("native listener metadata binds full invitations to the exact advertised ho
   ])
     expect(() => decodePairingReply(invalid)).toThrow();
 });
+
+test("trusted inventory exposes bounded immutable metadata and rejects executable or secret fields", () => {
+  const f = fixture();
+  const phone = {
+    phoneId: "phone-a",
+    label: "Controller",
+    credentialEpoch: "1",
+    active: true,
+    expiresAt: 123456,
+  };
+  const base = {
+    authorityInstanceId: "authority-A",
+    pairing: f.windows.status(),
+    offer: null,
+  };
+  const reply = decodePairingReply({ ...base, phones: [phone] });
+  expect(reply.phones).toEqual([phone]);
+  expect(Object.isFrozen(reply.phones)).toBe(true);
+  expect(Object.isFrozen(reply.phones![0])).toBe(true);
+  expect(decodePairingCommand({ command: "pairing-list" })).toEqual({
+    command: "pairing-list",
+  });
+  expect(
+    decodePairingCommand({ command: "pairing-revoke", phoneId: "phone-a" }),
+  ).toEqual({ command: "pairing-revoke", phoneId: "phone-a" });
+  for (const phones of [
+    [{ ...phone, credential: "secret" }],
+    [phone, phone],
+    [{ ...phone, credentialEpoch: "01" }],
+    [{ ...phone, credentialEpoch: "9223372036854775808" }],
+    [{ ...phone, label: "é".repeat(65) }],
+    [{ ...phone, label: "bad\nlabel" }],
+    [{ ...phone, active: 1 }],
+    [{ ...phone, expiresAt: 0 }],
+    Array(1),
+    Array(33).fill(phone),
+  ])
+    expect(() => decodePairingReply({ ...base, phones })).toThrow();
+  let calls = 0;
+  const phones = [phone];
+  Object.defineProperty(phones, "0", {
+    get() {
+      calls++;
+      return phone;
+    },
+  });
+  expect(() => decodePairingReply({ ...base, phones })).toThrow();
+  expect(() =>
+    decodePairingCommand({
+      command: "pairing-revoke",
+      get phoneId() {
+        calls++;
+        return "phone-a";
+      },
+    }),
+  ).toThrow();
+  expect(calls).toBe(0);
+  expect(() => decodePairingCommand({ command: "pairing-revoke" })).toThrow();
+  expect(() =>
+    decodePairingCommand({ command: "pairing-open", phoneId: "phone-a" }),
+  ).toThrow();
+});

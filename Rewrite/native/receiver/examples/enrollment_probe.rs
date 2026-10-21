@@ -57,7 +57,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     let mut channel =
         ControlChannel::accept_unenrolled(stream, &identity).map_err(|_| "tls_failed")?;
-    let result = enrollment::enroll(&mut channel, &Mutex::new(windows), &store, now);
+    let result = enrollment::enroll(
+        &mut channel,
+        &Mutex::new(windows),
+        &store,
+        &Mutex::new(()),
+        now,
+    );
     match result {
         Ok(phone) => println!(
             "{}",

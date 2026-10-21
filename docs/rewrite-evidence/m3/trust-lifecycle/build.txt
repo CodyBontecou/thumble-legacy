@@ -1,0 +1,2 @@
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.90s

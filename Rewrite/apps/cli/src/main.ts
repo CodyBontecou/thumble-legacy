@@ -33,6 +33,7 @@ function options(values: string[]): Map<string, string | true> {
         "--identity-dir",
         "--bind-address",
         "--advertise-host",
+        "--phone-id",
         "--runtime-dir",
         "--receiver",
         "--profile-id",
@@ -199,9 +200,15 @@ async function main(): Promise<unknown> {
   }
   if (family === "pairing") {
     if (
-      !["open", "status", "cancel", "listen", "stop-listening"].includes(
-        action ?? "",
-      )
+      ![
+        "open",
+        "status",
+        "list",
+        "revoke",
+        "cancel",
+        "listen",
+        "stop-listening",
+      ].includes(action ?? "")
     )
       throw new Error("unsupported_pairing_command");
     if (
@@ -209,6 +216,11 @@ async function main(): Promise<unknown> {
       opts.get("--reveal-secret") !== true
     )
       throw new Error("pairing_secret_output_opt_in_required");
+    if (action === "revoke")
+      return requestPairing(readEndpoint(root, receiver), {
+        command: "pairing-revoke",
+        phoneId: required(opts, "--phone-id"),
+      });
     if (action === "listen")
       return requestPairing(readEndpoint(root, receiver), {
         command: "pairing-listen",
@@ -219,6 +231,7 @@ async function main(): Promise<unknown> {
       command: `pairing-${action}` as
         | "pairing-open"
         | "pairing-status"
+        | "pairing-list"
         | "pairing-cancel"
         | "pairing-stop-listening",
     });
