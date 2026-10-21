@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Report M0/M1 readiness; exit 2 for open gates and 1 for invalid evidence.
+"""Report acceptance separately from approved headless development; exit 2 for open gates and 1 for invalid evidence.
 
 This is a consistency check, not a certifier. Only measured, reviewed acceptance
 records can close a gate; package/codec success does not imply gameplay success.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -79,13 +80,24 @@ def open_gates(data: dict, root: Path = ROOT) -> list[str]:
     return reasons
 
 
+def implementation_allowed(data: dict, root: Path = ROOT) -> bool:
+    policy = data.get("executionPolicy", {})
+    if (policy.get("mode"), policy.get("windowsAutomation"), policy.get("physicalAcceptance")) != ("headless-development", "github-actions-hosted", "beta-testers"):
+        return False
+    return not review_record(root, policy["authorization"])
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--development", action="store_true", help="Check the approved headless implementation policy; keep physical acceptance separate")
+    args = parser.parse_args()
     try:
         data = json.loads((ROOT / "docs/rewrite-evidence/m0/launch-contract.json").read_text())
         reasons = open_gates(data)
-        print(json.dumps({"m2Ready": not reasons, "openGates": reasons,
-                          "note": "Required live sync additionally gates M5/M6 release; no release approval is inferred."}, indent=2))
-        return 2 if reasons else 0
+        allowed = implementation_allowed(data)
+        print(json.dumps({"implementationAllowed": allowed, "m0m1AcceptanceComplete": not reasons, "openGates": reasons,
+                          "note": "Physical/signing/live-sync acceptance remains required for release; hosted runner results do not certify gameplay."}, indent=2))
+        return (0 if allowed else 2) if args.development else (2 if reasons else 0)
     except (ValueError, KeyError, OSError, TypeError) as error:
         print(json.dumps({"invalidEvidence": str(error)}))
         return 1

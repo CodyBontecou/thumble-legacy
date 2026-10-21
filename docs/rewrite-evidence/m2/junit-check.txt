@@ -1,0 +1,52 @@
+$ bun tooling/ci-test.ts
+bun test v1.4.3 (c6da4a4d3)
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.37ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.07ms]
+(pass) retained Swift/Rust v2 native report vectors > east [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > west
+(pass) retained Swift/Rust v2 native report vectors > north
+(pass) retained Swift/Rust v2 native report vectors > left shoulder
+(pass) retained Swift/Rust v2 native report vectors > right shoulder [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis [0.02ms]
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis [0.04ms]
+(pass) retained Swift/Rust v2 native report vectors > select [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > start [0.06ms]
+(pass) retained Swift/Rust v2 native report vectors > home [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > up right
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right
+(pass) retained Swift/Rust v2 native report vectors > down
+(pass) retained Swift/Rust v2 native report vectors > down left
+(pass) retained Swift/Rust v2 native report vectors > left [0.03ms]
+(pass) retained Swift/Rust v2 native report vectors > up left
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state [0.02ms]
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.24ms]
+(pass) digital trigger release restores independent analog hold [0.13ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.09ms]
+(pass) decoded state has independent immutable ownership [0.03ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.03ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [3.54ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.38ms]
+
+ 41 pass
+ 0 fail
+ 70 expect() calls
+Ran 41 tests across 2 files. [92.00ms]

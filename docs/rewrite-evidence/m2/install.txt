@@ -1,0 +1,3 @@
+bun install v1.4.3 (c6da4a4d3)
+
+Checked 11 installs across 9 packages (no changes) [15.00ms]

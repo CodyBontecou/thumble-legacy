@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="41" assertions="70" failures="0" skipped="0" time="0.092326">
+  <testsuite name="tests/gamepad.test.ts" file="tests/gamepad.test.ts" tests="39" assertions="58" failures="0" skipped="0" time="0.003969" hostname="MacBook-Pro.local">
+    <testsuite name="retained Swift/Rust v2 native report vectors" file="tests/gamepad.test.ts" line="10" tests="34" assertions="34" failures="0" skipped="0" time="0" hostname="MacBook-Pro.local">
+      <testcase name="neutral" classname="retained Swift/Rust v2 native report vectors" time="0.000374" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="south" classname="retained Swift/Rust v2 native report vectors" time="0.00007" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="east" classname="retained Swift/Rust v2 native report vectors" time="0.000014" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="west" classname="retained Swift/Rust v2 native report vectors" time="0.00001" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="north" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="left shoulder" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="right shoulder" classname="retained Swift/Rust v2 native report vectors" time="0.000011" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="digital left trigger also actuates axis" classname="retained Swift/Rust v2 native report vectors" time="0.000016" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="digital right trigger also actuates axis" classname="retained Swift/Rust v2 native report vectors" time="0.000037" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="select" classname="retained Swift/Rust v2 native report vectors" time="0.000027" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="start" classname="retained Swift/Rust v2 native report vectors" time="0.000057" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="home" classname="retained Swift/Rust v2 native report vectors" time="0.000014" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="left stick press" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="right stick press" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="up" classname="retained Swift/Rust v2 native report vectors" time="0.000028" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="up right" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="right" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="down right" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="down" classname="retained Swift/Rust v2 native report vectors" time="0.000004" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="down left" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="left" classname="retained Swift/Rust v2 native report vectors" time="0.000027" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="up left" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="opposed vertical" classname="retained Swift/Rust v2 native report vectors" time="0.000008" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="opposed horizontal" classname="retained Swift/Rust v2 native report vectors" time="0.000009" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="all dpad directions" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="sticks full scale" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="sticks clamp" classname="retained Swift/Rust v2 native report vectors" time="0.000007" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="sticks half scale" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="left trigger independent" classname="retained Swift/Rust v2 native report vectors" time="0.000006" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="right trigger independent" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="triggers together" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="trigger midpoint rounds away from zero" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="triggers clamp" classname="retained Swift/Rust v2 native report vectors" time="0.000005" file="tests/gamepad.test.ts" line="12" assertions="1" />
+      <testcase name="mixed state" classname="retained Swift/Rust v2 native report vectors" time="0.000021" file="tests/gamepad.test.ts" line="12" assertions="1" />
+    </testsuite>
+    <testcase name="internal oracle neutralizes nonfinite values; external validator refuses them" classname="" time="0.000237" file="tests/gamepad.test.ts" line="28" assertions="2" />
+    <testcase name="digital trigger release restores independent analog hold" classname="" time="0.000133" file="tests/gamepad.test.ts" line="34" assertions="3" />
+    <testcase name="contract rejects malformed, unknown, duplicate, missing and out-of-range data" classname="" time="0.000089" file="tests/gamepad.test.ts" line="41" assertions="13" />
+    <testcase name="decoded state has independent immutable ownership" classname="" time="0.000026" file="tests/gamepad.test.ts" line="52" assertions="4" />
+    <testcase name="signed axis ties match Swift/Rust rounding away from zero" classname="" time="0.000033" file="tests/gamepad.test.ts" line="63" assertions="2" />
+  </testsuite>
+  <testsuite name="tests/boundaries.test.ts" file="tests/boundaries.test.ts" tests="2" assertions="12" failures="0" skipped="0" time="0.08534" hostname="MacBook-Pro.local">
+    <testcase name="portable modules cannot import platform code, host policy or escape through relative paths" classname="" time="0.003535" file="tests/boundaries.test.ts" line="5" assertions="9" />
+    <testcase name="portable domain imports and ordinary document variables remain valid" classname="" time="0.000376" file="tests/boundaries.test.ts" line="14" assertions="3" />
+  </testsuite>
+</testsuites>

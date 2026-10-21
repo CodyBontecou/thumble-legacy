@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 from capture_baseline import bundle_manifest
-from check_gates import EXERCISES, ROOT, open_gates, review_record
+from check_gates import EXERCISES, ROOT, implementation_allowed, open_gates, review_record
 from inventory import inventory, mcp_tools
 
 
@@ -25,6 +25,19 @@ class BaselineTests(unittest.TestCase):
 
     def test_multiline_tool_declarations_are_inventory_inputs(self):
         self.assertEqual(mcp_tools('#[tool(\n description = "x", annotations(read_only_hint = true)\n)]\n pub async fn new_surface('), ['new_surface'])
+
+    def test_headless_development_does_not_falsify_physical_acceptance(self):
+        self.assertTrue(implementation_allowed(self.contract))
+        self.assertTrue(open_gates(self.contract))
+
+    def test_development_requires_recorded_execution_policy(self):
+        self.contract.pop('executionPolicy')
+        self.assertFalse(implementation_allowed(self.contract))
+
+    def test_headless_authorization_evidence_cannot_be_tampered(self):
+        self.contract['executionPolicy']['authorization']['evidence'][0]['sha256'] = '0' * 64
+        with self.assertRaises(ValueError):
+            implementation_allowed(self.contract)
 
     def test_current_gates_are_open(self):
         reasons = open_gates(self.contract)

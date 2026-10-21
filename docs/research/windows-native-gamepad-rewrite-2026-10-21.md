@@ -1,6 +1,6 @@
 # Windows native gamepad feasibility for the TypeScript rewrite
 
-Date: 2026-10-21. Research only; no driver selected, installed, or independently tested. Windows and optical live sync remain mandatory launch requirements. This note supports M0/M1; it does not authorize broad M2 expansion or certify the eight phone/receiver/game combinations in the rewrite plan.
+Date: 2026-10-21. Research only; no driver selected, installed, or independently tested. Windows and optical live sync remain mandatory launch requirements. This note supports M0/M1 and does not certify the eight phone/receiver/game combinations. The later [headless execution decision](../rewrite-evidence/m0/headless-execution-decision.md) permits M2 engineering while physical beta/release acceptance remains pending.
 
 ## Decision
 
@@ -45,4 +45,4 @@ HIDMaestro provides [uninstall documentation](https://github.com/hifihedgehog/HI
 2. Produce a candidate artifact manifest (commit, version, hashes, signatures, license notices, installed files/services/certificates). Establish production trust/distribution path before adoption. Use an isolated clean Windows machine for the trial.
 3. Run independent native XInput trigger/readback, both game recognition tests, physical iOS/Android transport latency, cancellation, lost-release repair, crash/disconnect neutralization, suspend/reconnect and receiver restart. Cross-compiling is not installed-device proof.
 4. Test upgrade/rollback/uninstall/reinstall, reboot, coexistence with physical controllers and other virtual-driver users, least-privilege steady state, Secure Boot/HVCI, and required Windows optical live sync.
-5. Attach exact logs/artifacts to the M1 gate. No candidate currently satisfies these Thumble gates from inspected evidence; keep M2 blocked on the plan's acceptance requirements.
+5. Attach exact logs/artifacts to the M1 gate. No candidate currently satisfies these Thumble gates from inspected evidence; keep physical/release acceptance pending while implementation proceeds under the approved headless policy.

@@ -1,6 +1,6 @@
 # Thumble TypeScript rewrite plan
 
-Status: implementation started in a dedicated worktree; M0 evidence in progress. No rewrite milestones are complete. See [the execution record](rewrite-evidence/m0/README.md).
+Status: headless implementation underway in a dedicated worktree. M2 workspace/contracts are implemented; receiver/mobile seams remain pending. No acceptance milestones are complete. See [M2 evidence](rewrite-evidence/m2/README.md) and [the baseline](rewrite-evidence/m0/README.md).
 Created: 2026-10-21.
 
 ## Outcome and scope
@@ -201,6 +201,10 @@ Use isolated state, discovery identifiers/metadata, ports, and explicit client s
 
 All milestones below start pending. Gates require stored evidence, not checked boxes inferred from implementation. Work in small vertical changes; the dependencies below describe sequencing, not authorization to launch parallel agents.
 
+### Headless implementation policy (user decision, 2026-10-21)
+
+Development runs entirely headlessly. Use GitHub-hosted Windows runners for Windows build/unit/contract/loopback/package tests; eventual beta testers provide physical Windows/phone/gameplay evidence. No local Windows machine or connected phone is required to continue implementation. M2 and subsequent engineering may proceed while M0/M1 physical evidence remains pending. Those outstanding acceptance gates still block release certification and retirement of existing owners; headless CI never substitutes for gameplay, production driver/signing, physical latency, haptics or optical capture acceptance. See [the recorded user clarification](rewrite-evidence/m0/headless-execution-decision.md).
+
 ### M0 — Baseline and launch contract
 
 Deliver: retained-feature ledger; fixed baseline artifacts; supported phone/OS/device matrix; exact Classic/Forever/addon combinations; decisions on macOS-first and live-sync scope; latency/build/size measurements.
@@ -211,11 +215,11 @@ Complete when every retained CLI/MCP/phone operation maps to a replacement, expl
 
 Depends on M0. Use the current receiver before rebuilding broad UI. Verify the exact release identity, entitlement/provisioning scope, native device creation, independent GameController semantics, and actual game enumeration.
 
-Complete when physical iPhone and Android input passes movement, camera, buttons, both triggers, modifier combinations, target/interact/menu actions, disconnect neutralization, and reconnect in each launch game experience on both macOS and Windows (eight combinations). Windows additionally requires a proven native virtual gamepad driver and signed installation/removal path. Store build/package/descriptor hashes and recordings. Development HID success alone does not satisfy production signing or gameplay gates. An unresolved gamepad or entitlement failure blocks feature expansion.
+Complete when physical iPhone and Android input passes movement, camera, buttons, both triggers, modifier combinations, target/interact/menu actions, disconnect neutralization, and reconnect in each launch game experience on both macOS and Windows (eight combinations). Windows additionally requires a proven native virtual gamepad driver and signed installation/removal path. Store build/package/descriptor hashes and recordings. Development HID success alone does not satisfy production signing or gameplay gates. An unresolved gamepad or entitlement failure blocks enabling real input and release acceptance. Under the headless policy above, isolated implementation and automated testing may continue with those gates explicitly pending.
 
 ### M2 — Workspace, contracts, and receiver seam
 
-Depends on M1. Create the Bun workspace, strict TypeScript boundaries, contract generation, fixture runner, minimal local IPC, and extracted receiver interface. Build the native mobile input-module skeleton on both phones.
+Engineering may proceed under the headless policy; final acceptance depends on M1. Create the Bun workspace, strict TypeScript boundaries, contract generation, fixture runner, minimal local IPC, and extracted receiver interface. Build the native mobile input-module skeleton on both phones.
 
 Complete when one semantic controller fixture produces matching TypeScript/Swift/Kotlin/native output, receiver activation is revisioned, invalid/stale packets are rejected, and killing the service neutralizes input within the configured lease. Demonstrate a packaged Bun executable launching the signed helper without a repository checkout.
 
@@ -281,7 +285,7 @@ Store evidence under `docs/rewrite-evidence/<milestone>/` when work begins. Each
 
 ## First implementation slice
 
-After M0/M1 evidence, implement M2 as one reviewable slice: workspace setup, a single contract fixture, an extracted receiver adapter, a Bun CLI that starts/statuses/releases it, and a native-module smoke build on iOS/Android. Keep old production entry points intact. Acceptance is a signed isolated receiver driven by the new contract, with neutralization on service death and no shared-state writes to the existing authority.
+Under the headless implementation policy, implement M2 as one reviewable slice while preserving outstanding M0/M1 physical acceptance: workspace setup, a single contract fixture, an extracted receiver adapter, a Bun CLI that starts/statuses/releases it, and a native-module smoke build on iOS/Android. Keep old production entry points intact. Acceptance is a signed isolated receiver driven by the new contract, with neutralization on service death and no shared-state writes to the existing authority.
 
 ## References
 

@@ -1,5 +1,7 @@
 # M1 native receiver acceptance — incomplete
 
+Implementation now proceeds under the [headless execution policy](../m0/headless-execution-decision.md): GitHub-hosted Windows runners for automation, beta testers for physical acceptance. This record remains incomplete acceptance evidence.
+
 Read-only observations captured 2026-10-21 on macOS 26.5.1 (25F80), Apple silicon. Source baseline, runtime/compiler versions and artifact/descriptor fixture hashes are recorded in [M0](../m0/baseline.json). The final package was not rebuilt from that baseline.
 
 Commands run against the existing isolated lab:

@@ -1,11 +1,12 @@
 {
-  "m2Ready": false,
+  "implementationAllowed": true,
+  "m0m1AcceptanceComplete": false,
   "openGates": [
-    "m0.deviceMatrix: Pixel 7 API 37 available; physical iPhones paired over network but disconnected; Windows acceptance machine unspecified",
+    "m0.deviceMatrix: Physical phone/device matrix remains beta acceptance; Windows automation uses GitHub-hosted runners, not a local Windows machine",
     "m0.compatibilityBuilds: Local provisional targets: Era 1.15.9.70003/ConsolePort 3.3.11 and Forever 1.60.1.70245; neither gameplay-certified; Windows builds unpinned",
     "m0.measuredBudgets: Only existing macOS package bytes measured; latency/load/build baselines and thresholds not frozen",
     "native.productionSigning: Development lab signature passes; Developer ID provisioning/final release acceptance not established",
-    "native.windowsDriver: Existing Windows SendInput backend has no virtual gamepad. Source research identifies an isolated HIDMaestro evaluation candidate; trusted driver distribution, Windows test host and actual device/gameplay proof remain required.",
+    "native.windowsDriver: Driver candidate evaluation, signing/install and actual gamepad delivery remain beta/release gates; build and contract automation will run headlessly in GitHub Actions",
     "native.independentConsumer: macOS extended GameController enumerates neutral; full phone-driven and Windows semantics unverified",
     "native.gameEnumeration: Real Classic/Forever enumeration and gameplay evidence required on both hosts",
     "budgets.macos.coldBuildSeconds: measurement and threshold pending",
@@ -35,5 +36,5 @@
     "gameplay.windows/android/classic-era-consoleport: Physical gameplay run with pinned builds and recordings required",
     "gameplay.windows/android/forever-native: Physical gameplay run with pinned builds and recordings required"
   ],
-  "note": "Required live sync additionally gates M5/M6 release; no release approval is inferred."
+  "note": "Physical/signing/live-sync acceptance remains required for release; hosted runner results do not certify gameplay."
 }

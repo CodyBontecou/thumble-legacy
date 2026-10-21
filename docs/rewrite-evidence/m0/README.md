@@ -2,7 +2,7 @@
 
 Implementation started 2026-10-21 on `codex/typescript-rewrite`, in the dedicated worktree `/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble`.
 
-**M0 is in progress. M1 is incomplete. M2–M6 remain pending.** The requested plan says M1 must pass before workspace/receiver-seam expansion. No production entry point, user authority, phone installation, addon installation, or native input behavior was changed by this slice.
+**M0/M1 acceptance is incomplete. M2 implementation has begun under the user-approved headless policy.** The [headless clarification](headless-execution-decision.md) supersedes the earlier restriction on starting implementation without local hardware; physical acceptance still gates release and retirement. No production entry point, user authority, phone installation, addon installation, or native input behavior was changed by this slice.
 
 ## Scope and reproducible baseline
 
@@ -76,7 +76,7 @@ python3 -m unittest discover -s scripts/rewrite -p 'test_*.py'
 python3 scripts/rewrite/check_gates.py
 ```
 
-The gate check currently exits **2**, meaning valid records with open M0/M1 gates. Exit 1 means malformed/inconsistent evidence; 0 means the recorded prerequisite checks are satisfied, not permission to publish. `launch-contract.json` requires both hosts, eight physical gameplay cells, separate finite numeric budgets and hash-bound reviewed evidence. It cannot infer gameplay from the present codec or development-signing results.
+The default gate check exits **2**, meaning valid records with open M0/M1 acceptance gates. `python3 scripts/rewrite/check_gates.py --development` exits **0** when the hash-bound user-approved headless execution policy is valid; it does not mark physical acceptance complete. Exit 1 means malformed/inconsistent evidence; 0 means the recorded prerequisite checks are satisfied, not permission to publish. `launch-contract.json` requires both hosts, eight physical gameplay cells, separate finite numeric budgets and hash-bound reviewed evidence. It cannot infer gameplay from the present codec or development-signing results.
 
 Capture public source/fixture/bundle metadata again with:
 
@@ -85,7 +85,7 @@ python3 scripts/rewrite/capture_baseline.py --baseline c7456e2 \
   --receiver-bundle '/absolute/path/to/the/existing/lab.app'
 ```
 
-This reads only the selected package, never adjoining state/backups. It does not launch a receiver. See [launch-contract.json](launch-contract.json) and the generated [open-gate report](gates.json) for unresolved prerequisites. Do not weaken those records to begin M2: the plan explicitly makes unresolved native gamepad/signing failures block feature expansion.
+This reads only the selected package, never adjoining state/backups. It does not launch a receiver. See [launch-contract.json](launch-contract.json) and the generated [open-gate report](gates.json) for unresolved prerequisites. Keep those acceptance records pending while implementing M2 headlessly. Native gamepad/signing and physical beta evidence remain required before real-input/release acceptance.
 
 ## Subsequent M1 preparation
 

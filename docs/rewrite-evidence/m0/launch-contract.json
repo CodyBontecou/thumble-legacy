@@ -33,7 +33,7 @@
     },
     "deviceMatrix": {
       "status": "pending",
-      "reason": "Pixel 7 API 37 available; physical iPhones paired over network but disconnected; Windows acceptance machine unspecified"
+      "reason": "Physical phone/device matrix remains beta acceptance; Windows automation uses GitHub-hosted runners, not a local Windows machine"
     },
     "compatibilityBuilds": {
       "status": "pending",
@@ -62,7 +62,7 @@
     },
     "windowsDriver": {
       "status": "pending",
-      "reason": "Existing Windows SendInput backend has no virtual gamepad. Source research identifies an isolated HIDMaestro evaluation candidate; trusted driver distribution, Windows test host and actual device/gameplay proof remain required."
+      "reason": "Driver candidate evaluation, signing/install and actual gamepad delivery remain beta/release gates; build and contract automation will run headlessly in GitHub Actions"
     },
     "independentConsumer": {
       "status": "pending",
@@ -129,6 +129,22 @@
     "windows/android/forever-native": {
       "status": "pending",
       "reason": "Physical gameplay run with pinned builds and recordings required"
+    }
+  },
+  "executionPolicy": {
+    "mode": "headless-development",
+    "windowsAutomation": "github-actions-hosted",
+    "physicalAcceptance": "beta-testers",
+    "authorization": {
+      "status": "passed",
+      "reviewedBy": "User, direct clarification 2026-10-21",
+      "command": "Review headless execution clarification recorded in headless-execution-decision.md",
+      "evidence": [
+        {
+          "path": "docs/rewrite-evidence/m0/headless-execution-decision.md",
+          "sha256": "471a3b1ac3c7b91238ede8ba0384e49e85cda1adbea5a70dd29a08a374251031"
+        }
+      ]
     }
   }
 }

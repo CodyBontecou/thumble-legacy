@@ -1,0 +1,774 @@
+{
+  "version": 1,
+  "ciBranch": "codex/typescript-rewrite-headless-ci",
+  "ciBaseCommit": "4076d377cd758ad89867a514dfe3881e0dff9766",
+  "portable": {
+    "id": 39642030587,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39642030587",
+    "headSha": "c14f3803f0016f852ba5af353542256babe0e01f"
+  },
+  "portableJobs": {
+    "jobs": [
+      {
+        "id": 119367763139,
+        "name": "portable (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39642030587,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bun install --frozen-lockfile",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bun run check:generated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run bun run check:boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run bun run typecheck",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run bun run test:ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Typecheck generated Swift DTOs",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Post Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21
+          }
+        ]
+      },
+      {
+        "id": 119367763416,
+        "name": "portable (macos-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39642030587,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bun install --frozen-lockfile",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bun run check:generated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run bun run check:boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run bun run typecheck",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run bun run test:ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Typecheck generated Swift DTOs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Post Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21
+          }
+        ]
+      },
+      {
+        "id": 119367763765,
+        "name": "portable (windows-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39642030587,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run bun install --frozen-lockfile",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run bun run check:generated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run bun run check:boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run bun run typecheck",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Run bun run test:ci",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Typecheck generated Swift DTOs",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Post Run oven-sh/setup-bun@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21
+          }
+        ]
+      }
+    ]
+  },
+  "portableArtifacts": {
+    "artifacts": [
+      {
+        "id": 12364833895,
+        "name": "rewrite-portable-tests-macos-latest",
+        "size_in_bytes": 1300,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364833895",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364833895/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:14:55Z",
+        "expires_at": "2027-01-19T17:14:34Z",
+        "updated_at": "2026-10-21T17:14:55Z",
+        "digest": "sha256:a984df93193a97c8cdf27be49ad9025851f0891ee9484e3a18a8a4b0419b337b",
+        "workflow_run": {
+          "id": 39642030587,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "c14f3803f0016f852ba5af353542256babe0e01f"
+        }
+      },
+      {
+        "id": 12364778850,
+        "name": "rewrite-portable-tests-ubuntu-latest",
+        "size_in_bytes": 1288,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364778850",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364778850/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:14:53Z",
+        "expires_at": "2027-01-19T17:14:34Z",
+        "updated_at": "2026-10-21T17:14:53Z",
+        "digest": "sha256:fa36203932ba8dc86e92fd617b35b2e7e4be6d683da086dfb302ea18fe56a900",
+        "workflow_run": {
+          "id": 39642030587,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "c14f3803f0016f852ba5af353542256babe0e01f"
+        }
+      },
+      {
+        "id": 12364329152,
+        "name": "rewrite-portable-tests-windows-latest",
+        "size_in_bytes": 1267,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364329152",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12364329152/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:15:26Z",
+        "expires_at": "2027-01-19T17:14:34Z",
+        "updated_at": "2026-10-21T17:15:26Z",
+        "digest": "sha256:347103e5e47879ddef5ff23a1f255edff8f9edc3dc80d8c6576194b35e435087",
+        "workflow_run": {
+          "id": 39642030587,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "c14f3803f0016f852ba5af353542256babe0e01f"
+        }
+      }
+    ]
+  },
+  "nativeReceiver": {
+    "id": 39641444003,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39641444003",
+    "headSha": "34ba0f503770dc99afd19f1a4097fcdebfb7fcf6"
+  },
+  "nativeJobs": {
+    "jobs": [
+      {
+        "id": 119365716990,
+        "name": "receiver (windows-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39641444003,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@1.88.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run cargo fmt -p thumble-receiver -- --check",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run cargo clippy --locked -p thumble-receiver --all-targets --no-deps -- -D warnings",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run cargo test --locked -p thumble-protocol -p thumble-core -p thumble-receiver",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Prepare isolated Linux native input witness",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 8
+          },
+          {
+            "name": "Verify native OS delivery through the receiver WebSocket",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9
+          },
+          {
+            "name": "Verify read-only Windows witness",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Record headless XInput availability (not gameplay acceptance)",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Run cargo build --locked --release -p thumble-receiver",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Build Windows witness for beta testing",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 15
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      },
+      {
+        "id": 119365717297,
+        "name": "receiver (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 39641444003,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run dtolnay/rust-toolchain@1.88.0",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Run cargo fmt -p thumble-receiver -- --check",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run cargo clippy --locked -p thumble-receiver --all-targets --no-deps -- -D warnings",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run cargo test --locked -p thumble-protocol -p thumble-core -p thumble-receiver",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Prepare isolated Linux native input witness",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Verify native OS delivery through the receiver WebSocket",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Verify read-only Windows witness",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10
+          },
+          {
+            "name": "Record headless XInput availability (not gameplay acceptance)",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11
+          },
+          {
+            "name": "Run cargo build --locked --release -p thumble-receiver",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Build Windows witness for beta testing",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 14
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Run Swatinem/rust-cache@v2",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      }
+    ]
+  },
+  "nativeArtifacts": {
+    "artifacts": [
+      {
+        "id": 12366070308,
+        "name": "windows-xinput-observation",
+        "size_in_bytes": 617,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12366070308",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12366070308/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:13:33Z",
+        "expires_at": "2027-01-19T17:10:41Z",
+        "updated_at": "2026-10-21T17:13:33Z",
+        "digest": "sha256:431238debb5ddfd74241d0c2298905fcff6fbef8798f88598b88e172be572c65",
+        "workflow_run": {
+          "id": 39641444003,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "34ba0f503770dc99afd19f1a4097fcdebfb7fcf6"
+        }
+      },
+      {
+        "id": 12365905377,
+        "name": "thumble-receiver-ubuntu-latest",
+        "size_in_bytes": 1961115,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365905377",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365905377/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:11:56Z",
+        "expires_at": "2027-01-19T17:10:41Z",
+        "updated_at": "2026-10-21T17:11:56Z",
+        "digest": "sha256:255997667d7c9c280bbaa8d136da3aeb381da0dccc626f66bfbe211d6ea6de92",
+        "workflow_run": {
+          "id": 39641444003,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "34ba0f503770dc99afd19f1a4097fcdebfb7fcf6"
+        }
+      },
+      {
+        "id": 12365850658,
+        "name": "thumble-receiver-windows-latest",
+        "size_in_bytes": 1954810,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365850658",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365850658/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:13:34Z",
+        "expires_at": "2027-01-19T17:10:41Z",
+        "updated_at": "2026-10-21T17:13:34Z",
+        "digest": "sha256:d8e11a3a9a3d801a658bcc4649770259753fb1cd81561f1a50fb34a1f0dbf991",
+        "workflow_run": {
+          "id": 39641444003,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "34ba0f503770dc99afd19f1a4097fcdebfb7fcf6"
+        }
+      },
+      {
+        "id": 12365840397,
+        "name": "native-delivery-ubuntu-latest",
+        "size_in_bytes": 980,
+        "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365840397",
+        "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12365840397/zip",
+        "expired": false,
+        "created_at": "2026-10-21T17:11:55Z",
+        "expires_at": "2027-01-19T17:10:41Z",
+        "updated_at": "2026-10-21T17:11:55Z",
+        "digest": "sha256:a51d4be2b9846e9e9f6b94c5e2dbfa066bb4d57a3e00150e82e2f70ef648c853",
+        "workflow_run": {
+          "id": 39641444003,
+          "repository_id": 1286679935,
+          "head_repository_id": 1286679935,
+          "head_branch": "codex/typescript-rewrite-headless-ci",
+          "head_sha": "34ba0f503770dc99afd19f1a4097fcdebfb7fcf6"
+        }
+      }
+    ]
+  },
+  "nativeFilesComparedToLocal": [
+    {
+      "path": "Host/crates/thumble-receiver/Cargo.toml",
+      "matchesCurrentSource": true,
+      "sourceSHA256": "84ed042f69de02a5b2f2b943b5adc8a30043d5132f3c4086c099523977de1ac8"
+    },
+    {
+      "path": "Host/crates/thumble-receiver/examples/probe_gamepad.rs",
+      "matchesCurrentSource": true,
+      "sourceSHA256": "53b29766ef4c2e8b3527a23009cda10948a7efa23d6564bbf33df86e9ff13e53"
+    },
+    {
+      "path": ".github/workflows/cross-platform-receiver.yml",
+      "matchesCurrentSource": true,
+      "sourceSHA256": "04fc1473d353ea8d98afe78b845b612d67ad60ec94b362c4d02fb6fa7e398739"
+    }
+  ],
+  "ciSourceSHA256": {
+    ".github/workflows/cross-platform-receiver.yml": "04fc1473d353ea8d98afe78b845b612d67ad60ec94b362c4d02fb6fa7e398739",
+    ".github/workflows/typescript-rewrite.yml": "5f0b15b06616f8afd28b1a577ace1e18401eb464435e35cf5f57900014823cf3",
+    "Host/crates/thumble-receiver/Cargo.toml": "84ed042f69de02a5b2f2b943b5adc8a30043d5132f3c4086c099523977de1ac8",
+    "Host/crates/thumble-receiver/examples/probe_gamepad.rs": "53b29766ef4c2e8b3527a23009cda10948a7efa23d6564bbf33df86e9ff13e53",
+    "Host/fixtures/gamepad/v2.json": "8efa76bae553a6dd90efbcf491e0f5da616140b945191b11da9b4d141b0dac68",
+    "Rewrite/.gitattributes": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+    "Rewrite/.gitignore": "32716a0d7faf3c234737fadd642b3fc46bfc62a966fc2d2651fb87e30abccf45",
+    "Rewrite/README.md": "451a2e077a0246c945bfb18b6d8e78c685f482973b3c0ed9eb31a25b8c930632",
+    "Rewrite/bun.lock": "da98b089015aebd5914eaeb4b8a839c011d9f68eff141c3c817da689ff74f889",
+    "Rewrite/bunfig.toml": "b5c95b2eec607a9d0095b61d249d85fe4f879f110f6d366dbd50508f0e08c873",
+    "Rewrite/package.json": "ed8c80274866ed14558a431e71cd588e60f0e00d5037159d137414ca459cc39f",
+    "Rewrite/packages/contracts/generated/kotlin/GamepadStateV1.kt": "b85895d549989b108058d140efd98a5d5026dbe8126c6e52f07a94f46aeb5144",
+    "Rewrite/packages/contracts/generated/swift/GamepadStateV1.swift": "87e7f59957cd724e927c7d10f4385de2022a989f2ef4e16f54afbe5d19f7c0b1",
+    "Rewrite/packages/contracts/package.json": "7b30777dcf5bc44fc1724e989e355138305fe7920e3958e75f48475c20e31c45",
+    "Rewrite/packages/contracts/schema/gamepad-state-v1.schema.json": "335d9125955a485d4a6bed0376bc6940b87cd6db546c766f10c700d9b156eafe",
+    "Rewrite/packages/contracts/src/gamepad.generated.ts": "e3539fc14e9fbf92580b31f8216cfd77fb78d5343850e3e9f610ee011a1b5c6d",
+    "Rewrite/packages/contracts/src/index.ts": "8e458f77bf49a26c074906f243deb43a6dd670d97bd245aea3d5403960a4eb06",
+    "Rewrite/packages/domain/package.json": "ef1b27c308b73dece9c65d52e558e601400a6f2aa1c48f9ada5a700273fb3976",
+    "Rewrite/packages/domain/src/gamepad-report.ts": "7846a0b254da02fe0a7b83863ed4c74eedecd96b1bb3e2c0b0b53be567dd7e80",
+    "Rewrite/tests/boundaries.test.ts": "787fc0697453c7d41ebdb026c3ed9d1421630985803f6f8e4bfaf37d548e1c38",
+    "Rewrite/tests/gamepad.test.ts": "9e0120ca09f3a5bb7ab1c08275a88451e3c0acd12cc7a8908b05797efe32698d",
+    "Rewrite/tooling/check-boundaries.ts": "a1fec606c72df09febecb83ac033d5c75e18b2b92269518ec17472a94b29624c",
+    "Rewrite/tooling/ci-test.ts": "a7f5e0bb6d2b396a5a447f15d107a8f2a732921a0c438101b1c3450b3ada8258",
+    "Rewrite/tooling/generate-contracts.ts": "55233e21950ba8d345fe2d71632b006e7aec2f67bf82f5625500924327ee8d13",
+    "Rewrite/tsconfig.json": "e07960a44d6c3707c2ac336d8e333f67f4b9e63b9e41881695ff276f87f8018e",
+    "Rewrite/tsconfig.portable.json": "c1c38455ed68130e77fcfba29cc34d01dc968512d424a97424c9780110e44bb3",
+    "ThirdParty/SteamControllerBridge-LICENSE.txt": "f3b592ee3a1c9ce42bdc9d14f0aea069b1276e5d304aaae932feb7338fdf4da3"
+  },
+  "windowsTestSummary": [
+    "2026-10-21T17:12:18.4236514Z running 48 tests",
+    "2026-10-21T17:12:18.6414050Z test result: ok. 48 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s",
+    "2026-10-21T17:12:18.6586956Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:18.6746433Z running 13 tests",
+    "2026-10-21T17:12:18.6994792Z test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "2026-10-21T17:12:18.7114763Z running 2 tests",
+    "2026-10-21T17:12:18.7970983Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s",
+    "2026-10-21T17:12:18.8094034Z running 19 tests",
+    "2026-10-21T17:12:18.8475030Z test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s",
+    "2026-10-21T17:12:18.8592792Z running 21 tests",
+    "2026-10-21T17:12:22.6744245Z test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.82s",
+    "2026-10-21T17:12:22.6874690Z running 13 tests",
+    "2026-10-21T17:12:22.7065991Z test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "2026-10-21T17:12:22.7182951Z running 9 tests",
+    "2026-10-21T17:12:22.7354594Z test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "2026-10-21T17:12:22.7475659Z running 5 tests",
+    "2026-10-21T17:12:23.3872648Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s",
+    "2026-10-21T17:12:23.3994580Z running 3 tests",
+    "2026-10-21T17:12:23.4091287Z test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+    "2026-10-21T17:12:23.4205184Z running 14 tests",
+    "2026-10-21T17:12:23.4404139Z test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+    "2026-10-21T17:12:23.4517682Z running 13 tests",
+    "2026-10-21T17:12:23.5044115Z test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s",
+    "2026-10-21T17:12:23.5161076Z running 8 tests",
+    "2026-10-21T17:12:23.5200605Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:23.5326466Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:23.5439487Z running 5 tests",
+    "2026-10-21T17:12:23.5459762Z test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:23.5570280Z running 12 tests",
+    "2026-10-21T17:12:23.8172433Z test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s",
+    "2026-10-21T17:12:23.8339209Z running 10 tests",
+    "2026-10-21T17:12:23.9145292Z test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s",
+    "2026-10-21T17:12:23.9268114Z running 0 tests",
+    "2026-10-21T17:12:23.9268766Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:23.9429449Z running 2 tests",
+    "2026-10-21T17:12:26.3383968Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.40s",
+    "2026-10-21T17:12:26.3561163Z test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:26.7806377Z running 0 tests",
+    "2026-10-21T17:12:26.7807024Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:26.9209725Z running 0 tests",
+    "2026-10-21T17:12:26.9210787Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:27.0395461Z running 0 tests",
+    "2026-10-21T17:12:27.0396732Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+    "2026-10-21T17:12:28.2974710Z running 4 tests",
+    "2026-10-21T17:12:28.2995737Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+  ],
+  "scope": "Curated CI branch contains rewrite sources, required fixture/license and Windows witness/workflow only. It does not contain the full copied local baseline or certify gameplay/driver signing/mobile hardware. No signed download URLs or credentials retained."
+}
