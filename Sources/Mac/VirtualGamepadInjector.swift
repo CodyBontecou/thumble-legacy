@@ -56,10 +56,12 @@ private final class IOKitVirtualGamepadDevice: VirtualGamepadHIDDevice {
             kIOHIDVendorIDKey as String: VirtualGamepadReport.vendorID,
             kIOHIDProductIDKey as String: VirtualGamepadReport.productID,
             kIOHIDVersionNumberKey as String: 1,
-            kIOHIDTransportKey as String: "Virtual",
+            kIOHIDTransportKey as String: "USB",
             kIOHIDManufacturerKey as String: "Thumble",
             kIOHIDProductKey as String: "Thumble Virtual Gamepad",
-            kIOHIDSerialNumberKey as String: "PocketPad-Gamepad-1",
+            kIOHIDSerialNumberKey as String: "Thumble-Gamepad-2",
+            "PhysicalDeviceUniqueID": "Thumble-Gamepad-2",
+            kIOHIDLocationIDKey as String: 0x54485002,
             kIOHIDPrimaryUsagePageKey as String: 0x01,
             kIOHIDPrimaryUsageKey as String: 0x05
         ]
@@ -75,7 +77,7 @@ private final class IOKitVirtualGamepadDevice: VirtualGamepadHIDDevice {
         IOHIDUserDeviceRegisterGetReportBlock(device) { type, id, report, length in
             buffer.copyInputReport(type: type, reportID: id, destination: report, length: length)
         }
-        // v1 intentionally has no output/feature reports or rumble contract.
+        // Rumble/output reports are deliberately unsupported; this is input only.
         IOHIDUserDeviceRegisterSetReportBlock(device) { _, _, _, _ in kIOReturnUnsupported }
         IOHIDUserDeviceSetDispatchQueue(device, queue)
         // A dispatch cancel is asynchronous. An extra CF retain, not a capture

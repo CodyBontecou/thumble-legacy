@@ -1,0 +1,702 @@
+{
+  "schema": "thumble-native-import-design/1",
+  "title": "Classic Hunter Link",
+  "status": "revision-2-intent-awaiting-native-review",
+  "scope": "Native import layout and reusable role materials; no appearance package or canonical template claim.",
+  "coordinateContract": {
+    "positions": "Normalized center relative to safe native content canvas; reference points are design targets, not raw screen coordinates.",
+    "dimensions": "Native hit frame in points, including stroke; preserve explicit width/height during layout generation.",
+    "minHitSizePt": 44,
+    "minGapPt": 8,
+    "drawerExclusion": "Centered system drawer control remains native, outside utility frames.",
+    "scaling": "On a different viewport adapt within safe content; do not proportionally shrink below 44pt."
+  },
+  "bindingContract": "Keys shown here are anonymized sample hints only. Lookup semantic import command, preserve its imported UUID and actual resolved outputs. Never generate outputs from this design file.",
+  "palette": {
+    "ground": {
+      "light": "#E8E4D8",
+      "dark": "#111A1C"
+    },
+    "face": {
+      "light": "#F7F2E7",
+      "dark": "#253638"
+    },
+    "well": {
+      "light": "#CBCBBE",
+      "dark": "#0B1213"
+    },
+    "ink": {
+      "light": "#242F2C",
+      "dark": "#F4ECDA"
+    },
+    "mutedInk": {
+      "light": "#4D5B52",
+      "dark": "#C2C7B8"
+    },
+    "brass": {
+      "light": "#725021",
+      "dark": "#C6A467"
+    },
+    "leaf": {
+      "light": "#3E6243",
+      "dark": "#A9C6A6"
+    }
+  },
+  "nativeMaterialSpecs": [
+    {
+      "kind": "matte_rubber",
+      "baseColor": "#F7F2E7",
+      "darkBaseColor": "#253638",
+      "foregroundColor": "#242F2C",
+      "darkForegroundColor": "#F4ECDA",
+      "strokeColor": "#3E6243",
+      "darkStrokeColor": "#A9C6A6",
+      "highlightColor": "#FFFFFF",
+      "pressedFillColor": "#DDD7C7",
+      "darkPressedFillColor": "#142326",
+      "activeFillColor": "#F7F2E7",
+      "darkActiveFillColor": "#253638",
+      "activeColor": "#3E6243",
+      "darkActiveColor": "#A9C6A6",
+      "activeIndexColor": "#725021",
+      "darkActiveIndexColor": "#C6A467",
+      "activeIndexWidth": 3,
+      "disabledFillColor": "#DEDCD2",
+      "darkDisabledFillColor": "#293131",
+      "disabledForegroundColor": "#4D5750",
+      "darkDisabledForegroundColor": "#B9BFB3",
+      "disabledStrokeColor": "#737873",
+      "darkDisabledStrokeColor": "#737873",
+      "shadowColor": "#000000",
+      "shadowScale": 0.25,
+      "pressedShadowScale": 0,
+      "pressedInnerShadowScale": 0.6,
+      "activeStrokeWidth": 3,
+      "disabledStrokeWidth": 1,
+      "disabledOpacity": 0.8,
+      "depth": 0.25,
+      "gloss": 0,
+      "cornerRadius": 8,
+      "pressedScale": 1,
+      "id": "field-movement",
+      "name": "Field Movement"
+    },
+    {
+      "kind": "matte_rubber",
+      "baseColor": "#F7F2E7",
+      "darkBaseColor": "#253638",
+      "foregroundColor": "#242F2C",
+      "darkForegroundColor": "#F4ECDA",
+      "strokeColor": "#725021",
+      "darkStrokeColor": "#C6A467",
+      "highlightColor": "#FFFFFF",
+      "pressedFillColor": "#DDD7C7",
+      "darkPressedFillColor": "#142326",
+      "activeFillColor": "#F7F2E7",
+      "darkActiveFillColor": "#253638",
+      "activeColor": "#3E6243",
+      "darkActiveColor": "#A9C6A6",
+      "activeIndexColor": "#725021",
+      "darkActiveIndexColor": "#C6A467",
+      "activeIndexWidth": 3,
+      "disabledFillColor": "#DEDCD2",
+      "darkDisabledFillColor": "#293131",
+      "disabledForegroundColor": "#4D5750",
+      "darkDisabledForegroundColor": "#B9BFB3",
+      "disabledStrokeColor": "#737873",
+      "darkDisabledStrokeColor": "#737873",
+      "shadowColor": "#000000",
+      "shadowScale": 0.25,
+      "pressedShadowScale": 0,
+      "pressedInnerShadowScale": 0.6,
+      "activeStrokeWidth": 3,
+      "disabledStrokeWidth": 1,
+      "disabledOpacity": 0.8,
+      "depth": 0.25,
+      "gloss": 0,
+      "cornerRadius": 8,
+      "pressedScale": 1,
+      "id": "field-combat",
+      "name": "Field Combat"
+    },
+    {
+      "kind": "matte_rubber",
+      "baseColor": "#F7F2E7",
+      "darkBaseColor": "#253638",
+      "foregroundColor": "#242F2C",
+      "darkForegroundColor": "#F4ECDA",
+      "strokeColor": "#725021",
+      "darkStrokeColor": "#C6A467",
+      "highlightColor": "#FFFFFF",
+      "pressedFillColor": "#DDD7C7",
+      "darkPressedFillColor": "#142326",
+      "activeFillColor": "#F7F2E7",
+      "darkActiveFillColor": "#253638",
+      "activeColor": "#3E6243",
+      "darkActiveColor": "#A9C6A6",
+      "activeIndexColor": "#725021",
+      "darkActiveIndexColor": "#C6A467",
+      "activeIndexWidth": 3,
+      "disabledFillColor": "#DEDCD2",
+      "darkDisabledFillColor": "#293131",
+      "disabledForegroundColor": "#4D5750",
+      "darkDisabledForegroundColor": "#B9BFB3",
+      "disabledStrokeColor": "#737873",
+      "darkDisabledStrokeColor": "#737873",
+      "shadowColor": "#000000",
+      "shadowScale": 0.12,
+      "pressedShadowScale": 0,
+      "pressedInnerShadowScale": 0.6,
+      "activeStrokeWidth": 3,
+      "disabledStrokeWidth": 1,
+      "disabledOpacity": 0.8,
+      "depth": 0.12,
+      "gloss": 0,
+      "cornerRadius": 8,
+      "pressedScale": 1,
+      "id": "field-secondary",
+      "name": "Field Secondary"
+    },
+    {
+      "kind": "matte_rubber",
+      "baseColor": "#F7F2E7",
+      "darkBaseColor": "#253638",
+      "foregroundColor": "#242F2C",
+      "darkForegroundColor": "#F4ECDA",
+      "strokeColor": "#725021",
+      "darkStrokeColor": "#C6A467",
+      "highlightColor": "#FFFFFF",
+      "pressedFillColor": "#DDD7C7",
+      "darkPressedFillColor": "#142326",
+      "activeFillColor": "#F7F2E7",
+      "darkActiveFillColor": "#253638",
+      "activeColor": "#3E6243",
+      "darkActiveColor": "#A9C6A6",
+      "activeIndexColor": "#725021",
+      "darkActiveIndexColor": "#C6A467",
+      "activeIndexWidth": 3,
+      "disabledFillColor": "#DEDCD2",
+      "darkDisabledFillColor": "#293131",
+      "disabledForegroundColor": "#4D5750",
+      "darkDisabledForegroundColor": "#B9BFB3",
+      "disabledStrokeColor": "#737873",
+      "darkDisabledStrokeColor": "#737873",
+      "shadowColor": "#000000",
+      "shadowScale": 0.12,
+      "pressedShadowScale": 0,
+      "pressedInnerShadowScale": 0.6,
+      "activeStrokeWidth": 3,
+      "disabledStrokeWidth": 1,
+      "disabledOpacity": 0.8,
+      "depth": 0.12,
+      "gloss": 0,
+      "cornerRadius": 8,
+      "pressedScale": 1,
+      "id": "field-utility",
+      "name": "Field Utility"
+    }
+  ],
+  "roleAssignments": {
+    "movement": "field-movement",
+    "primaryAction": "field-combat",
+    "secondaryAction": "field-secondary",
+    "utility": "field-utility",
+    "menu": "field-utility",
+    "custom": "field-utility"
+  },
+  "typography": {
+    "captionFont": "system rounded semibold",
+    "captionSizePt": {
+      "portraitMovement": 13,
+      "portraitCombat": 14,
+      "landscapeCombat": 15,
+      "utility": 13
+    },
+    "captionMaxLines": 2,
+    "captionTruncation": "Never clip or reduce below13pt; use honest short captions for known movement/menu commands; preserve full imported accessibility label.",
+    "keyHintSizePt": 12,
+    "keyHintFont": "system monospaced medium",
+    "captionToHintGapPt": 3
+  },
+  "states": {
+    "normal": "Matte raised face, thin structural stroke.",
+    "pressed": "Native scheme-aware derived inset fill; no raised shadow; no label/target movement. Exact advisory fill tokens may adapt to native derivation.",
+    "active": "Current native inherited press fill plus3pt continuous stronger edge; ordinary-face refinement tracked as minor2, not claimed fixed.",
+    "disabled": "Native overall opacity0.8,neutral#737873 edge,raised shadow off; actual composited hint contrast must measure>=4.5:1."
+  },
+  "orientations": {
+    "portrait": {
+      "referenceCanvasPt": {
+        "width": 402,
+        "height": 874
+      },
+      "controls": [
+        {
+          "semanticCommand": "forward",
+          "caption": "Up",
+          "visualRole": "movement",
+          "sampleHint": "W",
+          "centerX": 0.2636816,
+          "centerY": 0.5102975,
+          "centerPt": {
+            "x": 106,
+            "y": 446
+          },
+          "widthPt": 52,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "backward",
+          "caption": "Back",
+          "visualRole": "movement",
+          "sampleHint": "S",
+          "centerX": 0.2636816,
+          "centerY": 0.6475973,
+          "centerPt": {
+            "x": 106,
+            "y": 566
+          },
+          "widthPt": 52,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "strafeLeft",
+          "caption": "Strafe L",
+          "visualRole": "movement",
+          "sampleHint": "Q",
+          "centerX": 0.1144279,
+          "centerY": 0.5789474,
+          "centerPt": {
+            "x": 46,
+            "y": 506
+          },
+          "widthPt": 52,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "strafeRight",
+          "caption": "Strafe R",
+          "visualRole": "movement",
+          "sampleHint": "E",
+          "centerX": 0.4129353,
+          "centerY": 0.5789474,
+          "centerPt": {
+            "x": 166,
+            "y": 506
+          },
+          "widthPt": 52,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "attack",
+          "caption": "Attack",
+          "visualRole": "primaryAction",
+          "sampleHint": "1",
+          "centerX": 0.6318408,
+          "centerY": 0.5331808,
+          "centerPt": {
+            "x": 254,
+            "y": 466
+          },
+          "widthPt": 76,
+          "heightPt": 76
+        },
+        {
+          "semanticCommand": "raptorStrike",
+          "caption": "Raptor Strike",
+          "visualRole": "primaryAction",
+          "sampleHint": "2",
+          "centerX": 0.840796,
+          "centerY": 0.5331808,
+          "centerPt": {
+            "x": 338,
+            "y": 466
+          },
+          "widthPt": 76,
+          "heightPt": 76
+        },
+        {
+          "semanticCommand": "autoShot",
+          "caption": "Auto Shot",
+          "visualRole": "primaryAction",
+          "sampleHint": "3",
+          "centerX": 0.6318408,
+          "centerY": 0.6292906,
+          "centerPt": {
+            "x": 254,
+            "y": 550
+          },
+          "widthPt": 76,
+          "heightPt": 76
+        },
+        {
+          "semanticCommand": "jump",
+          "caption": "Jump",
+          "visualRole": "secondaryAction",
+          "sampleHint": "Space",
+          "centerX": 0.840796,
+          "centerY": 0.6292906,
+          "centerPt": {
+            "x": 338,
+            "y": 550
+          },
+          "widthPt": 76,
+          "heightPt": 76
+        },
+        {
+          "semanticCommand": "water",
+          "caption": "Water",
+          "visualRole": "secondaryAction",
+          "sampleHint": "\u2212",
+          "centerX": 0.2860697,
+          "centerY": 0.8009153,
+          "centerPt": {
+            "x": 115,
+            "y": 700
+          },
+          "widthPt": 144,
+          "heightPt": 60
+        },
+        {
+          "semanticCommand": "food",
+          "caption": "Food",
+          "visualRole": "secondaryAction",
+          "sampleHint": "=",
+          "centerX": 0.7139303,
+          "centerY": 0.8009153,
+          "centerPt": {
+            "x": 287,
+            "y": 700
+          },
+          "widthPt": 144,
+          "heightPt": 60
+        },
+        {
+          "semanticCommand": "worldMap",
+          "caption": "Map",
+          "visualRole": "menu",
+          "sampleHint": "M",
+          "centerX": 0.2114428,
+          "centerY": 0.2723112,
+          "centerPt": {
+            "x": 85,
+            "y": 238
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "bags",
+          "caption": "Bags",
+          "visualRole": "menu",
+          "sampleHint": "\u21e7B",
+          "centerX": 0.5,
+          "centerY": 0.2723112,
+          "centerPt": {
+            "x": 201,
+            "y": 238
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "character",
+          "caption": "Character",
+          "visualRole": "menu",
+          "sampleHint": "C",
+          "centerX": 0.7885572,
+          "centerY": 0.2723112,
+          "centerPt": {
+            "x": 317,
+            "y": 238
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "targetNearest",
+          "caption": "Target",
+          "visualRole": "utility",
+          "sampleHint": "Tab",
+          "centerX": 0.2114428,
+          "centerY": 0.3409611,
+          "centerPt": {
+            "x": 85,
+            "y": 298
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "targetPrevious",
+          "caption": "Previous",
+          "visualRole": "utility",
+          "sampleHint": "\u21e7Tab",
+          "centerX": 0.5,
+          "centerY": 0.3409611,
+          "centerPt": {
+            "x": 201,
+            "y": 298
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        },
+        {
+          "semanticCommand": "targetSelf",
+          "caption": "Self",
+          "visualRole": "utility",
+          "sampleHint": "F1",
+          "centerX": 0.7885572,
+          "centerY": 0.3409611,
+          "centerPt": {
+            "x": 317,
+            "y": 298
+          },
+          "widthPt": 108,
+          "heightPt": 52
+        }
+      ]
+    },
+    "landscape": {
+      "referenceCanvasPt": {
+        "width": 874,
+        "height": 402
+      },
+      "controls": [
+        {
+          "semanticCommand": "forward",
+          "caption": "Up",
+          "visualRole": "movement",
+          "sampleHint": "W",
+          "centerX": 0.2105263,
+          "centerY": 0.4328358,
+          "centerPt": {
+            "x": 184,
+            "y": 174
+          },
+          "widthPt": 72,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "backward",
+          "caption": "Back",
+          "visualRole": "movement",
+          "sampleHint": "S",
+          "centerX": 0.2105263,
+          "centerY": 0.8308458,
+          "centerPt": {
+            "x": 184,
+            "y": 334
+          },
+          "widthPt": 72,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "strafeLeft",
+          "caption": "Strafe L",
+          "visualRole": "movement",
+          "sampleHint": "Q",
+          "centerX": 0.1189931,
+          "centerY": 0.6318408,
+          "centerPt": {
+            "x": 104,
+            "y": 254
+          },
+          "widthPt": 72,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "strafeRight",
+          "caption": "Strafe R",
+          "visualRole": "movement",
+          "sampleHint": "E",
+          "centerX": 0.3020595,
+          "centerY": 0.6318408,
+          "centerPt": {
+            "x": 264,
+            "y": 254
+          },
+          "widthPt": 72,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "attack",
+          "caption": "Attack",
+          "visualRole": "primaryAction",
+          "sampleHint": "1",
+          "centerX": 0.7299771,
+          "centerY": 0.5223881,
+          "centerPt": {
+            "x": 638,
+            "y": 210
+          },
+          "widthPt": 104,
+          "heightPt": 72
+        },
+        {
+          "semanticCommand": "raptorStrike",
+          "caption": "Raptor Strike",
+          "visualRole": "primaryAction",
+          "sampleHint": "2",
+          "centerX": 0.8581236,
+          "centerY": 0.5223881,
+          "centerPt": {
+            "x": 750,
+            "y": 210
+          },
+          "widthPt": 104,
+          "heightPt": 72
+        },
+        {
+          "semanticCommand": "autoShot",
+          "caption": "Auto Shot",
+          "visualRole": "primaryAction",
+          "sampleHint": "3",
+          "centerX": 0.7299771,
+          "centerY": 0.7412935,
+          "centerPt": {
+            "x": 638,
+            "y": 298
+          },
+          "widthPt": 104,
+          "heightPt": 72
+        },
+        {
+          "semanticCommand": "jump",
+          "caption": "Jump",
+          "visualRole": "secondaryAction",
+          "sampleHint": "Space",
+          "centerX": 0.8581236,
+          "centerY": 0.7412935,
+          "centerPt": {
+            "x": 750,
+            "y": 298
+          },
+          "widthPt": 104,
+          "heightPt": 72
+        },
+        {
+          "semanticCommand": "water",
+          "caption": "Water",
+          "visualRole": "secondaryAction",
+          "sampleHint": "\u2212",
+          "centerX": 0.5,
+          "centerY": 0.5323383,
+          "centerPt": {
+            "x": 437,
+            "y": 214
+          },
+          "widthPt": 116,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "food",
+          "caption": "Food",
+          "visualRole": "secondaryAction",
+          "sampleHint": "=",
+          "centerX": 0.5,
+          "centerY": 0.7313433,
+          "centerPt": {
+            "x": 437,
+            "y": 294
+          },
+          "widthPt": 116,
+          "heightPt": 64
+        },
+        {
+          "semanticCommand": "worldMap",
+          "caption": "Map",
+          "visualRole": "menu",
+          "sampleHint": "M",
+          "centerX": 0.117849,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 103,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        },
+        {
+          "semanticCommand": "bags",
+          "caption": "Bags",
+          "visualRole": "menu",
+          "sampleHint": "\u21e7B",
+          "centerX": 0.2185355,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 191,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        },
+        {
+          "semanticCommand": "character",
+          "caption": "Character",
+          "visualRole": "menu",
+          "sampleHint": "C",
+          "centerX": 0.319222,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 279,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        },
+        {
+          "semanticCommand": "targetNearest",
+          "caption": "Target",
+          "visualRole": "utility",
+          "sampleHint": "Tab",
+          "centerX": 0.680778,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 595,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        },
+        {
+          "semanticCommand": "targetPrevious",
+          "caption": "Previous",
+          "visualRole": "utility",
+          "sampleHint": "\u21e7Tab",
+          "centerX": 0.7814645,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 683,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        },
+        {
+          "semanticCommand": "targetSelf",
+          "caption": "Self",
+          "visualRole": "utility",
+          "sampleHint": "F1",
+          "centerX": 0.882151,
+          "centerY": 0.2437811,
+          "centerPt": {
+            "x": 771,
+            "y": 98
+          },
+          "widthPt": 80,
+          "heightPt": 48
+        }
+      ]
+    }
+  },
+  "nativeImplementationContract": {
+    "appearance": "Use native scheme-aware light/dark fills and contrasting native foregrounds; no appearance bank, new portrait-bank API, appearance package, or canonical artboard required.",
+    "pressed": "Native scheme-aware press fill derives from ordinary native fill; exact advisory palette tokens may be adapted. Keep stable geometry and caption baselines.",
+    "disabled": "Overall native opacity0.8; neutral#737873 border; raised shadow off. Remeasure actual composited key-hint glyph interiors against faces and require4.5:1.",
+    "activeTrackedMinor": "Native active currently inherits pressed face with stronger continuous border. Distinguishable in review1, but ordinary active face remains tracked minor2; no blanket redesign authorized.",
+    "defaultCaptionRefresh": "Known captions Up,Back,Target,Previous retain full imported accessibility names. Both raw imported labels and legacy normalized12-character labels are unchanged imported defaults eligible for default-caption correction; manual labels are preserved.",
+    "portraitRecovery": "For<=16 supported commands use y700; for dense17\u201324 commands retain y662 and positions632\u2013692 to leave footer room. Never reposition on ordinary refresh.",
+    "outputs": "Imported UUIDs, resolved outputs and modifiers, and refresh/manual-edit preservation remain unchanged."
+  }
+}

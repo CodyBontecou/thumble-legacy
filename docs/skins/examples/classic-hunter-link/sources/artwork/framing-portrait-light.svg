@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="402" height="874" viewBox="0 0 402 874">
+  <title>Classic Hunter Link — portrait light passive framing study</title>
+  <desc>Original native-achievable framing study. No controls, bindings, labels, game imagery, or interactive states. Not runtime artwork; align only after native capture.</desc>
+  <g id="canvas"><rect width="402" height="874" fill="#E8E4D8"/></g>
+  <g id="group-recesses">
+    <rect x="12" y="396" width="188" height="188" rx="14" fill="#CBCBBE" stroke="#725021" stroke-opacity="0.38" stroke-width="1"/>
+    <rect x="208" y="404" width="176" height="176" rx="14" fill="#CBCBBE" stroke="#725021" stroke-opacity="0.38" stroke-width="1"/>
+    <rect x="35" y="620" width="332" height="84" rx="14" fill="#CBCBBE" stroke="#725021" stroke-opacity="0.38" stroke-width="1"/>
+  </g>
+</svg>

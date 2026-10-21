@@ -282,8 +282,10 @@ class MainActivity : ComponentActivity() {
                 OutlinedButton(onClick = { reconnectSavedMac() }, enabled = !state.connecting, modifier = Modifier.fillMaxWidth()) {
                     Text("Reconnect to saved Mac")
                 }
-                TextButton(onClick = { pendingReconnect = false; pendingTarget = null; client.forgetMac() }) { Text("Forget saved Mac") }
             }
+            val hasSavedMac=state.canReconnect || state.snapshot.profiles.isNotEmpty() || state.pendingSkinChanges>0 ||
+                state.pendingAppearanceChanges>0 || state.pendingLayoutChanges>0 || state.pendingSkinRemovals>0
+            if(hasSavedMac) TextButton(onClick = { localError=null;pendingReconnect = false;pendingTarget = null;client.forgetMac() }) { Text("Forget saved Mac") }
             TextButton(onClick={ localError=null;surface?.cancelTouches();guideOpen=true },modifier=Modifier.testTag("open-setup-guide")) { Text("Setup guide") }
             HorizontalDivider()
             Text(if (state.needsCode) "Pairing code" else "Connect manually", style = MaterialTheme.typography.titleMedium)

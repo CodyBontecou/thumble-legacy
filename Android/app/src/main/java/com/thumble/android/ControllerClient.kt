@@ -56,7 +56,7 @@ internal data class ClientState(
 )
 
 /** All session state, socket writes, hold refreshes, and touch edges run on one queue. */
-internal class ControllerClient(private val store: SessionStore = MemorySessionStore(), private val discovery: MacDiscovery? = null, private val skinArchive: (SkinReference) -> ByteArray? = { null }, private val incomingSkins: (IncomingSkinPackages) -> Boolean = { true }, private val removedSkins: (List<SkinReference>, (Boolean)->Unit) -> Unit = { _,completed -> completed(true) }, private val publish: (ClientState) -> Unit) {
+internal class ControllerClient(private val store: SessionStore = MemorySessionStore(), private val discovery: MacDiscovery? = null, private val skinArchive: (SkinReference) -> ByteArray? = { null }, private val incomingSkins: (IncomingSkinPackages) -> Boolean = { true }, private val removedSkins: (List<SkinReference>, (Boolean)->Unit) -> Unit = { _,completed -> completed(true) }, private val enableOwnedPhoneEdits: Boolean = true, private val publish: (ClientState) -> Unit) {
     private val queue = Executors.newSingleThreadScheduledExecutor { task -> Thread(task, "Thumble input") }
     private val main = Handler(Looper.getMainLooper())
     private val http = OkHttpClient.Builder().socketFactory(NoDelaySocketFactory()).connectTimeout(5, TimeUnit.SECONDS)
@@ -87,6 +87,13 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     private var appearanceUploadIDs = emptySet<UUID>()
     private var pendingLayouts = emptyList<PendingLayoutEdit>()
     private var pendingLayoutsLoaded = true
+    private var pendingOwned = emptyList<PendingOwnedPhoneEdit>()
+    private var pendingOwnedLoaded = true
+    private var ownedAuthority: ProfileSnapshot? = null
+    private var ownedInFlight: UUID? = null
+    private val ownedConflicts = mutableMapOf<UUID,JSONObject>()
+    private val ownedBlocked = mutableSetOf<UUID>()
+    private var offeredFormats = ProfileFramePolicy.supportedFormats
     private var layoutUploadKeys = emptySet<LayoutEditKey>()
     private var editingProfileID: UUID? = null
     private var nextEditToken = 0L
@@ -203,13 +210,23 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         pendingLayouts = runCatching { store.loadPendingLayoutEdits() }.getOrElse {
             pendingLayoutsLoaded=false;skinError="Could not restore pending layout edits. Your saved data has been kept.";emptyList()
         }
+        pendingOwned = runCatching { store.loadPendingOwnedPhoneEdits() }.getOrElse {
+            pendingOwnedLoaded=false;skinError="Could not restore pending controller edits. Your saved data has been kept.";emptyList()
+        }
         pendingRemovals=runCatching { store.loadPendingSkinRemovals() }.getOrElse {
             removalsLoaded=false;skinError="Could not restore pending skin removals. Your saved data has been kept.";emptyList()
         }
         val onboardingCompleted=runCatching { store.loadOnboardingCompleted() }.getOrElse {
             skinError="Could not restore setup progress. Your saved data has been kept.";false
         }
-        state = state.copy(onboardingLoaded=true,onboardingCompleted=onboardingCompleted,error=skinError,pendingLayoutChanges=pendingLayouts.size,pendingAppearanceChanges=pendingAppearance.size,pendingSkinChanges=pendingSkins.size,snapshot = store.loadSnapshot(), canReconnect = trusted != null, practiceMode = preferences.practiceMode,
+        var snapshot=store.loadSnapshot()
+        if(snapshot.serverID==null && trusted!=null) {
+            // Migrate the old single-Mac cache before reconnect can retire its credential.
+            snapshot=snapshot.copy(serverID=trusted!!.serverID)
+            if(runCatching { store.saveSnapshot(snapshot) }.isFailure)
+                skinError="Could not save the cached Mac identity. Your saved data has been kept."
+        }
+        state = state.copy(onboardingLoaded=true,onboardingCompleted=onboardingCompleted,error=skinError,pendingLayoutChanges=pendingLayouts.size+pendingOwned.size,pendingAppearanceChanges=pendingAppearance.size,pendingSkinChanges=pendingSkins.size,snapshot = snapshot, canReconnect = trusted != null, practiceMode = preferences.practiceMode,
             hapticIntensity=preferences.hapticIntensity,showBindingGlyphs=preferences.showBindingGlyphs)
         publishState()
     } }
@@ -250,6 +267,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         pendingSkins=emptyList();pendingSkinsLoaded=true;pendingRemovals=emptyList();removalsLoaded=true;removalRevisions.clear()
         pendingAppearance=emptyList();pendingAppearanceLoaded=true;appearanceUploadIDs=emptySet()
         pendingLayouts=emptyList();pendingLayoutsLoaded=true;layoutUploadKeys=emptySet()
+        pendingOwned=emptyList();pendingOwnedLoaded=true;ownedConflicts.clear();ownedBlocked.clear()
         state = ClientState(status = "Mac forgotten",onboardingLoaded=state.onboardingLoaded,onboardingCompleted=state.onboardingCompleted, practiceMode = preferences.practiceMode,
             hapticIntensity=preferences.hapticIntensity,showBindingGlyphs=preferences.showBindingGlyphs,surfaceRevision = revision)
         publishState()
@@ -322,8 +340,11 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     }
     fun beginLayoutEditing(profileID: UUID, orientation: LayoutOrientation) = enqueue {
         if(state.layoutEditing || state.snapshot.selectedID!=profileID || state.snapshot.selected==null || (!state.paired && !state.viewingSaved)) return@enqueue
-        if(!pendingLayoutsLoaded || !pendingAppearanceLoaded || !pendingSkinsLoaded) {
+        if(!pendingLayoutsLoaded || !pendingOwnedLoaded || !pendingAppearanceLoaded || !pendingSkinsLoaded) {
             state=state.copy(error="Could not restore pending keypad changes. Your saved data has been kept.");publishState();return@enqueue
+        }
+        if(state.snapshot.selected!!.isOwned && orientation!=LayoutOrientation.LANDSCAPE) {
+            state=state.copy(error="This controller uses its saved landscape layout.");publishState();return@enqueue
         }
         invalidateSurface()
         editingProfileID=state.snapshot.selectedID
@@ -340,7 +361,9 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         state=state.copy(layoutEditing=false,layoutEditEntry=null,layoutEditToken=++nextEditToken,layoutEditOrientation=null)
     }
     private fun persistProfiles(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>, layouts: List<PendingLayoutEdit>) {
-        if(pendingLayouts.isEmpty() && layouts.isEmpty()) store.saveProfileState(snapshot,skins,appearance)
+        check(pendingOwnedLoaded) { "Could not restore pending controller edits" }
+        if(pendingOwned.isNotEmpty()) store.saveOwnedEditingState(snapshot,skins,appearance,layouts,pendingOwned)
+        else if(pendingLayouts.isEmpty() && layouts.isEmpty()) store.saveProfileState(snapshot,skins,appearance)
         else store.saveEditingState(snapshot,skins,appearance,layouts)
     }
     fun commitLayoutEdit(customization: LayoutSnapshot, token: Long, completed: (Boolean)->Unit = {}) = enqueue {
@@ -348,10 +371,33 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         val profile=state.snapshot.selected
         val orientation=state.layoutEditOrientation
         if(!state.layoutEditing || token!=state.layoutEditToken || profile==null || profile.id!=editingProfileID || orientation==null ||
-            !pendingLayoutsLoaded || !pendingAppearanceLoaded || !pendingSkinsLoaded) { finish(false);return@enqueue }
+            !pendingLayoutsLoaded || !pendingOwnedLoaded || !pendingAppearanceLoaded || !pendingSkinsLoaded) { finish(false);return@enqueue }
+        if(profile.isOwned) {
+            val prepared=runCatching {
+                val revision=requireNotNull(state.snapshot.configurationRevision) { "Reconnect to refresh this controller" }
+                val before=requireNotNull(state.layoutEditEntry)
+                val after=LayoutSnapshot.capture(customization.json().put("colorSchemePreference",before.json().optString("colorSchemePreference","system")))
+                val intent=OwnedPhoneEdit.between(profile.id,before,after,revision) ?: return@runCatching null
+                val now=System.currentTimeMillis()
+                val changed=intent.applying(profile,now)
+                val pending=PendingOwnedPhoneEdit.capture(requireNotNull(cachedMacID()),intent,now,StrictJSON.data(changed.source).toString(Charsets.UTF_8))
+                val next=OwnedPhoneEditJournal.recording(pendingOwned,pending)
+                val snapshot=state.snapshot.copy(profiles=state.snapshot.profiles.map { if(it.id==profile.id) changed else it })
+                store.saveOwnedEditingState(snapshot,pendingSkins,pendingAppearance,pendingLayouts,next)
+                pendingOwned=next
+                snapshot
+            }
+            if(prepared.isFailure) {
+                state=state.copy(error="Could not save this controller edit. Your saved controller is unchanged.");finish(false);return@enqueue
+            }
+            prepared.getOrNull()?.let { snapshot ->
+                invalidateSurface();state=state.copy(snapshot=snapshot,pendingLayoutChanges=pendingLayouts.size+pendingOwned.size,error=null)
+            }
+            flushOwnedPhoneEdits();finish(true);return@enqueue
+        }
         val prepared=runCatching {
             val raw=customization.json().put("colorSchemePreference",profile.source.getJSONObject("customization").optString("colorSchemePreference","system"))
-            val edit=PendingLayoutEdit.create(profile.id,orientation,raw,System.currentTimeMillis(),trusted?.serverID,profile)
+            val edit=PendingLayoutEdit.create(profile.id,orientation,raw,System.currentTimeMillis(),cachedMacID(),profile)
             val next=LayoutEditJournal.recording(pendingLayouts,edit)
             val changed=LayoutEditJournal.applying(profile,edit)
             Triple(edit,next,state.snapshot.copy(profiles=state.snapshot.profiles.map { if(it.id==profile.id) changed else it }))
@@ -364,11 +410,65 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         }
         pendingLayouts=next;layoutUploadKeys=layoutUploadKeys+edit.key
         invalidateSurface()
-        state=state.copy(snapshot=snapshot,pendingLayoutChanges=next.size,error=null)
+        state=state.copy(snapshot=snapshot,pendingLayoutChanges=next.size+pendingOwned.size,error=null)
         flushLayoutEdits();finish(true)
     }
+
+    private fun receiveOwnedPhoneReceipt(message: JSONObject) {
+        require(message.optInt("profileFormatVersion")==5 && "owned_phone_edit_v1" in state.capabilities)
+        val receipt=message.getJSONObject("ownedPhoneEditResult")
+        val server=requireNotNull(state.pairedServerID)
+        val next=OwnedPhoneEditJournal.acknowledge(pendingOwned,server,receipt)
+        val request=OwnedPhoneEdit.id(receipt.get("editID"))
+        val matching=pendingOwned.any { it.serverID==server && it.edit.editID==request &&
+            it.edit.profileID==OwnedPhoneEdit.id(receipt.get("profileID")) && it.edit.baseConfigurationRevision==OwnedPhoneEdit.revision(receipt.get("baseConfigurationRevision")) }
+        if(!matching) return
+        if(next.size<pendingOwned.size) {
+            store.saveOwnedEditingState(state.snapshot,pendingSkins,pendingAppearance,pendingLayouts,next)
+            pendingOwned=next;ownedConflicts.remove(request);ownedBlocked.remove(request)
+            state=state.copy(pendingLayoutChanges=pendingLayouts.size+next.size,error=null)
+        } else if(receipt.getString("status")=="conflict") {
+            ownedConflicts[request]=StrictJSON.objectValue(receipt.toString().toByteArray(),exactNumbers=true)
+            socket?.send(WireCodec.message("gamepad_profiles").put("profileFormatVersion",5).toString())
+        } else {
+            ownedBlocked.add(request)
+            state=state.copy(error="The Mac could not apply a controller edit. Your edit and recovery data have been kept.")
+        }
+        if(ownedInFlight==request) ownedInFlight=null
+        flushOwnedPhoneEdits()
+    }
+    private fun flushOwnedPhoneEdits() {
+        if(!state.paired || !pendingOwnedLoaded || !enableOwnedPhoneEdits || "owned_phone_edit_v1" !in state.capabilities || ownedInFlight!=null) return
+        val server=state.pairedServerID ?: return
+        for(pending in OwnedPhoneEditJournal.uploads(pendingOwned,server)) {
+            if(pending.edit.editID in ownedBlocked) continue
+            var outgoing=pending
+            ownedConflicts[pending.edit.editID]?.let { receipt ->
+                val authority=ownedAuthority
+                val revision=authority?.configurationRevision
+                if(revision==null || revision<OwnedPhoneEdit.revision(receipt.get("configurationRevision")) || revision<=pending.edit.baseConfigurationRevision) return@let
+                val replacement=runCatching { OwnedPhoneEditJournal.retryAfterConflict(pendingOwned,server,receipt,authority) }
+                if(replacement.isFailure) {
+                    ownedBlocked.add(pending.edit.editID)
+                    state=state.copy(error="A controller changed on the Mac. Your pending edit has been kept for review.")
+                } else {
+                    val next=replacement.getOrThrow()
+                    if(runCatching { store.saveOwnedEditingState(state.snapshot,pendingSkins,pendingAppearance,pendingLayouts,next) }.isSuccess) {
+                        pendingOwned=next;outgoing=next.first { it.edit.editID!=pending.edit.editID && it.serverID==server && it.edit.profileID==pending.edit.profileID }
+                        ownedConflicts.remove(pending.edit.editID)
+                    } else state=state.copy(error="Could not save the controller retry. Your pending edit has been kept.")
+                }
+            }
+            if(pending.edit.editID in ownedConflicts || pending.edit.editID in ownedBlocked) continue
+            // Embed the original validated intent string verbatim, including
+            // integer tokens. A reconnect resends exactly these request bytes.
+            val payload="{\"type\":\"owned_phone_edit\",\"timestamp\":0,\"profileFormatVersion\":5,\"ownedPhoneEdit\":"+outgoing.edit.data().toString(Charsets.UTF_8)+"}"
+            if(socket?.send(payload)==true) ownedInFlight=outgoing.edit.editID
+            return
+        }
+    }
     private fun flushLayoutEdits() {
-        if(!state.paired || !pendingLayoutsLoaded || ProfileActions.ORIENTATION_CAPABILITY !in state.capabilities) return
+        if(!state.paired || !pendingLayoutsLoaded || !pendingOwnedLoaded || ProfileActions.ORIENTATION_CAPABILITY !in state.capabilities) return
         for(edit in pendingLayouts.sortedWith(compareBy<PendingLayoutEdit> { it.updatedAt }.thenBy { it.key.toString() })) {
             if(edit.serverID==null || edit.serverID!=trusted?.serverID || edit.key !in layoutUploadKeys) continue
             if(pendingSkins.any { it.profileID==edit.profileID && it.serverID==trusted?.serverID }) continue
@@ -383,11 +483,27 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     fun setAppearancePreference(preference: AppearancePreference) = enqueue {
         val profile = state.snapshot.selected ?: return@enqueue
         if(state.layoutEditing) { state=state.copy(error="Finish editing before changing appearance.");publishState();return@enqueue }
-        if (!pendingAppearanceLoaded || !pendingSkinsLoaded || !pendingLayoutsLoaded) {
+        if (!pendingAppearanceLoaded || !pendingSkinsLoaded || !pendingLayoutsLoaded || !pendingOwnedLoaded) {
             state=state.copy(error="Could not restore pending keypad changes. Your saved data has been kept.");publishState();return@enqueue
         }
         if (AppearancePreference.forProfile(profile) == preference) return@enqueue
-        val edit = PendingAppearancePreference.create(profile, preference, System.currentTimeMillis(), trusted?.serverID)
+        if(profile.isOwned) {
+            val saved=runCatching {
+                val before=LayoutSnapshot.resolved(profile,LayoutOrientation.LANDSCAPE)
+                val after=LayoutSnapshot.capture(before.json().put("colorSchemePreference",preference.wireValue))
+                val intent=requireNotNull(OwnedPhoneEdit.between(profile.id,before,after,requireNotNull(state.snapshot.configurationRevision)))
+                val now=System.currentTimeMillis();val changed=intent.applying(profile,now)
+                val edit=PendingOwnedPhoneEdit.capture(requireNotNull(cachedMacID()),intent,now,StrictJSON.data(changed.source).toString(Charsets.UTF_8))
+                val next=OwnedPhoneEditJournal.recording(pendingOwned,edit)
+                val snapshot=state.snapshot.copy(profiles=state.snapshot.profiles.map { if(it.id==profile.id) changed else it })
+                store.saveOwnedEditingState(snapshot,pendingSkins,pendingAppearance,pendingLayouts,next)
+                pendingOwned=next;invalidateSurface()
+                state=state.copy(snapshot=snapshot,pendingLayoutChanges=pendingLayouts.size+next.size,error=null)
+            }
+            if(saved.isFailure) state=state.copy(error="Could not save controller appearance. Your saved controller is unchanged.")
+            flushOwnedPhoneEdits();publishState();return@enqueue
+        }
+        val edit = PendingAppearancePreference.create(profile, preference, System.currentTimeMillis(), cachedMacID())
         val next = AppearancePreferenceJournal.recording(pendingAppearance, edit)
         val snapshot = state.snapshot.copy(profiles=state.snapshot.profiles.map {
             if(it.id==profile.id) AppearancePreferenceJournal.applying(it, edit) else it
@@ -462,17 +578,21 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         publishState()
     }
     fun surfaceChanged() = enqueue { invalidateSurface();if(state.layoutEditing) endLayoutEditing();publishState() }
+    private fun cachedMacID() = state.snapshot.serverID ?: trusted?.serverID
     fun commitSkinChange(expected: ControllerProfile, replacement: ControllerProfile, reference: SkinReference?, completed: (Boolean) -> Unit = {}) = enqueue {
         fun finish(success: Boolean) { publishState();main.post { completed(success) } }
-        if (!pendingSkinsLoaded || !pendingLayoutsLoaded || !pendingAppearanceLoaded || state.layoutEditing) { finish(false);return@enqueue }
+        if (!pendingSkinsLoaded || !pendingLayoutsLoaded || !pendingOwnedLoaded || !pendingAppearanceLoaded || state.layoutEditing) { finish(false);return@enqueue }
         val current=state.snapshot.selected
         if (current?.id!=expected.id || current.source!==expected.source || replacement.id!=expected.id) {
             state=state.copy(error="The keypad changed while preparing the skin. Try again.");finish(false);return@enqueue
         }
-        val next=SkinSelectionJournal.replacing(pendingSkins,PendingSkinSelection(expected.id,reference,System.currentTimeMillis(),trusted?.serverID))
+        if(current.isOwned) {
+            state=state.copy(error="This controller owns its appearance. Change its design through your agent.");finish(false);return@enqueue
+        }
+        val next=SkinSelectionJournal.replacing(pendingSkins,PendingSkinSelection(expected.id,reference,System.currentTimeMillis(),cachedMacID()))
         val snapshot=state.snapshot.copy(profiles=state.snapshot.profiles.map { if(it.id==expected.id) replacement else it })
         val layouts=runCatching { pendingLayouts.map { edit ->
-            if(edit.profileID==expected.id && edit.serverID==trusted?.serverID)
+            if(edit.profileID==expected.id && edit.serverID==cachedMacID())
                 edit.copy(customization=LayoutSnapshot.resolved(replacement,edit.orientation).oriented(edit.orientation).stamped(edit.updatedAt)) else edit
         } }.getOrElse { state=state.copy(error="Could not prepare the skin change. Your keypad is unchanged.");finish(false);return@enqueue }
         if (runCatching {
@@ -490,7 +610,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     private fun flushSkinSelections() {
         if (!state.paired || "gamepad_profile_skin_selection" !in state.capabilities) return
         for (pending in pendingSkins.sortedBy { it.updatedAt }) {
-            if(pending.serverID!=null && pending.serverID!=trusted?.serverID) continue
+            if(pending.serverID==null || pending.serverID!=trusted?.serverID) continue
             val reference=pending.reference
             val bytes=if(reference!=null && "skin_packages" in state.capabilities) runCatching { skinArchive(reference) }.getOrNull() else null
             if(bytes!=null && !sendSkinArchive(bytes)) continue
@@ -506,7 +626,9 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
             state=state.copy(error="This skin is still used by ${inUse?.name ?: "a pending keypad change"}.");finish(false);return@enqueue
         }
         if(!removalsLoaded) { state=state.copy(error="Could not restore pending skin removals.");finish(false);return@enqueue }
-        val serverID=trusted?.serverID
+        // Owned paint/resources have no package-library dependency. Removing
+        // an unused local archive must not create an unsendable legacy intent.
+        val serverID=if(state.snapshot.selected?.isOwned==true) null else cachedMacID()
         val next=if(serverID==null) pendingRemovals else (pendingRemovals+PendingSkinRemoval(reference,serverID)).distinct()
         if(runCatching { store.savePendingSkinRemovals(next) }.isFailure) {
             state=state.copy(error="Could not save this skin removal. The package is kept.");finish(false);return@enqueue
@@ -564,7 +686,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         return socket?.send(upload)==true
     }
     private fun saveIncomingSkinState(snapshot: ProfileSnapshot, authoritativeProfiles: Boolean, scalar: JSONObject?): Pair<ProfileSnapshot,String?> {
-        if(!pendingSkinsLoaded || !pendingAppearanceLoaded || !pendingLayoutsLoaded)
+        if(!pendingSkinsLoaded || !pendingAppearanceLoaded || !pendingLayoutsLoaded || !pendingOwnedLoaded)
             return snapshot to "Could not restore pending keypad changes. Your saved data has been kept."
         val remainingSkins=if(authoritativeProfiles) SkinSelectionJournal.acknowledge(pendingSkins,snapshot,trusted?.serverID) else pendingSkins
         val scalarKeys=if(scalar!=null && snapshot.selectedID!=null)
@@ -580,11 +702,23 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         layoutUploadKeys=layouts.uploads.map { it.key }.toSet()
         // ACKs use original authority. Optimistic layout overlays cannot clear
         // an appearance intent that the Mac has never echoed.
-        val merged=AppearancePreferenceJournal.reconcile(layouts.snapshot,appearance.remaining,trusted?.serverID,false).snapshot
+        val legacyMerged=AppearancePreferenceJournal.reconcile(layouts.snapshot,appearance.remaining,trusted?.serverID,false).snapshot
+        if(authoritativeProfiles) ownedAuthority=snapshot
+        var overlayError: String?=null
+        val merged=legacyMerged.copy(profiles=legacyMerged.profiles.map { original ->
+            if(!original.isOwned) original else {
+                var profile=original
+                pendingOwned.filter { it.serverID==trusted?.serverID && it.edit.profileID==original.id }.forEach { pending ->
+                    runCatching { pending.edit.applying(profile,pending.updatedAt) }.onSuccess { profile=it }
+                        .onFailure { overlayError="Some controller edits need review. Their recovery data has been kept." }
+                }
+                profile
+            }
+        })
         return if(runCatching { persistProfiles(merged,remainingSkins,appearance.remaining,layouts.remaining) }.isSuccess) {
             pendingSkins=remainingSkins;pendingAppearance=appearance.remaining;pendingLayouts=layouts.remaining
-            state=state.copy(pendingSkinChanges=remainingSkins.size,pendingAppearanceChanges=appearance.remaining.size,pendingLayoutChanges=layouts.remaining.size)
-            merged to null
+            state=state.copy(pendingSkinChanges=remainingSkins.size,pendingAppearanceChanges=appearance.remaining.size,pendingLayoutChanges=layouts.remaining.size+pendingOwned.size)
+            merged to overlayError
         } else merged to "Connected, but could not save your keypad and pending changes."
     }
     fun setDefaultProfile(id: UUID) = enqueue {
@@ -645,11 +779,19 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     private fun enqueue(action: () -> Unit) {
         try { queue.execute(action) } catch (_: RejectedExecutionException) { /* Activity already disposed. */ }
     }
-    private fun hello(code: String?): JSONObject = ProfileFramePolicy.advertise(WireCodec.message(if (code == null && !trustedAttempt) "pairing_request" else "hello"))
+    private val legacyJournalsReadyForOwned: Boolean get() = pendingOwnedLoaded && pendingLayoutsLoaded &&
+        pendingAppearanceLoaded && pendingSkinsLoaded && removalsLoaded && pendingRemovals.isEmpty() &&
+        pendingLayouts.isEmpty() && pendingAppearance.isEmpty() && pendingSkins.isEmpty()
+    private fun hello(code: String?): JSONObject {
+        // Admit owned transfer only after every legacy journal was loaded and
+        // drained through its legacy owner. Freeze this offer per connection.
+        offeredFormats=if(enableOwnedPhoneEdits && legacyJournalsReadyForOwned) listOf(4,5) else ProfileFramePolicy.supportedFormats
+        return ProfileFramePolicy.advertise(WireCodec.message(if (code == null && !trustedAttempt) "pairing_request" else "hello"),offeredFormats)
         .put("clientName", "Thumble Android (${Build.MODEL})").also {
             if (trustedAttempt) trusted?.let { mac -> it.put("authToken", mac.authToken).put("serverID", mac.serverID) }
             else if (code != null) it.put("pairingCode", code)
         }
+    }
 
     private fun openNextAddress() {
         val value = target ?: return
@@ -707,8 +849,12 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
     }
     private fun receive(bytes: ByteArray, url: String) {
         try {
-            val message = WireCodec.decode(bytes)
-            ProfileFramePolicy.validateIncoming(message)
+            val message = WireCodec.decode(bytes,exactNumbers=true)
+            ProfileFramePolicy.validateIncoming(message,offeredFormats)
+            if(message.optInt("profileFormatVersion")==5 && !legacyJournalsReadyForOwned) {
+                fail("Pending older controller edits need reconciliation before migration. Your saved data has been kept.",false)
+                return
+            }
             if(message.optString("type")=="profile_artifact_adoption_result") return // Retired phone upload replies never mutate profiles.
             if (state.paired || message.optString("type") in setOf("hello", "pairing_accepted")) {
                 message.optJSONObject("virtualGamepadStatus")?.let { state = state.copy(virtualGamepadStatus = it) }
@@ -733,7 +879,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
                     val expectedID = target?.serverID
                     require(expectedID == null || message.optString("serverID") == expectedID) { "The responding Mac does not match this QR code." }
                     val skinPackages=IncomingSkinPackages.validated(message,bytes.size)
-                    var snapshot = state.snapshot.applying(message)
+                    var snapshot = state.snapshot.applying(message,replaceServer=true)
                     require(snapshot.selected != null) { "The Mac did not send a selected profile." }
                     deadline?.cancel(false)
                     cancelRetry()
@@ -750,7 +896,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
                             saveError = "Connected, but could not save this Mac for next time."
                         }
                     } else if (!trustedAttempt) {
-                        store.forgetMac()
+                        store.clearMacCredential()
                         trusted = null
                     }
                     val saved=saveIncomingSkinState(snapshot,message.optJSONArray("gamepadProfiles")!=null,message.optJSONObject("gamepadCustomization"))
@@ -767,6 +913,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
                     flushSkinSelections()
                     flushAppearancePreferences()
                     flushLayoutEdits()
+                    flushOwnedPhoneEdits()
                     if(!offerSkinPackages(skinPackages)) return
                     flushSkinRemovalsNow()
                     publishState()
@@ -783,6 +930,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
                         state = state.copy(snapshot = saved.first,error=saved.second)
                         flushAppearancePreferences()
                         flushLayoutEdits()
+                        flushOwnedPhoneEdits()
                     } else if(message.optJSONArray("bindingPresentations")!=null) {
                         val snapshot=state.snapshot.applying(message)
                         val error=runCatching { store.saveSnapshot(snapshot) }.exceptionOrNull()?.let { "Could not save binding hints. Try reconnecting." }
@@ -790,6 +938,10 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
                     }
                     if(!offerSkinPackages(skinPackages)) return
                     flushSkinRemovalsNow()
+                    publishState()
+                }
+                "owned_phone_edit_result" -> if(state.paired) {
+                    receiveOwnedPhoneReceipt(message)
                     publishState()
                 }
                 "release_all" -> if (state.paired) {
@@ -848,6 +1000,7 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         state = state.copy(surfaceRevision = revision)
     }
     private fun closeSession() {
+        ownedAuthority=null;ownedInFlight=null;ownedConflicts.clear();ownedBlocked.clear()
         sentRemovals.clear()
         endLayoutEditing()
         clearAnalogQueue()
@@ -872,11 +1025,8 @@ internal class ControllerClient(private val store: SessionStore = MemorySessionS
         udp?.close(); udp = null
     }
     private fun forgetExpiredTrust() {
-        store.forgetMac()
-        pendingSkins=emptyList();pendingSkinsLoaded=true;pendingRemovals=emptyList();removalsLoaded=true;removalRevisions.clear()
-        pendingAppearance=emptyList();pendingAppearanceLoaded=true;appearanceUploadIDs=emptySet()
-        pendingLayouts=emptyList();pendingLayoutsLoaded=true;layoutUploadKeys=emptySet()
-        state=state.copy(pendingSkinChanges=0,pendingAppearanceChanges=0,pendingLayoutChanges=0)
+        store.clearMacCredential()
+        appearanceUploadIDs=emptySet();layoutUploadKeys=emptySet();removalRevisions.clear()
         trusted = null
         wantsConnection = false
     }

@@ -41,6 +41,127 @@ final class ThumbleLinkTests: XCTestCase {
         }
     }
 
+    func testClassicEraImportRefreshAndClientIsolation() throws {
+        let eraText = try String(contentsOf: URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .appendingPathComponent("Fixtures/ThumbleLink/warrior-classic-era.txt"), encoding: .utf8)
+        let forever = try ThumbleLinkSnapshot.parse(fixture())
+        let era = try ThumbleLinkSnapshot.parse(eraText)
+        XCTAssertEqual(era.client.displayName, "Classic Era")
+        XCTAssertNotEqual(era.profileID, forever.profileID)
+        XCTAssertNotEqual(era.elementID(for: "ACTIONBUTTON1"), forever.elementID(for: "ACTIONBUTTON1"))
+        let first = try ThumbleLinkImport.prepare(text: eraText, currentConfiguration: emptyConfiguration())
+        XCTAssertEqual(try profile(first).customization.elements.count, 3)
+        let refreshed = try ThumbleLinkImport.prepare(text: eraText, currentConfiguration: first.configurationData)
+        XCTAssertTrue(refreshed.isRefresh)
+        let otherClient = try ThumbleLinkImport.prepare(text: fixture(), currentConfiguration: first.configurationData)
+        XCTAssertFalse(otherClient.isRefresh)
+        let both = try MacConfigurationBindings.decodeKeypadImport(data: otherClient.configurationData, sourceName: "Test")
+        // Plans contain only the profile to merge; the authority preserves other setups.
+        XCTAssertEqual(both.profiles.map(\.id), [forever.profileID])
+        XCTAssertEqual(try profile(first).id, era.profileID)
+        for (flavor, interface) in [("classic-era", 16001), ("forever", 11509), ("classic-era", 11508)] {
+            XCTAssertThrowsError(try ThumbleLinkSnapshot.parse(editedSnapshot {
+                $0["client"] = ["flavor": flavor, "interface": interface, "version": "test", "build": "1"]
+            }))
+        }
+    }
+
+    private func hunterFixture() throws -> String {
+        try String(contentsOf: URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .appendingPathComponent("Fixtures/ThumbleLink/hunter-classic-era.txt"), encoding: .utf8)
+    }
+
+    func testControllerImportGroupsActualBindingsAndKeepsFullLegends() throws {
+        let plan = try ThumbleLinkImport.prepare(text: hunterFixture(), currentConfiguration: emptyConfiguration())
+        XCTAssertEqual(plan.layout, .controller)
+        let controller = try profile(plan)
+        XCTAssertEqual(controller.outputMode, .keyboard)
+        XCTAssertEqual(controller.customization.elements.count, 16)
+        let actions = Dictionary(uniqueKeysWithValues: plan.snapshot.actions.map { ($0.command, $0) })
+        for orientation in [GamepadEditorDeviceOrientation.portrait, .landscape] {
+            let customization = controller.customization(for: orientation)
+            let controls = customization.resolvedControls(in: customization.deviceCanvas.editorDeviceFrame.screenRect.size)
+                .filter { $0.elementID != nil }
+            XCTAssertEqual(controls.count, 16)
+            for row in plan.rows where row.key != nil {
+                let id = plan.snapshot.elementID(for: row.command)
+                let element = try XCTUnwrap(customization.elements.first { $0.id == id })
+                XCTAssertEqual(element.output?.keyboard, row.key.flatMap(ThumbleLinkKeyBinding.resolve))
+                XCTAssertTrue(element.output?.gamepadButtons.isEmpty ?? true)
+                XCTAssertEqual(element.presentation?.accessibilityName, actions[row.command]?.label)
+            }
+            let forward = try XCTUnwrap(customization.elements.first { $0.id == plan.snapshot.elementID(for: "MOVEFORWARD") })
+            let attack = try XCTUnwrap(customization.elements.first { $0.id == plan.snapshot.elementID(for: "ACTIONBUTTON1") })
+            XCTAssertEqual(forward.visualRole, .movement)
+            XCTAssertEqual(forward.presentation?.legend, "Up")
+            let target = try XCTUnwrap(customization.elements.first { $0.id == plan.snapshot.elementID(for: "TARGETNEARESTENEMY") })
+            let previous = try XCTUnwrap(customization.elements.first { $0.id == plan.snapshot.elementID(for: "TARGETPREVIOUSENEMY") })
+            XCTAssertEqual(target.presentation?.legend, "Target")
+            XCTAssertEqual(previous.presentation?.legend, "Previous")
+            XCTAssertLessThan(try XCTUnwrap(forward.layout.centerX), try XCTUnwrap(attack.layout.centerX))
+            for control in controls {
+                XCTAssertGreaterThanOrEqual(control.size.width, 44)
+                XCTAssertGreaterThanOrEqual(control.size.height, 44)
+                for other in controls where other.id != control.id {
+                    XCTAssertFalse(control.hitFrame.insetBy(dx: 0.01, dy: 0.01).intersects(other.hitFrame),
+                        "\(orientation.rawValue): \(control.visualLegend) overlaps \(other.visualLegend)")
+                }
+            }
+        }
+        let raptor = try XCTUnwrap(controller.customization.elements.first { $0.id == plan.snapshot.elementID(for: "ACTIONBUTTON2") })
+        XCTAssertEqual(raptor.presentation?.legend, "Raptor Strike")
+    }
+
+    func testControllerOverflowKeepsEveryBindingAndRemainsNonOverlapping() throws {
+        let original = try hunterFixture().replacingOccurrences(of: ThumbleLinkSnapshot.prefix, with: "")
+        var snapshot = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(original.utf8)) as? [String: Any])
+        var actions = try XCTUnwrap(snapshot["actions"] as? [[String: Any]])
+        for index in 1...8 {
+            actions.append(["command": "EXTRABUTTON\(index)", "label": "Extra \(index)", "keys": ["F\(index + 2)"], "kind": "spell"])
+        }
+        snapshot["actions"] = actions
+        let text = String(decoding: try JSONSerialization.data(withJSONObject: snapshot), as: UTF8.self)
+        let plan = try ThumbleLinkImport.prepare(text: text, currentConfiguration: emptyConfiguration())
+        XCTAssertEqual(plan.layout, .controller)
+        let controller = try profile(plan)
+        for orientation in [GamepadEditorDeviceOrientation.portrait, .landscape] {
+            let layout = controller.customization(for: orientation)
+            let controls = layout.resolvedControls(in: layout.deviceCanvas.editorDeviceFrame.screenRect.size)
+                .filter { $0.elementID != nil }
+            XCTAssertEqual(controls.count, 24)
+            for first in controls {
+                XCTAssertGreaterThanOrEqual(first.size.width, 44)
+                XCTAssertGreaterThanOrEqual(first.size.height, 44)
+                for second in controls where second.id != first.id {
+                    XCTAssertFalse(first.hitFrame.insetBy(dx: 0.01, dy: 0.01).intersects(second.hitFrame))
+                }
+            }
+        }
+        actions.append(["command": "EXTRABUTTON9", "label": "Extra 9", "keys": ["F11"], "kind": "spell"])
+        snapshot["actions"] = actions
+        let tooMany = String(decoding: try JSONSerialization.data(withJSONObject: snapshot), as: UTF8.self)
+        XCTAssertThrowsError(try ThumbleLinkImport.prepare(text: tooMany, currentConfiguration: emptyConfiguration(), layout: .controller))
+        let grid = try ThumbleLinkImport.prepare(text: tooMany, currentConfiguration: emptyConfiguration())
+        XCTAssertEqual(grid.layout, .grid)
+        XCTAssertEqual(try profile(grid).customization.elements.count, 25)
+    }
+
+    func testExplicitControllerConversionPreservesBindingsAndOrdinaryRefreshPreservesLayout() throws {
+        let initial = try ThumbleLinkImport.prepare(text: hunterFixture(), currentConfiguration: emptyConfiguration(), layout: .grid)
+        let grid = try profile(initial)
+        let plainRefresh = try ThumbleLinkImport.prepare(text: hunterFixture(), currentConfiguration: initial.configurationData)
+        XCTAssertEqual(plainRefresh.layout, .grid)
+        XCTAssertEqual(try profile(plainRefresh).customization.elements.map(\.layout), grid.customization.elements.map(\.layout))
+        let converted = try ThumbleLinkImport.prepare(text: hunterFixture(), currentConfiguration: initial.configurationData, layout: .controller)
+        let controller = try profile(converted)
+        XCTAssertEqual(controller.customization.elements.map(\.id), grid.customization.elements.map(\.id))
+        XCTAssertEqual(controller.customization.elements.map(\.output), grid.customization.elements.map(\.output))
+        XCTAssertNotEqual(controller.customization.elements.map(\.layout), grid.customization.elements.map(\.layout))
+        let refreshed = try ThumbleLinkImport.prepare(text: hunterFixture(), currentConfiguration: converted.configurationData)
+        XCTAssertEqual(refreshed.layout, .controller)
+        XCTAssertEqual(try profile(refreshed).customization.elements.map(\.layout), controller.customization.elements.map(\.layout))
+    }
+
     func testWoWKeyVocabularyUsesPhysicalKeysAndModifierChords() throws {
         XCTAssertEqual(ThumbleLinkKeyBinding.resolve("CTRL-SHIFT-Q"), KeypadKeyboardBinding(keyCode: 12, modifiersRawValue: 10))
         XCTAssertEqual(ThumbleLinkKeyBinding.resolve("SHIFT--"), KeypadKeyboardBinding(keyCode: 27, modifiersRawValue: 2))

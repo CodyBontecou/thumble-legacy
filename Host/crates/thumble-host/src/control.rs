@@ -138,6 +138,9 @@ pub enum ControlRequest {
         control_id: String,
         pressed: bool,
     },
+    WowLive {
+        action: crate::wow_live::SyncAction,
+    },
     GamepadStatus,
     GamepadRetry,
     ReleaseAll,
@@ -276,6 +279,8 @@ pub struct ControlResponse {
     pub status: Option<HostStatus>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub virtual_gamepad_status: Option<GamepadSnapshot>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wow_live: Option<crate::wow_live::SyncStatus>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pairing_code: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -337,6 +342,7 @@ impl ControlResponse {
             conflict_paths: None,
             status: None,
             virtual_gamepad_status: None,
+            wow_live: None,
             pairing_code: None,
             rotated: None,
             accessibility_trusted: None,

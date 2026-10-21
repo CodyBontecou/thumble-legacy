@@ -1,0 +1,86 @@
+{
+  "inspect": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/inspect.log"
+  },
+  "session": {
+    "artboardSHA256": "ab497378e7087e1352803f67a558590307103fca388b4682749ef06070fd7531",
+    "baseProfileSHA256": "f7eb589656a91a6eb05a9861fa1c1c7e70622b145a79f838d18a193fa2961ccf",
+    "bindingSHA256": "79ad44961b50a80a874f39100e30881b85c037fbaadfe90a46314d3d6afccd73",
+    "id": "735E2ECF-50A1-4B77-9EDC-33E9EDACDA3F",
+    "latestReview": 2,
+    "layoutPlanSHA256": "e8cf1d52cd009b59b8cb66494541a71b5cccb99e9f2a52958b34ef4828345823",
+    "ownedAuthority": true,
+    "profileID": "A4E1DDD3-9767-504E-AC27-099919F511CB",
+    "profileSHA256": "128dc0af65806905864466032120d24aec9c88a74a5e451cffca39dbf10d642d",
+    "revision": 3,
+    "schemaVersion": 1,
+    "sourceFiles": [
+      {
+        "byteCount": 320973,
+        "path": "skin-source.json",
+        "sha256": "f8debdeb620d76645d57b16dc12acb6e56f77102945da65188a47e790a15d9f4"
+      },
+      {
+        "byteCount": 330,
+        "path": "sources/ability-recess.svg",
+        "sha256": "62ec45f5136689a4150ff242a8fe1a049ea3d34d45846c1c4059cd51823d5450"
+      },
+      {
+        "byteCount": 3195,
+        "path": "sources/game-1423ee090e2ad989.png",
+        "sha256": "1423ee090e2ad9894f24ffac74603951206fe51d7bd9bf645c7a10bcf2300381"
+      },
+      {
+        "byteCount": 2809,
+        "path": "sources/game-14699954e649808f.png",
+        "sha256": "14699954e649808fe7df9574cc78c488afada18af1656b0d75eb5d1dba6ce9f5"
+      },
+      {
+        "byteCount": 1881,
+        "path": "sources/game-2713ca406582f2a7.png",
+        "sha256": "2713ca406582f2a70d19ff416b19f0e2c060cc99b87e1c44a1bc7c17752d944d"
+      },
+      {
+        "byteCount": 2806,
+        "path": "styles/controller.css",
+        "sha256": "fc9d84b5ef60fdf35cec46193e9c7878a2503c7b36b03ce1cf9841f6f653c452"
+      }
+    ],
+    "sourceSHA256": "4e66ef581b7a677840f657c5ee145a4f739c988e24113af15c0d6484010766e2",
+    "targetRevision": 7
+  },
+  "sourceSynchronized": true,
+  "compile-a": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/compile-a.log",
+    "sha256": "b34d337bc66da6e1336d7b5e1c0c38472db3146dcd49603330b128bebb024259"
+  },
+  "validate-a": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/validate-a.log"
+  },
+  "compile-b": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/compile-b.log",
+    "sha256": "b34d337bc66da6e1336d7b5e1c0c38472db3146dcd49603330b128bebb024259"
+  },
+  "validate-b": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/validate-b.log"
+  },
+  "quality": {
+    "exitCode": 1,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/quality.log"
+  },
+  "unpack": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/unpack.log"
+  },
+  "repack": {
+    "exitCode": 0,
+    "log": "/private/tmp/consoleport-qa-y90vk7m_/repack.log"
+  },
+  "artifactMatch": true,
+  "repackMatch": true
+}

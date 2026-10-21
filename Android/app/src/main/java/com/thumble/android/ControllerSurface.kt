@@ -40,6 +40,21 @@ internal class ControllerSurface(context: Context, private val legacyArtworkBlen
         },
         { kind, x, y, button, down -> onPointer(kind, x, y, button, down) }, ::playHaptic)
     private val indicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var cameraFrameQueued = false
+    private var cameraFrameTime = 0L
+    private val cameraFrame = object : Runnable {
+        override fun run() {
+            cameraFrameQueued = false
+            if (!router.hasCameraMotion) { cameraFrameTime = 0;return }
+            val now = System.nanoTime()
+            router.advanceCamera(if (cameraFrameTime == 0L) 1.0/60 else (now-cameraFrameTime)/1_000_000_000.0)
+            cameraFrameTime = now
+            queueCameraFrame()
+        }
+    }
+    private fun queueCameraFrame() {
+        if (router.hasCameraMotion && !cameraFrameQueued) { cameraFrameQueued = true;postOnAnimation(cameraFrame) }
+    }
     private var controls = emptyList<Control>()
     private var currentProfile: ControllerProfile? = null
     private var currentRevision = -1L
@@ -268,6 +283,18 @@ internal class ControllerSurface(context: Context, private val legacyArtworkBlen
         val saved = canvas.save(); canvas.clipRect(0,0,width,height)
         artwork.draw(canvas, "underlay", legacyArtworkBuffer)
         super.dispatchDraw(canvas)
+        // Hardware child display lists clip drawing to the face bounds even when
+        // clipChildren is false. External native legends belong to the surface's
+        // display list, with the same face transform and accessibility TextView.
+        for (index in 0 until childCount) {
+            val child = getChildAt(index) as? ControlFaceView ?: continue
+            if (!child.hasExternalLegend || child.visibility != View.VISIBLE) continue
+            val labelSave = canvas.save()
+            canvas.translate(child.left.toFloat(), child.top.toFloat())
+            canvas.concat(child.matrix)
+            child.drawExternalLegend(canvas)
+            canvas.restoreToCount(labelSave)
+        }
         artwork.draw(canvas, "overlay", legacyArtworkBuffer)
         canvas.restoreToCount(saved)
     }
@@ -372,6 +399,7 @@ internal class ControllerSurface(context: Context, private val legacyArtworkBlen
         val density = resources.displayMetrics.density
         val contacts = (0 until event.pointerCount).map { Contact(event.getPointerId(it), Vector((event.getX(it) / density).toDouble(), (event.getY(it) / density).toDouble())) }
         router.handle(phase, event.getPointerId(event.actionIndex), contacts, event.eventTime)
+        queueCameraFrame()
         parent?.requestDisallowInterceptTouchEvent(event.actionMasked != MotionEvent.ACTION_UP)
         renderColors(); invalidate()
         return true
@@ -426,9 +454,32 @@ internal class ControllerSurface(context: Context, private val legacyArtworkBlen
             indicatorPaint.color = if (dark) 0x99FFFFFF.toInt() else 0x99000000.toInt()
             if (control.kind == "joystick") {
                 val vector = router.joystickVectors[control.id] ?: Vector()
-                val radius = min(width, height) * .17f
-                canvas.drawCircle(width / 2f + (vector.x * width * .25).toFloat(),
-                    height / 2f + (vector.y * height * .25).toFloat(), radius, indicatorPaint)
+                val face = (getChildAt(controls.indexOfFirst { it.id == control.id }) as? ControlFaceView)?.appliedPresentation
+                val content = face?.optJSONObject("content")
+                val pointing = content?.optJSONObject("pointing")
+                val density = resources.displayMetrics.density
+                val side = min(width, height).toFloat()
+                // Use the same authored puck and well tokens as the native
+                // renderer instead of covering them with a fixed gray dot.
+                if (pointing?.optJSONObject("joystickRingColor") != null && content.optBoolean("joystickRingVisible", true)) {
+                    indicatorPaint.color = rgbaColor(pointing.optJSONObject("joystickRingColor"), indicatorPaint.color)
+                    indicatorPaint.style = Paint.Style.STROKE
+                    indicatorPaint.strokeWidth = pointing.finite("joystickRingStrokeWidth", 1.0).toFloat() * density
+                    canvas.drawCircle(width / 2f, height / 2f, side * .35f, indicatorPaint)
+                }
+                val radius = side * (content?.finite("joystickKnobRatio", .34) ?: .34).coerceIn(.2, .9).toFloat() / 2
+                val x = width / 2f + (vector.x * width * .25).toFloat()
+                val y = height / 2f + (vector.y * height * .25).toFloat()
+                indicatorPaint.style = Paint.Style.FILL
+                indicatorPaint.color = rgbaColor(pointing?.optJSONObject("joystickKnobFillColor"), if (dark) 0x99FFFFFF.toInt() else 0x99000000.toInt())
+                canvas.drawCircle(x, y, radius, indicatorPaint)
+                pointing?.optJSONObject("joystickKnobStrokeColor")?.let { color ->
+                    indicatorPaint.style = Paint.Style.STROKE
+                    indicatorPaint.color = rgbaColor(color, indicatorPaint.color)
+                    indicatorPaint.strokeWidth = (content?.finite("joystickKnobStrokeWidth", 1.0) ?: 1.0).toFloat() * density
+                    canvas.drawCircle(x, y, radius, indicatorPaint)
+                    indicatorPaint.style = Paint.Style.FILL
+                }
             } else {
                 val value = (router.triggerValues[control.id] ?: 0.0).toFloat()
                 val horizontal = TriggerSettings.parse(control.source.optJSONObject("triggerSettings")).horizontal
@@ -437,6 +488,7 @@ internal class ControllerSurface(context: Context, private val legacyArtworkBlen
             }
     }
     fun cancelTouches() {
+        removeCallbacks(cameraFrame);cameraFrameQueued = false;cameraFrameTime = 0
         router.cancel()
         actionInputs.reset(); selectPaint(ControllerActionSet.BASE)
         haptics.cancel()
@@ -540,7 +592,19 @@ internal class ControlFaceView(context: Context) : TextView(context) {
     override fun onDraw(canvas: Canvas) {
         drawIndicator(canvas)
         val density = resources.displayMetrics.density
-        iconPainter?.draw(canvas, width / 2f + (metrics.offset.x * density).toFloat(), height / 2f + (metrics.offset.y * density).toFloat(), (metrics.size * density).toFloat(), currentTextColor)
+        iconPainter?.draw(canvas, width / 2f + (metrics.offset.x * density).toFloat(), height / 2f + (metrics.offset.y * density).toFloat(), (metrics.size * density).toFloat(), currentTextColor, content?.optString("iconMask", "none") ?: "none")
+        if (!hasExternalLegend) drawLegends(canvas)
+    }
+    val hasExternalLegend: Boolean get() = content?.optString("labelPlacement") == "above"
+    fun drawExternalLegend(canvas: Canvas) {
+        if (!hasExternalLegend) return
+        val extent = max(width, height).toFloat() * 2
+        val saved = if (alpha < .999f) canvas.saveLayerAlpha(android.graphics.RectF(-extent, -extent, width + extent, height + extent), (alpha * 255).roundToInt()) else canvas.save()
+        drawLegends(canvas)
+        canvas.restoreToCount(saved)
+    }
+    private fun drawLegends(canvas: Canvas) {
+        val density = resources.displayMetrics.density
         val saved = canvas.save()
         canvas.translate((metrics.labelOffset.x * density).toFloat(), (metrics.labelOffset.y * density).toFloat())
         val secondary=secondaryLayouts()

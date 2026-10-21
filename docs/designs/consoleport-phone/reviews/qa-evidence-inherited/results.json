@@ -1,0 +1,96 @@
+{
+  "inspect": {
+    "exitCode": 0
+  },
+  "session": {
+    "artboardSHA256": "3aeda31f30f602a2ffc251789f57613f3cfab332f794e9b8a7d7ca3b6cc45426",
+    "baseProfileSHA256": "f7eb589656a91a6eb05a9861fa1c1c7e70622b145a79f838d18a193fa2961ccf",
+    "bindingSHA256": "79ad44961b50a80a874f39100e30881b85c037fbaadfe90a46314d3d6afccd73",
+    "id": "B97D005C-9F89-4130-92CE-ECC1E2508EB8",
+    "latestReview": 1,
+    "layoutPlanSHA256": "e8cf1d52cd009b59b8cb66494541a71b5cccb99e9f2a52958b34ef4828345823",
+    "ownedAuthority": true,
+    "profileID": "A4E1DDD3-9767-504E-AC27-099919F511CB",
+    "profileSHA256": "128dc0af65806905864466032120d24aec9c88a74a5e451cffca39dbf10d642d",
+    "revision": 2,
+    "schemaVersion": 1,
+    "sourceFiles": [
+      {
+        "byteCount": 320553,
+        "path": "skin-source.json",
+        "sha256": "c8fd33611c8663315e54b862a117a037779684940459ded348331168026c67c8"
+      },
+      {
+        "byteCount": 330,
+        "path": "sources/ability-recess.svg",
+        "sha256": "62ec45f5136689a4150ff242a8fe1a049ea3d34d45846c1c4059cd51823d5450"
+      },
+      {
+        "byteCount": 2172,
+        "path": "styles/controller.css",
+        "sha256": "ab9dd7618589d7352a95ec594919be48fdf86365d52d6e2b09aee7e66d545c22"
+      }
+    ],
+    "sourceSHA256": "34086e61559c78604c1abaaf65f1c5b9693cc71defeb16668715edce24bb20e6",
+    "targetRevision": 7
+  },
+  "sourceSynchronized": true,
+  "compile-a": {
+    "exitCode": 0,
+    "sha256": "1810f3fa3239a9a276783356a9701a28edee40f87b3e3379778aef0a3277c0db"
+  },
+  "validate-a": {
+    "exitCode": 0
+  },
+  "compile-b": {
+    "exitCode": 0,
+    "sha256": "1810f3fa3239a9a276783356a9701a28edee40f87b3e3379778aef0a3277c0db"
+  },
+  "validate-b": {
+    "exitCode": 0
+  },
+  "quality": {
+    "exitCode": 1
+  },
+  "unpack": {
+    "exitCode": 0
+  },
+  "repack": {
+    "exitCode": 0
+  },
+  "artifactMatch": true,
+  "repackMatch": true,
+  "allEvidenceHashesMatch": true,
+  "evidenceCount": 45,
+  "all40FramesEqualPrior": true,
+  "sameSheet": true,
+  "sameBindingDigest": true,
+  "sameLayoutPlan": true,
+  "contentIconIdentities": 0,
+  "presentationOverrides": 288,
+  "assets": [
+    {
+      "byteCount": 10265,
+      "contentType": "image/png",
+      "id": "left-diamond-recess",
+      "path": "assets/left-diamond-recess.png",
+      "role": "texture",
+      "sha256": "7104bb27f2458e32e22c6ce1741b264051361ccebda7ce3fcd0c939d020d16c8"
+    },
+    {
+      "byteCount": 10265,
+      "contentType": "image/png",
+      "id": "right-diamond-recess",
+      "path": "assets/right-diamond-recess.png",
+      "role": "texture",
+      "sha256": "7104bb27f2458e32e22c6ce1741b264051361ccebda7ce3fcd0c939d020d16c8"
+    }
+  ],
+  "packageFiles": [
+    "skin.json",
+    "manifest.json",
+    "assets/right-diamond-recess.png",
+    "assets/left-diamond-recess.png"
+  ],
+  "allAssetHashesMatch": true
+}

@@ -75,6 +75,16 @@ pub fn pointer_move(
     if button == CGMouseButton::Center {
         CGEvent::set_integer_value_field(Some(&event), CGEventField::MouseEventButtonNumber, 2);
     }
+    CGEvent::set_integer_value_field(
+        Some(&event),
+        CGEventField::MouseEventDeltaX,
+        delta_x.round() as i64,
+    );
+    CGEvent::set_integer_value_field(
+        Some(&event),
+        CGEventField::MouseEventDeltaY,
+        delta_y.round() as i64,
+    );
     CGEvent::post(CGEventTapLocation::HIDEventTap, Some(&event));
     Ok(())
 }

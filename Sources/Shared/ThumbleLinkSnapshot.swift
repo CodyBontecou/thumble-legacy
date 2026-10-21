@@ -13,6 +13,13 @@ struct ThumbleLinkSnapshot: Codable, Equatable, Sendable {
         let version: String
         let build: String
         let interface: Int
+
+        var displayName: String { flavor == "classic-era" ? "Classic Era" : "Forever" }
+
+        var isSupported: Bool {
+            (flavor == "forever" && interface == 16001)
+                || (flavor == "classic-era" && interface == 11509)
+        }
     }
 
     struct Character: Codable, Equatable, Sendable {
@@ -54,14 +61,13 @@ struct ThumbleLinkSnapshot: Codable, Equatable, Sendable {
     }
 
     private func validate() throws {
-        guard schema == Self.schema, version == 1, client.flavor == "forever",
-              client.interface == 16001, exportedAt > 0,
+        guard schema == Self.schema, version == 1, client.isSupported, exportedAt > 0,
               (1...Self.maximumActions).contains(actions.count), warnings.count <= 32,
               Self.text(client.version, limit: 32), Self.text(client.build, limit: 32),
               Self.text(character.id, limit: 96), Self.text(character.name, limit: 96),
               Self.text(character.realm, limit: 96), Self.text(character.classTag, limit: 32),
               warnings.allSatisfy({ Self.text($0, limit: 256) }) else {
-            throw ThumbleLinkError("This export has an unsupported client, version, or invalid snapshot fields. Version 1 supports Forever interface 16001.")
+            throw ThumbleLinkError("This export has an unsupported client, version, or invalid snapshot fields. Version 1 supports Forever interface 16001 and Classic Era interface 11509.")
         }
         var commands = Set<String>()
         for action in actions {
@@ -85,7 +91,10 @@ struct ThumbleLinkSnapshot: Codable, Equatable, Sendable {
     }
 
     var profileID: UUID { Self.stableID("profile/\(client.flavor)/\(character.id)") }
-    var suggestedName: String { "WoW \(character.name) – \(character.realm)" }
+    var suggestedName: String {
+        let game = client.flavor == "classic-era" ? "WoW Classic Era" : "WoW"
+        return "\(game) \(character.name) – \(character.realm)"
+    }
 
     func elementID(for command: String) -> UUID {
         Self.stableID("element/\(client.flavor)/\(character.id)/\(command)")

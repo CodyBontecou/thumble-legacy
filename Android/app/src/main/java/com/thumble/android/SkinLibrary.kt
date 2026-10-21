@@ -11,7 +11,8 @@ internal data class SkinInstallResult(val reference: SkinReference,val change: S
 internal data class InstalledSkin(val reference: SkinReference,val name: String,val archiveSHA256: String,val author: String="",val summary: String="",val license: String="")
 
 /** Private, independently shareable archives. Atomic replacement never exposes a partial package. */
-internal class SkinLibrary(private val root: File) {
+internal class SkinLibrary(private val root: File,
+    private val decode: (ByteArray) -> SkinPackage = SkinPackageCodec::decode) {
     init {
         if (Files.isSymbolicLink(root.toPath())) throw SkinPackageException("invalid-store")
         check(root.mkdirs() || root.isDirectory)
@@ -23,22 +24,25 @@ internal class SkinLibrary(private val root: File) {
     @Synchronized fun packageFor(reference: SkinReference): SkinPackage {
         val file=destination(reference)
         if (!file.isFile) throw SkinPackageException("skin-not-installed")
-        val packageValue=SkinPackageCodec.decode(read(file))
+        val packageValue=decode(read(file))
         if (packageValue.reference!=reference || !packageValue.hasSkin) throw SkinPackageException("invalid-store-identity")
         return packageValue
     }
     @Synchronized fun archiveFor(reference: SkinReference): ByteArray = packageFor(reference).archiveBytes()
     @Synchronized fun install(bytes: ByteArray,policy: SkinInstallPolicy=SkinInstallPolicy.NEWER_ONLY): SkinInstallResult {
-        val incoming=SkinPackageCodec.decode(bytes)
+        val incoming=decode(bytes)
         if (!incoming.hasSkin) throw SkinPackageException("package-has-no-skin")
         val reference=incoming.reference;val destination=destination(reference)
-        val installed=entries().filter { it.reference.identifier==reference.identifier }
-        val latest=installed.maxByOrNull { SkinVersion.parse(it.reference.version)!! }
         val exists=destination.isFile
         if (exists) {
+            // Incoming bytes have already passed full validation. Reconnecting
+            // sends unchanged archives too; those need no library-wide scan.
             if (read(destination).contentEquals(bytes)) return SkinInstallResult(reference,SkinInstallChange.UNCHANGED)
             if (policy==SkinInstallPolicy.NEWER_ONLY) throw SkinPackageException("version-already-installed")
-        } else if (policy!=SkinInstallPolicy.ALLOW_DOWNGRADE && latest!=null &&
+        }
+        val installed=entries().filter { it.reference.identifier==reference.identifier }
+        val latest=installed.maxByOrNull { SkinVersion.parse(it.reference.version)!! }
+        if (!exists && policy!=SkinInstallPolicy.ALLOW_DOWNGRADE && latest!=null &&
             SkinVersion.parse(reference.version)!! < SkinVersion.parse(latest.reference.version)!!) {
             throw SkinPackageException("newer-version-installed")
         }
@@ -79,7 +83,7 @@ internal class SkinLibrary(private val root: File) {
             if (!directory.isDirectory || Files.isSymbolicLink(directory.toPath())) continue
             for (file in directory.listFiles().orEmpty()) {
                 if (file.extension!="pocketpad" || !file.isFile || Files.isSymbolicLink(file.toPath())) continue
-                val p=runCatching { SkinPackageCodec.decode(read(file)) }.getOrNull() ?: continue
+                val p=runCatching { decode(read(file)) }.getOrNull() ?: continue
                 if (p.hasSkin && runCatching { destination(p.reference)==file }.getOrDefault(false)) result.add(InstalledSkin(p.reference,p.name,p.archiveSHA256,p.authorName,p.manifestJSON().optString("summary"),p.manifestJSON().optString("license")))
             }
         }

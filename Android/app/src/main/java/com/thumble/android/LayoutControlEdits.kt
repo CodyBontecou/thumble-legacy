@@ -11,14 +11,14 @@ internal data class LayoutControlPatch(val id: UUID, val values: Map<String, Dou
         require(values.keys.all { it in setOf("centerX", "centerY", "widthScale", "heightScale", "rotationDegrees") })
         require(values.values.all { it.isFinite() })
     }
-    fun applying(snapshot: LayoutSnapshot): LayoutSnapshot {
+    fun applying(snapshot: LayoutSnapshot, deleteDeclaredElement: Boolean = false): LayoutSnapshot {
         val raw = snapshot.json()
         val elements = raw.getJSONArray("elements")
         val index = (0 until elements.length()).firstOrNull { UUID.fromString(elements.getJSONObject(it).getString("id")) == id }
             ?: return snapshot
         val element = elements.getJSONObject(index)
         val builtin = element.optString("kind", "button") == "button" && id.starterSlot() != null
-        if (delete && !builtin) {
+        if (delete && (!builtin || deleteDeclaredElement)) {
             elements.remove(index)
             // Legacy mirrors, if present, must not resurrect a deleted custom element.
             raw.optJSONArray("customButtons")?.let { buttons ->
@@ -28,7 +28,7 @@ internal data class LayoutControlPatch(val id: UUID, val values: Map<String, Dou
         } else {
             val overrides = raw.swiftMap("buttonCustomizations")
             val old = if (builtin) overrides[id.toString().uppercase()] as? JSONObject else null
-            val style = JSONObject((old ?: element.optJSONObject("layout") ?: JSONObject()).toString())
+            val style = StrictJSON.objectCopy(old ?: element.optJSONObject("layout") ?: JSONObject())
             if (!delete && style.optBoolean("isLocationLocked")) return snapshot
             if (delete) style.put("isHidden", true)
             values.forEach { (key, value) -> style.put(key, value) }
@@ -40,13 +40,13 @@ internal data class LayoutControlPatch(val id: UUID, val values: Map<String, Dou
                 raw.put("buttonCustomizations", map)
                 // Swift setButtonCustomization owns both representations. An old
                 // declared layout makes a native echo differ from the pending edit.
-                element.put("layout", JSONObject(style.toString()))
+                element.put("layout", StrictJSON.objectCopy(style))
             } else {
                 element.put("layout", style)
                 raw.optJSONArray("customButtons")?.let { mirrors ->
                     repeat(mirrors.length()) { i ->
                         val mirror=mirrors.getJSONObject(i)
-                        if(mirror.optString("id").equals(id.toString(),true)) mirror.put("layout",JSONObject(style.toString()))
+                        if(mirror.optString("id").equals(id.toString(),true)) mirror.put("layout",StrictJSON.objectCopy(style))
                     }
                 }
             }
@@ -65,8 +65,8 @@ internal data class LayoutControlPatch(val id: UUID, val values: Map<String, Dou
             }
         }
         fun matches(value: Any?) = when(value) {
-            is JSONObject -> value.optString("kind")=="custom" && value.optString("id").equals(id.toString(),true)
-            is String -> value.startsWith("custom.") && value.substringAfter('.').equals(id.toString(),true)
+            is JSONObject -> value.optString("kind") in setOf("custom","builtin") && value.optString(if(value.optString("kind")=="builtin") "button" else "id").equals(id.toString(),true)
+            is String -> value.substringBefore('.') in setOf("custom","builtin") && value.substringAfter('.').equals(id.toString(),true)
             else -> false
         }
         fun prune(array: JSONArray?) {

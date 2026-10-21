@@ -127,13 +127,19 @@ def main():
                 deadline = time.monotonic() + 20
                 while True:
                     assert process.poll() is None, (root / 'receiver.log').read_text()[-1200:]
-                    try:
-                        status = command('status', '--json')
-                        if status.get('port'):
-                            assert status['configurationWriteEnabled'] is False
-                            return status['port']
-                    except AssertionError:
-                        pass
+                    # Readiness probing must not acquire the authority lock
+                    # before the receiver does. Even status briefly probes that
+                    # lock, which can race a fresh process's InstanceGuard.
+                    pid_file = authority / 'runtime.pid'
+                    ready_pid = pid_file.read_text().strip() if pid_file.is_file() else None
+                    if ready_pid == str(process.pid):
+                        try:
+                            status = command('status', '--json')
+                            if status.get('port'):
+                                assert status['configurationWriteEnabled'] is False
+                                return status['port']
+                        except AssertionError:
+                            pass
                     assert time.monotonic() < deadline, (root / 'receiver.log').read_text()[-1200:]
                     time.sleep(0.05)
 

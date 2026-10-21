@@ -68,8 +68,8 @@ internal object SkinContractCodec {
     private fun rawContent(v: Any): JSONObject {
         val pointingColors=listOf("trackpadFrameColor","trackpadCursorColor","trackpadIndicatorColor","trackpadSecondaryIndicatorColor","joystickRingColor","joystickKnobFillColor","joystickKnobStrokeColor")
         val pointing: ContractDecoder = { p -> fields(p,optional=pointingColors.associateWith { rawColor }+numbers("trackpadFrameStrokeWidth","joystickRingStrokeWidth")) }
-        return fields(v,optional=mapOf("pointing" to pointing,"icon" to ::rawIcon,"legend" to string,"fontWeight" to enum("regular","medium","semibold","bold"),"fontDesign" to enum("system","rounded","serif","monospaced"),"lineLimit" to integer,"alignment" to enum("leading","center","trailing"),"labelPlacement" to enum("center","top","bottom","leading","trailing"))+
-            numbers("fontSize","tracking","labelPadding","joystickKnobRatio","joystickKnobStrokeWidth")+
+        return fields(v,optional=mapOf("pointing" to pointing,"icon" to ::rawIcon,"iconMask" to enum("none","circle"),"iconPlacement" to enum("leading","trailing","top","bottom","center","background"),"legend" to string,"fontWeight" to enum("regular","medium","semibold","bold"),"fontDesign" to enum("system","rounded","serif","monospaced"),"lineLimit" to integer,"alignment" to enum("leading","center","trailing"),"labelPlacement" to enum("center","top","bottom","leading","trailing","above"))+
+            numbers("iconScale","fontSize","tracking","labelPadding","joystickKnobRatio","joystickKnobStrokeWidth")+
             listOf("trackpadFrameVisible","trackpadCursorVisible","trackpadIndicatorsVisible","joystickRingVisible").associateWith { bool })
     }
     private val paintNumbers=listOf("strokeWidth","shadowRadius","shadowX","shadowY","glowRadius","innerShadowRadius","innerShadowX","innerShadowY","highlightRadius","highlightX","highlightY","highlightOpacity","bevelWidth","indexWidth","opacity","scale","blurRadius")

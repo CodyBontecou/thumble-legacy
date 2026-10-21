@@ -1116,6 +1116,69 @@ mod tests {
         }
     }
     #[test]
+    fn adapter_descriptor_replays_only_the_identical_intent() {
+        let (_temp, paths, source) = fixture();
+        let store = OwnedDraftStore::new(&paths);
+        let draft_id = id();
+        let draft = store.begin(&source, 41, &draft_id, 100).unwrap();
+        let operation_id = id();
+        let descriptor = "a".repeat(64);
+        let edited = store
+            .edit_with_descriptor(
+                &draft_id,
+                draft.draft_revision,
+                &operation_id,
+                &descriptor,
+                101,
+                |document| {
+                    rename(
+                        document,
+                        document.profiles()[0]["id"].as_str().unwrap(),
+                        "WoW character",
+                        101,
+                    )
+                },
+            )
+            .unwrap();
+        assert!(edited.outcome.changed);
+        let replay = store
+            .edit_with_descriptor(
+                &draft_id,
+                draft.draft_revision,
+                &operation_id,
+                &descriptor,
+                102,
+                |_| panic!("a replay must not execute the adapter"),
+            )
+            .unwrap();
+        assert!(replay.idempotent_replay);
+        assert_eq!(
+            replay.draft.document().original_bytes(),
+            edited.draft.document().original_bytes()
+        );
+        assert!(matches!(
+            store.edit_with_descriptor(
+                &draft_id,
+                draft.draft_revision,
+                &operation_id,
+                &"b".repeat(64),
+                102,
+                |_| { panic!("a conflicting intent must not execute") }
+            ),
+            Err(DraftError::OperationIdConflict)
+        ));
+        assert!(store
+            .edit_with_descriptor(
+                &draft_id,
+                draft.draft_revision,
+                &id(),
+                "invalid",
+                102,
+                |_| { panic!("an invalid descriptor must not execute") }
+            )
+            .is_err());
+    }
+    #[test]
     fn restart_preserves_raw_numbers_and_replays_without_reapplying() {
         let (_temp, paths, source) = fixture();
         let store = OwnedDraftStore::new(&paths);

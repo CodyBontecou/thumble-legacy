@@ -1008,19 +1008,25 @@ public struct GamepadTrackpadSettings: Codable, Equatable, Sendable {
     public var tapToClick: Bool
     public var twoFingerScroll: Bool
     public var naturalScrolling: Bool
+    public var clickButton: ControllerPointerButton?
+    public var movesCursor: Bool
 
     public init(
         sensitivity: CGFloat = 1.2,
         scrollSensitivity: CGFloat = 0.85,
         tapToClick: Bool = true,
         twoFingerScroll: Bool = true,
-        naturalScrolling: Bool = true
+        naturalScrolling: Bool = true,
+        clickButton: ControllerPointerButton? = nil,
+        movesCursor: Bool = true
     ) {
         self.sensitivity = sensitivity
         self.scrollSensitivity = scrollSensitivity
         self.tapToClick = tapToClick
         self.twoFingerScroll = twoFingerScroll
         self.naturalScrolling = naturalScrolling
+        self.clickButton = clickButton
+        self.movesCursor = movesCursor
     }
 
     public var normalized: GamepadTrackpadSettings {
@@ -1029,8 +1035,36 @@ public struct GamepadTrackpadSettings: Codable, Equatable, Sendable {
             scrollSensitivity: Self.clamp(scrollSensitivity, lower: Self.minimumScrollSensitivity, upper: Self.maximumScrollSensitivity),
             tapToClick: tapToClick,
             twoFingerScroll: twoFingerScroll,
-            naturalScrolling: naturalScrolling
+            naturalScrolling: naturalScrolling,
+            clickButton: clickButton,
+            movesCursor: movesCursor
         )
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case sensitivity, scrollSensitivity, tapToClick, twoFingerScroll, naturalScrolling, clickButton, movesCursor
+    }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(sensitivity: try values.decode(CGFloat.self, forKey: .sensitivity),
+                  scrollSensitivity: try values.decode(CGFloat.self, forKey: .scrollSensitivity),
+                  tapToClick: try values.decode(Bool.self, forKey: .tapToClick),
+                  twoFingerScroll: try values.decode(Bool.self, forKey: .twoFingerScroll),
+                  naturalScrolling: try values.decode(Bool.self, forKey: .naturalScrolling),
+                  clickButton: try values.decodeIfPresent(ControllerPointerButton.self, forKey: .clickButton),
+                  movesCursor: try values.decodeIfPresent(Bool.self, forKey: .movesCursor) ?? true)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(sensitivity, forKey: .sensitivity)
+        try values.encode(scrollSensitivity, forKey: .scrollSensitivity)
+        try values.encode(tapToClick, forKey: .tapToClick)
+        try values.encode(twoFingerScroll, forKey: .twoFingerScroll)
+        try values.encode(naturalScrolling, forKey: .naturalScrolling)
+        try values.encodeIfPresent(clickButton, forKey: .clickButton)
+        if !movesCursor { try values.encode(false, forKey: .movesCursor) }
     }
 
     private static func clamp(_ value: CGFloat, lower: CGFloat, upper: CGFloat) -> CGFloat {
@@ -2836,7 +2870,7 @@ public struct GamepadCustomization: Codable, Equatable, Sendable {
     public static let maximumCustomButtons = 128
     public static let maximumJoysticks = 2
     public static let maximumTriggers = 2
-    public static let maximumTrackpads = 1
+    public static let maximumTrackpads = 3
     public static let defaultTopBarActivationRegion = GamepadButtonCustomization(
         centerX: 0.5,
         centerY: 0.115,
@@ -3375,6 +3409,8 @@ public struct GamepadCustomization: Codable, Equatable, Sendable {
             return "Left Stick"
         case .rightStick:
             return "Right Stick"
+        case .mouseLook:
+            return "Camera"
         }
     }
 
@@ -8820,6 +8856,7 @@ struct GamepadRenderedControlFace: View {
                 }
             }
         }
+        .modifier(GamepadCircularIconMask(enabled: presentation.content?.iconMask == .circle))
         .offset(native.iconOffset ?? .zero)
         .opacity(maskOpacity("icon"))
                 .modifier(GamepadNativeBarLayoutModifier(collector: flowLayoutCollector("icon"), id: "icon"))
@@ -26762,3 +26799,11 @@ private struct GamepadStyleLibraryJSONDocument: FileDocument {
     }
 }
 #endif
+
+/// Presentation-only clipping; the source asset and its live identity stay intact.
+private struct GamepadCircularIconMask: ViewModifier {
+    let enabled: Bool
+    @ViewBuilder func body(content: Content) -> some View {
+        if enabled { content.clipShape(Circle()) } else { content }
+    }
+}

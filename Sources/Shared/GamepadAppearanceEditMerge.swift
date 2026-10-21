@@ -192,6 +192,9 @@ enum GamepadAppearanceEditMerge {
         guard let edited else { return nil }
         return GamepadControlContentStyle(
             icon: value(edited.icon, baseline?.icon, target?.icon),
+            iconPlacement: value(edited.iconPlacement, baseline?.iconPlacement, target?.iconPlacement),
+            iconScale: value(edited.iconScale, baseline?.iconScale, target?.iconScale),
+            iconMask: value(edited.iconMask, baseline?.iconMask, target?.iconMask),
             legend: value(edited.legend, baseline?.legend, target?.legend),
             fontSize: value(edited.fontSize, baseline?.fontSize, target?.fontSize),
             fontWeight: value(edited.fontWeight, baseline?.fontWeight, target?.fontWeight),

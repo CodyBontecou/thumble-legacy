@@ -1,6 +1,7 @@
 -- Run with Lua 5.1 (WoW-compatible syntax), without a game client or dependencies.
 local root = assert(arg[1], "repository root required")
 local combat, wrongClient, override = false, false, true
+local classicEra = arg[2] == "classic-era"
 local secret = {}
 local keys = {
     ACTIONBUTTON1 = { "1" }, ACTIONBUTTON2 = { "SHIFT-2" },
@@ -10,7 +11,10 @@ local keys = {
 _G.SlashCmdList, _G.UISpecialFrames = {}, {}
 function InCombatLockdown() return combat end
 function UnitAffectingCombat() return false end
-function GetBuildInfo() return "1.60.1", "99999", "Oct 18 2026", wrongClient and 120000 or 16001 end
+function GetBuildInfo()
+    return classicEra and "1.15.9" or "1.60.1", classicEra and "70003" or "99999", "Oct 18 2026",
+        wrongClient and 120000 or (classicEra and 11509 or 16001)
+end
 function UnitGUID() return "Player-1234-00000001" end
 function UnitName() return "Test Warrior" end
 function GetRealmName() return "Test Realm" end
@@ -65,6 +69,32 @@ C_Spell.GetSpellName = function() return 'Quote " \\ newline\n日本語' end
 local escaped = addon.snapshot(options)
 assert(escaped:find('Quote \\" \\\\ newline ', 1, true), "escape JSON and scrub control characters")
 C_Spell.GetSpellName = oldName
+
+-- Classic Era uses the same resolved slots/binding commands, including paged bars.
+local originalClient = classicEra
+classicEra = true
+local era = addon.snapshot(options)
+assert(era:find('"flavor":"classic-era"', 1, true))
+assert(era:find('"interface":11509', 1, true))
+local savedSpell, savedActionBar, savedTexture = C_Spell, C_ActionBar, GetActionTexture
+C_Spell = nil
+function GetSpellInfo(id) return "Legacy spell " .. id end
+C_ActionBar = { GetActionTexture = function() return 132282 end }
+GetActionTexture = nil
+ActionButton1.action = 3
+MultiBarBottomLeftButton1 = { action = 2 }
+keys.MULTIACTIONBAR1BUTTON1 = { "CTRL-Q" }
+local paged, pagedCount = addon.snapshot({ main = true, extra = true })
+assert(pagedCount == 6)
+assert(paged:find('"label":"Legacy spell 6552"', 1, true))
+assert(paged:find('"command":"MULTIACTIONBAR1BUTTON1"', 1, true))
+assert(paged:find('"keys":["CTRL-Q"]', 1, true))
+assert(paged:find('"iconFileID":132282', 1, true))
+ActionButton1.action = oldAction
+MultiBarBottomLeftButton1 = nil
+keys.MULTIACTIONBAR1BUTTON1 = nil
+C_Spell, C_ActionBar, GetActionTexture = savedSpell, savedActionBar, savedTexture
+classicEra = originalClient
 
 -- Minimal frame mock verifies the slash-command UI and clears stale exports on failure.
 local lastButton, editBox

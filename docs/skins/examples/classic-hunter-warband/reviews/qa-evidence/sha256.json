@@ -1,0 +1,26 @@
+{
+  "candidatePackageSHA256": "ee1851315847080a8190f3b1f562ef9fe6b3bb2abd96a10896de653bfa3ed6e9",
+  "compileASHA256": "ee1851315847080a8190f3b1f562ef9fe6b3bb2abd96a10896de653bfa3ed6e9",
+  "compileBSHA256": "ee1851315847080a8190f3b1f562ef9fe6b3bb2abd96a10896de653bfa3ed6e9",
+  "repackedSHA256": "ee1851315847080a8190f3b1f562ef9fe6b3bb2abd96a10896de653bfa3ed6e9",
+  "reviewedSheetSHA256": "a08ab2d25646301f9f9b46766d0ea33ba9b0e82ad5a07038a042db9e4bbc9ea9",
+  "nativeRerenderHashes": {
+    "contact-sheet.png": "a08ab2d25646301f9f9b46766d0ea33ba9b0e82ad5a07038a042db9e4bbc9ea9",
+    "landscape-dark-active.png": "34a79eb0e55de6433c2fd753bd63f4098787a25cb63cacd865c78f862c0779b4",
+    "landscape-dark-disabled.png": "152a50f628a04dd585da67e2265b6a548be1e9b82ce40f071600bb6b191de9c0",
+    "landscape-dark-normal.png": "3084ee6d4451dc371536e40441cbe3371a0b6368e50f6d064519183d90ef8070",
+    "landscape-dark-pressed.png": "0f44a45c7a7cae445ad0418a01c6d24612567dd0c4af699deba724aa0b6e3b61",
+    "landscape-light-active.png": "13c03c88377e6122f0faa91414a25667465983fd8f76a5c176ef1966380dad32",
+    "landscape-light-disabled.png": "95b3619e87abba743385d25ccf50eb127d623523fc68c12c111d1e0d4f9c99f2",
+    "landscape-light-normal.png": "f9a48f86c14845838c3e66161d462869af10468860967d5a24474fcbbc1a9c5f",
+    "landscape-light-pressed.png": "5a8b25b6fc8df89665be9d0afc4dfea9b973f9d32f9ae7856901595211e8afe3",
+    "portrait-dark-active.png": "d6902f3c47fa0c3e3561d7ee80aee14c8f124ac25f3213daf2b7618ede7a14b7",
+    "portrait-dark-disabled.png": "5c3d1591d5873573201770daeae9c208e9cfc1d87008f2b03344e8a8b79b2c42",
+    "portrait-dark-normal.png": "8263a69020bded7eb8b64e81964e1a03c4bd0845975ab56eef393790f8c31800",
+    "portrait-dark-pressed.png": "a520d0a397a4b7559531744d00f2042f62f1d886ed74aa4e51ec7d1e92187a82",
+    "portrait-light-active.png": "998c830bbcd7bac1f7e448143d61252ff78a9d15bf9238afc3b86115b71311e0",
+    "portrait-light-disabled.png": "5454aa1fa3332f86ad1c4e900e468dd2d2743995168b8d7b8e4548bc3cd82801",
+    "portrait-light-normal.png": "4e234fcc67ce5b1701062f2bf2bd861aaae4b0310efb8c013ae2f149d8994d8b",
+    "portrait-light-pressed.png": "05c390ddd7ff727b6b81ca929db37bf43fb70c789b7bf9ada5a55ed63d2d41b9"
+  }
+}

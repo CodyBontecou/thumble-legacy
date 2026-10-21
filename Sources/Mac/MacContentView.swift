@@ -189,7 +189,7 @@ struct MacContentView: View {
                 Button { isShowingThumbleLinkImport = true } label: {
                     Label("Thumble Link…", systemImage: "link")
                 }
-                .help("Import WoW Forever keybindings from /thumble")
+                .help("Import WoW Forever or Classic Era keybindings from /thumble")
             }
             ToolbarItem {
                 Button {

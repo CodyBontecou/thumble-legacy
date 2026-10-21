@@ -2,7 +2,8 @@ import Foundation
 
 @main
 private enum ThumbleBridgeMain {
-    static func main() {
+    @MainActor
+    static func main() async {
         guard CommandLine.arguments.count == 1 else {
             emitFailure(code: "arguments_not_allowed", message: "thumble-bridge accepts no command-line arguments")
             exit(2)
@@ -10,7 +11,23 @@ private enum ThumbleBridgeMain {
         do {
             let requestData = try readSingleBoundedRequest()
             let probe = try JSONDecoder().decodeUnique(BridgeRequestKind.self, from: requestData)
-            if probe.ownedConfigurationCommand != nil {
+            let families = [probe.wowProfileCommand, probe.wowLiveCommand, probe.ownedConfigurationCommand,
+                            probe.legacyProfileCommand, probe.profileArtifactCommand, probe.skinCommand,
+                            probe.phoneLayoutCommand].compactMap { $0 }
+            guard families.count <= 1 else { throw ThumbleBridgeInputError.multipleRequests }
+            if probe.wowProfileCommand != nil {
+                guard requestData.count <= 12 * 1024 * 1024 else { throw ThumbleBridgeInputError.tooLarge }
+                let request = try JSONDecoder().decodeUnique(WoWLiveProfileRequest.self, from: requestData)
+                try emit(WoWLiveProfile.prepare(request), maximumBytes: 16 * 1024 * 1024)
+            } else if probe.wowLiveCommand != nil {
+                guard probe.ownedConfigurationCommand == nil, probe.legacyProfileCommand == nil,
+                      probe.profileArtifactCommand == nil, probe.skinCommand == nil,
+                      probe.phoneLayoutCommand == nil, requestData.count <= 1024 else {
+                    throw ThumbleBridgeInputError.multipleRequests
+                }
+                let request = try JSONDecoder().decodeUnique(WoWLiveCaptureRequest.self, from: requestData)
+                try emit(await WoWLiveCapture.perform(request), maximumBytes: 3 * 1024 * 1024)
+            } else if probe.ownedConfigurationCommand != nil {
                 guard probe.legacyProfileCommand == nil, probe.profileArtifactCommand == nil,
                       probe.skinCommand == nil, probe.phoneLayoutCommand == nil,
                       requestData.count <= 24 * 1024 * 1024 else { throw ThumbleBridgeInputError.tooLarge }
@@ -39,6 +56,9 @@ private enum ThumbleBridgeMain {
                 let request = try JSONDecoder().decodeUnique(ThumbleConfigurationBridgeRequest.self, from: requestData)
                 try emit(ThumbleConfigurationBridge.transform(request))
             }
+        } catch let error as WoWLiveProfile.Failure {
+            emitFailure(code: "wow_profile_" + String(describing: error), message: "WoW live profile failed validation")
+            exit(1)
         } catch let error as ThumbleOwnedOperationBridgeError {
             emitFailure(code: error.rawValue, message: "Owned configuration operation failed validation")
             exit(1)
@@ -110,6 +130,8 @@ private enum ThumbleBridgeInputError: Error {
 }
 
 private struct BridgeRequestKind: Decodable {
+    let wowProfileCommand: String?
+    let wowLiveCommand: String?
     let ownedConfigurationCommand: String?
     let legacyProfileCommand: String?
     let skinCommand: String?

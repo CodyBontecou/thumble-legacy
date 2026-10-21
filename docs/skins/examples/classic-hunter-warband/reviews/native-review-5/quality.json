@@ -1,0 +1,206 @@
+{
+  "checkedArtboardID" : "classic-hunter-warband-captured-v1",
+  "issues" : [
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04 (landscape-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04 (landscape-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04 (portrait-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04 (portrait-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-0987-a2-e8-6-f5-a-51-a-a-b-c08-860-a875-b4-f04"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647 (landscape-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647 (landscape-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647 (portrait-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647 (portrait-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-700381-d6-7668-5-c81-a-d-e2-a93-a-e679-f647"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13 (landscape-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13 (landscape-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13 (portrait-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13 (portrait-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-b6-e-a-d2-e-c-1-a-e0-5-a43-b7-d2-f-d1505-c-e4-e13"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d (landscape-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d (landscape-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d (portrait-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d (portrait-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-e5-f9558-b-8-c54-52-b3-91-f-e-b4-a758179-f1-d"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226 (landscape-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226 (landscape-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226 (portrait-light, pressed) has 1.21:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226 (portrait-light, disabled) has 1.02:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-f-d-e50653-80-a4-5344-b3-f9-11-e4976-d-e226"
+      }
+    }
+  ],
+  "score" : 0
+}

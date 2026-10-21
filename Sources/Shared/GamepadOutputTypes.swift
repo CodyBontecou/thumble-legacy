@@ -154,6 +154,7 @@ public enum GamepadJoystickAnalogTarget: String, Codable, CaseIterable, Identifi
     case none
     case leftStick = "left_stick"
     case rightStick = "right_stick"
+    case mouseLook = "mouse_look"
 
     public var id: String { rawValue }
 
@@ -162,12 +163,13 @@ public enum GamepadJoystickAnalogTarget: String, Codable, CaseIterable, Identifi
         case .none: "Digital directions"
         case .leftStick: "Left analog stick"
         case .rightStick: "Right analog stick"
+        case .mouseLook: "Camera (right-mouse look)"
         }
     }
 
     public var stick: VirtualGamepadStick? {
         switch self {
-        case .none: nil
+        case .none, .mouseLook: nil
         case .leftStick: .left
         case .rightStick: .right
         }
@@ -208,7 +210,7 @@ public struct GamepadJoystickOutputSettings: Codable, Equatable, Sendable {
     public var normalized: GamepadJoystickOutputSettings {
         GamepadJoystickOutputSettings(
             analogTarget: analogTarget,
-            sendsDigitalDirections: sendsDigitalDirections || analogTarget == .none,
+            sendsDigitalDirections: analogTarget != .mouseLook && (sendsDigitalDirections || analogTarget == .none),
             deadZone: Self.clamp(deadZone, lower: 0, upper: 0.85),
             sensitivity: Self.clamp(sensitivity, lower: 0.2, upper: 3.0),
             invertX: invertX,

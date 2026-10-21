@@ -217,7 +217,7 @@ internal class PortableProfileArtifact private constructor(private val bytes: By
                 behavior(e,true)
                 e.opt("presentation")?.takeUnless { it===JSONObject.NULL }?.let { SkinContractCodec.presentation(it) }
             }
-            if((kinds["joystick"] ?: 0)>2 || (kinds["trigger"] ?: 0)>2 || (kinds["trackpad"] ?: 0)>1) bad()
+            if((kinds["joystick"] ?: 0)>2 || (kinds["trigger"] ?: 0)>2 || (kinds["trackpad"] ?: 0)>3) bad()
             for(field in listOf("labelOverrides","buttonCustomizations")) {
                 val keys=mutableSetOf<UUID>()
                 val raw=layout.opt(field)

@@ -5,10 +5,12 @@ description: "Configure Thumble through local CLI/MCP: generate and edit control
 
 # Thumble CLI / Keypad Generator
 
-Use this skill to configure Thumble from the command line. Thumble turns an iPhone into a programmable keypad/controller for a Mac. The target is local CLI/MCP configuration through the user’s agent, with phone controller/editor UI and a headless local receiver. Desktop UI is being retired; use the headless lifecycle and profile tools. See `docs/cli-mcp-cutover.md` for unfinished authority/tool migrations.
+Use this skill to configure Thumble from the command line. Thumble turns a phone into a programmable keypad/controller for a Mac. The target is local CLI/MCP configuration through the user’s agent, with phone controller/editor UI and a headless local receiver. Desktop UI is being retired; use the headless lifecycle and profile tools. See `docs/cli-mcp-cutover.md` for unfinished authority/tool migrations.
 
 ## Decision tree
 
+- User wants WoW ConsolePort installation, live game icons, or character switching → follow [ConsolePort onboarding](docs/thumble-link.md#consoleport-onboarding), including its separate installation, format-compatibility, and physical-input acceptance checks.
+- Receiver needs owned-profile migration, or a phone retains legacy edits after cutover → follow [authority migration and exact-plan recovery](docs/authority-migration.md). Reconcile journals before migration; never clear them or change schema markers to bypass admission.
 - User names a game and wants a keypad/controller profile → generate or write a spec, dry-run, install.
 - User wants an emulator/controller-style layout → use `template list` / `template install`.
 - User wants to change shortcuts → use `binding` commands.

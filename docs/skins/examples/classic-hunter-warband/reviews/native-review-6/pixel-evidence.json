@@ -1,0 +1,658 @@
+[
+  {
+    "frame": "portrait-light-normal",
+    "cursorForegroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 7.370805606275174,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.5,
+          784.5,
+          51.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.5,
+          784.0,
+          162.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "cursorForegroundRGB": [
+      63,
+      65,
+      61
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 9.08072353802591,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.5,
+          784.5,
+          51.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.5,
+          784.0,
+          162.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "portrait-light-active",
+    "cursorForegroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 7.370805606275174,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.5,
+          784.5,
+          51.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.5,
+          784.0,
+          162.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "cursorForegroundRGB": [
+      84,
+      86,
+      79
+    ],
+    "cursorPuckRGB": [
+      243,
+      238,
+      227
+    ],
+    "cursorContrastRatio": 6.43391713329759,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.5,
+          784.5,
+          51.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.5,
+          784.0,
+          162.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.0,
+          784.5,
+          52.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.0,
+          784.0,
+          162.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.0,
+          784.5,
+          52.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.0,
+          784.0,
+          162.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "portrait-dark-active",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.0,
+          784.5,
+          52.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.0,
+          784.0,
+          162.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "cursorForegroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "cursorPuckRGB": [
+      35,
+      46,
+      53
+    ],
+    "cursorContrastRatio": 6.398270812678597,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          35.0,
+          784.5,
+          52.0,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.590000000000032
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          135.0,
+          784.0,
+          162.5,
+          791.0
+        ],
+        "minimumSocketClearancePt": 9.090000000000032
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "landscape-light-normal",
+    "cursorForegroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 7.370805606275174,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.5,
+          307.5,
+          241.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.5,
+          307.0,
+          352.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "cursorForegroundRGB": [
+      63,
+      65,
+      61
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 9.08072353802591,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.5,
+          307.5,
+          241.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.5,
+          307.0,
+          352.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "landscape-light-active",
+    "cursorForegroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "cursorPuckRGB": [
+      245,
+      240,
+      229
+    ],
+    "cursorContrastRatio": 7.370805606275174,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.5,
+          307.5,
+          241.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.5,
+          307.0,
+          352.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "cursorForegroundRGB": [
+      84,
+      86,
+      79
+    ],
+    "cursorPuckRGB": [
+      243,
+      238,
+      227
+    ],
+    "cursorContrastRatio": 6.43391713329759,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.5,
+          307.5,
+          241.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.5,
+          307.0,
+          352.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      232,
+      226,
+      213
+    ]
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.0,
+          307.5,
+          242.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.0,
+          307.0,
+          352.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.0,
+          307.5,
+          242.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.0,
+          307.0,
+          352.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "landscape-dark-active",
+    "cursorForegroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "cursorPuckRGB": [
+      38,
+      50,
+      57
+    ],
+    "cursorContrastRatio": 7.812784094805977,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.0,
+          307.5,
+          242.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.0,
+          307.0,
+          352.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "cursorForegroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "cursorPuckRGB": [
+      35,
+      46,
+      53
+    ],
+    "cursorContrastRatio": 6.398270812678597,
+    "targetKeyTags": [
+      {
+        "tag": "Tab",
+        "glyphBoundsPt": [
+          225.0,
+          307.5,
+          242.0,
+          314.0
+        ],
+        "minimumSocketClearancePt": 6.139999999999986
+      },
+      {
+        "tag": "Shift-Tab",
+        "glyphBoundsPt": [
+          325.0,
+          307.0,
+          352.5,
+          314.0
+        ],
+        "minimumSocketClearancePt": 5.639999999999986
+      }
+    ],
+    "groundRGB": [
+      17,
+      23,
+      27
+    ]
+  }
+]

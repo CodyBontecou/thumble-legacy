@@ -193,6 +193,13 @@ def is_shared_runtime_symbol(name: str) -> bool:
             ".ProfileFormatPolicy.",
             ".ThumbleBridgeBackgroundFill.",
             ".ThumbleOwnedConfigurationDocument.",
+            ".OwnedPhoneEdit.",
+            ".OwnedPhoneEditJournal.",
+            ".OwnedPhoneLayoutAdapter.",
+            ".OwnedPhoneSnapshot.",
+            ".OwnedPhoneCache.",
+            ".OwnedPhoneSession.",
+            ".OwnedPhoneReceivedFrame.",
             ".ThumbleOwnedOperationBridge",
             ".ThumbleLegacyProfileMigration.",
             ".ThumbleLegacyProfileBridge",
@@ -418,6 +425,9 @@ def is_ios_runtime_symbol(name: str) -> bool:
                 "applySkinToSelectedProfile",
                 "detachSkinFromSelectedProfile",
                 ".init()",
+                ".init(enableOwnedPhoneEdits:",
+                "OwnedPhone",
+                "ownedPhone",
             )
         )
     if ".PendingKeypadLayoutReconciler." in name:
@@ -482,7 +492,7 @@ def required_sentinels(scope: str) -> tuple[tuple[str, tuple[str, ...]], ...]:
             ("Mac deferred send", ("sendNowOnNetworkQueue",)),
         )
     return shared + (
-        ("iOS startup", ("ControllerClient.init()",)),
+        ("iOS startup", ("ControllerClient.init(enableOwnedPhoneEdits:",)),
         ("iOS receive", ("handleIncoming",)),
         ("iOS profile application", ("applyGamepadProfileStateFromMac",)),
         ("profile skin application", ("GamepadConfigurationProfile.applySkin",)),
@@ -592,7 +602,7 @@ def base_call_path_budgets(scope: str) -> tuple[CallPathBudget, ...]:
             name="iOS default profile startup",
             maximum_bytes=128 * KIB,
             groups=(
-                ("startup caller", ("ControllerClient.init()",)),
+                ("startup caller", ("ControllerClient.init(enableOwnedPhoneEdits:",)),
                 ("persistence load", ("GamepadConfigurationProfilePersistence.load(",)),
                 ("default selection", ("GamepadConfigurationProfilePersistence.(defaultProfiles",)),
                 ("template entry", ("GamepadControllerTemplate.makeProfile(",)),

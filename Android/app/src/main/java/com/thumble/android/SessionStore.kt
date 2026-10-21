@@ -43,11 +43,19 @@ internal interface SessionStore {
     fun savePendingSkinRemovals(values: List<PendingSkinRemoval>) { check(values.isEmpty()) { "This store cannot persist skin removals" } }
     fun loadMac(): TrustedMac?
     fun saveMac(mac: TrustedMac)
+    /** Retire authentication while preserving offline profiles, preferences, and journals. */
+    fun clearMacCredential()
     fun forgetMac()
     fun loadSnapshot(): ProfileSnapshot
     fun saveSnapshot(snapshot: ProfileSnapshot)
     fun loadPendingAppearancePreferences(): List<PendingAppearancePreference> = emptyList()
     fun loadPendingLayoutEdits(): List<PendingLayoutEdit> = emptyList()
+    fun loadPendingOwnedPhoneEdits(): List<PendingOwnedPhoneEdit> = emptyList()
+    fun saveOwnedEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>,
+        layouts: List<PendingLayoutEdit>, owned: List<PendingOwnedPhoneEdit>) {
+        check(owned.isEmpty()) { "This profile store cannot persist owned phone edits" }
+        saveEditingState(snapshot, skins, appearance, layouts)
+    }
     fun saveEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>, layouts: List<PendingLayoutEdit>) {
         check(layouts.isEmpty()) { "This profile store cannot persist pending layout edits" }
         saveProfileState(snapshot, skins, appearance)
@@ -72,16 +80,25 @@ internal class MemorySessionStore : SessionStore {
     private var pendingSkins = emptyList<PendingSkinSelection>()
     private var pendingAppearance = emptyList<PendingAppearancePreference>()
     private var pendingLayouts = emptyList<PendingLayoutEdit>()
+    private var pendingOwned = emptyList<PendingOwnedPhoneEdit>()
     private var pendingRemovals = emptyList<PendingSkinRemoval>()
     override fun loadPendingSkinRemovals() = pendingRemovals
     override fun savePendingSkinRemovals(values: List<PendingSkinRemoval>) { SkinRemovalJournal.encode(values);pendingRemovals=values.toList() }
     override fun loadMac() = mac
     override fun saveMac(mac: TrustedMac) { this.mac = mac }
-    override fun forgetMac() { mac = null; snapshot = ProfileSnapshot(); pendingSkins = emptyList(); pendingAppearance = emptyList(); pendingLayouts = emptyList();pendingRemovals=emptyList() }
+    override fun clearMacCredential() { mac = null }
+    override fun forgetMac() { mac = null; snapshot = ProfileSnapshot(); pendingSkins = emptyList(); pendingAppearance = emptyList(); pendingLayouts = emptyList();pendingOwned = emptyList();pendingRemovals=emptyList() }
     override fun loadSnapshot() = snapshot
     override fun saveSnapshot(snapshot: ProfileSnapshot) { this.snapshot = snapshot }
     override fun loadPendingAppearancePreferences() = pendingAppearance
     override fun loadPendingLayoutEdits() = pendingLayouts
+    override fun loadPendingOwnedPhoneEdits() = pendingOwned
+    override fun saveOwnedEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>,
+        layouts: List<PendingLayoutEdit>, owned: List<PendingOwnedPhoneEdit>) {
+        OwnedPhoneEditJournal.encode(owned)
+        saveEditingState(snapshot, skins, appearance, layouts)
+        pendingOwned = owned.toList()
+    }
     override fun saveEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>, layouts: List<PendingLayoutEdit>) {
         LayoutEditJournal.encode(layouts)
         saveProfileState(snapshot, skins, appearance)
@@ -156,6 +173,7 @@ internal class AndroidSessionStore(context: Context, namespace: String = "sessio
         write(credential, byteArrayOf(1) + cipher.iv + cipher.doFinal(json))
     }
 
+    override fun clearMacCredential() = eraseCredential()
     override fun forgetMac() { eraseCredential(); profiles.delete();removals.delete() }
     private fun eraseCredential() {
         credential.delete()
@@ -164,7 +182,7 @@ internal class AndroidSessionStore(context: Context, namespace: String = "sessio
     override fun loadSnapshot(): ProfileSnapshot = try {
         val bytes = profiles.readFully()
         require(bytes.size <= WireCodec.MAX_PAYLOAD)
-        ProfileSnapshot().applying(JSONObject(bytes.toString(Charsets.UTF_8)))
+        ProfileSnapshot().applying(StrictJSON.objectValue(bytes,exactNumbers=true))
     } catch (_: Exception) { ProfileSnapshot() }
 
     override fun loadPendingSkinSelections(): List<PendingSkinSelection> {
@@ -185,23 +203,36 @@ internal class AndroidSessionStore(context: Context, namespace: String = "sessio
         val json=PackageJSON.objectValue(bytes)
         return LayoutEditJournal.decode(if(json.has("androidPendingLayoutEdits")) json.getJSONArray("androidPendingLayoutEdits") else null)
     }
+    override fun loadPendingOwnedPhoneEdits(): List<PendingOwnedPhoneEdit> {
+        val bytes=try { profiles.readFully() } catch (_: java.io.FileNotFoundException) { return emptyList() }
+        require(bytes.size<=WireCodec.MAX_PAYLOAD)
+        val json=StrictJSON.objectValue(bytes,exactNumbers=true)
+        return if(json.has("androidPendingOwnedPhoneEdits"))
+            OwnedPhoneEditJournal.decode(StrictJSON.data(json.getJSONObject("androidPendingOwnedPhoneEdits"))) else emptyList()
+    }
     override fun saveSnapshot(snapshot: ProfileSnapshot) = saveSkinState(snapshot,loadPendingSkinSelections())
     override fun saveSkinState(snapshot: ProfileSnapshot, pending: List<PendingSkinSelection>) =
         saveProfileState(snapshot, pending, loadPendingAppearancePreferences())
     override fun saveProfileState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>) =
         saveEditingState(snapshot, skins, appearance, loadPendingLayoutEdits())
-    override fun saveEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>, layouts: List<PendingLayoutEdit>) {
+    override fun saveEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>, layouts: List<PendingLayoutEdit>) =
+        saveOwnedEditingState(snapshot, skins, appearance, layouts, loadPendingOwnedPhoneEdits())
+    override fun saveOwnedEditingState(snapshot: ProfileSnapshot, skins: List<PendingSkinSelection>, appearance: List<PendingAppearancePreference>,
+        layouts: List<PendingLayoutEdit>, owned: List<PendingOwnedPhoneEdit>) {
+        val ownedJSON=JSONObject(OwnedPhoneEditJournal.encode(owned).toString(Charsets.UTF_8))
         require(skins.size<=256)
         val json = WireCodec.message("gamepad_profiles").put("gamepadProfiles", JSONArray().apply {
             snapshot.profiles.forEach { put(it.source) }
         }).put("gamepadProfileID", snapshot.selectedID?.toString())
             .put("defaultGamepadProfileID",snapshot.defaultID?.toString())
             .put("bindingPresentations",BindingPresentations.encode(snapshot.bindingPresentations))
+            .put("serverID",snapshot.serverID ?: JSONObject.NULL)
+            .also { message -> snapshot.configurationRevision?.let { message.put("configurationRevision",it) } }
+            .put("androidPendingOwnedPhoneEdits",ownedJSON)
             .put("androidPendingSkinSelections",SkinSelectionJournal.encode(skins))
             .put("androidPendingLayoutEdits",LayoutEditJournal.encode(layouts))
-            .put("androidPendingAppearancePreferences",AppearancePreferenceJournal.encode(appearance)).toString().toByteArray()
-        require(json.size <= WireCodec.MAX_PAYLOAD)
-        write(profiles, json)
+            .put("androidPendingAppearancePreferences",AppearancePreferenceJournal.encode(appearance))
+        write(profiles, StrictJSON.data(json))
     }
 
     override fun loadPreferences(): ClientPreferences = try {

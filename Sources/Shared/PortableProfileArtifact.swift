@@ -603,6 +603,15 @@ extension JSONDecoder {
         return try decode(type, from: data)
     }
 
+    /// Capture selected root values while the existing scanner validates the
+    /// complete document. Tokens remain byte-for-byte intact; no DTO or NSNumber
+    /// roundtrip can normalize opaque metadata or accidentally persist credentials.
+    static func rawObjectFields(in data: Data, named names: Set<String>) throws -> [String: Data] {
+        let scanner = PortableJSONScanner(data: data, enforceSafeIntegers: false, capturedNames: names)
+        try scanner.scan()
+        return scanner.capturedValues
+    }
+
     static func validateUniqueKeys(in data: Data, integerKeys: Set<String> = [], integerKeyDepthLimit: Int = .max) throws {
         try PortableJSONScanner(data: data, enforceSafeIntegers: false, integerKeys: integerKeys, integerKeyDepthLimit: integerKeyDepthLimit).scan()
     }
@@ -628,8 +637,13 @@ private final class PortableJSONScanner {
     private let maximumStringBytes: Int
     private let integerKeys: Set<String>
     private let integerKeyDepthLimit: Int
+    private let capturedNames: Set<String>
+    private var capturedStart: Int?
+    private(set) var capturedValues: [String: Data] = [:]
 
-    init(data: Data, enforceSafeIntegers: Bool = true, integerKeys: Set<String> = [], integerKeyDepthLimit: Int = .max) {
+    init(data: Data, enforceSafeIntegers: Bool = true, integerKeys: Set<String> = [], integerKeyDepthLimit: Int = .max,
+         capturedNames: Set<String> = []) {
+        self.capturedNames = capturedNames
         self.integerKeys = integerKeys
         self.integerKeyDepthLimit = integerKeyDepthLimit
         bytes = Array(data)
@@ -702,6 +716,8 @@ private final class PortableJSONScanner {
     }
 
     private func consumeValue() throws {
+        if frames.count == 1, frames[0].kind == .object, frames[0].state == .objectValue,
+           capturedNames.contains(frames[0].currentKey) { capturedStart = index }
         guard index < bytes.count else { throw PortableProfileArtifactError.invalidJSON }
         switch bytes[index] {
         case 0x7B:
@@ -757,6 +773,10 @@ private final class PortableJSONScanner {
         let last = frames.count - 1
         switch frames[last].state {
         case .objectValue:
+            if last == 0, let start = capturedStart {
+                capturedValues[frames[last].currentKey] = Data(bytes[start..<index])
+                capturedStart = nil
+            }
             frames[last].count += 1
             guard frames[last].count <= 4_096 else {
                 throw PortableProfileArtifactError.containerTooLarge(offset: bounded(index))

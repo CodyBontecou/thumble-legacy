@@ -1,0 +1,87 @@
+[
+  {
+    "name": "attack",
+    "kind": "spell",
+    "actionID": 6603,
+    "iconFileID": 135641,
+    "source": "Installed Classic Era CASC archive: /Applications/World of Warcraft*wow_classic_era",
+    "originalFile": "originals/135641.blp",
+    "originalSHA256": "2f62ba8db6bde7664c3530d5ed1fd9c2a217a1a3dacc21463077d3eb4589e7be",
+    "pngFile": "icons/attack.png",
+    "pngSHA256": "1eab0c69796b586bbc3bb363b2b7e03249ced68efe441ad542119cf5bb5f2c9b",
+    "dimensions": [
+      64,
+      64
+    ],
+    "operation": "Pillow BLP decoder to PNG; no resizing, cropping, recoloring, sharpening, or generated content.",
+    "attribution": "\u00a9 Blizzard Entertainment. All rights reserved."
+  },
+  {
+    "name": "raptor-strike",
+    "kind": "spell",
+    "actionID": 2973,
+    "iconFileID": 132223,
+    "source": "Installed Classic Era CASC archive: /Applications/World of Warcraft*wow_classic_era",
+    "originalFile": "originals/132223.blp",
+    "originalSHA256": "71938322932875c3c9a44a39be6c93c8e0e23d30fad32131c41e285700e73103",
+    "pngFile": "icons/raptor-strike.png",
+    "pngSHA256": "1970d75d777cee2a824fa908e4194dcd530e1791312370a6060542687298c4bb",
+    "dimensions": [
+      64,
+      64
+    ],
+    "operation": "Pillow BLP decoder to PNG; no resizing, cropping, recoloring, sharpening, or generated content.",
+    "attribution": "\u00a9 Blizzard Entertainment. All rights reserved."
+  },
+  {
+    "name": "auto-shot",
+    "kind": "spell",
+    "actionID": 75,
+    "iconFileID": 135493,
+    "source": "Installed Classic Era CASC archive: /Applications/World of Warcraft*wow_classic_era",
+    "originalFile": "originals/135493.blp",
+    "originalSHA256": "b30c35ae012dfe9f6a670d868068130c1ca241e313f19440e58e0a0c59d2e799",
+    "pngFile": "icons/auto-shot.png",
+    "pngSHA256": "4cbc050107a2892c9797876475e361320b624767c0984dbc904b5b066e16ac21",
+    "dimensions": [
+      64,
+      64
+    ],
+    "operation": "Pillow BLP decoder to PNG; no resizing, cropping, recoloring, sharpening, or generated content.",
+    "attribution": "\u00a9 Blizzard Entertainment. All rights reserved."
+  },
+  {
+    "name": "spring-water",
+    "kind": "item",
+    "actionID": 159,
+    "iconFileID": 132794,
+    "source": "Installed Classic Era CASC archive: /Applications/World of Warcraft*wow_classic_era",
+    "originalFile": "originals/132794.blp",
+    "originalSHA256": "1b797cba111e1229207e3c648cfd3511b3638ac63a3e6f24f302bc3c5d35644f",
+    "pngFile": "icons/spring-water.png",
+    "pngSHA256": "1f40337afaad8868b8121f55de89ec964ad570fc33c0079e91c1ebed8777df9b",
+    "dimensions": [
+      64,
+      64
+    ],
+    "operation": "Pillow BLP decoder to PNG; no resizing, cropping, recoloring, sharpening, or generated content.",
+    "attribution": "\u00a9 Blizzard Entertainment. All rights reserved."
+  },
+  {
+    "name": "tough-jerky",
+    "kind": "item",
+    "actionID": 117,
+    "iconFileID": 133972,
+    "source": "Installed Classic Era CASC archive: /Applications/World of Warcraft*wow_classic_era",
+    "originalFile": "originals/133972.blp",
+    "originalSHA256": "d938454e486b21b16f4ac375a962f32c230e388aadf86dc24aa65136b61bd5c1",
+    "pngFile": "icons/tough-jerky.png",
+    "pngSHA256": "b438d9e87b73c7d68bac95630567fa34188dd376fbc9dc237e42e2722eb1ecc9",
+    "dimensions": [
+      64,
+      64
+    ],
+    "operation": "Pillow BLP decoder to PNG; no resizing, cropping, recoloring, sharpening, or generated content.",
+    "attribution": "\u00a9 Blizzard Entertainment. All rights reserved."
+  }
+]

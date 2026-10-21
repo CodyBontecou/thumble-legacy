@@ -240,7 +240,7 @@ fn specialized_capacities_drop_before_assignment_and_leave_no_profile_or_artifac
             .iter()
             .map(|control| control.source_ordinal)
             .collect::<Vec<_>>(),
-        vec![0, 1, 3, 4, 6]
+        vec![0, 1, 3, 4, 6, 7]
     );
     assert_eq!(
         plan.dropped_controls
@@ -250,32 +250,31 @@ fn specialized_capacities_drop_before_assignment_and_leave_no_profile_or_artifac
         vec![
             (2, "specialized-capacity-exceeded:joystick"),
             (5, "specialized-capacity-exceeded:trigger"),
-            (7, "specialized-capacity-exceeded:trackpad"),
         ]
     );
-    for (ordinal, kind) in [(2, "joystick"), (5, "trigger"), (7, "trackpad")] {
+    for (ordinal, kind) in [(2, "joystick"), (5, "trigger")] {
         assert!(plan.warnings.iter().any(|warning| {
             warning.code == "specialized-capacity-exceeded"
                 && warning.source_ordinal == ordinal
                 && warning.message.contains(kind)
         }));
     }
-    assert_eq!(plan.elements.len(), 5);
-    for dropped_label in ["Joystick Dr", "Trigger Drop", "Trackpad Dro"] {
+    assert_eq!(plan.elements.len(), 6);
+    for dropped_label in ["Joystick Dr", "Trigger Drop"] {
         assert!(!plan
             .elements
             .iter()
             .any(|element| element["label"] == dropped_label));
     }
-    assert_eq!(plan.semantic_bindings.len(), 5);
-    for button in ["custom3", "custom6", "custom8"] {
+    assert_eq!(plan.semantic_bindings.len(), 6);
+    for button in ["custom3", "custom6"] {
         assert!(plan.profile_key_bindings.get_raw(button).is_none());
         assert!(plan.profile_output_bindings.get_raw(button).is_none());
     }
 
     assert_eq!(plan.artifact.profiles, vec![plan.profile.clone()]);
     let artifact_document = plan.artifact.to_configuration_document().unwrap();
-    for button in ["custom3", "custom6", "custom8"] {
+    for button in ["custom3", "custom6"] {
         assert!(artifact_document
             .profile_key_bindings
             .get(&plan.profile_id)
@@ -348,12 +347,16 @@ fn repeated_labels_have_independent_ids_and_no_slot_capacity() {
         warning.code == "specialized-capacity-exceeded" && warning.source_ordinal == 2
     }));
     assert!(specialized_plan.warnings.iter().any(|warning| {
-        warning.code == "specialized-capacity-exceeded" && warning.source_ordinal == 4
+        warning.code == "reused-trackpad-layout-default" && warning.source_ordinal == 4
     }));
-    assert!(!specialized_plan
-        .warnings
-        .iter()
-        .any(|warning| warning.code == "reused-trackpad-layout-default"));
+    assert_eq!(
+        specialized_plan
+            .elements
+            .iter()
+            .filter(|e| e["kind"] == "trackpad")
+            .count(),
+        2
+    );
 
     let plan = plan_generation_spec(EXHAUSTION, None).unwrap();
     assert_eq!(plan.assigned_controls.len(), 20);
@@ -990,4 +993,25 @@ fn expected_semantic_vector_matches_fixture() {
             })
         );
     }
+}
+
+#[test]
+fn three_cursor_click_surfaces_are_preserved_and_a_fourth_is_rejected() {
+    let input = serde_json::to_vec(&json!({"controls":[
+        {"kind":"trackpad","label":"Cursor"},
+        {"kind":"trackpad","label":"Left click","trackpadSettings":{"movesCursor":false,"clickButton":"left"}},
+        {"kind":"trackpad","label":"Right click","trackpadSettings":{"movesCursor":false,"clickButton":"right"}},
+        {"kind":"trackpad","label":"Overflow"}
+    ]})).unwrap();
+    let plan = plan_generation_spec(&input, None).unwrap();
+    assert_eq!(plan.elements.len(), 3);
+    assert_eq!(plan.dropped_controls.len(), 1);
+    assert_eq!(plan.dropped_controls[0].source_ordinal, 3);
+    assert_eq!(plan.elements[1]["trackpadSettings"]["clickButton"], "left");
+    assert_eq!(plan.elements[2]["trackpadSettings"]["movesCursor"], false);
+    plan.artifact
+        .to_configuration_document()
+        .unwrap()
+        .validate()
+        .unwrap();
 }

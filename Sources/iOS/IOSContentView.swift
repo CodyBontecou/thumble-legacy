@@ -1718,18 +1718,20 @@ private struct KeypadSettingsSheet: View {
 }
 
 @MainActor
-private final class IOSKeypadEditRuntime: ObservableObject {
+final class IOSKeypadEditRuntime: ObservableObject {
     @Published private(set) var isEditing = false
     @Published private(set) var canUndo = false
     @Published private(set) var hasChanges = false
     @Published private(set) var feedback = ""
     private var session: GamepadLayoutEditSession?
+    private var entryProfileID: UUID?
 
     func begin(with customization: GamepadCustomization, client: ControllerClient) {
         releaseInputs(client: client)
         let canonical = client.canonicalKeypadLayoutEdit(customization,
             orientation: customization.deviceCanvas.editorDeviceFrame.orientation)
         session = GamepadLayoutEditSession(entrySnapshot: canonical)
+        entryProfileID = client.selectedGamepadProfileID
         feedback = client.isConnected ? "Changes save and sync to Mac" : "Changes save on this iPhone"
         refreshSessionState()
         isEditing = true
@@ -1740,6 +1742,7 @@ private final class IOSKeypadEditRuntime: ObservableObject {
         releaseInputs(client: client)
         isEditing = false
         session = nil
+        entryProfileID = nil
         canUndo = false
         hasChanges = false
         feedback = ""
@@ -1747,6 +1750,7 @@ private final class IOSKeypadEditRuntime: ObservableObject {
     }
 
     func undo(client: ControllerClient) {
+        guard entryProfileID == client.selectedGamepadProfileID else { finish(client: client); return }
         releaseInputs(client: client)
         guard session?.undo(apply: { previous in
             client.updateSelectedKeypadLayout(
@@ -1761,6 +1765,7 @@ private final class IOSKeypadEditRuntime: ObservableObject {
     }
 
     func cancel(client: ControllerClient) {
+        guard entryProfileID == client.selectedGamepadProfileID else { finish(client: client); return }
         guard let session else {
             finish(client: client)
             return
@@ -1775,6 +1780,7 @@ private final class IOSKeypadEditRuntime: ObservableObject {
         }
         isEditing = false
         self.session = nil
+        entryProfileID = nil
         canUndo = false
         hasChanges = false
         feedback = ""
@@ -1787,6 +1793,7 @@ private final class IOSKeypadEditRuntime: ObservableObject {
         isFinal: Bool,
         client: ControllerClient
     ) {
+        guard isEditing, entryProfileID == client.selectedGamepadProfileID else { finish(client: client); return }
         let canonical = client.canonicalKeypadLayoutEdit(customization, orientation: orientation)
         if isFinal {
             _ = session?.commit(canonical)
@@ -4711,6 +4718,8 @@ private struct GamepadJoystick: View {
 
     @State private var activeDirections: Set<GamepadJoystickDirection> = []
     @State private var normalizedOffset = CGSize.zero
+    @State private var cameraTask: Task<Void, Never>?
+    @State private var cameraVector = CGVector.zero
 
     private var joystickVisualStyle: GamepadJoystickVisualStyle {
         elementCustomization.joystickVisualStyle ?? .pad
@@ -4828,9 +4837,12 @@ private struct GamepadJoystick: View {
         }
         .frame(width: interactionSize.width, height: interactionSize.height)
         .onDisappear {
+            stopCamera()
             activeDirections.removeAll()
             normalizedOffset = .zero
         }
+        .onChange(of: client.isConnected) { _, connected in if !connected { stopCamera() } }
+        .onChange(of: client.isPracticeModeEnabled) { _, _ in stopCamera() }
     }
 
     @ViewBuilder
@@ -4868,7 +4880,6 @@ private struct GamepadJoystick: View {
 
     private func handleAccessibilityDirection(_ direction: GamepadJoystickDirection) {
         let settings = outputSettings.normalized
-        guard let stick = settings.analogTarget.stick else { return }
         let vector: CGVector
         switch direction {
         case .up: vector = CGVector(dx: 0, dy: -1)
@@ -4877,16 +4888,47 @@ private struct GamepadJoystick: View {
         case .right: vector = CGVector(dx: 1, dy: 0)
         }
         let transformed = settings.transformedVector(x: vector.dx, y: vector.dy)
+        if settings.analogTarget == .mouseLook {
+            client.beginCameraLook()
+            client.sendPointerMove(deltaX: Double(transformed.dx) * 18, deltaY: Double(transformed.dy) * 18)
+            client.endCameraLook()
+            return
+        }
+        guard let stick = settings.analogTarget.stick else { return }
         client.setGamepadStick(stick, x: Double(transformed.dx), y: Double(transformed.dy), isFinal: false)
         client.setGamepadStick(stick, x: 0, y: 0, isFinal: true)
     }
 
     private func handleVectorChanged(_ vector: CGVector) {
         let settings = outputSettings.normalized
-        guard let stick = settings.analogTarget.stick else { return }
         let transformed = settings.transformedVector(x: vector.dx, y: vector.dy)
+        if settings.analogTarget == .mouseLook {
+            cameraVector = transformed
+            if abs(transformed.dx) < 0.001 && abs(transformed.dy) < 0.001 { stopCamera();return }
+            guard cameraTask == nil else { return }
+            client.beginCameraLook()
+            cameraTask = Task { @MainActor in
+                var previous = ContinuousClock.now
+                while !Task.isCancelled {
+                    do { try await Task.sleep(for: .milliseconds(16)) } catch { break }
+                    let now = ContinuousClock.now
+                    let elapsed = previous.duration(to: now).components
+                    previous = now
+                    let seconds = min(0.05, Double(elapsed.seconds) + Double(elapsed.attoseconds) / 1e18)
+                    client.sendPointerMove(deltaX: Double(cameraVector.dx) * 360 * seconds, deltaY: Double(cameraVector.dy) * 360 * seconds)
+                }
+            }
+            return
+        }
+        guard let stick = settings.analogTarget.stick else { return }
         let isFinal = abs(vector.dx) < 0.001 && abs(vector.dy) < 0.001
         client.setGamepadStick(stick, x: Double(transformed.dx), y: Double(transformed.dy), isFinal: isFinal)
+    }
+
+    private func stopCamera() {
+        guard let task = cameraTask else { return }
+        task.cancel();cameraTask = nil;cameraVector = .zero
+        client.endCameraLook()
     }
 }
 
@@ -5323,6 +5365,7 @@ private struct GamepadTrackpad: View {
 
     private func handleMove(_ delta: CGVector) {
         let settings = normalizedSettings
+        guard settings.movesCursor else { return }
         client.sendPointerMove(
             deltaX: Double(delta.dx) * Double(settings.sensitivity),
             deltaY: Double(delta.dy) * Double(settings.sensitivity)
@@ -5340,7 +5383,7 @@ private struct GamepadTrackpad: View {
 
     private func handleTap(fingerCount: Int) {
         scheduleTapHaptic()
-        client.sendPointerClick(fingerCount >= 2 ? .right : .left)
+        client.sendPointerClick(normalizedSettings.clickButton ?? (fingerCount >= 2 ? .right : .left))
     }
 
     private func scheduleTapHaptic() {

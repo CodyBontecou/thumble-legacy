@@ -77,12 +77,14 @@ fn recording_controller_reports_preserve_mixed_outputs_and_release_to_neutral() 
     assert!(frames
         .iter()
         .any(|frame| frame["event"] == "pointer_down:left"));
-    assert!(frames
-        .iter()
-        .any(|frame| frame["gamepadReport"]
-            == serde_json::json!([1, 1, 0, 1, 129, 127, 64, 192, 64, 0])));
+    assert!(frames.iter().any(|frame| frame["gamepadReport"]
+        == serde_json::json!([
+            0, 20, 9, 16, 64, 0, 0, 128, 0, 128, 0, 64, 0, 64, 0, 0, 0, 0, 0, 0
+        ])));
+    // The held digital trigger must dominate the lower analog value until release.
+    assert!(frames.iter().any(|frame| frame["gamepadReport"][4] == 255));
     assert_eq!(
         frames.last().unwrap()["gamepadReport"],
-        serde_json::json!([1, 0, 0, 8, 0, 0, 0, 0, 0, 0])
+        serde_json::json!([0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     );
 }

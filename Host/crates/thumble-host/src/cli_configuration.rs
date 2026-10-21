@@ -15,6 +15,8 @@ pub struct ConfigurationArgs {
 }
 #[derive(Debug, Subcommand)]
 pub enum ConfigurationCommand {
+    /// Plan or apply a backed-up migration while this receiver is stopped.
+    Migration(crate::migration_command::MigrationArgs),
     Status,
     /// Prepare an owned artifact from a legacy file without writing authority state.
     PrepareImport {
@@ -83,7 +85,7 @@ pub enum ConfigurationCommand {
 impl ConfigurationCommand {
     pub(crate) fn request(self) -> Result<ControlRequest, String> {
         Ok(match self {
-            Self::PrepareImport { .. } => {
+            Self::PrepareImport { .. } | Self::Migration(_) => {
                 return Err(
                     "legacy preparation is handled locally without a control request".into(),
                 )
@@ -226,6 +228,9 @@ pub async fn run(paths: &HostPaths, args: ConfigurationArgs) -> Result<(), Strin
                 .map_err(|_| "legacy preparation result could not be encoded")?
         );
         return Ok(());
+    }
+    if let ConfigurationCommand::Migration(arguments) = args.action {
+        return crate::migration_command::run(paths, arguments);
     }
     let request = args.action.request()?;
     let response = send_request(&paths.control_socket, &request).await?;

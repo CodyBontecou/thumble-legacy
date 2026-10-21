@@ -1,0 +1,3880 @@
+{
+  "customization": {
+    "accentStyle": "blue",
+    "artworkLayers": [],
+    "assetLibrary": {
+      "assets": []
+    },
+    "buttonCustomizations": [],
+    "colorSchemePreference": "system",
+    "controlBarItemCustomizations": [
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "status"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "profile_menu"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "launch_target"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "edit_layout"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "settings"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "home"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "connection"
+      }
+    ],
+    "controlScale": "standard",
+    "customButtons": [],
+    "designMetadata": {
+      "schemaVersion": 1,
+      "groups": [],
+      "guides": [],
+      "tags": [
+        "hunter",
+        "classic-era",
+        "warband-derived"
+      ],
+      "layerOrder": [],
+      "grid": {
+        "gridSize": 16,
+        "showsGrid": false,
+        "snapToGrid": false,
+        "snapToObjects": true,
+        "snapTolerance": 6
+      }
+    },
+    "deviceCanvas": {
+      "frameID": "iphone-17-pro-landscape"
+    },
+    "elements": [
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "700381D6-7668-5C81-ADE2-A93AE679F647",
+        "kind": "button",
+        "label": "Water",
+        "layout": {
+          "centerX": 0.32608695652173914,
+          "centerY": 0.554726368159204,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Water",
+          "accessibilityName": "Refreshing Spring Water",
+          "actionID": "hunter.actionbutton11",
+          "purposeID": "abilities.actionbutton11",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FDE50653-80A4-5344-B3F9-11E4976DE226",
+        "kind": "button",
+        "label": "Food",
+        "layout": {
+          "centerX": 0.32608695652173914,
+          "centerY": 0.8134328358208955,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Food",
+          "accessibilityName": "Tough Jerky",
+          "actionID": "hunter.actionbutton12",
+          "purposeID": "abilities.actionbutton12",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "47ABBDA3-02D7-55D0-B4B8-B41C8C1E7B4C",
+        "kind": "button",
+        "label": "Target",
+        "layout": {
+          "centerX": 0.2665903890160183,
+          "centerY": 0.6840796019900498,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Target",
+          "accessibilityName": "Target nearest enemy",
+          "actionID": "hunter.targetnearestenemy",
+          "purposeID": "utility.targetnearestenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "5BD82721-D9FF-5990-BDBE-C2CF1E617EAA",
+        "kind": "button",
+        "label": "Previous",
+        "layout": {
+          "centerX": 0.38558352402745993,
+          "centerY": 0.6840796019900498,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Previous",
+          "accessibilityName": "Target previous enemy",
+          "actionID": "hunter.targetpreviousenemy",
+          "purposeID": "utility.targetpreviousenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "CA73647D-F9AE-5410-AE7D-D26F0F145CE7",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.8352402745995423,
+          "centerY": 0.763681592039801,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "0987A2E8-6F5A-51AA-BC08-860A875B4F04",
+        "kind": "button",
+        "label": "Attack",
+        "layout": {
+          "centerX": 0.7757437070938215,
+          "centerY": 0.6343283582089553,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Attack",
+          "accessibilityName": "Attack",
+          "actionID": "hunter.actionbutton1",
+          "purposeID": "abilities.actionbutton1",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B6EAD2EC-1AE0-5A43-B7D2-FD1505CE4E13",
+        "kind": "button",
+        "label": "Raptor Strike",
+        "layout": {
+          "centerX": 0.8947368421052632,
+          "centerY": 0.6343283582089553,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Raptor Strike",
+          "accessibilityName": "Raptor Strike",
+          "actionID": "hunter.actionbutton2",
+          "purposeID": "abilities.actionbutton2",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "E5F9558B-8C54-52B3-91FE-B4A758179F1D",
+        "kind": "button",
+        "label": "Auto Shot",
+        "layout": {
+          "centerX": 0.8352402745995423,
+          "centerY": 0.5049751243781094,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Auto Shot",
+          "accessibilityName": "Auto Shot",
+          "actionID": "hunter.actionbutton3",
+          "purposeID": "abilities.actionbutton3",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "184FCABD-EBD3-53F7-AD4C-6EA21FB8CFD1",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B9DB5288-52F4-5AFB-9E9B-E17FD541890A",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+        "kind": "button",
+        "label": "Bags",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.31,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Bags",
+          "accessibilityName": "Bags",
+          "actionID": "hunter.openallbags",
+          "purposeID": "utility.openallbags",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "\u21e7B"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "5AA44897-7D31-5524-A4D0-F338A7D69B04",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.31,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.44,
+          "centerY": 0.28,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.962,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 6,
+            "bottom": 6,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "49F0530B-1BD5-5309-8309-4E9E6332A854",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.56,
+          "centerY": 0.28,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.079,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 6,
+            "bottom": 6,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "1E11667A-13FF-5290-8EB2-BE7F755F2738",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.137,
+          "centerY": 0.88,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "Space"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FCF5BD0E-DDA9-54F6-BD4E-633D5297849C",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.69,
+          "centerY": 0.88,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "id": "9839F49B-4B94-5475-8D06-F72F013D922E",
+        "joystickOutputSettings": {
+          "analogTarget": "none",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": true,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Move",
+        "layout": {
+          "centerX": 0.13729977116704806,
+          "centerY": 0.5597014925373134,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [
+          "joystick_up",
+          {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_down",
+          {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_left",
+          {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_right",
+          {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        ],
+        "visualRole": "movement",
+        "joystickMapping": {
+          "up": {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "down": {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "left": {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "right": {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Move",
+          "accessibilityName": "Move: forward W,back S,strafe left Q,strafe right E",
+          "actionID": "hunter.move",
+          "purposeID": "sticks.move",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "3C9B8BF7-6689-5E77-A495-E7A4995635C6",
+        "kind": "trackpad",
+        "label": "Cursor",
+        "layout": {
+          "centerX": 0.5034324942791762,
+          "centerY": 0.6965174129353234,
+          "cornerRadius": 60,
+          "heightScale": 0.7714285714285715,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.45,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "trackpad",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": true,
+          "naturalScrolling": true,
+          "movesCursor": true
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Cursor",
+          "accessibilityName": "Cursor: relative pointer, tap to click",
+          "actionID": "hunter.cursor",
+          "purposeID": "sticks.cursor",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+        "joystickOutputSettings": {
+          "analogTarget": "mouse_look",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": false,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Camera",
+        "layout": {
+          "centerX": 0.6636155606407322,
+          "centerY": 0.572139303482587,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "joystick",
+        "joystickMapping": {
+          "up": {
+            "gamepadButtons": []
+          },
+          "down": {
+            "gamepadButtons": []
+          },
+          "left": {
+            "gamepadButtons": []
+          },
+          "right": {
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Camera",
+          "accessibilityName": "Camera: hold and move to look, release to stop",
+          "actionID": "hunter.camera",
+          "purposeID": "sticks.camera",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "BA5C2D0B-75AF-569B-8848-6227B293158D",
+        "kind": "trackpad",
+        "label": "L click",
+        "layout": {
+          "centerX": 0.4405034324942792,
+          "centerY": 0.8830845771144279,
+          "cornerRadius": 7,
+          "heightScale": 0.39090262970859985,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.269485903814262,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "left"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "L click",
+          "accessibilityName": "Left mouse click",
+          "actionID": "hunter.left-click",
+          "purposeID": "mouse.left-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      },
+      {
+        "id": "898354BA-213F-5CA1-B85C-F06D9495E18B",
+        "kind": "trackpad",
+        "label": "R click",
+        "layout": {
+          "centerX": 0.5663615560640732,
+          "centerY": 0.8830845771144279,
+          "cornerRadius": 7,
+          "heightScale": 0.39090262970859985,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.269485903814262,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "right"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "R click",
+          "accessibilityName": "Right mouse click",
+          "actionID": "hunter.right-click",
+          "purposeID": "mouse.right-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      }
+    ],
+    "labelOverrides": [],
+    "layoutMode": "standard",
+    "showsButtonLabels": true,
+    "styleLibrary": {
+      "styles": []
+    },
+    "topBarActivationRegion": {
+      "centerX": 0.5,
+      "centerY": 0.115,
+      "cornerRadius": 7,
+      "heightScale": 1,
+      "icon": {
+        "placement": "center",
+        "renderingMode": "template",
+        "scale": 1,
+        "source": "sf_symbol",
+        "value": "chevron.down"
+      },
+      "isHidden": false,
+      "isLocationLocked": false,
+      "rotationDegrees": 0,
+      "shadowStrength": 1,
+      "shape": "capsule",
+      "widthScale": 1,
+      "zIndex": 100
+    },
+    "updatedAt": 0
+  },
+  "id": "96E7A71A-359E-55AC-9513-AE0034F3C42E",
+  "landscapeCustomization": {
+    "accentStyle": "blue",
+    "artworkLayers": [],
+    "assetLibrary": {
+      "assets": []
+    },
+    "buttonCustomizations": [],
+    "colorSchemePreference": "system",
+    "controlBarItemCustomizations": [
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "status"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "profile_menu"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "launch_target"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "edit_layout"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "settings"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "home"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "connection"
+      }
+    ],
+    "controlScale": "standard",
+    "customButtons": [],
+    "designMetadata": {
+      "schemaVersion": 1,
+      "groups": [],
+      "guides": [],
+      "tags": [
+        "hunter",
+        "classic-era",
+        "warband-derived"
+      ],
+      "layerOrder": [],
+      "grid": {
+        "gridSize": 16,
+        "showsGrid": false,
+        "snapToGrid": false,
+        "snapToObjects": true,
+        "snapTolerance": 6
+      }
+    },
+    "deviceCanvas": {
+      "frameID": "iphone-17-pro-landscape"
+    },
+    "elements": [
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "700381D6-7668-5C81-ADE2-A93AE679F647",
+        "kind": "button",
+        "label": "Water",
+        "layout": {
+          "centerX": 0.32608695652173914,
+          "centerY": 0.554726368159204,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Water",
+          "accessibilityName": "Refreshing Spring Water",
+          "actionID": "hunter.actionbutton11",
+          "purposeID": "abilities.actionbutton11",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FDE50653-80A4-5344-B3F9-11E4976DE226",
+        "kind": "button",
+        "label": "Food",
+        "layout": {
+          "centerX": 0.32608695652173914,
+          "centerY": 0.8134328358208955,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Food",
+          "accessibilityName": "Tough Jerky",
+          "actionID": "hunter.actionbutton12",
+          "purposeID": "abilities.actionbutton12",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "47ABBDA3-02D7-55D0-B4B8-B41C8C1E7B4C",
+        "kind": "button",
+        "label": "Target",
+        "layout": {
+          "centerX": 0.2665903890160183,
+          "centerY": 0.6840796019900498,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Target",
+          "accessibilityName": "Target nearest enemy",
+          "actionID": "hunter.targetnearestenemy",
+          "purposeID": "utility.targetnearestenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "5BD82721-D9FF-5990-BDBE-C2CF1E617EAA",
+        "kind": "button",
+        "label": "Previous",
+        "layout": {
+          "centerX": 0.38558352402745993,
+          "centerY": 0.6840796019900498,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Previous",
+          "accessibilityName": "Target previous enemy",
+          "actionID": "hunter.targetpreviousenemy",
+          "purposeID": "utility.targetpreviousenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "CA73647D-F9AE-5410-AE7D-D26F0F145CE7",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.8352402745995423,
+          "centerY": 0.763681592039801,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "0987A2E8-6F5A-51AA-BC08-860A875B4F04",
+        "kind": "button",
+        "label": "Attack",
+        "layout": {
+          "centerX": 0.7757437070938215,
+          "centerY": 0.6343283582089553,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Attack",
+          "accessibilityName": "Attack",
+          "actionID": "hunter.actionbutton1",
+          "purposeID": "abilities.actionbutton1",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B6EAD2EC-1AE0-5A43-B7D2-FD1505CE4E13",
+        "kind": "button",
+        "label": "Raptor Strike",
+        "layout": {
+          "centerX": 0.8947368421052632,
+          "centerY": 0.6343283582089553,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Raptor Strike",
+          "accessibilityName": "Raptor Strike",
+          "actionID": "hunter.actionbutton2",
+          "purposeID": "abilities.actionbutton2",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "E5F9558B-8C54-52B3-91FE-B4A758179F1D",
+        "kind": "button",
+        "label": "Auto Shot",
+        "layout": {
+          "centerX": 0.8352402745995423,
+          "centerY": 0.5049751243781094,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Auto Shot",
+          "accessibilityName": "Auto Shot",
+          "actionID": "hunter.actionbutton3",
+          "purposeID": "abilities.actionbutton3",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "184FCABD-EBD3-53F7-AD4C-6EA21FB8CFD1",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B9DB5288-52F4-5AFB-9E9B-E17FD541890A",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+        "kind": "button",
+        "label": "Bags",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.31,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Bags",
+          "accessibilityName": "Bags",
+          "actionID": "hunter.openallbags",
+          "purposeID": "utility.openallbags",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "\u21e7B"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "5AA44897-7D31-5524-A4D0-F338A7D69B04",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.31,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.44,
+          "centerY": 0.28,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.962,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 6,
+            "bottom": 6,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "49F0530B-1BD5-5309-8309-4E9E6332A854",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.56,
+          "centerY": 0.28,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.079,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 6,
+            "bottom": 6,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "1E11667A-13FF-5290-8EB2-BE7F755F2738",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.137,
+          "centerY": 0.88,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "Space"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FCF5BD0E-DDA9-54F6-BD4E-633D5297849C",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.69,
+          "centerY": 0.88,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "id": "9839F49B-4B94-5475-8D06-F72F013D922E",
+        "joystickOutputSettings": {
+          "analogTarget": "none",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": true,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Move",
+        "layout": {
+          "centerX": 0.13729977116704806,
+          "centerY": 0.5597014925373134,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [
+          "joystick_up",
+          {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_down",
+          {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_left",
+          {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_right",
+          {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        ],
+        "visualRole": "movement",
+        "joystickMapping": {
+          "up": {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "down": {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "left": {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "right": {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Move",
+          "accessibilityName": "Move: forward W,back S,strafe left Q,strafe right E",
+          "actionID": "hunter.move",
+          "purposeID": "sticks.move",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "3C9B8BF7-6689-5E77-A495-E7A4995635C6",
+        "kind": "trackpad",
+        "label": "Cursor",
+        "layout": {
+          "centerX": 0.5034324942791762,
+          "centerY": 0.6965174129353234,
+          "cornerRadius": 60,
+          "heightScale": 0.7714285714285715,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.45,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "trackpad",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": true,
+          "naturalScrolling": true,
+          "movesCursor": true
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Cursor",
+          "accessibilityName": "Cursor: relative pointer, tap to click",
+          "actionID": "hunter.cursor",
+          "purposeID": "sticks.cursor",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+        "joystickOutputSettings": {
+          "analogTarget": "mouse_look",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": false,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Camera",
+        "layout": {
+          "centerX": 0.6636155606407322,
+          "centerY": 0.572139303482587,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "joystick",
+        "joystickMapping": {
+          "up": {
+            "gamepadButtons": []
+          },
+          "down": {
+            "gamepadButtons": []
+          },
+          "left": {
+            "gamepadButtons": []
+          },
+          "right": {
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Camera",
+          "accessibilityName": "Camera: hold and move to look, release to stop",
+          "actionID": "hunter.camera",
+          "purposeID": "sticks.camera",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "BA5C2D0B-75AF-569B-8848-6227B293158D",
+        "kind": "trackpad",
+        "label": "L click",
+        "layout": {
+          "centerX": 0.4405034324942792,
+          "centerY": 0.8830845771144279,
+          "cornerRadius": 7,
+          "heightScale": 0.39090262970859985,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.269485903814262,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "left"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "L click",
+          "accessibilityName": "Left mouse click",
+          "actionID": "hunter.left-click",
+          "purposeID": "mouse.left-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      },
+      {
+        "id": "898354BA-213F-5CA1-B85C-F06D9495E18B",
+        "kind": "trackpad",
+        "label": "R click",
+        "layout": {
+          "centerX": 0.5663615560640732,
+          "centerY": 0.8830845771144279,
+          "cornerRadius": 7,
+          "heightScale": 0.39090262970859985,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.269485903814262,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "right"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "R click",
+          "accessibilityName": "Right mouse click",
+          "actionID": "hunter.right-click",
+          "purposeID": "mouse.right-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      }
+    ],
+    "labelOverrides": [],
+    "layoutMode": "standard",
+    "showsButtonLabels": true,
+    "styleLibrary": {
+      "styles": []
+    },
+    "topBarActivationRegion": {
+      "centerX": 0.5,
+      "centerY": 0.115,
+      "cornerRadius": 7,
+      "heightScale": 1,
+      "icon": {
+        "placement": "center",
+        "renderingMode": "template",
+        "scale": 1,
+        "source": "sf_symbol",
+        "value": "chevron.down"
+      },
+      "isHidden": false,
+      "isLocationLocked": false,
+      "rotationDegrees": 0,
+      "shadowStrength": 1,
+      "shape": "capsule",
+      "widthScale": 1,
+      "zIndex": 100
+    },
+    "updatedAt": 0
+  },
+  "name": "Hunter",
+  "orientationPreference": "landscape",
+  "outputMode": "keyboard",
+  "portraitCustomization": {
+    "accentStyle": "blue",
+    "artworkLayers": [],
+    "assetLibrary": {
+      "assets": []
+    },
+    "buttonCustomizations": [],
+    "colorSchemePreference": "system",
+    "controlBarItemCustomizations": [
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "status"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "profile_menu"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "launch_target"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "edit_layout"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "settings"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-default",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "home"
+      },
+      {
+        "appearance": {
+          "cornerRadius": 7,
+          "heightScale": 1,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "styleID": "css-role-system",
+          "widthScale": 1,
+          "zIndex": 0
+        },
+        "item": "connection"
+      }
+    ],
+    "controlScale": "standard",
+    "customButtons": [],
+    "designMetadata": {
+      "schemaVersion": 1,
+      "groups": [],
+      "guides": [],
+      "tags": [
+        "hunter",
+        "classic-era",
+        "warband-derived"
+      ],
+      "layerOrder": [],
+      "grid": {
+        "gridSize": 16,
+        "showsGrid": false,
+        "snapToGrid": false,
+        "snapToObjects": true,
+        "snapTolerance": 6
+      }
+    },
+    "deviceCanvas": {
+      "frameID": "iphone-17-pro-portrait"
+    },
+    "elements": [
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "700381D6-7668-5C81-ADE2-A93AE679F647",
+        "kind": "button",
+        "label": "Water",
+        "layout": {
+          "centerX": 0.236318407960199,
+          "centerY": 0.7986270022883295,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 27,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Water",
+          "accessibilityName": "Refreshing Spring Water",
+          "actionID": "hunter.actionbutton11",
+          "purposeID": "abilities.actionbutton11",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FDE50653-80A4-5344-B3F9-11E4976DE226",
+        "kind": "button",
+        "label": "Food",
+        "layout": {
+          "centerX": 0.236318407960199,
+          "centerY": 0.9176201372997712,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 24,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "secondary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Food",
+          "accessibilityName": "Tough Jerky",
+          "actionID": "hunter.actionbutton12",
+          "purposeID": "abilities.actionbutton12",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "47ABBDA3-02D7-55D0-B4B8-B41C8C1E7B4C",
+        "kind": "button",
+        "label": "Target",
+        "layout": {
+          "centerX": 0.10696517412935323,
+          "centerY": 0.8581235697940504,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Target",
+          "accessibilityName": "Target nearest enemy",
+          "actionID": "hunter.targetnearestenemy",
+          "purposeID": "utility.targetnearestenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "5BD82721-D9FF-5990-BDBE-C2CF1E617EAA",
+        "kind": "button",
+        "label": "Previous",
+        "layout": {
+          "centerX": 0.3656716417910448,
+          "centerY": 0.8581235697940504,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 48,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Previous",
+          "accessibilityName": "Target previous enemy",
+          "actionID": "hunter.targetpreviousenemy",
+          "purposeID": "utility.targetpreviousenemy",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "CA73647D-F9AE-5410-AE7D-D26F0F145CE7",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.7587064676616916,
+          "centerY": 0.9176201372997712,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "0987A2E8-6F5A-51AA-BC08-860A875B4F04",
+        "kind": "button",
+        "label": "Attack",
+        "layout": {
+          "centerX": 0.6293532338308457,
+          "centerY": 0.8581235697940504,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 18,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Attack",
+          "accessibilityName": "Attack",
+          "actionID": "hunter.actionbutton1",
+          "purposeID": "abilities.actionbutton1",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B6EAD2EC-1AE0-5A43-B7D2-FD1505CE4E13",
+        "kind": "button",
+        "label": "Raptor Strike",
+        "layout": {
+          "centerX": 0.8880597014925373,
+          "centerY": 0.8581235697940504,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 19,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Raptor Strike",
+          "accessibilityName": "Raptor Strike",
+          "actionID": "hunter.actionbutton2",
+          "purposeID": "abilities.actionbutton2",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "E5F9558B-8C54-52B3-91FE-B4A758179F1D",
+        "kind": "button",
+        "label": "Auto Shot",
+        "layout": {
+          "centerX": 0.7587064676616916,
+          "centerY": 0.7986270022883295,
+          "cornerRadius": 5,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "rounded_rectangle",
+          "widthScale": 0.52,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 20,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "primary_action",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Auto Shot",
+          "accessibilityName": "Auto Shot",
+          "actionID": "hunter.actionbutton3",
+          "purposeID": "abilities.actionbutton3",
+          "groupIDs": [
+            "command",
+            "abilities"
+          ]
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "184FCABD-EBD3-53F7-AD4C-6EA21FB8CFD1",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "B9DB5288-52F4-5AFB-9E9B-E17FD541890A",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.17,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "id": "F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+        "kind": "button",
+        "label": "Bags",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.25,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 11,
+            "modifiersRawValue": 2
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Bags",
+          "accessibilityName": "Bags",
+          "actionID": "hunter.openallbags",
+          "purposeID": "utility.openallbags",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "\u21e7B"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "5AA44897-7D31-5524-A4D0-F338A7D69B04",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.25,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.05,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+        "kind": "button",
+        "label": "Map",
+        "layout": {
+          "centerX": 0.35,
+          "centerY": 0.38,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.962,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 7,
+            "bottom": 7,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 46,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Map",
+          "accessibilityName": "World map",
+          "actionID": "hunter.toggleworldmap",
+          "purposeID": "utility.toggleworldmap",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "M"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "49F0530B-1BD5-5309-8309-4E9E6332A854",
+        "kind": "button",
+        "label": "Character",
+        "layout": {
+          "centerX": 0.65,
+          "centerY": 0.38,
+          "cornerRadius": 7,
+          "heightScale": 0.3744,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 1.079,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 7,
+            "bottom": 7,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 8,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "menu",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Character",
+          "accessibilityName": "Character",
+          "actionID": "hunter.togglecharacter0",
+          "purposeID": "utility.togglecharacter0",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "C"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "1E11667A-13FF-5290-8EB2-BE7F755F2738",
+        "kind": "button",
+        "label": "Jump",
+        "layout": {
+          "centerX": 0.23,
+          "centerY": 0.48,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 49,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Jump",
+          "accessibilityName": "Jump",
+          "actionID": "hunter.jump",
+          "purposeID": "utility.jump",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "Space"
+        }
+      },
+      {
+        "defaultOutput": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "id": "FCF5BD0E-DDA9-54F6-BD4E-633D5297849C",
+        "kind": "button",
+        "label": "Self",
+        "layout": {
+          "centerX": 0.77,
+          "centerY": 0.48,
+          "cornerRadius": 7,
+          "heightScale": 0.52,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.65,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "output": {
+          "keyboard": {
+            "keyCode": 122,
+            "modifiersRawValue": 0
+          },
+          "gamepadButtons": []
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Self",
+          "accessibilityName": "Target self",
+          "actionID": "hunter.targetself",
+          "purposeID": "utility.targetself",
+          "groupIDs": [
+            "command",
+            "utility"
+          ],
+          "caption": "F1"
+        }
+      },
+      {
+        "id": "9839F49B-4B94-5475-8D06-F72F013D922E",
+        "joystickOutputSettings": {
+          "analogTarget": "none",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": true,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Move",
+        "layout": {
+          "centerX": 0.236318407960199,
+          "centerY": 0.6521739130434783,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 1.2,
+            "bottom": 1.2,
+            "leading": 1.2,
+            "trailing": 1.2
+          }
+        },
+        "partOutputs": [
+          "joystick_up",
+          {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_down",
+          {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_left",
+          {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "joystick_right",
+          {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        ],
+        "visualRole": "movement",
+        "joystickMapping": {
+          "up": {
+            "keyboard": {
+              "keyCode": 13,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "down": {
+            "keyboard": {
+              "keyCode": 1,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "left": {
+            "keyboard": {
+              "keyCode": 12,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          },
+          "right": {
+            "keyboard": {
+              "keyCode": 14,
+              "modifiersRawValue": 0
+            },
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Move",
+          "accessibilityName": "Move: forward W,back S,strafe left Q,strafe right E",
+          "actionID": "hunter.move",
+          "purposeID": "sticks.move",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "3C9B8BF7-6689-5E77-A495-E7A4995635C6",
+        "kind": "trackpad",
+        "label": "Cursor",
+        "layout": {
+          "centerX": 0.5,
+          "centerY": 0.5835240274599542,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.4114285714285714,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "trackpad",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": true,
+          "naturalScrolling": true,
+          "movesCursor": true
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Cursor",
+          "accessibilityName": "Cursor: relative pointer, tap to click",
+          "actionID": "hunter.cursor",
+          "purposeID": "sticks.cursor",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+        "joystickOutputSettings": {
+          "analogTarget": "mouse_look",
+          "deadZone": 0.12,
+          "invertX": false,
+          "invertY": false,
+          "sendsDigitalDirections": false,
+          "sensitivity": 1,
+          "snapToCardinal": false
+        },
+        "kind": "joystick",
+        "label": "Camera",
+        "layout": {
+          "centerX": 0.7587064676616916,
+          "centerY": 0.6521739130434783,
+          "cornerRadius": 60,
+          "heightScale": 0.72,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "circle",
+          "widthScale": 0.72,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "joystick",
+        "joystickMapping": {
+          "up": {
+            "gamepadButtons": []
+          },
+          "down": {
+            "gamepadButtons": []
+          },
+          "left": {
+            "gamepadButtons": []
+          },
+          "right": {
+            "gamepadButtons": []
+          }
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "Camera",
+          "accessibilityName": "Camera: hold and move to look, release to stop",
+          "actionID": "hunter.camera",
+          "purposeID": "sticks.camera",
+          "groupIDs": [
+            "command",
+            "sticks"
+          ]
+        }
+      },
+      {
+        "id": "BA5C2D0B-75AF-569B-8848-6227B293158D",
+        "kind": "trackpad",
+        "label": "L click",
+        "layout": {
+          "centerX": 0.4228855721393035,
+          "centerY": 0.6979405034324943,
+          "cornerRadius": 7,
+          "heightScale": 0.4560530679933665,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.2606017531390666,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "left"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "L click",
+          "accessibilityName": "Left mouse click",
+          "actionID": "hunter.left-click",
+          "purposeID": "mouse.left-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      },
+      {
+        "id": "898354BA-213F-5CA1-B85C-F06D9495E18B",
+        "kind": "trackpad",
+        "label": "R click",
+        "layout": {
+          "centerX": 0.572139303482587,
+          "centerY": 0.6979405034324943,
+          "cornerRadius": 7,
+          "heightScale": 0.4560530679933665,
+          "isHidden": false,
+          "isLocationLocked": false,
+          "rotationDegrees": 0,
+          "shadowStrength": 1,
+          "shape": "capsule",
+          "widthScale": 0.2606017531390666,
+          "zIndex": 0,
+          "hitInsets": {
+            "top": 0,
+            "bottom": 0,
+            "leading": 0,
+            "trailing": 0
+          }
+        },
+        "partOutputs": [],
+        "visualRole": "utility",
+        "trackpadSettings": {
+          "sensitivity": 1.2,
+          "scrollSensitivity": 0.85,
+          "tapToClick": true,
+          "twoFingerScroll": false,
+          "naturalScrolling": true,
+          "movesCursor": false,
+          "clickButton": "right"
+        },
+        "presentation": {
+          "schemaVersion": 1,
+          "legend": "R click",
+          "accessibilityName": "Right mouse click",
+          "actionID": "hunter.right-click",
+          "purposeID": "mouse.right-click",
+          "groupIDs": [
+            "command",
+            "mouse-click"
+          ]
+        }
+      }
+    ],
+    "labelOverrides": [],
+    "layoutMode": "standard",
+    "showsButtonLabels": true,
+    "styleLibrary": {
+      "styles": []
+    },
+    "topBarActivationRegion": {
+      "centerX": 0.5,
+      "centerY": 0.115,
+      "cornerRadius": 7,
+      "heightScale": 1,
+      "icon": {
+        "placement": "center",
+        "renderingMode": "template",
+        "scale": 1,
+        "source": "sf_symbol",
+        "value": "chevron.down"
+      },
+      "isHidden": false,
+      "isLocationLocked": false,
+      "rotationDegrees": 0,
+      "shadowStrength": 1,
+      "shape": "capsule",
+      "widthScale": 1,
+      "zIndex": 100
+    },
+    "updatedAt": 0
+  },
+  "updatedAt": 1792526400000
+}

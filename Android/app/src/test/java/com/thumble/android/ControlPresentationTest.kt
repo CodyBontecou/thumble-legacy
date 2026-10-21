@@ -79,4 +79,23 @@ class ControlPresentationTest {
         assertEquals(.5f, ControlPresentation.effectiveScale(control("joystick"), true, presentation), .0001f)
         assertEquals(.5f, ControlPresentation.effectiveScale(control(), false, presentation), .0001f)
     }
+    @Test fun `live icon refresh preserves independent presentation without changing asset identity`() {
+        val content = JSONObject().put("iconPlacement", "center").put("iconScale", 2.2)
+        val style = JSONObject().put("visualStyle", JSONObject().put("normal", JSONObject().put("content", content))
+            .put("pressed", JSONObject().put("content", JSONObject().put("fontWeight", "bold"))))
+        val c = control(style = style)
+        for (asset in listOf("wow-live-icon-133972", "wow-live-icon-132282")) {
+            val syncedIcon = JSONObject().put("source", "asset").put("value", asset).put("placement", "top")
+                .put("scale", 1).put("renderingMode", "original")
+            style.put("icon", syncedIcon)
+            val result = ControlPresentation.resolve(c, JSONObject(), PresentationState.PRESSED, true).getJSONObject("icon")
+            assertEquals(asset, result.getString("value")); assertEquals("asset", result.getString("source"))
+            assertEquals("original", result.getString("renderingMode")); assertEquals("center", result.getString("placement"))
+            assertEquals(2.2, result.getDouble("scale"), 0.0)
+            assertEquals("top", syncedIcon.getString("placement")); assertEquals(1.0, syncedIcon.getDouble("scale"), 0.0)
+        }
+        style.remove("icon")
+        assertFalse(ControlPresentation.resolve(c, JSONObject(), PresentationState.NORMAL, false).has("icon"))
+    }
+
 }

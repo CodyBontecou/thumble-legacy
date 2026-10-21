@@ -34,6 +34,8 @@ fn decode_stdio_request(data: &[u8]) -> Result<RxJsonRpcMessage<RoleServer>, &'s
                 "update_controller_design"
                 | "import_profiles"
                 | "prepare_legacy_profile_import"
+                | "migrate_profile_authority"
+                | "rollback_profile_authority"
                 | "import_customization"
                 | "import_style_library",
             ) => true,
@@ -174,6 +176,8 @@ mod stdio_request_tests {
             "update_controller_design",
             "import_profiles",
             "prepare_legacy_profile_import",
+            "migrate_profile_authority",
+            "rollback_profile_authority",
             "import_customization",
             "import_style_library",
         ] {

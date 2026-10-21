@@ -5,6 +5,18 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class SkinLibraryManagementTest {
+    @Test fun unchangedSyncValidatesIncomingArchiveWithoutRescanningInstalledSkins() {
+        val root=java.nio.file.Files.createTempDirectory("skin-unchanged-sync").toFile()
+        try {
+            val bytes=javaClass.classLoader!!.getResourceAsStream("solar-sumi-1.0.0-edbecde5b708.pocketpad")!!.use { it.readBytes() }
+            var decodes=0
+            val library=SkinLibrary(root) { decodes++;SkinPackageCodec.decode(it) }
+            library.install(bytes)
+            decodes=0
+            assertEquals(SkinInstallChange.UNCHANGED,library.install(bytes,SkinInstallPolicy.ALLOW_DOWNGRADE).change)
+            assertEquals("An unchanged sync still validates its incoming archive, but must not decode the installed library again",1,decodes)
+        } finally { root.deleteRecursively() }
+    }
     private val reference=SkinReference("com.example.skin","1.0.0")
     @Test fun removalIntentRoundTripsWithExplicitMacOwnership() {
         val values=listOf(PendingSkinRemoval(reference,"mac-a"),PendingSkinRemoval(reference,"mac-b"))

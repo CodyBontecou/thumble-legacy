@@ -29,6 +29,28 @@ class IconArtworkDeviceTest {
     private fun size(surface: ControllerSurface) {
         surface.measure(View.MeasureSpec.makeMeasureSpec(600, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(600, View.MeasureSpec.EXACTLY)); surface.layout(0, 0, 600, 600)
     }
+    @Test fun externalLegendPaintsAboveTheControlInsteadOfBeingTextViewClipped() {
+        instrumentation.runOnMainSync {
+            val element = button().put("label", "A")
+            element.getJSONObject("layout").put("showsIntegratedLabel", true).put("widthScale", .75).put("heightScale", .75)
+                .put("visualStyle", JSONObject().put("normal", JSONObject().put("foregroundColor", rgbaJSON(Color.MAGENTA))
+                    .put("content", JSONObject().put("legend", "A").put("fontSize", 12).put("labelPlacement", "above").put("labelPadding", 2))))
+            val surface = ControllerSurface(instrumentation.targetContext)
+            surface.show(profile(element), 1, false, false); size(surface)
+            val child = surface.getChildAt(0)
+            val bitmap = Bitmap.createBitmap(600, 600, Bitmap.Config.ARGB_8888)
+            surface.draw(Canvas(bitmap))
+            val margin = (24 * surface.resources.displayMetrics.density).toInt()
+            var ink = 0
+            for (y in (child.top - margin).coerceAtLeast(0) until child.top) for (x in child.left.coerceAtLeast(0) until child.right.coerceAtMost(600)) {
+                val pixel = bitmap.getPixel(x, y)
+                if (Color.red(pixel) > 150 && Color.blue(pixel) > 150 && Color.green(pixel) < 100) ink++
+            }
+            bitmap.recycle()
+            assertTrue("Above legend must render outside the body; labels remain native accessible text", ink > 3)
+            assertEquals("A", (child as TextView).text.toString())
+        }
+    }
     @Test fun passiveArtworkPlanesPaintAroundControlsAndNeverInterceptTouch() {
         val element = button()
         val layers = JSONArray().put(layer("under", "underlay", Color.GREEN)).put(layer("over", "overlay", Color.RED, .5).put("zIndex", -10000))
@@ -132,4 +154,27 @@ class IconArtworkDeviceTest {
             assertEquals("", view.text.toString()); assertEquals(listOf(true,false),edges.map { it.first }); assertEquals(edges[0].second,edges[1].second)
         }
     }
+    @Test fun circleIconMaskClipsOnlyPaintAndLeavesOriginalSquareDefault() {
+        val source = Bitmap.createBitmap(16, 16, Bitmap.Config.ARGB_8888).apply { eraseColor(Color.RED) }
+        val out = ByteArrayOutputStream(); source.compress(Bitmap.CompressFormat.PNG, 100, out); source.recycle()
+        val assets = AssetImages(JSONObject().put("assets", JSONArray().put(JSONObject().put("id", "uniform-red").put("name", "Red")
+            .put("data", Base64.encodeToString(out.toByteArray(), Base64.NO_WRAP)))))
+        val icon = ControlIcon.parse(JSONObject().put("source", "asset").put("value", "uniform-red").put("renderingMode", "original"))!!
+        val painter = IconPainter(icon, assets)
+        fun render(mask: String?): Bitmap = Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888).also { target ->
+            val canvas = Canvas(target)
+            if (mask == null) painter.draw(canvas, 32f, 32f, 40f, Color.GREEN)
+            else painter.draw(canvas, 32f, 32f, 40f, Color.GREEN, mask)
+            // A subsequent draw outside the icon proves the painter restored the caller's clipping state.
+            canvas.drawRect(0f, 0f, 4f, 4f, Paint().apply { color = Color.BLUE })
+        }
+        val circle = render("circle"); val square = render(null); val explicitNone = render("none")
+        assertEquals(0, Color.alpha(circle.getPixel(15, 15)))
+        assertEquals(Color.RED, circle.getPixel(32, 32)); assertEquals(Color.RED, circle.getPixel(32, 16))
+        assertEquals(Color.RED, square.getPixel(15, 15)); assertEquals(Color.RED, explicitNone.getPixel(15, 15))
+        assertEquals(Color.BLUE, circle.getPixel(1, 1))
+        assertEquals("uniform-red", icon.value); assertEquals("original", icon.renderingMode)
+        circle.recycle(); square.recycle(); explicitNone.recycle()
+    }
+
 }

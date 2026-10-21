@@ -20,9 +20,12 @@ data class PairingTarget(val urls: List<String>, val code: String?, val serverID
             val code = json.optString("pairingCode").takeIf { it.isNotBlank() && it != "null" }
             require(code == null || code.matches(Regex("[0-9]{6}"))) { "Pairing code must contain six digits." }
             val serverID = json.optString("serverID").takeIf { it.isNotBlank() && it != "null" }
-            val name = json.optString("bonjourServiceName").takeIf { it.isNotBlank() && it != "null" }
-            val type = json.optString("bonjourServiceType", "_pocketpad._tcp").trimEnd('.')
-            val domain = json.optString("bonjourServiceDomain", "local").trimEnd('.')
+            // PairingPayload uses service*, while older receivers used bonjourService*.
+            fun serviceField(current: String,legacy: String,fallback: String="") =
+                if(json.has(current) && !json.isNull(current)) json.getString(current) else json.optString(legacy,fallback)
+            val name = serviceField("serviceName","bonjourServiceName").takeIf { it.isNotBlank() && it != "null" }
+            val type = serviceField("serviceType","bonjourServiceType","_pocketpad._tcp").trimEnd('.')
+            val domain = serviceField("serviceDomain","bonjourServiceDomain","local").trimEnd('.')
             require(urls.isNotEmpty() || ((serverID != null || name != null) && type == "_pocketpad._tcp" && domain == "local")) {
                 "QR has no reachable address or supported nearby Mac service."
             }
@@ -66,14 +69,14 @@ object WireCodec {
         .put("type", type).put("timestamp", 0).also {
             if (generation != null) it.put("inputProtocolVersion", 3).put("inputGeneration", generation)
         }
-    fun decode(data: ByteArray): JSONObject {
+    fun decode(data: ByteArray, exactNumbers: Boolean = false): JSONObject {
         require(data.size <= MAX_PAYLOAD) { "Host message is too large." }
         if (data.size == 14 && data[0] == 80.toByte() && data[1] == 80.toByte()) {
             require(data[2] == 1.toByte() && data[12] == (-1).toByte() && data[13] == (-1).toByte())
             val type = when (data[3].toInt()) { 2 -> "release_all"; 3 -> "heartbeat"; 4 -> "ping"; 5 -> "pong"; else -> error("Invalid control frame") }
             return message(type).put("timestamp", ByteBuffer.wrap(data, 4, 8).order(ByteOrder.LITTLE_ENDIAN).long)
         }
-        return StrictJSON.objectValue(data)
+        return StrictJSON.objectValue(data,exactNumbers=exactNumbers)
     }
 }
 

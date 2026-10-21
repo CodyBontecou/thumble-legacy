@@ -455,6 +455,47 @@ final class StackSafetyRegressionTests: XCTestCase {
         }
     }
 
+    func testOwnedPhoneSnapshotCacheAndEditorFitConstrainedThread() throws {
+        assertInlineSize(OwnedPhoneSnapshot.self, atMost: 8)
+        assertInlineSize(OwnedPhoneReceivedFrame.self, atMost: 8)
+        assertInlineSize(OwnedPhoneSession.self, atMost: 8)
+        assertInlineSize(OwnedPhoneCache.self, atMost: 64)
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) { try OwnedPhoneCacheStackJob().run() }
+    }
+    private final class OwnedPhoneCacheStackJob {
+        private var frame: OwnedPhoneReceivedFrame?
+        private var session: OwnedPhoneSession?
+        func run() throws { try receive(); try record(); try persistAndReplay() }
+        private func receive() throws {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let source = try Data(contentsOf: root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))
+            let fields = try JSONDecoder.rawObjectFields(in: source, named: ["profiles", "activeProfileID", "defaultProfileID"])
+            var wire = Data(#"{"type":"pairing_accepted","timestamp":0,"profileFormatVersion":5,"configurationRevision":41,"serverID":"stack-owned-apple","gamepadProfiles":"#.utf8)
+            wire.append(fields["profiles"]!); wire.append(Data(#", "gamepadProfileID":"#.utf8)); wire.append(fields["activeProfileID"]!)
+            wire.append(Data(#", "defaultGamepadProfileID":"#.utf8)); wire.append(fields["defaultProfileID"]!); wire.append(125)
+            frame = try OwnedPhoneReceivedFrame(wireData: wire, expectedServerID: "stack-owned-apple")
+            session = OwnedPhoneSession(cache: .init(snapshot: frame!.snapshot, journal: .init()))
+        }
+        private func record() throws {
+            let profile = session!.profiles[0]
+            var customization = profile.customization
+            let element = customization.elements[0]
+            var paint = element.layout; paint.centerX = 0.63
+            if element.kind == .button, let builtin = element.defaultControlID { customization.setButtonCustomization(paint, for: builtin) }
+            else { customization.elements[0].layout = paint; if let i = customization.customButtons.firstIndex(where: { $0.id == element.id }) { customization.customButtons[i].layout = paint } }
+            session = try session!.recording(profileID: profile.id, customization: customization, nowMillis: 100)
+        }
+        private func persistAndReplay() throws {
+            let restored = try OwnedPhoneCache(validating: session!.cache.encoded())
+            let replay = OwnedPhoneSession(cache: restored)
+            guard replay.cache.journal.pending.count == 1, replay.profiles.count == 2,
+                  replay.cache.snapshot!.documentData == frame!.snapshot.documentData else { throw StackTestError.unexpectedDecodedState }
+            let data = try OwnedPhoneSession.wireData(for: replay.cache.journal.pending[0])
+            let message = try ControllerWireCodec.decode(data, using: JSONDecoder())
+            guard message.ownedPhoneEdit?.originalData.isEmpty == false else { throw StackTestError.unexpectedDecodedState }
+        }
+    }
+
     func testOwnedConfigurationReaderFitsConstrainedThread() throws {
         assertInlineSize(ThumbleOwnedConfigurationDocument.self, atMost: 8)
         try runOnThread(stackSize: 512 * 1024, timeout: 30) {
@@ -571,6 +612,23 @@ final class StackSafetyRegressionTests: XCTestCase {
             for frame in frames {
                 let response = try ThumbleCLIRuntimeBackend.decodeResponse(frame, invocationID: invocation)
                 guard response.control?.applicationLaunch?.profileID == profile else { throw StackTestError.unexpectedDecodedState }
+            }
+        }
+    }
+
+    func testThumbleLinkControllerImportAndRefreshOn512KiBStack() throws {
+        let fixture = try String(contentsOf: URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .appendingPathComponent("Fixtures/ThumbleLink/hunter-classic-era.txt"), encoding: .utf8)
+        let baseProfile = GamepadConfigurationProfile(name: "Stack Controller Base", customization: GamepadCustomization(elements: []))
+        let base = try JSONEncoder().encode(ThumbleKeypadConfigurationExport(profiles: [baseProfile],
+            activeProfileID: baseProfile.id, defaultProfileID: baseProfile.id))
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let first = try ThumbleLinkImport.prepare(text: fixture, currentConfiguration: base, layout: .controller)
+            let refresh = try ThumbleLinkImport.prepare(text: fixture, currentConfiguration: first.configurationData)
+            let envelope = try MacConfigurationBindings.decodeKeypadImport(data: refresh.configurationData, sourceName: "Stack Controller")
+            guard refresh.isRefresh, refresh.layout == .controller,
+                  envelope.profiles[0].customization.elements.count == 16 else {
+                throw StackTestError.unexpectedDecodedState
             }
         }
     }
@@ -1931,4 +1989,37 @@ extension StackSafetyRegressionTests {
             _ = try JSONEncoder().encode(response)
         }
     }
+    func testWoWLiveProfileCreateAndRefreshRunOn512KiBStack() throws {
+        try runOnThread(stackSize: 512 * 1024, timeout: 30) {
+            let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            let fixture = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: root.appendingPathComponent("Host/fixtures/wow-live/v1.json"))) as? [String: Any])
+            let snapshotData = try JSONSerialization.data(withJSONObject: XCTUnwrap(fixture["snapshot"]))
+            let snapshot = try JSONDecoder().decodeUnique(WoWLiveProfile.Snapshot.self, from: snapshotData)
+            let atlas = "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAA+UlEQVR4nO3RMQ0AMAzAsN5DPNiDMBg9YikAInnOfVps1g/iAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEA7AADaAQDQDgCAdgAAtAMAoB0AAO0AAGgHAEC7DwafhWXtIJ+sAAAAAElFTkSuQmCC"
+            let request = WoWLiveProfileRequest(schemaVersion: 2, wowProfileCommand: "prepare-owned", profileID: snapshot.profileID,
+                snapshotJSON: String(decoding: snapshotData, as: UTF8.self), atlasPNGBase64: atlas,
+                existingProfileJSON: nil, existingBindingsJSON: nil)
+            let result = try WoWLiveProfile.prepare(request)
+            let profileData = try JSONEncoder().encode(XCTUnwrap(result.document.profiles.first))
+            let rawProfile = try XCTUnwrap(JSONSerialization.jsonObject(with: profileData) as? [String: Any])
+            let ownedData = try JSONSerialization.data(withJSONObject: ["schema": ThumbleKeypadConfigurationExport.schemaIdentifier,
+                "version": 5, "profiles": [rawProfile], "activeProfileID": snapshot.profileID.uuidString,
+                "defaultProfileID": snapshot.profileID.uuidString])
+            let profile = try XCTUnwrap(ThumbleOwnedConfigurationDocument(validating: ownedData).projectedProfiles.first)
+            guard profile.outputMode == .controller, profile.appearanceBank?.variants.count == 8,
+                  profile.customization.assetLibrary.assets.count == 2,
+                  profile.customization.elements.contains(where: { $0.layout.icon?.value == "wow-live-icon-132282" }) else {
+                throw StackTestError.unexpectedDecodedState
+            }
+            let bindings = ThumbleBridgeJSONValue.object([
+                "outputBindings": try XCTUnwrap(result.document.profileOutputBindings[profile.id.uuidString]),
+                "keyBindings": try XCTUnwrap(result.document.profileKeyBindings[profile.id.uuidString])])
+            let refresh = WoWLiveProfileRequest(schemaVersion: 2, wowProfileCommand: "prepare-owned", profileID: snapshot.profileID,
+                snapshotJSON: request.snapshotJSON, atlasPNGBase64: atlas,
+                existingProfileJSON: String(decoding: profileData, as: UTF8.self),
+                existingBindingsJSON: String(decoding: try JSONEncoder().encode(bindings), as: UTF8.self))
+            _ = try JSONEncoder().encode(WoWLiveProfile.prepare(refresh))
+        }
+    }
+
 }

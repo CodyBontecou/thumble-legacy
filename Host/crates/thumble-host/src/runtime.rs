@@ -4,6 +4,8 @@ mod owned_intent_runtime;
 mod owned_runtime;
 #[path = "runtime_skins.rs"]
 mod skin_runtime;
+#[path = "runtime_wow.rs"]
+mod wow_runtime;
 use crate::authority::{
     prepare_configuration_commit, ConfigurationCommitError, ConfigurationCommitInput,
     PreparedConfigurationCommit,
@@ -136,6 +138,7 @@ struct RuntimeInner {
 struct SharedRuntime {
     inner: Mutex<RuntimeInner>,
     application_launcher: crate::application_launch::ApplicationLauncher,
+    wow_sync: Mutex<crate::wow_live::SyncStatus>,
     skin_service: Option<skin_runtime::SkinService>,
     phone_layout_bridge: Option<crate::phone_layout::PhoneLayoutBridge>,
     skin_jobs: Mutex<Option<std::sync::mpsc::SyncSender<(ConnectionId, skin_runtime::ProfileJob)>>>,
@@ -1650,6 +1653,7 @@ impl ControlHandler for SharedRuntime {
                 response.cli_profile = Some(self.cli_profile_transaction(&request));
                 response
             }
+            ControlRequest::WowLive { action } => self.wow_sync_control(action),
             ControlRequest::ConfigurationStatus => {
                 let mut response = ControlResponse::success();
                 response.configuration = Some(self.configuration_status());
@@ -1921,6 +1925,7 @@ pub async fn run_runtime(paths: HostPaths, options: RuntimeOptions) -> Result<()
         phone_layout_bridge,
         skin_jobs: Mutex::new(None),
         application_launcher: Default::default(),
+        wow_sync: Mutex::new(Default::default()),
         started_at: crate::input_liveness::InputClock::now(),
     });
 
@@ -1991,6 +1996,9 @@ pub async fn run_runtime(paths: HostPaths, options: RuntimeOptions) -> Result<()
         })
         .collect::<Vec<_>>();
     let expiry_task = tokio::spawn(expiry_loop(Arc::clone(&shared), shutdown_rx.clone()));
+    let wow_shared = Arc::clone(&shared);
+    let wow_shutdown = shutdown_rx.clone();
+    let wow_task = tokio::task::spawn_blocking(move || wow_runtime::run(wow_shared, wow_shutdown));
     let signal_shutdown = shutdown_tx.clone();
     let signal_task = tokio::spawn(async move {
         wait_for_shutdown_signal().await;
@@ -2011,6 +2019,7 @@ pub async fn run_runtime(paths: HostPaths, options: RuntimeOptions) -> Result<()
     for task in datagram_tasks {
         let _ = tokio::time::timeout(Duration::from_secs(1), task).await;
     }
+    let _ = tokio::time::timeout(Duration::from_secs(6), wow_task).await;
     signal_task.abort();
     control::remove_control_socket(&paths.control_socket);
     instance.cleanup_runtime_files();
@@ -2672,7 +2681,10 @@ mod tests {
         fn start(&mut self) -> Result<(), String> {
             Ok(())
         }
-        fn report(&mut self, bytes: [u8; 10]) -> Result<(u32, u64), String> {
+        fn report(
+            &mut self,
+            bytes: [u8; crate::gamepad::REPORT_LENGTH],
+        ) -> Result<(u32, u64), String> {
             if bytes == crate::gamepad::NEUTRAL_REPORT {
                 Ok((0, 1))
             } else {
@@ -2724,6 +2736,7 @@ mod tests {
             phone_layout_bridge: None,
             skin_jobs: Mutex::new(None),
             application_launcher: Default::default(),
+            wow_sync: Mutex::new(Default::default()),
             started_at: crate::input_liveness::InputClock::now(),
         }
     }
@@ -3171,6 +3184,7 @@ mod tests {
             phone_layout_bridge: None,
             skin_jobs: Mutex::new(None),
             application_launcher: Default::default(),
+            wow_sync: Mutex::new(Default::default()),
             started_at: crate::input_liveness::InputClock::now(),
         };
         for version in [1, 2, 3] {
@@ -3271,6 +3285,7 @@ mod tests {
             phone_layout_bridge: None,
             skin_jobs: Mutex::new(None),
             application_launcher: Default::default(),
+            wow_sync: Mutex::new(Default::default()),
             started_at: crate::input_liveness::InputClock::now(),
         };
 
@@ -3358,6 +3373,7 @@ mod tests {
             phone_layout_bridge: None,
             skin_jobs: Mutex::new(None),
             application_launcher: Default::default(),
+            wow_sync: Mutex::new(Default::default()),
             started_at: crate::input_liveness::InputClock::now(),
         };
         let draft = shared.begin_configuration_draft(1).unwrap();

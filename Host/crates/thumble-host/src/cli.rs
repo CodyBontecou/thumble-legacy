@@ -93,6 +93,15 @@ pub enum HostCommand {
     },
     /// Inspect or recover the receiver-owned virtual gamepad; never creates a second input owner.
     Gamepad(GamepadArgs),
+    /// Observe WoW character/controller changes through the opt-in addon panel.
+    /// Plan or apply a backed-up local ConsolePort/Thumble Link installation.
+    WowSetup(crate::wow_setup::SetupArgs),
+    Wow {
+        #[arg(value_enum, default_value = "status")]
+        action: crate::wow_live::SyncAction,
+        #[arg(long)]
+        json: bool,
+    },
     /// Release every keyboard, pointer and controller hold.
     ReleaseAll,
 }
@@ -224,6 +233,34 @@ pub async fn execute(cli: Cli, paths: HostPaths) -> Result<(), String> {
             press_control(&paths, control_id, json).await
         }
         HostCommand::Gamepad(arguments) => gamepad(&paths, arguments).await,
+        HostCommand::WowSetup(arguments) => arguments.run(),
+        HostCommand::Wow {
+            action,
+            json: json_output,
+        } => {
+            let response = require_ok(
+                send_request(&paths.control_socket, &ControlRequest::WowLive { action }).await?,
+            )?;
+            let status = response
+                .wow_live
+                .ok_or("Receiver returned no WoW sync status")?;
+            if json_output {
+                println!(
+                    "{}",
+                    serde_json::to_string(&status).map_err(|e| e.to_string())?
+                );
+            } else {
+                println!(
+                    "WoW sync: {}{}",
+                    status.phase,
+                    status
+                        .last_error
+                        .map(|error| format!(" ({error})"))
+                        .unwrap_or_default()
+                );
+            }
+            Ok(())
+        }
         HostCommand::ReleaseAll => release_all(&paths).await,
     }
 }

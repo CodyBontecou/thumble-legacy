@@ -172,6 +172,23 @@ pub struct PrepareLegacyImportParams {
     pub packages: Vec<LegacyPackageInput>,
 }
 
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct MigrateAuthorityParams {
+    #[serde(default)]
+    pub apply: bool,
+    /// Exact JSON returned by the planning call; required only for apply.
+    pub plan_json: Option<String>,
+    #[serde(default)]
+    pub packages: Vec<LegacyPackageInput>,
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct RollbackAuthorityParams {
+    pub plan_json: String,
+}
+
 const THUMBLE_ICON_URL: &str = "https://pocketpad-site.pages.dev/assets/app-icon.png?v=6eae962e";
 const THUMBLE_WEBSITE_URL: &str = "https://pocketpad-site.pages.dev";
 
@@ -257,6 +274,7 @@ pub struct BonjourStatusResult {
 #[serde(rename_all = "camelCase")]
 pub struct CoreStatusResult {
     pub paired: bool,
+    pub client_supports_owned_profiles: bool,
     pub client_name: Option<String>,
     pub pairing_pending: bool,
     pub active_profile_id: String,
@@ -327,6 +345,7 @@ impl HostStatusResult {
             server_id: status.server_id,
             core: CoreStatusResult {
                 paired: status.core.paired,
+                client_supports_owned_profiles: status.core.client_supports_owned_profiles,
                 client_name: status.core.client_name,
                 pairing_pending: status.core.pairing_pending,
                 active_profile_id: status.core.active_profile_id,
@@ -4409,6 +4428,40 @@ pub struct SaveConfigurationDraftResult {
     pub phone_sync_queued: bool,
 }
 
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct WoWSetupParams {
+    pub client_root: PathBuf,
+    pub console_port_source: PathBuf,
+    #[serde(default)]
+    pub replace_bindings: bool,
+    #[serde(default)]
+    pub replace_addons: bool,
+    #[serde(default = "wow_enable_live")]
+    pub enable_live: bool,
+    #[serde(default)]
+    pub apply: bool,
+    #[serde(rename = "expectedPlanSHA256")]
+    pub expected_plan_sha256: Option<String>,
+}
+fn wow_enable_live() -> bool {
+    true
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "kebab-case")]
+pub enum WoWSyncAction {
+    Status,
+    Start,
+    Stop,
+    RequestPermission,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct WoWSyncParams {
+    pub action: WoWSyncAction,
+}
+
 #[derive(Clone)]
 pub struct ThumbleMcp {
     tool_router: ToolRouter<Self>,
@@ -4456,6 +4509,80 @@ impl ThumbleMcp {
             allow_config_write,
             press_limiter: Arc::new(Mutex::new(PressRateLimiter::new())),
         }
+    }
+
+    #[tool(
+        description = "Plan or apply a local ConsolePort 3.3.11 and embedded Thumble Link installation for Classic Era/Forever. clientRoot is the actual _classic_era_ or _forever_ folder; consolePortSource is an extracted release folder containing all nine ConsolePort addon directories. Default is read-only planning. Apply requires the exact planSHA256 as expectedPlanSHA256, closed WoW client and MCP --allow-config-write. Existing differing ConsolePort files require explicit replaceAddons; all replaced addons and relevant WTF binding/SavedVariables files are backed up privately. Character preset setup keeps existing controller bindings unless replaceBindings is explicit. Does not install a desktop GUI or bypass native HID/Screen Recording or phone-format requirements.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn setup_wow_consoleport(
+        &self,
+        Parameters(params): Parameters<WoWSetupParams>,
+    ) -> Result<Json<Value>, String> {
+        if params.apply && !self.allow_config_write {
+            return Err("WoW addon installation requires MCP --allow-config-write".into());
+        }
+        if params.apply != params.expected_plan_sha256.is_some() {
+            return Err("Apply requires expectedPlanSHA256 from a fresh setup plan; omit it for a read-only plan".into());
+        }
+        let request = thumble_host::wow_setup::SetupRequest {
+            client_root: params.client_root,
+            consoleport_source: params.console_port_source,
+            replace_bindings: params.replace_bindings,
+            replace_addons: params.replace_addons,
+            enable_live: params.enable_live,
+        };
+        let result = tokio::task::spawn_blocking(move || {
+            thumble_host::wow_setup::execute(&request, params.expected_plan_sha256.as_deref())
+        })
+        .await
+        .map_err(|_| "WoW setup worker failed")??;
+        Ok(Json(
+            serde_json::to_value(result).map_err(|e| e.to_string())?,
+        ))
+    }
+
+    #[tool(
+        description = "Inspect, enable or stop local WoW ConsolePort live sync, or explicitly request macOS Screen Recording permission for its native capture helper. Start requires --allow-config-write on MCP and receiver. The opt-in /thumblelive addon panel supplies character GUID, controller bindings and cropped game icons; swaps use separate character profiles. No desktop GUI is required. Sync runs only for this receiver session.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn wow_sync(
+        &self,
+        Parameters(params): Parameters<WoWSyncParams>,
+    ) -> Result<Json<Value>, String> {
+        use thumble_host::wow_live::SyncAction;
+        let action = match params.action {
+            WoWSyncAction::Status => SyncAction::Status,
+            WoWSyncAction::Start => SyncAction::Start,
+            WoWSyncAction::Stop => SyncAction::Stop,
+            WoWSyncAction::RequestPermission => SyncAction::RequestPermission,
+        };
+        if matches!(action, SyncAction::Start | SyncAction::RequestPermission)
+            && !self.allow_config_write
+        {
+            return Err(
+                "WoW sync enable/permission requests require MCP --allow-config-write".into(),
+            );
+        }
+        let response = self
+            .request("wow_sync", ControlRequest::WowLive { action })
+            .await?;
+        let status = response
+            .wow_live
+            .ok_or("Receiver returned no WoW sync status")?;
+        Ok(Json(
+            serde_json::to_value(status).map_err(|e| e.to_string())?,
+        ))
     }
 
     #[tool(
@@ -4618,6 +4745,104 @@ impl ThumbleMcp {
         Ok(Json(AccessibilityStatusResult {
             trusted: response.accessibility_trusted.unwrap_or(false),
         }))
+    }
+
+    #[tool(
+        description = "Plan or apply a backed-up version-4 to owned version-5 profile authority migration for this exact local receiver. Stop the receiver first; a live owner or relay channel is refused. Planning returns credential-free source/destination checksums, revision and layout reviews without replacing state. Apply requires MCP --allow-config-write and the exact complete plan JSON as planJson. Supply original package archives by profile UUID when referenced. Saves exact private state/assets before installation, preserves trust/IDs/launch metadata, and refuses changed sources or later edits. This does not enable phone format offers or reconcile pending phone edits.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn migrate_profile_authority(
+        &self,
+        Parameters(params): Parameters<MigrateAuthorityParams>,
+    ) -> Result<Json<Value>, String> {
+        if params.apply && !self.allow_config_write {
+            return Err("Authority migration requires MCP --allow-config-write".into());
+        }
+        if params.apply != params.plan_json.is_some()
+            || params.packages.len() > 256
+            || params
+                .plan_json
+                .as_ref()
+                .is_some_and(|s| s.len() > 512 * 1024)
+        {
+            return Err("Apply requires only the exact bounded planJson from planning; package mappings are limited to 256".into());
+        }
+        let paths = self.channel.local_authority_paths().ok_or("Authority migration requires the configured local receiver channel; relay/custom channels cannot select a filesystem authority")?;
+        let mut packages = std::collections::BTreeMap::new();
+        for package in params.packages {
+            let id = package
+                .profile_id
+                .parse()
+                .map_err(|_| "Package profileId must be a UUID")?;
+            let path = PathBuf::from(package.archive_path);
+            if !path.is_absolute() || packages.insert(id, path).is_some() {
+                return Err("Package paths must be absolute with unique profile IDs".into());
+            }
+        }
+        let value = tokio::task::spawn_blocking(move || {
+            if let Some(json) = params.plan_json {
+                let plan = thumble_protocol::decode_unique_json(json.as_bytes())
+                    .map_err(|_| "Migration plan must be valid, unambiguous JSON")?;
+                serde_json::to_value(thumble_host::migration_command::apply(
+                    &paths, &packages, &plan,
+                )?)
+                .map_err(|_| "Migration receipt encoding failed".to_owned())
+            } else {
+                let now = std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .map_err(|_| "System clock unavailable")?
+                    .as_millis()
+                    .try_into()
+                    .map_err(|_| "System clock exceeds bound")?;
+                serde_json::to_value(thumble_host::migration_command::plan(
+                    &paths, &packages, now,
+                )?)
+                .map_err(|_| "Migration plan encoding failed".to_owned())
+            }
+        })
+        .await
+        .map_err(|_| "Authority migration worker failed")??;
+        Ok(Json(value))
+    }
+
+    #[tool(
+        description = "Restore the exact backed-up legacy authority from a reviewed migration plan to reconcile retained phone work. Requires a stopped configured local receiver, MCP --allow-config-write and complete original planJson. Refuses any later authority write, including trust changes. Restores absent original package archives from the private backup but refuses conflicting installed archives. Revision advances monotonically; exact retries resume recorded recovery. Does not discard phone journals or undo later owned edits.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn rollback_profile_authority(
+        &self,
+        Parameters(params): Parameters<RollbackAuthorityParams>,
+    ) -> Result<Json<Value>, String> {
+        if !self.allow_config_write {
+            return Err("Authority rollback requires MCP --allow-config-write".into());
+        }
+        if params.plan_json.len() > 512 * 1024 {
+            return Err("Migration plan exceeds its bound".into());
+        }
+        let paths = self
+            .channel
+            .local_authority_paths()
+            .ok_or("Authority rollback requires the configured local receiver channel")?;
+        let plan = thumble_protocol::decode_unique_json(params.plan_json.as_bytes())
+            .map_err(|_| "Migration plan must be valid, unambiguous JSON")?;
+        let result = tokio::task::spawn_blocking(move || {
+            thumble_host::migration_command::rollback(&paths, &plan)
+        })
+        .await
+        .map_err(|_| "Authority rollback worker failed")??;
+        Ok(Json(
+            serde_json::to_value(result).map_err(|_| "Rollback receipt encoding failed")?,
+        ))
     }
 
     #[tool(
@@ -6684,7 +6909,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 37);
+        assert_eq!(tools.len(), 41);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6816,6 +7041,7 @@ mod tests {
                 "launch_profile_application",
                 "list_controls",
                 "list_profiles",
+                "migrate_profile_authority",
                 "pairing_code",
                 "prepare_legacy_profile_import",
                 "press_control",
@@ -6826,10 +7052,13 @@ mod tests {
                 "release_all",
                 "render_controller",
                 "review_controller_design",
+                "rollback_profile_authority",
                 "save_configuration_draft",
                 "select_profile",
+                "setup_wow_consoleport",
                 "update_controller_design",
                 "validate_configuration_draft",
+                "wow_sync",
             ]
         );
     }
@@ -6882,6 +7111,43 @@ mod tests {
         assert!(ConfigurationOperation::from(out_of_bounds)
             .validate_bridge_input()
             .is_err());
+    }
+
+    #[tokio::test]
+    async fn wow_setup_apply_requires_write_authorization_before_filesystem_access() {
+        let server = ThumbleMcp::new(PathBuf::from("/missing/control.sock"), false, false);
+        let params = WoWSetupParams {
+            client_root: PathBuf::from("/missing/client"),
+            console_port_source: PathBuf::from("/missing/source"),
+            replace_bindings: false,
+            replace_addons: false,
+            enable_live: true,
+            apply: true,
+            expected_plan_sha256: Some("a".repeat(64)),
+        };
+        let error = match server.setup_wow_consoleport(Parameters(params)).await {
+            Err(error) => error,
+            Ok(_) => panic!("Installer ran without authorization"),
+        };
+        assert!(error.contains("--allow-config-write"));
+        assert!(!error.contains("filesystem"));
+    }
+
+    #[tokio::test]
+    async fn wow_sync_enable_and_permission_require_write_authorization_before_socket_access() {
+        let server = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        for action in [WoWSyncAction::Start, WoWSyncAction::RequestPermission] {
+            let error = match server.wow_sync(Parameters(WoWSyncParams { action })).await {
+                Err(error) => error,
+                Ok(_) => panic!("WoW sync started without write authorization"),
+            };
+            assert!(error.contains("--allow-config-write"));
+            assert!(!error.contains("control.sock"));
+        }
     }
 
     #[tokio::test]
@@ -7121,7 +7387,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 37);
+        assert_eq!(tools.len(), 41);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));
@@ -7792,5 +8058,71 @@ mod tests {
             .err()
             .expect("invalid UUID must fail");
         assert!(error.contains("UUID"));
+    }
+    #[tokio::test]
+    async fn authority_migration_requires_write_opt_in_and_exact_local_channel() {
+        let disabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        let request = || MigrateAuthorityParams {
+            apply: true,
+            plan_json: Some("{}".into()),
+            packages: vec![],
+        };
+        assert!(disabled
+            .migrate_profile_authority(Parameters(request()))
+            .await
+            .err()
+            .expect("migration must be refused")
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            true,
+        );
+        assert!(enabled
+            .migrate_profile_authority(Parameters(request()))
+            .await
+            .err()
+            .expect("migration must be refused")
+            .contains("local receiver channel"));
+        assert!(enabled
+            .migrate_profile_authority(Parameters(MigrateAuthorityParams {
+                apply: false,
+                plan_json: Some("{}".into()),
+                packages: vec![]
+            }))
+            .await
+            .is_err());
+    }
+    #[tokio::test]
+    async fn authority_rollback_requires_write_opt_in_and_exact_local_channel() {
+        let request = || RollbackAuthorityParams {
+            plan_json: "{}".into(),
+        };
+        let disabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            false,
+        );
+        assert!(disabled
+            .rollback_profile_authority(Parameters(request()))
+            .await
+            .err()
+            .expect("rollback must be refused")
+            .contains("--allow-config-write"));
+        let enabled = ThumbleMcp::new(
+            PathBuf::from("/definitely/missing/control.sock"),
+            false,
+            true,
+        );
+        assert!(enabled
+            .rollback_profile_authority(Parameters(request()))
+            .await
+            .err()
+            .expect("rollback must be refused")
+            .contains("local receiver channel"));
     }
 }

@@ -1742,6 +1742,34 @@ Replay using Argent `flow-execute` with `name: android-setup-pages`, the absolut
 repository `project_root`, and an explicit Android `device`; start on a device
 whose setup is already complete and whose connection screen is available.
 
+## Credential-expiry recovery acceptance (2026-10-20)
+
+The previous cache audit is resolved. Expired trust now clears only the credential.
+Saved profiles, setup completion and all four pending journals survive reload.
+The cache retains its originating Mac identity, including migration of legacy
+trusted caches. Pending edits remain scoped to that Mac; switching to another Mac
+with the same profile UUID does not upload them. Returning to the original Mac
+replays and acknowledges its edits. Unscoped legacy skin intents stay local.
+Fresh peers clear stale binding hints. Offline Practice and explicit Forget remain
+available without valid credentials; explicit Forget still clears the cache.
+
+Native QR discovery accepts serviceName/serviceType/serviceDomain and the older
+bonjourService aliases. Unsupported service-only domains/types are rejected.
+The real Pixel paired with the running native Mac receiver, persisted encrypted
+trust, restored seven current profiles and recovered through Bonjour after a
+simulated stale address. The standalone Rust Host stayed stopped; no keys were
+pressed and the receiver had no held controls afterward.
+
+Verification: 179 unit tests passed, Android build/lint passed, 33 reported
+device methods passed on each of Pixel 7 and API 26 (31 exercised per device; two
+optional live methods skipped), plus the separate real-Mac Pixel check. The first
+Pixel batch hit a competing accessibility-test service; scoped helper cleanup
+and an isolated rerun passed. Swift stack safety passed 30 constrained-thread
+tests and both static frame gates. Concurrent feature removal is in progress;
+these results describe the recorded frozen APKs, not subsequent edits.
+Evidence: `app/build/evidence/credential-expiry/20261020T181647Z/verification.json`.
+Full iOS parity remains incomplete.
+
 ## Hosted phone retirement and local recovery
 
 Android no longer ships the hosted HTTPS activity, bearer-token fetcher, shared-build review/preview/adoption UI, or phone upload state machine. The old pruning store is test support only. Recover saved builds is available before onboarding/pairing and from connection/controller menus when recovery records exist. Export retains original valid bytes, or raw corrupt/orphaned pairs in a recovery archive, without expiration pruning, metadata repair, source deletion or paired-profile mutation. Existing ordinary Practice Mode, profile synchronization and phone editing remain. See docs/feature-removal-progress.md for verification and remaining iOS/backend retirement work.

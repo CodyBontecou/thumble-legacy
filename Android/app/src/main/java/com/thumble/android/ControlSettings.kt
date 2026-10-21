@@ -41,9 +41,10 @@ internal data class JoystickSettings(
             val target = when (json?.optString("analogTarget")) {
                 "left_stick", "leftStick" -> "left"
                 "right_stick", "rightStick" -> "right"
+                "mouse_look" -> "mouse_look"
                 else -> null
             }
-            return JoystickSettings(target, json?.optBoolean("sendsDigitalDirections", true) != false || target == null,
+            return JoystickSettings(target, target != "mouse_look" && (json?.optBoolean("sendsDigitalDirections", true) != false || target == null),
                 setting(json, "deadZone", .12, 0.0, .85), setting(json, "sensitivity", 1.0, .2, 3.0),
                 json?.optBoolean("invertX") == true, json?.optBoolean("invertY") == true, json?.optBoolean("snapToCardinal") == true)
         }
@@ -65,11 +66,13 @@ internal data class TriggerSettings(val target: String = "right", val horizontal
 }
 
 internal data class TrackpadSettings(val sensitivity: Double = 1.2, val scrollSensitivity: Double = .85,
-    val tap: Boolean = true, val scroll: Boolean = true, val natural: Boolean = true) {
+    val tap: Boolean = true, val scroll: Boolean = true, val natural: Boolean = true,
+    val clickButton: String? = null, val movesCursor: Boolean = true) {
     companion object {
         fun parse(json: JSONObject?) = TrackpadSettings(setting(json, "sensitivity", 1.2, .2, 4.0),
             setting(json, "scrollSensitivity", .85, .1, 4.0), json?.optBoolean("tapToClick", true) != false,
-            json?.optBoolean("twoFingerScroll", true) != false, json?.optBoolean("naturalScrolling", true) != false)
+            json?.optBoolean("twoFingerScroll", true) != false, json?.optBoolean("naturalScrolling", true) != false,
+            json?.optString("clickButton")?.takeIf { it in setOf("left", "right", "middle") }, json?.optBoolean("movesCursor", true) != false)
     }
 }
 

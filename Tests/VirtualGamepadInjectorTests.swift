@@ -46,7 +46,7 @@ final class VirtualGamepadInjectorTests: XCTestCase {
         XCTAssertFalse(injector.status().isActive)
         XCTAssertEqual(injector.status().phase, .reportFailed)
         XCTAssertEqual(injector.status().reportCount, 0)
-        XCTAssertEqual(device.reports, [[1, 0, 0, 8, 0, 0, 0, 0, 0, 0], [1, 0, 0, 8, 0, 0, 0, 0, 0, 0]])
+        XCTAssertEqual(device.reports, [[0, 20] + Array(repeating: 0, count: 18), [0, 20] + Array(repeating: 0, count: 18)])
         wait(for: [cancelled], timeout: 1)
     }
 
@@ -70,7 +70,7 @@ final class VirtualGamepadInjectorTests: XCTestCase {
         injector.setStick(.right, x: 0, y: 0)
         injector.setTrigger(.left, value: 0)
         XCTAssertEqual(creations, 1)
-        XCTAssertEqual(device.reports.last, [1, 0, 0, 8, 0, 0, 0, 0, 0, 0])
+        XCTAssertEqual(device.reports.last, [0, 20] + Array(repeating: 0, count: 18))
         XCTAssertEqual(injector.status().phase, .inactive)
         XCTAssertEqual(injector.status().pressedButtons, [])
     }
@@ -80,25 +80,25 @@ final class VirtualGamepadInjectorTests: XCTestCase {
         var state = VirtualGamepadReportState()
         state.buttons = [.east, .dpadUp]
         buffer.update(state.reportBytes)
-        var bytes = [UInt8](repeating: 0xEE, count: 16)
+        var bytes = [UInt8](repeating: 0xEE, count: 32)
         var length = bytes.count
         func request(_ type: IOHIDReportType, _ id: UInt32) -> IOReturn {
             bytes.withUnsafeMutableBufferPointer { buffer.copyInputReport(type: type, reportID: id, destination: $0.baseAddress!, length: &length) }
         }
-        XCTAssertEqual(request(kIOHIDReportTypeInput, 1), kIOReturnSuccess)
-        XCTAssertEqual(length, 10)
-        XCTAssertEqual(Array(bytes.prefix(10)), [1, 2, 0, 0, 0, 0, 0, 0, 0, 0])
-        XCTAssertEqual(bytes[10], 0xEE)
+        XCTAssertEqual(request(kIOHIDReportTypeInput, 0), kIOReturnSuccess)
+        XCTAssertEqual(length, 20)
+        XCTAssertEqual(Array(bytes.prefix(20)), [0, 20, 1, 32] + Array(repeating: 0, count: 16))
+        XCTAssertEqual(bytes[20], 0xEE)
         XCTAssertEqual(request(kIOHIDReportTypeFeature, 1), kIOReturnUnsupported)
         XCTAssertEqual(request(kIOHIDReportTypeInput, 2), kIOReturnUnsupported)
-        bytes = [UInt8](repeating: 0xEE, count: 16); length = 9
-        XCTAssertEqual(request(kIOHIDReportTypeInput, 1), kIOReturnNoSpace)
-        XCTAssertEqual(length, 10)
-        XCTAssertEqual(bytes, [UInt8](repeating: 0xEE, count: 16))
+        bytes = [UInt8](repeating: 0xEE, count: 32); length = 19
+        XCTAssertEqual(request(kIOHIDReportTypeInput, 0), kIOReturnNoSpace)
+        XCTAssertEqual(length, 20)
+        XCTAssertEqual(bytes, [UInt8](repeating: 0xEE, count: 32))
         length = -1
-        XCTAssertEqual(request(kIOHIDReportTypeInput, 1), kIOReturnBadArgument)
+        XCTAssertEqual(request(kIOHIDReportTypeInput, 0), kIOReturnBadArgument)
         XCTAssertEqual(length, 0)
-        XCTAssertEqual(bytes, [UInt8](repeating: 0xEE, count: 16))
+        XCTAssertEqual(bytes, [UInt8](repeating: 0xEE, count: 32))
     }
 
     private final class FakeDevice: VirtualGamepadHIDDevice {

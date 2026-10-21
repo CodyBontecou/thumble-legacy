@@ -943,15 +943,19 @@ public struct ThumbleBridgeTrackpadSettings: Decodable, Sendable {
     public let tapToClick: Bool?
     public let twoFingerScroll: Bool?
     public let naturalScrolling: Bool?
+    public let clickButton: ControllerPointerButton?
+    public let movesCursor: Bool?
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
-        try container.requireOnly(["sensitivity", "scrollSensitivity", "tapToClick", "twoFingerScroll", "naturalScrolling"])
+        try container.requireOnly(["sensitivity", "scrollSensitivity", "tapToClick", "twoFingerScroll", "naturalScrolling", "clickButton", "movesCursor"])
         sensitivity = try container.decodeIfPresent(Double.self, forKey: .init("sensitivity"))
         scrollSensitivity = try container.decodeIfPresent(Double.self, forKey: .init("scrollSensitivity"))
         tapToClick = try container.decodeIfPresent(Bool.self, forKey: .init("tapToClick"))
         twoFingerScroll = try container.decodeIfPresent(Bool.self, forKey: .init("twoFingerScroll"))
         naturalScrolling = try container.decodeIfPresent(Bool.self, forKey: .init("naturalScrolling"))
+        clickButton = try container.decodeIfPresent(ControllerPointerButton.self, forKey: .init("clickButton"))
+        movesCursor = try container.decodeIfPresent(Bool.self, forKey: .init("movesCursor"))
     }
 
     fileprivate func applying(to input: GamepadTrackpadSettings) throws -> GamepadTrackpadSettings {
@@ -963,6 +967,8 @@ public struct ThumbleBridgeTrackpadSettings: Decodable, Sendable {
         if let tapToClick { output.tapToClick = tapToClick }
         if let twoFingerScroll { output.twoFingerScroll = twoFingerScroll }
         if let naturalScrolling { output.naturalScrolling = naturalScrolling }
+        if let clickButton { output.clickButton = clickButton }
+        if let movesCursor { output.movesCursor = movesCursor }
         return output.normalized
     }
 }
@@ -4569,6 +4575,14 @@ public enum ThumbleConfigurationBridge {
         return applyCanonicalChanges(raw: raw, before: try encodedJSONValue(before), after: try encodedJSONValue(profile))
     }
 
+    /// A newly created orientation slot has no receiver-side raw value to
+    /// inherit. Keep the submitted layout's extension fields while applying
+    /// native normalization, timestamps and asset dehydration to known fields.
+    static func preservingCustomizationMetadata(_ raw: ThumbleBridgeJSONValue, after customization: GamepadCustomization) throws -> ThumbleBridgeJSONValue {
+        let before: GamepadCustomization = try decoded(raw)
+        return applyCanonicalChanges(raw: raw, before: try encodedJSONValue(before), after: try encodedJSONValue(customization))
+    }
+
     private static func applyCanonicalChanges(
         raw: ThumbleBridgeJSONValue,
         before: ThumbleBridgeJSONValue,
@@ -5100,7 +5114,18 @@ public enum ThumblePhoneLayoutBridge {
             } else {
                 result = try JSONDecoder().decode(ThumbleBridgeJSONValue.self, from: JSONEncoder().encode(profile))
             }
-            return .init(invocationID: request.invocationID, profile: result, changed: changed, recovered: request.profile == nil)
+            return .init(invocationID: request.invocationID, profile: try preservingSubmittedLayout(in: result), changed: changed, recovered: request.profile == nil)
+        }
+        private func preservingSubmittedLayout(in result: ThumbleBridgeJSONValue) throws -> ThumbleBridgeJSONValue {
+            guard changed, let raw = request.customization, let customization,
+                  case .object(var fields) = result else { return result }
+            let layout = try ThumbleConfigurationBridge.preservingCustomizationMetadata(raw, after: customization)
+            fields["customization"] = layout
+            switch customization.deviceCanvas.editorDeviceFrame.orientation {
+            case .landscape: fields["landscapeCustomization"] = layout
+            case .portrait: fields["portraitCustomization"] = layout
+            }
+            return .object(fields)
         }
         private func decodeModels() throws {
             guard let id = request.profileID, let raw = request.customization else { throw ThumblePhoneLayoutBridgeError.invalidRequest }

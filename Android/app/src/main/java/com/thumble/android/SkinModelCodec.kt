@@ -14,7 +14,7 @@ internal object SkinModelCodec {
     private val accents=listOf("monochrome","blue","green","purple","pink","amber")
     private val shapes=listOf("rounded_rectangle","rectangle","capsule","circle","ellipse","polygon","star")
     private val haptics=listOf("none","light","medium","heavy","soft","rigid")
-    private val contentFields=listOf("icon","legend","fontSize","fontWeight","fontDesign","tracking","lineLimit","alignment","labelPadding","labelPlacement","trackpadFrameVisible","trackpadCursorVisible","trackpadIndicatorsVisible","joystickRingVisible","joystickKnobRatio","joystickKnobStrokeWidth")
+    private val contentFields=listOf("icon","iconPlacement","iconScale","iconMask","legend","fontSize","fontWeight","fontDesign","tracking","lineLimit","alignment","labelPadding","labelPlacement","trackpadFrameVisible","trackpadCursorVisible","trackpadIndicatorsVisible","joystickRingVisible","joystickKnobRatio","joystickKnobStrokeWidth")
     private val pointingColors=listOf("trackpadFrameColor","trackpadCursorColor","trackpadIndicatorColor","trackpadSecondaryIndicatorColor","joystickRingColor","joystickKnobFillColor","joystickKnobStrokeColor")
     private val pointingWidths=listOf("trackpadFrameStrokeWidth","joystickRingStrokeWidth")
     private val stateColors=listOf("foregroundColor","strokeColor","shadowColor","glowColor","innerShadowColor","highlightColor","bevelHighlightColor","bevelShadowColor","indexColor")
@@ -157,9 +157,9 @@ internal object SkinModelCodec {
             val cleaned=buildString { text(v).codePoints().forEach { scalar -> if(!SkinText.isControl(scalar)) appendCodePoint(scalar) } }
             result.put("legend",prefix(cleaned,64))
         }
-        for((k,range) in mapOf("fontSize" to (8.0 to 72.0),"tracking" to (-4.0 to 12.0),"labelPadding" to (0.0 to 32.0),"joystickKnobRatio" to (.2 to .9),"joystickKnobStrokeWidth" to (0.0 to 12.0))) put(result,k,optionalNumber(raw,k,range.first,range.second))
+        for((k,range) in mapOf("iconScale" to (.2 to 3.0),"fontSize" to (8.0 to 72.0),"tracking" to (-4.0 to 12.0),"labelPadding" to (0.0 to 32.0),"joystickKnobRatio" to (.2 to .9),"joystickKnobStrokeWidth" to (0.0 to 12.0))) put(result,k,optionalNumber(raw,k,range.first,range.second))
         value(raw,"lineLimit")?.let { result.put("lineLimit",integer(it).coerceIn(1,4)) }
-        for((k,values) in mapOf("fontWeight" to listOf("regular","medium","semibold","bold"),"fontDesign" to listOf("system","rounded","serif","monospaced"),"alignment" to listOf("leading","center","trailing"),"labelPlacement" to listOf("center","top","bottom","leading","trailing"))) put(result,k,optionalEnum(raw,k,values))
+        for((k,values) in mapOf("iconMask" to listOf("none","circle"),"iconPlacement" to listOf("leading","trailing","top","bottom","center","background"),"fontWeight" to listOf("regular","medium","semibold","bold"),"fontDesign" to listOf("system","rounded","serif","monospaced"),"alignment" to listOf("leading","center","trailing"),"labelPlacement" to listOf("center","top","bottom","leading","trailing","above"))) put(result,k,optionalEnum(raw,k,values))
         for(k in listOf("trackpadFrameVisible","trackpadCursorVisible","trackpadIndicatorsVisible","joystickRingVisible")) value(raw,k)?.let { result.put(k,boolean(it)) }
     }
     private fun stateEmpty(o: JSONObject): Boolean = o.keys().asSequence().all { it=="content" && contentEmpty(o.getJSONObject(it)) }

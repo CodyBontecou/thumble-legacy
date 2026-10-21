@@ -25,6 +25,11 @@
     {
       "key": "G",
       "modifiers": []
+    },
+    "57B14212-A263-57D3-A10C-200BED91A017",
+    {
+      "key": "H",
+      "modifiers": []
     }
   ],
   "notes": [
@@ -237,6 +242,39 @@
           "controlKind": "trackpad",
           "id": "1A539C00-8D79-55CB-A9AC-45372B6E737D",
           "label": "Trackpad One",
+          "layout": {
+            "accentStyle": "monochrome",
+            "centerX": 0.5,
+            "centerY": 0.58,
+            "cornerRadius": 18.0,
+            "fillColor": {
+              "alpha": 1.0,
+              "blue": 0.21568627450980393,
+              "green": 0.1607843137254902,
+              "red": 0.12156862745098039
+            },
+            "heightScale": 1.0,
+            "isHidden": false,
+            "isLocationLocked": false,
+            "rotationDegrees": 0,
+            "shadowStrength": 1.0,
+            "shape": "rounded_rectangle",
+            "widthScale": 1.25,
+            "zIndex": 0
+          },
+          "trackpadSettings": {
+            "naturalScrolling": true,
+            "scrollSensitivity": 0.85,
+            "sensitivity": 1.2,
+            "tapToClick": true,
+            "twoFingerScroll": true
+          },
+          "visualRole": "trackpad"
+        },
+        {
+          "controlKind": "trackpad",
+          "id": "57B14212-A263-57D3-A10C-200BED91A017",
+          "label": "Trackpad Dro",
           "layout": {
             "accentStyle": "monochrome",
             "centerX": 0.5,
@@ -593,6 +631,47 @@
             "gamepadButtons": [],
             "keyboard": {
               "keyCode": 5,
+              "modifiersRawValue": 0
+            }
+          },
+          "partOutputs": [],
+          "trackpadSettings": {
+            "naturalScrolling": true,
+            "scrollSensitivity": 0.85,
+            "sensitivity": 1.2,
+            "tapToClick": true,
+            "twoFingerScroll": true
+          },
+          "visualRole": "trackpad"
+        },
+        {
+          "id": "57B14212-A263-57D3-A10C-200BED91A017",
+          "kind": "trackpad",
+          "label": "Trackpad Dro",
+          "layout": {
+            "accentStyle": "monochrome",
+            "centerX": 0.5,
+            "centerY": 0.58,
+            "cornerRadius": 18.0,
+            "fillColor": {
+              "alpha": 1.0,
+              "blue": 0.21568627450980393,
+              "green": 0.1607843137254902,
+              "red": 0.12156862745098039
+            },
+            "heightScale": 1.0,
+            "isHidden": false,
+            "isLocationLocked": false,
+            "rotationDegrees": 0,
+            "shadowStrength": 1.0,
+            "shape": "rounded_rectangle",
+            "widthScale": 1.25,
+            "zIndex": 0
+          },
+          "output": {
+            "gamepadButtons": [],
+            "keyboard": {
+              "keyCode": 4,
               "modifiersRawValue": 0
             }
           },

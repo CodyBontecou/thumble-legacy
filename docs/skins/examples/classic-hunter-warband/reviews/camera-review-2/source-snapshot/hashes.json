@@ -1,0 +1,16 @@
+{
+  "classic-hunter-warband-1.1.0.pocketpad": "77fe5da8064c82dcec6bfbb2ab757fefe2f81ae9e3ba2df5f2dba43c9b6afb0a",
+  "skin-source.json": "bf42ea35da8a9ee23f54cd4cb7ae1abd7848ccbf74e1acd2d1ba19bbaa89e743",
+  "styles/controller.css": "8121029bef5426a0dc9486fdc8a0ffe830b9479bec117524f1aa02ffb62dfcf5",
+  "sources/BuildHunterWarband.swift": "882b29dbbb75ec71901dbccafe947b9352a1f74d859fd84decd70b70ea863c9b",
+  "sources/prepare-profile.py": "9fa5017fe0385abffb2d3ba20be37b79c1d4a8bc144f2153c13937cfae4c5a37",
+  "sources/artwork/cursor-face-light.svg": "e80804c40b41206f5b618a6b72332399f81b81815a539ea43ccf0c00b82f9f94",
+  "sources/artwork/cursor-face-dark.svg": "8e2ad1e7bd127d17d48b5c6b2eb71ed1ad194b7fa5abb1f7bb6aa4fc94ad8d48",
+  "sources/artwork/command-landscape-dark.svg": "f039e6cc735ec722c4ab5a93e714f3dffa9ff880c5ac982b408b6b7bdd9cb821",
+  "sources/artwork/command-portrait-light.svg": "ba8fb85f3c6a74c3927a9de8f18d4169a0a06c360fdb14fa4b4e2ea8abec7eda",
+  "sources/artwork/command-portrait-dark.svg": "b17d53b11d62e35e0b1fd7adf0d13f90e4d0dbbe31d9dbb7cba995ceca6e2041",
+  "sources/artwork/command-landscape-light.svg": "c3a8b1dad6b3173c7758c93f25dd5ca8b1ef06b3a06028a998f072febd3fc3d2",
+  "preview/captured-artboard.json": "cd761887780fadf82972be4ba73d6f5dca6f84483ef2056bc56343998d2c1b5c",
+  "preview/install-profile.json": "385cffeff6904db6470e5c2cd3ec9b792d7c0900ff2f7ec95035280788d0fb66",
+  "preview/profile.json": "fc562135fd7ccb7d601bfa4bfd0cf78ec2d6400508fd825eb593072b12676175"
+}
