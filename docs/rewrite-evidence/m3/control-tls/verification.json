@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "nativeTests": 25,
+  "sourceTests": 65,
+  "sourceSkipped": 1,
+  "standalonePackageTests": 1,
+  "clippy": "pass",
+  "node": "26.8.1",
+  "openssl": "3.6.4",
+  "rust": "1.88.0",
+  "hostedTLSStatus": "not published",
+  "remaining": [
+    "native network worker",
+    "phone enrollment",
+    "persistent identity and phone trust",
+    "mobile TLS adapters",
+    "UDP routing and reconnect",
+    "physical acceptance"
+  ]
+}

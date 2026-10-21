@@ -1,0 +1,11 @@
+# M3 isolated native TLS transport
+
+The Rust library now establishes pinned, host-authenticated TLS 1.3 and exchanges bounded control/input frames. [ADR 0003](../../../adr/0003-rewrite-native-control-tls.md) records certificate policy, framing, deadlines and the separate phone-trust boundary. No product LAN listener or phone enrollment is enabled.
+
+Local verification passes 25 Rust tests, Clippy with warnings denied, 65 TypeScript tests and one standalone package lifecycle test. An actual Node 26.8.1 / OpenSSL 3.6.4 client exchanges control and encrypted input packets with the native loopback probe, including authenticated semantic rejection, duplicate rejection and neutral full-state repair. Separate connections reject a wrong pin and TLS 1.2. Rust also verifies expired/future/name/usage-invalid certificates, ALPN mismatch/absence, malformed/truncated frames, maximum payloads, byte budgets and absolute deadlines under trickled reads. Accepted sockets are forced into blocking mode; an independent client exposed the need on macOS and a regression test now covers both client and accepted nonblocking sockets.
+
+Native notices cover all 87 locked registry crates, including target-specific and development dependencies. The generator retains Ring's bundled third-party license files and supplemental notices, and selects MIT where offered as an alternative. Standalone packages carry the notice file bound to the exact lockfile hash.
+
+The synthetic example binds loopback only, uses public deterministic fixture keys and the recording backend, and is excluded from packaged product binaries. It is an interoperability witness, not the product network topology or a phone-trust proof. Native safety scheduling remains separate work: the blocking TLS library must run on a bounded network worker without blocking the native safety tick.
+
+[verification.json](verification.json) and adjacent logs describe local checks. [ci-publication-candidate.json](ci-publication-candidate.json) lists the exact source-only candidate. Hosted packet runs at `9c317f7` exclude this later TLS work. Persistent identity/trust storage, authenticated enrollment and grant issuance, native phone TLS adapters, UDP/reliable routing, reconnect, production input/signing, physical testing and required optical live sync remain open.

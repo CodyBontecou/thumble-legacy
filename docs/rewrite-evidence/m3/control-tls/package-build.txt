@@ -1,0 +1,23 @@
+$ bun tooling/build.ts
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.15
+   Compiling zeroize v1.9.1
+   Compiling untrusted v0.9.0
+   Compiling powerfmt v0.2.1
+   Compiling deranged v0.5.9
+   Compiling time-core v0.1.9
+   Compiling num-conv v0.2.2
+   Compiling rustls v0.23.46
+   Compiling once_cell v1.21.4
+   Compiling rustls-pki-types v1.15.1
+   Compiling cc v1.9.0
+   Compiling time v0.3.55
+   Compiling ring v0.17.14
+   Compiling yasna v0.6.0
+   Compiling rustls-webpki v0.103.16
+   Compiling rcgen v0.14.10
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `release` profile [optimized] target(s) in 6.94s
+  [11ms]  bundle  13 modules
+ [127ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime

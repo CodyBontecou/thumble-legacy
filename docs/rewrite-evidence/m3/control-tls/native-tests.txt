@@ -1,0 +1,44 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-7e141f4e70130094)
+
+running 25 tests
+test gamepad::tests::retained_native_vectors ... ok
+test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+test runtime::tests::owner_lease_expires_even_without_samples ... ok
+test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+test control_tls::tests::certificate_pin_is_canonical_and_identity_is_fresh ... ok
+test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+test control_tls::tests::wrong_pin_refuses_handshake_before_any_application_frame ... ok
+test control_tls::socket_mode_tests::accepted_and_client_nonblocking_sockets_are_normalized_before_tls ... ok
+test control_tls::tests::pinned_tls13_round_trip_control_and_exact_input_frames ... ok
+test control_tls::tests::unsupported_alpn_and_tls12_are_rejected ... ok
+test control_tls::tests::pin_does_not_bypass_expiry_future_dates_hostname_or_server_usage ... ok
+test control_tls::tests::framing_accepts_maximum_control_and_rejects_local_invalid_frames_terminally ... ok
+test control_tls::tests::malformed_remote_lengths_kinds_and_truncation_retire_connection ... ok
+test control_tls::tests::absolute_io_budget_cannot_be_extended_by_trickled_reads ... ok
+test control_tls::tests::read_byte_budget_and_unresponsive_peer_fail_closed ... ok
+test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running unittests src/main.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-79e6502ab1bf118e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests thumble_rewrite_receiver
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

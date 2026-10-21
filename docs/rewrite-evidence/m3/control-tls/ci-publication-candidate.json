@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "scope": "Isolated native TLS and synthetic loopback interoperability only",
+  "expectedPublicParent": "9c317f7192533f84dd3fa74fdff11de9c3c6af8d",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite.yml",
+      "bytes": 2517,
+      "sha256": "ad991f184e0ae5fec6d905f5f6e641ba8ee5ec7b536a722e327a33aede7ddc49"
+    },
+    {
+      "path": "Rewrite/package.json",
+      "bytes": 1549,
+      "sha256": "14b64991412a01c735a47f4786cb45247390a977bc9037339e18c8354fbb244e"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "bytes": 851,
+      "sha256": "f1d75cceb136a72c1ef616187a4ef5c7b2622c71bcda63a5ca3fe32df4ad8b75"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.lock",
+      "bytes": 20417,
+      "sha256": "7e380b5d6379c575626188d033af25db678dd2177bc915500366b35bcd66ad52"
+    },
+    {
+      "path": "Rewrite/native/receiver/THIRD-PARTY-NOTICES.txt",
+      "bytes": 143722,
+      "sha256": "0c3bb0f86271edf6deae09f1a988483264a2e94eef716a28adee0e86146d8a2e"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "bytes": 271,
+      "sha256": "9cd2efe7055f14537f0b564e9b9911d1e705a112ed5435cdfed6a411b55ff576"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/control_tls.rs",
+      "bytes": 27581,
+      "sha256": "6d53453179854633cb0e754c17ca2e96c3d60943a81c674c7035f6c3b19cf7c7"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/control_tls_probe.rs",
+      "bytes": 4001,
+      "sha256": "2689ef6d4af81071e914597c9c31968efa723022adb87d45c682b3a0093f2fa0"
+    },
+    {
+      "path": "Rewrite/tooling/native-notices.ts",
+      "bytes": 3419,
+      "sha256": "cdd67748a4e75f53c518a5e9c023e5940f81e193ca1f9674b218c754ca2e3f3f"
+    },
+    {
+      "path": "Rewrite/tooling/test-control-tls.mjs",
+      "bytes": 7328,
+      "sha256": "9ed4546efd3c9dc3d3ed3a67047a5238ad84e219eb639edcf0abf91f83719bec"
+    },
+    {
+      "path": "docs/adr/0003-rewrite-native-control-tls.md",
+      "bytes": 3744,
+      "sha256": "a3efa6cafca41280fbf9cad24679e9aa1d409164ce30f8306324c4007d0b441c"
+    }
+  ],
+  "excluded": [
+    "private baseline/history",
+    "real credentials",
+    "build products",
+    "local evidence"
+  ]
+}
