@@ -361,11 +361,8 @@ final class ThumbleCLIRuntimeBackend {
             }
             return .rust(response)
         }
-        guard response.owner == .none || (response.owner == .unreachable && response.error?.code == "legacy_owner_possible")
-        else { throw failure(response) }
-        let data = try legacyStatus(invocationID)
-        try Self.verifyLegacyStatus(data, requestID: invocationID, now: now, processIsLive: processIsLive)
-        return .legacy(data)
+        // A missing or unreachable headless owner cannot authorize desktop IPC.
+        throw failure(response)
     }
 
     private func failure(_ response: Response) -> BackendError {

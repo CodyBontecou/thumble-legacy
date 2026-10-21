@@ -17,6 +17,26 @@ final class StackSafetyRegressionTests: XCTestCase {
         case generationPlanDecodeMismatch
     }
 
+    func testOwnedCloneAndApplicationAttachmentRunOn512KiBStack() throws {
+        assertInlineSize(ThumbleBridgeOperation.self, atMost: 512)
+        try runOnThread(stackSize:512 * 1024, timeout:30) {
+            let root = URL(fileURLWithPath:#filePath).deletingLastPathComponent().deletingLastPathComponent()
+            var source = try Data(contentsOf:root.appendingPathComponent("Host/fixtures/owned-configuration/v1/document.json"))
+            let before = try ThumbleOwnedConfigurationDocument(validating:source); let profile=before.projectedProfiles[0]
+            let newID="EE000000-0000-4000-8000-000000000001"
+            for operation: [String:Any] in [
+                ["type":"profile.create","sourceProfileID":profile.id.uuidString,"newProfileID":newID,"name":"Clone","select":true,"makeDefault":false],
+                ["type":"profile.application-set","profileID":newID,"attachment":["displayName":"WoW","filePath":"/Applications/WoW.app"]]] {
+                let input: [String:Any] = ["schemaVersion":1,"invocationID":UUID().uuidString,"ownedConfigurationCommand":"apply","documentData":source.base64EncodedString(),"nowMillis":2000,"operation":operation]
+                let request=try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:JSONSerialization.data(withJSONObject:input))
+                source=try XCTUnwrap(Data(base64Encoded:ThumbleOwnedOperationBridge.transform(request).afterDocumentData))
+            }
+            let after=try ThumbleOwnedConfigurationDocument(validating:source)
+            guard after.projectedProfiles.last?.appearanceBank == profile.appearanceBank,
+                  after.projectedProfiles.last?.launchTarget?.filePath == "/Applications/WoW.app" else { throw StackTestError.unexpectedDecodedState }
+        }
+    }
+
     func testMaximumRichBackgroundAcrossEightStatesRunsOn512KiBStack() throws {
         assertInlineSize(ThumbleBridgeBackgroundFill?.self, atMost: 8)
         try runOnThread(stackSize: 512 * 1024, timeout: 60) {

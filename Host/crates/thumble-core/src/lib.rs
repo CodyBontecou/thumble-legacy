@@ -8,7 +8,8 @@ mod binding;
 mod configuration;
 mod customization_artifact;
 pub use customization_artifact::{
-    CustomizationArtifact, CustomizationArtifactError, CUSTOMIZATION_ARTIFACT_SCHEMA,
+    legacy_json_numbers_are_supported, CustomizationArtifact, CustomizationArtifactError,
+    CUSTOMIZATION_ARTIFACT_SCHEMA,
 };
 mod controller_snapshot;
 mod core;

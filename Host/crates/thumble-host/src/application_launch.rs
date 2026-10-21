@@ -8,6 +8,7 @@ use std::time::Duration;
 #[derive(Clone)]
 pub struct ApplicationTarget {
     pub(crate) bookmark: Option<String>,
+    bookmark_resource_sha256: Option<String>,
     pub(crate) path: Option<String>,
     pub(crate) bundle: Option<String>,
 }
@@ -36,8 +37,32 @@ impl ApplicationTarget {
             }
             Ok((!value.is_empty()).then(|| value.to_owned()))
         }
+        let (bookmark, bookmark_resource_sha256) =
+            if let Some(reference) = target.get("bookmarkData").filter(|v| v.is_object()) {
+                let digest = reference
+                    .get("resourceSHA256")
+                    .and_then(Value::as_str)
+                    .filter(|digest| {
+                        reference.as_object().is_some_and(|v| v.len() == 1)
+                            && digest.len() == 64
+                            && digest
+                                .bytes()
+                                .all(|v| v.is_ascii_hexdigit() && !v.is_ascii_uppercase())
+                    })
+                    .ok_or("invalid_launch_target")?;
+                let value = profile
+                    .get("appearanceResources")
+                    .and_then(|v| v.get(digest))
+                    .and_then(Value::as_str)
+                    .filter(|v| !v.is_empty() && v.len() <= 1024 * 1024)
+                    .ok_or("invalid_launch_target")?;
+                (Some(value.to_owned()), Some(digest.to_owned()))
+            } else {
+                (text(target, "bookmarkData", 1024 * 1024)?, None)
+            };
         let target = Self {
-            bookmark: text(target, "bookmarkData", 1024 * 1024)?,
+            bookmark,
+            bookmark_resource_sha256,
             path: text(target, "filePath", 32 * 1024)?,
             bundle: text(target, "bundleIdentifier", 1024)?,
         };
@@ -45,6 +70,24 @@ impl ApplicationTarget {
             return Err("application_not_found");
         }
         Ok(target)
+    }
+    fn validate_bookmark_resource(&self) -> Result<(), &'static str> {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        use sha2::{Digest, Sha256};
+        if let Some(digest) = &self.bookmark_resource_sha256 {
+            let encoded = self.bookmark.as_deref().ok_or("invalid_launch_target")?;
+            let bytes = STANDARD
+                .decode(encoded)
+                .map_err(|_| "invalid_launch_target")?;
+            if bytes.is_empty()
+                || bytes.len() > 786432
+                || STANDARD.encode(&bytes) != encoded
+                || format!("{:x}", Sha256::digest(&bytes)) != *digest
+            {
+                return Err("invalid_launch_target");
+            }
+        }
+        Ok(())
     }
 }
 
@@ -139,19 +182,22 @@ impl ApplicationLauncher {
         if std::thread::Builder::new()
             .name("application-launch".into())
             .spawn(move || {
-                let result = resolve(&target).and_then(|path| {
-                    let (send, receive) = mpsc::sync_channel(1);
-                    {
-                        let mut state = shared.lock().expect("launch mutex poisoned");
-                        state.status.as_mut().unwrap().phase = LaunchPhase::ReleasingInput;
-                        state.ready = Some(send);
-                    }
-                    match receive.recv_timeout(Duration::from_secs(10)) {
-                        Ok(true) => open(&path),
-                        Ok(false) => Err("input_release_failed"),
-                        Err(_) => Err("application_launch_timed_out"),
-                    }
-                });
+                let result = target
+                    .validate_bookmark_resource()
+                    .and_then(|()| resolve(&target))
+                    .and_then(|path| {
+                        let (send, receive) = mpsc::sync_channel(1);
+                        {
+                            let mut state = shared.lock().expect("launch mutex poisoned");
+                            state.status.as_mut().unwrap().phase = LaunchPhase::ReleasingInput;
+                            state.ready = Some(send);
+                        }
+                        match receive.recv_timeout(Duration::from_secs(10)) {
+                            Ok(true) => open(&path),
+                            Ok(false) => Err("input_release_failed"),
+                            Err(_) => Err("application_launch_timed_out"),
+                        }
+                    });
                 let mut state = shared.lock().expect("launch mutex poisoned");
                 state.ready = None;
                 state.busy = false;
@@ -189,6 +235,34 @@ impl ApplicationLauncher {
 mod tests {
     use super::*;
     use serde_json::json;
+    #[test]
+    fn pooled_bookmarks_are_checked_on_the_worker_before_resolution_or_input_release() {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        use sha2::{Digest, Sha256};
+        let digest = format!("{:x}", Sha256::digest(b"private-bookmark-fixture"));
+        let mut profile = json!({"launchTarget":{"filePath":"/fixture/App.app","bookmarkData":{"resourceSHA256":digest}},"appearanceResources":{(digest.clone()):STANDARD.encode(b"private-bookmark-fixture")}});
+        let target = ApplicationTarget::from_profile(&profile).unwrap();
+        assert!(target.validate_bookmark_resource().is_ok());
+        profile["appearanceResources"][&digest] = json!(STANDARD.encode(b"different bytes"));
+        let target = ApplicationTarget::from_profile(&profile).unwrap();
+        let launcher = ApplicationLauncher::default();
+        launcher
+            .request_using(
+                "fixture-profile".into(),
+                target,
+                |_| panic!("invalid resource reached resolver"),
+                |_| panic!("invalid resource reached activation"),
+            )
+            .unwrap();
+        wait(&launcher, LaunchPhase::Failed);
+        assert_eq!(
+            launcher.status().unwrap().error_code.as_deref(),
+            Some("invalid_launch_target")
+        );
+        assert!(launcher.state.lock().unwrap().ready.is_none());
+        profile["launchTarget"]["bookmarkData"]["extra"] = json!(true);
+        assert!(ApplicationTarget::from_profile(&profile).is_err());
+    }
     fn target() -> ApplicationTarget {
         ApplicationTarget::from_profile(&json!({"launchTarget":{"filePath":"/fixture/App.app"}}))
             .unwrap()

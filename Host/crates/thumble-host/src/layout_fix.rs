@@ -494,6 +494,32 @@ impl RepairEngine {
                 }
                 true
             }
+            LayoutRepairTarget::Issue { code } => {
+                let normalized = |v: &str| {
+                    v.chars()
+                        .filter(|c| c.is_alphanumeric())
+                        .flat_map(char::to_lowercase)
+                        .collect::<String>()
+                };
+                let issues: Vec<_> = self
+                    .issues()
+                    .into_iter()
+                    .filter(|issue| normalized(issue.code) == normalized(code))
+                    .collect();
+                if issues.is_empty() {
+                    return false;
+                }
+                let mut changed = false;
+                for issue in issues {
+                    if let Some(repair) = issue.suggested_repair() {
+                        changed |= self.apply_repair(repair, Some(issue.controls.as_slice()));
+                    }
+                }
+                if changed {
+                    canonicalize_button_customization_order(&mut self.customization);
+                }
+                true
+            }
             LayoutRepairTarget::All {} => {
                 let mut changed_any = false;
                 for _ in 0..3 {

@@ -9,8 +9,12 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use thumble_core::{ConfigurationDocument, OwnedConfigurationDocument, ProfileAppearanceBank};
 use uuid::Uuid;
+#[path = "owned_application.rs"]
+mod application;
 #[path = "owned_background_fill.rs"]
 mod background_fill;
+#[path = "owned_profile_clone.rs"]
+mod profile_clone;
 #[path = "owned_style_import.rs"]
 mod style_import;
 const MAXIMUM: usize = 8 * 1024 * 1024;
@@ -69,6 +73,29 @@ impl ConfigurationBridge {
         }
         let before = projection(&response.before_document_data)?;
         let after = projection(&response.after_document_data)?;
+        if let ConfigurationOperation::ProfileApplicationSet { profile_id, .. } = &canonical {
+            let profile = after
+                .profiles()
+                .iter()
+                .find(|p| {
+                    p["id"]
+                        .as_str()
+                        .is_some_and(|id| id.eq_ignore_ascii_case(profile_id))
+                })
+                .ok_or(Error::InvalidResponse)?;
+            if let Some(icon) = profile
+                .pointer("/launchTarget/iconPNGData")
+                .filter(|v| v.is_object())
+            {
+                let table = thumble_core::ProfileResourceTable::from_profile(profile)
+                    .map_err(|_| Error::InvalidResponse)?
+                    .ok_or(Error::InvalidResponse)?;
+                if table.data(icon).map_err(|_| Error::InvalidResponse)?.len() > 200000 {
+                    return Err(Error::InvalidResponse);
+                }
+            }
+        }
+
         let fallback = before
             .default_profile_id()
             .unwrap_or(before.active_profile_id());
@@ -92,7 +119,17 @@ impl ConfigurationBridge {
         {
             return Err(Error::InvalidResponse);
         }
-        let merged = if let ConfigurationOperation::CustomizationSet {
+        let merged = if let ConfigurationOperation::ProfileApplicationSet { profile_id, .. } =
+            &canonical
+        {
+            if response.changed {
+                application::merge(source, &before, &after, profile_id)?
+            } else {
+                source.clone()
+            }
+        } else if let Some((source_id, destination_id)) = profile_clone::identities(&canonical) {
+            profile_clone::merge(source, &before, &after, source_id, destination_id)?
+        } else if let ConfigurationOperation::CustomizationSet {
             profile_id,
             changes,
             ..
@@ -241,6 +278,23 @@ fn banks_preserved(
     after: &OwnedConfigurationDocument,
     operation: &ConfigurationOperation,
 ) -> bool {
+    if let Some((source_id, destination_id)) = profile_clone::identities(operation) {
+        let find = |document: &OwnedConfigurationDocument, id: &str| {
+            document
+                .profiles()
+                .iter()
+                .find(|p| p["id"].as_str().is_some_and(|v| v.eq_ignore_ascii_case(id)))
+                .cloned()
+        };
+        let (Some(source), Some(destination)) =
+            (find(before, source_id), find(after, destination_id))
+        else {
+            return false;
+        };
+        if source.get("appearanceBank") != destination.get("appearanceBank") {
+            return false;
+        }
+    }
     for profile in before.profiles() {
         let Some(next) = after
             .profiles()

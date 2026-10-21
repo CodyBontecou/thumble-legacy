@@ -3,6 +3,103 @@ import SwiftUI
 import XCTest
 
 final class OwnedConfigurationDocumentTests: XCTestCase {
+    func testOwnedCreationPreservesAllSourceAppearanceAndSelectionOptions() throws {
+        let source = try fixture("document")
+        let before = try ThumbleOwnedConfigurationDocument(validating: source)
+        let original = before.projectedProfiles[0]
+        let newID = UUID(uuidString: "EE000000-0000-4000-8000-000000000001")!
+        for select in [false,true] { for makeDefault in [false,true] {
+            let operation: [String:Any] = ["type":"profile.create", "sourceProfileID":original.id.uuidString,"newProfileID":newID.uuidString,"name":"Owned copy","select":select,"makeDefault":makeDefault]
+            let response = try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source,operation)))
+            let result = try ThumbleOwnedConfigurationDocument(validating: XCTUnwrap(Data(base64Encoded: response.afterDocumentData)))
+            let copy = try XCTUnwrap(result.projectedProfiles.last)
+            XCTAssertEqual(Array(result.projectedProfiles.dropLast()),before.projectedProfiles)
+            XCTAssertEqual(copy.id,newID); XCTAssertEqual(copy.customization,original.customization)
+            XCTAssertEqual(copy.appearanceBank,original.appearanceBank); XCTAssertEqual(copy.appearanceBank?.variants.count,8)
+            XCTAssertEqual(copy.outputMode,original.outputMode); XCTAssertNil(copy.launchTarget)
+            XCTAssertEqual(result.activeProfileID,select ? newID:before.activeProfileID)
+            XCTAssertEqual(result.defaultProfileID,makeDefault ? newID:before.defaultProfileID)
+        }}
+    }
+
+    func testOwnedDefaultCreationPreservesLowercaseBindingMapKeys() throws {
+        var source = try fixture("document")
+        let id = "ee000000-0000-4000-8000-000000000002"
+        let operations: [[String:Any]] = [
+            ["type":"profile.create", "newProfileID":id, "name":"Default", "select":false, "makeDefault":false],
+            ["type":"customization.reset", "profileID":id, "variant":"primary"],
+            ["type":"binding.reset-all", "profileID":id]
+        ]
+        for operation in operations {
+            let response = try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self, from: operationRequest(source,operation)))
+            source = try XCTUnwrap(Data(base64Encoded: response.afterDocumentData))
+        }
+        let root = try XCTUnwrap(JSONSerialization.jsonObject(with: source) as? [String:Any])
+        for field in ["profileKeyBindings", "profileOutputBindings"] {
+            let maps = try XCTUnwrap(root[field] as? [String:Any])
+            XCTAssertNotNil(maps[id]); XCTAssertNil(maps[id.uppercased()])
+            XCTAssertFalse(try XCTUnwrap(maps[id] as? [String:Any]).isEmpty)
+        }
+    }
+
+    func testOwnedApplicationAttachmentPreservesPaintAndLaterClockNoOps() throws {
+        var source = try fixture("document")
+        let before = try ThumbleOwnedConfigurationDocument(validating: source)
+        let profile = before.projectedProfiles[0]
+        let attachment: [String:Any] = ["displayName":"World of Warcraft", "filePath":"/Applications/World of Warcraft.app", "bundleIdentifier":"com.example.wow"]
+        for value in [attachment as Any, NSNull()] {
+            let operation: [String:Any] = ["type":"profile.application-set","profileID":profile.id.uuidString,"attachment":value]
+            let request = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:operationRequest(source,operation))
+            let response = try ThumbleOwnedOperationBridge.transform(request)
+            source = try XCTUnwrap(Data(base64Encoded:response.afterDocumentData))
+            let after = try ThumbleOwnedConfigurationDocument(validating:source)
+            XCTAssertEqual(after.projectedProfiles[0].customization,profile.customization)
+            XCTAssertEqual(after.projectedProfiles[0].appearanceBank,profile.appearanceBank)
+            XCTAssertEqual(after.projectedProfiles[1],before.projectedProfiles[1])
+            XCTAssertEqual(after.activeProfileID,before.activeProfileID)
+            let repeatRequest = try JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:operationRequest(source,operation,nowMillis:9000))
+            XCTAssertFalse(try ThumbleOwnedOperationBridge.transform(repeatRequest).changed)
+        }
+        var invalid = attachment; invalid["filePath"] = "relative.app"
+        let operation: [String:Any] = ["type":"profile.application-set","profileID":profile.id.uuidString,"attachment":invalid]
+        XCTAssertThrowsError(try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:operationRequest(source,operation))))
+    }
+
+    func testIssueSpecificRepairKeepsPaintAndRespectsLocks() throws {
+        for locked in [false,true] {
+            var root = try XCTUnwrap(JSONSerialization.jsonObject(with: fixture("document")) as? [String:Any])
+            var profiles = try XCTUnwrap(root["profiles"] as? [[String:Any]])
+            var layout = try XCTUnwrap(profiles[0]["customization"] as? [String:Any])
+            var elements = try XCTUnwrap(layout["elements"] as? [[String:Any]])
+            var paint = try XCTUnwrap(elements[0]["layout"] as? [String:Any]); paint["widthScale"]=0.1; paint["heightScale"]=0.1; paint["isLocationLocked"]=locked
+            elements[0]["layout"]=paint; layout["elements"]=elements
+            var mirrors = try XCTUnwrap(layout["buttonCustomizations"] as? [Any])
+            for index in stride(from:0,to:mirrors.count,by:2) where mirrors[index] as? String == elements[0]["id"] as? String { mirrors[index+1]=paint }
+            layout["buttonCustomizations"]=mirrors
+            var buttons = try XCTUnwrap(layout["customButtons"] as? [[String:Any]])
+            for i in buttons.indices where buttons[i]["id"] as? String == elements[0]["id"] as? String { buttons[i]["layout"]=paint }
+            layout["customButtons"]=buttons; profiles[0]["customization"]=layout; root["profiles"]=profiles
+            let source = try JSONSerialization.data(withJSONObject:root)
+            let before = try ThumbleOwnedConfigurationDocument(validating:source); let profile=before.projectedProfiles[0]
+            XCTAssertTrue(profile.customization.layoutQualityReport().issues.contains { $0.code == "small-control" })
+            var operation: [String:Any] = ["type":"customization.fix","profileID":profile.id.uuidString,"variant":"primary","target":["kind":"issue","code":"small-control"],"canvas":["source":"stored"],"includeLocked":false]
+            let response = try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:operationRequest(source,operation)))
+            let after = try ThumbleOwnedConfigurationDocument(validating:XCTUnwrap(Data(base64Encoded:response.afterDocumentData)))
+            XCTAssertEqual(after.projectedProfiles[0].appearanceBank,profile.appearanceBank)
+            XCTAssertEqual(after.projectedProfiles[0].customization.elements.map(\.output),profile.customization.elements.map(\.output))
+            XCTAssertEqual(after.projectedProfiles[1],before.projectedProfiles[1])
+            if locked {
+                let a=try XCTUnwrap(JSONSerialization.jsonObject(with:JSONEncoder().encode(after.projectedProfiles[0].customization)) as? [String:Any])
+                let b=try XCTUnwrap(JSONSerialization.jsonObject(with:JSONEncoder().encode(profile.customization)) as? [String:Any])
+                let changed=Set(a.keys).union(b.keys).filter { !NSDictionary(dictionary:["value":a[$0] ?? NSNull()]).isEqual(to:["value":b[$0] ?? NSNull()]) }.sorted()
+                XCTAssertTrue(changed.isEmpty,"Locked repair changed fields: \(changed)")
+            }
+            else { XCTAssertFalse(after.projectedProfiles[0].customization.layoutQualityReport().issues.contains { $0.code == "small-control" }) }
+            operation["target"]=["kind":"issue","code":"unknown-issue"]
+            XCTAssertThrowsError(try ThumbleOwnedOperationBridge.transform(JSONDecoder().decodeUnique(ThumbleOwnedOperationBridgeRequest.self,from:operationRequest(source,operation))))
+        }
+    }
+
     func testRichBackgroundFillsReplaceRequestedScopeAcrossAllOwnedStates() throws {
         let source = try fixture("document")
         let before = try ThumbleOwnedConfigurationDocument(validating: source)

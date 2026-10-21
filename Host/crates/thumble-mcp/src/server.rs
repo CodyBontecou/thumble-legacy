@@ -26,6 +26,23 @@ use thumble_host::control::{
 };
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ApplicationAttachmentInput {
+    #[schemars(length(min = 1, max = 512))]
+    pub display_name: String,
+    #[schemars(length(min = 1, max = 32768))]
+    pub file_path: Option<String>,
+    #[schemars(length(min = 1, max = 1024))]
+    pub bundle_identifier: Option<String>,
+}
+#[derive(Debug, Clone, Serialize, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct ApplicationLaunchResult {
+    pub launch_id: String,
+    pub profile_id: String,
+    pub phase: String,
+}
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ExportProfilesParams {
     pub profile_id: Option<String>,
 }
@@ -1327,6 +1344,12 @@ pub struct DiscardConfigurationDraftResult {
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
 #[serde(tag = "type", deny_unknown_fields)]
 pub enum ConfigurationOperationInput {
+    #[serde(rename = "profile.application-set")]
+    ProfileApplicationSet {
+        #[serde(rename = "profileID")]
+        profile_id: String,
+        attachment: Option<ApplicationAttachmentInput>,
+    },
     #[serde(rename = "profile.rename")]
     ProfileRename {
         /// Exact profile UUID from list_profiles or the draft summary.
@@ -1894,6 +1917,19 @@ pub enum ConfigurationOperationInput {
 impl From<ConfigurationOperationInput> for ConfigurationOperation {
     fn from(input: ConfigurationOperationInput) -> Self {
         match input {
+            ConfigurationOperationInput::ProfileApplicationSet {
+                profile_id,
+                attachment,
+            } => Self::ProfileApplicationSet {
+                profile_id,
+                attachment: attachment.map(|a| {
+                    thumble_host::draft_operation::ApplicationAttachment {
+                        display_name: a.display_name,
+                        file_path: a.file_path,
+                        bundle_identifier: a.bundle_identifier,
+                    }
+                }),
+            },
             ConfigurationOperationInput::ProfileRename { profile_id, name } => {
                 Self::ProfileRename { profile_id, name }
             }
@@ -2604,13 +2640,20 @@ impl From<LayoutRepairKindInput> for LayoutRepairKind {
 #[serde(tag = "kind", rename_all = "lowercase", deny_unknown_fields)]
 pub enum LayoutRepairTargetInput {
     All {},
-    Repair { repair: LayoutRepairKindInput },
+    Repair {
+        repair: LayoutRepairKindInput,
+    },
+    Issue {
+        #[schemars(length(min = 1, max = 128))]
+        code: String,
+    },
 }
 
 impl From<LayoutRepairTargetInput> for LayoutRepairTarget {
     fn from(value: LayoutRepairTargetInput) -> Self {
         match value {
             LayoutRepairTargetInput::All {} => Self::All {},
+            LayoutRepairTargetInput::Issue { code } => Self::Issue { code },
             LayoutRepairTargetInput::Repair { repair } => Self::Repair {
                 repair: repair.into(),
             },
@@ -5791,6 +5834,68 @@ impl ThumbleMcp {
     }
 
     #[tool(
+        description = "Launch the local application already attached to an exact profile UUID. Requires MCP --allow-input. Resolves through the headless receiver and releases held input before activation; never accepts paths, shell commands, or credentials. Returns a correlated launch ID and phase; inspect host_status for completion.",
+        annotations(
+            title = "Launch profile application",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = true
+        )
+    )]
+    pub async fn launch_profile_application(
+        &self,
+        Parameters(params): Parameters<SelectProfileParams>,
+    ) -> Result<Json<ApplicationLaunchResult>, String> {
+        if !self.allow_input {
+            return Err(
+                "MCP application launch is disabled; enable --allow-input to use this action"
+                    .into(),
+            );
+        }
+        let profile_id = uuid::Uuid::parse_str(&params.profile_id)
+            .map_err(|_| "Expected an exact profile UUID")?
+            .to_string();
+        self.press_limiter
+            .lock()
+            .map_err(|_| "MCP input rate limiter failed")?
+            .allow()?;
+        let response = self
+            .request(
+                "launch_profile_application",
+                ControlRequest::LaunchProfile {
+                    profile_id: Some(profile_id.clone()),
+                },
+            )
+            .await?;
+        let launch = response
+            .application_launch
+            .ok_or("Host returned no application launch acknowledgement")?;
+        if !launch.profile_id.eq_ignore_ascii_case(&profile_id)
+            || uuid::Uuid::parse_str(&launch.launch_id).is_err()
+        {
+            return Err("Host returned an uncorrelated launch acknowledgement".into());
+        }
+        use thumble_host::application_launch::LaunchPhase;
+        let phase = match launch.phase {
+            LaunchPhase::Resolving => "resolving",
+            LaunchPhase::ReleasingInput => "releasing-input",
+            LaunchPhase::Launched => "launched",
+            LaunchPhase::Failed => {
+                return Err(format!(
+                    "Application launch failed: {}",
+                    launch.error_code.as_deref().unwrap_or("launch_failed")
+                ))
+            }
+        };
+        Ok(Json(ApplicationLaunchResult {
+            profile_id: launch.profile_id,
+            launch_id: launch.launch_id,
+            phase: phase.into(),
+        }))
+    }
+
+    #[tool(
         description = "Tap one installed active-profile control, automatically releasing it. Requires thumble-mcp --allow-input, host input mode, and macOS Accessibility permission. Accepts only an exact opaque controlId returned by list_controls; arbitrary keys, text, and shell commands are impossible.",
         annotations(
             title = "Press Thumble control",
@@ -6016,6 +6121,96 @@ const fn element_part_name(part: thumble_protocol::KeypadElementInputPart) -> &'
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[tokio::test]
+    async fn application_launch_requires_input_opt_in_and_correlates_receipts() {
+        struct Channel {
+            count: Arc<std::sync::atomic::AtomicUsize>,
+            wrong: bool,
+        }
+        impl crate::channel::HostChannel for Channel {
+            fn request(
+                &self,
+                request: ControlRequest,
+            ) -> crate::channel::BoxedHostRequestFuture<'_> {
+                self.count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                let wrong = self.wrong;
+                Box::pin(async move {
+                    let ControlRequest::LaunchProfile {
+                        profile_id: Some(profile_id),
+                    } = request
+                    else {
+                        return Err("wrong request".into());
+                    };
+                    let mut response = ControlResponse::success();
+                    response.application_launch =
+                        Some(thumble_host::application_launch::LaunchStatus {
+                            launch_id: uuid::Uuid::new_v4().to_string(),
+                            profile_id: if wrong {
+                                uuid::Uuid::new_v4().to_string()
+                            } else {
+                                profile_id
+                            },
+                            phase: thumble_host::application_launch::LaunchPhase::Resolving,
+                            error_code: None,
+                        });
+                    Ok(response)
+                })
+            }
+        }
+        let count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
+        let id = uuid::Uuid::new_v4().to_string();
+        let disabled = ThumbleMcp::with_channel(
+            Arc::new(Channel {
+                count: count.clone(),
+                wrong: false,
+            }),
+            false,
+            false,
+        );
+        assert!(disabled
+            .launch_profile_application(Parameters(SelectProfileParams {
+                profile_id: id.clone()
+            }))
+            .await
+            .is_err());
+        assert_eq!(count.load(std::sync::atomic::Ordering::SeqCst), 0);
+        for wrong in [false, true] {
+            let server = ThumbleMcp::with_channel(
+                Arc::new(Channel {
+                    count: count.clone(),
+                    wrong,
+                }),
+                true,
+                false,
+            );
+            assert_eq!(
+                server
+                    .launch_profile_application(Parameters(SelectProfileParams {
+                        profile_id: id.clone()
+                    }))
+                    .await
+                    .is_ok(),
+                !wrong
+            );
+        }
+        let enabled = ThumbleMcp::with_channel(
+            Arc::new(Channel {
+                count: count.clone(),
+                wrong: false,
+            }),
+            true,
+            false,
+        );
+        let old = count.load(std::sync::atomic::Ordering::SeqCst);
+        assert!(enabled
+            .launch_profile_application(Parameters(SelectProfileParams {
+                profile_id: "/Applications/WoW.app".into()
+            }))
+            .await
+            .is_err());
+        assert_eq!(old, count.load(std::sync::atomic::Ordering::SeqCst));
+    }
+
     use rmcp::{
         model::{CallToolRequestParams, ProtocolVersion},
         ServiceExt,
@@ -6489,7 +6684,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 36);
+        assert_eq!(tools.len(), 37);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -6618,6 +6813,7 @@ mod tests {
                 "import_profiles",
                 "import_style_library",
                 "inspect_controller_design",
+                "launch_profile_application",
                 "list_controls",
                 "list_profiles",
                 "pairing_code",
@@ -6925,7 +7121,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 36);
+        assert_eq!(tools.len(), 37);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));

@@ -1,0 +1,18 @@
+{
+  "classicAndOwned": true,
+  "legacyPrecisionRefusal": true,
+  "eightStateNativePreviews": true,
+  "explicitReadOnlyLegacySnapshot": true,
+  "blankDefaultAndCopyCreation": true,
+  "selectionAndDefaults": true,
+  "rawMetadataAndEightStates": true,
+  "helperFreeReplay": true,
+  "applicationAttachDetachNoOps": true,
+  "revisionCheckedInspection": true,
+  "issueSpecificRepair": true,
+  "ordinaryCommandsNeverUseDesktopIPC": true,
+  "stoppedReceiverLaunchRefused": true,
+  "mcpPrivateDraftCommitReplay": true,
+  "mcpLaunchOptIn": true,
+  "installedAuthorityTouched": false
+}

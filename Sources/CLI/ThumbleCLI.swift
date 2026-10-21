@@ -720,27 +720,21 @@ struct ThumbleCLI {
             }
 
         case "show":
-            try requireExplicitUnmigratedProfileAccess(operation: "profile show", artifactRequired: true)
-            let json = rest.contains("--json")
-            let target = firstPositional(in: rest)
-            let store = try loadStore()
-            let profile = try resolveProfile(target, in: store)
-            if json {
-                let bindings = store.profileKeyBindings[profile.id.uuidString] ?? rawBindings(profile.initialMacOutputBindings.keyboardBindings)
-                let keyboardBindings = decodedBindings(bindings) ?? profile.initialMacOutputBindings.keyboardBindings
-                let storedOutputs = decodedOutputBindings(store.profileOutputBindings[profile.id.uuidString]) ?? profile.initialMacOutputBindings
-                let outputs = effectiveOutputBindings(for: profile.outputMode, keyBindings: keyboardBindings, customOutputBindings: storedOutputs)
-                try printJSON(ProfileExportEnvelope(
-                    profiles: [profile],
-                    activeProfileID: profile.id,
-                    defaultProfileID: store.defaultProfileID == profile.id ? profile.id : nil,
-                    profileKeyBindings: [profile.id.uuidString: bindings],
-                    profileOutputBindings: [profile.id.uuidString: rawOutputBindings(outputs)],
-                    bindingPresentations: bindingPresentations(for: profile, store: store),
-                    preserving: store.profileSources
-                ))
+            if rest.contains("--legacy-desktop") {
+                guard rest.contains("--json") else {throw CLIError.message("Use profile show --legacy-desktop --json for an explicit read-only migration snapshot")}
+                let response=try profileBackend().perform(.legacyDesktopSnapshot(.init(optionValue("--profile",in:rest) ?? firstPositional(in:rest))))
+                guard let snapshot=response.designSnapshot else {throw CLIError.message("Legacy owner returned no migration snapshot")}
+                _ = try ThumbleCLIProfileBackend.inspectionProfile(snapshot,expectedRevision:snapshot.configurationRevision)
+                let body="{\"schema\":\"thumble.profile-inspection\",\"version\":1,\"origin\":\"legacy-desktop-migration\",\"configurationRevision\":\(snapshot.configurationRevision),\"profile\":"+snapshot.profileJSON+",\"bindings\":"+snapshot.bindingJSON+"}\n"
+                try FileHandle.standardOutput.write(contentsOf:Data(body.utf8));return
+            }
+            let captured = try profileBackend().captureInspectionProfile(target: .init(optionValue("--profile", in: rest) ?? firstPositional(in: rest)))
+            if rest.contains("--json") {
+                // Embed exact profile/binding bytes without a numeric decode/re-encode.
+                let body = "{\"schema\":\"thumble.profile-inspection\",\"version\":1,\"configurationRevision\":\(captured.configurationRevision),\"active\":\(captured.active),\"default\":\(captured.isDefault),\"profile\":" + String(decoding: captured.sourceProfileData, as: UTF8.self) + ",\"bindings\":" + captured.bindingJSON + "}\n"
+                try FileHandle.standardOutput.write(contentsOf: Data(body.utf8))
             } else {
-                printProfile(profile, store: store)
+                printProfile(captured.profile, active: captured.active, isDefault: captured.isDefault)
             }
 
         case "select", "use":
@@ -829,34 +823,7 @@ struct ThumbleCLI {
             printProfileInvocation(response)
 
         case "new", "create":
-            if let templateName = optionValue("--template", in: rest) {
-                let template = try resolveTemplate(templateName)
-                guard let authorityTemplate = ThumbleCLIProfileBackend.ControllerTemplate(
-                    rawValue: template.rawValue
-                ) else {
-                    throw CLIError.message("Template is unavailable through Rust profile authority")
-                }
-                let requestedName = positionals(in: rest)
-                    .joined(separator: " ")
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                let response = try profileBackend().perform(
-                    .templateInstall(
-                        authorityTemplate,
-                        name: requestedName.isEmpty ? nil : requestedName,
-                        select: !rest.contains("--no-select"),
-                        makeDefault: rest.contains("--default") && !rest.contains("--no-default")
-                    ),
-                    invocationID: try profileInvocationID(in: rest)
-                )
-                guard let installedName = response.outcome?.profileNames.first else {
-                    throw CLIError.message("Rust profile authority returned no template-install outcome")
-                }
-                print("Created profile \"\(installedName)\".")
-                printProfileInvocation(response)
-            } else {
-                try requireExplicitUnmigratedProfileAccess(operation: "profile create")
-                try createProfile(arguments: rest)
-            }
+            try createProfile(arguments: rest)
 
         case "export":
             try exportProfiles(arguments: rest)
@@ -865,11 +832,9 @@ struct ThumbleCLI {
             try importProfiles(arguments: rest)
 
         case "attach-app", "attach-application", "app", "application":
-            try requireExplicitUnmigratedProfileAccess(operation: "profile attach-app", artifactRequired: true)
             try attachApplicationToProfile(arguments: rest)
 
         case "detach-app", "detach-application", "clear-app", "remove-app":
-            try requireExplicitUnmigratedProfileAccess(operation: "profile detach-app", artifactRequired: true)
             try detachApplicationFromProfile(arguments: rest)
 
         case "launch", "open-app":
@@ -924,110 +889,44 @@ struct ThumbleCLI {
     }
 
     private static func createProfile(arguments: [String]) throws {
-        var nameParts: [String] = []
-        var templateName: String?
-        var fromProfile: String?
-        var select = true
-        var makeDefault = false
-        var blank = false
-
+        let invocation = try profileInvocationID(in: arguments)
+        let args = try removingProfileInvocationID(from: arguments)
+        var names: [String] = [], source: String?, template: String?
+        var blank = false, select = true, makeDefault = false
         var index = 0
-        while index < arguments.count {
-            let argument = arguments[index]
-            switch argument {
-            case "--template":
+        while index < args.count {
+            switch args[index] {
+            case "--from", "--template":
+                let key = args[index]
+                guard index + 1 < args.count, !args[index + 1].hasPrefix("--") else { throw CLIError.message("Missing value for \(key)") }
                 index += 1
-                guard index < arguments.count else { throw CLIError.message("Missing template name") }
-                templateName = arguments[index]
-            case "--from":
-                index += 1
-                guard index < arguments.count else { throw CLIError.message("Missing source profile") }
-                fromProfile = arguments[index]
-            case "--blank":
-                blank = true
-            case "--select":
-                select = true
-            case "--no-select":
-                select = false
-            case "--default":
-                makeDefault = true
-            case "--no-default":
-                makeDefault = false
+                if key == "--from" { guard source == nil else { throw CLIError.message("Provide --from once") }; source = args[index] }
+                else { guard template == nil else { throw CLIError.message("Provide --template once") }; template = args[index] }
+            case "--blank": blank = true
+            case "--select": select = true
+            case "--no-select": select = false
+            case "--default": makeDefault = true
+            case "--no-default": makeDefault = false
             default:
-                if argument.hasPrefix("-") { throw CLIError.message("Unknown option: \(argument)") }
-                nameParts.append(argument)
+                guard !args[index].hasPrefix("-") else { throw CLIError.message("Unknown create option: \(args[index])") }
+                names.append(args[index])
             }
             index += 1
         }
-
-        var store = try loadStore()
-        let requestedName = nameParts.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
-        let baseCustomization: GamepadCustomization
-        let baseOutputMode: GamepadProfileOutputMode
-        let defaultName: String
-        var baseLandscapeCustomization: GamepadCustomization? = nil
-        var basePortraitCustomization: GamepadCustomization? = nil
-        var baseOrientationPreference: GamepadProfileOrientationPreference = .automatic
-        var baseBindings: [KeypadElementID: MacKeyBinding] = [:]
-        var baseOutputBindings: [String: MacControlOutputBinding]?
-
-        if let templateName {
-            let template = try resolveTemplate(templateName)
-            let profile = template.makeProfile()
-            baseCustomization = profile.customization
-            baseOutputMode = profile.outputMode
-            baseLandscapeCustomization = profile.landscapeCustomization
-            basePortraitCustomization = profile.portraitCustomization
-            baseOrientationPreference = profile.orientationPreference
-            defaultName = profile.name
-            let bindings = profile.initialMacOutputBindings
-            baseBindings = bindings.keyboardBindings
-            baseOutputBindings = rawOutputBindings(bindings)
-        } else if let fromProfile {
-            let profile = try resolveProfile(fromProfile, in: store)
-            baseCustomization = profile.customization
-            baseOutputMode = profile.outputMode
-            baseLandscapeCustomization = profile.landscapeCustomization
-            basePortraitCustomization = profile.portraitCustomization
-            baseOrientationPreference = profile.orientationPreference
-            defaultName = "\(profile.name) Copy"
-            baseBindings = decodedBindings(store.profileKeyBindings[profile.id.uuidString]) ?? profile.initialMacOutputBindings.keyboardBindings
-            baseOutputBindings = store.profileOutputBindings[profile.id.uuidString] ?? rawOutputBindings(profile.initialMacOutputBindings)
-        } else if blank {
-            baseCustomization = .blankCanvas
-            baseOutputMode = .keyboard
-            defaultName = "Blank Setup"
+        guard [source != nil, template != nil, blank].filter({ $0 }).count <= 1 else { throw CLIError.message("Choose one of --from, --template, or --blank") }
+        let name = names.joined(separator: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+        let command: ThumbleCLIProfileBackend.Command
+        if let template {
+            let resolved = try resolveTemplate(template)
+            guard let value = ThumbleCLIProfileBackend.ControllerTemplate(rawValue: resolved.rawValue) else { throw CLIError.message("Template is unavailable through local authority") }
+            command = .templateInstall(value, name: name.isEmpty ? nil : name, select: select, makeDefault: makeDefault)
         } else {
-            baseCustomization = .defaultValue
-            baseOutputMode = .keyboard
-            defaultName = "Setup \(store.profiles.count + 1)"
+            command = .create(name: name.isEmpty ? nil : name, source: source.map(ThumbleCLIProfileBackend.ProfileSelector.init), blank: blank, select: select, makeDefault: makeDefault)
         }
-
-        var profile = GamepadConfigurationProfile(
-            name: requestedName.isEmpty ? defaultName : requestedName,
-            primaryCustomization: baseCustomization,
-            orientationPreference: baseOrientationPreference,
-            outputMode: baseOutputMode
-        )
-        if let baseLandscapeCustomization {
-            profile.setCustomizationVariant(baseLandscapeCustomization, for: .landscape)
-        }
-        if let basePortraitCustomization {
-            profile.setCustomizationVariant(basePortraitCustomization, for: .portrait)
-        }
-        if templateName == nil && fromProfile == nil {
-            baseBindings = profile.initialMacOutputBindings.keyboardBindings
-            baseOutputBindings = rawOutputBindings(profile.initialMacOutputBindings)
-        }
-        store.profiles.append(profile)
-        store.profileKeyBindings[profile.id.uuidString] = rawBindings(baseBindings)
-        if let baseOutputBindings {
-            store.profileOutputBindings[profile.id.uuidString] = baseOutputBindings
-        }
-        if select { store.activeProfileID = profile.id }
-        if makeDefault { store.defaultProfileID = profile.id }
-        try persistStore(store)
-        print("Created profile \"\(profile.name)\".")
+        let response = try profileBackend().perform(command, invocationID: invocation)
+        guard let created = response.outcome?.profileNames.first else { throw CLIError.message("Local authority returned no creation outcome") }
+        print("Created profile \"\(created)\".")
+        printProfileInvocation(response)
     }
 
     private struct ProfileExportArguments {
@@ -1456,29 +1355,18 @@ struct ThumbleCLI {
         let applicationURL = try resolveApplicationURL(path: path, bundleIdentifier: bundleIdentifier)
         let launchTarget = GamepadProfileLaunchTarget.application(url: applicationURL)
 
-        var store = try loadStore()
-        let index = try resolveProfileIndex(profileTarget, in: store)
-        store.profiles[index].launchTarget = launchTarget
-        store.profiles[index].updatedAt = Date.currentMilliseconds
-        let profileName = store.profiles[index].name
-        try persistStore(store)
-        print("Attached \"\(launchTarget.displayName)\" to profile \"\(profileName)\".")
+        let response = try profileBackend().perform(.applicationSet(.init(profileTarget), .init(displayName: launchTarget.displayName, filePath: launchTarget.filePath, bundleIdentifier: launchTarget.bundleIdentifier)), invocationID: try profileInvocationID(in: arguments))
+        guard let name = response.outcome?.profileNames.first else { throw CLIError.message("Local authority returned no attachment outcome") }
+        print("Attached \"\(launchTarget.displayName)\" to profile \"\(name)\".")
+        printProfileInvocation(response)
     }
 
     private static func detachApplicationFromProfile(arguments: [String]) throws {
         let profileTarget = optionValue("--profile", in: arguments) ?? firstPositional(in: arguments)
-        var store = try loadStore()
-        let index = try resolveProfileIndex(profileTarget, in: store)
-        let removedName = store.profiles[index].launchTarget?.displayName
-        store.profiles[index].launchTarget = nil
-        store.profiles[index].updatedAt = Date.currentMilliseconds
-        let profileName = store.profiles[index].name
-        try persistStore(store)
-        if let removedName {
-            print("Removed \"\(removedName)\" from profile \"\(profileName)\".")
-        } else {
-            print("Profile \"\(profileName)\" did not have an attached application.")
-        }
+        let response = try profileBackend().perform(.applicationSet(.init(profileTarget), nil), invocationID: try profileInvocationID(in: arguments))
+        guard let name = response.outcome?.profileNames.first else { throw CLIError.message("Local authority returned no detachment outcome") }
+        print("Cleared attached application from profile \"\(name)\".")
+        printProfileInvocation(response)
     }
 
     private static func launchAttachedApplication(arguments: [String]) throws {
@@ -1509,15 +1397,8 @@ struct ThumbleCLI {
             else { print("Application launch queued for profile \(launch.profileID.uuidString). Launch ID: \(launch.launchID.uuidString). Inspect status for completion.") }
             return
         case .legacy:
-            try requireExplicitUnmigratedProfileAccess(operation: "profile launch", artifactRequired: true)
+            throw CLIError.message("Start the headless receiver before launching an attached application.")
         }
-        let store = try loadStore()
-        let profile = try resolveProfile(profileTarget, in: store)
-        guard let launchTarget = profile.launchTarget else {
-            throw CLIError.message("Profile \"\(profile.name)\" does not have an attached application.")
-        }
-        try openLaunchTarget(launchTarget)
-        print("Launched \"\(launchTarget.displayName)\" from profile \"\(profile.name)\".")
     }
 
     private static func resolveApplicationURL(path: String?, bundleIdentifier: String?) throws -> URL {
@@ -1542,20 +1423,6 @@ struct ThumbleCLI {
         }
 
         throw CLIError.message("Usage: thumble profile attach-app [PROFILE|--profile PROFILE] --path /Applications/App.app or --bundle-id com.example.App")
-    }
-
-    private static func openLaunchTarget(_ launchTarget: GamepadProfileLaunchTarget) throws {
-        if let applicationURL = launchTarget.resolvedApplicationURL() {
-            try runProcess("/usr/bin/open", arguments: [applicationURL.path])
-            return
-        }
-
-        if let bundleIdentifier = launchTarget.bundleIdentifier?.trimmingCharacters(in: .whitespacesAndNewlines), !bundleIdentifier.isEmpty {
-            try runProcess("/usr/bin/open", arguments: ["-b", bundleIdentifier])
-            return
-        }
-
-        throw CLIError.message("Could not resolve attached application \"\(launchTarget.displayName)\". Reattach it with `thumble profile attach-app`.")
     }
 
     // MARK: - Templates
@@ -3432,7 +3299,7 @@ struct ThumbleCLI {
                   let typedRepair = ThumbleCLIProfileBackend.LayoutRepairKind(rawValue: repair.rawValue) {
             authorityTarget = .repair(typedRepair)
         } else {
-            authorityTarget = nil
+            authorityTarget = .issue(target)
         }
         if let authorityTarget {
             let response = try profileBackend().perform(
@@ -3459,61 +3326,6 @@ struct ThumbleCLI {
             return
         }
 
-        try requireExplicitUnmigratedProfileAccess(operation: "customization issue-specific repair")
-        let variant = try customizationVariant(in: arguments)
-        let profileTarget = optionValue("--profile", in: arguments)
-        let respectsLocks = !arguments.contains("--unlock") && !arguments.contains("--include-locked")
-        var results: [GamepadLayoutRepairResult] = []
-
-        try mutateCustomization(profileTarget: profileTarget, variant: variant) { customization in
-            let canvasSize = try parseLayoutCanvasSize(
-                arguments,
-                fallback: customization.deviceCanvas.editorDeviceFrame.screenRect.size
-            )
-            let report = customization.layoutQualityReport(canvasSize: canvasSize)
-
-            if target == "all" || target == "suggested" {
-                results.append(contentsOf: customization.applyLayoutRepairs(
-                    target: .all,
-                    canvasSize: canvasSize,
-                    respectingLocks: respectsLocks
-                ))
-            } else if let repair = parseLayoutRepairKind(target) {
-                results.append(contentsOf: customization.applyLayoutRepairs(
-                    target: .repair(repair),
-                    canvasSize: canvasSize,
-                    respectingLocks: respectsLocks
-                ))
-            } else {
-                let matchingIssues = report.issues.filter { normalizedLookup($0.code) == target }
-                guard !matchingIssues.isEmpty else {
-                    throw CLIError.message("No layout issue or repair named \"\(target)\". Use all, small-control, control-overlap, expanded-hit-overlap, edge-hugging-control, thumb-reach, coverage, minimum-touch-target, move-inside-safe-area, resolve-overlap, separate-expanded-hit-targets, ergonomic-auto-arrange, or auto-arrange.")
-                }
-                for issue in matchingIssues {
-                    guard let repair = issue.suggestedRepairs.first else { continue }
-                    results.append(
-                        customization.applyLayoutRepair(
-                            repair,
-                            issue: issue,
-                            canvasSize: canvasSize,
-                            respectingLocks: respectsLocks
-                        )
-                    )
-                }
-            }
-        }
-
-        if arguments.contains("--json") {
-            try printJSON(results)
-        } else {
-            let changed = Set(results.flatMap(\.changedControlIDs)).count
-            let skipped = Set(results.flatMap(\.skippedLockedControlIDs)).count
-            let remaining = results.last?.issueCountAfter ?? 0
-            print("Repaired layout: \(changed) control\(changed == 1 ? "" : "s") changed, \(remaining) issue\(remaining == 1 ? "" : "s") remaining.")
-            if skipped > 0 {
-                print("Skipped \(skipped) locked control\(skipped == 1 ? "" : "s"). Re-run with --unlock to include them.")
-            }
-        }
     }
 
     private static func parseLayoutRepairKind(_ value: String) -> GamepadLayoutRepairKind? {
@@ -3744,20 +3556,6 @@ struct ThumbleCLI {
             return profile.customization(for: variant)
         }
         return profile.customization
-    }
-
-    private static func mutateCustomization(profileTarget: String?, variant: GamepadEditorDeviceOrientation? = nil, mutate: (inout GamepadCustomization) throws -> Void) throws {
-        var store = try loadStore()
-        let index = try resolveProfileIndex(profileTarget, in: store)
-        let previous = store.profiles[index]
-        var customization = variant.map { store.profiles[index].customization(for: $0) } ?? store.profiles[index].customization
-        try mutate(&customization)
-        let normalizedCustomization = customization.normalized
-        let orientation = variant ?? normalizedCustomization.deviceCanvas.editorDeviceFrame.orientation
-        store.profiles[index].setCustomization(normalizedCustomization, for: orientation)
-        store.profiles[index].updatedAt = Date.currentMilliseconds
-        removeDeletedOwnerReferences(previous: previous, current: store.profiles[index], from: &store)
-        try persistStore(store)
     }
 
     private static func removeDeletedOwnerReferences(previous: GamepadConfigurationProfile, current: GamepadConfigurationProfile, from store: inout ProfileStore) {
@@ -6124,21 +5922,8 @@ struct ThumbleCLI {
                 throw CLIError.message("Rust returned no gamepad readiness status.")
             }
             status = value
-        case .legacy(let data):
-            if action == "retry" {
-                // Typed local projection keeps this CLI source compatible while Shared adds the enum case.
-                try postLegacyCommandData(JSONEncoder().encode(LegacyGamepadRetryCommand()))
-                let refreshed = try readCorrelatedLegacyStatus(requestID: UUID())
-                guard let value = try JSONDecoder().decode(LegacyGamepadProjection.self, from: refreshed).virtualGamepadStatus else {
-                    throw CLIError.message("Legacy runtime has no structured gamepad readiness status.")
-                }
-                status = value
-            } else {
-                guard let value = try JSONDecoder().decode(LegacyGamepadProjection.self, from: data).virtualGamepadStatus else {
-                    throw CLIError.message("Legacy runtime has no structured gamepad readiness status; old availability flags are not readiness proof.")
-                }
-                status = value
-            }
+        case .legacy:
+            throw CLIError.message("Start the headless receiver to inspect or retry gamepad output.")
         }
         if rest.contains("--json") {
             try printJSON(status)
@@ -6703,25 +6488,7 @@ struct ThumbleCLI {
     }
 
     private static func runtimeRoute(_ command: ThumbleCLIRuntimeBackend.Command) throws -> ThumbleCLIRuntimeBackend.Route {
-        try ThumbleCLIRuntimeBackend().route(command, legacyStatus: readCorrelatedLegacyStatus)
-    }
-
-    private static func readCorrelatedLegacyStatus(requestID: UUID) throws -> Data {
-        struct StatusRequest: Encodable {
-            let command = "publishStatus"
-            let requestID: UUID
-        }
-        try postLegacyCommandData(JSONEncoder().encode(StatusRequest(requestID: requestID)))
-        let deadline = Date().addingTimeInterval(1)
-        repeat {
-            if let data = dataValue(loadAppDomain()[ThumbleMacIPC.runtimeStatusDefaultsKey]),
-               (try? ThumbleCLIRuntimeBackend.verifyLegacyStatus(data, requestID: requestID,
-                    now: Date.currentMilliseconds, processIsLive: { Darwin.kill($0, 0) == 0 })) != nil {
-                return data
-            }
-            Thread.sleep(forTimeInterval: 0.025)
-        } while Date() < deadline
-        throw CLIError.message("Legacy runtime did not return a fresh correlated status with a live PID and instance UUID; no input was sent.")
+        try ThumbleCLIRuntimeBackend().route(command, legacyStatus: { _ in throw ThumbleCLIRuntimeBackend.BackendError.noVerifiedOwner })
     }
 
     private static func readFreshRuntimeStatus() throws -> ThumbleMacRuntimeStatus {
@@ -7759,11 +7526,11 @@ struct ThumbleCLI {
 
     // MARK: - Output / process helpers
 
-    private static func printProfile(_ profile: GamepadConfigurationProfile, store: ProfileStore) {
+    private static func printProfile(_ profile: GamepadConfigurationProfile, active: Bool, isDefault: Bool) {
         print("Name: \(profile.name)")
         print("ID: \(profile.id.uuidString)")
-        print("Active: \(profile.id == store.activeProfileID ? "yes" : "no")")
-        print("Default: \(profile.id == store.defaultProfileID ? "yes" : "no")")
+        print("Active: \(active ? "yes" : "no")")
+        print("Default: \(isDefault ? "yes" : "no")")
         print("Output: \(profile.outputMode.displayName)")
         print("iPhone Rotation: \(profile.orientationPreference.rawValue)")
         if let launchTarget = profile.launchTarget {

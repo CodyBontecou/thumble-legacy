@@ -7,7 +7,7 @@
     "response.json": "5782782e3eea62f55c2d90e395b21c457732eed218b3c1cc5d5a54d705a91082"
   },
   "sources": {
-    "Tests/OwnedConfigurationDocumentTests.swift": "9e9f1ef913819dccf822585222ccd43aef51fda64bc3f91eaa5a2e5300334b88",
+    "Tests/OwnedConfigurationDocumentTests.swift": "72d43758fec1c8fa2655254f3d8f53b85a2479c5cabea72b236b4e6585db042c",
     "Host/crates/thumble-host/tests/owned_background_fill.rs": "9d90d1b5f16ee7521afa72547c52d866c7f2c5c091879878d94cf81f7299707c"
   },
   "automaticMigrationActivated": false

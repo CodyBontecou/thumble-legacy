@@ -62,7 +62,7 @@
           "cli": [
             "profile show"
           ],
-          "status": "planned",
+          "status": "current",
           "mcpTool": "get_configuration_draft"
         },
         {
@@ -132,7 +132,7 @@
             "profile create",
             "profile new"
           ],
-          "status": "partial",
+          "status": "current",
           "mcpTool": "edit_configuration_draft"
         },
         {
@@ -152,35 +152,13 @@
           "mcpTool": "import_profiles"
         },
         {
-          "id": "profile.attach-app",
-          "cli": [
-            "profile attach-app",
-            "profile attach-application",
-            "profile app",
-            "profile application"
-          ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
-        },
-        {
-          "id": "profile.detach-app",
-          "cli": [
-            "profile detach-app",
-            "profile detach-application",
-            "profile clear-app",
-            "profile remove-app"
-          ],
-          "status": "planned",
-          "mcpTool": "edit_configuration_draft"
-        },
-        {
           "id": "profile.launch",
           "cli": [
             "profile launch",
             "profile open-app"
           ],
-          "status": "planned",
-          "mcpTool": "launch_profile_target",
+          "status": "current",
+          "mcpTool": "launch_profile_application",
           "gate": "app-action"
         },
         {
@@ -192,6 +170,22 @@
           "mcpTool": "prepare_legacy_profile_import",
           "gate": "none",
           "phoneEffect": "No phone or authority mutation; owned peer activation remains gated"
+        },
+        {
+          "id": "profile.application-set",
+          "cli": [
+            "profile attach-app",
+            "profile attach-application",
+            "profile app",
+            "profile application",
+            "profile detach-app",
+            "profile detach-application",
+            "profile clear-app",
+            "profile remove-app"
+          ],
+          "status": "current",
+          "mcpTool": "edit_configuration_draft",
+          "gate": "configuration-write"
         }
       ]
     },

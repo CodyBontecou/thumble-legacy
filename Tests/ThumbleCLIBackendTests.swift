@@ -3,6 +3,19 @@ import Foundation
 import XCTest
 
 final class ThumbleCLIBackendTests: XCTestCase {
+    func testCreationAttachmentAndIssueRepairHaveTypedAuthorityPayloads() throws {
+        let commands: [ThumbleCLIProfileBackend.Command] = [
+            .create(name:"Owned",source:.active,blank:false,select:false,makeDefault:true),
+            .applicationSet(.active,.init(displayName:"WoW",filePath:"/Applications/WoW.app",bundleIdentifier:nil)),
+            .applicationSet(.active,nil),
+            .customizationFix(.active,.primary,.issue("control-overlap"),.stored,includeLocked:false)]
+        let rows = try commands.map { try XCTUnwrap(JSONSerialization.jsonObject(with:JSONEncoder().encode($0)) as? [String:Any]) }
+        XCTAssertEqual(rows[0]["type"] as? String,"profile.create")
+        XCTAssertEqual(rows[0]["select"] as? Bool,false); XCTAssertEqual(rows[0]["makeDefault"] as? Bool,true)
+        XCTAssertEqual((rows[1]["attachment"] as? [String:Any])?["filePath"] as? String,"/Applications/WoW.app")
+        XCTAssertTrue(rows[2]["attachment"] is NSNull)
+        XCTAssertEqual((rows[3]["target"] as? [String:String])?["code"],"control-overlap")
+    }
     func testThemeCommandCarriesExplicitAuthorityTargetAndVariant() throws {
         let bytes = try JSONEncoder().encode(ThumbleCLIProfileBackend.Command.themeApply(.active, .landscape, preset: "cavern-glow"))
         let value = try XCTUnwrap(JSONSerialization.jsonObject(with: bytes) as? [String: Any])

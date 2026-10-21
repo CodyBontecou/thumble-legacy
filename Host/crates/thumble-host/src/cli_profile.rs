@@ -86,6 +86,8 @@ pub enum CliProfileCommand {
     AuthorityStatus,
     #[serde(rename = "profile.list")]
     List,
+    #[serde(rename = "migration.desktop-snapshot")]
+    LegacyDesktopSnapshot { target: ProfileSelector },
     #[serde(rename = "design.apply")]
     DesignApply {
         target: ProfileSelector,
@@ -155,6 +157,20 @@ pub enum CliProfileCommand {
     Select { target: ProfileSelector },
     #[serde(rename = "profile.default")]
     SetDefault { target: ProfileSelector },
+    #[serde(rename = "profile.create")]
+    Create {
+        name: Option<String>,
+        source: Option<ProfileSelector>,
+        blank: bool,
+        select: bool,
+        #[serde(rename = "makeDefault")]
+        make_default: bool,
+    },
+    #[serde(rename = "profile.application-set")]
+    ApplicationSet {
+        target: ProfileSelector,
+        attachment: Option<crate::draft_operation::ApplicationAttachment>,
+    },
     #[serde(rename = "profile.rename")]
     Rename {
         target: ProfileSelector,
@@ -656,6 +672,7 @@ impl CliProfileCommand {
             Self::AssetRemove { .. } => "asset.remove",
             Self::AuthorityStatus => "authority.status",
             Self::List => "profile.list",
+            Self::LegacyDesktopSnapshot { .. } => "migration.desktop-snapshot",
             Self::Export { .. } => "profile.export",
             Self::DesignSnapshot { .. } => "design.snapshot",
             Self::DesignApply { .. } => "design.apply",
@@ -663,6 +680,8 @@ impl CliProfileCommand {
             Self::Select { .. } => "profile.select",
             Self::SetDefault { .. } => "profile.default",
             Self::Rename { .. } => "profile.rename",
+            Self::Create { .. } => "profile.create",
+            Self::ApplicationSet { .. } => "profile.application-set",
             Self::Duplicate { .. } => "profile.duplicate",
             Self::Delete { .. } => "profile.delete",
             Self::Reset { .. } => "profile.reset",
@@ -2541,6 +2560,33 @@ fn validate_request(request: &CliProfileRequest) -> Result<(), TransactionFailur
                 ));
             }
         }
+        CliProfileCommand::ApplicationSet {
+            attachment: Some(value),
+            ..
+        } => {
+            value.validate().map_err(|_| {
+                TransactionFailure::new(
+                    "invalid_application_attachment",
+                    "Application attachment fields are invalid",
+                )
+            })?;
+        }
+        CliProfileCommand::Create {
+            name,
+            source,
+            blank,
+            ..
+        } => {
+            if let Some(name) = name {
+                validate_name(name)?;
+            }
+            if *blank && source.is_some() {
+                return Err(TransactionFailure::new(
+                    "invalid_profile_source",
+                    "Choose either blank or a source profile",
+                ));
+            }
+        }
         CliProfileCommand::Rename { name, .. } => validate_name(name)?,
         CliProfileCommand::Duplicate {
             name: Some(name), ..
@@ -2817,6 +2863,10 @@ fn plan_transaction(
     invocation_id: Uuid,
 ) -> Result<PlannedTransaction, TransactionFailure> {
     match command {
+        CliProfileCommand::LegacyDesktopSnapshot { .. } => Err(TransactionFailure::new(
+            "migration_snapshot_only",
+            "Use the explicit CLI migration snapshot route",
+        )),
         CliProfileCommand::ElementAdd {
             target,
             variant,
@@ -3020,6 +3070,64 @@ fn plan_transaction(
             Ok(plan_one(
                 ConfigurationOperation::ProfileSetDefault {
                     profile_id: profile.profile_id.hyphenated().to_string(),
+                },
+                profile.name.clone(),
+            ))
+        }
+        CliProfileCommand::Create {
+            name,
+            source,
+            blank,
+            select,
+            make_default,
+        } => {
+            let source = source
+                .as_ref()
+                .map(|s| resolve_selector(s, catalog))
+                .transpose()?;
+            let name = name
+                .as_ref()
+                .map(|n| normalized_name(n))
+                .transpose()?
+                .unwrap_or_else(|| {
+                    source
+                        .map(|s| format!("{} Copy", s.name))
+                        .unwrap_or_else(|| {
+                            if *blank {
+                                "Blank Setup".into()
+                            } else {
+                                format!("Setup {}", catalog.profiles.len() + 1)
+                            }
+                        })
+                });
+            let id = deterministic_uuid(invocation_id, "profile.create:new-profile").to_string();
+            let mut operations = vec![ConfigurationOperation::ProfileCreate {
+                name: name.clone(),
+                new_profile_id: id.clone(),
+                source_profile_id: source.map(|s| s.profile_id.to_string()),
+                select: *select,
+                make_default: *make_default,
+            }];
+            if source.is_none() && !*blank {
+                operations.push(ConfigurationOperation::CustomizationReset {
+                    profile_id: id.clone(),
+                    variant: ConfigurationVariant::Primary,
+                });
+                operations.push(ConfigurationOperation::BindingResetAll { profile_id: id });
+            }
+            Ok(PlannedTransaction {
+                operations,
+                profile_names: vec![name],
+                destination: None,
+                removed_every_profile: false,
+            })
+        }
+        CliProfileCommand::ApplicationSet { target, attachment } => {
+            let profile = resolve_selector(target, catalog)?;
+            Ok(plan_one(
+                ConfigurationOperation::ProfileApplicationSet {
+                    profile_id: profile.profile_id.to_string(),
+                    attachment: attachment.clone(),
                 },
                 profile.name.clone(),
             ))
@@ -6359,6 +6467,20 @@ fn replay_profile_names(
     invocation_id: Uuid,
 ) -> Vec<String> {
     match command {
+        CliProfileCommand::LegacyDesktopSnapshot { .. } => vec![],
+        CliProfileCommand::Create { name, .. } => {
+            let id = deterministic_uuid(invocation_id, "profile.create:new-profile");
+            vec![catalog
+                .profiles
+                .iter()
+                .find(|p| p.profile_id == id)
+                .map(|p| p.name.clone())
+                .or_else(|| name.clone())
+                .unwrap_or_else(|| "profile".into())]
+        }
+        CliProfileCommand::ApplicationSet { target, .. } => vec![resolve_selector(target, catalog)
+            .map(|p| p.name.clone())
+            .unwrap_or_else(|_| "profile".into())],
         CliProfileCommand::Rename { name, .. } => vec![name.trim().to_owned()],
         CliProfileCommand::Duplicate { target, name } => {
             let duplicate_id = deterministic_uuid(invocation_id, "profile.duplicate:new-profile");
@@ -6709,6 +6831,87 @@ fn export_customization(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn creation_plans_are_atomic_deterministic_and_preserve_selection_intent() {
+        let state = PersistentState::minimal("create-plan").unwrap();
+        let catalog = catalog_from_state(&state).unwrap();
+        let id = Uuid::new_v4();
+        let command = CliProfileCommand::Create {
+            name: None,
+            source: None,
+            blank: false,
+            select: false,
+            make_default: true,
+        };
+        validate_request(&request(command.clone())).unwrap();
+        let a = plan_transaction(&command, &catalog, &state.profiles, id).unwrap();
+        let b = plan_transaction(&command, &catalog, &state.profiles, id).unwrap();
+        assert_eq!(a.operations, b.operations);
+        assert!(matches!(
+            &a.operations[0],
+            ConfigurationOperation::ProfileCreate {
+                select: false,
+                make_default: true,
+                ..
+            }
+        ));
+        assert!(matches!(
+            &a.operations[1],
+            ConfigurationOperation::CustomizationReset { .. }
+        ));
+        assert!(matches!(
+            &a.operations[2],
+            ConfigurationOperation::BindingResetAll { .. }
+        ));
+        let command = CliProfileCommand::Create {
+            name: Some("Copy".into()),
+            source: Some(ProfileSelector::Active),
+            blank: false,
+            select: true,
+            make_default: false,
+        };
+        let plan = plan_transaction(&command, &catalog, &state.profiles, id).unwrap();
+        assert_eq!(plan.operations.len(), 1);
+        assert!(
+            matches!(&plan.operations[0],ConfigurationOperation::ProfileCreate {source_profile_id:Some(source),..} if source.eq_ignore_ascii_case(&state.active_profile_id))
+        );
+        let command = CliProfileCommand::Create {
+            name: None,
+            source: Some(ProfileSelector::Active),
+            blank: true,
+            select: true,
+            make_default: false,
+        };
+        assert!(validate_request(&request(command)).is_err());
+    }
+    #[test]
+    fn application_attachment_validation_and_planning_are_scoped() {
+        let state = PersistentState::minimal("app-plan").unwrap();
+        let catalog = catalog_from_state(&state).unwrap();
+        let mut attachment = crate::draft_operation::ApplicationAttachment {
+            display_name: "WoW".into(),
+            file_path: Some("/Applications/WoW.app".into()),
+            bundle_identifier: None,
+        };
+        for value in [Some(attachment.clone()), None] {
+            let command = CliProfileCommand::ApplicationSet {
+                target: ProfileSelector::Active,
+                attachment: value.clone(),
+            };
+            validate_request(&request(command.clone())).unwrap();
+            let plan =
+                plan_transaction(&command, &catalog, &state.profiles, Uuid::new_v4()).unwrap();
+            assert!(
+                matches!(&plan.operations[0],ConfigurationOperation::ProfileApplicationSet { attachment:actual,.. } if actual==&value)
+            );
+        }
+        for path in ["relative.app", "/bad\napp"] {
+            attachment.file_path = Some(path.into());
+            assert!(attachment.validate().is_err());
+        }
+        attachment.file_path = None;
+        assert!(attachment.validate().is_err());
+    }
     #[test]
     fn customization_export_uses_guarded_native_snapshot_without_a_state_file() {
         let state = PersistentState::minimal("native-customization-read").unwrap();

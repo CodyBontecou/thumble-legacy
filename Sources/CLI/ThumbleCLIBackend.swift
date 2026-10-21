@@ -14,6 +14,11 @@ final class ThumbleCLIProfileBackend {
     /// A profile can own distinct 128-control primary, landscape and portrait canvases.
     static let maximumProfileBindingRows = 3 * GamepadCustomization.maximumCustomButtons
 
+    struct ApplicationAttachment: Encodable, Equatable {
+        let displayName: String
+        let filePath: String?
+        let bundleIdentifier: String?
+    }
     enum ProfileSelector: Encodable, Equatable {
         case active
         case `default`
@@ -206,8 +211,9 @@ final class ThumbleCLIProfileBackend {
     enum LayoutRepairTarget: Encodable, Equatable {
         case all
         case repair(LayoutRepairKind)
+        case issue(String)
 
-        private enum CodingKeys: String, CodingKey { case kind, repair }
+        private enum CodingKeys: String, CodingKey { case kind, repair, code }
 
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
@@ -217,6 +223,9 @@ final class ThumbleCLIProfileBackend {
             case .repair(let repair):
                 try container.encode("repair", forKey: .kind)
                 try container.encode(repair, forKey: .repair)
+            case .issue(let code):
+                try container.encode("issue", forKey: .kind)
+                try container.encode(code, forKey: .code)
             }
         }
     }
@@ -601,12 +610,15 @@ final class ThumbleCLIProfileBackend {
         case assetRemove(ProfileSelector, assetID: String)
         case authorityStatus
         case list
+        case legacyDesktopSnapshot(ProfileSelector)
         case export(ProfileSelector?)
         case designApply(ProfileSelector, draftID: UUID?, expectedDraftRevision: UInt64?, packageBase64: String, packageSHA256: String, profileSHA256: String, evidenceSHA256: String, baseProfileSHA256: String? = nil, layoutEditsJSON: String? = nil)
         case designSnapshot(ProfileSelector, draftID: UUID?, expectedDraftRevision: UInt64?, createDraft: Bool = false)
         case `import`(artifactJSON: String, appendAsCopies: Bool, select: Bool, makeDefault: Bool)
         case select(ProfileSelector)
         case setDefault(ProfileSelector)
+        case create(name: String?, source: ProfileSelector?, blank: Bool, select: Bool, makeDefault: Bool)
+        case applicationSet(ProfileSelector, ApplicationAttachment?)
         case rename(ProfileSelector, String)
         case duplicate(ProfileSelector?, String?)
         case delete([ProfileSelector])
@@ -685,7 +697,7 @@ final class ThumbleCLIProfileBackend {
         case controlBarItemReset(ProfileSelector, ConfigurationVariant, GamepadControlBarItem)
 
         private enum CodingKeys: String, CodingKey {
-            case preset, libraryJSON, merge
+            case preset, libraryJSON, merge, blank, attachment
             case assetID, fileName, contentType, dataBase64, role
             case type, target, name, targets, destination, preference, source, automaticallyArrange
             case artifactJSON, appendAsCopies, draftID, expectedDraftRevision, createDraft, packageBase64, packageSHA256, profileSHA256, evidenceSHA256, baseProfileSHA256, layoutEditsJSON
@@ -733,6 +745,9 @@ final class ThumbleCLIProfileBackend {
                 try container.encode(assetID, forKey: .assetID)
             case .authorityStatus:
                 try container.encode("authority.status", forKey: .type)
+            case .legacyDesktopSnapshot(let target):
+                try container.encode("migration.desktop-snapshot",forKey:.type)
+                try container.encode(target,forKey:.target)
             case .list:
                 try container.encode("profile.list", forKey: .type)
             case .designApply(let target, let draftID, let expectedDraftRevision, let packageBase64, let packageSHA256, let profileSHA256, let evidenceSHA256, let baseProfileSHA256, let layoutEditsJSON):
@@ -816,6 +831,17 @@ final class ThumbleCLIProfileBackend {
             case .setDefault(let target):
                 try container.encode("profile.default", forKey: .type)
                 try container.encode(target, forKey: .target)
+            case .create(let name, let source, let blank, let select, let makeDefault):
+                try container.encode("profile.create", forKey: .type)
+                try container.encodeIfPresent(name, forKey: .name)
+                try container.encodeIfPresent(source, forKey: .source)
+                try container.encode(blank, forKey: .blank)
+                try container.encode(select, forKey: .select)
+                try container.encode(makeDefault, forKey: .makeDefault)
+            case .applicationSet(let target, let attachment):
+                try container.encode("profile.application-set", forKey: .type)
+                try container.encode(target, forKey: .target)
+                try container.encode(attachment, forKey: .attachment)
             case .rename(let target, let name):
                 try container.encode("profile.rename", forKey: .type)
                 try container.encode(target, forKey: .target)
@@ -1448,6 +1474,9 @@ final class ThumbleCLIProfileBackend {
         let sourceProfileData: Data
         let configurationRevision: UInt64
         let owned: Bool
+        var active = false
+        var isDefault = false
+        var bindingJSON = "{}"
     }
 
     func captureInspectionProfile(target: ProfileSelector) throws -> InspectionProfile {
@@ -1455,7 +1484,7 @@ final class ThumbleCLIProfileBackend {
         let response = try perform(.designSnapshot(target, draftID: nil, expectedDraftRevision: nil),
             expectedConfigurationRevision: catalog.configurationRevision)
         guard let snapshot = response.designSnapshot else { throw BackendError.malformedResponse }
-        let projection = try Self.inspectionProfile(snapshot, expectedRevision: catalog.configurationRevision)
+        var projection = try Self.inspectionProfile(snapshot, expectedRevision: catalog.configurationRevision)
         guard let entry = catalog.profiles.first(where: { $0.profileID == projection.profile.id }) else { throw BackendError.malformedResponse }
         let matches: Bool
         switch target {
@@ -1465,6 +1494,9 @@ final class ThumbleCLIProfileBackend {
         case .name(let name): matches = entry.name.lowercased() == name.lowercased()
         }
         guard matches else { throw BackendError.malformedResponse }
+        projection.active = entry.active
+        projection.isDefault = entry.default
+        projection.bindingJSON = snapshot.bindingJSON
         return projection
     }
 

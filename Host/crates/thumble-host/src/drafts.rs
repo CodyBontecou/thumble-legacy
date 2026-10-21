@@ -94,18 +94,23 @@ pub struct DraftValidationRecord {
 #[derive(Debug, Clone)]
 pub struct DraftStore {
     directory: PathBuf,
+    state_file: Option<PathBuf>,
 }
 
 impl DraftStore {
     pub fn new(paths: &HostPaths) -> Self {
         Self {
             directory: paths.drafts_dir.clone(),
+            state_file: Some(paths.state_file.clone()),
         }
     }
 
     #[cfg(test)]
     fn in_directory(directory: PathBuf) -> Self {
-        Self { directory }
+        Self {
+            directory,
+            state_file: None,
+        }
     }
 
     pub fn begin(
@@ -252,8 +257,69 @@ impl DraftStore {
             operation_id,
             operation,
             now_millis,
-            apply,
+            |document| {
+                self.validate_legacy_clone(draft_id, operation, now_millis)?;
+                apply(document)
+            },
         )
+    }
+
+    // A legacy draft has already passed through binary64 DTOs. Inspect the
+    // original authority bytes before copying; never manufacture a rounded copy.
+    fn validate_legacy_clone(
+        &self,
+        draft_id: &str,
+        operation: &ConfigurationOperation,
+        now_millis: i64,
+    ) -> Result<(), DraftError> {
+        let source = match operation {
+            ConfigurationOperation::ProfileCreate {
+                source_profile_id: Some(id),
+                ..
+            }
+            | ConfigurationOperation::ProfileDuplicate { profile_id: id, .. } => id,
+            _ => return Ok(()),
+        };
+        let source = Uuid::parse_str(source).map_err(|_| DraftError::Malformed)?;
+        let Some(path) = &self.state_file else {
+            return Ok(());
+        };
+        if !path.exists() {
+            return Ok(());
+        }
+        let bytes = crate::storage::read_state_bytes(path).map_err(|_| DraftError::Malformed)?;
+        let fields: std::collections::BTreeMap<String, &serde_json::value::RawValue> =
+            serde_json::from_slice(&bytes).map_err(|_| DraftError::Malformed)?;
+        let revision: u64 = fields
+            .get("configurationRevision")
+            .map(|value| serde_json::from_str(value.get()))
+            .transpose()
+            .map_err(|_| DraftError::Malformed)?
+            .unwrap_or(thumble_core::INITIAL_CONFIGURATION_REVISION);
+        let draft = self.get(draft_id, now_millis)?;
+        if revision != draft.base_configuration_revision {
+            return Err(DraftError::ConfigurationRevisionConflict {
+                expected: draft.base_configuration_revision,
+                actual: revision,
+            });
+        }
+        let profiles: Vec<&serde_json::value::RawValue> =
+            serde_json::from_str(fields.get("profiles").ok_or(DraftError::Malformed)?.get())
+                .map_err(|_| DraftError::Malformed)?;
+        for profile in profiles {
+            let value: serde_json::Value =
+                serde_json::from_str(profile.get()).map_err(|_| DraftError::Malformed)?;
+            if value
+                .get("id")
+                .and_then(serde_json::Value::as_str)
+                .and_then(|id| Uuid::parse_str(id).ok())
+                == Some(source)
+                && !thumble_core::legacy_json_numbers_are_supported(profile.get().as_bytes())
+            {
+                return Err(DraftError::Preview("Legacy profile contains numeric extensions that cannot be copied exactly; migrate to owned configuration before copying this profile".to_owned()));
+            }
+        }
+        Ok(())
     }
 
     /// Apply a native closure while recording the digest of an explicit,
@@ -752,6 +818,56 @@ mod tests {
         let directory = tempdir().unwrap();
         let store = DraftStore::in_directory(directory.path().join("drafts"));
         (directory, store)
+    }
+
+    #[test]
+    fn legacy_clone_refuses_precision_loss_before_native_transform() {
+        let (directory, mut store) = store();
+        let mut state = PersistentState::minimal("server-id").unwrap();
+        let source = state.active_profile_id.clone();
+        state.profiles[0]["futureExact"] = serde_json::json!("PRECISE");
+        let mut wire = serde_json::to_value(&state).unwrap();
+        wire.as_object_mut()
+            .unwrap()
+            .remove("configurationRevision");
+        let bytes = serde_json::to_string(&wire)
+            .unwrap()
+            .replace("\"PRECISE\"", "0.123456789012345678901234567890123456789");
+        let state: PersistentState = serde_json::from_str(&bytes).unwrap();
+        let path = directory.path().join("state.json");
+        fs::write(&path, &bytes).unwrap();
+        fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+        store.state_file = Some(path.clone());
+        let draft = store
+            .begin(&state, state.configuration_revision, 1_000)
+            .unwrap();
+        let saved_draft = fs::read(store.path(&draft.draft_id)).unwrap();
+        for operation in [
+            ConfigurationOperation::ProfileCreate {
+                name: "Copy".to_owned(),
+                new_profile_id: Uuid::new_v4().to_string(),
+                source_profile_id: Some(source.clone()),
+                select: false,
+                make_default: false,
+            },
+            ConfigurationOperation::ProfileDuplicate {
+                profile_id: source.clone(),
+                new_profile_id: Uuid::new_v4().to_string(),
+                name: "Duplicate".to_owned(),
+            },
+        ] {
+            let result = store.edit_with(
+                &draft.draft_id,
+                draft.draft_revision,
+                &Uuid::new_v4().to_string(),
+                &operation,
+                2_000,
+                |_| panic!("unsafe clone reached native transform"),
+            );
+            assert!(result.unwrap_err().to_string().contains("migrate to owned"));
+            assert_eq!(fs::read(&path).unwrap(), bytes.as_bytes());
+            assert_eq!(fs::read(store.path(&draft.draft_id)).unwrap(), saved_draft);
+        }
     }
 
     #[test]

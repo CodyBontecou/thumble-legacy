@@ -428,59 +428,62 @@ impl CustomizationArtifact {
         if self.is_pooled() {
             return false;
         }
-        let Ok(root) = serde_json::from_str::<&RawValue>(
-            std::str::from_utf8(self.original_bytes()).unwrap_or(""),
-        ) else {
-            return false;
-        };
-        let mut pending = vec![root];
-        while let Some(value) = pending.pop() {
-            let text = value.get();
-            match text.as_bytes().first() {
-                Some(b'{') => {
-                    let Ok(fields) = serde_json::from_str::<BTreeMap<String, &RawValue>>(text)
-                    else {
-                        return false;
-                    };
-                    pending.extend(fields.values().copied());
-                }
-                Some(b'[') => {
-                    let Ok(rows) = serde_json::from_str::<Vec<&RawValue>>(text) else {
-                        return false;
-                    };
-                    pending.extend(rows);
-                }
-                Some(b'-' | b'0'..=b'9') => {
-                    if text.parse::<i64>().is_ok() {
-                        continue;
-                    }
-                    let Ok(number) = text.parse::<f64>() else {
-                        return false;
-                    };
-                    if !number.is_finite() {
-                        return false;
-                    }
-                    let Ok(encoded) = serde_json::to_string(&number) else {
-                        return false;
-                    };
-                    let Some((digits, _)) = decimal_key(text) else {
-                        return false;
-                    };
-                    if number == 0.0 && digits != "0" {
-                        return false;
-                    }
-                    if decimal_key(text) != decimal_key(&encoded)
-                        && (!(text.contains('.') || text.contains(['e', 'E']))
-                            || digits.trim_start_matches('-').len() > 17)
-                    {
-                        return false;
-                    }
-                }
-                _ => {}
-            }
-        }
-        true
+        legacy_json_numbers_are_supported(self.original_bytes())
     }
+}
+
+/// Whether legacy native numeric decoding can preserve this JSON value.
+pub fn legacy_json_numbers_are_supported(bytes: &[u8]) -> bool {
+    let Ok(root) = serde_json::from_str::<&RawValue>(std::str::from_utf8(bytes).unwrap_or(""))
+    else {
+        return false;
+    };
+    let mut pending = vec![root];
+    while let Some(value) = pending.pop() {
+        let text = value.get();
+        match text.as_bytes().first() {
+            Some(b'{') => {
+                let Ok(fields) = serde_json::from_str::<BTreeMap<String, &RawValue>>(text) else {
+                    return false;
+                };
+                pending.extend(fields.values().copied());
+            }
+            Some(b'[') => {
+                let Ok(rows) = serde_json::from_str::<Vec<&RawValue>>(text) else {
+                    return false;
+                };
+                pending.extend(rows);
+            }
+            Some(b'-' | b'0'..=b'9') => {
+                if text.parse::<i64>().is_ok() {
+                    continue;
+                }
+                let Ok(number) = text.parse::<f64>() else {
+                    return false;
+                };
+                if !number.is_finite() {
+                    return false;
+                }
+                let Ok(encoded) = serde_json::to_string(&number) else {
+                    return false;
+                };
+                let Some((digits, _)) = decimal_key(text) else {
+                    return false;
+                };
+                if number == 0.0 && digits != "0" {
+                    return false;
+                }
+                if decimal_key(text) != decimal_key(&encoded)
+                    && (!(text.contains('.') || text.contains(['e', 'E']))
+                        || digits.trim_start_matches('-').len() > 17)
+                {
+                    return false;
+                }
+            }
+            _ => {}
+        }
+    }
+    true
 }
 
 #[cfg(test)]

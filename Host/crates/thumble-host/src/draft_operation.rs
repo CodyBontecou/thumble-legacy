@@ -30,6 +30,12 @@ pub enum ConfigurationOperation {
         profile_id: String,
         name: String,
     },
+    #[serde(rename = "profile.application-set")]
+    ProfileApplicationSet {
+        #[serde(rename = "profileID")]
+        profile_id: String,
+        attachment: Option<ApplicationAttachment>,
+    },
     #[serde(rename = "element.add")]
     ElementAdd {
         #[serde(rename = "profileID")]
@@ -780,6 +786,7 @@ pub enum LayoutRepairKind {
 pub enum LayoutRepairTarget {
     All {},
     Repair { repair: LayoutRepairKind },
+    Issue { code: String },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1806,8 +1813,56 @@ pub(crate) fn decode_design_layout_plan(
     Ok(edits)
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ApplicationAttachment {
+    pub display_name: String,
+    pub file_path: Option<String>,
+    pub bundle_identifier: Option<String>,
+}
+impl ApplicationAttachment {
+    pub fn validate(&self) -> Result<(), ConfigurationOperationError> {
+        let valid = |text: &str, maximum| {
+            !text.trim().is_empty() && text.len() <= maximum && !text.chars().any(char::is_control)
+        };
+        if !valid(&self.display_name, 512)
+            || self
+                .file_path
+                .as_ref()
+                .is_some_and(|v| !valid(v, 32768) || !std::path::Path::new(v).is_absolute())
+            || self
+                .bundle_identifier
+                .as_ref()
+                .is_some_and(|v| !valid(v, 1024))
+            || (self.file_path.is_none() && self.bundle_identifier.is_none())
+        {
+            return Err(ConfigurationOperationError::InvalidOutput);
+        }
+        Ok(())
+    }
+}
 impl ConfigurationOperation {
     pub fn validate_bridge_input(&self) -> Result<(), ConfigurationOperationError> {
+        if let Self::ProfileApplicationSet {
+            profile_id,
+            attachment,
+        } = self
+        {
+            validate_profile_id(profile_id)?;
+            if let Some(value) = attachment {
+                value.validate()?;
+            }
+        }
+        if let Self::CustomizationFix { target, .. } = self {
+            if let LayoutRepairTarget::Issue { code } = target.as_ref() {
+                if code.is_empty()
+                    || code.len() > 128
+                    || !code.chars().all(|c| c.is_alphanumeric() || c == '-')
+                {
+                    return Err(ConfigurationOperationError::InvalidStyle);
+                }
+            }
+        }
         if let Self::CustomizationImport {
             customization_json, ..
         } = self
@@ -2332,6 +2387,7 @@ impl ConfigurationOperation {
                 | Self::ProfileDelete { .. }
                 | Self::ProfileMove { .. }
                 | Self::ProfileCreate { .. }
+                | Self::ProfileApplicationSet { .. }
                 | Self::ThemeApply { .. }
                 | Self::DesignApply { .. }
                 | Self::OrientationCopy { .. }
@@ -2380,7 +2436,8 @@ impl ConfigurationOperation {
 
     fn profile_id(&self) -> &str {
         match self {
-            Self::ProfileRename { profile_id, .. }
+            Self::ProfileApplicationSet { profile_id, .. }
+            | Self::ProfileRename { profile_id, .. }
             | Self::ElementAdd { profile_id, .. }
             | Self::ElementSet { profile_id, .. }
             | Self::BindingSet { profile_id, .. }

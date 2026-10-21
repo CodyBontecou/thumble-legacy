@@ -1226,6 +1226,7 @@ public enum ThumbleBridgeLayoutRepairKind: String, Decodable, Sendable {
 public enum ThumbleBridgeLayoutRepairTarget: Decodable, Sendable {
     case all
     case repair(ThumbleBridgeLayoutRepairKind)
+    case issue(String)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
@@ -1240,15 +1241,21 @@ public enum ThumbleBridgeLayoutRepairTarget: Decodable, Sendable {
                 ThumbleBridgeLayoutRepairKind.self,
                 forKey: .init("repair")
             ))
+        case "issue":
+            try container.requireOnly(["kind", "code"])
+            let code = try container.decode(String.self, forKey: .init("code"))
+            guard !code.isEmpty, code.utf8.count <= 128, code.unicodeScalars.allSatisfy({ CharacterSet.alphanumerics.contains($0) || $0 == "-" }) else { throw ThumbleConfigurationBridgeError.invalidCustomizationChanges }
+            self = .issue(code)
         default:
             throw ThumbleConfigurationBridgeError.invalidCustomizationChanges
         }
     }
 
-    fileprivate var shared: GamepadLayoutRepairTarget {
+    fileprivate var shared: GamepadLayoutRepairTarget? {
         switch self {
         case .all: .all
         case .repair(let repair): .repair(repair.shared)
+        case .issue: nil
         }
     }
 }
@@ -1316,6 +1323,22 @@ public final class ThumbleBridgeCustomizationFixInput: Decodable, @unchecked Sen
     }
 }
 
+public struct ThumbleBridgeApplicationAttachment: Codable, Sendable {
+    public let displayName: String
+    public let filePath: String?
+    public let bundleIdentifier: String?
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
+        try c.requireOnly(["displayName", "filePath", "bundleIdentifier"])
+        displayName = try c.decode(String.self, forKey: .init("displayName"))
+        filePath = try c.decodeIfPresent(String.self, forKey: .init("filePath"))
+        bundleIdentifier = try c.decodeIfPresent(String.self, forKey: .init("bundleIdentifier"))
+        func valid(_ text: String, limit: Int) -> Bool { !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && text.utf8.count <= limit && !text.unicodeScalars.contains(where: CharacterSet.controlCharacters.contains) }
+        guard valid(displayName, limit: 512), filePath != nil || bundleIdentifier != nil,
+            filePath.map({ valid($0, limit: 32768) && $0.hasPrefix("/") }) ?? true,
+            bundleIdentifier.map({ valid($0, limit: 1024) }) ?? true else { throw ThumbleConfigurationBridgeError.invalidCustomizationChanges }
+    }
+}
 public enum ThumbleBridgeOperation: Decodable, Sendable {
     case bindingSet(profileID: String, button: KeypadElementID, sequence: [ThumbleBridgeSemanticKeyStroke])
     case bindingClear(profileID: String, button: KeypadElementID)
@@ -1371,6 +1394,7 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
     case profileDelete(profileID: String, replacementProfileID: String?)
     case profileMove(profileID: String, index: Int)
     case profileCreate(name: String, newProfileID: String, sourceProfileID: String?, select: Bool, makeDefault: Bool)
+    case profileApplicationSet(profileID: String, attachment: ThumbleBridgeApplicationAttachment?)
     case designApply(profileID: String, packageBase64: String, packageSHA256: String, profileSHA256: String, evidenceSHA256: String, baseProfileSHA256: String?, layoutEditsJSON: String?)
     case themeApply(profileID: String, variant: ThumbleBridgeLayoutVariant, preset: String)
     case orientationCopy(profileID: String, source: GamepadProfileLayoutVariant, destination: GamepadProfileLayoutVariant, automaticallyArrange: Bool)
@@ -1387,6 +1411,9 @@ public enum ThumbleBridgeOperation: Decodable, Sendable {
         let container = try decoder.container(keyedBy: ThumbleBridgeCodingKey.self)
         let type = try container.decode(String.self, forKey: .init("type"))
         switch type {
+        case "profile.application-set":
+            try container.requireOnly(["type", "profileID", "attachment"])
+            self = .profileApplicationSet(profileID: try container.decode(String.self, forKey: .init("profileID")), attachment: try container.decodeIfPresent(ThumbleBridgeApplicationAttachment.self, forKey: .init("attachment")))
         case "binding.set":
             try container.requireOnly(["type", "profileID", "button", "sequence"])
             self = .bindingSet(
@@ -1965,11 +1992,17 @@ public enum ThumbleConfigurationBridge {
             return try mutateProfile(input.profileID, in: &document, nowMillis: nowMillis) { profile in
                 var customization = customization(in: profile, variant: input.variant)
                 let canvasSize = try input.canvas.size(for: customization)
-                _ = customization.applyLayoutRepairs(
-                    target: input.target.shared,
-                    canvasSize: canvasSize,
-                    respectingLocks: !input.includeLocked
-                )
+                if let target = input.target.shared {
+                    _ = customization.applyLayoutRepairs(target: target, canvasSize: canvasSize, respectingLocks: !input.includeLocked)
+                } else if case .issue(let code) = input.target {
+                    func normalized(_ value: String) -> String { String(value.unicodeScalars.filter { CharacterSet.alphanumerics.contains($0) }).lowercased() }
+                    let issues = customization.layoutQualityReport(canvasSize: canvasSize).issues.filter { normalized($0.code) == normalized(code) }
+                    guard !issues.isEmpty else { throw ThumbleConfigurationBridgeError.invalidCustomizationChanges }
+                    for issue in issues {
+                        guard let repair = issue.suggestedRepairs.first else { continue }
+                        _ = customization.applyLayoutRepair(repair, issue: issue, canvasSize: canvasSize, respectingLocks: !input.includeLocked)
+                    }
+                }
                 setCustomization(customization, in: &profile, variant: input.variant)
             }
         case let .orientationSet(profileID, preference):
@@ -2401,35 +2434,49 @@ public enum ThumbleConfigurationBridge {
             let profile = document.profiles.remove(at: source)
             document.profiles.insert(profile, at: index)
             return ["/profiles"]
+        case let .profileApplicationSet(profileID, attachment):
+            let index = try profileIndex(profileID, in: document)
+            var profile = document.profiles[index]
+            guard case .object(let profileFields) = profile else { throw ThumbleConfigurationBridgeError.invalidProfile }
+            let previous: ThumbleBridgeJSONValue? = { if case .object? = profileFields["launchTarget"] { return profileFields["launchTarget"] }; return nil }()
+            func text(_ value: ThumbleBridgeJSONValue?, _ key: String) -> String? { if case .object(let fields)? = value, case .string(let text)? = fields[key] { return text }; return nil }
+            var target: ThumbleBridgeJSONValue = .null
+            if let attachment {
+                target = try encodedJSONValue(attachment)
+                try target.setObjectValue(.string("application"), forKey: "kind")
+                // Preserve a valid same-application bookmark and opaque launch metadata.
+                if let previous, text(previous, "filePath") == attachment.filePath,
+                   text(previous, "bundleIdentifier") == attachment.bundleIdentifier {
+                    target = previous
+                    try target.setObjectValue(.string(attachment.displayName), forKey: "displayName")
+                }
+                if target == previous { return [] }
+                try target.setObjectValue(.integer(nowMillis), forKey: "attachedAt")
+            } else if previous == nil { return [] }
+            try profile.setObjectValue(target, forKey: "launchTarget")
+            try profile.setObjectValue(.integer(nowMillis), forKey: "updatedAt")
+            document.profiles[index] = profile
+            return ["/profiles/" + profileID]
         case let .profileCreate(name, newProfileID, sourceProfileID, select, makeDefault):
             let newID = try canonicalNewProfileID(newProfileID, in: document)
             let normalizedName = try profileName(name)
-            let profile: GamepadConfigurationProfile
+            var encodedProfile: ThumbleBridgeJSONValue
             if let sourceProfileID {
                 let sourceIndex = try profileIndex(sourceProfileID, in: document)
-                let source: GamepadConfigurationProfile = try decoded(document.profiles[sourceIndex])
-                profile = GamepadConfigurationProfile(
-                    id: UUID(uuidString: newID)!,
-                    name: normalizedName,
-                    customization: source.customization,
-                    landscapeCustomization: source.landscapeCustomization,
-                    portraitCustomization: source.portraitCustomization,
-                    orientationPreference: source.orientationPreference,
-                    outputMode: source.outputMode,
-                    updatedAt: nowMillis
-                )
-                try cloneOrInstallBindingMaps(from: source.id.uuidString, to: newID, in: &document)
+                encodedProfile = document.profiles[sourceIndex]
+                guard case .object(var fields) = encodedProfile else { throw ThumbleConfigurationBridgeError.invalidProfile }
+                fields.removeValue(forKey: "launchTarget")
+                encodedProfile = .object(fields)
+                try encodedProfile.setObjectValue(.string(normalizedName), forKey: "name")
+                try encodedProfile.setObjectValue(.integer(nowMillis), forKey: "updatedAt")
+                let sourceID = try document.profiles[sourceIndex].requiredString(forKey: "id")
+                try cloneOrInstallBindingMaps(from: sourceID, to: newID, in: &document)
             } else {
-                profile = GamepadConfigurationProfile(
-                    id: UUID(uuidString: newID)!,
-                    name: normalizedName,
-                    primaryCustomization: .blankCanvas,
-                    updatedAt: nowMillis
-                )
+                let profile = GamepadConfigurationProfile(id: UUID(uuidString: newID)!, name: normalizedName, primaryCustomization: .blankCanvas, updatedAt: nowMillis)
+                encodedProfile = try encodedJSONValue(profile)
                 document.profileKeyBindings[newID] = .object([:])
                 document.profileOutputBindings[newID] = .object([:])
             }
-            var encodedProfile = try encodedJSONValue(profile)
             try encodedProfile.setObjectValue(.string(newID), forKey: "id")
             document.profiles.append(encodedProfile)
             if select { document.activeProfileID = newID }
@@ -3073,10 +3120,12 @@ public enum ThumbleConfigurationBridge {
             before: beforeOutputsCanonical,
             after: afterOutputsCanonical
         )
-        removeBindingMap(for: canonicalID, from: &document.profileKeyBindings)
-        removeBindingMap(for: canonicalID, from: &document.profileOutputBindings)
-        document.profileKeyBindings[canonicalID] = nextKeys
-        document.profileOutputBindings[canonicalID] = nextOutputs
+        // UUID case is not a semantic rename. Keep existing raw map keys so
+        // source-preserving merges never need to delete/reinsert an opaque map.
+        let keyMapID = document.profileKeyBindings.keys.first(where: { idsEqual($0, canonicalID) }) ?? canonicalID
+        let outputMapID = document.profileOutputBindings.keys.first(where: { idsEqual($0, canonicalID) }) ?? canonicalID
+        document.profileKeyBindings[keyMapID] = nextKeys
+        document.profileOutputBindings[outputMapID] = nextOutputs
 
         var changedPaths = [
             "/profiles/\(escapePointer(canonicalID))",

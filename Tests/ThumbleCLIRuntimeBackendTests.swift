@@ -47,27 +47,15 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
         XCTAssertFalse(legacyCalled)
     }
 
-    func testLegacyRequiresCorrelatedFreshLivePIDAndInstance() throws {
-        let backend = ThumbleCLIRuntimeBackend(transport: { _ in (0, self.frame(owner: "none")) })
-        let now: Int64 = 10000
-        func status(_ request: UUID, pid: Int = 42, updated: Int64 = 10000, nonce: String? = nil) throws -> Data {
-            try JSONSerialization.data(withJSONObject: [
-                "updatedAt": updated, "runtimeProcessID": pid,
-                "runtimeInstanceID": nonce ?? instance.uuidString,
-                "runtimeStatusRequestID": request.uuidString
-            ])
+    func testAbsentAndLegacyCandidatesNeverReadDesktopStatus() throws {
+        for (owner, error) in [("none", "runtime_not_running"), ("unreachable", "legacy_owner_possible")] {
+            let backend = ThumbleCLIRuntimeBackend(transport: { _ in (1, self.frame(owner: owner, ok: false, error: error)) })
+            var called = false
+            for command in [ThumbleCLIRuntimeBackend.Command.status, .releaseAll, .launchProfile(.active)] {
+                XCTAssertThrowsError(try backend.route(command, invocationID: id, legacyStatus: { _ in called = true; return Data() }))
+            }
+            XCTAssertFalse(called)
         }
-        let route = try backend.route(.releaseAll, invocationID: id, legacyStatus: { try status($0) },
-                                      processIsLive: { $0 == 42 }, now: now)
-        guard case .legacy = route else { return XCTFail("Expected verified legacy route") }
-        for data in [try status(instance), try status(id, updated: 1), try status(id, pid: 0), try status(id, nonce: "bad")] {
-            XCTAssertThrowsError(try backend.route(.releaseAll, invocationID: id, legacyStatus: { _ in data },
-                                                  processIsLive: { _ in true }, now: now))
-        }
-        XCTAssertThrowsError(try backend.route(.releaseAll, invocationID: id, legacyStatus: { try status($0) },
-                                              processIsLive: { _ in false }, now: now))
-        XCTAssertThrowsError(try backend.route(.releaseAll, invocationID: id, legacyStatus: { try status($0, updated: now + 2000) },
-                                              processIsLive: { _ in true }, now: now))
     }
 
     func testRustRouteNeverReadsLegacyAndRequiresAcknowledgement() throws {

@@ -11,14 +11,8 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "Sources/CLI/ThumbleCLI.swift"
 EXPECTED = {
-    "profile": (1, 0),  # artifact-only `profile show`
-    "createProfile": (1, 1),
-    "attachApplicationToProfile": (1, 1),
-    "detachApplicationFromProfile": (1, 1),
-    "launchAttachedApplication": (1, 0),
     "skin": (3, 2),
     "renderSkinPreview": (2, 0),  # mutually exclusive lazy reads; artifact previews need no store
-    "mutateCustomization": (1, 1),
     "mutateProfileResources": (1, 1),
     "asset": (1, 0),  # legacy asset metadata mutation only; reads use authority snapshots
 }
@@ -243,8 +237,8 @@ repair_block = SOURCE.read_text(encoding="utf-8").split(
 if "customizationFix" not in repair_block:
     print("Missing Rust-authoritative customization repair routing", file=sys.stderr)
     raise SystemExit(1)
-if "requireExplicitUnmigratedProfileAccess" not in repair_block:
-    print("Issue-specific legacy repairs must fail closed under Rust authority", file=sys.stderr)
+if ".issue(target)" not in repair_block or "requireExplicitUnmigratedProfileAccess" in repair_block:
+    print("Issue-specific repairs must use typed local authority", file=sys.stderr)
     raise SystemExit(1)
 
 element_block = SOURCE.read_text(encoding="utf-8").split(
@@ -294,3 +288,8 @@ if "future bounded configuration transaction" in device_write or ".deviceSet(" n
     raise SystemExit("Custom device selection must use the existing typed authority transaction")
 
 print("CLI direct profile/design/element persistence allowlist passed.")
+
+for method in ("createProfile", "attachApplicationToProfile", "detachApplicationFromProfile", "launchAttachedApplication", "repairLayout"):
+    block = source_text.split(f"private static func {method}(",1)[1].split("private static func ",1)[0]
+    for forbidden in ("loadStore(", "persistStore(", "mutateCustomization(", "requireExplicitUnmigratedProfileAccess("):
+        if forbidden in block: raise SystemExit(f"{method} still uses {forbidden}")

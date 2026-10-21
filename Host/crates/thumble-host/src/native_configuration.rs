@@ -1,7 +1,7 @@
-//! A native editor remains the authority while it holds runtime.lock. The CLI
-//! evaluates its existing transactions against a credential-free snapshot, then
-//! compare-and-swaps the result back to that editor. It never creates Rust state
-//! or writes CFPreferences in this mode.
+//! Explicit read-only legacy migration snapshots. Ordinary CLI configuration
+//! commands use the headless authority; this transport is never their fallback.
+//! The historical transaction machinery remains for the existing native server
+//! and its regression coverage, not as a runtime owner election path.
 use crate::authority::{
     prepare_configuration_commit, ConfigurationCommitInput, PreparedConfigurationCommit,
 };
@@ -102,6 +102,10 @@ pub fn endpoint_present(paths: &HostPaths) -> bool {
 
 pub fn execute(paths: &HostPaths, request: &CliProfileRequest) -> CliProfileResponse {
     let invocation_id = request.invocation_id.unwrap_or_else(Uuid::new_v4);
+    let migration_snapshot = matches!(
+        request.command,
+        crate::cli_profile::CliProfileCommand::LegacyDesktopSnapshot { .. }
+    );
     let mut normalized_request = request.clone();
     normalized_request.invocation_id = Some(invocation_id);
     let fail = |code: &str, message: &str| {
@@ -159,6 +163,21 @@ pub fn execute(paths: &HostPaths, request: &CliProfileRequest) -> CliProfileResp
             "Native editor returned no validated configuration snapshot",
         );
     };
+    if let crate::cli_profile::CliProfileCommand::LegacyDesktopSnapshot { target } =
+        &request.command
+    {
+        normalized_request.command = crate::cli_profile::CliProfileCommand::DesignSnapshot {
+            target: target.clone(),
+            create_draft: false,
+            draft_id: None,
+            expected_draft_revision: None,
+        };
+        // This explicit read captures the revision from the same authenticated
+        // snapshot, without requiring a prior headless catalog read.
+        normalized_request
+            .expected_configuration_revision
+            .get_or_insert(snapshot.configuration_revision);
+    }
     let (mut response, candidate) = evaluate_with_drafts(
         &document,
         snapshot.configuration_revision,
@@ -171,6 +190,12 @@ pub fn execute(paths: &HostPaths, request: &CliProfileRequest) -> CliProfileResp
     let Some(candidate) = candidate else {
         return response;
     };
+    if migration_snapshot {
+        return fail(
+            "read_only_migration_snapshot",
+            "Desktop migration snapshots cannot commit configuration",
+        );
+    }
     let commit_request = NativeRequest {
         schema_version: 1,
         request_id: Uuid::new_v4(),

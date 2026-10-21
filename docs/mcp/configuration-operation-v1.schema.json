@@ -1,5 +1,83 @@
 {
   "$defs": {
+    "ApplicationAttachmentInput": {
+      "additionalProperties": false,
+      "properties": {
+        "bundleIdentifier": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "displayName": {
+          "maxLength": 512,
+          "minLength": 1,
+          "type": "string"
+        },
+        "filePath": {
+          "maxLength": 32768,
+          "minLength": 1,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "displayName"
+      ],
+      "type": "object"
+    },
+    "BackgroundFillInput": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ElementFillInput"
+        },
+        {
+          "$ref": "#/$defs/BackgroundImageFillInput"
+        }
+      ]
+    },
+    "BackgroundImageFillInput": {
+      "additionalProperties": false,
+      "properties": {
+        "contentMode": {
+          "enum": [
+            "fill",
+            "fit",
+            "tile"
+          ],
+          "type": "string"
+        },
+        "dataBase64": {
+          "description": "Canonical Base64; 1...2,500,000 decoded bytes. No filesystem paths or URLs.",
+          "maxLength": 3333336,
+          "minLength": 4,
+          "type": "string"
+        },
+        "fileName": {
+          "description": "Optional display basename, at most 512 UTF-8 bytes; no path separators or controls.",
+          "maxLength": 512,
+          "minLength": 1,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "const": "image",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "dataBase64",
+        "contentMode"
+      ],
+      "type": "object"
+    },
     "ConfigurationAccentStyleInput": {
       "enum": [
         "monochrome",
@@ -61,25 +139,25 @@
           "type": "object"
         },
         {
-          "type": "object",
           "additionalProperties": false,
           "properties": {
             "action": {
               "const": "fill",
               "type": "string"
             },
-            "scope": {
-              "$ref": "#/$defs/ConfigurationBackgroundScopeInput"
-            },
             "fill": {
               "$ref": "#/$defs/BackgroundFillInput"
+            },
+            "scope": {
+              "$ref": "#/$defs/ConfigurationBackgroundScopeInput"
             }
           },
           "required": [
             "action",
             "scope",
             "fill"
-          ]
+          ],
+          "type": "object"
         }
       ]
     },
@@ -579,6 +657,10 @@
           "default": false,
           "type": "boolean"
         },
+        "clearPresentation": {
+          "default": false,
+          "type": "boolean"
+        },
         "clearStyle": {
           "default": false,
           "type": "boolean"
@@ -813,6 +895,16 @@
             }
           ]
         },
+        "presentation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ElementPresentationInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "rotationDegrees": {
           "format": "double",
           "maximum": 36000.0,
@@ -919,20 +1011,6 @@
             "integer",
             "null"
           ]
-        },
-        "presentation": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ElementPresentationInput"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "clearPresentation": {
-          "type": "boolean",
-          "default": false
         }
       },
       "type": "object"
@@ -1314,6 +1392,56 @@
         "keyboardEdit",
         "gamepadEdit"
       ],
+      "type": "object"
+    },
+    "ElementPresentationInput": {
+      "additionalProperties": false,
+      "properties": {
+        "accessibilityName": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        },
+        "actionID": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+$",
+          "type": "string"
+        },
+        "caption": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "groupIDs": {
+          "default": [],
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9._-]+$",
+            "type": "string"
+          },
+          "maxItems": 16,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "legend": {
+          "maxLength": 64,
+          "type": "string"
+        },
+        "purposeID": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9._-]+$",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "default": 1,
+          "enum": [
+            1
+          ],
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "ElementShapeInput": {
@@ -1784,6 +1912,25 @@
           "required": [
             "kind",
             "repair"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "maxLength": 128,
+              "minLength": 1,
+              "type": "string"
+            },
+            "kind": {
+              "const": "issue",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "code"
           ],
           "type": "object"
         }
@@ -2288,121 +2435,23 @@
       ],
       "type": "string"
     },
-    "ElementPresentationInput": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "schemaVersion": {
-          "type": "integer",
-          "enum": [
-            1
-          ],
-          "default": 1
-        },
-        "actionID": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 64,
-          "pattern": "^[a-z0-9._-]+$"
-        },
-        "purposeID": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 64,
-          "pattern": "^[a-z0-9._-]+$"
-        },
-        "groupIDs": {
-          "type": "array",
-          "maxItems": 16,
-          "uniqueItems": true,
-          "default": [],
-          "items": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 64,
-            "pattern": "^[a-z0-9._-]+$"
-          }
-        },
-        "legend": {
-          "type": "string",
-          "maxLength": 64
-        },
-        "caption": {
-          "type": "string",
-          "maxLength": 128
-        },
-        "accessibilityName": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 128
-        }
-      }
-    },
     "deviceTargetID": {
-      "description": "Exact catalog ID or canonical custom-WxH-orientation ID; integer portrait dimensions must satisfy 240 <= W <= H <= 1800. Owned profiles require landscape.",
       "anyOf": [
         {
           "$ref": "#/$defs/deviceFrameID"
         },
         {
-          "type": "string",
           "maxLength": 128,
-          "pattern": "^custom-(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)x(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)-(landscape|portrait)$"
+          "pattern": "^custom-(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)x(?:2[4-9][0-9]|[3-9][0-9]{2}|1[0-7][0-9]{2}|1800)-(landscape|portrait)$",
+          "type": "string"
         }
-      ]
-    },
-    "BackgroundImageFillInput": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "kind": {
-          "type": "string",
-          "const": "image"
-        },
-        "dataBase64": {
-          "type": "string",
-          "minLength": 4,
-          "maxLength": 3333336,
-          "description": "Canonical Base64; 1...2,500,000 decoded bytes. No filesystem paths or URLs."
-        },
-        "fileName": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "minLength": 1,
-          "maxLength": 512,
-          "description": "Optional display basename, at most 512 UTF-8 bytes; no path separators or controls."
-        },
-        "contentMode": {
-          "type": "string",
-          "enum": [
-            "fill",
-            "fit",
-            "tile"
-          ]
-        }
-      },
-      "required": [
-        "kind",
-        "dataBase64",
-        "contentMode"
-      ]
-    },
-    "BackgroundFillInput": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/ElementFillInput"
-        },
-        {
-          "$ref": "#/$defs/BackgroundImageFillInput"
-        }
-      ]
+      ],
+      "description": "Exact catalog ID or canonical custom-WxH-orientation ID; integer portrait dimensions must satisfy 240 <= W <= H <= 1800. Owned profiles require landscape."
     }
   },
   "$id": "https://codybontecou.com/thumble/schemas/configuration-operation-v1.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Strict revision-safe configuration operations. Customization fix accepts only stored/catalog/bounded-size canvases; control-bar item set and element add/set expose only bounded non-file values. Images, bytes, paths, raw key codes, modifier masks, asset IDs, raw JSON, launch targets, argv, credentials, and unknown fields are rejected.",
+  "description": "Strict revision-safe local operations. Retain typed image/customization imports, bounded app attachments and issue-specific repairs; unknown fields, shell commands and credentials are rejected.",
   "oneOf": [
     {
       "additionalProperties": false,
@@ -4158,6 +4207,33 @@
         "profileID",
         "variant",
         "elementID"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "attachment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationAttachmentInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "profileID": {
+          "type": "string"
+        },
+        "type": {
+          "const": "profile.application-set",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "profileID"
       ],
       "type": "object"
     }

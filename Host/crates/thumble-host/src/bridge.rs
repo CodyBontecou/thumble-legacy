@@ -584,6 +584,13 @@ fn validate_operation_bounds(
             Err(ConfigurationBridgeError::OperationTooLarge)
         };
     }
+    if let ConfigurationOperation::ProfileApplicationSet { .. } = operation {
+        return if encoded.len() <= 64 * 1024 && operation.validate_bridge_input().is_ok() {
+            Ok(())
+        } else {
+            Err(ConfigurationBridgeError::OperationTooLarge)
+        };
+    }
     if matches!(
         operation,
         ConfigurationOperation::DesignApply { .. }
@@ -712,6 +719,9 @@ fn allowed_changed_path(operation: &ConfigurationOperation, path: &str) -> bool 
         ),
         ConfigurationOperation::ProfileSetDefault { .. } => path == "/defaultProfileID",
         ConfigurationOperation::ProfileMove { .. } => path == "/profiles",
+        ConfigurationOperation::ProfileApplicationSet { profile_id, .. } => {
+            path.eq_ignore_ascii_case(&format!("/profiles/{}", escape_json_pointer(profile_id)))
+        }
         ConfigurationOperation::ProfileDuplicate { .. }
         | ConfigurationOperation::ProfileDelete { .. }
         | ConfigurationOperation::ProfileCreate { .. }
@@ -982,6 +992,10 @@ fn valid_operation_delta(
         operation @ ConfigurationOperation::OrientationCopy { .. } => {
             constrained_orientation_copy_delta(before, after, operation)
         }
+        ConfigurationOperation::ProfileApplicationSet {
+            profile_id,
+            attachment,
+        } => valid_application_delta(before, after, profile_id, attachment.as_ref()),
         ConfigurationOperation::ProfileDuplicate {
             profile_id,
             new_profile_id,
@@ -9234,16 +9248,20 @@ fn valid_profile_duplicate(
     else {
         return false;
     };
-    let expected_keys =
-        profile_binding_for(&before.profile_key_bindings, profile_id).or_else(|| {
-            profile_id_matches(&before.active_profile_id, profile_id)
-                .then_some(&before.key_bindings)
-        });
-    let expected_outputs = profile_binding_for(&before.profile_output_bindings, profile_id)
-        .or_else(|| {
-            profile_id_matches(&before.active_profile_id, profile_id)
-                .then_some(&before.output_bindings)
-        });
+    let fallback_outputs = thumble_core::profile_owned_outputs(&before.profiles[source_index]);
+    let mut fallback_keys = ButtonBindings::default();
+    for (id, output) in fallback_outputs.iter_ids() {
+        if let Some(keyboard) = &output.keyboard {
+            fallback_keys.insert(id, keyboard.clone());
+        }
+    }
+    let expected_keys = Some(
+        profile_binding_for(&before.profile_key_bindings, profile_id).unwrap_or(&fallback_keys),
+    );
+    let expected_outputs = Some(
+        profile_binding_for(&before.profile_output_bindings, profile_id)
+            .unwrap_or(&fallback_outputs),
+    );
     expected_keys == Some(new_keys)
         && expected_outputs == Some(new_outputs)
         && after.key_bindings == *new_keys
@@ -9303,17 +9321,40 @@ fn valid_profile_create(
     ) else {
         return false;
     };
+    if created.get("launchTarget").is_some_and(|v| !v.is_null()) {
+        return false;
+    }
     if let Some(source_id) = source_profile_id {
-        let expected_keys =
-            profile_binding_for(&before.profile_key_bindings, source_id).or_else(|| {
-                profile_id_matches(&before.active_profile_id, source_id)
-                    .then_some(&before.key_bindings)
-            });
-        let expected_outputs = profile_binding_for(&before.profile_output_bindings, source_id)
-            .or_else(|| {
-                profile_id_matches(&before.active_profile_id, source_id)
-                    .then_some(&before.output_bindings)
-            });
+        let Some(source_index) = profile_position(before, source_id) else {
+            return false;
+        };
+        let Some(original) = before.profiles[source_index].as_object() else {
+            return false;
+        };
+        let mut expected = original.clone();
+        let mut actual = created.clone();
+        for key in ["id", "name", "updatedAt", "launchTarget"] {
+            expected.remove(key);
+            actual.remove(key);
+        }
+        if expected != actual {
+            return false;
+        }
+
+        let fallback_outputs = thumble_core::profile_owned_outputs(&before.profiles[source_index]);
+        let mut fallback_keys = ButtonBindings::default();
+        for (id, output) in fallback_outputs.iter_ids() {
+            if let Some(keyboard) = &output.keyboard {
+                fallback_keys.insert(id, keyboard.clone());
+            }
+        }
+        let expected_keys = Some(
+            profile_binding_for(&before.profile_key_bindings, source_id).unwrap_or(&fallback_keys),
+        );
+        let expected_outputs = Some(
+            profile_binding_for(&before.profile_output_bindings, source_id)
+                .unwrap_or(&fallback_outputs),
+        );
         if expected_keys != Some(new_keys) || expected_outputs != Some(new_outputs) {
             return false;
         }
@@ -12275,4 +12316,85 @@ mod presentation_delta_regression_tests {
             &part_operation
         ));
     }
+}
+
+fn valid_application_delta(
+    before: &ConfigurationDocument,
+    after: &ConfigurationDocument,
+    id: &str,
+    attachment: Option<&crate::draft_operation::ApplicationAttachment>,
+) -> bool {
+    if !profile_local_delta(before, after, id, &["launchTarget", "updatedAt"]) {
+        return false;
+    }
+    let Some(index) = profile_position(before, id) else {
+        return false;
+    };
+    let old = before.profiles[index]
+        .get("launchTarget")
+        .filter(|v| v.is_object());
+    let actual = after.profiles[index]
+        .get("launchTarget")
+        .filter(|v| !v.is_null());
+    let Some(attachment) = attachment else {
+        return actual.is_none();
+    };
+    let text = |v: Option<&serde_json::Value>, key: &str| {
+        v.and_then(|o| o.get(key))
+            .and_then(|s| s.as_str())
+            .map(str::to_owned)
+    };
+    let mut expected = if text(old, "filePath") == attachment.file_path
+        && text(old, "bundleIdentifier") == attachment.bundle_identifier
+    {
+        old.cloned().unwrap_or_else(|| serde_json::json!({}))
+    } else {
+        serde_json::json!({})
+    };
+    expected["kind"] = serde_json::json!("application");
+    expected["displayName"] = serde_json::json!(attachment.display_name);
+    if let Some(path) = &attachment.file_path {
+        expected["filePath"] = serde_json::json!(path);
+    }
+    if let Some(bundle) = &attachment.bundle_identifier {
+        expected["bundleIdentifier"] = serde_json::json!(bundle);
+    }
+    // The native profile normalizer may cache the selected application's icon.
+    // This bounded display-only field is the only additional attachment data.
+    if expected.get("iconPNGData").is_none() {
+        if let Some(icon) = actual.and_then(|v| v.get("iconPNGData")) {
+            let valid = if let Some(text) = icon.as_str() {
+                use base64::{engine::general_purpose::STANDARD, Engine};
+                text.len() <= 266668
+                    && STANDARD
+                        .decode(text)
+                        .is_ok_and(|v| v.len() <= 200000 && STANDARD.encode(&v) == text)
+            } else {
+                icon.as_object().is_some_and(|v| {
+                    v.len() == 1
+                        && v.get("resourceSHA256")
+                            .and_then(|v| v.as_str())
+                            .is_some_and(|v| {
+                                v.len() == 64 && v.bytes().all(|b| b.is_ascii_hexdigit())
+                            })
+                })
+            };
+            if !valid {
+                return false;
+            }
+            expected["iconPNGData"] = icon.clone();
+        }
+    }
+    if old == Some(&expected) {
+        return actual == old;
+    }
+    let Some(time) = after.profiles[index]
+        .get("updatedAt")
+        .and_then(|v| v.as_i64())
+        .filter(|v| *v >= 0)
+    else {
+        return false;
+    };
+    expected["attachedAt"] = serde_json::json!(time);
+    actual == Some(&expected)
 }
