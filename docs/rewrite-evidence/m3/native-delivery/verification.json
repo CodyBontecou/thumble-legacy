@@ -12,10 +12,20 @@
   "inputPath": "Native touch engine -> packet encryption -> TLS -> Rust recording receiver",
   "androidBackpressure": "one latest input slot; eight outbound controls; eight inbound controls; one writer plus one reader plus at most one transient closer",
   "iosBackpressure": "one in-flight frame; eight controls; one latest input",
-  "hostedNewDelivery": "not published",
+  "hostedNewDelivery": {
+    "commit": "ac9cafeec2ae987d6d9d7125ce6e1793f047c675",
+    "nativeRun": 39677723295,
+    "hostRun": 39677723373,
+    "ios": "success",
+    "android": "success",
+    "windows": "success",
+    "linux": "success",
+    "macos": "queued"
+  },
   "remaining": [
-    "phone enrollment",
-    "persistent trust",
+    "product enrollment coordination",
+    "phone secure credential storage",
+    "session revocation integration",
     "product listener and grant issuance",
     "UDP/reliable routing",
     "reconnect",
