@@ -40,5 +40,21 @@
     "macos": "Hosted code22 InvalidInput occurs setting read timeout after peer stop, before the closure assertion. Not reproduced in 30 local iterations. Test now observes actual EOF/reset with a bounded result deadline; no post-reset socket-option requirement.",
     "cleanup": "Temporary delay/log probes removed from publication; only private red/green evidence retains them."
   },
-  "publication": "Ready under explicit standing CI authorization; no UDP production source included"
+  "publication": "Published automatically under standing user CI authorization",
+  "localSourceCommit": "8d377e9",
+  "publicCommit": "a0203d60838f676cbe6ba29eee8d373518f59b9b",
+  "publicTree": "f49c4334095bc6530b50c5fb403d3bb464793f9c",
+  "remoteFileHashesVerified": true,
+  "runs": [
+    {
+      "id": 39705818873,
+      "name": "TypeScript rewrite (headless)",
+      "status": "Windows/Linux passed; macOS standalone identity initialization failed, public CLI error previously hidden by exit-code assertion"
+    },
+    {
+      "id": 39705819155,
+      "name": "TypeScript rewrite native mobile",
+      "status": "All three jobs passed: iOS, Android, Android Keystore"
+    }
+  ]
 }
