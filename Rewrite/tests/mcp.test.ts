@@ -109,9 +109,20 @@ test("SDK modern and legacy clients share CLI authority, preserve input opt-in a
     ],
     { stdout: "pipe", stderr: "pipe" },
   );
+  const phase = (label: string) => {
+    if (process.env.CI) console.error(`MCP fixture phase=${label}`);
+  };
   try {
-    expect(await start.exited).toBe(0);
-    expect(await new Response(start.stderr).text()).toBe("");
+    phase("service-start");
+    const [startupOutput, startupError, startupCode] = await Promise.all([
+      new Response(start.stdout).text(),
+      new Response(start.stderr).text(),
+      start.exited,
+    ]);
+    expect(startupCode).toBe(0);
+    expect(startupError).toBe("");
+    expect(JSON.parse(startupOutput).ok).toBe(true);
+    phase("service-ready");
     const endpoint = readEndpoint(runtime, receiver);
     for (const legacy of [false, true])
       for (const optIn of [false, true]) {
@@ -142,10 +153,16 @@ test("SDK modern and legacy clients share CLI authority, preserve input opt-in a
           },
         );
         try {
+          phase(
+            `connect-${legacy ? "legacy" : "modern"}-${optIn ? "recording" : "default"}`,
+          );
           await client.connect(
             transport,
-            legacy ? { prior: { kind: "legacy" } } : {},
+            legacy
+              ? { prior: { kind: "legacy" }, timeout: 5000 }
+              : { timeout: 5000 },
           );
+          phase("connected");
           expect(client.getProtocolEra()).toBe(legacy ? "legacy" : "modern");
           const tools = await client.listTools();
           expect(tools.tools.map((t) => t.name).sort()).toEqual(
@@ -214,7 +231,9 @@ test("SDK modern and legacy clients share CLI authority, preserve input opt-in a
               .active,
           ).toBe(false);
         } finally {
+          phase("client-close");
           await client.close();
+          phase("client-closed");
         }
         expect(stderr).toBe("");
         expect(
