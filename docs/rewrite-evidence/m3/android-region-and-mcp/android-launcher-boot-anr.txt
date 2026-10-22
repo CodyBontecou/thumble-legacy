@@ -1,0 +1,12 @@
+Public source afaeafe7; run 39745232916; job 119711910483.
+Artifact 12412030571; SHA-256 2077b7d8b8fbb93b2d5242d8b08a03f2cbce7c16ae78251cd0806d3e7585b752.
+All seven cases failed during setup; the actual input assertions did not run.
+java.lang.AssertionError
+at org.junit.Assert.fail(Assert.java:87)
+at org.junit.Assert.assertTrue(Assert.java:42)
+at org.junit.Assert.assertTrue(Assert.java:53)
+at com.thumble.rewrite.qa.PracticeInputTest.openPractice(PracticeInputTest.kt:116)
+Primary captured UI: screenOn=true; package=android.
+Android alertTitle: Pixel Launcher is not responding.
+Android close action: android:id/aerr_close.
+ReactNativeJS logged Running main; the launcher dialog covered the Activity.

@@ -1,0 +1,5 @@
+Public source 274194d2; native run 39749929877; job 119728156595.
+Artifact 12414185243 SHA-256 17589e9a286de6cea52b17942ebe4ad4de6d46739f257fe8df5f288240a14506.
+metadataInspectionDoesNotConsumeOrReplaceExactGrantAdmission: expected 1 delivered input, observed 0 at PhoneInputTest.kt:676.
+The native delivery writer is asynchronous; immediate acceptance does not imply completed socket I/O.
+Forced paused-writer reproduction: java.lang.AssertionError: expected:<1> but was:<0>

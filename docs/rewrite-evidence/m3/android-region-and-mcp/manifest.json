@@ -165,6 +165,62 @@
     "thumble-invitation-async-mcp-projection-package.txt": {
       "path": "/private/tmp/thumble-invitation-async-mcp-projection-package.txt",
       "sha256": "fe47ec4dab2e3259c5ff9f596d7de137391bea0e0120d8bab6cb7349994e46b5"
+    },
+    "thumble-mcp-independent-node.txt": {
+      "path": "/private/tmp/thumble-mcp-independent-node.txt",
+      "sha256": "3a7a4f2898cee233f62823ac27f3aba879f0fa092c5938633007dbeab059e51c"
+    },
+    "thumble-mcp-node-outer-gate.txt": {
+      "path": "/private/tmp/thumble-mcp-node-outer-gate.txt",
+      "sha256": "3a7a4f2898cee233f62823ac27f3aba879f0fa092c5938633007dbeab059e51c"
+    },
+    "thumble-mcp-dispatch-gate-projection-verify.txt": {
+      "path": "/private/tmp/thumble-mcp-dispatch-gate-projection-verify.txt",
+      "sha256": "b328b11f7af2bd5e49b8d27197652d540fd60c4fbdd89357946f8d808c89beb7"
+    },
+    "thumble-mcp-dispatch-gate-projection-package.txt": {
+      "path": "/private/tmp/thumble-mcp-dispatch-gate-projection-package.txt",
+      "sha256": "47202d73e268aae2f2aa7d8651277b93a3be9e223ef2351ef08802cb9ea31bda"
+    },
+    "thumble-mcp-eof-source-tests-v2.txt": {
+      "path": "/private/tmp/thumble-mcp-eof-source-tests-v2.txt",
+      "sha256": "0b55553eb9e66f2cd3d78967687d16fde16b34b7ad60a636e04986fd957be18f"
+    },
+    "thumble-node-driver-launcher-projection-verify.txt": {
+      "path": "/private/tmp/thumble-node-driver-launcher-projection-verify.txt",
+      "sha256": "76fff0cb56111180dcd88e49bf33fe6346c545156e7c6edb52d50a8d8fffa873"
+    },
+    "thumble-node-driver-launcher-projection-package.txt": {
+      "path": "/private/tmp/thumble-node-driver-launcher-projection-package.txt",
+      "sha256": "41d957444635bca56e5040538ee74b9c96696419a24da7d873c188d82ff23585"
+    },
+    "thumble-emulator-launcher-setup-app.txt": {
+      "path": "/private/tmp/thumble-emulator-launcher-setup-app.txt",
+      "sha256": "fc87b18a7fca652b30b45b012736ef19541463fc336e7c42e50a988b497a0fa7"
+    },
+    "thumble-full-packaged-node-projection-verify.txt": {
+      "path": "/private/tmp/thumble-full-packaged-node-projection-verify.txt",
+      "sha256": "c8719cc29d84afbfa850d8daba819f24dc09ef1902c55575f98698c52724eaf9"
+    },
+    "thumble-full-packaged-node-projection-package.txt": {
+      "path": "/private/tmp/thumble-full-packaged-node-projection-package.txt",
+      "sha256": "805c58d457098380895541c79bb4305e090831df53558b8744b4c3fb74c8ff22"
+    },
+    "thumble-android-native-writer-forced-red.txt": {
+      "path": "/private/tmp/thumble-android-native-writer-forced-red.txt",
+      "sha256": "12377b3f01f16229aaf4506dfaee1e57a4879e0ab5b1b8db8189c7c15ac8cdab"
+    },
+    "thumble-android-native-writer-forced-red.xml": {
+      "path": "/private/tmp/thumble-android-native-writer-forced-red.xml",
+      "sha256": "381306f10f0619c33373e641335089ab4bee45427561b5a6121b16430bad13ef"
+    },
+    "thumble-android-native-writer-barrier-green.txt": {
+      "path": "/private/tmp/thumble-android-native-writer-barrier-green.txt",
+      "sha256": "4752376c1ed38a62bbc6a87f07f8191392343258832d72ae6b2436a8114fb4dc"
+    },
+    "thumble-native-writer-fixture-projection.txt": {
+      "path": "/private/tmp/thumble-native-writer-fixture-projection.txt",
+      "sha256": "b52334de8f8e8430a5921c45808e228b9a10090ad5af03cae5f446e29b54705f"
     }
   },
   "mcpSuccessors": [
@@ -211,7 +267,150 @@
     "hostRun": 39745233044,
     "nativeRun": 39745233063,
     "appRun": 39745232916,
-    "hostedResults": "pending",
+    "hostedResults": {
+      "nativeSDKAndProviders": "all three pass",
+      "androidApp": {
+        "job": 119711910483,
+        "conclusion": "failure",
+        "cause": "all seven cases stop at openPractice; Pixel Launcher boot-ANR modal covers Activity"
+      },
+      "iosApp": "pending",
+      "host": "macos/Linux pass; Windows status tool succeeds, Bun-hosted SDK consumer later times out"
+    },
     "scope": "native strict invitation intake, asynchronous Windows protection helper in MCP, physical stick-only 1-LSB tolerance; no physical acceptance"
+  },
+  "validationSuccessors": [
+    {
+      "local": "156e99e",
+      "public": "fa5af69617facea389889015af8ae5b6ccc2d24c",
+      "parent": "afaeafe7212cbc861043846e646b7b97d09da8f1",
+      "tree": "e2c894e3b24147df24175b76d0aa984917c74e12",
+      "paths": 3,
+      "capsuleSha256": "b0980a8bcee03cfd584fad978fffba31292ecd15d221cfb32158139f19b76b8e",
+      "hostRun": 39746138848,
+      "windowsJob": 119714938010,
+      "result": "bounded trace isolates unavailable-tool call timeout in Bun-hosted SDK consumer"
+    },
+    {
+      "local": "aa91902",
+      "public": "9bac3f0ede35f8bf22587f5f8d70f2f47555fa4a",
+      "parent": "fa5af69617facea389889015af8ae5b6ccc2d24c",
+      "tree": "8921a141f094a98f38148c996013c8095e844baa",
+      "paths": 7,
+      "capsuleSha256": "e6261de823f5c4100d2e2ffa0e75eea5727d461c483e36360d8e565ebc86cc3f",
+      "hostRun": 39747383642,
+      "windowsJob": 119719131311,
+      "result": "independent Node client passes all four scenarios on same Windows Bun server; Bun-hosted SDK consumer times out after explicit accepted error reply"
+    },
+    {
+      "local": "30c32c6",
+      "public": "60ef45d11c4e41a10261b0127affa35210a5d0da",
+      "parent": "9bac3f0ede35f8bf22587f5f8d70f2f47555fa4a",
+      "tree": "6a949a4f8162ad92e4d72b21b54b96765ba691c2",
+      "paths": 7,
+      "capsuleSha256": "49232850924640940fd9cd7bdbf061f3e8fb7778792c898620c4a272bb8134dc",
+      "hostRun": 39748760932,
+      "result": "all host jobs pass",
+      "jobs": {
+        "windows": 119723724069,
+        "macos": 119723724158,
+        "linux": 119723724016
+      },
+      "portable": 106,
+      "packaging": {
+        "cases": 1,
+        "assertions": 57
+      },
+      "appRun": 39748760846,
+      "appResults": {
+        "ios": {
+          "job": 119723723030,
+          "conclusion": "success",
+          "cases": 2
+        },
+        "android": {
+          "job": 119723723049,
+          "conclusion": "success",
+          "cases": 7,
+          "requiredCaseChecker": "success",
+          "productionShapedApk": "success"
+        }
+      }
+    },
+    {
+      "local": "ba827cf",
+      "public": "274194d281e64a27e0ffde1225b036e581d6f421",
+      "parent": "60ef45d11c4e41a10261b0127affa35210a5d0da",
+      "tree": "8bc5ce2dbbbfef35fb29e651899bc0eff56cc97f",
+      "paths": 3,
+      "capsuleSha256": "55de1b9f73903f55c37f2e5ad3c2be8614c795d00a6d05b242a108a578a9de6d",
+      "hostRun": 39749930024,
+      "result": "all host jobs pass",
+      "jobs": {
+        "windows": 119727636287,
+        "macos": 119727636264,
+        "linux": 119727636307
+      },
+      "portable": 106,
+      "packaging": {
+        "cases": 1,
+        "assertions": 46,
+        "clientRuntime": "Node",
+        "serverRuntime": "standalone Bun binary",
+        "protocolEras": ["modern", "legacy"],
+        "capabilityModes": ["default", "recording"],
+        "completedScenarios": 4,
+        "serverPathExcludesBunAndNode": true
+      },
+      "nativeRun": 39749929877,
+      "nativeResults": {
+        "android": {
+          "job": 119728156595,
+          "conclusion": "failure",
+          "case": "metadataInspectionDoesNotConsumeOrReplaceExactGrantAdmission",
+          "cause": "immediate assertion races asynchronous writer; expected 1, saw 0"
+        },
+        "keystore": {
+          "job": 119728156678,
+          "conclusion": "success"
+        },
+        "ios": "pending/supersession; not counted as passing evidence"
+      }
+    }
+  ],
+  "androidLauncherArtifact": {
+    "id": 12412030571,
+    "source": "afaeafe7212cbc861043846e646b7b97d09da8f1",
+    "run": 39745232916,
+    "sha256": "2077b7d8b8fbb93b2d5242d8b08a03f2cbce7c16ae78251cd0806d3e7585b752",
+    "localZip": "/private/tmp/thumble-android-intake-ci.zip",
+    "publicUrlSaved": false
+  },
+  "nativeWriterFixtureRepair": {
+    "local": "d5a9988",
+    "public": "a3edca9b7c52d17115172d0c7ba4914828eb722b",
+    "parent": "274194d281e64a27e0ffde1225b036e581d6f421",
+    "tree": "6befb47611eacf520e626b2bb35cc514fb23f203",
+    "verifiedPaths": 2,
+    "capsuleSha256": "8dab5ad243fac5f156d44c69ce196c7bc10d853d77977261b89af1a4430aae6d",
+    "scope": "test-only native writer handshake plus app workflow source filtering; production delivery and deadlines unchanged",
+    "forcedReproduction": "fails at exact expected 1 versus observed 0 while writer is paused",
+    "projection": {
+      "android": 93,
+      "failures": 0,
+      "skipped": 0,
+      "releaseAar": "pass",
+      "lint": "pass"
+    },
+    "hostRun": 39752869738,
+    "nativeRun": 39752869804,
+    "appRun": 39752869832,
+    "hostedResults": "pending"
+  },
+  "nativeWriterFailureArtifact": {
+    "id": 12414185243,
+    "sha256": "17589e9a286de6cea52b17942ebe4ad4de6d46739f257fe8df5f288240a14506",
+    "localZip": "/private/tmp/thumble-android-native-writer-failure.zip",
+    "signedUrlSaved": false
   }
 }

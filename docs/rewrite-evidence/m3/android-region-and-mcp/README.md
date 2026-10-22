@@ -82,3 +82,69 @@ are [host](https://github.com/CodyBontecou/Thumble/actions/runs/39745233044),
 and [bundled app](https://github.com/CodyBontecou/Thumble/actions/runs/39745232916);
 results remain pending. The original public Android failure and all Windows
 failures remain explicit, rather than being overwritten by local successes.
+
+## Completed host validation and corrected client driver
+
+Public `60ef45d1` passes all three host jobs in run `39748760932`, including
+Windows's isolated/concurrent native tests, all 106 portable cases, source MCP
+interoperability and standalone packaging. Its direct child-process test proves
+natural EOF and malformed-frame exit plus protocol-only stdout, without an SDK
+client killing the server. Windows passes that witness in 397 ms.
+
+The independent Node client had already passed all four protocol/capability
+scenarios on public `9bac3f0`, while the Bun-hosted SDK client timed out after the
+Bun server accepted and sent its explicit unavailable-tool error. The preserved
+trace and receipt distinguish a consumer-runtime compatibility failure from a
+missing server response. Tests now use the SDK's supported Node runtime on every
+platform against the actual Bun server. No Windows interop case is skipped.
+
+Public `274194d2` expands this to all four combinations against the standalone
+binary, with its sibling receiver and a server PATH excluding both Bun and Node.
+The driver counts completed scenarios and records actual negotiated eras. This
+exact snapshot passes Windows, macOS and Linux in
+[run 39749930024](https://github.com/CodyBontecou/Thumble/actions/runs/39749930024).
+Local projection checks pass 106 cases and standalone packaging 1/46; the Node
+assertions inside the driver are additional to the Bun assertion count. Native
+phone APIs remain at 74 Swift/93 Android cases and the unchanged stack gate is 55.
+
+The Android `afaeafe7` artifact shows all seven cases stopping in setup because a
+Pixel Launcher boot-ANR dialog covers the running Activity. Its screen is on;
+this differs from the earlier sleep failure and the prior physical quantization
+failure. Setup can close one exactly identified launcher ANR per target-Activity
+wait on emulator hardware. It leaves Thumble app failures visible, and repeated
+launcher failures in that wait fail. All seven cases pass locally after this
+change. The [bundled-app run](https://github.com/CodyBontecou/Thumble/actions/runs/39748760846)
+now passes both jobs: all seven Android witnesses, production-shaped APK assembly
+and both UIKit hosted cases. [Native/provider validation](https://github.com/CodyBontecou/Thumble/actions/runs/39749929877)
+has a test-only asynchronous-writer race described below. The preceding iOS native run was cancelled by source supersession
+and is not counted as a pass.
+
+Private source/history and this evidence were never included in public parents
+or capsules. Every published snapshot was checked for its exact changed paths,
+modes, Git blob hashes and sole public parent. The dedicated worktree is clean
+at each source checkpoint. The unused owned Metro server and its one emulator
+reverse mapping were removed after bundled app tests; unrelated devices/processes
+were untouched. Native pairing/binding UI, renewal, configuration/editor work,
+physical output/signing, gameplay and mandatory optical live sync remain open.
+
+## Native writer fixture follow-up
+
+Android native job `119728156595` on public `274194d2` fails at a test's immediate
+`io.inputs().size == 1`: the asynchronous native writer has not yet delivered the
+accepted first neutral packet (observed zero). Pausing that exact fixture writer
+reproduces the same failure locally. The test now explicitly holds the writer,
+requires admission to return while delivery is blocked, verifies metadata
+inspection cannot consume/rebind the grant, releases the writer, waits for actual
+delivery, and still requires exactly one packet plus a connected engine. Native
+production delivery code, socket deadlines, grants and TTLs are unchanged.
+
+The two-file repair is local `d5a9988`, public `a3edca9b`, sole public parent
+`274194d2`. Its isolated public projection passes all 93 native Android cases with
+zero skips, release AAR assembly and lint. App CI now watches the shared native
+production sources rather than unit-only fixture files. Hosted
+[host](https://github.com/CodyBontecou/Thumble/actions/runs/39752869738),
+[native mobile](https://github.com/CodyBontecou/Thumble/actions/runs/39752869804)
+and [app](https://github.com/CodyBontecou/Thumble/actions/runs/39752869832)
+runs are pending; the original artifact and forced red witness remain preserved.
+The completed host/app snapshots above are passing evidence for their exact
+sources, not inferred successes for this repair.

@@ -1,0 +1,35 @@
+2026-10-22T08:26:06.5775275Z MCP fixture phase=service-start
+2026-10-22T08:26:07.0562068Z MCP fixture phase=service-ready
+2026-10-22T08:26:07.1098203Z MCP fixture phase=connect-modern-default
+2026-10-22T08:26:07.3129402Z MCP fixture phase=connected
+2026-10-22T08:26:07.3130404Z MCP fixture phase=tools-list
+2026-10-22T08:26:07.4977660Z MCP fixture phase=tools-listed
+2026-10-22T08:26:07.4978483Z MCP fixture phase=status-call
+2026-10-22T08:26:07.5486650Z MCP fixture phase=status-returned
+2026-10-22T08:26:12.5553354Z MCP fixture phase=client-close
+2026-10-22T08:26:12.5661870Z MCP fixture phase=client-closed
+2026-10-22T08:26:12.5662448Z MCP transport phase=incoming
+2026-10-22T08:26:12.5662715Z MCP transport phase=dispatched
+2026-10-22T08:26:12.5662963Z MCP transport phase=reply
+2026-10-22T08:26:12.5663192Z MCP transport phase=accepted
+2026-10-22T08:26:12.5663425Z MCP transport phase=incoming
+2026-10-22T08:26:12.5663661Z MCP transport phase=dispatched
+2026-10-22T08:26:12.5663891Z MCP transport phase=reply
+2026-10-22T08:26:12.5664116Z MCP transport phase=accepted
+2026-10-22T08:26:12.5664353Z MCP transport phase=incoming
+2026-10-22T08:26:12.5664580Z MCP transport phase=dispatched
+2026-10-22T08:26:12.5665127Z MCP transport phase=reply
+2026-10-22T08:26:12.5665364Z MCP transport phase=accepted
+2026-10-22T08:26:12.5665590Z MCP transport phase=tool-denied
+2026-10-22T08:26:12.5665827Z MCP transport phase=reply
+2026-10-22T08:26:12.5666037Z MCP transport phase=accepted
+2026-10-22T08:26:12.5666257Z MCP transport phase=incoming
+2026-10-22T08:26:12.5666527Z MCP transport phase=dispatched
+2026-10-22T08:26:12.5666769Z MCP transport phase=closed
+2026-10-22T08:26:12.6140412Z Expected substring: "tool_unavailable"
+2026-10-22T08:26:12.6140963Z Received message: "Request timed out"
+2026-10-22T08:26:12.6167339Z ##[error]Expected substring: "tool_unavailable"
+Received message: "Request timed out"
+2026-10-22T08:26:12.6175200Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [6040.97ms]
+2026-10-22T08:26:33.3484356Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [6040.97ms]
+2026-10-22T08:26:41.3529395Z {"ok":true,"runtime":"v22.23.3","eras":["modern","legacy"],"scenarios":4,"inputEnabled":false}

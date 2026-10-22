@@ -1,0 +1,35 @@
+2026-10-22T08:16:28.1386266Z MCP fixture phase=service-start
+2026-10-22T08:16:28.5800694Z MCP fixture phase=service-ready
+2026-10-22T08:16:28.6254247Z MCP fixture phase=connect-modern-default
+2026-10-22T08:16:28.8104491Z MCP fixture phase=connected
+2026-10-22T08:16:28.8105122Z MCP fixture phase=tools-list
+2026-10-22T08:16:28.9656269Z MCP fixture phase=tools-listed
+2026-10-22T08:16:28.9656685Z MCP fixture phase=status-call
+2026-10-22T08:16:29.0075751Z MCP fixture phase=status-returned
+2026-10-22T08:16:34.0127176Z MCP fixture phase=client-close
+2026-10-22T08:16:34.0250973Z MCP fixture phase=client-closed
+2026-10-22T08:16:34.0251994Z MCP transport phase=incoming
+2026-10-22T08:16:34.0252517Z MCP transport phase=dispatched
+2026-10-22T08:16:34.0252900Z MCP transport phase=reply
+2026-10-22T08:16:34.0253177Z MCP transport phase=accepted
+2026-10-22T08:16:34.0253472Z MCP transport phase=incoming
+2026-10-22T08:16:34.0253768Z MCP transport phase=dispatched
+2026-10-22T08:16:34.0254054Z MCP transport phase=reply
+2026-10-22T08:16:34.0254339Z MCP transport phase=accepted
+2026-10-22T08:16:34.0254621Z MCP transport phase=incoming
+2026-10-22T08:16:34.0254918Z MCP transport phase=dispatched
+2026-10-22T08:16:34.0255609Z MCP transport phase=reply
+2026-10-22T08:16:34.0255903Z MCP transport phase=accepted
+2026-10-22T08:16:34.0256196Z MCP transport phase=incoming
+2026-10-22T08:16:34.0256492Z MCP transport phase=dispatched
+2026-10-22T08:16:34.0256776Z MCP transport phase=reply
+2026-10-22T08:16:34.0257049Z MCP transport phase=accepted
+2026-10-22T08:16:34.0257324Z MCP transport phase=incoming
+2026-10-22T08:16:34.0257605Z MCP transport phase=dispatched
+2026-10-22T08:16:34.0257897Z MCP transport phase=closed
+2026-10-22T08:16:34.0752939Z Expected substring: "Tool receiver_activate not found"
+2026-10-22T08:16:34.0754592Z Received message: "Request timed out"
+2026-10-22T08:16:34.0780682Z ##[error]Expected substring: "Tool receiver_activate not found"
+Received message: "Request timed out"
+2026-10-22T08:16:34.0790163Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [5940.93ms]
+2026-10-22T08:17:00.4354842Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [5940.93ms]
