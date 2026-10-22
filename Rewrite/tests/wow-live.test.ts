@@ -368,7 +368,7 @@ test("action bank enums reject coercible arrays and nonstring values", () => {
     "left-trigger",
     "right-trigger",
     "both-triggers",
-  ]) {
+  ] as const) {
     const result = decodeWowLiveSnapshot(
       encode({ ...base, actions: [{ ...action, bank }] }),
     );
