@@ -1,0 +1,70 @@
+{
+  "localSource": "3666484",
+  "publicSource": "fd2059c8447e9100c1fed229b231b2ac3186adba",
+  "publicParent": "ca7be33f97b41274f5863491f5d9d1a64f797309",
+  "publicTree": "fcb3b7de8d2038ffb671aa187bf689ad6a3fe56c",
+  "capsuleSha256": "03f013041f74d2c9f6f165e9def599535d851c1a14eee60af5de8613a58f2692",
+  "paths": [
+    {
+      "path": "Rewrite/native/receiver/src/authenticated_control.rs",
+      "mode": "100644",
+      "sha": "a1567829a1d21b44f12a8f209ed68d0c18a3c5fc"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/authenticated_control_renewal_tests.rs",
+      "mode": "100644",
+      "sha": "3c1d2ed139823c3ea3c7f47411f841722ee4835d"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "mode": "100644",
+      "sha": "14d8d279c345e75d26d9c55c071462efe3c63225"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/input_broker.rs",
+      "mode": "100644",
+      "sha": "ed1ce63450284983c33c4978c17fb7889df06bae"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/native_ingress.rs",
+      "mode": "100644",
+      "sha": "44a371682dd917fd852382f52697e977e4a61ff6"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "mode": "100644",
+      "sha": "32bf0e9d777ad4a7ab03c07d3616e567291026b2"
+    },
+    {
+      "path": "docs/adr/0010-rewrite-live-grant-rotation.md",
+      "mode": "100644",
+      "sha": "db5758211917c814c213536ec1270844d0410c5f"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v5.md",
+      "mode": "100644",
+      "sha": "b9d1a0a742640ba50fab5992d93495601c1d6527"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v6.md",
+      "mode": "100644",
+      "sha": "f0096cb48c76f83a45239695b0897b3bd2bf089c"
+    }
+  ],
+  "checks": {
+    "localRustUnit": 97,
+    "localRustProcess": 14,
+    "projectionRustUnit": 97,
+    "projectionRustProcess": 14,
+    "nativeSkipped": 0,
+    "clippy": "passed -D warnings",
+    "format": "passed",
+    "standalonePackage": "passed 1 case, 46 Bun assertions; official Node MCP client scenarios included"
+  },
+  "hosted": "pending",
+  "limits": [
+    "Controlled wall time in renewal tests; no real-duration phone renewal yet",
+    "Phone clients remain on control version 5",
+    "Recording-only output; launch acceptance open"
+  ]
+}
