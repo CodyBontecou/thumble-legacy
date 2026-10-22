@@ -35,13 +35,23 @@
       "id": 39720471127,
       "workflow": "headless-host",
       "head": "6f82b43767de4376e3d9b4a49be7af3782414d17",
-      "lastObserved": "running"
+      "lastObserved": "all three jobs passed",
+      "jobs": [
+        119632509688,
+        119632509918,
+        119632509984
+      ]
     },
     {
       "id": 39720471225,
       "workflow": "native-mobile",
       "head": "6f82b43767de4376e3d9b4a49be7af3782414d17",
-      "lastObserved": "running"
+      "lastObserved": "all three jobs passed",
+      "jobs": [
+        119632510054,
+        119632510289,
+        119632510430
+      ]
     }
   ]
 }

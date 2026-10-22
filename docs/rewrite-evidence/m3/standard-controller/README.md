@@ -9,3 +9,5 @@ The manifest freezes exactly ten source/docs files, remote blob hashes, one publ
 This is engineering progress toward M3, not a complete controller application. React Native app/bridge/UI, native presentation feedback/haptics, discovery/manual pairing flow, continuous authorization renewal, physical output/signing/gameplay and optical live sync remain open.
 
 Hosted validation handles: headless host 39720471127 and native mobile 39720471225, both on exact public 6f82b437. Both were confirmed running. Continue observing those runs; do not restart confirmed active runs because observation is slow.
+
+Public 6f82b437 passes all six jobs: host 39720471127 (Linux 119632509688, macOS 119632509918, Windows 119632509984), mobile 39720471225 (iOS 119632510054, Keystore 119632510289, Android native 119632510430). No rerun was needed. New React Native app/bridge work is newer source and is not covered by those results.
