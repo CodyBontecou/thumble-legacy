@@ -76,17 +76,18 @@
     {
       "id": 39717539659,
       "sha": "b51e076c584c254b299f27f01c31b1481a65c2fc",
-      "lastObserved": "macOS/Linux passed; Windows first attempt stopped in unchanged native TLS fixture before SQLite tests; one same-source job rerun dispatched",
+      "lastObserved": "All three host jobs passed after same-source Windows retry; SQLite/source/package checks executed successfully",
       "jobs": [
-        119623158399,
-        119623158502,
-        119623158885
-      ]
+        119624508198,
+        119624509559,
+        119624509942
+      ],
+      "firstWindowsAttempt": 119623158399
     },
     {
       "id": 39717539730,
       "sha": "b51e076c584c254b299f27f01c31b1481a65c2fc",
-      "lastObserved": "Three native/provider jobs running",
+      "lastObserved": "All three native mobile jobs passed, including headless Keychain and Keystore provider tests",
       "jobs": [
         119623158141,
         119623158346,

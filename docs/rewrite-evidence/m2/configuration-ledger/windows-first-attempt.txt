@@ -1,0 +1,20 @@
+---- stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration stdout ----
+2026-10-22T03:35:28.3042864Z
+2026-10-22T03:35:28.3043383Z thread 'stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration' panicked at tests\native_ingress_process.rs:349:35:
+2026-10-22T03:35:28.3044146Z called `Result::unwrap()` on an `Err` value: TransportRejected
+2026-10-22T03:35:28.3044630Z note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+2026-10-22T03:35:28.3044914Z
+2026-10-22T03:35:28.3044932Z
+2026-10-22T03:35:28.3045014Z failures:
+2026-10-22T03:35:28.3045600Z     stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration
+2026-10-22T03:35:28.3045969Z
+2026-10-22T03:35:28.3046264Z test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.12s
+2026-10-22T03:35:28.3046737Z
+2026-10-22T03:35:28.3066485Z [1m[31merror[0m[1m:[0m test failed, to rerun pass `--test native_ingress_process`
+2026-10-22T03:35:28.3151684Z error: script "native:test" exited with code 101
+2026-10-22T03:35:28.4085270Z ##[error]Process completed with exit code 1.
+2026-10-22T03:35:28.4295020Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T03:35:28.4295434Z with:
+2026-10-22T03:35:28.4295688Z   name: rewrite-portable-tests-windows-latest
+2026-10-22T03:35:28.4296022Z   path: Rewrite/reports/*junit.xml
+2026-10-22T03:35:28.4296293Z   if-no-f
