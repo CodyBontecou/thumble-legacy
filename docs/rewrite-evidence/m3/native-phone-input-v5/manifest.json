@@ -73,5 +73,34 @@
   "localSourceCommit": "106e996",
   "publicCommit": "9eff05ab6d30443dff4872be730ad703fa729ce6",
   "publicTree": "626f2696eaf6676f28fe74cd0584ba807cf4d958",
-  "remoteSourceHashesVerified": true
+  "remoteSourceHashesVerified": true,
+  "isolatedPublicProjection": {
+    "portableTests": 74,
+    "rustUnitTests": 80,
+    "rustProcessTests": 12,
+    "packageTests": 1,
+    "packageAssertions": 40
+  },
+  "runs": [
+    {
+      "id": 39710593802,
+      "sha": "9eff05ab6d30443dff4872be730ad703fa729ce6",
+      "lastObserved": "All three host jobs passed",
+      "jobs": [
+        119600738700,
+        119600738791,
+        119600738860
+      ]
+    },
+    {
+      "id": 39710593567,
+      "sha": "9eff05ab6d30443dff4872be730ad703fa729ce6",
+      "lastObserved": "Android native passed; iOS Simulator/Keychain and Keystore jobs running",
+      "jobs": [
+        119600737650,
+        119600737879,
+        119600737888
+      ]
+    }
+  ]
 }
