@@ -19,3 +19,9 @@ Status queries and observations share a clock high-water mark. A backward query 
 Synthetic fixtures cover maximum assembly, reordered and mixed pages, corruption, source changes, reload, repeated/frozen/backward ticks, wrap, clock regression, UTF-8 boundaries and strict schema rejection. They contain no character/account exports. The retained native optical producer and capture code remain migration inputs.
 
 Launch live sync remains required. Signed headless capture permission, supported window/scaling behavior, capture identity/freshness, observation-to-profile mapping, phone delivery, visible stale state and real capture/phone acceptance are separate unfinished work. Manual snapshot import/refresh must remain available when observation is stale or unavailable. This module neither changes saved configuration nor grants input authority.
+
+## Portable pixel decoding
+
+`@thumble/domain/wow-optical-panel` accepts explicit top-left RGBA8 pixels, dimensions and stride. Native capture wrappers must normalize channel order and orientation. Dimensions are at most8192each and16,777,216pixels; stride padding is bounded and the entire input must fit64MiB. Discovery searches the top-left512-square area, calibrates fiducial spacing and16grays, and validates the decoded512-byte page before producing a copied256-square RGBA atlas. A fixed4,194,304sample-read budget rejects adversarial scanning work. Output bytes are independent of the capture buffer and caller-owned. PNG encoding and native capture remain outside this module.
+
+Synthetic tests cover the retained10scales, four-corner atlas orientation, padded/offset buffers, nonlinear calibration/noise, corrupt payload, clipping and discovery bounds, output ownership and the scan-work limit. These tests establish decoder behavior on generated pixels, not real capture quality or signed capture permission.

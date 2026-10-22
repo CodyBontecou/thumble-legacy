@@ -68,6 +68,11 @@ function frame(bytes: Uint8Array): Frame {
     payload: bytes.slice(HEADER, HEADER + length),
   };
 }
+/** Header/page checksum admission only; does not establish message or source trust. */
+export function validateWowLiveFrame(bytes: Uint8Array): void {
+  frame(bytes);
+}
+
 function time(value: number): void {
   if (!Number.isSafeInteger(value) || value < 0) invalid();
 }
