@@ -11,14 +11,14 @@ revision as the compare-and-swap precondition. A null default is supported; the
 active selector must name an existing profile.
 
 ```sh
-thumble configuration select-profiles \
+thumble-rewrite configuration select-profiles \
   --runtime-dir /absolute/runtime --receiver /absolute/thumble-rewrite-receiver \
   --operation-id selection-1 --expected-revision 7 \
   --active-profile-id aaaaaaaa-0000-0000-0000-000000000001 \
   --default-profile-id bbbbbbbb-0000-0000-0000-000000000002 --json
 
 # Clear only the saved default while explicitly retaining the active selector.
-thumble configuration select-profiles \
+thumble-rewrite configuration select-profiles \
   --runtime-dir /absolute/runtime --receiver /absolute/thumble-rewrite-receiver \
   --operation-id selection-2 --expected-revision 8 \
   --active-profile-id aaaaaaaa-0000-0000-0000-000000000001 \
