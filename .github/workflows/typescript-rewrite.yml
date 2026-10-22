@@ -57,6 +57,13 @@ jobs:
       - run: bun x --no-install prettier --check .
       - run: cargo fmt --manifest-path native/receiver/Cargo.toml -- --check
       - run: cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+      - name: Compile read-only macOS signed-claim doctor
+        if: runner.os == 'macOS'
+        run: cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets --features output-doctor-macos -- -D warnings
+      - name: Verify inspection-only macOS doctor
+        if: runner.os == 'macOS'
+        run: cargo test --locked --manifest-path native/receiver/Cargo.toml --features output-doctor-macos --lib output_doctor
+
       - name: Isolate Windows stale-grant regression with phase diagnostics
         shell: pwsh
         if: runner.os == 'Windows'
