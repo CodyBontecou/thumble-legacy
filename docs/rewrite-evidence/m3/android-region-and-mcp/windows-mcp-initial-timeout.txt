@@ -1,0 +1,4 @@
+2026-10-22T07:41:23.7137443Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [30001.86ms]
+2026-10-22T07:41:23.7137926Z   ^ this test timed out after 30000ms.
+2026-10-22T07:42:05.5196115Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [30001.86ms]
+2026-10-22T07:42:05.5196552Z   ^ this test timed out after 30000ms.

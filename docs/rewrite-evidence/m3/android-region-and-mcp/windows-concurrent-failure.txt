@@ -1,0 +1,26 @@
+2026-10-22T07:26:41.2334747Z stale-grant phase=receiver-ready elapsedMs=40
+2026-10-22T07:26:41.4122904Z stale-grant phase=enrolled elapsedMs=218
+2026-10-22T07:26:41.6038934Z stale-grant phase=current-authenticated elapsedMs=410
+2026-10-22T07:26:41.7985532Z stale-grant phase=current-granted elapsedMs=605
+2026-10-22T07:26:41.8943150Z stale-grant phase=current-held-acknowledged elapsedMs=700
+2026-10-22T07:26:41.9623962Z stale-grant phase=sampling-first-native-ack elapsedMs=769
+2026-10-22T07:26:42.0938972Z stale-grant phase=stale-authenticated elapsedMs=900
+2026-10-22T07:26:42.2491001Z stale-grant phase=stale-rejected elapsedMs=1055
+2026-10-22T07:26:42.3872491Z stale-grant phase=sampling-joined elapsedMs=1193
+2026-10-22T07:26:42.4640480Z stale-grant phase=sampling-drained elapsedMs=1270
+2026-10-22T07:26:42.5573962Z stale-grant phase=old-generation-rejected elapsedMs=1364
+2026-10-22T07:26:42.6535321Z stale-grant phase=fresh-authenticated elapsedMs=1460
+2026-10-22T07:26:42.8120940Z stale-grant phase=fresh-held-acknowledged elapsedMs=1618
+2026-10-22T07:27:02.2628793Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... FAILED
+2026-10-22T07:27:03.8979347Z stale-grant phase=receiver-ready elapsedMs=39
+2026-10-22T07:27:03.8979859Z stale-grant phase=enrolled elapsedMs=320
+2026-10-22T07:27:03.8980434Z stale-grant phase=current-authenticated elapsedMs=564
+2026-10-22T07:27:03.8981040Z stale-grant phase=current-granted elapsedMs=922
+2026-10-22T07:27:03.8981689Z stale-grant phase=current-held-acknowledged elapsedMs=1133
+2026-10-22T07:27:03.8982440Z stale-grant phase=sampling-first-native-ack elapsedMs=1195
+2026-10-22T07:27:03.8983111Z stale-grant phase=stale-authenticated elapsedMs=1324
+2026-10-22T07:27:03.8984235Z stale-grant phase=stale-rejected elapsedMs=1524
+2026-10-22T07:27:03.8985478Z thread '<unnamed>' panicked at tests\native_ingress_process.rs:441:16:
+2026-10-22T07:27:03.8986286Z called `Result::unwrap()` on an `Err` value: TransportRejected
+2026-10-22T07:27:03.8988303Z thread 'stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration' panicked at tests\native_ingress_process.rs:608:53:
+2026-10-22T07:27:03.8991896Z test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.34s

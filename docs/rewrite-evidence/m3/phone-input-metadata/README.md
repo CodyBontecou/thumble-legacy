@@ -31,8 +31,8 @@ certification. Earlier failures remain in the sibling app evidence directory.
 Hosted results for this exact source:
 
 - [Windows/macOS/Linux host run](https://github.com/CodyBontecou/Thumble/actions/runs/39735127322): all three pass, including the isolated and concurrent Windows native tests.
-- [Native mobile run](https://github.com/CodyBontecou/Thumble/actions/runs/39735127446): Android passes; iOS/Keychain and Keystore remain in progress.
-- [Bundled app run](https://github.com/CodyBontecou/Thumble/actions/runs/39735127408): iOS and Android remain in progress.
+- [Native mobile run](https://github.com/CodyBontecou/Thumble/actions/runs/39735127446): all three pass, including iOS/Keychain and Android Keystore.
+- [Bundled app run](https://github.com/CodyBontecou/Thumble/actions/runs/39735127408): iOS passes both hosted UIKit cases; Android fails during emulator wake/setup before the input witnesses. The preserved failure led to a wake guard, preboot APK build, and separate per-control Android capture regions. See [the successor evidence](../android-region-and-mcp/README.md).
 
 App workflow dependencies now exclude receiver-only test edits, so future Windows
 fixture work does not restart an unrelated iOS app build. The phone app still runs

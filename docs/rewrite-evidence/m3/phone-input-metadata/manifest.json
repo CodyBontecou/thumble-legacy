@@ -16,10 +16,7 @@
     "portable": 99,
     "packagingTests": 1,
     "packagingAssertions": 41,
-    "iosSdkBuilds": [
-      "iphonesimulator",
-      "iphoneos"
-    ],
+    "iosSdkBuilds": ["iphonesimulator", "iphoneos"],
     "iosAppCases": 2,
     "androidAppCases": 5,
     "stackSafety": 55,
@@ -53,19 +50,19 @@
       },
       "iosNative": {
         "id": 119678914561,
-        "conclusion": null
+        "conclusion": "success"
       },
       "androidKeystore": {
         "id": 119678914827,
-        "conclusion": null
+        "conclusion": "success"
       },
       "iosApp": {
         "id": 119679239087,
-        "conclusion": null
+        "conclusion": "success"
       },
       "androidApp": {
         "id": 119679239470,
-        "conclusion": null
+        "conclusion": "failure"
       }
     }
   },

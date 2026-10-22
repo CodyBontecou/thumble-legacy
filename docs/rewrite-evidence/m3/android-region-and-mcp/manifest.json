@@ -1,0 +1,217 @@
+{
+  "androidRepair": {
+    "localSourceCommit": "22f4e47",
+    "publicCommit": "09d71c76b49c7ae1498b56999a6af316c4875add",
+    "publicParent": "b41af1aaaaa2e7765daabce67bcf42eace08a2bb",
+    "publicTree": "a2689868364e3b7b27f311ee99d5e43dfae57ca0",
+    "verifiedPaths": 6,
+    "capsuleSha256": "55f3e27d292cefea6c407579e1141cf3bc3e23b2ebedba83f33a63f0fc1432a8",
+    "localAndroidCases": 7,
+    "asleepRepeatCases": 7,
+    "hostRun": 39740319733,
+    "nativeRun": 39740319632,
+    "appRun": 39740319712,
+    "hostWindows": {
+      "job": 119695700796,
+      "conclusion": "failure",
+      "phase": "sampling worker failed sending control status; isolated case passes"
+    },
+    "androidApp": {
+      "job": 119695699607,
+      "conclusion": "cancelled",
+      "cause": "Superseded by MCP lockfile push during instrumentation; not passing evidence"
+    },
+    "iosApp": {
+      "job": 119695700197,
+      "conclusion": "success"
+    },
+    "nativeJobs": "all three pass"
+  },
+  "mcp": {
+    "localSourceCommit": "0a45506",
+    "publicCommit": "1d923e9f49a83b845db14a72486728872dfb39a7",
+    "publicParent": "09d71c76b49c7ae1498b56999a6af316c4875add",
+    "publicTree": "53edc5d61bd9fe50af3cb26d28bd10e889c52711",
+    "verifiedPaths": 14,
+    "capsuleSha256": "95a91029012f501b0251a7dd5710e04ea0ab78ad25708198ef6efa4048e892d8",
+    "portable": 102,
+    "packageTests": 1,
+    "packageAssertions": 55,
+    "clientEras": ["modern", "legacy"],
+    "hostRun": 39741905682,
+    "nativeRun": 39741905687,
+    "appRun": 39741905588,
+    "hostedResults": {
+      "macos": "success",
+      "linux": "success",
+      "windows": "native suite passes at two threads; new MCP test times out"
+    }
+  },
+  "privateHistoryPublished": false,
+  "exactRemoteBlobsVerified": true,
+  "logs": {
+    "thumble-android-app-asleep-reproduction.txt": {
+      "path": "/private/tmp/thumble-android-app-asleep-reproduction.txt",
+      "sha256": "2bf91ec685821a706788b169eef2bd91b967580deec5e62638729bcc09368a1a"
+    },
+    "thumble-android-app-wake-guard.txt": {
+      "path": "/private/tmp/thumble-android-app-wake-guard.txt",
+      "sha256": "b6d5de1a6cd5f3f182884ff62e4ad97e030d69694b583801e826308f5966d641"
+    },
+    "thumble-android-held-done-red.txt": {
+      "path": "/private/tmp/thumble-android-held-done-red.txt",
+      "sha256": "3b569cb02259818cbc2a004f6d81000b521c1f1e9ef6dca7dda94caa681a7871"
+    },
+    "thumble-android-native-region-capture.txt": {
+      "path": "/private/tmp/thumble-android-native-region-capture.txt",
+      "sha256": "ab6070f63a4052389a5884584478624bf1c01e34762ccbff92d0dc30b6d7ccf8"
+    },
+    "thumble-android-native-region-asleep-repeat.txt": {
+      "path": "/private/tmp/thumble-android-native-region-asleep-repeat.txt",
+      "sha256": "0dc91d4fc0edc2feaf1cc84fc282222d7016bff19a98cf81de8696aba01d934a"
+    },
+    "thumble-android-region-projection-verify.txt": {
+      "path": "/private/tmp/thumble-android-region-projection-verify.txt",
+      "sha256": "34afbf4dccc9be475f59bb397d798d3aa6942b35d297ef094c0d439ab1cb5b10"
+    },
+    "thumble-android-region-projection-package.txt": {
+      "path": "/private/tmp/thumble-android-region-projection-package.txt",
+      "sha256": "1d267fb9095f0b10eae072219c80bc2e8d323cc070c39453d50ce7c99bf81dfa"
+    },
+    "thumble-mcp-final-verify.txt": {
+      "path": "/private/tmp/thumble-mcp-final-verify.txt",
+      "sha256": "b9f43c996835a7fad294e5a0db72b107ad56b725b76d9d3151de7573d8683d2c"
+    },
+    "thumble-mcp-final-package.txt": {
+      "path": "/private/tmp/thumble-mcp-final-package.txt",
+      "sha256": "cc5012df25ba0447c5d3c37644209cab8cbc37179b079611807aee09ea6d77e4"
+    },
+    "thumble-native-two-thread-suite.txt": {
+      "path": "/private/tmp/thumble-native-two-thread-suite.txt",
+      "sha256": "a0eccd8919800f37d50b1195d4342647d445cb49195f2fc8de27fe8eda7c2f80"
+    },
+    "thumble-mcp-projection-verify.txt": {
+      "path": "/private/tmp/thumble-mcp-projection-verify.txt",
+      "sha256": "21400f8a3064533ffce31885ce100db263689318713a961ef09583a4f324050e"
+    },
+    "thumble-mcp-projection-package.txt": {
+      "path": "/private/tmp/thumble-mcp-projection-package.txt",
+      "sha256": "dd32da37a7af5b213466c0b578590695d305183993575a7d781335a920a57700"
+    },
+    "thumble-mcp-pinned-projection-verify.txt": {
+      "path": "/private/tmp/thumble-mcp-pinned-projection-verify.txt",
+      "sha256": "1499b1413bad61d558a6704d450b78506cc21447c1ef21f423a319f778785f77"
+    },
+    "thumble-mcp-pinned-projection-package.txt": {
+      "path": "/private/tmp/thumble-mcp-pinned-projection-package.txt",
+      "sha256": "9166a6aa19c165c05938ade9b6410fd3608d80f845a1e82b46ff9540eb43d9af"
+    },
+    "thumble-mcp-drained-projection-verify.txt": {
+      "path": "/private/tmp/thumble-mcp-drained-projection-verify.txt",
+      "sha256": "8450cde5873a59715fd23e1b39cdb3b93b3d8079b136dfc93aa54873dfbd9d0b"
+    },
+    "thumble-mcp-drained-projection-package.txt": {
+      "path": "/private/tmp/thumble-mcp-drained-projection-package.txt",
+      "sha256": "de17a5c4b45aac4cf3f4c947d7a1ff4ad051713bb408abe60d62d31148431f3c"
+    },
+    "thumble-mcp-write-callback-red.txt": {
+      "path": "/private/tmp/thumble-mcp-write-callback-red.txt",
+      "sha256": "51911a7459f85b8f6be0a4cb9a0facb1eddacf24fed71394ab5d0bcb84e39a0b"
+    },
+    "thumble-mcp-backpressure-tests-v3.txt": {
+      "path": "/private/tmp/thumble-mcp-backpressure-tests-v3.txt",
+      "sha256": "b9642d366d03eedb5be3bc9cd09e1d84b0d66e2dc7b27aa6ea8325a567248a09"
+    },
+    "thumble-mcp-backpressure-projection-verify-v2.txt": {
+      "path": "/private/tmp/thumble-mcp-backpressure-projection-verify-v2.txt",
+      "sha256": "2b5fa9a9df545af9f909125d3d6a1ffca809185d3a0125ac56482e4144bc7721"
+    },
+    "thumble-mcp-backpressure-projection-package-v2.txt": {
+      "path": "/private/tmp/thumble-mcp-backpressure-projection-package-v2.txt",
+      "sha256": "776b64f4a7957e6d8ba0a3d05375fe185f54e41b89c4e7f39d99d80ab3f9fd61"
+    },
+    "thumble-native-invitation-swift-network-final.txt": {
+      "path": "/private/tmp/thumble-native-invitation-swift-network-final.txt",
+      "sha256": "233b06f30e46e3b67a4f9ef7ff88b12d67df6f1eb3512a6df41ee4d8f6679f2f"
+    },
+    "thumble-native-invitation-android-final.txt": {
+      "path": "/private/tmp/thumble-native-invitation-android-final.txt",
+      "sha256": "feaa88c3a57858f183ecd17ee9c3c902c80041c24ef45755807ffd59852ff489"
+    },
+    "thumble-native-invitation-ios-sdks.txt": {
+      "path": "/private/tmp/thumble-native-invitation-ios-sdks.txt",
+      "sha256": "7dfd1cd177b57ec6648f07866d7802d69040e7fa043171b0c075a1bb7cb00b31"
+    },
+    "thumble-native-invitation-ios-device-sdk.txt": {
+      "path": "/private/tmp/thumble-native-invitation-ios-device-sdk.txt",
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    "thumble-native-invitation-android-app.txt": {
+      "path": "/private/tmp/thumble-native-invitation-android-app.txt",
+      "sha256": "1b038bdbf952f9d727bcdb2efc2299e24f25211b1097fb596fa9bb83789497f4"
+    },
+    "thumble-native-invitation-ios-app.txt": {
+      "path": "/private/tmp/thumble-native-invitation-ios-app.txt",
+      "sha256": "217061d0fa5b66858dc73752c082b3e43d4c01a0ec3aa5b61dd7f1b4f5af9b89"
+    },
+    "thumble-native-invitation-stack-safety-v2.txt": {
+      "path": "/private/tmp/thumble-native-invitation-stack-safety-v2.txt",
+      "sha256": "656ddd04f28189bd941455610cb4a9c94df4b0882acbc29751a9229829f9b3e6"
+    },
+    "thumble-invitation-async-mcp-projection-verify.txt": {
+      "path": "/private/tmp/thumble-invitation-async-mcp-projection-verify.txt",
+      "sha256": "40d42d4032dbffab55283f1aec7dbe932975008969ba78c923dfcc8cc5f8d9d8"
+    },
+    "thumble-invitation-async-mcp-projection-package.txt": {
+      "path": "/private/tmp/thumble-invitation-async-mcp-projection-package.txt",
+      "sha256": "fe47ec4dab2e3259c5ff9f596d7de137391bea0e0120d8bab6cb7349994e46b5"
+    }
+  },
+  "mcpSuccessors": [
+    {
+      "localSourceCommit": "398ffec",
+      "publicCommit": "d26d7d252c3d9696d362908d4bf94b9c4afbd274",
+      "publicParent": "1d923e9f49a83b845db14a72486728872dfb39a7",
+      "publicTree": "b708429d06fa3c9fa27629ddde25164001c284fa",
+      "verifiedPaths": 2,
+      "capsuleSha256": "87440bd287604999d7a842b98f7193abe6db20f91723f95cf094fb08617d2ba7",
+      "hostRun": 39742638671,
+      "windowsJob": 119703369695,
+      "result": "native passes; MCP negotiates modern but times out at tool listing"
+    },
+    {
+      "localSourceCommit": "6475ef8",
+      "publicCommit": "1641db6be5ae271376dcdffe8ecb3b07ae9230d9",
+      "publicParent": "d26d7d252c3d9696d362908d4bf94b9c4afbd274",
+      "publicTree": "33c92d2da1bce8902723ca70073804d755522c03",
+      "verifiedPaths": 2,
+      "capsuleSha256": "41db5b73b15bec30e5845dff42769661f695679a2420dddd7ccb69f58d1ffc29",
+      "hostRun": 39743788754,
+      "windowsJob": 119707151667,
+      "result": "native passes; modern negotiation and tool listing pass; status call times out; portable stdout regression passes locally"
+    }
+  ],
+  "invitationAndAsyncMcp": {
+    "localSourceCommit": "6b3bee1",
+    "publicCommit": "afaeafe7212cbc861043846e646b7b97d09da8f1",
+    "publicParent": "1641db6be5ae271376dcdffe8ecb3b07ae9230d9",
+    "publicTree": "89fcb51bc0354cb0ed10d8aebabfd0f6d092e8cf",
+    "verifiedPaths": 16,
+    "capsuleSha256": "a65963fe16aa1f1f7107ed400adecba5f31aba9977729df6ede3f997329e5b3c",
+    "portable": 104,
+    "packageTests": 1,
+    "packageAssertions": 57,
+    "swift": 74,
+    "android": 93,
+    "androidSkipped": 0,
+    "iosSdkBuilds": ["iphonesimulator", "iphoneos"],
+    "androidApp": 7,
+    "iosApp": 2,
+    "stackSafety": 55,
+    "hostRun": 39745233044,
+    "nativeRun": 39745233063,
+    "appRun": 39745232916,
+    "hostedResults": "pending",
+    "scope": "native strict invitation intake, asynchronous Windows protection helper in MCP, physical stick-only 1-LSB tolerance; no physical acceptance"
+  }
+}

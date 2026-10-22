@@ -1,0 +1,12 @@
+2026-10-22T07:56:10.3558630Z MCP fixture phase=service-start
+2026-10-22T07:56:10.7152620Z MCP fixture phase=service-ready
+2026-10-22T07:56:10.7345297Z MCP fixture phase=connect-modern-default
+2026-10-22T07:56:10.8650723Z MCP fixture phase=connected
+2026-10-22T07:56:10.8651327Z MCP fixture phase=tools-list
+2026-10-22T07:56:10.9746000Z MCP fixture phase=tools-listed
+2026-10-22T07:56:40.3550562Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [30000.34ms]
+2026-10-22T07:56:40.3550912Z   ^ this test timed out after 30000ms.
+2026-10-22T07:57:11.0136784Z MCP fixture phase=client-close
+2026-10-22T07:57:11.0187957Z MCP fixture phase=client-closed
+2026-10-22T07:57:20.9126178Z (fail) SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit [30000.34ms]
+2026-10-22T07:57:20.9126655Z   ^ this test timed out after 30000ms.
