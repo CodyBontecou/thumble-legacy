@@ -1,0 +1,34 @@
+{
+  "localSourceCommit": "2aa8a41",
+  "publicCommit": "6f82b43767de4376e3d9b4a49be7af3782414d17",
+  "publicParent": "cd55d98bb627088c6626b5b4ee787762a4adbbc9",
+  "publicTree": "da31e31799f1de043cac18cb0a4e0dc6006c7489",
+  "capsuleSHA256": "57ea64202655db5485876072973d9db231f20cc0cc3a8eb5997e0c0219fbaa39",
+  "bytes": 31404,
+  "characters": 31404,
+  "branchPublished": false,
+  "remoteHashesVerified": true,
+  "files": {
+    "Rewrite/packages/domain/package.json": "ffbc5d2984ddda8525d553ac071a4299fc2a9b39",
+    "Rewrite/packages/domain/src/controller-layout.ts": "10ba1cf8d069431a0ce075dfd0cc263349ee396e",
+    "Rewrite/packages/fixtures/controller-layout-v1.json": "a21850711097c2fe46de70ebf20963e17f91df1e",
+    "Rewrite/tests/controller-layout.test.ts": "c76ed9cee9d8fe9d6ef16bf6f02e640e645df66e",
+    "Rewrite/tooling/generate-controller-layout-fixture.ts": "86147e4c36de9c44578f3853db4524d352f8b61e",
+    "Rewrite/tooling/generate-contracts.ts": "da0de27489657e8536da98945de7da9bd7f484e3",
+    "Rewrite/tooling/prepare-mobile-fixtures.ts": "6b6a5cb705a1a1a3fb81bbd0065de6a5d6d0250a",
+    "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/ControllerLayoutTests.swift": "ec3d03e7650af7601770de12be95840702bd115f",
+    "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/ControllerLayoutTest.kt": "279feec3477ede3239ceca14354e1d46c9d914f7",
+    "docs/rewrite-standard-controller-v1.md": "ac6b5765f8bbcd53d4364c91dadb585bc297f3d1"
+  },
+  "tests": {
+    "portable": 98,
+    "swift": 69,
+    "android": 88,
+    "androidFailures": 0,
+    "androidSkipped": 0,
+    "standalone": 1,
+    "standaloneAssertions": 41,
+    "isolatedPortable": 98
+  },
+  "pending": "Allow catalog iOS provider run 39719281581 / 119628746071 to finish before updating the CI branch; no cancellation of a confirmed live run."
+}
