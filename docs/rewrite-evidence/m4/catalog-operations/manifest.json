@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "localSourceCommit": "0ef2a86",
+  "publicCommit": "88b28bdb0aaa8d5305c52bcac491f694646c2ae8",
+  "publicTree": "de698b5e861f513a97465b21aef9a55eb3cce2fa",
+  "publicParent": "5e8ba80d2e8dcbdab0b4e13e6669c2410762e415",
+  "capsule": {
+    "files": 19,
+    "bytes": 268637,
+    "sha256": "f3e1cbc00c864542aba79838406629a683484049f4036ef49df3794240ccd3c3"
+  },
+  "tests": {
+    "portablePass": 116,
+    "portableSkip": 1,
+    "portableSkipReason": "standalone package is tested separately",
+    "portableAssertions": 2027,
+    "standalonePass": 1,
+    "standaloneAssertions": 49,
+    "mcpEras": [
+      "modern",
+      "legacy"
+    ],
+    "sourceConfigurationScenarios": 4,
+    "standaloneConfigurationScenarios": 4
+  },
+  "logs": {
+    "verify": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/verify.txt",
+      "sha256": "4876d64f66692c6adcfa7b2e21e33145fd0d1ed23cd7137ee303168a1e1edec0"
+    },
+    "build": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/build.txt",
+      "sha256": "8d1a2c3f0f6c2dcb83dbe89ceaf8002b9f465c977a34bc82f56b27377b62af37"
+    },
+    "package": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/package.txt",
+      "sha256": "5aac8834259ff94942e9e62c2f7b3dcbaf58f330e99bf4959b1b663db3fea888"
+    },
+    "projection-verify": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/projection-verify.txt",
+      "sha256": "1bc99d426dba7880d08e5d0cb17cb0397daa89bf0272ce284099ff78de2f72f6"
+    },
+    "projection-build": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/projection-build.txt",
+      "sha256": "dc85224fb663f58b20a25fcb7549617d710dfa866f20aff09d0a84b1e0a8b131"
+    },
+    "projection-package": {
+      "path": "docs/rewrite-evidence/m4/catalog-operations/projection-package.txt",
+      "sha256": "74bdcfc2bf2bc155b882ed89139889be9a2e2b22cd6c085ce920d4b2fd55be97"
+    }
+  },
+  "ci": {
+    "hostRun": 39784844653,
+    "nativeRun": 39784844681,
+    "appRun": 39784844641,
+    "state": "All eight jobs in progress at observation"
+  },
+  "priorRenewalCI": {
+    "publicCommit": "5e8ba80d2e8dcbdab0b4e13e6669c2410762e415",
+    "greenJobs": 7,
+    "failedJob": 119832681939,
+    "run": 39781223090,
+    "artifact": 12427985696,
+    "artifactSHA256": "534dc87d8a6d3b9ca4a2ddd819396b622a783b1c7853d6d2eb3ac0be01e3fed4",
+    "failedCases": 1,
+    "passedCases": 4,
+    "error": "InvalidTransition { phase: idle targetPhase: failed(deinit) }",
+    "cause": "Unestablished; do not label as production lifecycle fix or passing mobile acceptance."
+  },
+  "limits": [
+    "Catalog-only validation; no full owned-document or runtime validity",
+    "No configuration seeding/import/migration or stopped-service edit startup",
+    "No physical output/signing/gameplay/latency/haptics/optical acceptance",
+    "Private evidence excluded from public capsule"
+  ]
+}
