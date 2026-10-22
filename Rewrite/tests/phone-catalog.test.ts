@@ -195,3 +195,41 @@ test("invalid internal read request cannot latch the single pending slot", async
   await expect(bridge.execute({ ...valid, offset: 256 })).rejects.toThrow();
   expect(await bridge.execute(valid)).toHaveProperty("result.profileCount", 0);
 });
+
+test("malformed phone catalog child result terminates its poisoned owner", async () => {
+  const { ConfigurationOwner } = await import(
+    "../apps/service/src/configuration-owner.ts"
+  );
+  const { resolve } = await import("node:path");
+  const { once } = await import("node:events");
+  const owner = new ConfigurationOwner("unused", "unused", [
+    process.execPath,
+    resolve(import.meta.dir, "fixtures/invalid-configuration-owner.ts"),
+  ]);
+  const exited = once(owner.child, "exit");
+  let deadline: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await owner.ready;
+    await expect(owner.readCatalogForPhone(command)).rejects.toThrow(
+      "configuration_response_invalid",
+    );
+    await Promise.race([
+      exited,
+      new Promise((_, reject) => {
+        deadline = setTimeout(
+          () => reject(new Error("poisoned_owner_not_terminated")),
+          1000,
+        );
+      }),
+    ]);
+    expect(
+      owner.child.exitCode !== null || owner.child.signalCode !== null,
+    ).toBe(true);
+  } finally {
+    clearTimeout(deadline);
+    owner.disconnect();
+    if (owner.child.exitCode === null && owner.child.signalCode === null)
+      owner.child.kill("SIGKILL");
+    await exited;
+  }
+});

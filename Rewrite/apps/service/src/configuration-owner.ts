@@ -210,6 +210,15 @@ export class ConfigurationOwner {
         this.child.kill("SIGKILL");
         throw new Error("configuration_response_invalid");
       }
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message === "configuration_owner_unavailable"
+      ) {
+        this.pipe.disconnect();
+        this.child.kill("SIGKILL");
+      }
+      throw error;
     } finally {
       this.phoneRead = false;
     }
