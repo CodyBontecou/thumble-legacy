@@ -1,0 +1,89 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2C25402F-F87F-46EA-A615-A1A9C0689EC6",
+      "deviceName" : "Thumble Rewrite QA",
+      "modelName" : "iPhone 17 Pro",
+      "osBuildNumber" : "23F77",
+      "osVersion" : "26.5",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.0075s",
+                  "durationInSeconds" : 0.007465958595275879,
+                  "name" : "testActualReactRootDoesNotOwnTouchSurface()",
+                  "nodeIdentifier" : "NativePortalTests/testActualReactRootDoesNotOwnTouchSurface()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testActualReactRootDoesNotOwnTouchSurface",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0053s",
+                  "durationInSeconds" : 0.005334019660949707,
+                  "name" : "testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease()",
+                  "nodeIdentifier" : "NativePortalTests/testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0012s",
+                  "durationInSeconds" : 0.0011680126190185547,
+                  "name" : "testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval()",
+                  "nodeIdentifier" : "NativePortalTests/testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.057s",
+                  "durationInSeconds" : 0.05693399906158447,
+                  "name" : "testHiddenAndRemovedAnchorsReleaseAndStopIntercepting()",
+                  "nodeIdentifier" : "NativePortalTests/testHiddenAndRemovedAnchorsReleaseAndStopIntercepting()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testHiddenAndRemovedAnchorsReleaseAndStopIntercepting",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 18s",
+                  "durationInSeconds" : 78.02909207344055,
+                  "name" : "testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+                  "nodeIdentifier" : "NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "NativePortalTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "NativePortalTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "NativePortalTests",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+Writing result bundle at path:
+	/private/tmp/thumble-renewal-ios-diagnose-1.xcresult
+
+Node found at: /opt/homebrew/Cellar/node/26.8.1/bin/node
+warning: The @ExpoModule class 'CoreModule' (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/expo-modules-core@58.0.24+c1c56a507c186acf/node_modules/expo-modules-core/ios/Core/Modules/CoreModule.swift) is internal, so the generated modules provider cannot reference it. Declare it public to link it automatically, or use a lower access level such as private to opt it out of linking.
++ DEST=/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app
++ [[ ! -n '' ]]
++ [[ Release = *Debug* ]]
++ [[ -n '' ]]
++ case "$CONFIGURATION" in
++ DEV=false
++++ dirname /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/scripts/react-native-xcode.sh
+++ cd /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/scripts/..
+++ pwd
++ REACT_NATIVE_DIR=/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native
++ PROJECT_ROOT=/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/..
++ cd /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/..
++ [[ -n /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/node_modules/expo-router/entry.js ]]
++ :
++ source /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/scripts/node-binary.sh
+++ '[' -z /opt/homebrew/Cellar/node/26.8.1/bin/node ']'
+++ type /opt/homebrew/Cellar/node/26.8.1/bin/node
++ HERMES_ENGINE_PATH=/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods/hermes-engine
++ '[' -z /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods/../../../../node_modules/.bun/hermes-compiler@260318099.0.4/node_modules/hermes-compiler/hermesc/osx-bin/hermesc ']'
++ [[ -z /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods ]]
++ [[ ! -d /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods ]]
++ [[ true != false ]]
++ [[ -f /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods/hermes-engine ]]
++ '[' -z '' ']'
++ export NODE_ARGS=
++ NODE_ARGS=
++ '[' -z /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/@expo+cli@58.1.14+2e25e4b3db2daf9e/node_modules/@expo/cli/build/src/index.js ']'
++ '[' -z export:embed ']'
++ '[' -z '' ']'
++ COMPOSE_SOURCEMAP_PATH=/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/scripts/compose-source-maps.js
++ [[ -z '' ]]
++ CONFIG_ARG=
++ [[ -z '' ]]
++ BUNDLE_NAME=main
++ BUNDLE_FILE=/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle
++ EXTRA_ARGS=()
++ case "$PLATFORM_NAME" in
++ BUNDLE_PLATFORM=ios
++ '[' '' = YES ']'
++ EMIT_SOURCEMAP=
++ [[ ! -z '' ]]
++ PACKAGER_SOURCEMAP_FILE=
++ [[ '' == true ]]
++ [[ true != false ]]
++ [[ false == false ]]
++ EXTRA_ARGS+=("--minify" "false")
++ [[ -n '' ]]
++ [[ -n '' ]]
++ EXTRA_ARGS+=("--config-cmd" "'$NODE_BINARY' $NODE_ARGS '$REACT_NATIVE_DIR/cli.js' config")
++ source /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/scripts/xcode/asset-catalog.sh
+++ asset_catalog_staging_dir
+++ [[ ios == \i\o\s ]]
+++ [[ -n /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/ThumbleRewrite/Info.plist ]]
+++ local use_asset_catalog
++++ /usr/libexec/PlistBuddy -c 'Print :RCTUseAssetCatalog' /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/ThumbleRewrite/Info.plist
++++ true
+++ use_asset_catalog=
+++ case "$(echo "$use_asset_catalog" | tr '[:upper:]' '[:lower:]')" in
++++ echo ''
++++ tr '[:upper:]' '[:lower:]'
+++ return 0
++ ASSET_CATALOG_STAGING_DIR=
++ [[ -n '' ]]
++ /opt/homebrew/Cellar/node/26.8.1/bin/node /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/@expo+cli@58.1.14+2e25e4b3db2daf9e/node_modules/@expo/cli/build/src/index.js export:embed --entry-file /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/node_modules/expo-router/entry.js --platform ios --dev false --reset-cache --bundle-output /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle --assets-dest /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app --minify false --config-cmd ''\''/opt/homebrew/Cellar/node/26.8.1/bin/node'\''  '\''/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/react-native@0.88.0+1ce689159cd6796e/node_modules/react-native/cli.js'\'' config'
+Using src/app as the root directory for Expo Router.
+Expo Autolinking module resolution enabled
+Starting Metro Bundler
+
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:49171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundled 2099ms node_modules/.bun/expo-router@58.0.25+38b7a22c7476f183/node_modules/expo-router/entry.js (1154 modules)
+Writing bundle output to: /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle
+Copying 22 asset files
+Done writing bundle output
++ asset_catalog_compile ''
++ local staging_dir=
++ local rn_assets_bundle=/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app/RNAssets.bundle
++ rm -rf /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app/RNAssets.bundle
++ [[ -n '' ]]
++ return 0
++ [[ true == false ]]
++ EXTRA_COMPILER_ARGS=
++ [[ false == true ]]
++ EXTRA_COMPILER_ARGS=-O
++ [[ '' == true ]]
++ /Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/ios/Pods/../../../../node_modules/.bun/hermes-compiler@260318099.0.4/node_modules/hermes-compiler/hermesc/osx-bin/hermesc -emit-binary -max-diagnostic-width=80 -O -out /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app/main.jsbundle /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:919:13: warning: the variable "Promise" was not declared in anonymous function
+    var z = Promise,
+            ^~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:3499:26: warning: the variable "URL" was not declared in anonymous arrow function
+          props[0] = new URL(props[0], origin).toString();
+                         ^~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:3531:42: warning: the variable "fetch" was not declared in anonymous function
+      value: wrapFetchWithWindowLocation(fetch)
+                                         ^~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:5898:57: warning: the variable "AbortSignal" was not declared in anonymous function
+        if (signal !== undefined && !(signal instanceof AbortSignal)) {
+                                                        ^~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:6158:5: warning: the variable "setTimeout" was not declared in function "reportListenerError"
+    setTimeout(() => {
+    ^~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:6204:71: warning: the variable "performance" was not declared in anonymous function
+...!== undefined ? initTimestamp : performance.now();
+                                   ^~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:22459:21: warning: the variable "clearTimeout" was not declared in anonymous function
+    cancelTimeout = clearTimeout;
+                    ^~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:22497:42: warning: the variable "Node" was not declared in anonymous function
+    if (null === parentHostFiber) return Node.DOCUMENT_POSITION_DISCONNECTED;
+                                         ^~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:27294:15: warning: the variable "Blob" was not declared in anonymous function
+          new Blob();
+              ^~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:27433:24: warning: the variable "FileReader" was not declared in function "readBlobAsArrayBuffer"
+      var reader = new FileReader();
+                       ^~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:27486:40: warning: the variable "FormData" was not declared in anonymous function
+        } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+                                       ^~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:27488:44: warning: the variable "URLSearchParams" was not declared in anonymous function
+...e if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body...
+                                 ^~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:27741:23: warning: the variable "XMLHttpRequest" was not declared in anonymous function
+        var xhr = new XMLHttpRequest();
+                      ^~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:31779:25: warning: the variable "ErrorUtils" was not declared in anonymous function
+    var globalHandler = ErrorUtils.getGlobalHandler();
+                        ^~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:32114:35: warning: the variable "TransformStream" was not declared in anonymous function
+  class TextDecoderStream extends TransformStream {
+                                  ^~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:32116:25: warning: the variable "TextDecoder" was not declared in anonymous function
+      var decoder = new TextDecoder(label, options);
+                        ^~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:32554:72: warning: the variable "atob" was not declared in function "prepareBitmap"
+... parseInt(A, 36)), Uint8Array.from(atob(t), A => A.charCodeAt(0))];
+                                      ^~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:35082:7: warning: Direct call to eval(), but lexical scope is not supported.
+      eval(code);
+      ^~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:35172:30: warning: the variable "setInterval" was not declared in anonymous function
+      this._heartbeatTimer = setInterval(() => {
+                             ^~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:35180:9: warning: the variable "clearInterval" was not declared in anonymous function
+        clearInterval(this._heartbeatTimer);
+        ^~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:39637:5: warning: the variable "clearImmediate" was not declared in function "scheduleQueueFlush"
+    clearImmediate(flushQueueImmediate);
+    ^~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:41481:32: warning: the variable "requestAnimationFrame" was not declared in anonymous function
+        this._animationFrame = requestAnimationFrame(() => this.onUpdate());
+                               ^~~~~~~~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:57654:50: warning: the variable "Request" was not declared in anonymous arrow function
+...ody' in input || input instanceof Request || input[Symbol.toStringTag] ===...
+                                     ^~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:59115:22: warning: the variable "ReadableStream" was not declared in function "wrapWithConsumption"
+    var stream = new ReadableStream({
+                     ^~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:59373:18: warning: the variable "Headers" was not declared in anonymous function
+      return new Headers(this._rawHeaders);
+                 ^~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:60006:16: warning: Direct call to eval(), but lexical scope is not supported.
+        return eval(body);
+               ^~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:61070:21: warning: the variable "Image" was not declared in anonymous arrow function
+      var img = new Image();
+                    ^~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:81505:26: warning: the variable "ResizeObserver" was not declared in anonymous arrow function
+      var observer = new ResizeObserver(entries => {
+                         ^~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:82967:16: warning: the variable "requestIdleCallback" was not declared in anonymous arrow function
+      var id = requestIdleCallback(() => {
+               ^~~~~~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:82970:20: warning: the variable "cancelIdleCallback" was not declared in anonymous arrow function
+      return () => cancelIdleCallback(id);
+                   ^~~~~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:90668:7: warning: the variable "cancelAnimationFrame" was not declared in function "cancelSplashScreenAnimationFrame"
+      cancelAnimationFrame(splashScreenAnimationFrame);
+      ^~~~~~~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:96923:9: warning: the variable "REACT_NAVIGATION_DEVTOOLS" was not declared in anonymous arrow function
+        REACT_NAVIGATION_DEVTOOLS.set(containerRef.current, {
+        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/main.jsbundle:106172:7: warning: the variable "alert" was not declared in function "throwOrAlert"
+      alert(msg);
+      ^~~~~
++ [[ '' == true ]]
++ BUNDLE_FILE=/tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app/main.jsbundle
++ [[ false != true ]]
++ [[ ! -f /tmp/thumble-mobile-ios-derived/Build/Products/Release-iphonesimulator/ThumbleRewrite.app/main.jsbundle ]]
+Node found at: /opt/homebrew/Cellar/node/26.8.1/bin/node
+warning: The @ExpoModule class 'CoreModule' (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/node_modules/.bun/expo-modules-core@58.0.24+c1c56a507c186acf/node_modules/expo-modules-core/ios/Core/Modules/CoreModule.swift) is internal, so the generated modules provider cannot reference it. Declare it public to link it automatically, or use a lower access level such as private to opt it out of linking.
+note: Run script build phase '[CP-User] [Hermes] Replace Hermes for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'hermes-engine' from project 'Pods')
+note: Run script build phase '[CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ReactNativeDependencies' from project 'Pods')
+note: Run script build phase '[CP-User] [RNCore] Replace React Native Core for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-Core-prebuilt' from project 'Pods')
+note: Run script build phase '[CP-User] [RN]Check FBReactNativeSpec' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-RCTFBReactNativeSpec' from project 'Pods')
+note: Run script build phase '[CP-User] Build ExpoModulesJSI xcframework' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesJSI' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesCore XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesCore' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFont XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFont' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFileSystem XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFileSystem' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesWorklets XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesWorklets' from project 'Pods')
+note: Run script build phase '[CP-User] Generate app.config for prebuilt Constants.manifest' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'EXConstants' from project 'Pods')
+note: Run script build phase '[Expo] Configure project' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ThumbleRewrite' from project 'ThumbleRewrite')
+note: Run script build phase 'Bundle React Native code and images' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ThumbleRewrite' from project 'ThumbleRewrite')
+note: Run script build phase '[Expo] Configure project' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'NativePortalTests' from project 'ThumbleRewrite')
+app_probe_phase_pass /fresh
+app_probe_phase_pass /renewal-start
+app_native_renewal_verified {"continuousHeld": true, "durationMs": 75193, "inputEnabled": false, "inputTtlMs": 350, "neutralPulses": 0, "rotations": 2, "samples": 4101}
+app_probe_phase_pass /renewal-verified
+app_probe_phase_pass /held
+app_probe_phase_pass /neutral
+app_probe_phase_pass /next
+app_probe_phase_pass /fresh
+app_probe_phase_pass /held
+app_probe_phase_pass /neutral
+app_probe_phase_pass /finish
+2026-10-22 09:17:22.729 xcodebuild[48817:97803815] [MT] IDETestOperationsObserverDebug: 80.485 elapsed -- Testing started completed.
+2026-10-22 09:17:22.729 xcodebuild[48817:97803815] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-22 09:17:22.729 xcodebuild[48817:97803815] [MT] IDETestOperationsObserverDebug: 80.485 sec, +80.485 sec -- end
+Testing started
+Verified app native pairing/reconnect against recording-only receiver: {"held": 2, "fresh": 2, "neutral": 2, "renewalStarts": 1, "renewalVerified": 1}

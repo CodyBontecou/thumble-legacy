@@ -53,7 +53,7 @@
     "hostRun": 39784844653,
     "nativeRun": 39784844681,
     "appRun": 39784844641,
-    "state": "All eight jobs in progress at observation"
+    "state": "All three host and all three native SDK/provider jobs pass; both app jobs remain in progress"
   },
   "priorRenewalCI": {
     "publicCommit": "5e8ba80d2e8dcbdab0b4e13e6669c2410762e415",

@@ -1,0 +1,7 @@
+test_accepts_only_bounded_native_state (test_mobile_app_probe.CheckpointTests) ... ok
+test_invalid_checkpoint_cannot_be_logged_and_memory_is_bounded (test_mobile_app_probe.CheckpointTests) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK

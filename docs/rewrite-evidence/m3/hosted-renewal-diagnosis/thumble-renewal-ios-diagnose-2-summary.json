@@ -1,0 +1,42 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2C25402F-F87F-46EA-A615-A1A9C0689EC6",
+        "deviceName" : "Thumble Rewrite QA",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 5,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "NativePortalTests · Built with macOS 26.5.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792675212.559,
+  "passedTests" : 5,
+  "result" : "Passed",
+  "skippedTests" : 0,
+  "startTime" : 1792675118.944,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - NativePortalTests",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 5
+}

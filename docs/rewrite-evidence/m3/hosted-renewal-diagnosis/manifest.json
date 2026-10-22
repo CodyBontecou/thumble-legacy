@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "localSourceCommit": "a34d4ac",
+  "publicCommit": "2ae6e6d32a9a383a0a9f6c1f4d2c0c04da78dc0a",
+  "publicTree": "feb30e2652ddb11ff73603c72b5516d380a4f080",
+  "publicParent": "88b28bdb0aaa8d5305c52bcac491f694646c2ae8",
+  "capsule": {
+    "files": 4,
+    "bytes": 42933,
+    "sha256": "1900cfde89a9a46eceffba6c1c04ae73240b4ad7ec717f4bacacf068916dde10"
+  },
+  "tests": {
+    "UIKitAppCases": 5,
+    "AndroidAppCases": 10,
+    "diagnosticProtocolCases": 2,
+    "skips": 0,
+    "workflowLint": "pass",
+    "types": "pass"
+  },
+  "proofs": {
+    "ios": {
+      "continuousHeld": true,
+      "durationMs": 75103,
+      "inputEnabled": false,
+      "inputTtlMs": 350,
+      "neutralPulses": 0,
+      "rotations": 2,
+      "samples": 4508,
+      "diagnosticCheckpoints": 17,
+      "maximumPublicationGapMs": 17
+    },
+    "android": {
+      "continuousHeld": true,
+      "durationMs": 75009,
+      "inputEnabled": false,
+      "inputTtlMs": 350,
+      "neutralPulses": 0,
+      "rotations": 2,
+      "samples": 4472
+    }
+  },
+  "logs": {
+    "thumble-renewal-ios-diagnose-1.txt": {
+      "sha256": "a44f7187128e33e2dcb380be4f319f46fec381a29b0cf0104aa152ff23a67d2b",
+      "bytes": 22103
+    },
+    "thumble-renewal-ios-diagnose-1-details.json": {
+      "sha256": "16bad61d8fc4616f71476b2f9d7d2f47a95ac98a301f0f7eb4c26d6c2e577d4c",
+      "bytes": 1641
+    },
+    "thumble-renewal-ios-diagnose-2.txt": {
+      "sha256": "756ae9bd2c98e58d8888f717c2bcab80daf0af087c34bf78d3d41d1204199ab1",
+      "bytes": 26278
+    },
+    "thumble-renewal-ios-diagnose-2-summary.json": {
+      "sha256": "b5ec0b5261035d9f50761c8db020e9a25a753ff1828608356765496ea2f0d697",
+      "bytes": 991
+    },
+    "thumble-renewal-ios-diagnose-2-tests.json": {
+      "sha256": "54ff3dc0689c8745c37d643584b4846ea7a8822117b6ce04a44413ec3fbbee30",
+      "bytes": 4182
+    },
+    "thumble-renewal-ios-diagnose-3.txt": {
+      "sha256": "a796f4c75cd5176d5b53bb73732bfd3f2365cd504aee243afaa6c561f45248cf",
+      "bytes": 26833
+    },
+    "thumble-renewal-ios-diagnose-3-summary.json": {
+      "sha256": "989306509dfe1cb509c307cca92ae56f675737543779920246ee1bc8a35a32ec",
+      "bytes": 991
+    },
+    "thumble-renewal-ios-diagnose-3-tests.json": {
+      "sha256": "3a765d695c0a2c2bc9bbfd9459e9a3670ccf5db865f5a1daf1aca85e5c5fdf08",
+      "bytes": 4181
+    },
+    "thumble-renewal-ios-diagnose-3-details.json": {
+      "sha256": "65c015a515e6c90caa4a808533e433ffcd85f330917ac77e6df2717951f85a16",
+      "bytes": 1641
+    },
+    "thumble-renewal-diagnostic-android.txt": {
+      "sha256": "5dfbf3f507e40ef69ddb12622a152baed63be6aa72b5f4e7754a4e730fbbddfa",
+      "bytes": 52625
+    },
+    "thumble-renewal-diagnostic-python.txt": {
+      "sha256": "785f5d483d760d1d893af8798a8730f9fdc3b1c62a08311918cc88c195acb648",
+      "bytes": 294
+    },
+    "thumble-renewal-diagnostic-types.txt": {
+      "sha256": "526dc66e52164ca6d19855e4868d447ea3d315e860cf8318e583c02a10162c36",
+      "bytes": 102
+    }
+  },
+  "catalogSnapshotCI": {
+    "sha": "88b28bdb0aaa8d5305c52bcac491f694646c2ae8",
+    "host": {
+      "run": 39784844653,
+      "windows": 119845180953,
+      "macos": 119845181379,
+      "linux": 119845181774,
+      "conclusion": "success"
+    },
+    "native": {
+      "run": 39784844681,
+      "android": 119845180403,
+      "ios": 119845180988,
+      "keystore": 119845181067,
+      "conclusion": "success"
+    },
+    "apps": {
+      "run": 39784844641,
+      "ios": 119845180115,
+      "android": 119845180280,
+      "state": "Both in progress at last observation"
+    }
+  },
+  "newCI": "Published ref verified; Actions run discovery pending",
+  "diagnosis": {
+    "originalHostedFailureJob": 119832681939,
+    "cause": "Unestablished",
+    "productionChanged": false,
+    "temporaryProbePrefix": "[DEBUG-renewal-app]",
+    "cleanup": "Remove temporary checkpoint probes once the hosted failure is isolated and original loop verified; do not label this batch a fix."
+  },
+  "remaining": [
+    "Hosted failure must be isolated; local successes do not clear it",
+    "Full rewrite and M4 typed document/recovery work remain incomplete",
+    "Physical/signing/gameplay/haptics/optical acceptance remain open"
+  ]
+}

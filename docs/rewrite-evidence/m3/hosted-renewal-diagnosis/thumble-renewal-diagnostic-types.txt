@@ -1,0 +1,1 @@
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json && tsc --noEmit -p apps/mobile/tsconfig.json

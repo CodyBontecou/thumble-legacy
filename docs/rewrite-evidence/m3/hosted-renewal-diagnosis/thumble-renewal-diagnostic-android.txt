@@ -1,0 +1,827 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar UP-TO-DATE
+> Task :gradle-plugin:shared:jar UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-module-gradle-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:jar UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-module-gradle-plugin:classes UP-TO-DATE
+> Task :expo-module-gradle-plugin:jar UP-TO-DATE
+
+> Configure project :
+[32m[ExpoRootProject][0m The Kotlin Gradle plugin used by this build is [32m2.2.10[0m, but the version catalog declares [33m2.2.0[0m. Using the plugin version.
+[32m[ExpoRootProject][0m Using the following versions:
+  - buildTools:  [32m37.0.0[0m
+  - minSdk:      [32m29[0m
+  - compileSdk:  [32m37[0m
+  - targetSdk:   [32m36[0m
+  - ndk:         [32m27.1.12297006[0m
+  - kotlin:      [32m2.2.10[0m
+  - ksp:         [32m2.2.10-2.0.2[0m
+
+> Configure project :app
+WARNING: The option setting 'android.builtInKotlin=false' is deprecated.
+The current default is 'true'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+WARNING: The option setting 'android.newDsl=false' is deprecated.
+The current default is 'true'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+ ℹ️  [33mApplying gradle plugin[0m '[32mexpo-max-sdk-override-plugin[0m'
+  [expo-max-sdk-override-plugin] This plugin will find all permissions declared with `android:maxSdkVersion`. If there exists a declaration with the `android:maxSdkVersion` annotation and another one without, the plugin will remove the annotation from the final merged manifest. In order to see a log with the changes run a clean build of the app.
+WARNING: API 'applicationVariants' is obsolete and has been replaced with 'AndroidComponentsExtension'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+The legacy variant API is disabled by default in AGP 9.0, but can be re-enabled by adding 
+    android.newDsl=false
+to this project's gradle.properties file.
+For more information, see http://developer.android.com/build/r/new-dsl.
+
+To determine what is calling applicationVariants, use -Pandroid.debug.obsoleteApi=true on the command line to display more information.
+WARNING: API 'testVariants' is obsolete and has been replaced with 'AndroidComponentsExtension'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+The legacy variant API is disabled by default in AGP 9.0, but can be re-enabled by adding 
+    android.newDsl=false
+to this project's gradle.properties file.
+For more information, see http://developer.android.com/build/r/new-dsl.
+
+To determine what is calling testVariants, use -Pandroid.debug.obsoleteApi=true on the command line to display more information.
+WARNING: API 'unitTestVariants' is obsolete and has been replaced with 'AndroidComponentsExtension'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+The legacy variant API is disabled by default in AGP 9.0, but can be re-enabled by adding 
+    android.newDsl=false
+to this project's gradle.properties file.
+For more information, see http://developer.android.com/build/r/new-dsl.
+
+To determine what is calling unitTestVariants, use -Pandroid.debug.obsoleteApi=true on the command line to display more information.
+
+> Configure project :expo
+WARNING: API 'libraryVariants' is obsolete and has been replaced with 'AndroidComponentsExtension'.
+It will be removed in version 10.0 of the Android Gradle plugin.
+The legacy variant API is disabled by default in AGP 9.0, but can be re-enabled by adding 
+    android.newDsl=false
+to this project's gradle.properties file.
+For more information, see http://developer.android.com/build/r/new-dsl.
+
+To determine what is calling libraryVariants, use -Pandroid.debug.obsoleteApi=true on the command line to display more information.
+
+Using expo modules
+  - [32mexpo-dom-webview[0m (58.0.2)
+  - [32mexpo-log-box[0m (58.0.13)
+  - [32mexpo-constants[0m (58.0.13)
+  - [32mexpo-modules-core[0m (58.0.24)
+  - [32mthumble-native-input[0m (0.0.0)
+  - [33m[📦][0m [32mexpo-asset[0m (58.0.18)
+  - [33m[📦][0m [32mexpo-file-system[0m (58.0.10)
+  - [33m[📦][0m [32mexpo-font[0m (58.0.9)
+  - [33m[📦][0m [32mexpo-keep-awake[0m (58.0.3)
+  - [33m[📦][0m [32mexpo-linking[0m (58.0.14)
+  - [33m[📦][0m [32mexpo-router[0m (58.0.25)
+  - [33m[📦][0m [32mexpo-status-bar[0m (58.0.4)
+  - [33m[📦][0m [32mexpo-system-ui[0m (58.0.6)
+
+
+> Task :expo-log-box:preBuild UP-TO-DATE
+> Task :react-native-masked-view_masked-view:preBuild UP-TO-DATE
+> Task :expo-constants:preBuild UP-TO-DATE
+> Task :expo-dom-webview:preBuild UP-TO-DATE
+> Task :thumble-native-input:preBuild UP-TO-DATE
+> Task :expo-log-box:preReleaseBuild UP-TO-DATE
+> Task :react-native-masked-view_masked-view:preReleaseBuild UP-TO-DATE
+> Task :expo-dom-webview:preReleaseBuild UP-TO-DATE
+> Task :thumble-native-input:preReleaseBuild UP-TO-DATE
+> Task :expo-dom-webview:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-log-box:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-dom-webview:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-log-box:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-gesture-handler:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-masked-view_masked-view:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-dom-webview:generateReleaseResources UP-TO-DATE
+> Task :thumble-native-input:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-modules-core:decompressPrebuiltNativeLibs UP-TO-DATE
+> Task :expo-modules-core:preBuild UP-TO-DATE
+> Task :expo-modules-core:preReleaseBuild UP-TO-DATE
+> Task :thumble-native-input:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-log-box:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateReleaseResources UP-TO-DATE
+> Task :thumble-native-input:generateReleaseResources UP-TO-DATE
+> Task :expo-log-box:generateReleaseResources UP-TO-DATE
+> Task :expo-modules-core:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-screens:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-gesture-handler:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-safe-area-context:preBuild UP-TO-DATE
+> Task :react-native-safe-area-context:preReleaseBuild UP-TO-DATE
+> Task :react-native-gesture-handler:preBuild UP-TO-DATE
+> Task :expo-modules-core:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-gesture-handler:preReleaseBuild UP-TO-DATE
+> Task :react-native-safe-area-context:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-modules-core:generateReleaseResources UP-TO-DATE
+> Task :react-native-gesture-handler:processReleaseNavigationResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:packageReleaseResources UP-TO-DATE
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-dom-webview:packageReleaseResources UP-TO-DATE
+> Task :react-native-gesture-handler:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-log-box:packageReleaseResources UP-TO-DATE
+> Task :thumble-native-input:packageReleaseResources UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseResources UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseResources UP-TO-DATE
+> Task :expo-dom-webview:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:parseReleaseLocalResources UP-TO-DATE
+> Task :thumble-native-input:parseReleaseLocalResources UP-TO-DATE
+> Task :expo-log-box:parseReleaseLocalResources UP-TO-DATE
+> Task :expo-modules-core:packageReleaseResources UP-TO-DATE
+> Task :react-native-screens:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-screens:preBuild UP-TO-DATE
+> Task :react-native-screens:preReleaseBuild UP-TO-DATE
+> Task :expo-modules-core:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateReleaseRFile UP-TO-DATE
+> Task :react-native-gesture-handler:packageReleaseResources UP-TO-DATE
+> Task :expo-dom-webview:generateReleaseRFile UP-TO-DATE
+> Task :thumble-native-input:generateReleaseRFile UP-TO-DATE
+> Task :expo-log-box:generateReleaseRFile UP-TO-DATE
+> Task :react-native-safe-area-context:packageReleaseResources UP-TO-DATE
+> Task :expo-dom-webview:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-gesture-handler:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:javaPreCompileRelease UP-TO-DATE
+> Task :expo-log-box:javaPreCompileRelease UP-TO-DATE
+> Task :expo-modules-core:generateReleaseRFile UP-TO-DATE
+> Task :thumble-native-input:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-screens:processReleaseNavigationResources UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseRFile UP-TO-DATE
+> Task :react-native-screens:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-screens:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-safe-area-context:parseReleaseLocalResources UP-TO-DATE
+> Task :expo-dom-webview:writeReleaseAarMetadata UP-TO-DATE
+> Task :thumble-native-input:writeReleaseAarMetadata UP-TO-DATE
+> Task :expo-log-box:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-gesture-handler:javaPreCompileRelease UP-TO-DATE
+> Task :thumble-native-input:extractDeepLinksRelease UP-TO-DATE
+> Task :expo-log-box:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-screens:generateReleaseResources UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseRFile UP-TO-DATE
+> Task :react-native-gesture-handler:writeReleaseAarMetadata UP-TO-DATE
+> Task :expo-dom-webview:extractDeepLinksRelease UP-TO-DATE
+> Task :thumble-native-input:processReleaseManifest UP-TO-DATE
+> Task :react-native-gesture-handler:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-reanimated:assertMinimalReactNativeVersionTask
+> Task :thumble-native-input:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-dom-webview:processReleaseManifest UP-TO-DATE
+> Task :thumble-native-input:compileReleaseLibraryResources UP-TO-DATE
+> Task :react-native-worklets:assertMinimalReactNativeVersionTask
+> Task :react-native-worklets:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :app:buildKotlinToolingMetadata UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-gesture-handler:processReleaseManifest UP-TO-DATE
+> Task :react-native-screens:packageReleaseResources UP-TO-DATE
+> Task :app:generateAutolinkingNewArchitectureFiles UP-TO-DATE
+> Task :react-native-screens:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-worklets:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-gesture-handler:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo:generateInlineModules
+> Task :react-native-gesture-handler:compileReleaseLibraryResources UP-TO-DATE
+> Task :react-native-screens:generateReleaseRFile UP-TO-DATE
+> Task :expo:generatePackagesList UP-TO-DATE
+> Task :expo:preBuild
+> Task :expo:preReleaseBuild
+> Task :react-native-gesture-handler:prepareReleaseArtProfile UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseAssets UP-TO-DATE
+> Task :app:generateAutolinkingPackageList UP-TO-DATE
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :expo:processReleaseNavigationResources UP-TO-DATE
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :expo:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-gesture-handler:mergeReleaseAssets UP-TO-DATE
+> Task :app:generateReactNativeEntryPoint UP-TO-DATE
+> Task :react-native-gesture-handler:extractProguardFiles UP-TO-DATE
+> Task :expo:generateReleaseResources UP-TO-DATE
+> Task :react-native-gesture-handler:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-gesture-handler:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :expo:packageReleaseResources UP-TO-DATE
+> Task :expo:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-reanimated:assertWorkletsVersionTask
+> Task :expo:generateReleaseRFile UP-TO-DATE
+> Task :expo:javaPreCompileRelease UP-TO-DATE
+> Task :expo:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-reanimated:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :thumble-native-input:prepareReleaseArtProfile UP-TO-DATE
+> Task :thumble-native-input:generateReleaseAssets UP-TO-DATE
+> Task :expo:extractDeepLinksRelease UP-TO-DATE
+> Task :expo-dom-webview:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-log-box:processReleaseManifest UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseAssets UP-TO-DATE
+> Task :app:createBundleNativeQaJsAndAssets UP-TO-DATE
+> Task :app:generateNativeQaAssets UP-TO-DATE
+> Task :app:generateNativeQaAndroidTestAssets UP-TO-DATE
+> Task :expo-dom-webview:compileReleaseLibraryResources UP-TO-DATE
+> Task :thumble-native-input:extractProguardFiles UP-TO-DATE
+> Task :expo-log-box:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-dom-webview:prepareReleaseArtProfile UP-TO-DATE
+> Task :expo:processReleaseManifest UP-TO-DATE
+> Task :expo-dom-webview:generateReleaseAssets UP-TO-DATE
+> Task :thumble-native-input:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-reanimated:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :thumble-native-input:checkReleaseAarMetadata UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseAssets UP-TO-DATE
+> Task :expo:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-constants:createReleaseExpoConfig
+> Task :react-native-masked-view_masked-view:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :expo-constants:preReleaseBuild
+> Task :expo-log-box:compileReleaseLibraryResources UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :expo:compileReleaseLibraryResources UP-TO-DATE
+> Task :expo-dom-webview:extractProguardFiles UP-TO-DATE
+> Task :expo-constants:processReleaseNavigationResources UP-TO-DATE
+> Task :expo-constants:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-log-box:prepareReleaseArtProfile UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-log-box:generateReleaseAssets UP-TO-DATE
+> Task :expo-dom-webview:prepareLintJarForPublish UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-constants:generateReleaseResources UP-TO-DATE
+> Task :expo:prepareReleaseArtProfile UP-TO-DATE
+> Task :expo:generateReleaseAssets UP-TO-DATE
+> Task :react-native-masked-view_masked-view:writeReleaseAarMetadata UP-TO-DATE
+> Task :expo-log-box:mergeReleaseAssets UP-TO-DATE
+> Task :thumble-native-input:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-log-box:extractProguardFiles UP-TO-DATE
+> Task :thumble-native-input:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-masked-view_masked-view:extractDeepLinksRelease UP-TO-DATE
+> Task :expo:mergeReleaseAssets UP-TO-DATE
+> Task :expo-dom-webview:checkReleaseAarMetadata UP-TO-DATE
+> Task :expo-log-box:prepareLintJarForPublish UP-TO-DATE
+> Task :expo:extractProguardFiles UP-TO-DATE
+> Task :thumble-native-input:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :expo-constants:packageReleaseResources UP-TO-DATE
+> Task :expo:prepareLintJarForPublish UP-TO-DATE
+> Task :thumble-native-input:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :thumble-native-input:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :expo-constants:parseReleaseLocalResources UP-TO-DATE
+> Task :expo:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-masked-view_masked-view:processReleaseManifest UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-masked-view_masked-view:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-dom-webview:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-constants:generateReleaseRFile UP-TO-DATE
+> Task :expo:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-masked-view_masked-view:compileReleaseLibraryResources UP-TO-DATE
+> Task :expo-constants:javaPreCompileRelease UP-TO-DATE
+> Task :expo:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-constants:writeReleaseAarMetadata UP-TO-DATE
+> Task :expo:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :expo-constants:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-masked-view_masked-view:prepareReleaseArtProfile UP-TO-DATE
+> Task :react-native-worklets:prepareWorkletsHeadersForPrefabs UP-TO-DATE
+> Task :react-native-worklets:preBuild
+> Task :react-native-worklets:preReleaseBuild
+> Task :react-native-masked-view_masked-view:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :expo-constants:processReleaseManifest UP-TO-DATE
+> Task :react-native-gesture-handler:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :react-native-worklets:processReleaseNavigationResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateReleaseAssets UP-TO-DATE
+> Task :react-native-worklets:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-constants:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :react-native-worklets:generateReleaseBuildConfig UP-TO-DATE
+> Task :react-native-worklets:generateReleaseResources UP-TO-DATE
+> Task :expo-constants:compileReleaseLibraryResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseAssets UP-TO-DATE
+> Task :expo-constants:prepareReleaseArtProfile UP-TO-DATE
+> Task :expo-constants:generateReleaseAssets UP-TO-DATE
+> Task :expo-constants:mergeReleaseAssets UP-TO-DATE
+> Task :expo-constants:extractProguardFiles UP-TO-DATE
+> Task :react-native-masked-view_masked-view:processReleaseJavaRes NO-SOURCE
+> Task :react-native-gesture-handler:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :expo-constants:prepareLintJarForPublish UP-TO-DATE
+> Task :expo:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :expo-constants:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-masked-view_masked-view:createFullJarRelease UP-TO-DATE
+> Task :react-native-masked-view_masked-view:extractProguardFiles UP-TO-DATE
+> Task :expo-constants:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :expo-constants:mergeReleaseNativeLibs NO-SOURCE
+> Task :expo-constants:stripReleaseDebugSymbols NO-SOURCE
+> Task :expo-constants:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :expo-constants:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-constants:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :expo-constants:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-reanimated:prepareReanimatedHeadersForPrefabs UP-TO-DATE
+> Task :react-native-reanimated:preBuild
+> Task :app:preBuild
+> Task :app:preNativeQaBuild
+> Task :app:generateNativeQaBuildConfig UP-TO-DATE
+> Task :expo-dom-webview:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-reanimated:preReleaseBuild
+> Task :react-native-reanimated:processReleaseNavigationResources UP-TO-DATE
+> Task :react-native-reanimated:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-dom-webview:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseBuildConfig UP-TO-DATE
+> Task :expo-dom-webview:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseResources UP-TO-DATE
+> Task :expo-dom-webview:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-reanimated:packageReleaseResources UP-TO-DATE
+> Task :react-native-reanimated:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseRFile UP-TO-DATE
+> Task :react-native-reanimated:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-reanimated:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-reanimated:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-reanimated:processReleaseManifest UP-TO-DATE
+> Task :react-native-reanimated:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :react-native-reanimated:compileReleaseLibraryResources UP-TO-DATE
+> Task :react-native-reanimated:prepareReleaseArtProfile UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseAssets UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseAssets UP-TO-DATE
+> Task :react-native-reanimated:extractProguardFiles UP-TO-DATE
+> Task :app:generateNativeQaResValues
+> Task :react-native-reanimated:prepareLintJarForPublish UP-TO-DATE
+> Task :app:generateNativeQaResources UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-reanimated:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :react-native-reanimated:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :app:packageNativeQaResources
+> Task :react-native-worklets:packageReleaseResources UP-TO-DATE
+> Task :react-native-worklets:parseReleaseLocalResources UP-TO-DATE
+> Task :react-native-worklets:generateReleaseRFile UP-TO-DATE
+> Task :react-native-safe-area-context:compileReleaseKotlin UP-TO-DATE
+> Task :react-native-safe-area-context:javaPreCompileRelease UP-TO-DATE
+> Task :expo-log-box:checkReleaseAarMetadata UP-TO-DATE
+> Task :app:processNativeQaNavigationResources UP-TO-DATE
+> Task :expo-log-box:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-safe-area-context:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :expo-log-box:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-log-box:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-safe-area-context:writeReleaseAarMetadata UP-TO-DATE
+> Task :expo-log-box:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-safe-area-context:extractDeepLinksRelease UP-TO-DATE
+> Task :expo-log-box:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-log-box:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :react-native-screens:compileReleaseKotlin UP-TO-DATE
+> Task :expo-log-box:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-safe-area-context:processReleaseManifest UP-TO-DATE
+> Task :react-native-screens:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-safe-area-context:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :react-native-safe-area-context:compileReleaseLibraryResources UP-TO-DATE
+> Task :app:javaPreCompileNativeQa UP-TO-DATE
+> Task :app:mapNativeQaSourceSetPaths UP-TO-DATE
+> Task :react-native-safe-area-context:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :react-native-safe-area-context:prepareReleaseArtProfile UP-TO-DATE
+> Task :app:compileNativeQaNavigationResources UP-TO-DATE
+> Task :expo-modules-core:compileReleaseKotlin UP-TO-DATE
+> Task :react-native-screens:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :react-native-safe-area-context:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseAssets UP-TO-DATE
+> Task :expo-modules-core:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-screens:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseAssets UP-TO-DATE
+> Task :react-native-worklets:compileReleaseKotlin UP-TO-DATE
+> Task :react-native-screens:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-worklets:javaPreCompileRelease UP-TO-DATE
+> Task :react-native-safe-area-context:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-safe-area-context:createFullJarRelease UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateReleaseLintModel UP-TO-DATE
+> Task :react-native-safe-area-context:extractProguardFiles UP-TO-DATE
+> Task :react-native-masked-view_masked-view:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-worklets:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :react-native-screens:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-worklets:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :react-native-worklets:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-screens:processReleaseManifest UP-TO-DATE
+> Task :react-native-worklets:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-screens:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :react-native-worklets:processReleaseManifest UP-TO-DATE
+> Task :react-native-worklets:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :react-native-worklets:compileReleaseLibraryResources UP-TO-DATE
+> Task :expo-modules-core:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :react-native-screens:compileReleaseLibraryResources UP-TO-DATE
+> Task :expo-modules-core:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :react-native-worklets:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :expo-modules-core:writeReleaseAarMetadata UP-TO-DATE
+> Task :react-native-worklets:prepareReleaseArtProfile UP-TO-DATE
+> Task :expo-modules-core:extractDeepLinksRelease UP-TO-DATE
+> Task :react-native-worklets:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-worklets:generateReleaseAssets UP-TO-DATE
+> Task :expo-modules-core:processReleaseManifest UP-TO-DATE
+> Task :react-native-worklets:mergeReleaseAssets UP-TO-DATE
+> Task :expo-modules-core:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :expo-modules-core:compileReleaseLibraryResources UP-TO-DATE
+> Task :react-native-gesture-handler:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-worklets:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-worklets:createFullJarRelease UP-TO-DATE
+> Task :react-native-worklets:extractProguardFiles UP-TO-DATE
+> Task :react-native-masked-view_masked-view:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseLintModel UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-masked-view_masked-view:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-masked-view_masked-view:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-masked-view_masked-view:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :app:parseNativeQaLocalResources
+> Task :react-native-safe-area-context:checkReleaseAarMetadata UP-TO-DATE
+> Task :expo:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :expo-dom-webview:compileReleaseKotlin UP-TO-DATE
+> Task :expo-log-box:compileReleaseKotlin UP-TO-DATE
+> Task :react-native-safe-area-context:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-constants:compileReleaseKotlin UP-TO-DATE
+> Task :expo-dom-webview:compileReleaseJavaWithJavac NO-SOURCE
+> Task :expo-constants:compileReleaseJavaWithJavac NO-SOURCE
+> Task :expo-dom-webview:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-constants:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-log-box:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :thumble-native-input:compileReleaseKotlin UP-TO-DATE
+> Task :expo-log-box:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-constants:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :thumble-native-input:compileReleaseJavaWithJavac NO-SOURCE
+> Task :react-native-reanimated:compileReleaseKotlin UP-TO-DATE
+> Task :expo-constants:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :thumble-native-input:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-constants:processReleaseJavaRes UP-TO-DATE
+> Task :expo-constants:createFullJarRelease UP-TO-DATE
+> Task :expo-log-box:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :react-native-worklets:generateReleaseLintModel UP-TO-DATE
+> Task :react-native-safe-area-context:extractReleaseAnnotations UP-TO-DATE
+> Task :expo-log-box:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :expo-constants:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-masked-view_masked-view:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-worklets:prepareLintJarForPublish UP-TO-DATE
+> Task :react-native-reanimated:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :expo-constants:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :expo-log-box:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :react-native-reanimated:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :expo-constants:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :expo-log-box:createFullJarRelease UP-TO-DATE
+> Task :expo-dom-webview:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeReleaseJavaResource UP-TO-DATE
+> Task :expo-dom-webview:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseJavaResource UP-TO-DATE
+> Task :expo-constants:mergeReleaseJavaResource UP-TO-DATE
+> Task :expo-dom-webview:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-safe-area-context:syncReleaseLibJars UP-TO-DATE
+> Task :expo-log-box:extractReleaseAnnotations UP-TO-DATE
+> Task :expo-dom-webview:createFullJarRelease UP-TO-DATE
+> Task :expo-log-box:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-masked-view_masked-view:syncReleaseLibJars UP-TO-DATE
+> Task :react-native-safe-area-context:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :expo-constants:syncReleaseLibJars UP-TO-DATE
+> Task :expo-log-box:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :expo-constants:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :expo-log-box:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-safe-area-context:lintVitalAnalyzeRelease SKIPPED
+> Task :react-native-masked-view_masked-view:lintVitalAnalyzeRelease SKIPPED
+> Task :expo-log-box:syncReleaseLibJars UP-TO-DATE
+> Task :react-native-masked-view_masked-view:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :react-native-safe-area-context:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :expo-log-box:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :expo-dom-webview:extractReleaseAnnotations UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateReleaseLintVitalModel UP-TO-DATE
+> Task :react-native-safe-area-context:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-dom-webview:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-masked-view_masked-view:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :expo-dom-webview:syncReleaseLibJars UP-TO-DATE
+> Task :expo-dom-webview:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-reanimated:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :thumble-native-input:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :react-native-reanimated:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :thumble-native-input:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-reanimated:processReleaseJavaRes UP-TO-DATE
+> Task :thumble-native-input:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-reanimated:createFullJarRelease UP-TO-DATE
+> Task :thumble-native-input:createFullJarRelease UP-TO-DATE
+> Task :thumble-native-input:extractReleaseAnnotations UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :thumble-native-input:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-screens:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :thumble-native-input:syncReleaseLibJars UP-TO-DATE
+> Task :react-native-screens:prepareReleaseArtProfile UP-TO-DATE
+> Task :thumble-native-input:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-screens:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-screens:generateReleaseAssets UP-TO-DATE
+> Task :react-native-screens:mergeReleaseAssets UP-TO-DATE
+> Task :react-native-screens:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-screens:createFullJarRelease UP-TO-DATE
+> Task :react-native-screens:extractProguardFiles UP-TO-DATE
+> Task :react-native-gesture-handler:compileReleaseKotlin UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseLintModel UP-TO-DATE
+> Task :react-native-gesture-handler:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :react-native-reanimated:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-reanimated:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-gesture-handler:processReleaseJavaRes UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :react-native-gesture-handler:createFullJarRelease UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-reanimated:syncReleaseLibJars UP-TO-DATE
+> Task :react-native-reanimated:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :expo-modules-core:prepareReleaseArtProfile UP-TO-DATE
+> Task :expo:compileReleaseKotlin UP-TO-DATE
+> Task :expo-modules-core:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :expo-modules-core:generateReleaseAssets UP-TO-DATE
+> Task :expo:compileReleaseJavaWithJavac NO-SOURCE
+> Task :expo-modules-core:mergeReleaseAssets UP-TO-DATE
+> Task :expo:bundleLibCompileToJarRelease UP-TO-DATE
+> Task :expo-modules-core:processReleaseJavaRes UP-TO-DATE
+> Task :expo-modules-core:createFullJarRelease UP-TO-DATE
+> Task :expo:bundleLibRuntimeToDirRelease UP-TO-DATE
+> Task :expo-modules-core:extractProguardFiles UP-TO-DATE
+> Task :expo:bundleLibRuntimeToJarRelease UP-TO-DATE
+> Task :react-native-screens:generateReleaseLintModel UP-TO-DATE
+> Task :react-native-screens:prepareLintJarForPublish UP-TO-DATE
+> Task :expo:processReleaseJavaRes UP-TO-DATE
+> Task :expo:createFullJarRelease UP-TO-DATE
+> Task :expo:extractReleaseAnnotations UP-TO-DATE
+> Task :expo:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-screens:checkReleaseAarMetadata UP-TO-DATE
+> Task :expo:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :expo:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseLintModel UP-TO-DATE
+> Task :expo:syncReleaseLibJars UP-TO-DATE
+> Task :expo:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-gesture-handler:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-gesture-handler:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-gesture-handler:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :react-native-gesture-handler:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-gesture-handler:syncReleaseLibJars UP-TO-DATE
+> Task :react-native-gesture-handler:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:generateReleaseLintModel UP-TO-DATE
+> Task :expo-modules-core:prepareLintJarForPublish UP-TO-DATE
+> Task :expo-constants:generateReleaseLintModel UP-TO-DATE
+> Task :expo-dom-webview:generateReleaseLintModel UP-TO-DATE
+> Task :expo-constants:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-dom-webview:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:checkReleaseAarMetadata UP-TO-DATE
+> Task :expo-log-box:generateReleaseLintModel UP-TO-DATE
+> Task :expo-log-box:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:unpackExpoModulesV2Cpp UP-TO-DATE
+> Task :thumble-native-input:generateReleaseLintModel UP-TO-DATE
+> Task :thumble-native-input:generateReleaseLintVitalModel UP-TO-DATE
+> Task :thumble-native-input:generateReleaseLintReportModel UP-TO-DATE
+> Task :expo:generateReleaseLintModel UP-TO-DATE
+> Task :expo:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-screens:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-screens:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-screens:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-screens:mergeReleaseNativeLibs UP-TO-DATE
+> Task :react-native-screens:stripReleaseDebugSymbols UP-TO-DATE
+> Task :react-native-screens:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-screens:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :expo-modules-core:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :expo-modules-core:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-screens:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-screens:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :expo-modules-core:mergeReleaseNativeLibs UP-TO-DATE
+> Task :react-native-screens:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :expo-modules-core:stripReleaseDebugSymbols UP-TO-DATE
+> Task :react-native-screens:mergeReleaseJavaResource UP-TO-DATE
+> Task :expo-modules-core:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-screens:syncReleaseLibJars UP-TO-DATE
+> Task :expo-modules-core:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :react-native-screens:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-screens:lintVitalAnalyzeRelease SKIPPED
+> Task :react-native-screens:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :expo-modules-core:extractReleaseAnnotations UP-TO-DATE
+> Task :expo-modules-core:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :expo-modules-core:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :react-native-screens:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-screens:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :expo-modules-core:syncReleaseLibJars UP-TO-DATE
+> Task :expo-modules-core:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :expo-modules-core:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :expo-modules-core:lintVitalAnalyzeRelease SKIPPED
+> Task :expo-dom-webview:lintVitalAnalyzeRelease SKIPPED
+> Task :expo-constants:lintVitalAnalyzeRelease SKIPPED
+> Task :thumble-native-input:lintVitalAnalyzeRelease SKIPPED
+> Task :expo-log-box:lintVitalAnalyzeRelease SKIPPED
+> Task :expo:lintVitalAnalyzeRelease SKIPPED
+> Task :expo-modules-core:generateReleaseLintVitalModel UP-TO-DATE
+> Task :expo-modules-core:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :expo-modules-core:lintAnalyzeRelease UP-TO-DATE
+> Task :thumble-native-input:lintAnalyzeRelease UP-TO-DATE
+> Task :thumble-native-input:lintReportRelease UP-TO-DATE
+> Task :thumble-native-input:lintRelease
+> Task :app:generateNativeQaRFile UP-TO-DATE
+> Task :app:compileNativeQaKotlin UP-TO-DATE
+> Task :app:compileNativeQaJavaWithJavac UP-TO-DATE
+> Task :app:checkNativeQaAarMetadata UP-TO-DATE
+> Task :app:createNativeQaCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksNativeQa UP-TO-DATE
+> Task :react-native-worklets:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:processNativeQaMainManifest UP-TO-DATE
+> Task :app:expoNativeQaOverrideMaxSdkConflicts UP-TO-DATE
+> Task :app:processNativeQaManifest UP-TO-DATE
+> Task :app:processNativeQaManifestForPackage UP-TO-DATE
+> Task :app:preNativeQaAndroidTestBuild SKIPPED
+> Task :app:processNativeQaAndroidTestManifest UP-TO-DATE
+> Task :app:generateNativeQaAndroidTestBuildConfig UP-TO-DATE
+> Task :react-native-worklets:buildCMakeRelWithDebInfo[arm64-v8a][worklets]
+> Task :app:generateNativeQaAndroidTestResValues
+> Task :app:generateNativeQaAndroidTestResources UP-TO-DATE
+> Task :react-native-worklets:externalNativeBuildRelease
+> Task :react-native-worklets:generateJsonModelRelease
+> Task :react-native-worklets:prefabReleaseConfigurePackage
+> Task :app:packageNativeQaAndroidTestResources
+> Task :app:processNativeQaAndroidTestNavigationResources UP-TO-DATE
+> Task :app:javaPreCompileNativeQaAndroidTest UP-TO-DATE
+> Task :react-native-worklets:prefabReleasePackage UP-TO-DATE
+> Task :react-native-worklets:mergeReleaseJniLibFolders UP-TO-DATE
+> Task :react-native-worklets:mergeReleaseNativeLibs UP-TO-DATE
+> Task :react-native-worklets:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :react-native-worklets:checkReleaseAarMetadata UP-TO-DATE
+> Task :react-native-worklets:stripReleaseDebugSymbols UP-TO-DATE
+> Task :react-native-worklets:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-worklets:extractDeepLinksForAarRelease UP-TO-DATE
+> Task :react-native-worklets:extractReleaseAnnotations UP-TO-DATE
+> Task :react-native-worklets:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :react-native-worklets:mergeReleaseConsumerProguardFiles UP-TO-DATE
+> Task :app:parseNativeQaAndroidTestLocalResources
+> Task :react-native-worklets:mergeReleaseJavaResource UP-TO-DATE
+> Task :react-native-worklets:syncReleaseLibJars UP-TO-DATE
+> Task :app:checkNativeQaDuplicateClasses UP-TO-DATE
+> Task :react-native-worklets:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-worklets:writeReleaseLintModelMetadata UP-TO-DATE
+> Task :react-native-worklets:lintVitalAnalyzeRelease SKIPPED
+> Task :app:generateNativeQaAndroidTestRFile UP-TO-DATE
+> Task :app:desugarNativeQaFileDependencies UP-TO-DATE
+> Task :app:mergeNativeQaStartupProfile UP-TO-DATE
+> Task :react-native-worklets:generateReleaseLintVitalModel UP-TO-DATE
+> Task :app:mergeNativeQaResources
+> Task :app:mergeExtDexNativeQa UP-TO-DATE
+> Task :app:mergeNativeQaArtProfile UP-TO-DATE
+> Task :app:mergeNativeQaAssets UP-TO-DATE
+> Task :app:compressNativeQaAssets UP-TO-DATE
+> Task :app:extractNativeQaVersionControlInfo UP-TO-DATE
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :app:generateNativeQaLintVitalReportModel
+> Task :app:processNativeQaJavaRes UP-TO-DATE
+> Task :app:mergeNativeQaJavaResource UP-TO-DATE
+> Task :app:collectNativeQaDependencies UP-TO-DATE
+> Task :app:sdkNativeQaDependencyData UP-TO-DATE
+> Task :app:mergeNativeQaJniLibFolders UP-TO-DATE
+> Task :app:validateSigningNativeQa UP-TO-DATE
+> Task :app:writeNativeQaAppMetadata UP-TO-DATE
+> Task :app:writeNativeQaSigningConfigVersions UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestAssets UP-TO-DATE
+> Task :app:compressNativeQaAndroidTestAssets UP-TO-DATE
+> Task :app:checkNativeQaAndroidTestDuplicateClasses UP-TO-DATE
+> Task :app:checkNativeQaAndroidTestAarMetadata UP-TO-DATE
+> Task :app:mapNativeQaAndroidTestSourceSetPaths UP-TO-DATE
+> Task :app:compileNativeQaAndroidTestNavigationResources UP-TO-DATE
+> Task :app:desugarNativeQaAndroidTestFileDependencies UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestResources
+> Task :app:mergeExtDexNativeQaAndroidTest UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestJniLibFolders UP-TO-DATE
+> Task :app:validateSigningNativeQaAndroidTest UP-TO-DATE
+> Task :app:writeNativeQaAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :app:processNativeQaAndroidTestResources
+> Task :react-native-reanimated:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-reanimated:generateJsonModelRelease
+> Task :react-native-reanimated:prefabReleaseConfigurePackage UP-TO-DATE
+> Task :react-native-reanimated:buildCMakeRelWithDebInfo[arm64-v8a][reanimated]
+> Task :react-native-reanimated:externalNativeBuildRelease
+> Task :react-native-reanimated:prefabReleasePackage UP-TO-DATE
+> Task :react-native-reanimated:mergeReleaseNativeLibs UP-TO-DATE
+> Task :react-native-reanimated:stripReleaseDebugSymbols UP-TO-DATE
+> Task :react-native-reanimated:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-reanimated:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-reanimated:lintVitalAnalyzeRelease SKIPPED
+> Task :react-native-reanimated:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :app:processNativeQaResources
+> Task :react-native-gesture-handler:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-gesture-handler:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :react-native-gesture-handler:mergeReleaseNativeLibs UP-TO-DATE
+> Task :react-native-gesture-handler:stripReleaseDebugSymbols UP-TO-DATE
+> Task :react-native-gesture-handler:copyReleaseJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :react-native-gesture-handler:bundleReleaseLocalLintAar UP-TO-DATE
+> Task :react-native-gesture-handler:lintVitalAnalyzeRelease SKIPPED
+> Task :react-native-gesture-handler:copyReleaseJniLibsProjectOnly UP-TO-DATE
+> Task :app:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:bundleNativeQaClassesToCompileJar UP-TO-DATE
+> Task :app:compileNativeQaAndroidTestKotlin UP-TO-DATE
+> Task :app:compileNativeQaAndroidTestJavaWithJavac UP-TO-DATE
+> Task :app:dexBuilderNativeQa UP-TO-DATE
+> Task :app:mergeDexNativeQa UP-TO-DATE
+> Task :app:mergeNativeQaGlobalSynthetics UP-TO-DATE
+> Task :app:compileNativeQaArtProfile UP-TO-DATE
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:mergeNativeQaNativeLibs UP-TO-DATE
+> Task :app:stripNativeQaDebugSymbols UP-TO-DATE
+> Task :app:dexBuilderNativeQaAndroidTest UP-TO-DATE
+> Task :app:mergeDexNativeQaAndroidTest UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :app:processNativeQaAndroidTestJavaRes UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestJavaResource UP-TO-DATE
+> Task :app:mergeNativeQaAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripNativeQaAndroidTestDebugSymbols NO-SOURCE
+> Task :app:optimizeNativeQaResources
+> Task :app:packageNativeQaAndroidTest
+> Task :app:createNativeQaAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:lintVitalAnalyzeNativeQa
+> Task :app:lintVitalReportNativeQa
+> Task :app:lintVitalNativeQa
+> Task :app:packageNativeQa
+> Task :app:createNativeQaApkListingFileRedirect UP-TO-DATE
+Starting 10 tests on thumble-rewrite-api35(AVD) - 15
+thumble-rewrite-api35(AVD) - 15 Tests 1/10 completed. (0 skipped) (0 failed)
+thumble-rewrite-api35(AVD) - 15 Tests 2/10 completed. (0 skipped) (0 failed)
+> Task :app:connectedNativeQaAndroidTest
+
+thumble-rewrite-api35(AVD) - 15 Tests 3/10 completed. (0 skipped) (0 failed)
+thumble-rewrite-api35(AVD) - 15 Tests 5/10 completed. (0 skipped) (0 failed)
+thumble-rewrite-api35(AVD) - 15 Tests 6/10 completed. (0 skipped) (0 failed)
+thumble-rewrite-api35(AVD) - 15 Tests 8/10 completed. (0 skipped) (0 failed)
+app_probe_phase_pass /fresh
+app_probe_phase_pass /renewal-start
+app_native_renewal_verified {"continuousHeld": true, "durationMs": 75009, "inputEnabled": false, "inputTtlMs": 350, "neutralPulses": 0, "rotations": 2, "samples": 4472}
+app_probe_phase_pass /renewal-verified
+app_probe_phase_pass /held
+app_probe_phase_pass /neutral
+app_probe_phase_pass /next
+app_probe_phase_pass /fresh
+app_probe_phase_pass /held
+app_probe_phase_pass /neutral
+app_probe_phase_pass /finish
+thumble-rewrite-api35(AVD) - 15 Tests 10/10 completed. (0 skipped) (0 failed)
+Finished 10 tests on thumble-rewrite-api35(AVD) - 15
+
+[Incubating] Problems report is available at: file:///Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/apps/mobile/android/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 54s
+603 actionable tasks: 39 executed, 564 up-to-date
+Verified app native pairing/reconnect against recording-only receiver: {"held": 2, "fresh": 2, "neutral": 2, "renewalStarts": 1, "renewalVerified": 1}
+[DEBUG-renewal-app] final {"completed": true, "counts": {"fresh": 2, "held": 2, "neutral": 2, "renewalStarts": 1, "renewalVerified": 1}, "lastCheckpoint": null, "nativeExitBeforeCleanup": 0, "nativeFailureCodes": []}
