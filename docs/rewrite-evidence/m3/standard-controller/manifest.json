@@ -6,7 +6,7 @@
   "capsuleSHA256": "57ea64202655db5485876072973d9db231f20cc0cc3a8eb5997e0c0219fbaa39",
   "bytes": 31404,
   "characters": 31404,
-  "branchPublished": false,
+  "branchPublished": true,
   "remoteHashesVerified": true,
   "files": {
     "Rewrite/packages/domain/package.json": "ffbc5d2984ddda8525d553ac071a4299fc2a9b39",
@@ -29,6 +29,5 @@
     "standalone": 1,
     "standaloneAssertions": 41,
     "isolatedPortable": 98
-  },
-  "pending": "Allow catalog iOS provider run 39719281581 / 119628746071 to finish before updating the CI branch; no cancellation of a confirmed live run."
+  }
 }

@@ -35,7 +35,7 @@
   ],
   "lastObserved": {
     "host": "all three jobs passed",
-    "mobile": "Android native and Keystore passed; iOS provider step running",
+    "mobile": "All three jobs passed, including headless Keychain and Keystore provider tests",
     "hostJobs": [
       119628745968,
       119628745973,
