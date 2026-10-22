@@ -1,7 +1,7 @@
 {
   "parent": "cd0e70a1b6e3886df19bbabb0f2b14a5ebc6ab0e",
-  "bytes": 229952,
-  "sha256": "3b902fb2e8612123cd0789a780e4d8ef733ebbe6643926f7cd4c504f7177b296",
+  "bytes": 230621,
+  "sha256": "301164e695408c22815d56ea04c7bbfedab6af172634f543bf633d744625be0c",
   "files": [
     {
       "path": "Rewrite/native/receiver/src/authenticated_control.rs",
@@ -33,7 +33,7 @@
     },
     {
       "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
-      "sha": "0483b10fe2dc978685b7e138287fcefd8bfe03c7"
+      "sha": "16dcb0f1f26d3f4d6df51c6e27c82fa5640a216b"
     },
     {
       "path": "Rewrite/apps/service/src/service.ts",

@@ -267,7 +267,21 @@ fn continuous_native_traffic_cannot_keep_a_lost_configuration_owner_alive() {
     assert!(accepted > 1);
     assert!(rejected);
     receiver.wait_neutral();
-    assert_eq!(receiver.status()["lastReleaseReason"], "lease_expired");
+    // Native IPC cleanup can issue a later idempotent release after rejecting
+    // the first post-expiry packet. Require the actual lease-expiry output event.
+    let events: Vec<Value> = fs::read_to_string(receiver.root.join("recording.jsonl"))
+        .unwrap()
+        .lines()
+        .map(|line| serde_json::from_str(line).unwrap())
+        .collect();
+    let reasons: Vec<_> = events.iter().map(|event| event["reason"].clone()).collect();
+    assert!(
+        events
+            .iter()
+            .any(|event| event["reason"] == "lease_expired" && event["reportHex"] == hex(&NEUTRAL)),
+        "missing native lease fence: {reasons:?}"
+    );
+    assert_eq!(receiver.status()["reportHex"], hex(&NEUTRAL));
 }
 #[test]
 fn stalled_ipc_clients_do_not_block_owner_commands_or_input_expiry() {
