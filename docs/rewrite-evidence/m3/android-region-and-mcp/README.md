@@ -148,3 +148,26 @@ and [app](https://github.com/CodyBontecou/Thumble/actions/runs/39752869832)
 runs are pending; the original artifact and forced red witness remain preserved.
 The completed host/app snapshots above are passing evidence for their exact
 sources, not inferred successes for this repair.
+
+## Connected native surface handoff
+
+Local `811d151`, public `73aab76d` (sole public parent `a3edca9b`, twelve verified
+source paths) adds single-use adoption of the already bound neutral engine.
+Both native clients preserve the exact admitted epoch and packet sequence through
+real TLS/IPC binding. UIKit construction in an unattached container survives first
+installation; removal disconnects. Android instrumentation injects a real touch
+into the adopted surface and verifies exact neutralization on release/removal.
+No credentials, grant keys or engine references cross React.
+
+Local checks pass 77 Swift and 96 Android cases, both iOS SDK builds, AAR/lint,
+eight Android app cases, three hosted UIKit cases, and the 55-case stack gate plus
+both builds. The isolated public projection passes after the standard generated
+fixture preparation. Its first unprepared run failed because fixture resources
+were missing; that is not product evidence. The first new Android app run reached
+the control and failed a string-versus-enum assertion; the corrected eight-case
+run passes. Both failed logs remain hashed in the manifest. Hosted successor
+checks are pending; no mobile connection UI or continuous renewal is claimed.
+
+Prior public `a3edca9b` now passes all three host and all three native mobile jobs,
+including Keychain/Keystore. Its Android app job `119737486934` passes; the iOS
+app job `119737486561` was still running at the last observation.

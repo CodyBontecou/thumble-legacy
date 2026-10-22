@@ -37,7 +37,10 @@
     "portable": 102,
     "packageTests": 1,
     "packageAssertions": 55,
-    "clientEras": ["modern", "legacy"],
+    "clientEras": [
+      "modern",
+      "legacy"
+    ],
     "hostRun": 39741905682,
     "nativeRun": 39741905687,
     "appRun": 39741905588,
@@ -221,6 +224,50 @@
     "thumble-native-writer-fixture-projection.txt": {
       "path": "/private/tmp/thumble-native-writer-fixture-projection.txt",
       "sha256": "b52334de8f8e8430a5921c45808e228b9a10090ad5af03cae5f446e29b54705f"
+    },
+    "thumble-surface-swift-full.txt": {
+      "path": "/private/tmp/thumble-surface-swift-full.txt",
+      "sha256": "872ca0e6f056f11134bbc2a53565c5377ad184b445c27c8d163b7c83ca13196f"
+    },
+    "thumble-surface-android-full.txt": {
+      "path": "/private/tmp/thumble-surface-android-full.txt",
+      "sha256": "d7c485a8dacd2660365132a52a13b20fd6db19f919774c9d75f7b7638735b8a1"
+    },
+    "thumble-surface-ios-app.txt": {
+      "path": "/private/tmp/thumble-surface-ios-app.txt",
+      "sha256": "36066ac4ff3f71460d4fcb3ec0dff4d86b79170482d8a247a2cc93dc7d11a233"
+    },
+    "thumble-surface-android-app.txt": {
+      "path": "/private/tmp/thumble-surface-android-app.txt",
+      "sha256": "6acb78b546f7ab65c5844f3c018397bf144fafe4e267e169f02103e0fa3520d6"
+    },
+    "thumble-surface-android-app-green.txt": {
+      "path": "/private/tmp/thumble-surface-android-app-green.txt",
+      "sha256": "41c0f023e7bf5a9b3019c28a8e1738312e1b1feabb279b5ce9a30f4b8d1155f8"
+    },
+    "thumble-surface-stack.txt": {
+      "path": "/private/tmp/thumble-surface-stack.txt",
+      "sha256": "243111e38b08bfd1e164d3b6b2009bcffd3feea1f1f29a79a13c1f353df8d2a8"
+    },
+    "thumble-surface-ios-sdk-sim.txt": {
+      "path": "/private/tmp/thumble-surface-ios-sdk-sim.txt",
+      "sha256": "7dfd1cd177b57ec6648f07866d7802d69040e7fa043171b0c075a1bb7cb00b31"
+    },
+    "thumble-surface-ios-sdk-device.txt": {
+      "path": "/private/tmp/thumble-surface-ios-sdk-device.txt",
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    "thumble-surface-projection-swift.txt": {
+      "path": "/private/tmp/thumble-surface-projection-swift.txt",
+      "sha256": "d47c6db1351776c5744717a0dec2702c7a1a60c1ec508adccfaff9630a783ecf"
+    },
+    "thumble-surface-projection-swift-prepared.txt": {
+      "path": "/private/tmp/thumble-surface-projection-swift-prepared.txt",
+      "sha256": "f52a25a733c60d3a4b187a22ea322406090e8b7aec3f0ef54c8a460bb85eba23"
+    },
+    "thumble-surface-projection-android.txt": {
+      "path": "/private/tmp/thumble-surface-projection-android.txt",
+      "sha256": "a47ff335c73bae41537791dd96404fc377920d65299e5b393058d22dfc95eae4"
     }
   },
   "mcpSuccessors": [
@@ -260,7 +307,10 @@
     "swift": 74,
     "android": 93,
     "androidSkipped": 0,
-    "iosSdkBuilds": ["iphonesimulator", "iphoneos"],
+    "iosSdkBuilds": [
+      "iphonesimulator",
+      "iphoneos"
+    ],
     "androidApp": 7,
     "iosApp": 2,
     "stackSafety": 55,
@@ -357,8 +407,14 @@
         "assertions": 46,
         "clientRuntime": "Node",
         "serverRuntime": "standalone Bun binary",
-        "protocolEras": ["modern", "legacy"],
-        "capabilityModes": ["default", "recording"],
+        "protocolEras": [
+          "modern",
+          "legacy"
+        ],
+        "capabilityModes": [
+          "default",
+          "recording"
+        ],
         "completedScenarios": 4,
         "serverPathExcludesBunAndNode": true
       },
@@ -412,5 +468,22 @@
     "sha256": "17589e9a286de6cea52b17942ebe4ad4de6d46739f257fe8df5f288240a14506",
     "localZip": "/private/tmp/thumble-android-native-writer-failure.zip",
     "signedUrlSaved": false
+  },
+  "nativeSurfaceHandoff": {
+    "localSourceCommit": "811d151",
+    "publicCommit": "73aab76ded69c8338630e536d105f778fde1f9bb",
+    "publicParent": "a3edca9b7c52d17115172d0c7ba4914828eb722b",
+    "publicTree": "734626f6c063282d423dca73a49ce330a872a026",
+    "verifiedPaths": 12,
+    "capsuleSha256": "41902dd6f54c25b980233f117dda57b040bca699440236cae7471fcf22ca8a58",
+    "localSwiftCases": 77,
+    "localAndroidCases": 96,
+    "localAndroidAppCases": 8,
+    "localUIKitCases": 3,
+    "stackCases": 55,
+    "bothIosSdks": "pass",
+    "isolatedProjection": "77 Swift and 96 Android cases, AAR and lint pass after standard fixture preparation",
+    "hostedResults": "pending",
+    "limitations": "No phone pairing UI, renewal, physical output, gameplay or optical acceptance claimed"
   }
 }
