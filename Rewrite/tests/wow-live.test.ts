@@ -343,3 +343,36 @@ test("freshness query high-water time prevents stale state from reviving through
   expect(a.observe(1, tick(f, 5), 4002)).toBeUndefined();
   expect(a.observe(1, tick(f, 6), 4003)).toBeDefined();
 });
+
+test("action bank enums reject coercible arrays and nonstring values", () => {
+  const base = fixture(),
+    action = base.actions[0]!;
+  for (const bank of [
+    ["base"],
+    [["base"]],
+    ["left-trigger"],
+    [],
+    {},
+    null,
+    0,
+    true,
+  ]) {
+    expect(() =>
+      decodeWowLiveSnapshot(
+        encode({ ...base, actions: [{ ...action, bank }] }),
+      ),
+    ).toThrow();
+  }
+  for (const bank of [
+    "base",
+    "left-trigger",
+    "right-trigger",
+    "both-triggers",
+  ]) {
+    const result = decodeWowLiveSnapshot(
+      encode({ ...base, actions: [{ ...action, bank }] }),
+    );
+    expect(result.actions[0]?.bank).toBe(bank);
+    expect(typeof result.actions[0]?.bank).toBe("string");
+  }
+});

@@ -159,8 +159,9 @@ export function decodeWowLiveSnapshot(bytes: Uint8Array): WowLiveSnapshot {
         ["slot", "actionID", "iconFileID", "iconIndex"],
       );
       if (
+        typeof row.bank !== "string" ||
         !["base", "left-trigger", "right-trigger", "both-triggers"].includes(
-          String(row.bank),
+          row.bank,
         ) ||
         !isGamepadButton(row.button)
       )
