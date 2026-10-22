@@ -1,0 +1,11 @@
+# Declared native input settings
+
+Local source `8c599f3`, public `724c53ebc48ee1350c0c124ec13b5fa06bc355ca`, adds immutable discriminated joystick/trigger/trackpad settings projections and checks every declared control, including those without a custom-button mirror. The actual document-reader regression failed before the fix: a declared joystick with invalid settings and no mirror was admitted. The file-inspection adapter now rejects the same malformed settings.
+
+The implementation follows the retained Swift defaults and normalization: joystick dead zone 0...0.85 and sensitivity 0.2...3; trigger threshold 0.01...1; trackpad sensitivity 0.2...4 and scroll sensitivity 0.1...4; joystick none/mouse-look digital rules; optional trackpad click/cursor defaults. Present records require native Codable fields and finite numeric values. Omission/null uses defaults. Exact numeric lexemes, raw unclamped source and safe extension fields remain untouched. This does not establish geometry, paint/image validity, platform output support or activation compatibility.
+
+The six-file capsule SHA-256 is `1f4a4910ba3553f64cc083b69e7587bdac05498685a0763bfafff3c17a253c7b`. The public commit has sole parent `d8e42c895807be1865a6f8e55729d2107dd08001`, tree `c6a4d7c1f51ef4baa428629561272465f1469a29`. Full recursive leaf diff, blob SHA-1, modes and parent were verified before the non-force leased publication. Private baseline/history/evidence, credentials and builds are excluded.
+
+Both local and exact isolated public projection pass strict type/format/generated/boundary/notice gates, all 159 source cases / 2,983 assertions, all 41 unchanged retained admission cases, and standalone packaging / 64 assertions. The source suite intentionally excludes the packaging case, which passes separately. No Swift source/model/startup fields changed in this snapshot.
+
+Hosted exact-source runs: [host matrix 39818097578](https://github.com/CodyBontecou/Thumble/actions/runs/39818097578) and [app matrix 39818097569](https://github.com/CodyBontecou/Thumble/actions/runs/39818097569) have been observed live/pending. They are not counted as passes. Existing app run 39811471888 is still live, so its phase result must be inspected without replacing it solely because observation is slow.

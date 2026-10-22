@@ -1,0 +1,7 @@
+# Bounded enrollment subphases
+
+Local source `12a2070`, public `a7791646`, distinguishes idle/connecting/negotiating/credential/storing/acknowledging/confirming/complete enrollment phases. App failure captures only the allowlisted last phase; no secrets, errors, peer data or timing policy are added to diagnostics. QA HTTP failures now throw immediately rather than continuing after a nonthrowing assertion. The hosted app run `39811471888` remains live at the latest observation; Android succeeds, iOS has not provided a terminal result. Local success does not resolve the hosted root cause.
+
+The new expired-invitation phase assertion was initially incorrect: an already-expired invitation correctly fails at idle before connect, while rollback detected after connect fails at negotiating. Local `2a6bdc9`, public `1c1d3cbd`, corrects only that test expectation.
+
+Local validation: full Swift suite 86 passed; both iOS device and simulator SDKs compile; PhoneConnection typechecks against the isolated SDK for both targets. All five actual bundled UIKit app tests pass. The native held-input witness spans 75,250 ms, two renewals, 4,517 samples, zero neutral pulses and maximum publication gap 16 ms. Fresh reconnect and acknowledged release pass. The retained stack gate passes 55 tests and both retained app builds. These remain recording-only witnesses, not physical output/gameplay acceptance.
