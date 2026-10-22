@@ -1,0 +1,35 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/configuration-storage.test.ts:
+103 |       expect(() =>
+104 |         repository.commit(command("first", "2", source, "b".repeat(64))),
+105 |       ).toThrow("operation_id_reused");
+106 |       expect(repository.current()?.revision).toBe("2");
+107 |       expect(Object.isFrozen(first.affectedEntities)).toBe(true);
+108 |       expect(() => repository.commit({...command("sparse","2"), affectedEntities: new Array<string>(1)})).toThrow("configuration_entities_invalid");
+                                                                                                                ^
+error: expect(received).toThrow(expected)
+
+Expected substring: "configuration_entities_invalid"
+
+Received function did not throw
+Received value: {
+  receipt: {
+    version: 1,
+    operationId: "sparse",
+    resultingRevision: "3",
+    contentHash: "768cf82dfea41888a3a0589d3a713f6988bbded857acea751eef294a476e0dd3",
+    affectedEntities: [ empty item ],
+  },
+  replayed: false,
+}
+
+      at <anonymous> (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/tests/configuration-storage.test.ts:108:107)
+      at fixture (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/tests/configuration-storage.test.ts:35:5)
+(fail) retries return the original receipt after later writes; changed operation payloads cannot write [6.80ms]
+
+ 0 pass
+ 8 filtered out
+ 1 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [15.00ms]

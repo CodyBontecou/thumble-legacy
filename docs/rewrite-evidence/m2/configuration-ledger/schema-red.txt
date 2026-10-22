@@ -1,0 +1,32 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/configuration-storage.test.ts:
+224 |     spoofed.exec(`PRAGMA application_id=${0x54484346}; PRAGMA user_version=1;
+225 |       CREATE TABLE configuration_state(singleton INTEGER PRIMARY KEY,revision TEXT,source TEXT,content_hash TEXT);
+226 |       CREATE TABLE operation_receipts(operation_id TEXT PRIMARY KEY,payload_hash TEXT,revision TEXT,receipt_json TEXT);`);
+227 |     spoofed.close();
+228 |     const spoofedBytes = readFileSync(path);
+229 |     expect(() => new SqliteConfigurationRepository(root,executable)).toThrow("configuration_database_invalid");
+                                                                           ^
+error: expect(received).toThrow(expected)
+
+Expected substring: "configuration_database_invalid"
+
+Received function did not throw
+Received value: SqliteConfigurationRepository {
+  open: [Function: open],
+  current: [Function: current],
+  receipt: [Function: receipt],
+  commit: [Function: commit],
+  close: [Function: close],
+}
+
+      at <anonymous> (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/tests/configuration-storage.test.ts:229:70)
+      at fixture (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/tests/configuration-storage.test.ts:35:5)
+(fail) foreign schemas and corrupt source hashes are refused without repair or overwrite [14.77ms]
+
+ 0 pass
+ 8 filtered out
+ 1 fail
+ 5 expect() calls
+Ran 1 test across 1 file. [24.00ms]

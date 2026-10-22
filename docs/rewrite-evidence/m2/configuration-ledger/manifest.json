@@ -1,0 +1,65 @@
+{
+  "expectedPublicParent": "87593c70f070bb8108ead36c1fecdf69c28c988f",
+  "baseTree": "acf174ee3079ebe0b0bdbf385067c36a95259ae0",
+  "bytes": 98717,
+  "characters": 98717,
+  "sha256": "928f1be4dc427e9197251767535956299410ebf3c5206c50c674233040baf92a",
+  "files": [
+    {
+      "path": "Rewrite/apps/service/package.json",
+      "sha": "30f0f00c440720bc350b82bdc52a9d940e97df01"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "sha": "ba31ba6de3c939f0b24a2affeabd2d402ee916f1"
+    },
+    {
+      "path": "Rewrite/bun.lock",
+      "sha": "5d4abeff72d9efb1e761d77d8068fb3c240b397f"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "sha": "13c29a1633d053ecde4eda223bfddf76ad3caeef"
+    },
+    {
+      "path": "Rewrite/package.json",
+      "sha": "015a3bed52247dd882b8cd4a1245ee8a177cf9b9"
+    },
+    {
+      "path": "Rewrite/packages/application/package.json",
+      "sha": "553fe46de152a3a255a19f919c3562500cd54c33"
+    },
+    {
+      "path": "Rewrite/packages/application/src/configuration-store.ts",
+      "sha": "b641f44ab562635290d93d1c1323e5d0e6216e2e"
+    },
+    {
+      "path": "Rewrite/packages/storage/package.json",
+      "sha": "5427711623e494493c7c799c2e0734b2082cf204"
+    },
+    {
+      "path": "Rewrite/packages/storage/src/configuration-sqlite.ts",
+      "sha": "4958a5c93a83b98016c143a5876d7852567fd067"
+    },
+    {
+      "path": "Rewrite/tests/configuration-storage.test.ts",
+      "sha": "18ca07724715d0cc1903c7c2abc4cca3f43020e7"
+    },
+    {
+      "path": "Rewrite/tests/helpers/configuration-process.ts",
+      "sha": "e9e37d688b173b2f6d5bdd0221d84e0bdcda9865"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "sha": "9a9e81eb0da2f44e44986e9ef3a034bc4340cf8d"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "sha": "d75d9687edb9486e9fa0a7c0bd85762160ded4a6"
+    },
+    {
+      "path": "docs/rewrite-configuration-ledger-v1.md",
+      "sha": "e2feac4b55ceaf7638da9cb38b646f3ced8ab33c"
+    }
+  ]
+}
