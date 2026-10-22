@@ -1,0 +1,63 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :generateDebugResValues
+> Task :generateDebugResources
+> Task :packageDebugResources
+> Task :preDebugUnitTestBuild UP-TO-DATE
+> Task :javaPreCompileDebug
+> Task :javaPreCompileDebugUnitTest
+> Task :mergeDebugJniLibFolders
+> Task :mergeDebugNativeLibs NO-SOURCE
+> Task :stripDebugDebugSymbols NO-SOURCE
+> Task :extractDeepLinksForAarDebug
+> Task :copyDebugJniLibsProjectAndLocalJars
+> Task :parseDebugLocalResources
+> Task :mergeDebugShaders
+> Task :compileDebugShaders NO-SOURCE
+> Task :generateDebugAssets UP-TO-DATE
+> Task :mergeDebugAssets
+> Task :prepareDebugArtProfile
+> Task :prepareLintJarForPublish
+> Task :generateDebugRFile
+> Task :processDebugManifest
+> Task :preDebugAndroidTestBuild UP-TO-DATE
+> Task :generateDebugUnitTestStubRFile
+> Task :generateDebugAndroidTestResValues
+> Task :writeDebugAarMetadata
+> Task :writeDebugLintModelMetadata
+> Task :extractProguardFiles
+> Task :compileDebugKotlin
+> Task :compileDebugJavaWithJavac NO-SOURCE
+> Task :bundleLibRuntimeToJarDebug
+> Task :bundleLibCompileToJarDebug
+> Task :processDebugJavaRes
+> Task :extractDebugAnnotations
+> Task :mergeDebugGeneratedProguardFiles
+> Task :mergeDebugConsumerProguardFiles
+> Task :createFullJarDebug
+> Task :mergeDebugJavaResource
+> Task :generateDebugLintReportModel
+> Task :syncDebugLibJars
+> Task :bundleDebugAar
+> Task :assembleDebug
+> Task :bundleDebugLocalLintAar
+> Task :generateDebugAndroidTestLintModel
+> Task :generateDebugUnitTestLintModel
+> Task :compileDebugUnitTestKotlin
+> Task :compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :processDebugUnitTestJavaRes
+> Task :lintAnalyzeDebugAndroidTest
+> Task :testDebugUnitTest
+> Task :lintAnalyzeDebugUnitTest
+> Task :lintAnalyzeDebug
+
+> Task :lintReportDebug
+Wrote HTML report to file:///private/tmp/thumble-native-input-v4-public-projection/Rewrite/native/mobile-input/android/build/reports/lint-results-debug.html
+
+> Task :lintDebug
+
+BUILD SUCCESSFUL in 28s
+43 actionable tasks: 43 executed
