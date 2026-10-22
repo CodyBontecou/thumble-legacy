@@ -296,5 +296,56 @@
     "UIKit uses native semantic admission; Android injects actual system touch pointers",
     "Physical gameplay, latency/ergonomics, signed drivers, haptics and optical sync are unaccepted",
     "Discovery/QR, typed authority/editing and CLI/MCP parity, migration, WoW integrations and release distribution remain open"
-  ]
+  ],
+  "ciLatestObservation": {
+    "hostRun": 39781222675,
+    "hostJobs": [
+      {
+        "id": 119832680546,
+        "platform": "Windows",
+        "result": "success"
+      },
+      {
+        "id": 119832681050,
+        "platform": "Linux",
+        "result": "success"
+      },
+      {
+        "id": 119832681196,
+        "platform": "macOS",
+        "result": "success"
+      }
+    ],
+    "nativeRun": 39781222894,
+    "nativeJobs": [
+      {
+        "id": 119832681391,
+        "name": "android-keystore",
+        "result": "success"
+      },
+      {
+        "id": 119832682148,
+        "name": "android-native",
+        "result": "success"
+      },
+      {
+        "id": 119832682197,
+        "name": "ios-native",
+        "state": "in progress: Keychain provider; native tests/SDK steps passed"
+      }
+    ],
+    "appRun": 39781223090,
+    "appJobs": [
+      {
+        "id": 119832681868,
+        "name": "android-app",
+        "state": "in progress: APK build"
+      },
+      {
+        "id": 119832681939,
+        "name": "ios-app",
+        "state": "in progress: UIKit app tests"
+      }
+    ]
+  }
 }
