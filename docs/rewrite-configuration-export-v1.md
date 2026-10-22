@@ -26,13 +26,13 @@ unimported file. The authority envelope includes external asset references, so
 its hash can differ from a materialized standalone document's hash.
 
 ```sh
-thumble configuration export-file --runtime-dir /absolute/runtime \
+thumble-rewrite configuration export-file --runtime-dir /absolute/runtime \
   --receiver /absolute/thumble-rewrite-receiver \
   --file /absolute/owned-output/saved.json \
   --operation-id export-review-1 --expected-revision 7 \
   --expected-source-hash AUTHORITY_CONTENT_HASH --json
 
-thumble configuration export-status --runtime-dir /absolute/runtime \
+thumble-rewrite configuration export-status --runtime-dir /absolute/runtime \
   --receiver /absolute/thumble-rewrite-receiver \
   --file /absolute/owned-output/saved.json \
   --operation-id export-review-1 --expected-revision 7 \
