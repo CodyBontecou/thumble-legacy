@@ -1,0 +1,78 @@
+{
+  "scope": "M3 bundled practice app; no host binding or launch acceptance",
+  "localSourceCommit": "5c8675d86bba54a70d6ae686d7f2d402d214ef4c",
+  "publicCommit": "5d70e1fd29592f2a766df56b593e223b3c45d21e",
+  "publicParent": "6f82b43767de4376e3d9b4a49be7af3782414d17",
+  "publicTree": "7e99b0efb06bca8f79c361dda8d67eecc15a205a",
+  "verifiedSourcePaths": 39,
+  "capsuleSha256": "368a19ded37d7e0337442829fa204ca1cc9fefc05e7ffb69721cf3455aeb2ecf",
+  "privateHistoryPublished": false,
+  "exactRemoteBlobsVerified": true,
+  "hostRun": 39731960042,
+  "nativeMobileRun": 39731960118,
+  "mobileAppRun": 39731960295,
+  "hostedStatus": "in_progress",
+  "local": {
+    "portable": 99,
+    "portableSkip": "packaging is a separate opt-in test",
+    "packagingTests": 1,
+    "packagingAssertions": 41,
+    "androidCases": 5,
+    "androidRepeated": true,
+    "iosHostedCases": 2,
+    "iosUiFlow": {
+      "passes": 2,
+      "passedStepsPerRun": 18,
+      "failures": 0,
+      "skips": 0
+    },
+    "stackSafetyCases": 55,
+    "retainedMacAndIosBuilds": "passed"
+  },
+  "logs": {
+    "portable": {
+      "path": "/private/tmp/thumble-mobile-app-final-verify.txt",
+      "sha256": "42fcd77b7aada1dfafba7e4415da2155da3e6595368cc0c9365440fea8c2be6e"
+    },
+    "publicProjection": {
+      "path": "/private/tmp/thumble-mobile-app-projection-verify-v2.txt",
+      "sha256": "1e04bccc4c342043ac87b8973b7a31d22c221180be94a3e3715114495dadb485"
+    },
+    "packaging": {
+      "path": "/private/tmp/thumble-mobile-app-projection-package.txt",
+      "sha256": "9a14e4c328d3dff8f4261d1f75a0e322ad10314fde663e66e63c906e6639a005"
+    },
+    "android": {
+      "path": "/private/tmp/thumble-mobile-android-native-admission-envelope.txt",
+      "sha256": "70f19cfe2fc06cddc1a08ff8256c2264a37e3690e34e93e6b7ec521de2892a5d"
+    },
+    "androidRepeat": {
+      "path": "/private/tmp/thumble-mobile-android-native-admission-envelope-repeat.txt",
+      "sha256": "65654d4a5e11558dc62a39fc3e9619f92263b0b35acd27e0a2a8775a3a3d40f6"
+    },
+    "ios": {
+      "path": "/private/tmp/thumble-mobile-ios-portal-tests-v6.txt",
+      "sha256": "f5801225c07b983797f41a09e389d6f1fb62375cc7597ab5dcb16f3cdbb7bbd5"
+    },
+    "stackSafety": {
+      "path": "/private/tmp/thumble-rewrite-mobile-stack-safety.txt",
+      "sha256": "c2048c598bd9ee42e4ef2eef11ad072fcd2e8d2db7f510c3ec202adb29057e51"
+    },
+    "ancestryRed": {
+      "path": "/private/tmp/thumble-mobile-android-ui-diagnostic.txt",
+      "sha256": "5e07a65e583799be092d355638a8edfc2bda9ec31a91724fa621c8014c4efc51"
+    },
+    "mountRace": {
+      "path": "/private/tmp/thumble-mobile-android-native-app-final.txt",
+      "sha256": "66a88d41284200323d1154c952c766a5796dc4ab26374124a8ee5e82b12fcd26"
+    },
+    "scannerHang": {
+      "path": "/private/tmp/thumble-mobile-ios-swb-sample.txt",
+      "sha256": "43c46913df22550847fd2998c504963f2f9937a1fb326ceb9b1456acd26c0a1f"
+    },
+    "eventShape": {
+      "path": "/private/tmp/thumble-mobile-android-ack-shape-isolated.txt",
+      "sha256": "aa1c187f7c48187bb9d48d17f4e5daccfdf6619056b24a00030062fcb6981474"
+    }
+  }
+}

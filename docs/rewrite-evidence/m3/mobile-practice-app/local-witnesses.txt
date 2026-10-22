@@ -1,0 +1,32 @@
+[portable]
+ 99 pass
+ 1 skip
+ 0 fail
+[publicProjection]
+ 99 pass
+ 1 skip
+ 0 fail
+[packaging]
+ 1 pass
+ 0 fail
+ 41 expect() calls
+[android]
+BUILD SUCCESSFUL in 48s
+[androidRepeat]
+BUILD SUCCESSFUL in 43s
+[ios]
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.085 (0.086) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.085 (0.086) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.085 (0.087) seconds
+** TEST SUCCEEDED **
+[stackSafety]
+Test Suite 'StackSafetyRegressionTests' passed at 2026-10-22 02:01:52.385.
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.629 (13.639) seconds
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.629 (13.639) seconds
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.629 (13.640) seconds
+** TEST SUCCEEDED **
+Stack-safety verification passed.
+[ancestryRed]
+	java.lang.AssertionError: Native touches would enter React's root dispatcher: [com.thumble.rewrite.bridge.ThumbleInputView, com.th3rdwave.safeareacontext.SafeAreaView, com.swmansion.rnscreens.ScreenContentWrapper, com.swmansion.rnscreens.Screen, com.swmansion.rnscreens.stack.views.ScreensCoordinatorLayout, com.swmansion.rnscreens.ScreenStack, com.th3rdwave.safeareacontext.SafeAreaProvider, com.facebook.react.runtime.ReactSurfaceView, androidx.appcompat.widget.ContentFrameLayout, androidx.appcompat.widget.FitWindowsLinearLayout, android.widget.FrameLayout, android.widget.LinearLayout, com.android.internal.policy.DecorView]
+java.lang.AssertionError: java.lang.AssertionError: Native touches would enter React's root dispatcher: [com.thumble.rewrite.bridge.ThumbleInputView, com.th3rdwave.safeareacontext.SafeAreaView, com.swmansion.rnscreens.ScreenContentWrapper, com.swmansion.rnscreens.Screen, com.swmansion.rnscreens.stack.views.ScreensCoordinatorLayout, com.swmansion.rnscreens.ScreenStack, com.th3rdwave.safeareacontext.SafeAreaProvider, com.facebook.react.runtime.ReactSurfaceView, androidx.appcompat.widget.ContentFrameLayout, androidx.appcompat.widget.FitWindowsLinearLayout, android.widget.FrameLayout, android.widget.LinearLayout, com.android.internal.policy.DecorView]
+java.lang.AssertionError: Native touches would enter React's root dispatcher: [com.thumble.rewrite.bridge.ThumbleInputView, com.th3rdwave.safeareacontext.SafeAreaView, com.swmansion.rnscreens.ScreenContentWrapper, com.swmansion.rnscreens.Screen, com.swmansion.rnscreens.stack.views.ScreensCoordinatorLayout, com.swmansion.rnscreens.ScreenStack, com.th3rdwave.safeareacontext.SafeAreaProvider, com.facebook.react.runtime.ReactSurfaceView, androidx.appcompat.widget.ContentFrameLayout, androidx.appcompat.widget.FitWindowsLinearLayout, android.widget.FrameLayout, android.widget.LinearLayout, com.android.internal.policy.DecorView]
