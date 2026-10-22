@@ -62,7 +62,7 @@ Local integration tests launch the Rust `control_tls_probe` when `THUMBLE_NATIVE
 
 `PhoneCredential.swift` / `PhoneCredential.kt` provide an opaque native record and verified-readback vault. Swift configures a noninteractive device-only Keychain record; Android encrypts app-private no-backup records with an AndroidKeyStore AES-GCM key (API 29+). Both enforce host binding, strict epochs and explicit failure/forget behavior. See `docs/rewrite-phone-credentials-v1.md` for format, policies and test limits. Native enrollment clients and control-v3 authentication now consume this vault; application wiring remains pending.
 
-Local verification covers 27 Swift tests, 46 Android tests, both iOS SDK compiles, Android AAR/lint, iOS build-for-testing and Android instrumentation APK compilation. The iOS-only synthetic Keychain test and Android synthetic Keystore instrumentation test are prepared but have not executed on OS providers. Hosted enrollment snapshot 9e2f643 excludes all newer vault source.
+Local verification covers 27 Swift tests, 46 Android tests, both iOS SDK compiles, Android AAR/lint, iOS build-for-testing and Android instrumentation APK compilation. The Android synthetic Keystore instrumentation test passed on a hosted API 35 emulator. The initial iOS package provider test failed for missing test-host entitlements; a separate simulator-only entitled app host now passes locally and awaits its scoped CI repair publication. Hosted enrollment snapshot 9e2f643 excludes all newer vault source.
 
 ## Native enrollment clients
 

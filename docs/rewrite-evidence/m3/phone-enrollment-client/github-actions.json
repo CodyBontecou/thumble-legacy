@@ -160,8 +160,8 @@
       "run": 39692579200,
       "id": 119542094509,
       "name": "ios-native",
-      "status": "queued",
-      "conclusion": null,
+      "status": "completed",
+      "conclusion": "failure",
       "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39692579200/job/119542094509"
     }
   ],
@@ -192,9 +192,19 @@
       "typescript": 68,
       "typescriptAssertions": 819,
       "packageAssertions": 29
+    },
+    "ios": {
+      "swiftNative": 36,
+      "directSDKs": [
+        "iphonesimulator",
+        "iphoneos"
+      ],
+      "genericSimulatorBuild": "passed",
+      "providerTest": "failed: PhoneCredentialError.unavailable",
+      "genericIphoneBuild": "skipped after provider failure"
     }
   },
-  "remaining": "Full portable Windows/macOS/Linux host matrix and Android native/Keystore pass. iOS native/Keychain remains unverified; see current job status.",
+  "remaining": "Original snapshot mobile run failed on iOS provider; eight-file simulator test-host repair passes locally against isolated approved source and awaits publication. No full-snapshot green claim.",
   "artifacts": [
     {
       "run": 39692579255,
@@ -259,6 +269,26 @@
       "digest": "sha256:1b46668ae6d6dd45398d46cbf07ce28f78912d32d3df2db7e40ab009613ad9f9",
       "bytes": 32750118,
       "expired": false
+    },
+    {
+      "run": 39692579200,
+      "id": 12390384676,
+      "name": "rewrite-mobile-ios-native",
+      "digest": "sha256:563c84247224adcb3616fe4ae79c5aaef211d7d4029c3e1ed0eaae01ee998e9a",
+      "bytes": 21423,
+      "expired": false
     }
-  ]
+  ],
+  "iosDiagnosis": {
+    "observedLocally": "OSStatus -34018 during SecItemCopyMatching",
+    "cause": "hostless package test lacks required application/Keychain entitlements",
+    "productionVaultChanged": false,
+    "repair": "separate simulator-only entitled test host",
+    "isolatedApprovedSourceRepairResults": {
+      "libraryTestsPassed": 30,
+      "KeychainProviderCasesPassed": 1,
+      "skipped": 0
+    },
+    "publication": "pending new scoped repair approval"
+  }
 }

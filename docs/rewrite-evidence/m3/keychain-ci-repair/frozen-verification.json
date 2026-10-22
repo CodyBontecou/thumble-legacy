@@ -1,0 +1,1 @@
+{"case": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances", "passedTests": 1, "provider": "iOS Keychain", "result": "Passed"}

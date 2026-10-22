@@ -1,0 +1,123 @@
+[0/1] Planning build
+Building for debugging...
+[0/4] Write sources
+[2/4] Write swift-version--58304C5D6DBC2206.txt
+[4/6] Compiling MobileInputCore PhoneCredential.swift
+[5/6] Emitting module MobileInputCore
+[6/8] Emitting module MobileInputTests
+[7/8] Compiling MobileInputTests PhoneCredentialTests.swift
+[8/10] Compiling MobileInputTests PhoneControlTests.swift
+[9/10] Compiling MobileInputTests InputPacketTests.swift
+Build complete! (2.29s)
+Test Suite 'All tests' started at 2026-10-21 20:03:04.835.
+Test Suite 'All tests' passed at 2026-10-21 20:03:04.836.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test packetReplayReorderingWrongKeysAndTerminalClose() started.
+◇ Test vaultStorageFailureNeverAcknowledgesOrErasesExistingTrust() started.
+◇ Test failedReadbackLeavesPotentiallyCommittedCredentialForExplicitRecovery() started.
+◇ Test missingExpiredOrForeignVaultCredentialNeverAuthenticates() started.
+◇ Test sharedEncryptedPacketsMatchAndDecodeBeforeHardwareQuantization() started.
+◇ Test nativeTouchLifecycle(_:) started.
+◇ Test controlTLSFramingRejectsInvalidLengthsKindsAndInputSizes() started.
+◇ Test malformedCredentialRepliesCannotReachStorageOrAcknowledgment() started.
+◇ Test vaultPersistsReadbackAndIdempotentSaveWithNoSecretExposure() started.
+◇ Test vaultRejectsStaleOrConflictingEpochAndPreservesNewerCredential() started.
+◇ Test actualNativePhoneEnrollsAndAuthenticatesOverPinnedTLSWithoutExportingBearer() started.
+◇ Test malformedAuthenticationCannotAdmitOrChangeConnection() started.
+◇ Test nativeControlLoadsOnlyAfterHelloAndExposesMetadata() started.
+◇ Test lateVaultReadCannotAuthenticateAfterCloseOrCancellation() started.
+◇ Test localStorageFailureNeverAcknowledgesEnrollment() started.
+◇ Test localControlExpiryAndRollbackAreTerminalBeforeAnyFurtherSend() started.
+◇ Test phoneEnrollmentAcknowledgesOnlyAfterStorageAndHostCompletion() started.
+◇ Test actualNativePhoneClientEnrollsThroughPinnedTLSToRustLedger() started.
+◇ Test packetSenderBudgetValidationAndOwnership() started.
+◇ Test expiredInvitationAndClockRollbackCloseBeforeProof() started.
+◇ Test nativeTLSCoalescesInputBackpressureAndBoundsControlQueue() started.
+◇ Test allRetainedNativeVectors() started.
+◇ Test sharedControlJSONRejectsDuplicatesUnicodeAliasesAndInvalidTypes() started.
+◇ Test touchBoundAndNonfiniteValuesFailClosed() started.
+◇ Test invalidConfigurationPreservesCurrentActivationAndHeldState() started.
+◇ Test concurrentStatusNeverQueuesAndCloseFencesLateReply() started.
+◇ Test credentialDecodeRejectsMalformedBoundsMagicIDsEpochsAndExpiry() started.
+◇ Test actualNativeTouchEngineDeliversMultitouchThroughTLSAndReleasesOnLoss() started.
+◇ Test actualNetworkFrameworkTLSRejectsWrongPinBeforeControl() started.
+◇ Test nativeTouchEngineUsesEncryptedChannelAndFailsNeutralOnTransportLoss() started.
+◇ Test sharedCredentialFixtureAndOpaqueStoragePreserveExactBytes() started.
+◇ Test actualNetworkFrameworkTLSExchangesControlAndEncryptedInputWithRust() started.
+◇ Test case passing 1 argument scenario → both triggers and a face button remain independently held to nativeTouchLifecycle(_:) started.
+◇ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() started.
+◇ Test hostNegotiationMismatchNeverSendsPairingProof() started.
+◇ Test sharedNativeScenarios() started.
+◇ Test packetTamperingAndMalformedPayloadsNeverBurnTheReplayCounter() started.
+◇ Test expiryHostBindingAndForgetRemainIndependent() started.
+◇ Test case passing 1 argument scenario → two sticks capture and release independently to nativeTouchLifecycle(_:) started.
+◇ Test channelGenerationSequenceAndReentrancyBarriersAreTerminal() started.
+◇ Test case passing 1 argument scenario → practice releases host input and never replays held touches to nativeTouchLifecycle(_:) started.
+◇ Test controlTLSRejectsMalformedInvitationsAndTerminalReconnect() started.
+◇ Test nativeTransportFailureCannotKeepOrReplayHeldTouches() started.
+◇ Test wrongControlNegotiationNeverReadsVaultOrSendsBearer() started.
+◇ Test case passing 1 argument scenario → screenLock retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → rotation retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → profile replacement is a neutral generation barrier to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → duplicate semantic buttons are reference counted to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → background retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → stick ownership never transfers to a previously rejected finger to nativeTouchLifecycle(_:) started.
+◇ Test disposalStopsCallbacksAndPreservesItsTerminalReason() started.
+◇ Test case passing 1 argument scenario → stick diagonals remain circular and saturate outside the control to nativeTouchLifecycle(_:) started.
+◇ Test nativeControlLocalLeaseCannotBeExtendedByLongerHostExpiry() started.
+◇ Test case passing 1 argument scenario → last hit region wins overlaps to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → duplicate pointer fails closed to nativeTouchLifecycle(_:) started.
+◇ Test case passing 1 argument scenario → disconnected retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test cancellationWhileNativeStorageIsRunningNeverAcknowledgesOrReplays() started.
+◇ Test case passing 1 argument scenario → disposal cannot reconnect to nativeTouchLifecycle(_:) started.
+✔ Test vaultStorageFailureNeverAcknowledgesOrErasesExistingTrust() passed after 0.001 seconds.
+✔ Test vaultRejectsStaleOrConflictingEpochAndPreservesNewerCredential() passed after 0.001 seconds.
+✔ Test failedReadbackLeavesPotentiallyCommittedCredentialForExplicitRecovery() passed after 0.001 seconds.
+◇ Test case passing 1 argument scenario → touchCancelled retires touches before reconnect to nativeTouchLifecycle(_:) started.
+◇ Test missingOrMismatchedCompletionPreservesSavedCredentialWithoutSuccess() started.
+✔ Test controlTLSFramingRejectsInvalidLengthsKindsAndInputSizes() passed after 0.001 seconds.
+✔ Test vaultPersistsReadbackAndIdempotentSaveWithNoSecretExposure() passed after 0.001 seconds.
+✔ Test sharedCredentialFixtureAndOpaqueStoragePreserveExactBytes() passed after 0.001 seconds.
+✔ Test credentialDecodeRejectsMalformedBoundsMagicIDsEpochsAndExpiry() passed after 0.001 seconds.
+✔ Test expiryHostBindingAndForgetRemainIndependent() passed after 0.001 seconds.
+✔ Test sharedControlJSONRejectsDuplicatesUnicodeAliasesAndInvalidTypes() passed after 0.002 seconds.
+✔ Test packetReplayReorderingWrongKeysAndTerminalClose() passed after 0.002 seconds.
+✔ Test allRetainedNativeVectors() passed after 0.002 seconds.
+✔ Test sharedEncryptedPacketsMatchAndDecodeBeforeHardwareQuantization() passed after 0.011 seconds.
+✔ Test packetSenderBudgetValidationAndOwnership() passed after 0.013 seconds.
+✔ Test invalidConfigurationPreservesCurrentActivationAndHeldState() passed after 0.790 seconds.
+✔ Test nativeTouchEngineUsesEncryptedChannelAndFailsNeutralOnTransportLoss() passed after 0.800 seconds.
+✔ Test controlTLSRejectsMalformedInvitationsAndTerminalReconnect() passed after 0.818 seconds.
+✔ Test nativeTransportFailureCannotKeepOrReplayHeldTouches() passed after 0.825 seconds.
+✔ Test channelGenerationSequenceAndReentrancyBarriersAreTerminal() passed after 1.171 seconds.
+✔ Test packetTamperingAndMalformedPayloadsNeverBurnTheReplayCounter() passed after 1.173 seconds.
+✔ Test sharedNativeScenarios() passed after 1.174 seconds.
+✔ Test touchBoundAndNonfiniteValuesFailClosed() passed after 1.174 seconds.
+✔ Test disposalStopsCallbacksAndPreservesItsTerminalReason() passed after 1.174 seconds.
+✔ Test nativeTouchLifecycle(_:) with 15 test cases passed after 1.175 seconds.
+✔ Test localStorageFailureNeverAcknowledgesEnrollment() passed after 1.177 seconds.
+✔ Test expiredInvitationAndClockRollbackCloseBeforeProof() passed after 1.177 seconds.
+✔ Test nativeControlLocalLeaseCannotBeExtendedByLongerHostExpiry() passed after 1.184 seconds.
+✔ Test phoneEnrollmentAcknowledgesOnlyAfterStorageAndHostCompletion() passed after 1.184 seconds.
+✔ Test localControlExpiryAndRollbackAreTerminalBeforeAnyFurtherSend() passed after 1.185 seconds.
+✔ Test nativeControlLoadsOnlyAfterHelloAndExposesMetadata() passed after 1.185 seconds.
+✔ Test missingExpiredOrForeignVaultCredentialNeverAuthenticates() passed after 1.186 seconds.
+✔ Test hostNegotiationMismatchNeverSendsPairingProof() passed after 1.187 seconds.
+✔ Test cancellationWhileNativeStorageIsRunningNeverAcknowledgesOrReplays() passed after 1.187 seconds.
+✔ Test wrongControlNegotiationNeverReadsVaultOrSendsBearer() passed after 1.188 seconds.
+✔ Test missingOrMismatchedCompletionPreservesSavedCredentialWithoutSuccess() passed after 1.188 seconds.
+✔ Test malformedCredentialRepliesCannotReachStorageOrAcknowledgment() passed after 1.189 seconds.
+✔ Test lateVaultReadCannotAuthenticateAfterCloseOrCancellation() passed after 1.189 seconds.
+✔ Test nativeTLSCoalescesInputBackpressureAndBoundsControlQueue() passed after 1.256 seconds.
+✔ Test concurrentStatusNeverQueuesAndCloseFencesLateReply() passed after 1.257 seconds.
+✔ Test actualNetworkFrameworkTLSExchangesControlAndEncryptedInputWithRust() passed after 1.324 seconds.
+✔ Test malformedAuthenticationCannotAdmitOrChangeConnection() passed after 1.325 seconds.
+✔ Test actualNativePhoneClientEnrollsThroughPinnedTLSToRustLedger() passed after 1.325 seconds.
+✔ Test actualNativeTouchEngineDeliversMultitouchThroughTLSAndReleasesOnLoss() passed after 1.392 seconds.
+✔ Test actualNativePhoneEnrollsAndAuthenticatesOverPinnedTLSWithoutExportingBearer() passed after 1.408 seconds.
+✔ Test actualNetworkFrameworkTLSRejectsWrongPinBeforeControl() passed after 4.280 seconds.
+✔ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() passed after 13.481 seconds.
+✔ Test run with 45 tests in 0 suites passed after 13.481 seconds.

@@ -1,0 +1,45 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "DB968EB0-E5C9-45B8-BA23-6427462F5B8B",
+        "deviceName" : "Thumble Receiver QA",
+        "modelName" : "iPhone 13 Pro Max",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 44,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "ThumbleMobileInput · Built with macOS 26.5.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792627799.505,
+  "passedTests" : 30,
+  "result" : "Passed",
+  "skippedTests" : 0,
+  "startTime" : 1792627793.665,
+  "statistics" : [
+    {
+      "subtitle" : "15 test runs",
+      "title" : "1 test ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - ThumbleMobileInput",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 30
+}

@@ -14,7 +14,14 @@
     "standalonePackageAssertions": 53,
     "clippy": "all targets with warnings denied passed",
     "retirementRace": "deterministic paused receiver acknowledgment regression passed",
-    "windows": "not run for this source"
+    "windows": "not run for this source",
+    "swiftCompatibility": 45,
+    "androidFreshCompatibility": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
   },
   "remaining": "Native Swift/Kotlin grant consumers and input binding, UDP, physical output, optical and launch acceptance. Separate approved phone snapshot iOS provider failure is under diagnosis.",
   "files": [
