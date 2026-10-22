@@ -1,0 +1,22 @@
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.91s
+     Running unittests src/lib.rs (Rewrite/native/receiver/target/debug/deps/thumble_rewrite_receiver-b82e341ae8479220)
+
+running 1 test
+test pairing_host::tests::dropping_host_releases_worker_owned_trust_lease_before_restart ... FAILED
+
+failures:
+
+---- pairing_host::tests::dropping_host_releases_worker_owned_trust_lease_before_restart stdout ----
+
+thread 'pairing_host::tests::dropping_host_releases_worker_owned_trust_lease_before_restart' panicked at src/pairing_host.rs:668:13:
+host workers outlived shutdown
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pairing_host::tests::dropping_host_releases_worker_owned_trust_lease_before_restart
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 79 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `--lib`

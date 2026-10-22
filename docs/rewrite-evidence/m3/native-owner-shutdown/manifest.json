@@ -1,0 +1,55 @@
+{
+  "parent": "cd0e70a1b6e3886df19bbabb0f2b14a5ebc6ab0e",
+  "bytes": 229952,
+  "sha256": "3b902fb2e8612123cd0789a780e4d8ef733ebbe6643926f7cd4c504f7177b296",
+  "files": [
+    {
+      "path": "Rewrite/native/receiver/src/authenticated_control.rs",
+      "sha": "0c20c8bfe0db0d279dd3d019d9725d9a40e10318"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/enrollment.rs",
+      "sha": "c666134065cd06703054b542122dc77ddfd441d6"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/input_broker.rs",
+      "sha": "a9fa50bd7137aaa3d232b793bdaef1d2e24f3303"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/input_datagram.rs",
+      "sha": "ebb9cfdade5b112bf2db983efa236983a3a53522"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "sha": "bf3a2e430a78a60cbb4e324810ad618324e66c43"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/native_ingress.rs",
+      "sha": "cfbba4ccf5cd6a39153826ace2ebb4515245b80c"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "sha": "6236e685ec518c7f0183a07c440855804f6a1c50"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+      "sha": "0483b10fe2dc978685b7e138287fcefd8bfe03c7"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "sha": "17500457823c6b2c81ae9ecbe14da04d61942a86"
+    },
+    {
+      "path": "Rewrite/tests/receiver-seam.test.ts",
+      "sha": "24b54a92de932a269bc6eb2e5baa824cf35b0ee1"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v4.md",
+      "sha": "97c1286b073a2c2569bd935bc1d9348f3fdba742"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v5.md",
+      "sha": "5fbe44c4de355622203189dfd221303233acc5d5"
+    }
+  ]
+}

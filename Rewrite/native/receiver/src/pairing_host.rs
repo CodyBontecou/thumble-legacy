@@ -105,7 +105,8 @@ pub struct Host {
     listener: Option<Listener>,
     policy_mutation: Arc<Mutex<()>>,
     input_grants: Arc<Registry>,
-    jobs: mpsc::SyncSender<Job>,
+    jobs: Option<mpsc::SyncSender<Job>>,
+    workers: Vec<thread::JoinHandle<()>>,
     _lease: File,
 }
 impl Host {
@@ -133,6 +134,7 @@ impl Host {
         let input_grants = Arc::new(Registry::default());
         let (jobs, incoming) = mpsc::sync_channel::<Job>(4);
         let incoming = Arc::new(Mutex::new(incoming));
+        let mut workers = Vec::new();
         if let Some(store) = &store {
             for _ in 0..4 {
                 let incoming = incoming.clone();
@@ -142,7 +144,7 @@ impl Host {
                 let policy_mutation = policy_mutation.clone();
                 let input_grants = input_grants.clone();
                 let runtime_directory = root.to_path_buf();
-                thread::spawn(move || loop {
+                workers.push(thread::spawn(move || loop {
                     let job = match incoming.lock() {
                         Ok(receiver) => match receiver.recv() {
                             Ok(job) => job,
@@ -180,7 +182,7 @@ impl Host {
                     if let Ok(mut peers) = job.peers.lock() {
                         peers.remove(&job.id);
                     };
-                });
+                }));
             }
         }
         Ok(Self {
@@ -191,7 +193,8 @@ impl Host {
             listener: None,
             policy_mutation,
             input_grants,
-            jobs,
+            jobs: Some(jobs),
+            workers,
             _lease: lease,
         })
     }
@@ -287,7 +290,7 @@ impl Host {
         let peers: Peers = Arc::new(Mutex::new(BTreeMap::new()));
         let stop_thread = stop.clone();
         let peers_thread = peers.clone();
-        let jobs = self.jobs.clone();
+        let jobs = self.jobs.as_ref().ok_or("pairing_closed")?.clone();
         let accept = thread::spawn(move || {
             let serial = AtomicU64::new(0);
             while !stop_thread.load(Ordering::SeqCst) {
@@ -415,6 +418,12 @@ impl Host {
 impl Drop for Host {
     fn drop(&mut self) {
         let _ = self.stop();
+        // Listener stop closes peer sockets. Closing the queue wakes idle workers;
+        // join before releasing host/trust leases so an immediate restart is safe.
+        self.jobs.take();
+        for worker in self.workers.drain(..) {
+            let _ = worker.join();
+        }
     }
 }
 /// Private inherited stdio only; parent EOF/backpressure tears down the enrollment listener.
@@ -655,6 +664,18 @@ mod tests {
         assert_eq!(stop["pairing"]["networkEnabled"], false);
         assert!(stop["transport"]["port"].is_null());
         assert!(channel.receive().is_err());
+    }
+    #[test]
+    fn dropping_host_releases_worker_owned_trust_lease_before_restart() {
+        let root = Root::new();
+        let runtime = root.0.join("runtime");
+        let identity = root.0.join("identity");
+        for _ in 0..32 {
+            let host = Host::new(&runtime, "authority-a", Some(&identity)).unwrap();
+            let store = Arc::downgrade(host.store.as_ref().unwrap());
+            drop(host);
+            assert!(store.upgrade().is_none(), "host workers outlived shutdown");
+        }
     }
     #[test]
     fn revocation_fences_an_enrollment_already_waiting_to_commit_and_survives_restart() {
