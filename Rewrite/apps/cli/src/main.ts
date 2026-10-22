@@ -1,4 +1,7 @@
 import { outputLaunchOptions } from "./output-launch.ts";
+import { runWowCaptureOwner } from "@thumble/service/wow-capture-owner-process";
+import { inspectWowCapturePermission } from "@thumble/service/wow-capture-permission";
+import { decodeWowCaptureCommand } from "@thumble/contracts/wow-capture-control";
 import { decodeSavedRuntimeCommand } from "@thumble/contracts/saved-runtime";
 import { inspectOutputCapabilities } from "./output-doctor.ts";
 import { runConfigurationOwner } from "@thumble/service/configuration-owner-process";
@@ -17,6 +20,7 @@ import {
   requestPairing,
   requestConfiguration,
   requestSavedRuntime,
+  requestWowCapture,
   runtimeDirectory,
 } from "@thumble/client/local";
 import {
@@ -40,6 +44,7 @@ function options(values: string[]): Map<string, string | true> {
         "--allow-recorded-input",
         "--reveal-secret",
         "--allow-configuration-write",
+        "--allow-wow-capture",
         "--select",
         "--keep-selection",
       ].includes(key)
@@ -61,6 +66,8 @@ function options(values: string[]): Map<string, string | true> {
         "--phone-id",
         "--runtime-dir",
         "--receiver",
+        "--capture-helper",
+        "--source",
         "--profile-id",
         "--new-profile-id",
         "--active-profile-id",
@@ -145,10 +152,44 @@ async function main(): Promise<unknown> {
         throw new Error("invalid_output_doctor_option");
     return inspectOutputCapabilities(receiver);
   }
+  if (family === "__wow-capture" && action === "run") {
+    for (const key of opts.keys())
+      if (key !== "--capture-helper")
+        throw new Error("invalid_wow_capture_option");
+    await runWowCaptureOwner(required(opts, "--capture-helper"));
+    return undefined;
+  }
+  if (
+    family === "wow" &&
+    (action === "permission-status" || action === "request-permission")
+  ) {
+    for (const key of opts.keys())
+      if (!["--capture-helper", "--json"].includes(key))
+        throw new Error("invalid_wow_capture_option");
+    return inspectWowCapturePermission(
+      required(opts, "--capture-helper"),
+      action === "request-permission",
+    );
+  }
   const raw = opts.get("--runtime-dir");
   const root = runtimeDirectory(
     typeof raw === "string" ? raw : join(homedir(), ".thumble-rewrite-runtime"),
   );
+  if (family === "wow") {
+    for (const key of opts.keys())
+      if (!["--runtime-dir", "--receiver", "--source", "--json"].includes(key))
+        throw new Error("invalid_wow_capture_option");
+    const body =
+      action === "capture-start"
+        ? { command: "wow-capture-start", source: required(opts, "--source") }
+        : { command: `wow-${action}` };
+    if (action !== "capture-start" && opts.has("--source"))
+      throw new Error("invalid_wow_capture_option");
+    return requestWowCapture(
+      readEndpoint(root, receiver),
+      decodeWowCaptureCommand(body),
+    );
+  }
   if (family === "mcp") {
     if (action !== "serve") throw new Error("unsupported_mcp_command");
     for (const key of opts.keys())
@@ -158,6 +199,7 @@ async function main(): Promise<unknown> {
           "--receiver",
           "--allow-recorded-input",
           "--allow-configuration-write",
+          "--allow-wow-capture",
         ].includes(key)
       )
         throw new Error("invalid_mcp_option");
@@ -166,6 +208,7 @@ async function main(): Promise<unknown> {
       receiver,
       opts.get("--allow-recorded-input") === true,
       opts.get("--allow-configuration-write") === true,
+      opts.get("--allow-wow-capture") === true,
     );
     return undefined;
   }
@@ -200,6 +243,9 @@ async function main(): Promise<unknown> {
       root,
       typeof identityDirectory === "string" ? identityDirectory : undefined,
       source ? [process.execPath, process.argv[1]!] : [process.execPath],
+      typeof opts.get("--capture-helper") === "string"
+        ? required(opts, "--capture-helper")
+        : undefined,
       output,
     );
     return undefined;
@@ -216,6 +262,9 @@ async function main(): Promise<unknown> {
       root,
       typeof identityDirectory === "string" ? identityDirectory : undefined,
       source ? [process.execPath, process.argv[1]!] : [process.execPath],
+      typeof opts.get("--capture-helper") === "string"
+        ? required(opts, "--capture-helper")
+        : undefined,
       output,
     );
     return undefined;
@@ -239,7 +288,11 @@ async function main(): Promise<unknown> {
       });
     } catch {}
     if (running) {
-      if (opts.has("--output") || opts.has("--allow-physical-output"))
+      if (
+        opts.has("--capture-helper") ||
+        opts.has("--output") ||
+        opts.has("--allow-physical-output")
+      )
         throw new Error("service_launch_options_restart_required");
       if (expectedIdentity) {
         const pairing = await requestPairing(readEndpoint(root, receiver), {
@@ -268,6 +321,9 @@ async function main(): Promise<unknown> {
         receiver,
         ...(typeof identityDirectory === "string"
           ? ["--identity-dir", identityDirectory]
+          : []),
+        ...(opts.has("--capture-helper")
+          ? ["--capture-helper", required(opts, "--capture-helper")]
           : []),
         ...(output.backend === "macos-hid"
           ? ["--output", "macos-hid", "--allow-physical-output"]

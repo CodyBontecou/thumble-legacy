@@ -1,3 +1,10 @@
+import { WowCaptureOwner } from "./wow-capture-owner.ts";
+import { captureHelperPath } from "./wow-capture-provider.ts";
+import {
+  decodeWowCaptureCommand,
+  disabledWowCaptureStatus,
+  type WowCaptureControlStatus,
+} from "@thumble/contracts/wow-capture-control";
 import { PhoneControlsBridge } from "./phone-controls-bridge.ts";
 import {
   decodeSavedRuntimeCommand,
@@ -75,8 +82,13 @@ export async function serve(
   path: string,
   identityDirectory: string | undefined,
   configurationLauncher: readonly string[],
+  wowCaptureHelper?: string,
   output: ReceiverOutput = { backend: "recording" },
 ): Promise<void> {
+  const authorizedCaptureHelper =
+    wowCaptureHelper === undefined
+      ? undefined
+      : captureHelperPath(wowCaptureHelper);
   const directory = secureDirectory(executable, path),
     instanceId = randomUUID(),
     token = randomBytes(32).toString("hex");
@@ -129,6 +141,26 @@ export async function serve(
       waitForOwnerExit(configuration.child),
     ]);
     throw error;
+  }
+  const capture = authorizedCaptureHelper
+    ? new WowCaptureOwner(authorizedCaptureHelper, configurationLauncher)
+    : undefined;
+  if (capture) {
+    try {
+      await capture.ready;
+    } catch (error) {
+      capture.disconnect();
+      configuration.disconnect();
+      pairing.disconnect();
+      native.disconnect();
+      await Promise.all([
+        waitForOwnerExit(capture.child),
+        waitForOwnerExit(configuration.child),
+        waitForOwnerExit(pairing.child),
+        waitForOwnerExit(native.child),
+      ]);
+      throw error;
+    }
   }
   const sockets = new Set<Socket>();
   let stopping = false;
@@ -198,9 +230,20 @@ export async function serve(
             | ServiceStatus
             | PairingReply
             | ConfigurationReply
-            | SavedRuntimeStatus;
+            | SavedRuntimeStatus
+            | WowCaptureControlStatus;
           const operation = record(envelope.body).command;
           if (
+            typeof operation === "string" &&
+            operation.startsWith("wow-capture-")
+          ) {
+            const command = decodeWowCaptureCommand(envelope.body);
+            if (!capture) {
+              if (command.command !== "wow-capture-status")
+                throw new Error("wow_capture_not_enabled");
+              result = disabledWowCaptureStatus();
+            } else result = await capture.request(command);
+          } else if (
             operation === "activate-saved" ||
             operation === "saved-binding-status"
           ) {
@@ -312,6 +355,7 @@ export async function serve(
     if (stopping) return;
     stopping = true;
     pairing.disconnect();
+    capture?.disconnect();
     clearInterval(heartbeat);
     try {
       await controller.execute({ command: "stop" });
@@ -330,6 +374,7 @@ export async function serve(
         waitForOwnerExit(native.child),
         waitForOwnerExit(pairing.child),
         waitForOwnerExit(configuration.child),
+        ...(capture ? [waitForOwnerExit(capture.child)] : []),
       ]);
     } catch {
       process.exit(1);
