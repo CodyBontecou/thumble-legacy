@@ -1,0 +1,89 @@
+{
+  "observedAt": "2026-10-22T10:45:44.589245+00:00",
+  "scope": "Receiver and private native IPC staged live grant continuation only",
+  "localSourceCommit": "628f0ef",
+  "publicCommit": "ca7be33f97b41274f5863491f5d9d1a64f797309",
+  "publicParent": "b862c61904f3a3a3e16a127a8e88b29ba915f5fd",
+  "publicTree": "a199aaa81c4acfe3b7b523cb56720a38944e0878",
+  "verifiedPaths": 7,
+  "capsuleSha256": "19e4d97a8b9c621f58818f7d5bb5c851b97aab3083a9eadfc71d4cb4a07c8acd",
+  "local": {
+    "rustUnit": 89,
+    "rustProcess": 14,
+    "skipped": 0,
+    "clippy": "success",
+    "isolatedProjection": "89 unit and 14 process, zero skips; clippy passes",
+    "standalonePackaging": {
+      "passed": 1,
+      "bunAssertions": 46,
+      "sdkNodeScenarios": 4
+    }
+  },
+  "hostRun": 39765297014,
+  "nativeRun": 39765296810,
+  "appRun": 39765296632,
+  "hostedResults": "pending",
+  "priorPhoneAppSnapshot": {
+    "publicCommit": "b862c61904f3a3a3e16a127a8e88b29ba915f5fd",
+    "hostRun": 39761455119,
+    "hostJobs": "all three success",
+    "nativeRun": 39761455105,
+    "nativeJobs": "all three success",
+    "androidApp": {
+      "job": 119766368338,
+      "conclusion": "success"
+    },
+    "iosApp": {
+      "job": 119766368418,
+      "status": "in_progress"
+    }
+  },
+  "priorSurfaceSnapshot": {
+    "publicCommit": "73aab76ded69c8338630e536d105f778fde1f9bb",
+    "iosApp": {
+      "job": 119750076712,
+      "conclusion": "success"
+    },
+    "allEightJobs": "success"
+  },
+  "invariants": [
+    "Staging retains exact live source/configuration and performs no publication or deadline extension",
+    "Authenticated next packet zero commits current full state without intermediate neutral output",
+    "Old key replay, stale releases and stale disconnect cleanup cannot affect successor",
+    "Lease/input/grant expiry, clock rollback, explicit release, configuration replacement and output failure prevent revival",
+    "One pending grant with at most two seconds to commit; abandoned delivery retires both",
+    "Eighty repeated rotations retain constant staging and preserve independent owner expiry"
+  ],
+  "limitations": [
+    "Phone authorization renewal and native sender/transport transfer remain unimplemented",
+    "Existing control revisions and app still use sixty-second grants",
+    "No physical output, production signing, gameplay, latency, haptics, migration or optical acceptance"
+  ],
+  "privateHistoryPublished": false,
+  "logs": {
+    "thumble-rotation-native-shapes-final.txt": {
+      "path": "/private/tmp/thumble-rotation-native-shapes-final.txt",
+      "sha256": "7735f47f4e63b8d1ec67e88085db60d066ce9536ae2edf4314344292158b6469"
+    },
+    "thumble-rotation-clippy-shapes-final.txt": {
+      "path": "/private/tmp/thumble-rotation-clippy-shapes-final.txt",
+      "sha256": "f8379728fe6eafa082dea820fb096f2460c68c398a0e4ee00d74c65319261199"
+    },
+    "thumble-rotation-package-build.txt": {
+      "path": "/private/tmp/thumble-rotation-package-build.txt",
+      "sha256": "1422ca69c43edff276ec8ae9188efda507dc6ae93a19167b33d59a23564e7abe"
+    },
+    "thumble-rotation-package.txt": {
+      "path": "/private/tmp/thumble-rotation-package.txt",
+      "sha256": "0851a5d1a698baac00f16c5201c9b29b5ecdaaadc95984d9bd4fe1e106b85fa5"
+    },
+    "thumble-rotation-projection-native.txt": {
+      "path": "/private/tmp/thumble-rotation-projection-native.txt",
+      "sha256": "1b8cd2cd4533c6de53fab8f2a038d7dcf2df31bc8501f9993772171d06b5fc6f"
+    },
+    "thumble-rotation-projection-clippy.txt": {
+      "path": "/private/tmp/thumble-rotation-projection-clippy.txt",
+      "sha256": "59b3ff09cd6ff600f54b94b741e190580b945a72e4c3ef05231696c5183677c5"
+    }
+  }
+}
