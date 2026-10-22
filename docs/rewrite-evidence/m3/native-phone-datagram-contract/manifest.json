@@ -1,0 +1,59 @@
+{
+  "parent": "e20c345166227e32963be954c0c5237cb2d3f562",
+  "baseTree": "d6948f144cfbeb7fec3c022213d79d5ef71cfac8",
+  "localSourceCommit": "363b100",
+  "bytes": 96639,
+  "sha256": "9caf05489df8c731490e5c8e5913e6aec75014a0c74e91c0414512591b4ee440",
+  "files": [
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneEnrollment.kt",
+      "sha": "ff727030251fcecea1a9b6e203d3c0eb0c57f22e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneInput.kt",
+      "sha": "73baba3209f484eb0298de9c4f3821d43f95d434"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneInputProgress.kt",
+      "sha": "d3347f31b1776e545ff3cc0ba57eea6b88bcf0ee"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneDatagramContractTest.kt",
+      "sha": "32121c9b33aba8fefbcf94c59dfb2e8a616578cd"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneEnrollment.swift",
+      "sha": "96f8b3ac628d21c00601759da63c31601546889d"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneInputGrant.swift",
+      "sha": "af6057655e8e2f5fa2ac2c2089c8292d7234c907"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneInputProgress.swift",
+      "sha": "d78578cce26d8e38346a2ce94303ea5979378ff2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneDatagramContractTests.swift",
+      "sha": "8212e9c035ad05ac7c16c0478a1a20594a812fb7"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+      "sha": "29caf59cf7cdf9413ef1c53f08a0d7e240360f50"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/native-input-control-v5.json",
+      "sha": "2d1596488fcf4bc92f128420295a3d58fc261f99"
+    },
+    {
+      "path": "Rewrite/tooling/prepare-mobile-fixtures.ts",
+      "sha": "3ebb3c8c4a07af07cc681151ff953c0943d158f6"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v5.md",
+      "sha": "f0aeca20fa2d76efcafc0ad90af7e8dad991292b"
+    }
+  ],
+  "publicCommit": "6d5b898b28a88fc1a4bfd8c3e6cca10c08143700",
+  "publicTree": "c909e43b5af22886a3e1db24b1da38bd8f87a352"
+}
