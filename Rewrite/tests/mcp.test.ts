@@ -77,7 +77,10 @@ test("MCP duplicate outstanding IDs and request/output budgets close the connect
     expect(calls).toBeLessThanOrEqual(16);
   }
   const input = new PassThrough();
-  const output = new Writable({ write(_chunk, _encoding, _callback) {} });
+  const output = new Writable({
+    highWaterMark: 1,
+    write(_chunk, _encoding, _callback) {},
+  });
   const transport = new BoundedStdioTransport(input, output);
   await transport.start();
   const sends = Array.from({ length: 5 }, (_, i) =>
