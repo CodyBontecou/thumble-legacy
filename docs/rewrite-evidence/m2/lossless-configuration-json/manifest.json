@@ -1,0 +1,37 @@
+{
+  "expectedPublicParent": "9eff05ab6d30443dff4872be730ad703fa729ce6",
+  "baseTree": "626f2696eaf6676f28fe74cd0584ba807cf4d958",
+  "localSourceCommit": "4f2183a",
+  "bytes": 37306,
+  "characters": 37306,
+  "sha256": "4f1b0c20543b52cebd29184b031ec30221c61a06f933c2cc37572ed2e609994a",
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "sha": "765a713b8dfdbb2ed68a9269afbf95d9577dc765"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/lossless-json.ts",
+      "sha": "0393758f1dd32aab00f5e7a5ea2a5526e52ef985"
+    },
+    {
+      "path": "Rewrite/packages/contracts/package.json",
+      "sha": "88bc427d3be5bfb278fdbe5a4f7bb3cc034364bc"
+    },
+    {
+      "path": "Rewrite/tests/lossless-json.test.ts",
+      "sha": "82dc548a2b989d1151530220e392bc864e037bc7"
+    },
+    {
+      "path": "Rewrite/tooling/check-boundaries.ts",
+      "sha": "23cb33751a5d0b7c5f16d8fa7c6146e518d96300"
+    },
+    {
+      "path": "docs/rewrite-lossless-json-v1.md",
+      "sha": "2427a393693111a865133addaedb75e813a54b05"
+    }
+  ],
+  "publicCommit": "ed7eec7e62ee6cadbcde512f8e64695a8df327c3",
+  "publicTree": "1cd66060c787dbad4f9f183514a73067b59cd54a",
+  "remoteSourceHashesVerified": true
+}
