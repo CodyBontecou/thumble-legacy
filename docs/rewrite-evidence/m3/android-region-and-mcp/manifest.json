@@ -483,7 +483,43 @@
     "stackCases": 55,
     "bothIosSdks": "pass",
     "isolatedProjection": "77 Swift and 96 Android cases, AAR and lint pass after standard fixture preparation",
-    "hostedResults": "pending",
-    "limitations": "No phone pairing UI, renewal, physical output, gameplay or optical acceptance claimed"
+    "hostedResults": {
+      "macos": {
+        "job": 119750076851,
+        "conclusion": "success"
+      },
+      "linux": {
+        "job": 119750077342,
+        "conclusion": "success"
+      },
+      "windows": {
+        "job": 119750077308,
+        "observation": "all test/package and completion steps pass; aggregate status still in_progress"
+      },
+      "androidNative": {
+        "job": 119750076124,
+        "conclusion": "success"
+      },
+      "androidKeystore": {
+        "job": 119750076539,
+        "status": "in_progress"
+      },
+      "iosNative": {
+        "job": 119750076579,
+        "status": "in_progress"
+      },
+      "androidApp": {
+        "job": 119750076237,
+        "status": "in_progress"
+      },
+      "iosApp": {
+        "job": 119750076712,
+        "status": "pending"
+      }
+    },
+    "limitations": "No phone pairing UI, renewal, physical output, gameplay or optical acceptance claimed",
+    "hostRun": 39756610064,
+    "nativeRun": 39756609917,
+    "appRun": 39756610030
   }
 }
