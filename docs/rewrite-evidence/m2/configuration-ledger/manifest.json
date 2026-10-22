@@ -65,5 +65,33 @@
   "localSourceCommit": "ad71cd1",
   "publicCommit": "b51e076c584c254b299f27f01c31b1481a65c2fc",
   "publicTree": "eda6e0ed51cd17351bb282acb4662047febb2533",
-  "remoteSourceHashesVerified": true
+  "remoteSourceHashesVerified": true,
+  "isolatedPublicProjection": {
+    "portableTests": 90,
+    "failures": 0,
+    "standaloneTests": 1,
+    "standaloneAssertions": 41
+  },
+  "runs": [
+    {
+      "id": 39717539659,
+      "sha": "b51e076c584c254b299f27f01c31b1481a65c2fc",
+      "lastObserved": "macOS/Linux passed; Windows first attempt stopped in unchanged native TLS fixture before SQLite tests; one same-source job rerun dispatched",
+      "jobs": [
+        119623158399,
+        119623158502,
+        119623158885
+      ]
+    },
+    {
+      "id": 39717539730,
+      "sha": "b51e076c584c254b299f27f01c31b1481a65c2fc",
+      "lastObserved": "Three native/provider jobs running",
+      "jobs": [
+        119623158141,
+        119623158346,
+        119623158355
+      ]
+    }
+  ]
 }
