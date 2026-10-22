@@ -359,12 +359,22 @@ import XCTest
       }
       let template = try fixtureMap()
       flow.start(template: template)
-      try await Task.sleep(for: .milliseconds(400))
-      var top = window.rootViewController
-      while let next = top?.presentedViewController { top = next }
+      var top: UIViewController?
+      for _ in 0..<200 {
+        top = window.rootViewController
+        while let next = top?.presentedViewController { top = next }
+        if let alert = top as? UIAlertController,
+          alert.textFields?.first?.isEnabled == true, !alert.isBeingPresented
+        {
+          break
+        }
+        try await Task.sleep(for: .milliseconds(16))
+      }
       let alert = try XCTUnwrap(top as? UIAlertController)
       let field = try XCTUnwrap(alert.textFields?.first)
       XCTAssertTrue(field.isSecureTextEntry)
+      XCTAssertFalse(field.isFirstResponder)
+      XCTAssertTrue(field.canBecomeFirstResponder)
       field.text = nil
       XCTAssertTrue(
         flow.textField(
