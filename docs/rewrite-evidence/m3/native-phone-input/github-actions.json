@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "commit": "a20e2e1b96312efe4c09a19db7bf1d7cc2c2f5f3",
+  "capsuleSha256": "096d8e6e80bd60ef5b8237f4f98c15a53a22bf39d9230b2b8bade5dd18f99888",
+  "status": "a20e2e1: Android native/Keystore passed; Linux/Windows blocked at formatter before tests; formatting repair in progress",
+  "runs": [
+    {
+      "id": 39703081012,
+      "name": "TypeScript rewrite native mobile",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39703081012"
+    },
+    {
+      "id": 39703081053,
+      "name": "TypeScript rewrite (headless)",
+      "url": "https://github.com/CodyBontecou/Thumble/actions/runs/39703081053"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 119576656869,
+      "name": "Android native",
+      "conclusion": "success"
+    },
+    {
+      "id": 119576657494,
+      "name": "Android Keystore",
+      "conclusion": "success",
+      "providerCase": "realAndroidKeystorePersistsAndDetectsTampering",
+      "providerResult": "Passed",
+      "totalCases": 1
+    },
+    {
+      "id": 119576657293,
+      "name": "Linux host",
+      "conclusion": "failure",
+      "cause": "Prettier line wrapping in tooling/prepare-mobile-fixtures.ts; runtime tests not reached"
+    },
+    {
+      "id": 119576657477,
+      "name": "Windows host",
+      "conclusion": "failure",
+      "cause": "same formatting gate; runtime tests not reached"
+    },
+    {
+      "id": 119576657212,
+      "name": "iOS native",
+      "status": "queued at last observation"
+    },
+    {
+      "id": 119576657565,
+      "name": "macOS host",
+      "status": "queued at last observation"
+    }
+  ]
+}

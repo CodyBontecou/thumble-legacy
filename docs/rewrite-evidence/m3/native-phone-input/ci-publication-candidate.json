@@ -4,7 +4,7 @@
   "localSourceCommit": "9922bf5ae3158e95f990812f3b4f13ba2a0051a3",
   "expectedPublicParent": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
   "publicBaseTree": "556f4f92cb17dce2db1dd1ce4884c202c9951836",
-  "publication": "Not published; requires scoped approval for this exact source",
+  "publication": "Published after explicit scoped approval; subsequent CI publication is also explicitly authorized",
   "capsule": {
     "path": "/private/tmp/thumble-native-input-v4-frozen-public-delta.json",
     "bytes": 590386,
@@ -543,5 +543,13 @@
     "path": "ci-publication.diff",
     "bytes": 399622,
     "sha256": "d2f0495bc44e61ac8f8d96cb3232462c1ce386fee711cdee5af1c53f7f971539"
-  }
+  },
+  "publicCommit": "a20e2e1b96312efe4c09a19db7bf1d7cc2c2f5f3",
+  "publicTree": "6737de7458a29fef9014f5e1e519841191c4ed35",
+  "publicVerification": {
+    "files": 54,
+    "singlePublicParent": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
+    "allGitBlobsModesTypesMatch": true
+  },
+  "futureCiAuthorization": "User explicitly requested: Please stop asking for CI related approbals. Just continue end to end with the implementation. Continue source-only CI publication without further approval; preserve private baseline/history, credentials, evidence and builds."
 }
