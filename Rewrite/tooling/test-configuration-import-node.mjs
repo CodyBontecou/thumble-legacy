@@ -346,16 +346,39 @@ try {
             JSON.stringify(exported).includes(exportArgs.path),
             false,
           );
-          assert.deepEqual(JSON.parse(readFileSync(exportArgs.path, "utf8")), {
-            ...JSON.parse(readFileSync(file, "utf8")),
-            activeProfileID: JSON.parse(
-              readFileSync(file, "utf8"),
-            ).profiles.find(
-              (profile) =>
-                profile.id.toLowerCase() === selection.activeProfileId,
-            ).id,
-            defaultProfileID: null,
-          });
+          const restoredDocument = JSON.parse(
+              readFileSync(exportArgs.path, "utf8"),
+            ),
+            originalDocument = JSON.parse(readFileSync(file, "utf8"));
+          const storedActiveId = originalDocument.profiles.find(
+            (profile) => profile.id.toLowerCase() === selection.activeProfileId,
+          ).id;
+          assert.equal(restoredDocument.activeProfileID, storedActiveId);
+          assert.equal(restoredDocument.defaultProfileID, null);
+          for (const key of Object.keys(originalDocument))
+            if (
+              ![
+                "activeProfileID",
+                "defaultProfileID",
+                "keyBindings",
+                "outputBindings",
+                "profileKeyBindings",
+                "profileOutputBindings",
+              ].includes(key)
+            )
+              assert.deepEqual(restoredDocument[key], originalDocument[key]);
+          for (const [root, map] of [
+            ["keyBindings", "profileKeyBindings"],
+            ["outputBindings", "profileOutputBindings"],
+          ]) {
+            assert.deepEqual(
+              restoredDocument[root],
+              restoredDocument[map][storedActiveId],
+            );
+            for (const [id, value] of Object.entries(originalDocument[map]))
+              if (id.toLowerCase() !== selection.activeProfileId)
+                assert.deepEqual(restoredDocument[map][id], value);
+          }
           const cliExportStatus = await invoke(
             "configuration",
             "export-status",

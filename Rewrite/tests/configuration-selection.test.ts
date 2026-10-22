@@ -14,7 +14,7 @@ import { OwnedAuthorityDocument } from "@thumble/domain/owned-authority";
 import { ConfigurationCatalogOperations } from "@thumble/application/configuration-catalog";
 import { SqliteConfigurationRepository } from "@thumble/storage";
 import { FileAssetStore } from "@thumble/storage/asset-files";
-import { a, b, catalogFixtureSource } from "./helpers/configuration-fixture.ts";
+import { a, b, selectionFixtureSource } from "./helpers/selection-fixture.ts";
 const root = resolve(import.meta.dir, ".."),
   executable = join(
     root,
@@ -42,8 +42,8 @@ function fixture(run: (runtime: string) => void) {
   }
 }
 
-test("saved profile selection edits only explicit root selectors and preserves opaque profile/timestamp/binding source", () => {
-  const original = catalogFixtureSource().set(
+test("saved profile selection synchronizes selected binding mirrors and preserves opaque profile/timestamp source", () => {
+  const original = selectionFixtureSource().set(
       "/profiles/0/id",
       JSON.stringify(a.toUpperCase()),
     ),
@@ -60,7 +60,16 @@ test("saved profile selection edits only explicit root selectors and preserves o
     original.get("/profiles/0/id")?.text(),
   );
   for (const key of original.keys)
-    if (!["activeProfileID", "defaultProfileID"].includes(key))
+    if (
+      ![
+        "activeProfileID",
+        "defaultProfileID",
+        "keyBindings",
+        "outputBindings",
+        "profileKeyBindings",
+        "profileOutputBindings",
+      ].includes(key)
+    )
       expect(changed.source.get(`/${key}`)?.text()).toBe(
         original.get(`/${key}`)?.text(),
       );
@@ -94,7 +103,7 @@ for (const external of [false, true])
               "utf8",
             ),
           )
-        : catalogFixtureSource();
+        : selectionFixtureSource();
       const prepared = external
         ? OwnedAuthorityDocument.prepare(original, digest)
         : undefined;
@@ -152,7 +161,16 @@ for (const external of [false, true])
               ).source
             : current.source;
         for (const key of original.keys)
-          if (!["activeProfileID", "defaultProfileID"].includes(key))
+          if (
+            ![
+              "activeProfileID",
+              "defaultProfileID",
+              "keyBindings",
+              "outputBindings",
+              "profileKeyBindings",
+              "profileOutputBindings",
+            ].includes(key)
+          )
             expect(changed.get(`/${key}`)?.canonicalText()).toBe(
               original.get(`/${key}`)?.canonicalText(),
             );

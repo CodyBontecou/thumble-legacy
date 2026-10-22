@@ -203,7 +203,7 @@ export function startMcp(
           "configuration_select_profiles",
           {
             description:
-              "Atomically select explicit saved active/default profile IDs at expectedRevision. Both profiles must exist; null clears the saved default. Preserves profile contents/resources and commits a durable retry receipt even for unchanged selections. Does not publish runtime configuration, enable receiver input, or establish activation compatibility.",
+              "Atomically select explicit saved active/default profile IDs at expectedRevision and synchronize their saved active binding mirrors. Both profiles must exist; null clears the saved default. Existing selected per-profile maps win, including empty maps; absent entries use that profile's verified control defaults/configured outputs. Preserves profile contents/resources and unrelated maps, and commits a durable retry receipt even for unchanged selectors. Does not publish runtime configuration, enable receiver input, or establish activation compatibility.",
             inputSchema: z
               .object({
                 operationId: z.string().regex(/^[A-Za-z0-9-]{1,64}$/),

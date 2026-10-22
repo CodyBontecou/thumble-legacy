@@ -1,4 +1,5 @@
 import { LosslessJson } from "@thumble/contracts/json";
+import { synchronizeOwnedActiveBindings } from "./owned-selection.ts";
 
 const schema = "com.codybontecou.pocketpad.keypad-configuration";
 const rootFields = [
@@ -174,8 +175,8 @@ export class ConfigurationCatalog {
   static read(source: LosslessJson): ConfigurationCatalog {
     return new ConfigurationCatalog(source);
   }
-  /** Saved selectors only. Profiles, bindings, timestamps and opaque source are
-   * untouched; this edit never publishes or activates receiver configuration. */
+  /** Saved selection and its selected-profile binding mirrors. Profile content,
+   * timestamps and unrelated source remain untouched; no runtime publication. */
   selectProfiles(
     activeProfileID: string,
     defaultProfileID: string | null,
@@ -203,9 +204,16 @@ export class ConfigurationCatalog {
               `/profiles/${this.#indices.get(selectedDefault)!}/id`,
             )!,
       );
-    return edits.size === 0
+    const selected =
+      edits.size === 0 ? this.source : this.source.replaceValues(edits);
+    const synchronized = synchronizeOwnedActiveBindings(
+      selected,
+      this.#indices.get(active)!,
+      new Set(this.#indices.keys()),
+    );
+    return synchronized === this.source
       ? this
-      : ConfigurationCatalog.read(this.source.replaceValues(edits));
+      : ConfigurationCatalog.read(synchronized);
   }
   /** Pure source edit addressed by stable profile ID, never current selection.
    * No persistence, receipt, clock, runtime activation or capability side effect. */
