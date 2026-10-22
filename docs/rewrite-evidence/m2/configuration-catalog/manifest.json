@@ -1,0 +1,36 @@
+{
+  "localSourceCommit": "493c272",
+  "publicCommit": "cd55d98bb627088c6626b5b4ee787762a4adbbc9",
+  "publicParent": "b51e076c584c254b299f27f01c31b1481a65c2fc",
+  "publicTree": "a1fcf33abf3c52081589d5478c05fc195b2f6900",
+  "capsuleSHA256": "20bbc942348909862b4da2980463dfc10603bbac8ae78abcd66faf66afc9c7e5",
+  "bytes": 14927,
+  "characters": 14912,
+  "remoteHashesVerified": true,
+  "files": [
+    {
+      "path": "Rewrite/packages/domain/package.json",
+      "sha": "1664837f63156e31ee37d50dc83729c560698d68"
+    },
+    {
+      "path": "Rewrite/packages/domain/src/configuration-catalog.ts",
+      "sha": "7068a189eb698855fb57b4bdc16e4f546d5a5d2e"
+    },
+    {
+      "path": "Rewrite/tests/configuration-catalog.test.ts",
+      "sha": "a6edc423a8a1d6f73ba9fbf8d0d4d7015193c016"
+    },
+    {
+      "path": "docs/rewrite-configuration-catalog-v1.md",
+      "sha": "93b4d5e5170f0ef911777fd1474558bd2049d9d8"
+    }
+  ],
+  "localTests": 96,
+  "standaloneTests": 1,
+  "standaloneAssertions": 41,
+  "isolatedProjectionTests": 96,
+  "runs": [
+    39719281750,
+    39719281581
+  ]
+}
