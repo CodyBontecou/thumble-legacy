@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "scope": "Simulator-only entitled Keychain test host, moved provider case and preserved iOS library/provider CI verification",
+  "localSourceCommit": "83e3478b92f1eb1a7e4f5ee802ee52701e49869f",
+  "expectedPublicParent": "07da0e0861838002f5eb9a040a3b736fa9152841",
+  "publicBaseTree": "b42c9f28fb0408a81f54f9fa4c9efc44237ab403",
+  "publication": "Pending separate scoped approval; no repair source published",
+  "capsule": {
+    "path": "/private/tmp/thumble-keychain-provider-ci-frozen-delta.json",
+    "bytes": 30982,
+    "characters": 30982,
+    "sha256": "a8ede7dfcc2a57221c327783663085ff99653a5d26f64ada384b6951e93065b8"
+  },
+  "projection": "Workflow begins at approved public source and includes only this repair; newer native auth-probe wiring is excluded. The other seven files match the local source commit.",
+  "verification": {
+    "productionVaultSourceChanged": false,
+    "isolatedBase": "8f216c9635c87cbd4ae44eb6be8de5bae9f12590",
+    "isolatedLibraryTests": 30,
+    "isolatedProviderCases": 1,
+    "currentLibraryTests": 38,
+    "currentProviderCases": 1,
+    "providerCase": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances",
+    "result": "Passed",
+    "skipped": 0,
+    "actionlint": "passed",
+    "verifierRegressionTests": 2
+  },
+  "files": [
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "mode": "100644",
+      "bytes": 8537,
+      "sha256": "eaad0908e12656b382c885114110d90c1e11f7897e32657ce28e0c1c9af2594b"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneCredentialTests.swift",
+      "mode": "100644",
+      "bytes": 6446,
+      "sha256": "65019e2c621f1f02bf7ea3a08ca1c4e6288b5c2e8e40ad8dcd0519df78b0650c"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/KeychainProvider.xcodeproj/project.pbxproj",
+      "mode": "100644",
+      "bytes": 6995,
+      "sha256": "a5855a5f226c5e8fbd583acdd7f074e067b451a999668710b275f8080935244a"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/KeychainProvider.xcodeproj/xcshareddata/xcschemes/KeychainProvider.xcscheme",
+      "mode": "100644",
+      "bytes": 1835,
+      "sha256": "3a7211c5117102db47802c90c9db287ed56196a93bdeffefec671d1c0c0a451e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/KeychainProviderTests.swift",
+      "mode": "100644",
+      "bytes": 1804,
+      "sha256": "74ba93505987feadee2041b6e47d0c588b5a722305f41b8afb79c60d3624cfd9"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/Provider.entitlements",
+      "mode": "100644",
+      "bytes": 531,
+      "sha256": "24bd9856fd1e8e68aeadc4042a726c5329abd164e51cdac0c654c0065793d536"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/ProviderApp.swift",
+      "mode": "100644",
+      "bytes": 601,
+      "sha256": "4fd1cab9ee856034b06a7416deef0705b3451e4a56a5d4eca990dcd3bc9e43c2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/ProviderTests/README.md",
+      "mode": "100644",
+      "bytes": 2425,
+      "sha256": "ff4be45313fcf13b291ad9a153855b24582a2f4834678f87d302cd1e12cc7c5d"
+    }
+  ],
+  "excluded": [
+    "private baseline/history",
+    "newer input broker/phone source and auth-probe workflow wiring",
+    "real credentials or signing material",
+    "local evidence/build products",
+    "root plan/progress documentation"
+  ]
+}
