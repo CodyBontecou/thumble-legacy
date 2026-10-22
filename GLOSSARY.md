@@ -33,3 +33,6 @@ The host endpoint that redeems pairing invitations and establishes a phone's tru
 
 **Authenticated control connection**:
 A temporary conversation in which a trusted phone has proved its current credential to one host authority. Input authorization remains a separate grant for a particular activation.
+
+**Grant rotation**:
+Replacement of an input session's cryptographic grant while retaining the same live controller interaction. It cannot revive an ended input session.
