@@ -1,0 +1,14 @@
+   Compiling ring v0.17.14
+   Compiling libsqlite3-sys v0.38.2
+   Compiling rustls v0.23.46
+   Compiling rusqlite v0.40.2
+   Compiling rustls-webpki v0.103.16
+   Compiling rcgen v0.14.10
+   Compiling thumble-rewrite-receiver v0.0.0 (/private/tmp/thumble-native-input-v4-public-projection/Rewrite/native/receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.66s
+     Running tests/native_ingress_process.rs (native/receiver/target/debug/deps/native_ingress_process-47eb203a7ac96d8a)
+
+running 1 test
+test authenticated_tls_input_reaches_the_independent_receiver_and_revocation_waits_for_neutral ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 2.27s

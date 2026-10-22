@@ -51,5 +51,39 @@
       "name": "macOS host",
       "status": "queued at last observation"
     }
-  ]
+  ],
+  "formatRepair": {
+    "publicCommit": "9cdb65f17043db7b04dab69f66d3f82505b232d6",
+    "publicParent": "a20e2e1b96312efe4c09a19db7bf1d7cc2c2f5f3",
+    "publicTree": "11e3846ef9225e912d95b5c87b5ef1f177c8c7bb",
+    "localCommit": "2d06d1bcd64ec03c54d39a407bc6be9b929f4082",
+    "files": [
+      "Rewrite/package.json",
+      "Rewrite/tooling/prepare-mobile-fixtures.ts"
+    ],
+    "scope": "Formatter repair plus same gate in local verify; no input behavior changed",
+    "validation": "Local verify now passes formatting, generated/boundary checks, typecheck and 74 tests/916 assertions; fixture preparation passes",
+    "authorization": "Explicit standing CI publication instruction from user",
+    "runs": [
+      {
+        "id": 39703858094,
+        "name": "TypeScript rewrite (headless)"
+      },
+      {
+        "id": 39703858106,
+        "name": "TypeScript rewrite native mobile"
+      }
+    ],
+    "status": "Linux and native/mobile/provider jobs passed; macOS/Windows native test fixtures require repair",
+    "ios": {
+      "job": 119579155696,
+      "conclusion": "success",
+      "nativeTests": 55,
+      "simulatorLibraryTests": 47,
+      "providerCase": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances",
+      "providerResult": "Passed",
+      "providerPassedTests": 1,
+      "bothSdkBuilds": "passed"
+    }
+  }
 }

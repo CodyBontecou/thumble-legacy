@@ -1,0 +1,26 @@
+2026-10-22T01:10:06.8192670Z ✔ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() passed after 12.677 seconds.
+2026-10-22T01:10:06.8193310Z ✔ Test run with 55 tests in 0 suites passed after 12.680 seconds.
+2026-10-22T01:10:06.8330920Z ##[group]Run bun run mobile:ios:sdk --sdk iphonesimulator
+2026-10-22T01:11:29.4695830Z
+2026-10-22T01:11:29.5274510Z ** BUILD SUCCEEDED **
+2026-10-22T01:11:29.5275010Z
+2026-10-22T01:13:46.5949060Z ✔ Test wallClockRollbackCannotExtendNativeGrant() passed after 0.002 seconds.
+2026-10-22T01:13:46.6051560Z ✔ Test run with 47 tests in 0 suites passed after 3.867 seconds.
+2026-10-22T01:13:47.0469020Z 2026-10-22 01:13:47.037 xcodebuild[14825:49430] [MT] IDETestOperationsObserverDebug: 50.399 elapsed -- Testing started completed.
+2026-10-22T01:13:47.9061410Z
+2026-10-22T01:13:47.9163480Z ** TEST SUCCEEDED **
+2026-10-22T01:13:47.9269710Z
+2026-10-22T01:20:35.3893190Z ↳ Target Platform: arm64-apple-ios13.0-simulator
+2026-10-22T01:20:35.3894990Z ◇ Test actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances() started.
+2026-10-22T01:20:36.3621510Z ✔ Test actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances() passed after 0.536 seconds.
+2026-10-22T01:20:36.3993970Z ✔ Test run with 1 test in 0 suites passed after 0.538 seconds.
+2026-10-22T01:20:42.5088440Z 2026-10-22 01:20:42.450 xcodebuild[17017:56385] [MT] IDETestOperationsObserverDebug: 363.455 elapsed -- Testing started completed.
+2026-10-22T01:20:43.3068860Z
+2026-10-22T01:20:43.3069160Z ** TEST SUCCEEDED **
+2026-10-22T01:20:43.3069550Z
+2026-10-22T01:20:47.1923160Z Testing started
+2026-10-22T01:20:48.6291530Z {"case": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances", "passedTests": 1, "provider": "iOS Keychain", "result": "Passed"}
+2026-10-22T01:20:48.6806620Z ##[group]Run xcodebuild -scheme ThumbleMobileInput -destination 'generic/platform=iOS' -derivedDataPath '/Users/runner/work/_temp/rewrite-ios-device' CODE_SIGNING_ALLOWED=NO build
+2026-10-22T01:21:20.5660330Z
+2026-10-22T01:21:20.6101000Z ** BUILD SUCCEEDED **
+2026-10-22T01:21:20.6101440Z

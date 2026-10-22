@@ -1,0 +1,8 @@
+    Checking ring v0.17.14
+    Checking libsqlite3-sys v0.38.2
+    Checking rusqlite v0.40.2
+    Checking rustls-webpki v0.103.16
+    Checking rcgen v0.14.10
+    Checking rustls v0.23.46
+    Checking thumble-rewrite-receiver v0.0.0 (/private/tmp/thumble-native-input-v4-public-projection/Rewrite/native/receiver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.17s

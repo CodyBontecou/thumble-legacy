@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "scope": "CI-only native test fixtures; production lease/TTL and protocol unchanged",
+  "expectedPublicParent": "9cdb65f17043db7b04dab69f66d3f82505b232d6",
+  "publicBaseTree": "11e3846ef9225e912d95b5c87b5ef1f177c8c7bb",
+  "capsule": {
+    "path": "/private/tmp/thumble-native-ci-fixture-repair.json",
+    "bytes": 59861,
+    "characters": 59861,
+    "sha256": "0a9c4f653542ca47c251722334840689e0193d1db2b8996779b10bfc188c3bfd"
+  },
+  "files": [
+    {
+      "path": "Rewrite/native/receiver/src/pairing_host.rs",
+      "mode": "100644",
+      "bytes": 33725,
+      "sha256": "5b4a47a0e50453e43d0d6baff1726ec01cfc07fcdb24d80f93e7cdefaaf12f94",
+      "gitBlob": "ed925ddb16bec23712071f3cf4a75480b07bb29f"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+      "mode": "100644",
+      "bytes": 23331,
+      "sha256": "6921e02c3a04cec542c1ce95cdc0ca1e2d865c1fafa9be0456effeed9335a565",
+      "gitBlob": "b504aa99798227f990976682691ae4e098222f5c"
+    }
+  ],
+  "verification": {
+    "rustUnit": 79,
+    "rustProcess": 9,
+    "failures": 0,
+    "clippyAllTargets": "passed",
+    "delayedRepliesMs": 200,
+    "delayedRevocation": "passed",
+    "delayedReenrollment": "passed",
+    "localSocketStressIterations": 30
+  },
+  "diagnosis": {
+    "windows": "Controlled 200ms reply delays reproduce TransportRejected with native lease_expired. A real independent fixture owner heartbeat keeps valid scenarios active; owner-disappearance test still has no heartbeat and still expires. Re-enrollment also keeps a native sampler active and requires native_input_released, preventing TTL from satisfying the assertion.",
+    "macos": "Hosted code22 InvalidInput occurs setting read timeout after peer stop, before the closure assertion. Not reproduced in 30 local iterations. Test now observes actual EOF/reset with a bounded result deadline; no post-reset socket-option requirement.",
+    "cleanup": "Temporary delay/log probes removed from publication; only private red/green evidence retains them."
+  },
+  "publication": "Ready under explicit standing CI authorization; no UDP production source included"
+}
