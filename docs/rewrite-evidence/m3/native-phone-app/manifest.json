@@ -57,35 +57,43 @@
   "hosted": {
     "macos": {
       "job": 119766368414,
-      "conclusion": "success"
+      "conclusion": "success",
+      "status": "completed"
     },
     "linux": {
       "job": 119766368335,
-      "conclusion": "success"
+      "conclusion": "success",
+      "status": "completed"
     },
     "windows": {
       "job": 119766367994,
-      "status": "in_progress"
+      "status": "completed",
+      "conclusion": "success"
     },
     "androidNative": {
       "job": 119766368300,
-      "status": "in_progress"
+      "status": "completed",
+      "conclusion": "success"
     },
     "androidKeystore": {
       "job": 119766367867,
-      "status": "in_progress"
+      "status": "completed",
+      "conclusion": "success"
     },
     "iosNative": {
       "job": 119766368076,
-      "status": "in_progress"
+      "status": "in_progress",
+      "conclusion": null
     },
     "androidApp": {
       "job": 119766368338,
-      "status": "in_progress"
+      "status": "in_progress",
+      "conclusion": null
     },
     "iosApp": {
       "job": 119766368418,
-      "status": "pending"
+      "status": "pending",
+      "conclusion": null
     }
   },
   "failedAttempts": [
