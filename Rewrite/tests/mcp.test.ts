@@ -133,15 +133,20 @@ test("SDK modern and legacy clients share CLI authority, preserve input opt-in a
         transport.stderr?.on("data", (chunk) => {
           stderr += chunk.toString();
         });
-        const client = new Client({
-          name: "thumble-headless-test",
-          version: "1",
-        });
+        const client = new Client(
+          { name: "thumble-headless-test", version: "1" },
+          {
+            versionNegotiation: {
+              mode: legacy ? "legacy" : { pin: "2026-07-28" },
+            },
+          },
+        );
         try {
           await client.connect(
             transport,
             legacy ? { prior: { kind: "legacy" } } : {},
           );
+          expect(client.getProtocolEra()).toBe(legacy ? "legacy" : "modern");
           const tools = await client.listTools();
           expect(tools.tools.map((t) => t.name).sort()).toEqual(
             [
