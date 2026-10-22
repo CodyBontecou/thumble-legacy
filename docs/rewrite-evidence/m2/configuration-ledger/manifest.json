@@ -61,5 +61,9 @@
       "path": "docs/rewrite-configuration-ledger-v1.md",
       "sha": "e2feac4b55ceaf7638da9cb38b646f3ced8ab33c"
     }
-  ]
+  ],
+  "localSourceCommit": "ad71cd1",
+  "publicCommit": "b51e076c584c254b299f27f01c31b1481a65c2fc",
+  "publicTree": "eda6e0ed51cd17351bb282acb4662047febb2533",
+  "remoteSourceHashesVerified": true
 }
