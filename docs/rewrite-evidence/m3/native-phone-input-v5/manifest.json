@@ -95,7 +95,7 @@
     {
       "id": 39710593567,
       "sha": "9eff05ab6d30443dff4872be730ad703fa729ce6",
-      "lastObserved": "Android native passed; iOS Simulator/Keychain and Keystore jobs running",
+      "lastObserved": "All three mobile jobs passed, including iOS and Keystore",
       "jobs": [
         119600737650,
         119600737879,
