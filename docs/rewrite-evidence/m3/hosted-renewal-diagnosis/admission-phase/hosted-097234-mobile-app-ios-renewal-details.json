@@ -1,0 +1,78 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "64371CF9-FEEA-4B8D-B19C-24949D40AD6B",
+      "deviceName" : "Thumble Rewrite CI",
+      "modelName" : "iPhone 17 Pro",
+      "osBuildNumber" : "23C54",
+      "osVersion" : "26.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "duration" : "Ran for 8.9 seconds",
+  "durationInSeconds" : 8.885179996490479,
+  "hasMediaAttachments" : true,
+  "hasPerformanceMetrics" : false,
+  "startTime" : 1792681149.489,
+  "testDescription" : "Test case with 1 run",
+  "testIdentifier" : "NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+  "testIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver",
+  "testName" : "testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ],
+  "testResult" : "Failed",
+  "testRuns" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "name" : "NativePortalTests.probe(_:body:)",
+                  "nodeType" : "Source Code Reference"
+                },
+                {
+                  "name" : "NativePortalTests.testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+                  "nodeType" : "Source Code Reference"
+                }
+              ],
+              "name" : "XCTAssertEqual failed: (\"Optional(500)\") is not equal to (\"Optional(200)\") - recording-only host witness failed at /renewal-start",
+              "nodeType" : "Test Case Run",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "name" : "",
+                  "nodeType" : "Source Code Reference"
+                }
+              ],
+              "name" : "failed: caught error: \"InvalidTransition { \n  phase: idle\n  targetPhase: failed(deinit)\n}\"",
+              "nodeType" : "Test Case Run",
+              "result" : "Failed"
+            }
+          ],
+          "duration" : "8s",
+          "durationInSeconds" : 8.885179996490479,
+          "name" : "Test Scheme Action",
+          "nodeIdentifier" : "1",
+          "nodeType" : "Test Plan Configuration",
+          "result" : "Failed"
+        }
+      ],
+      "details" : "iOS Simulator 26.2",
+      "duration" : "8s",
+      "durationInSeconds" : 8.885179996490479,
+      "name" : "iPhone 17 Pro",
+      "nodeIdentifier" : "64371CF9-FEEA-4B8D-B19C-24949D40AD6B",
+      "nodeType" : "Device",
+      "result" : "Failed"
+    }
+  ]
+}

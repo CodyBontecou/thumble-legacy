@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "capsuleSHA256": "3e2daed6a9a00aa1a7eff2efac1a1653b3e41646d845614024ffe8f4541275f1",
+  "sourceFiles": [
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5380b23554fe67e6955c3dc089449d4e66231c30"
+    },
+    {
+      "path": "Rewrite/apps/service/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "949ffb29f4f767b6f4720b3ddee06447acd8cb31"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a76c74893e4a51e946a7d61d120e21e79de4a718"
+    },
+    {
+      "path": "Rewrite/apps/service/src/configuration-owner.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40b0490fe0a18ace9d9401f9887c2910488d5f24"
+    },
+    {
+      "path": "Rewrite/apps/service/src/configuration-owner-process.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b5b4c74cd4fa0302de43db414e864129ba62f1c"
+    },
+    {
+      "path": "Rewrite/tests/configuration-owner.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f60339d6d9f00a8139898742b2bfd15100bf4f9"
+    },
+    {
+      "path": "docs/rewrite-configuration-owner-v1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5b28a00ce630c705cdaaf23d3b02d88b1d5395b"
+    },
+    {
+      "path": "docs/rewrite-asset-files-v1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00d59f04c623d542f79beb9fa49d435d83e4e86e"
+    },
+    {
+      "path": "Rewrite/tests/fixtures/invalid-configuration-owner.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7abcb3fe3171d670c885fcaf53fd89ae8913e11"
+    }
+  ],
+  "logs": [
+    {
+      "path": "verify.txt",
+      "byteCount": 14998,
+      "sha256": "5aaff6ea133fa57f1541cdcf12cf5738c18812cd4ead07869dcdfc4018a307db"
+    },
+    {
+      "path": "package.txt",
+      "byteCount": 540,
+      "sha256": "d91d31ddb9a91579d901d47cb889a4fa7c5072dfc75e68907caabb987579207a"
+    },
+    {
+      "path": "targeted.txt",
+      "byteCount": 774,
+      "sha256": "01962e5bbb76a745c80dcbde43f7bb41f90b1391e983e9b585dd076997951fc6"
+    }
+  ]
+}

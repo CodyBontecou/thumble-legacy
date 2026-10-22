@@ -1,0 +1,204 @@
+$ bun run check:generated && bun run check:boundaries && bun tooling/check-cli-notices.ts && bun run format:check && bun run typecheck && bun test
+$ bun tooling/generate-contracts.ts --check
+Generated 33 packet vectors and 5 invalid authenticated payloads
+$ bun tooling/check-boundaries.ts
+Portable contracts/domain import boundaries verified
+CLI dependency notices match the audited runtime distributions
+$ bun x --no-install prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json && tsc --noEmit -p apps/mobile/tsconfig.json
+bun test v1.4.3 (c6da4a4d3)
+
+tests/receiver-seam.test.ts:
+(pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [372.73ms]
+(pass) service death neutralizes the independent receiver within the owner lease [328.48ms]
+(pass) JS stalls do not stall native expiry [929.93ms]
+(pass) only one service owns a runtime directory; unrelated state is refused [193.98ms]
+(pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [193.94ms]
+(pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.11ms]
+(pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [607.64ms]
+(pass) headless CLI native listener pairs through independent pinned TLS and cancels stalled enrollment [972.24ms]
+(pass) CLI default cannot listen without explicit identity and running identity mismatches fail [343.68ms]
+(pass) service death closes enrollment listener and neutralizes receiver despite a stalled TLS peer [320.08ms]
+(pass) service owns durable source storage and releases its lease before endpoint disappearance [436.92ms]
+
+tests/owned-configuration.test.ts:
+(pass) owned v5 reader agrees with the retained cross-language admission matrix [158.25ms]
+(pass) owned source, all eight states, explicit identities and pooled aliases remain immutable [11.46ms]
+(pass) resource admission rejects corrupt digests, noncanonical Base64 and dangling or ambiguous references [24.68ms]
+(pass) Base64 decoding is exact and remains bounded on large inputs [6.32ms]
+(pass) binding and design references must belong to declared controls and canonical profiles [48.05ms]
+(pass) paint banks reject mismatched identities, undeclared assets and invalid canonical owner shapes [21.50ms]
+(pass) frozen retained document and matrix bytes match their recorded manifest [0.42ms]
+(pass) typed element projections preserve explicit output semantics and immutable presentation [11.47ms]
+(pass) native mirror settings, kind limits and missing joystick outputs cannot become a conflicting projection [36.72ms]
+
+tests/mcp.test.ts:
+(pass) MCP framing survives split UTF-8 and coalesced messages, rejects ambiguous or excessive input before dispatch [1.86ms]
+(pass) MCP duplicate outstanding IDs and request/output budgets close the connection [0.64ms]
+(pass) MCP accepts the writable backpressure signal without waiting for a platform callback [0.06ms]
+(pass) independent Node SDK clients exercise both MCP eras, capability gates and service survival [1397.64ms]
+(pass) MCP rejects unavailable tools before dispatch without reflecting caller data [0.56ms]
+(pass) MCP exits naturally on EOF or invalid framing and keeps CLI errors off stdout [144.79ms]
+
+tests/configuration-storage.test.ts:
+(pass) SQLite commits exact configuration source and receipts durably in a native-private directory [7.61ms]
+(pass) retries return the original receipt after later writes; changed operation payloads cannot write [5.75ms]
+(pass) revision conflicts do not reserve operation IDs or mutate the current source [6.76ms]
+(pass) an idle reopened authority owns an exclusive SQLite writer lease until close [14.35ms]
+(pass) SQLite full after a source update rolls back both source and receipt, surviving reopen [9.77ms]
+(pass) foreign schemas and corrupt source hashes are refused without repair or overwrite [16.43ms]
+(pass) unsafe state links cannot alter another file and native preparation accepts no extra path [13.71ms]
+(pass) revision counters remain exact beyond safe integers and refuse uint64 exhaustion [10.65ms]
+(pass) a committed receipt survives abrupt process death and ownership transfers only after exit [26.42ms]
+
+tests/configuration-owner.test.ts:
+(pass) dedicated configuration process preserves CAS, receipts, exclusive ownership and restart barriers [106.50ms]
+(pass) configuration owner death rejects pending work and releases its database lease [50.43ms]
+(pass) private configuration protocol refuses raw commits and malformed framing without reflecting source [98.46ms]
+(pass) a suspended configuration child cannot block native owner renewal or input publication [1103.51ms]
+(pass) configuration output backpressure preserves every queued reply through EOF [293.60ms]
+(pass) an invalid typed configuration result disconnects the owner instead of keeping a poisoned pipe [21.02ms]
+
+tests/configuration-cli.test.ts:
+(pass) CLI/MCP configuration operations share one service authority, CAS and durable retry across restart [1998.04ms]
+
+tests/asset-files.test.ts:
+(pass) content-addressed files deduplicate across stages, verify reads and preserve durable records across reopen [276.52ms]
+(pass) interrupted private staging can resume, while completed corrupt objects are never replaced [156.73ms]
+(pass) crash between Unix publication link and cleanup recovers only the exact private link pair [52.73ms]
+(pass) unsafe links, invalid input and corrupt journals cannot change neighboring files [86.89ms]
+(pass) SQLite publishes only after assets are prepared and rollback leaves a recoverable uncommitted stage [254.88ms]
+(pass) recovery distinguishes a matching committed receipt from an unrelated reuse of an operation ID [187.58ms]
+(pass) durable receipts and assets recover after actual owner process death before and after commit [335.52ms]
+(pass) pending journal count is bounded and retirement frees capacity without deleting content [2167.14ms]
+(pass) TypeScript preparation agrees with the shared binary and stage identity vector [45.66ms]
+(pass) reopen preserves a committed recovery record until its asset integrity is restored [229.91ms]
+
+tests/configuration-file.test.ts:
+(pass) offline CLI/MCP inspection agrees through both SDK eras without a receiver or service [306.97ms]
+(pass) file inspection rejects unsafe paths, invalid source and byte overflow without returning source [11.08ms]
+
+tests/input-packet.test.ts:
+(pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [1.25ms]
+(pass) authenticated malformed semantic payloads are refused independently of encryption [0.15ms]
+(pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.05ms]
+
+tests/package.test.ts:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+tests/gamepad.test.ts:
+(pass) retained Swift/Rust v2 native report vectors > neutral [0.12ms]
+(pass) retained Swift/Rust v2 native report vectors > south [0.04ms]
+(pass) retained Swift/Rust v2 native report vectors > east [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > west
+(pass) retained Swift/Rust v2 native report vectors > north
+(pass) retained Swift/Rust v2 native report vectors > left shoulder [0.01ms]
+(pass) retained Swift/Rust v2 native report vectors > right shoulder
+(pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis
+(pass) retained Swift/Rust v2 native report vectors > select
+(pass) retained Swift/Rust v2 native report vectors > start
+(pass) retained Swift/Rust v2 native report vectors > home
+(pass) retained Swift/Rust v2 native report vectors > left stick press
+(pass) retained Swift/Rust v2 native report vectors > right stick press
+(pass) retained Swift/Rust v2 native report vectors > up
+(pass) retained Swift/Rust v2 native report vectors > up right
+(pass) retained Swift/Rust v2 native report vectors > right
+(pass) retained Swift/Rust v2 native report vectors > down right
+(pass) retained Swift/Rust v2 native report vectors > down
+(pass) retained Swift/Rust v2 native report vectors > down left
+(pass) retained Swift/Rust v2 native report vectors > left
+(pass) retained Swift/Rust v2 native report vectors > up left
+(pass) retained Swift/Rust v2 native report vectors > opposed vertical
+(pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+(pass) retained Swift/Rust v2 native report vectors > all dpad directions
+(pass) retained Swift/Rust v2 native report vectors > sticks full scale
+(pass) retained Swift/Rust v2 native report vectors > sticks clamp
+(pass) retained Swift/Rust v2 native report vectors > sticks half scale
+(pass) retained Swift/Rust v2 native report vectors > left trigger independent
+(pass) retained Swift/Rust v2 native report vectors > right trigger independent
+(pass) retained Swift/Rust v2 native report vectors > triggers together
+(pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero
+(pass) retained Swift/Rust v2 native report vectors > triggers clamp
+(pass) retained Swift/Rust v2 native report vectors > mixed state
+(pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.04ms]
+(pass) digital trigger release restores independent analog hold [0.03ms]
+(pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.08ms]
+(pass) decoded state has independent immutable ownership [0.02ms]
+(pass) signed axis ties match Swift/Rust rounding away from zero [0.01ms]
+
+tests/controller-layout.test.ts:
+(pass) initial landscape map exposes every report control without overlapping hit regions [0.16ms]
+(pass) controller epochs remain caller-owned and native fixture probes hit only their intended region [0.07ms]
+
+tests/pairing.test.ts:
+(pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.15ms]
+(pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.06ms]
+(pass) a valid final allowed proof succeeds without granting another attempt [0.03ms]
+(pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.05ms]
+(pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.05ms]
+(pass) authority and window identities domain-separate the stored verifier [0.02ms]
+(pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.11ms]
+(pass) portable pairing client refuses a different authority and secret-bearing status replies [0.18ms]
+(pass) shared native enrollment fixture preserves service proof and public status semantics [0.19ms]
+(pass) listener commands require bounded explicit addresses without executing caller objects [0.10ms]
+(pass) native listener metadata binds full invitations to the exact advertised host pin port and authority [0.13ms]
+(pass) trusted inventory exposes bounded immutable metadata and rejects executable or secret fields [0.17ms]
+(pass) native invitation intake fixtures use the existing canonical CLI offer [0.22ms]
+
+tests/host-identity.test.ts:
+(pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.08ms]
+(pass) headless identity initialize/show survives separate native processes without exporting private keys [221.13ms]
+
+tests/boundaries.test.ts:
+(pass) portable modules cannot import platform code, host policy or escape through relative paths [2.86ms]
+(pass) portable domain imports and ordinary document variables remain valid [0.32ms]
+(pass) application operations can depend on domain while reverse imports remain forbidden [0.18ms]
+
+tests/mobile-input.test.ts:
+(pass) mobile control maps are bounded, immutable and share native semantic fixtures [0.29ms]
+(pass) invalid native maps cannot be admitted through the JS configuration boundary [0.07ms]
+(pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.06ms]
+(pass) native bridge configuration requires the matching activation receipt [0.52ms]
+(pass) native control lists reject holes and accessor elements without executing them [0.04ms]
+(pass) practice admission requires a native neutral-output receipt and rejects malformed metadata [0.07ms]
+(pass) native connection admission accepts only metadata and exact live receipts [0.07ms]
+
+tests/client.test.ts:
+(pass) typed local client handles repeated success and rejection without leaking connections [10.11ms]
+
+tests/configuration-catalog.test.ts:
+(pass) catalog projects case-insensitive stable IDs and exact Int64 timestamps without replacing source [0.11ms]
+(pass) rename targets the explicit profile even when another profile is active and preserves opaque subtrees [0.22ms]
+(pass) catalog refuses missing, duplicate and dangling profile identities and selection aliases [0.21ms]
+(pass) catalog blocks credentials, server authority fields and retired profile aliases [0.30ms]
+(pass) catalog timestamps reject rounded fractions and overflow while accepting exact integer spellings [0.46ms]
+(pass) rename rejects unknown identity, blank/oversized names, timestamp regression and noncanonical clocks [0.24ms]
+
+tests/configuration-operations.test.ts:
+(pass) scoped metadata commits preserve opaque exact source, inactive profile identity and durable retries [7.84ms]
+(pass) capability denial precedes storage and replay; stale edits return a typed revision conflict [5.34ms]
+(pass) catalog paging pins the source revision and bounds repeated MCP JSON encoding [21.77ms]
+(pass) empty ledger is readable, but rename cannot seed or overwrite arbitrary configuration [4.81ms]
+(pass) same-name writes keep exact source and still persist an idempotent receipt [4.97ms]
+(pass) command decoding rejects ambiguous accessors, extra capabilities, malformed IDs and invalid Unicode [0.17ms]
+(pass) response validation rejects mismatched receipts, stale pages and unsolicited source data [0.09ms]
+
+tests/lossless-json.test.ts:
+(pass) scoped source edits preserve raw full-width numbers, escaped strings and opaque subtrees [1.15ms]
+(pass) safe integer projections use decimal mathematics instead of rounded doubles [0.08ms]
+(pass) canonical source hashing representation is stable without claiming RFC 8785 [0.05ms]
+(pass) JSON pointers edit object data and arrays without prototype mutation or profile redirection [0.15ms]
+(pass) duplicate decoded keys, malformed grammar, non-JSON whitespace and invalid Unicode fail [0.47ms]
+(pass) byte, graph and depth limits apply again to composed edits [76.92ms]
+
+1 tests skipped:
+(skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+
+ 143 pass
+ 1 skip
+ 0 fail
+ 2328 expect() calls
+Ran 144 tests across 20 files. [14.93s]

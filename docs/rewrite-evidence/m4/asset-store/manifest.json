@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "capsuleSHA256": "abca1cef2e16734dc173dcd7327ddb1b8b018102306c3ea5b3b37139bad56efb",
+  "sourceFiles": [
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "17feccdbf4ec4dec1a45bd06af56bc2749227b59"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec505360f83ead13bcf25e2a799cb31ed733ba38"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7bb5e38131af62988a732ff8bbc7b56c39476a38"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/security.rs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9dc2a5b36d8c6b2410be765e7c17e2aa117fee84"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/asset_files.rs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4cd8dd8a14bb485c0d3d35aca3b0c5bac2dac10"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/asset_files_process.rs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ccde11c1b84ab1a223b304dbb5257721f9f74167"
+    },
+    {
+      "path": "Rewrite/packages/application/src/configuration-store.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f5eefbaf0df78ad9d194d3d993d3f447c743f29d"
+    },
+    {
+      "path": "Rewrite/packages/storage/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cc69661ca0ff2ea163e48272f2052f703469bfe"
+    },
+    {
+      "path": "Rewrite/packages/storage/src/configuration-sqlite.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2151de5269e3f9f45a86f634951482ea72361fcc"
+    },
+    {
+      "path": "Rewrite/packages/storage/src/asset-files.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ab1a77b35f441a55b23aa066d7289a437f0accca"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/asset-files-v1/vector.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58e6f366bfc2e58dd838ee3ec7e97790b09721ac"
+    },
+    {
+      "path": "Rewrite/tests/asset-files.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd2a33f240f1db17f8a741e931cf5ca6e30f80c7"
+    },
+    {
+      "path": "Rewrite/tests/helpers/configuration-asset-process.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7904b689e7f25ae6d572cece912c6bd6ed04e2bb"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "03dc066e3f3769d0692ae10cecfc3dcc630ca129"
+    },
+    {
+      "path": "docs/rewrite-asset-files-v1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "566f7d029ca01e83f46fe98ad1983f18dc0bdecf"
+    },
+    {
+      "path": "docs/rewrite-configuration-ledger-v1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd42c191777323ec27270576cc06e56898634680"
+    }
+  ],
+  "logs": [
+    {
+      "path": "rust.txt",
+      "byteCount": 12931,
+      "sha256": "5c8f2341834b5928b8ec401f170b552accaa4dd5ebfa5a2ef92f75cca5c3f655"
+    },
+    {
+      "path": "clippy.txt",
+      "byteCount": 198,
+      "sha256": "98dbf88d70c8c6d4fa6787183a04390800e6c1882ff8a449889e5506fbeee04c"
+    },
+    {
+      "path": "verify.txt",
+      "byteCount": 14381,
+      "sha256": "fe08601ffbf62088245e7d03528b1b94c8955cd9ae57bc64fe7f761c4933457f"
+    },
+    {
+      "path": "package.txt",
+      "byteCount": 666,
+      "sha256": "f959a070275d7fa87c53fad5fb4bbada1797f2c031bfb99581b83ca66feed12c"
+    },
+    {
+      "path": "stack-safety.txt",
+      "byteCount": 181932,
+      "sha256": "c1e0773455756b21743bfa97b1e2102dfe4696aac77beec9919ba7ae824b8a58"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "64371CF9-FEEA-4B8D-B19C-24949D40AD6B",
+      "deviceName" : "Thumble Rewrite CI",
+      "modelName" : "iPhone 17 Pro",
+      "osBuildNumber" : "23C54",
+      "osVersion" : "26.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.031s",
+                  "durationInSeconds" : 0.03148996829986572,
+                  "name" : "testActualReactRootDoesNotOwnTouchSurface()",
+                  "nodeIdentifier" : "NativePortalTests/testActualReactRootDoesNotOwnTouchSurface()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testActualReactRootDoesNotOwnTouchSurface",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.021s",
+                  "durationInSeconds" : 0.021399974822998047,
+                  "name" : "testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease()",
+                  "nodeIdentifier" : "NativePortalTests/testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testAppPortalAdoptsExactNativeReceiptWithoutFirstLayoutRelease",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0091s",
+                  "durationInSeconds" : 0.009052038192749023,
+                  "name" : "testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval()",
+                  "nodeIdentifier" : "NativePortalTests/testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testConnectedEngineSurvivesInitialInstallationAndReleasesOnRemoval",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.062s",
+                  "durationInSeconds" : 0.06169402599334717,
+                  "name" : "testHiddenAndRemovedAnchorsReleaseAndStopIntercepting()",
+                  "nodeIdentifier" : "NativePortalTests/testHiddenAndRemovedAnchorsReleaseAndStopIntercepting()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testHiddenAndRemovedAnchorsReleaseAndStopIntercepting",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "NativePortalTests.swift:201: XCTAssertEqual failed: (\"Optional(500)\") is not equal to (\"Optional(200)\") - recording-only host witness failed at /renewal-start",
+                      "nodeType" : "Failure Message"
+                    },
+                    {
+                      "name" : "<compiler-generated>:0: failed: caught error: \"InvalidTransition { \n  phase: idle\n  targetPhase: failed(deinit)\n}\"",
+                      "nodeType" : "Failure Message"
+                    }
+                  ],
+                  "duration" : "8s",
+                  "durationInSeconds" : 8.885179996490479,
+                  "name" : "testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+                  "nodeIdentifier" : "NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "NativePortalTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "NativePortalTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "NativePortalTests",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

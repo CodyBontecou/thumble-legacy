@@ -1,0 +1,2 @@
+    Checking thumble-rewrite-receiver v0.0.0 (/private/tmp/thumble-native-input-v4-public-projection/Rewrite/native/receiver)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.02s

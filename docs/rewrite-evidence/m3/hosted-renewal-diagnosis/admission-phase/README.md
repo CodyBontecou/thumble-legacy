@@ -1,0 +1,11 @@
+# Admission phase diagnostics
+
+Local source `ec5c449`, public `8fa989510a96251d5cab2629a352f2186403af0b`, adds bounded native phases and key-window state to the existing synthetic QA checkpoints, and stops immediately when admission fails. Five source files; capsule SHA-256 `9861fa9833c616edf4c1136ec29cb59dcc218843e34a2daa73fddfdac4ba3e3e`. Public tree/parent/blob isolation verified. No keys, raw errors, arbitrary text, invitations or production phone data enter the diagnostic protocol.
+
+Local UIKit suite executes all five tests without skips. Continuous hold: 75,150 ms, two accepted rotations, 4,061 recorded held samples, zero neutral pulses; observed maximum app publication gap 33 ms. Fresh neutral reconnect and acknowledged release pass. Python diagnostic tests, workflow lint, portable strict types and retained stack gate pass. Local success does not establish the hosted root cause.
+
+Prior public `2ae6e6d3` artifact failed native pairing/admission before publications (`probe_app_source_not_neutral`); its test had continued against a disconnected practice engine, so the later held-state checkpoint was misleading. The new admission guard prevents that continuation.
+
+A newer artifact for public `097234b0`, run `39792332085` / iOS job `119871229721`, has four passing tests, one failed, zero skips. It proves fresh neutral source admission succeeded. The first `/renewal-start` check then failed with `probe_held_trigger_not_ready`; the native witness exited with code 1. The app's later transport failure is downstream of that witness failure: the HTTP probe currently uses non-throwing XCTest assertions and can continue after HTTP 500. Do not treat the later `transportFailure` checkpoint as proof of the initiating cause. Fix that QA fail-fast path and investigate the missing initial held report without relaxing 350 ms expiry. Root cause remains unresolved.
+
+Current asset snapshot app run `39800634263` has iOS job `119899996608` and Android job `119899996124` in progress at the last CLI observation. It includes the admission diagnostics. GitHub connector commit-run wrapper filters to pull-request events, so an empty result does not prove push runs are absent; CLI inspection supplies the actual push run state. No runs were manually restarted or cancelled this turn.
