@@ -32,5 +32,19 @@
   "runs": [
     39719281750,
     39719281581
-  ]
+  ],
+  "lastObserved": {
+    "host": "all three jobs passed",
+    "mobile": "Android native and Keystore passed; iOS provider step running",
+    "hostJobs": [
+      119628745968,
+      119628745973,
+      119628746044
+    ],
+    "mobileJobs": [
+      119628745836,
+      119628745988,
+      119628746071
+    ]
+  }
 }
