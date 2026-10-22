@@ -1,0 +1,45 @@
+{
+  "sha": "6d5b898b28a88fc1a4bfd8c3e6cca10c08143700",
+  "hostRun": 39708722829,
+  "mobileRun": 39708813933,
+  "firstWindowsJob": 119594728088,
+  "firstWindowsResult": "Four TLS TransportRejected failures during a 66.95-second unit-test attempt; unchanged source passed the rerun.",
+  "jobs": [
+    {
+      "id": 119596025233,
+      "name": "portable (windows-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119596026133,
+      "name": "portable (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119596053104,
+      "name": "portable (macos-latest)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119595008607,
+      "name": "android-native",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119595008826,
+      "name": "ios-native",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 119595008851,
+      "name": "android-keystore",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

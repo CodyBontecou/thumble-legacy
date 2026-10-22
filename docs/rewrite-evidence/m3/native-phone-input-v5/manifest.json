@@ -1,0 +1,73 @@
+{
+  "expectedPublicParent": "6d5b898b28a88fc1a4bfd8c3e6cca10c08143700",
+  "baseTree": "c909e43b5af22886a3e1db24b1da38bd8f87a352",
+  "bytes": 136793,
+  "characters": 136793,
+  "sha256": "026c36f0c26a4f8dd7ac0cef0120574a6936753548708dd661ca88215f3a86ec",
+  "files": [
+    {
+      "path": "Rewrite/native/mobile-input/README.md",
+      "sha": "e983e29c25aed7cd7c321b3c28314291c65712a9"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneControl.kt",
+      "sha": "a09373ac8f7a589c651d08e7953c5333b8741877"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/NativeDatagram.kt",
+      "sha": "429bb767f23a57068be6aa05e48ffb445a102615"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/NativeInputRoute.kt",
+      "sha": "5f38b6b839273c98192e2f1ba10953aed476466a"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneInputTest.kt",
+      "sha": "4c892891ba29a0b3f6f5d36ff734026970ed2fa6"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/NativeDatagramTest.kt",
+      "sha": "c211737723dcc7d6ec1d7122a8b9358852ffdabf"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/NativeInputRouteTest.kt",
+      "sha": "45d6d16368dc6f365e0d79b23614805bb81fb60e"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneControl.swift",
+      "sha": "cb4b0fa6511f9f121b1738de36014b0368961be0"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/NativeDatagram.swift",
+      "sha": "414eca65bdc681afa15f4c7faf6cee3cfa107334"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/NativeInputRoute.swift",
+      "sha": "9df209cca2c89639ecaff8b7e10d462c4e450f3d"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneInputTests.swift",
+      "sha": "1e432317b653adf5535cffdaab7ffd18cf3102dd"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/NativeDatagramTests.swift",
+      "sha": "fadea00d406e2bdb269cf95551629123f268b2db"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/NativeInputRouteTests.swift",
+      "sha": "cd1f390cea820b5a46f6a07f70c463afa330bcc5"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v5.md",
+      "sha": "cca402ee819e845fdd216cc5e7aa5596d8db46cd"
+    },
+    {
+      "path": "docs/rewrite-native-phone-input-v4.md",
+      "sha": "2f547086a25ba4965e5261b58aadb19ba778d65e"
+    },
+    {
+      "path": "docs/rewrite-native-phone-input-v5.md",
+      "sha": "6bd7b936c7ae36dafb6708676a88ccce28931dd8"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# Native phone UDP and reliable fallback
+
+Explicit control-v5 opt-in; v3/v4 defaults preserved. Protocol and limits: [native phone v5](../../../rewrite-native-phone-input-v5.md). Changes stay in isolated native input libraries and docs. No retained desktop/shared model, real credential, physical output or GUI interaction used.
+
+Final local checks: 68 Swift tests with every native-process witness enabled, including TLS/UDP/dropped-UDP modes; 87 Android tests, zero skipped/failures/errors; AAR/lint; all three Swift native modules compile for both arm64 Simulator and iOS device SDKs; portable verify 74 passed; actionlint clean. Rust is unchanged from hosted baseline 6d5b898.
+
+The native route owns no packet queue or resealing operation. It retains at most 64 sequence/time pairs, takes initial neutral over TLS, and permanently falls back when the oldest unacknowledged offer reaches 150ms, metadata fills or UDP fails. Partial acknowledgments cannot extend older outstanding traffic. UDP transports retain one in-flight and one replaceable snapshot. Setup runs outside admission; a blocked setup test proves neutral/TLS input can bind and close, and late Android setup results close rather than install after owner loss. Invalid progress closes a held touch owner. Wall/continuous grant expiry is rechecked after progress responses too.
+
+Initial new dropped-UDP integration tests failed on second activation because that test submitted one held sample without continued display sampling. The test now drives fresh full-state ticks, matching the native display callback contract, and proves fallback without replaying touch history. Separate route tests assert exact ciphertext and counter behavior; actual UDP socket tests verify native packet delivery. None of this proves physical input or real network performance.
+
+Prior public 6d5b898 has six successful hosted jobs (see prior-hosted-baseline.json). Its Windows first attempt encountered four TLS deadline failures during an unusually slow run; unchanged source passed the rerun. Preserve this limitation rather than describe a production fix. New UDP phone code requires its own hosted/OS-provider run.
+
+Standing human authorization covers CI source publication without further approval requests. Publish only frozen source/docs on the current public parent. Private baseline/history, credentials, builds and this evidence are excluded. GitHub did not automatically schedule runs for the last ref update; the GitHub CLI dispatched its exact branch head successfully. Check for fresh runs and dispatch if necessary, without changing the source or restarting a confirmed live run.
+
+Retained stack-safety/cutover acceptance remains unresolved from the earlier stalled macro-compiler probe. No milestone or full rewrite completion is claimed. The 150ms route watchdog targets current CLI 350ms input TTL; user-selectable shorter TTLs need timing negotiation. Sixty-second grant/control renewal, app/bridge/UI integration, game/optical integration, signing/physical OS output and launch gates remain open.
