@@ -1,0 +1,34 @@
+   Compiling thumble-rewrite-receiver v0.0.0 (/Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/receiver)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.74s
+     Running unittests src/lib.rs (Rewrite/native/receiver/target/debug/deps/thumble_rewrite_receiver-b82e341ae8479220)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 80 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (Rewrite/native/receiver/target/debug/deps/thumble_rewrite_receiver-3a331690027b3d1b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/native_ingress_process.rs (Rewrite/native/receiver/target/debug/deps/native_ingress_process-47eb203a7ac96d8a)
+
+running 1 test
+[DEBUG-stale-source] {"active":false,"backend":"recording","generation":"1","inputEnabled":false,"lastReleaseReason":"input_expired","profileId":"profile-a","reportHex":"0014000000000000000000000000000000000000","revision":"1","sequence":null}
+
+thread 'stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration' panicked at tests/native_ingress_process.rs:571:5:
+assertion `left != right` failed
+  left: String("0014000000000000000000000000000000000000")
+ right: "0014000000000000000000000000000000000000"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... FAILED
+
+failures:
+
+failures:
+    stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 1.14s
+
+error: test failed, to rerun pass `--test native_ingress_process`

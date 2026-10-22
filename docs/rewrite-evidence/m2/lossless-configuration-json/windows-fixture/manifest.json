@@ -1,0 +1,10 @@
+{
+  "expectedPublicParent": "ed7eec7e62ee6cadbcde512f8e64695a8df327c3",
+  "baseTree": "1cd66060c787dbad4f9f183514a73067b59cd54a",
+  "bytes": 36718,
+  "sha256": "a94e30527c5241f6a4922d440a8d332944d024f21f097374f23d87627698f94f",
+  "file": {
+    "path": "Rewrite/native/receiver/tests/native_ingress_process.rs",
+    "sha": "0e443ae89615d3eb5e068b7bd74f2cbfce7bd7ba"
+  }
+}
