@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thumble.rewrite.input.PhoneInputTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-10-22T00:47:55" hostname="MacBook-Pro.local" time="4.618">
+  <properties/>
+  <testcase name="actualNativeTouchCrossesTlsAndIpcWithFreshNeutralReconnect" classname="com.thumble.rewrite.input.PhoneInputTest" time="3.571"/>
+  <testcase name="everyNativeLifecycleCancellationClosesGrantChannel" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.014"/>
+  <testcase name="inactiveStaleForeignOrExtendedConfigurationNeverRequestsGrant" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.004"/>
+  <testcase name="lateUiHandoffOrClockRollbackCannotExtendTheGrant" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.002"/>
+  <testcase name="lateGrantCannotBindAfterConcurrentClose" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.002"/>
+  <testcase name="authenticatesAndBindsOnInputThreadWithOnlySealedFrames" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.003"/>
+  <testcase name="malformedOrCrossConnectionGrantsNeverReachInputThread" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.009"/>
+  <testcase name="latencyConsumesGrantLifetimeAndElapsedClockExpiresHeldInput" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.003"/>
+  <testcase name="heartbeatRejectsAChangedConnectionAndInputThreadClearsHeldState" classname="com.thumble.rewrite.input.PhoneInputTest" time="1.007"/>
+  <testcase name="explicitVersion4RejectsDowngradeBeforeLoadingVault" classname="com.thumble.rewrite.input.PhoneInputTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+# Native phone input binding evidence
+
+Swift and Kotlin now explicitly negotiate control-v4, validate exact active configuration and a native-only grant, and bind one native touch engine. Sender ownership, conservative wall/continuous expiry, strict connection/counter/packet/transport fields, bounded asynchronous output, receipt heartbeat and lifecycle retirement remain native. Version 3 is still the default metadata-only mode.
+
+Actual Network.framework and JVM TLS tests enroll and authenticate against the real native host, deliver known held input through private IPC to a separate receiver, stay live across multiple heartbeats, confirm native release and reconnect on advanced generation/revision starting at admitted neutral sequence zero. The witness requires the exact native release reason before a one-second deadline while input TTL is 1,500ms, so ordinary TTL cannot satisfy the release check. An initial witness revision-reuse error was corrected; the receiver correctly rejected it. Swift witness reads moved to a test actor to avoid blocking native delivery. No product safety invariant was relaxed.
+
+Final checks: 55 Swift tests with all native witnesses enabled; 74 Android tests, zero skipped/failed, AAR/lint; both iOS SDK module compiles; 79 Rust unit + eight real-process tests; all-target Clippy; 74 TypeScript tests/916 assertions plus standalone packaging/53 assertions; actionlint. Strict-grant, late/cancelled handoff, unsupported metadata/version, clocks, local feedback and all lifecycle reasons have regression coverage. The original retained stack-safety macro probe remains unresolved and no passing retained-stack result is claimed.
+
+This is new local source beyond public c8d5d2b. No new source is published by recording these results. Separate hosted/OS-provider checks, UDP, app/controller UI, physical output/signing, gameplay, optical sync and launch gates remain pending. The original checkout and retained GUI owners are untouched.

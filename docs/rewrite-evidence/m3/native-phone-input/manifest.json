@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "scope": "Native control-v4 phone grant and touch binding to separate recording receiver",
+  "verification": {
+    "rust": {
+      "unit": 79,
+      "process": 8,
+      "failures": 0
+    },
+    "typescript": {
+      "tests": 74,
+      "assertions": 916,
+      "packageAssertions": 53
+    },
+    "swift": {
+      "tests": 55,
+      "failures": 0,
+      "allNativeWitnessesEnabled": true
+    },
+    "android": {
+      "tests": 74,
+      "failures": 0,
+      "skipped": 0,
+      "allNativeWitnessesEnabled": true,
+      "aarAndLint": "passed"
+    },
+    "bothIosSdkModules": "passed",
+    "clippyAllTargets": "passed",
+    "workflowActionlint": "passed"
+  },
+  "witness": {
+    "separateReceiver": true,
+    "exactHeldReport": true,
+    "freshNeutralSequenceZero": true,
+    "nativeReleaseReason": "native_input_released",
+    "sustainedHeartbeatSeconds": 3.1,
+    "freshGenerationAndRevisionReconnect": true,
+    "inputTtlMs": 1500,
+    "releaseObservationDeadlineMs": 1000
+  },
+  "limits": [
+    "No physical output or phone/UI/gameplay acceptance",
+    "New source not covered by public c8d5d2b CI",
+    "Retained stack-safety script previously stalled in macro compiler probe; no passing retained-stack evidence",
+    "UDP and launch optical sync remain required"
+  ],
+  "logs": [
+    {
+      "path": "README.md",
+      "bytes": 1975,
+      "sha256": "52391fdab00be375e8a3358d39d14ed238ce3e5402dbfea2c2cf5005a7b93dbf"
+    },
+    {
+      "path": "actionlint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "android-phone-input.xml",
+      "bytes": 1744,
+      "sha256": "8f9b1a8b71af4a4c318a9d306939e9a5b32ca3b77b439ef330db0f82cd7960d8"
+    },
+    {
+      "path": "android.txt",
+      "bytes": 2652,
+      "sha256": "7341c22674cc44846bc9fa5ee0a475110895272b163629d0780638c0cdf64631"
+    },
+    {
+      "path": "clippy.txt",
+      "bytes": 207,
+      "sha256": "640085f43e947314071653213ca84028fa39f99894702b2c34d85e52f941a5be"
+    },
+    {
+      "path": "ios-device.txt",
+      "bytes": 104,
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    {
+      "path": "ios-simulator.txt",
+      "bytes": 121,
+      "sha256": "d722a0dd6f8d0610704503346ed6cddf7c46911980421c430ecb32ab49220750"
+    },
+    {
+      "path": "package-build.txt",
+      "bytes": 242,
+      "sha256": "94aa47c33b08baee87f9052dfd7dfd7f451c0c23705ecb6363a043131e0f1e0e"
+    },
+    {
+      "path": "package.txt",
+      "bytes": 297,
+      "sha256": "73b0d8799a271b4e314c8585a98427892f9e4a333b4810296cbdd390740cf347"
+    },
+    {
+      "path": "probe-build.txt",
+      "bytes": 207,
+      "sha256": "6f112435c8c775a32022d0f49861ebc04cb89a450784ea31fce81bac0d459b6f"
+    },
+    {
+      "path": "rust.txt",
+      "bytes": 9463,
+      "sha256": "6099c369fa0ad8784eafd3b08f8b8315c6e2e043b1dfbc259e121d5e741286ff"
+    },
+    {
+      "path": "sdk-iphoneos.json",
+      "bytes": 720,
+      "sha256": "2ea8c2362cd6a684ec712116f8ce0d6c5669a4116107d351342ae71b6ef7386a"
+    },
+    {
+      "path": "sdk-iphonesimulator.json",
+      "bytes": 744,
+      "sha256": "71333329d51b8556e03397302fbd2353f3dbd9548ee1de9dc72d0c2faee9aafd"
+    },
+    {
+      "path": "swift.txt",
+      "bytes": 14137,
+      "sha256": "4316901c30575a94c196874267ec585864d38ac31666711f6276fadd8a8d7840"
+    },
+    {
+      "path": "typescript.txt",
+      "bytes": 7219,
+      "sha256": "140e3a54e9cde0a4abe2f50ef1610bb09b557b7b9384766f86be1b4b46fc93cc"
+    }
+  ],
+  "logNormalization": "Trailing whitespace removed and nonempty logs end in one newline; original command logs remain in /private/tmp."
+}

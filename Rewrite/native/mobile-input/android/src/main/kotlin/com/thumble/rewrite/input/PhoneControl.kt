@@ -46,20 +46,29 @@ internal constructor(
     private val load: (String, Long) -> PhoneCredential?,
     private val now: () -> Long,
     private val requireWorker: Boolean = false,
+    private val controlVersion: Int = 3,
+    private val elapsed: () -> Long = System::nanoTime,
 ) : Closeable {
     private val started = AtomicBoolean(false)
     private val closed = AtomicBoolean(false)
     private val busy = AtomicBoolean(false)
     private val owner = Any()
     private var io: NativeFrameIO? = null
-    private var admitted: PhoneControlMetadata? = null
-    private var last = 0L
-    private var deadline: Long? = null
+    @Volatile private var admitted: PhoneControlMetadata? = null
+    @Volatile private var last = 0L
+    @Volatile private var deadline: Long? = null
+    private val inputAttempted = AtomicBoolean(false)
+    @Volatile private var inputDeadline: Long? = null
+    @Volatile private var inputElapsedDeadline: Long? = null
+    private var inputElapsedLast: Long? = null
+    @Volatile private var inputDelivery: NativeControlDelivery? = null
+    @Volatile private var heartbeat: Thread? = null
 
     @TargetApi(29)
     constructor(
         endpoint: TrustedHostEndpoint,
         context: Context,
+        inputSessions: Boolean = false,
     ) : this(
         endpoint,
         {
@@ -79,6 +88,8 @@ internal constructor(
         PhoneCredentialVault(context)::load,
         System::currentTimeMillis,
         true,
+        if (inputSessions) 4 else 3,
+        android.os.SystemClock::elapsedRealtimeNanos,
     )
 
     private fun worker() {
@@ -86,20 +97,21 @@ internal constructor(
             throw PhoneControlRejected()
     }
 
-    private fun checkpoint(): Long {
-        val time = now()
-        if (
-            closed.get() ||
-                Thread.currentThread().isInterrupted ||
-                time < 0 ||
-                time < last ||
-                deadline?.let { time >= it } == true ||
-                admitted?.let { time >= it.expiresAt } == true
-        )
-            throw PhoneControlRejected()
-        last = time
-        return time
-    }
+    private fun checkpoint(): Long =
+        synchronized(owner) {
+            val time = now()
+            if (
+                closed.get() ||
+                    Thread.currentThread().isInterrupted ||
+                    time < 0 ||
+                    time < last ||
+                    deadline?.let { time >= it } == true ||
+                    admitted?.let { time >= it.expiresAt } == true
+            )
+                throw PhoneControlRejected()
+            last = time
+            time
+        }
 
     private fun transport(): NativeFrameIO =
         synchronized(owner) { io ?: throw PhoneControlRejected() }
@@ -124,7 +136,11 @@ internal constructor(
 
     fun authenticate(): PhoneControlMetadata {
         worker()
-        if (!started.compareAndSet(false, true) || !busy.compareAndSet(false, true))
+        if (
+            controlVersion !in 3..4 ||
+                !started.compareAndSet(false, true) ||
+                !busy.compareAndSet(false, true)
+        )
             throw PhoneControlRejected()
         try {
             checkpoint()
@@ -146,7 +162,7 @@ internal constructor(
                 JSONObject()
                     .put("version", 1)
                     .put("command", "hello")
-                    .put("controlVersion", 3)
+                    .put("controlVersion", controlVersion)
                     .put("inputVersion", 1)
                     .put("documentVersion", 1)
                     .put("capabilitiesVersion", 1)
@@ -157,7 +173,7 @@ internal constructor(
                     "command" to EnrollmentJSON.Value.Text("hello"),
                     "authorityInstanceId" to
                         EnrollmentJSON.Value.Text(endpoint.authorityInstanceID),
-                    "controlVersion" to EnrollmentJSON.Value.Integer(3),
+                    "controlVersion" to EnrollmentJSON.Value.Integer(controlVersion.toLong()),
                     "inputVersion" to EnrollmentJSON.Value.Integer(1),
                     "documentVersion" to EnrollmentJSON.Value.Integer(1),
                     "capabilitiesVersion" to EnrollmentJSON.Value.Integer(1),
@@ -221,13 +237,14 @@ internal constructor(
                 !connection.matches(Regex("[0-9a-f]{32}")) ||
                 expires <= last ||
                 value["inputEnabled"] != EnrollmentJSON.Value.BooleanValue(false) ||
-                value["inputSessionAvailable"] != EnrollmentJSON.Value.BooleanValue(false) ||
+                value["inputSessionAvailable"] !=
+                    EnrollmentJSON.Value.BooleanValue(controlVersion == 4) ||
                 credential?.let {
                     it.phoneID != phone || it.epoch != epoch || expires > it.expiresAt
                 } == true
         )
             throw PhoneControlRejected()
-        val receipt = PhoneControlMetadata(phone, epoch, connection, expires, false)
+        val receipt = PhoneControlMetadata(phone, epoch, connection, expires, controlVersion == 4)
         if (admitted?.let { it != receipt } == true) throw PhoneControlRejected()
         return receipt
     }
@@ -264,8 +281,116 @@ internal constructor(
         }
     }
 
+    /** Worker-only grant admission; bind the returned owner once on the native input/UI thread. */
+    fun prepareInput(map: ControlMap): PhoneInputAdmission {
+        worker()
+        if (
+            controlVersion != 4 ||
+                admitted == null ||
+                inputAttempted.get() ||
+                !busy.compareAndSet(false, true)
+        )
+            throw PhoneControlRejected()
+        try {
+            if (!inputAttempted.compareAndSet(false, true)) throw PhoneControlRejected()
+            map.validated()
+            val connection = admitted!!.connectionID
+            send(
+                JSONObject()
+                    .put("version", 1)
+                    .put("command", "input-configuration")
+                    .put("connectionId", connection)
+            )
+            PhoneInputGrant.configuration(receive(), connection, map)
+            val requested = checkpoint()
+            val startedAt = elapsed()
+            send(
+                JSONObject()
+                    .put("version", 1)
+                    .put("command", "input-grant")
+                    .put("connectionId", connection)
+                    .put("generation", map.generation)
+                    .put("revision", map.revision)
+            )
+            val grant = PhoneInputGrant(receive(), connection, map)
+            inputDeadline = minOf(deadline ?: 0, Math.addExact(requested, grant.lifetime))
+            inputElapsedDeadline =
+                Math.addExact(startedAt, Math.multiplyExact(grant.lifetime, 1_000_000))
+            inputElapsedLast = startedAt
+            inputCheckpoint()
+            val raw = transport()
+            val delivery = NativeControlDelivery(raw)
+            synchronized(owner) {
+                if (closed.get() || io !== raw) {
+                    delivery.close()
+                    throw PhoneControlRejected()
+                }
+                io = delivery
+                inputDelivery = delivery
+            }
+            val admission = PhoneInputAdmission(grant.packet, map, this)
+            heartbeat =
+                Thread(
+                        {
+                            try {
+                                while (!closed.get()) {
+                                    Thread.sleep(1000)
+                                    if (busy.get()) continue
+                                    inputCheckpoint()
+                                    status()
+                                }
+                            } catch (_: Exception) {
+                                close()
+                            }
+                        },
+                        "thumble-input-control",
+                    )
+                    .apply {
+                        isDaemon = true
+                        start()
+                    }
+            return admission
+        } catch (_: Exception) {
+            close()
+            throw PhoneControlRejected()
+        } finally {
+            busy.set(false)
+        }
+    }
+
+    internal fun inputThread() {
+        if (requireWorker && Looper.myLooper() != Looper.getMainLooper())
+            throw PhoneControlRejected()
+    }
+
+    internal fun inputCheckpoint() =
+        synchronized(owner) {
+            val time = checkpoint()
+            val wall = inputDeadline ?: throw PhoneControlRejected()
+            val continuous = inputElapsedDeadline ?: throw PhoneControlRejected()
+            val current = elapsed()
+            if (
+                time >= wall ||
+                    current >= continuous ||
+                    inputElapsedLast?.let { current < it } == true
+            )
+                throw PhoneControlRejected()
+            inputElapsedLast = current
+        }
+
+    internal fun offerInput(packet: ByteArray): Boolean =
+        try {
+            inputCheckpoint()
+            inputDelivery?.offerInput(packet) == true
+        } catch (_: Exception) {
+            close()
+            false
+        }
+
     override fun close() {
         if (!closed.compareAndSet(false, true)) return
+        heartbeat?.interrupt()
+        heartbeat = null
         val connected =
             synchronized(owner) {
                 val current = io

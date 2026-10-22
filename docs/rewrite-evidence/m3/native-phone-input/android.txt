@@ -1,0 +1,63 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :generateDebugResValues UP-TO-DATE
+> Task :generateDebugResources UP-TO-DATE
+> Task :packageDebugResources UP-TO-DATE
+> Task :parseDebugLocalResources UP-TO-DATE
+> Task :generateDebugRFile UP-TO-DATE
+> Task :javaPreCompileDebug UP-TO-DATE
+> Task :preDebugUnitTestBuild UP-TO-DATE
+> Task :generateDebugUnitTestStubRFile UP-TO-DATE
+> Task :javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :mergeDebugJniLibFolders UP-TO-DATE
+> Task :mergeDebugNativeLibs NO-SOURCE
+> Task :stripDebugDebugSymbols NO-SOURCE
+> Task :copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :extractDeepLinksForAarDebug UP-TO-DATE
+> Task :mergeDebugShaders UP-TO-DATE
+> Task :compileDebugShaders NO-SOURCE
+> Task :generateDebugAssets UP-TO-DATE
+> Task :mergeDebugAssets UP-TO-DATE
+> Task :prepareDebugArtProfile UP-TO-DATE
+> Task :prepareLintJarForPublish UP-TO-DATE
+> Task :processDebugManifest UP-TO-DATE
+> Task :writeDebugAarMetadata UP-TO-DATE
+> Task :preDebugAndroidTestBuild UP-TO-DATE
+> Task :generateDebugAndroidTestResValues UP-TO-DATE
+> Task :writeDebugLintModelMetadata UP-TO-DATE
+> Task :extractProguardFiles UP-TO-DATE
+> Task :compileDebugKotlin
+> Task :compileDebugJavaWithJavac NO-SOURCE
+> Task :processDebugJavaRes UP-TO-DATE
+> Task :bundleLibRuntimeToJarDebug
+> Task :bundleLibCompileToJarDebug
+> Task :extractDebugAnnotations
+> Task :mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :mergeDebugJavaResource UP-TO-DATE
+> Task :syncDebugLibJars
+> Task :bundleDebugAar
+> Task :assembleDebug
+> Task :bundleDebugLocalLintAar
+> Task :createFullJarDebug
+> Task :generateDebugLintReportModel
+> Task :generateDebugAndroidTestLintModel
+> Task :generateDebugUnitTestLintModel
+> Task :compileDebugUnitTestKotlin
+> Task :compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :processDebugUnitTestJavaRes UP-TO-DATE
+> Task :lintAnalyzeDebugAndroidTest
+> Task :lintAnalyzeDebugUnitTest
+> Task :testDebugUnitTest
+> Task :lintAnalyzeDebug
+
+> Task :lintReportDebug
+Wrote HTML report to file:///Users/codybontecou/.codex/worktrees/typescript-rewrite/Thumble/Rewrite/native/mobile-input/android/build/reports/lint-results-debug.html
+
+> Task :lintDebug
+
+BUILD SUCCESSFUL in 18s
+43 actionable tasks: 18 executed, 25 up-to-date
