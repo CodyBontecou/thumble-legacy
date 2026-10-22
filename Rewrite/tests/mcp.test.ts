@@ -93,6 +93,24 @@ test("MCP duplicate outstanding IDs and request/output budgets close the connect
   output.destroy();
 });
 
+test("MCP accepts the writable backpressure signal without waiting for a platform callback", async () => {
+  const input = new PassThrough();
+  const output = new Writable({
+    highWaterMark: 1024,
+    write(_chunk, _encoding, _callback) {},
+  });
+  const transport = new BoundedStdioTransport(input, output);
+  await transport.start();
+  try {
+    await expect(
+      transport.send({ jsonrpc: "2.0", id: 1, result: {} }),
+    ).resolves.toBeUndefined();
+  } finally {
+    await transport.close();
+    output.destroy();
+  }
+});
+
 test("SDK modern and legacy clients share CLI authority, preserve input opt-in and emergency release across MCP exit", async () => {
   const parent = realpathSync(mkdtempSync(join(tmpdir(), "thumble-mcp-"))),
     runtime = join(parent, "runtime");
@@ -164,7 +182,9 @@ test("SDK modern and legacy clients share CLI authority, preserve input opt-in a
           );
           phase("connected");
           expect(client.getProtocolEra()).toBe(legacy ? "legacy" : "modern");
-          const tools = await client.listTools();
+          phase("tools-list");
+          const tools = await client.listTools(undefined, { timeout: 5000 });
+          phase("tools-listed");
           expect(tools.tools.map((t) => t.name).sort()).toEqual(
             [
               "receiver_status",
