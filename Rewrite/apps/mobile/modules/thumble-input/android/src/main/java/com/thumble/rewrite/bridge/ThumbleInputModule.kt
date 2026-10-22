@@ -343,7 +343,16 @@ class ThumbleInputView(context: Context, appContext: AppContext) : ExpoView(cont
             previous == null ||
                 previous.generation != next.generation ||
                 previous.revision != next.revision ||
-                previous.controls != next.controls
+                previous.controls.map {
+                    it.copy(
+                        hapticFeedback = (it.hapticFeedback ?: TouchHapticFeedback()).normalized
+                    )
+                } !=
+                    next.controls.map {
+                        it.copy(
+                            hapticFeedback = (it.hapticFeedback ?: TouchHapticFeedback()).normalized
+                        )
+                    }
         ) {
             surface.configure(next)
             configured = next
@@ -444,7 +453,12 @@ class ThumbleInputView(context: Context, appContext: AppContext) : ExpoView(cont
             controls =
                 controls.map { value ->
                     val c = value as? Map<*, *> ?: error("invalid_control_map")
-                    require(c.keys == setOf("id", "action", "x", "y", "width", "height")) {
+                    require(
+                        c.keys ==
+                            setOf("id", "action", "x", "y", "width", "height") +
+                                if (c.containsKey("hapticFeedback")) setOf("hapticFeedback")
+                                else emptySet()
+                    ) {
                         "invalid_control_map"
                     }
                     ControlRegion(
@@ -454,6 +468,14 @@ class ThumbleInputView(context: Context, appContext: AppContext) : ExpoView(cont
                         number(c["y"]),
                         number(c["width"]),
                         number(c["height"]),
+                        if (c.containsKey("hapticFeedback"))
+                            TouchHapticFeedback.decode(
+                                org.json.JSONObject(
+                                    c["hapticFeedback"] as? Map<*, *>
+                                        ?: error("invalid_haptic_feedback")
+                                )
+                            )
+                        else null,
                     )
                 },
         )

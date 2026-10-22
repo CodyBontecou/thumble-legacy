@@ -13,6 +13,8 @@ import android.text.InputType
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Switch
 import com.thumble.rewrite.contracts.GamepadStateV1
 import com.thumble.rewrite.input.*
 import java.io.Closeable
@@ -91,11 +93,26 @@ internal class PhoneConnection(
                 isSaveEnabled = false
             }
         field = input
+        val touchFeedback =
+            Switch(activity).apply {
+                text = "Touch feedback"
+                contentDescription = "Touch feedback"
+                isChecked = TouchHapticPreferences.intensity(activity) > 0
+                setOnCheckedChangeListener { _, enabled ->
+                    TouchHapticPreferences.setEnabled(activity, enabled)
+                }
+            }
+        val content =
+            LinearLayout(activity).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(input)
+                addView(touchFeedback)
+            }
         val builder =
             AlertDialog.Builder(activity)
                 .setTitle("Connect to your computer")
                 .setMessage("Paste the pairing invitation from your agent. It stays on this phone.")
-                .setView(input)
+                .setView(content)
                 .setNegativeButton("Cancel") { _, _ ->
                     close()
                     status("cancelled")

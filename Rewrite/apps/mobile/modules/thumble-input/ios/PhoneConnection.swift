@@ -1,5 +1,6 @@
 import Foundation
 import MobileInputCore
+import MobileInputUIKit
 import ThumbleContracts
 import UIKit
 
@@ -82,6 +83,15 @@ import UIKit
           self?.reconnect(template: template)
         })
     }
+    alert.addAction(
+      UIAlertAction(
+        title: TouchHapticPreferences.intensity() > 0
+          ? "Turn touch feedback off" : "Turn touch feedback on", style: .default
+      ) { [weak self, weak alert] _ in
+        alert?.textFields?.first?.text = nil
+        TouchHapticPreferences.setEnabled(TouchHapticPreferences.intensity() == 0)
+        self?.afterPrompt { [weak self] in self?.start(template: template) }
+      })
     alert.addAction(
       UIAlertAction(title: "Pair", style: .default) { [weak self, weak alert] _ in
         self?.submitInvitation(alert?.textFields?.first?.text ?? "", template: template)
