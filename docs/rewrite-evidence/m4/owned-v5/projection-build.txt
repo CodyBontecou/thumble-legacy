@@ -1,0 +1,5 @@
+$ bun tooling/build.ts
+    Finished `release` profile [optimized] target(s) in 0.11s
+  [14ms]  bundle  137 modules
+ [146ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime

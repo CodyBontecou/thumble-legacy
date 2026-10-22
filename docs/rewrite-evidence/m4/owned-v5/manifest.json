@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "localSourceCommit": "7484454",
+  "publicCommit": "097234b06d158089e255da9afdfbd5afd4249005",
+  "publicTree": "5eaa818883e6dfd798763a179594444cc711d459",
+  "publicParent": "2ae6e6d32a9a383a0a9f6c1f4d2c0c04da78dc0a",
+  "capsule": {
+    "files": 25,
+    "bytes": 266269,
+    "sha256": "c8ab9b42e9df6027ee4ef25e41b17a7b106ab65790a005c3e2088c65e4adc56b"
+  },
+  "tests": {
+    "portablePass": 127,
+    "portableSkip": 1,
+    "portableAssertions": 2157,
+    "skipReason": "standalone package runs separately",
+    "standalonePass": 1,
+    "standaloneAssertions": 52,
+    "retainedMatrixCases": 41,
+    "sourceOfflineSDKScenarios": 2,
+    "standaloneOfflineSDKScenarios": 2,
+    "SDKeras": [
+      "modern",
+      "legacy"
+    ],
+    "hashesFrozen": "document and cases retain original manifest SHA-256 values"
+  },
+  "logs": {
+    "verify": {
+      "sha256": "b115f5b476fb04ee2ede3f957020ab96f53d8210a9fec248002375534e501dc4",
+      "bytes": 13202
+    },
+    "build": {
+      "sha256": "9afde8cffab903dac538a3afc1641fa004e6da39e7acc34e1d70f37f377fe706",
+      "bytes": 243
+    },
+    "package": {
+      "sha256": "ba0a6f54e3bd332ee8e7efcb699c6c4d36f8f87885414dd4967ad5991a96f3b8",
+      "bytes": 297
+    },
+    "projection-verify": {
+      "sha256": "d2cf6983e290ef339e651b0b42f50b579c16b35a5926b93ed2a9801dc7de3114",
+      "bytes": 13195
+    },
+    "projection-build": {
+      "sha256": "229a3bcaacd63654b5628eda6b4c3bee9172884f0eb5270842508c10507efc8c",
+      "bytes": 243
+    },
+    "projection-package": {
+      "sha256": "db696f55593f4bee1b0d032552daae041fb29911f42afa772b0612760e882050",
+      "bytes": 297
+    }
+  },
+  "ci": {
+    "hostRun": 39792332052,
+    "nativeRun": 39792332045,
+    "appRun": 39792332085,
+    "state": "Host queued, native in progress, app pending at observation"
+  },
+  "diagnosticCI": {
+    "sha": "2ae6e6d32a9a383a0a9f6c1f4d2c0c04da78dc0a",
+    "automaticRun": 39787798972,
+    "iosJob": 119855435138,
+    "androidJob": 119855435650,
+    "state": "Both automatic app jobs in progress; no restart/cancellation requested",
+    "manualRun": 39787465174,
+    "manualIosJob": 119854321142,
+    "manualIosConclusion": "cancelled",
+    "manualAndroidJob": 119854321550,
+    "manualAndroidConclusion": "success",
+    "note": "Delayed automatic push run superseded the manual pending iOS job through GitHub concurrency. The running automatic diagnostic job was retained before publishing this snapshot."
+  },
+  "previousCatalogFailure": {
+    "run": 39784844641,
+    "iosJob": 119845180115,
+    "conclusion": "failure",
+    "observedSignal": "/fresh and /renewal-start failed with probe_receiver_rejected; root cause remains unestablished",
+    "androidJob": 119845180280,
+    "androidConclusion": "success"
+  },
+  "limitations": [
+    "Structural owned-v5/interchange validation; activationCompatibility is not-evaluated",
+    "Geometry/style/haptic values, image/pixel decoding and platform output compatibility still need execution gates",
+    "No authority initialization/import, profile CRUD/rich edits, asset staging, undo, journal reconciliation or acknowledged publication",
+    "No migration, physical/signing/gameplay/haptics/optical launch acceptance",
+    "Private baseline/history/evidence excluded from public capsule"
+  ]
+}
