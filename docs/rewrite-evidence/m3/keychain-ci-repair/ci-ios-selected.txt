@@ -1,0 +1,62 @@
+2026-10-22T00:22:51.9959910Z   DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+2026-10-22T00:22:51.9960200Z ##[endgroup]
+2026-10-22T00:22:54.9964670Z Xcode 26.3
+2026-10-22T00:22:55.0028140Z Build version 17C529
+2026-10-22T00:22:57.6922150Z Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)
+2026-10-22T00:22:57.6922860Z Target: arm64-apple-macosx15.0
+2026-10-22T00:22:57.6988990Z swift-driver version: 1.127.15 
+2026-10-22T00:23:59.0180540Z Build complete! (23.65s)
+2026-10-22T00:24:12.5200980Z Test Suite 'All tests' started at 2026-10-22 00:23:59.446.
+2026-10-22T00:24:12.5277770Z Test Suite 'All tests' passed at 2026-10-22 00:23:59.448.
+2026-10-22T00:24:12.5278230Z 	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+2026-10-22T00:24:12.5280650Z ◇ Test run started.
+2026-10-22T00:24:12.5348530Z ✔ Test actualNetworkFrameworkTLSRejectsWrongPinBeforeControl() passed after 3.429 seconds.
+2026-10-22T00:24:12.5349280Z ✔ Test actualNetworkFrameworkPinDoesNotBypassCertificatePolicy() passed after 12.977 seconds.
+2026-10-22T00:24:12.5349820Z ✔ Test run with 36 tests in 0 suites passed after 12.984 seconds.
+2026-10-22T00:24:12.5541930Z ##[group]Run bun run mobile:ios:sdk --sdk iphonesimulator
+2026-10-22T00:24:12.5542660Z [36;1mbun run mobile:ios:sdk --sdk iphonesimulator[0m
+2026-10-22T00:25:22.7014060Z     builtin-RegisterExecutionPolicyException /Users/runner/work/_temp/rewrite-ios-simulator/Build/Products/Debug-iphonesimulator/MobileInputUIKit.o
+2026-10-22T00:25:22.7015120Z 
+2026-10-22T00:25:22.7015260Z ** BUILD SUCCEEDED **
+2026-10-22T00:25:22.7015450Z 
+2026-10-22T00:25:22.7147780Z ##[group]Run set -o pipefail
+2026-10-22T00:26:24.9263680Z 
+2026-10-22T00:27:05.7082550Z Test Suite 'All tests' started at 2026-10-22 00:27:05.372.
+2026-10-22T00:27:05.7919770Z Test Suite 'All tests' passed at 2026-10-22 00:27:05.373.
+2026-10-22T00:27:05.8724500Z 	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+2026-10-22T00:27:06.0485620Z ◇ Test run started.
+2026-10-22T00:27:08.8054590Z ◇ Test expiredInvitationAndClockRollbackCloseBeforeProof() started.
+2026-10-22T00:27:08.8164840Z ✔ Test expiredInvitationAndClockRollbackCloseBeforeProof() passed after 0.021 seconds.
+2026-10-22T00:27:08.8283610Z ✔ Test run with 30 tests in 0 suites passed after 0.831 seconds.
+2026-10-22T00:27:09.7288830Z 2026-10-22 00:27:09.727 xcodebuild[4567:19239] [MT] IDETestOperationsObserverDebug: 44.940 elapsed -- Testing started completed.
+2026-10-22T00:27:09.7314410Z 2026-10-22 00:27:09.727 xcodebuild[4567:19239] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-22T00:27:09.9264840Z 	/Users/runner/work/_temp/rewrite-ios-library-tests.xcresult
+2026-10-22T00:27:09.9265970Z 
+2026-10-22T00:27:09.9266800Z ** TEST SUCCEEDED **
+2026-10-22T00:27:09.9268600Z 
+2026-10-22T00:27:13.3467110Z Testing started
+2026-10-22T00:29:25.6224310Z 2026-10-22 00:29:23.237303+0000 KeychainProviderHost[8611:34296] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+2026-10-22T00:29:28.4197020Z Test Suite 'All tests' started at 2026-10-22 00:29:27.864.
+2026-10-22T00:29:28.6020260Z Test Suite 'All tests' passed at 2026-10-22 00:29:27.865.
+2026-10-22T00:29:28.7676460Z 	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+2026-10-22T00:29:29.0498940Z ◇ Test run started.
+2026-10-22T00:29:29.1295450Z ↳ Testing Library Version: 1501
+2026-10-22T00:29:29.1296550Z ↳ Target Platform: arm64-apple-ios13.0-simulator
+2026-10-22T00:29:29.1299120Z ◇ Test actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances() started.
+2026-10-22T00:29:29.1300420Z ✔ Test actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances() passed after 0.323 seconds.
+2026-10-22T00:29:29.1301330Z ✔ Test run with 1 test in 0 suites passed after 0.323 seconds.
+2026-10-22T00:29:33.9004580Z 2026-10-22 00:29:33.890 xcodebuild[6447:25812] [MT] IDETestOperationsObserverDebug: 109.006 elapsed -- Testing started completed.
+2026-10-22T00:29:33.9087190Z 2026-10-22 00:29:33.890 xcodebuild[6447:25812] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-22T00:29:34.5359020Z 	/Users/runner/work/_temp/rewrite-keychain-tests.xcresult
+2026-10-22T00:29:34.5514590Z 
+2026-10-22T00:29:34.5925610Z ** TEST SUCCEEDED **
+2026-10-22T00:29:34.6079840Z 
+2026-10-22T00:29:39.1218570Z Testing started
+2026-10-22T00:29:40.4956500Z {"case": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances", "passedTests": 1, "provider": "iOS Keychain", "result": "Passed"}
+2026-10-22T00:29:40.5626600Z ##[group]Run xcodebuild -scheme ThumbleMobileInput -destination 'generic/platform=iOS' -derivedDataPath '/Users/runner/work/_temp/rewrite-ios-device' CODE_SIGNING_ALLOWED=NO build
+2026-10-22T00:29:40.5628510Z [36;1mxcodebuild -scheme ThumbleMobileInput -destination 'generic/platform=iOS' -derivedDataPath '/Users/runner/work/_temp/rewrite-ios-device' CODE_SIGNING_ALLOWED=NO build[0m
+2026-10-22T00:30:00.3519160Z     builtin-RegisterExecutionPolicyException /Users/runner/work/_temp/rewrite-ios-device/Build/Products/Debug-iphoneos/MobileInputUIKit.o
+2026-10-22T00:30:00.3558750Z 
+2026-10-22T00:30:00.3806530Z ** BUILD SUCCEEDED **
+2026-10-22T00:30:00.3840610Z 
+2026-10-22T00:30:00.4240010Z ##[group]Run actions/upload-artifact@v4

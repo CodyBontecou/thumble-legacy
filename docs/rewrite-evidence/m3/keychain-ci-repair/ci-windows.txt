@@ -1,0 +1,818 @@
+﻿2026-10-22T00:22:00.8788563Z Current runner version: '2.338.0'
+2026-10-22T00:22:00.8814880Z ##[group]Runner Image Provisioner
+2026-10-22T00:22:00.8815751Z Hosted Compute Agent
+2026-10-22T00:22:00.8816358Z Version: 20261002.596
+2026-10-22T00:22:00.8816966Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-22T00:22:00.8817691Z Build Date: 2026-10-02T22:28:27Z
+2026-10-22T00:22:00.8818339Z Worker ID: {ba54dbc0-7e5b-49ec-809d-0eb0ad7ae70c}
+2026-10-22T00:22:00.8819021Z Region: westus3
+2026-10-22T00:22:00.8819555Z Cloud: Azure
+2026-10-22T00:22:00.8820092Z ##[endgroup]
+2026-10-22T00:22:00.8821564Z ##[group]Operating System
+2026-10-22T00:22:00.8822172Z Microsoft Windows Server 2025
+2026-10-22T00:22:00.8822786Z 10.0.26100
+2026-10-22T00:22:00.8823263Z Datacenter
+2026-10-22T00:22:00.8824250Z ##[endgroup]
+2026-10-22T00:22:00.8824774Z ##[group]Runner Image
+2026-10-22T00:22:00.8825363Z Image: windows-2025-vs2026
+2026-10-22T00:22:00.8825968Z Version: 20261007.264.1
+2026-10-22T00:22:00.8827526Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md
+2026-10-22T00:22:00.8829130Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261007.264
+2026-10-22T00:22:00.8830069Z ##[endgroup]
+2026-10-22T00:22:00.8831215Z ##[group]GITHUB_TOKEN Permissions
+2026-10-22T00:22:00.8833130Z Contents: read
+2026-10-22T00:22:00.8833760Z Metadata: read
+2026-10-22T00:22:00.8834284Z ##[endgroup]
+2026-10-22T00:22:00.8836415Z Secret source: Actions
+2026-10-22T00:22:00.8837280Z Cache mode: write
+2026-10-22T00:22:00.8837998Z Prepare workflow directory
+2026-10-22T00:22:00.9321715Z Prepare all required actions
+2026-10-22T00:22:00.9373402Z Getting action download info
+2026-10-22T00:22:01.2696450Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-22T00:22:01.4155319Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-22T00:22:01.9344788Z Download action repository 'dtolnay/rust-toolchain@1.88.0' (SHA:360a4e93673de6630fac2478bc9e35244b01a759)
+2026-10-22T00:22:02.1594979Z Download action repository 'Swatinem/rust-cache@v2' (SHA:d1527c8f67ef9af357290475d4af4b0fab8f12e0)
+2026-10-22T00:22:02.8049985Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-22T00:22:03.2212581Z Complete job name: portable (windows-latest)
+2026-10-22T00:22:03.4216889Z ##[group]Run actions/checkout@v4
+2026-10-22T00:22:03.4219239Z with:
+2026-10-22T00:22:03.4219952Z   persist-credentials: false
+2026-10-22T00:22:03.4220676Z   repository: CodyBontecou/Thumble
+2026-10-22T00:22:03.4224521Z   token: ***
+2026-10-22T00:22:03.4225146Z   ssh-strict: true
+2026-10-22T00:22:03.4225757Z   ssh-user: git
+2026-10-22T00:22:03.4226358Z   clean: true
+2026-10-22T00:22:03.4226998Z   sparse-checkout-cone-mode: true
+2026-10-22T00:22:03.4227705Z   fetch-depth: 1
+2026-10-22T00:22:03.4228315Z   fetch-tags: false
+2026-10-22T00:22:03.4228991Z   show-progress: true
+2026-10-22T00:22:03.4229624Z   lfs: false
+2026-10-22T00:22:03.4230233Z   submodules: false
+2026-10-22T00:22:03.4230887Z   set-safe-directory: true
+2026-10-22T00:22:03.4231602Z   allow-unsafe-pr-checkout: false
+2026-10-22T00:22:03.4232615Z ##[endgroup]
+2026-10-22T00:22:03.5832603Z Syncing repository: CodyBontecou/Thumble
+2026-10-22T00:22:03.5835399Z ##[group]Getting Git version info
+2026-10-22T00:22:03.5836308Z Working directory is 'D:\a\Thumble\Thumble'
+2026-10-22T00:22:03.6781975Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-22T00:22:04.0800756Z git version 2.56.0.windows.2
+2026-10-22T00:22:04.0856005Z ##[endgroup]
+2026-10-22T00:22:04.0876417Z Temporarily overriding HOME='D:\a\_temp\f55895b8-1d1e-4d7c-bcb3-1b9397771096' before making global git config changes
+2026-10-22T00:22:04.0877793Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:22:04.0888507Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Thumble\Thumble
+2026-10-22T00:22:04.1724995Z Deleting the contents of 'D:\a\Thumble\Thumble'
+2026-10-22T00:22:04.1731670Z ##[group]Initializing the repository
+2026-10-22T00:22:04.1740671Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Thumble\Thumble
+2026-10-22T00:22:04.2768431Z Initialized empty Git repository in D:/a/Thumble/Thumble/.git/
+2026-10-22T00:22:04.2822180Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:04.3782511Z ##[endgroup]
+2026-10-22T00:22:04.3783626Z ##[group]Disabling automatic garbage collection
+2026-10-22T00:22:04.3791889Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-22T00:22:04.4216068Z ##[endgroup]
+2026-10-22T00:22:04.4217223Z ##[group]Setting up auth
+2026-10-22T00:22:04.4218238Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:04.4633342Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-22T00:22:06.1708585Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:06.2129368Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-22T00:22:06.7925104Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:06.8336550Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-22T00:22:07.4389212Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-22T00:22:07.4799258Z ##[endgroup]
+2026-10-22T00:22:07.4800237Z ##[group]Fetching the repository
+2026-10-22T00:22:07.4819039Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8:refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:11.8996740Z From https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:11.8998129Z  * [new ref]         c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8 -> origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:11.9043412Z ##[endgroup]
+2026-10-22T00:22:11.9044052Z ##[group]Determining the checkout info
+2026-10-22T00:22:11.9048234Z ##[endgroup]
+2026-10-22T00:22:11.9060068Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-22T00:22:11.9622274Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-22T00:22:12.0054452Z ##[group]Checking out the ref
+2026-10-22T00:22:12.0069503Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/typescript-rewrite-headless-ci refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:13.0714418Z Updating files:  83% (1307/1564)
+2026-10-22T00:22:13.0765126Z Updating files:  84% (1314/1564)
+2026-10-22T00:22:13.0808483Z Updating files:  85% (1330/1564)
+2026-10-22T00:22:13.0849312Z Updating files:  86% (1346/1564)
+2026-10-22T00:22:13.0887269Z Updating files:  87% (1361/1564)
+2026-10-22T00:22:13.0936442Z Updating files:  88% (1377/1564)
+2026-10-22T00:22:13.1095231Z Updating files:  89% (1392/1564)
+2026-10-22T00:22:13.3461457Z Updating files:  90% (1408/1564)
+2026-10-22T00:22:13.5805613Z Updating files:  91% (1424/1564)
+2026-10-22T00:22:13.7010199Z Updating files:  92% (1439/1564)
+2026-10-22T00:22:13.7134726Z Updating files:  93% (1455/1564)
+2026-10-22T00:22:13.7450254Z Updating files:  94% (1471/1564)
+2026-10-22T00:22:13.7880453Z Updating files:  95% (1486/1564)
+2026-10-22T00:22:13.8130863Z Updating files:  96% (1502/1564)
+2026-10-22T00:22:13.8187922Z Updating files:  97% (1518/1564)
+2026-10-22T00:22:13.8232680Z Updating files:  98% (1533/1564)
+2026-10-22T00:22:13.8287838Z Updating files:  99% (1549/1564)
+2026-10-22T00:22:13.8288371Z Updating files: 100% (1564/1564)
+2026-10-22T00:22:13.8289651Z Updating files: 100% (1564/1564), done.
+2026-10-22T00:22:13.8473933Z Switched to a new branch 'codex/typescript-rewrite-headless-ci'
+2026-10-22T00:22:13.8492258Z branch 'codex/typescript-rewrite-headless-ci' set up to track 'origin/codex/typescript-rewrite-headless-ci'.
+2026-10-22T00:22:13.8773690Z ##[endgroup]
+2026-10-22T00:22:13.9224868Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-22T00:22:13.9590812Z c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8
+2026-10-22T00:22:13.9643382Z ##[group]Removing auth
+2026-10-22T00:22:13.9653403Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:14.0072152Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-22T00:22:14.6029387Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:14.6397031Z http.https://github.com/.extraheader
+2026-10-22T00:22:14.6448657Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-22T00:22:14.6865540Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-22T00:22:15.3064376Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:15.3473408Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-22T00:22:15.9131226Z ##[endgroup]
+2026-10-22T00:22:15.9555737Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-22T00:22:15.9556053Z with:
+2026-10-22T00:22:15.9556233Z   bun-version: 1.4.3
+2026-10-22T00:22:15.9556432Z   no-cache: false
+2026-10-22T00:22:15.9559171Z   token: ***
+2026-10-22T00:22:15.9559351Z ##[endgroup]
+2026-10-22T00:22:16.5516158Z Cache hit for: bun-xolSjvAaK+5ef/ofj0mCjFnROAc=
+2026-10-22T00:22:17.7189208Z Received 43650525 of 43650525 (100.0%), 44.1 MBs/sec
+2026-10-22T00:22:17.7194323Z Cache Size: ~42 MB (43650525 B)
+2026-10-22T00:22:17.7308497Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/543e075b-771a-4d25-9e93-81437f508ee1/cache.tzst -P -C D:/a/Thumble/Thumble --force-local --use-compress-program "zstd -d"
+2026-10-22T00:22:18.0617009Z Cache restored successfully
+2026-10-22T00:22:18.0654643Z [command]C:\Users\runneradmin\.bun\bin\bun.exe --revision
+2026-10-22T00:22:19.7834473Z 1.4.3+c6da4a4d3
+2026-10-22T00:22:19.7849682Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-22T00:22:19.8334527Z ##[group]Run dtolnay/rust-toolchain@1.88.0
+2026-10-22T00:22:19.8334873Z with:
+2026-10-22T00:22:19.8335067Z   components: rustfmt, clippy
+2026-10-22T00:22:19.8335301Z ##[endgroup]
+2026-10-22T00:22:19.8435466Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-22T00:22:19.8623215Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-22T00:22:19.8623591Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-22T00:22:19.8624141Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-22T00:22:19.8624703Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-22T00:22:19.8624984Z [36;1m  exit 1[0m
+2026-10-22T00:22:19.8625297Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-22T00:22:19.8625988Z [36;1m  if [[ Windows == macOS ]]; then[0m
+2026-10-22T00:22:19.8626567Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:19.8627076Z [36;1m  else[0m
+2026-10-22T00:22:19.8627462Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:19.8627922Z [36;1m  fi[0m
+2026-10-22T00:22:19.8628200Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-22T00:22:19.8628734Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:19.8629191Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-22T00:22:19.8629714Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:19.8630202Z [36;1melse[0m
+2026-10-22T00:22:19.8630383Z [36;1m  delimiter=EOF[0m
+2026-10-22T00:22:19.8630682Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-22T00:22:19.8631184Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:19.8631853Z [36;1mfi[0m
+2026-10-22T00:22:19.8653850Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:19.8654256Z env:
+2026-10-22T00:22:19.8654423Z   toolchain: 1.88.0
+2026-10-22T00:22:19.8654618Z ##[endgroup]
+2026-10-22T00:22:20.0567417Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=213]
+2026-10-22T00:22:20.0572803Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-22T00:22:20.0721171Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$USERPROFILE\.cargo"} >> $GITHUB_ENV
+2026-10-22T00:22:20.0722193Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$USERPROFILE\.cargo"} >> $GITHUB_ENV[0m
+2026-10-22T00:22:20.0737928Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.0738386Z ##[endgroup]
+2026-10-22T00:22:20.1162879Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=58]
+2026-10-22T00:22:20.1165278Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-22T00:22:20.1174329Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-22T00:22:20.1177225Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-22T00:22:20.1309124Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-22T00:22:20.1309481Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-22T00:22:20.1310244Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://win.rustup.rs/x86_64 --output 'D:\a\_temp\rustup-init.exe'[0m
+2026-10-22T00:22:20.1312805Z [36;1m  'D:\a\_temp\rustup-init.exe' --default-toolchain none --no-modify-path -y[0m
+2026-10-22T00:22:20.1313345Z [36;1m  echo "$CARGO_HOME\bin" >> $GITHUB_PATH[0m
+2026-10-22T00:22:20.1313621Z [36;1mfi[0m
+2026-10-22T00:22:20.1329197Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.1329593Z env:
+2026-10-22T00:22:20.1329800Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:20.1330056Z ##[endgroup]
+2026-10-22T00:22:20.1870694Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=success;conclusion=success;duration_ms=69]
+2026-10-22T00:22:20.1885391Z ##[start-action display=rustup toolchain install 1.88.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-22T00:22:20.2024042Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-22T00:22:20.2024882Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-22T00:22:20.2025320Z [36;1mflags=()[0m
+2026-10-22T00:22:20.2025613Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-22T00:22:20.2026002Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-22T00:22:20.2026482Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-22T00:22:20.2026885Z [36;1mlog=$(mktemp)[0m
+2026-10-22T00:22:20.2027096Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-22T00:22:20.2027329Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-22T00:22:20.2027883Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-22T00:22:20.2028440Z [36;1m    break[0m
+2026-10-22T00:22:20.2028612Z [36;1m  else[0m
+2026-10-22T00:22:20.2028785Z [36;1m    status=$?[0m
+2026-10-22T00:22:20.2028973Z [36;1m  fi[0m
+2026-10-22T00:22:20.2029243Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-22T00:22:20.2029786Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-22T00:22:20.2030335Z [36;1m    exit "$status"[0m
+2026-10-22T00:22:20.2030876Z [36;1m  fi[0m
+2026-10-22T00:22:20.2031224Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-22T00:22:20.2031626Z [36;1m  sleep 30[0m
+2026-10-22T00:22:20.2031805Z [36;1mdone[0m
+2026-10-22T00:22:20.2046849Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.2047228Z env:
+2026-10-22T00:22:20.2047412Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:20.2047672Z   toolchain: 1.88.0
+2026-10-22T00:22:20.2047853Z   targets: 
+2026-10-22T00:22:20.2048026Z   components: rustfmt, clippy
+2026-10-22T00:22:20.2048271Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-22T00:22:20.2048485Z ##[endgroup]
+2026-10-22T00:22:21.0529169Z info: syncing channel updates for 1.88.0-x86_64-pc-windows-msvc
+2026-10-22T00:22:21.7339624Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:21.7361464Z info: downloading 5 components
+2026-10-22T00:22:31.4617620Z 
+2026-10-22T00:22:31.5094109Z   1.88.0-x86_64-pc-windows-msvc installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:31.5095182Z 
+2026-10-22T00:22:31.5596540Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=11370]
+2026-10-22T00:22:31.5603919Z ##[start-action display=rustup default 1.88.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-22T00:22:31.5746688Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-22T00:22:31.5747554Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-22T00:22:31.5763109Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:31.5763528Z env:
+2026-10-22T00:22:31.5763721Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:31.5763975Z   toolchain: 1.88.0
+2026-10-22T00:22:31.5764155Z ##[endgroup]
+2026-10-22T00:22:31.6511138Z info: using existing install for 1.88.0-x86_64-pc-windows-msvc
+2026-10-22T00:22:31.6600923Z info: default toolchain set to 1.88.0-x86_64-pc-windows-msvc
+2026-10-22T00:22:31.6603758Z 
+2026-10-22T00:22:31.6822602Z   1.88.0-x86_64-pc-windows-msvc unchanged - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:31.6823000Z 
+2026-10-22T00:22:31.6905790Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=130]
+2026-10-22T00:22:31.6909578Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-22T00:22:31.7043007Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-22T00:22:31.7043901Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-22T00:22:31.7045454Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-22T00:22:31.7045965Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:31.7061882Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:31.7062341Z env:
+2026-10-22T00:22:31.7062646Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:31.7062992Z   toolchain: 1.88.0
+2026-10-22T00:22:31.7063263Z ##[endgroup]
+2026-10-22T00:22:32.6340384Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=942]
+2026-10-22T00:22:32.6343330Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-22T00:22:32.6483782Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-22T00:22:32.6484200Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-22T00:22:32.6484508Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-22T00:22:32.6484770Z [36;1mfi[0m
+2026-10-22T00:22:32.6500955Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:32.6501344Z env:
+2026-10-22T00:22:32.6501537Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:32.6501790Z ##[endgroup]
+2026-10-22T00:22:32.6911357Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=56]
+2026-10-22T00:22:32.6913704Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-22T00:22:32.7058693Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-22T00:22:32.7059070Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-22T00:22:32.7059384Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-22T00:22:32.7059654Z [36;1mfi[0m
+2026-10-22T00:22:32.7076121Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:32.7076516Z env:
+2026-10-22T00:22:32.7076705Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:32.7076980Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:32.7077171Z ##[endgroup]
+2026-10-22T00:22:32.7478955Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=56]
+2026-10-22T00:22:32.7482880Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-22T00:22:32.7630268Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-22T00:22:32.7630790Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-22T00:22:32.7631448Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-22T00:22:32.7632233Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-22T00:22:32.7632789Z [36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:32.7633444Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-22T00:22:32.7633962Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-22T00:22:32.7634481Z [36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:32.7634946Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-22T00:22:32.7635282Z [36;1m  fi[0m
+2026-10-22T00:22:32.7635451Z [36;1mfi[0m
+2026-10-22T00:22:32.7651107Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:32.7651509Z env:
+2026-10-22T00:22:32.7651699Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:32.7651957Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:32.7652161Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:32.7652545Z   toolchain: 1.88.0
+2026-10-22T00:22:32.7652726Z ##[endgroup]
+2026-10-22T00:22:32.9587127Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=210]
+2026-10-22T00:22:32.9590862Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-22T00:22:32.9732503Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-22T00:22:32.9733711Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-22T00:22:32.9734333Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-22T00:22:32.9734795Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-22T00:22:32.9735092Z [36;1mfi[0m
+2026-10-22T00:22:32.9750732Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:32.9751137Z env:
+2026-10-22T00:22:32.9751330Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:32.9751588Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:32.9751797Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:32.9752015Z   toolchain: 1.88.0
+2026-10-22T00:22:32.9752199Z ##[endgroup]
+2026-10-22T00:22:33.0859813Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=126]
+2026-10-22T00:22:33.0865460Z ##[start-action display=rustc +1.88.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-22T00:22:33.1013727Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-22T00:22:33.1014268Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-22T00:22:33.1030691Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:33.1031273Z env:
+2026-10-22T00:22:33.1031577Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:33.1031982Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:33.1032295Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:33.1032617Z   toolchain: 1.88.0
+2026-10-22T00:22:33.1032880Z ##[endgroup]
+2026-10-22T00:22:33.1970306Z rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:33.1970802Z binary: rustc
+2026-10-22T00:22:33.1971236Z commit-hash: 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:22:33.1971714Z commit-date: 2025-06-23
+2026-10-22T00:22:33.1972071Z host: x86_64-pc-windows-msvc
+2026-10-22T00:22:33.1972429Z release: 1.88.0
+2026-10-22T00:22:33.1972856Z LLVM version: 20.1.5
+2026-10-22T00:22:33.2089728Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=122]
+2026-10-22T00:22:33.2299002Z ##[group]Run Swatinem/rust-cache@v2
+2026-10-22T00:22:33.2299331Z with:
+2026-10-22T00:22:33.2299535Z   workspaces: Rewrite/native/receiver
+2026-10-22T00:22:33.2299795Z   prefix-key: v0-rust
+2026-10-22T00:22:33.2300012Z   add-job-id-key: true
+2026-10-22T00:22:33.2300251Z   add-rust-environment-hash-key: true
+2026-10-22T00:22:33.2300522Z   cache-targets: true
+2026-10-22T00:22:33.2300716Z   cache-all-crates: false
+2026-10-22T00:22:33.2300942Z   cache-workspace-crates: false
+2026-10-22T00:22:33.2301173Z   save-if: true
+2026-10-22T00:22:33.2301364Z   cache-provider: github
+2026-10-22T00:22:33.2301570Z   cache-bin: true
+2026-10-22T00:22:33.2301754Z   lookup-only: false
+2026-10-22T00:22:33.2301944Z   cmd-format: {0}
+2026-10-22T00:22:33.2302108Z env:
+2026-10-22T00:22:33.2302286Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:33.2302537Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:33.2302733Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:33.2302935Z ##[endgroup]
+2026-10-22T00:22:38.4572838Z ##[group]Cache Configuration
+2026-10-22T00:22:38.4573296Z Cache Provider:
+2026-10-22T00:22:38.4573570Z     github
+2026-10-22T00:22:38.4573809Z Workspaces:
+2026-10-22T00:22:38.4574121Z     D:\a\Thumble\Thumble\Rewrite\native\receiver
+2026-10-22T00:22:38.4574555Z Cache Paths:
+2026-10-22T00:22:38.4574830Z     C:\Users\runneradmin\.cargo\bin
+2026-10-22T00:22:38.4575664Z     C:\Users\runneradmin\.cargo\.crates.toml
+2026-10-22T00:22:38.4576113Z     C:\Users\runneradmin\.cargo\.crates2.json
+2026-10-22T00:22:38.4576568Z     C:\Users\runneradmin\.cargo\registry
+2026-10-22T00:22:38.4576981Z     C:\Users\runneradmin\.cargo\git
+2026-10-22T00:22:38.4577409Z     D:\a\Thumble\Thumble\Rewrite\native\receiver\target
+2026-10-22T00:22:38.4577693Z Restore Key:
+2026-10-22T00:22:38.4577930Z     v0-rust-portable-Windows_NT-x64-2a7e1b63
+2026-10-22T00:22:38.4578199Z Cache Key:
+2026-10-22T00:22:38.4578430Z     v0-rust-portable-Windows_NT-x64-2a7e1b63-b2e44447
+2026-10-22T00:22:38.4578736Z .. Prefix:
+2026-10-22T00:22:38.4578948Z   - v0-rust-portable-Windows_NT-x64
+2026-10-22T00:22:38.4579405Z .. Environment considered:
+2026-10-22T00:22:38.4579715Z   - Rust Versions:
+2026-10-22T00:22:38.4580354Z     - 1.88.0 x86_64-pc-windows-msvc 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:22:38.4580858Z     - 1.99.0 x86_64-pc-windows-msvc b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+2026-10-22T00:22:38.4581222Z   - CARGO_HOME
+2026-10-22T00:22:38.4581402Z   - CARGO_INCREMENTAL
+2026-10-22T00:22:38.4581595Z   - CARGO_TERM_COLOR
+2026-10-22T00:22:38.4581790Z .. Lockfiles considered:
+2026-10-22T00:22:38.4582061Z   - D:\a\Thumble\Thumble\Rewrite\native\receiver\Cargo.lock
+2026-10-22T00:22:38.4582439Z   - D:\a\Thumble\Thumble\Rewrite\native\receiver\Cargo.toml
+2026-10-22T00:22:38.4583145Z ##[endgroup]
+2026-10-22T00:22:38.4583295Z 
+2026-10-22T00:22:38.4583379Z ... Restoring cache ...
+2026-10-22T00:22:38.7398105Z Cache hit for: v0-rust-portable-Windows_NT-x64-2a7e1b63-b2e44447
+2026-10-22T00:22:39.9468073Z Received 75497472 of 195983028 (38.5%), 71.9 MBs/sec
+2026-10-22T00:22:40.8698076Z Received 195983028 of 195983028 (100.0%), 97.1 MBs/sec
+2026-10-22T00:22:40.8701301Z Cache Size: ~187 MB (195983028 B)
+2026-10-22T00:22:40.8740262Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/7d08d3ab-0ac7-47e5-89a7-deba78d0b496/cache.tzst -P -C D:/a/Thumble/Thumble --force-local --use-compress-program "zstd -d"
+2026-10-22T00:22:45.0365824Z Cache restored successfully
+2026-10-22T00:22:45.0491708Z Restored from cache key "v0-rust-portable-Windows_NT-x64-2a7e1b63-b2e44447" full match: true.
+2026-10-22T00:22:45.0884811Z ##[group]Run bun install --frozen-lockfile
+2026-10-22T00:22:45.0885250Z [36;1mbun install --frozen-lockfile[0m
+2026-10-22T00:22:45.1802520Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:45.1802987Z env:
+2026-10-22T00:22:45.1803255Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:45.1803602Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:45.1803871Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:45.1804165Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:45.1804441Z ##[endgroup]
+2026-10-22T00:22:45.5512996Z bun install v1.4.3 (c6da4a4d3)
+2026-10-22T00:22:46.7672903Z 
+2026-10-22T00:22:46.7673441Z + @types/bun@1.4.3
+2026-10-22T00:22:46.7673861Z + prettier@3.6.2
+2026-10-22T00:22:46.7674226Z + typescript@6.0.3
+2026-10-22T00:22:46.7674493Z 
+2026-10-22T00:22:46.7674659Z 7 packages installed [1217.00ms]
+2026-10-22T00:22:46.9214032Z ##[group]Run node tooling/verify-input-packet-oracle.mjs
+2026-10-22T00:22:46.9214557Z [36;1mnode tooling/verify-input-packet-oracle.mjs[0m
+2026-10-22T00:22:46.9290630Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:46.9290987Z env:
+2026-10-22T00:22:46.9291192Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:46.9291487Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:46.9291713Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:46.9291943Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:46.9292161Z ##[endgroup]
+2026-10-22T00:22:51.1284950Z Node v22.23.3; OpenSSL 3.5.8; verified 33 exact packet vectors and 5 authenticated-invalid packets
+2026-10-22T00:22:51.2864494Z ##[group]Run bun run check:generated
+2026-10-22T00:22:51.2864905Z [36;1mbun run check:generated[0m
+2026-10-22T00:22:51.2940177Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:51.2940803Z env:
+2026-10-22T00:22:51.2941014Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:51.2941304Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:51.2941515Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:51.2941737Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:51.2941951Z ##[endgroup]
+2026-10-22T00:22:51.5947734Z $ bun tooling/generate-contracts.ts --check
+2026-10-22T00:22:51.6416397Z Generated 33 packet vectors and 5 invalid authenticated payloads
+2026-10-22T00:22:51.7674536Z ##[group]Run bun run check:boundaries
+2026-10-22T00:22:51.7675012Z [36;1mbun run check:boundaries[0m
+2026-10-22T00:22:51.7747187Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:51.7747556Z env:
+2026-10-22T00:22:51.7747753Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:51.7748025Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:51.7748226Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:51.7748446Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:51.7748669Z ##[endgroup]
+2026-10-22T00:22:52.0673987Z $ bun tooling/check-boundaries.ts
+2026-10-22T00:22:52.6185661Z Portable contracts/domain import boundaries verified
+2026-10-22T00:22:52.7609805Z ##[group]Run bun x --no-install prettier --check .
+2026-10-22T00:22:52.7610298Z [36;1mbun x --no-install prettier --check .[0m
+2026-10-22T00:22:52.7697363Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:52.7697744Z env:
+2026-10-22T00:22:52.7697963Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:52.7698245Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:52.7698462Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:52.7698683Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:52.7698899Z ##[endgroup]
+2026-10-22T00:22:53.3735221Z Checking formatting...
+2026-10-22T00:22:55.8334148Z All matched files use Prettier code style!
+2026-10-22T00:22:56.0221912Z ##[group]Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check
+2026-10-22T00:22:56.0222914Z [36;1mcargo fmt --manifest-path native/receiver/Cargo.toml -- --check[0m
+2026-10-22T00:22:56.0330325Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:56.0330688Z env:
+2026-10-22T00:22:56.0330905Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:56.0331176Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:56.0331380Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:56.0331603Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:56.0331812Z ##[endgroup]
+2026-10-22T00:22:57.3483665Z ##[group]Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+2026-10-22T00:22:57.3484539Z [36;1mcargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings[0m
+2026-10-22T00:22:57.3556965Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:22:57.3557324Z env:
+2026-10-22T00:22:57.3557530Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:22:57.3557797Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:57.3558004Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:57.3558241Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:57.3558447Z ##[endgroup]
+2026-10-22T00:22:58.5234154Z [1m[32m    Updating[0m crates.io index
+2026-10-22T00:23:05.2019987Z [1m[32m    Checking[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+2026-10-22T00:23:06.5988187Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 8.24s
+2026-10-22T00:23:06.7576748Z ##[group]Run bun run native:test
+2026-10-22T00:23:06.7577144Z [36;1mbun run native:test[0m
+2026-10-22T00:23:06.7657717Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:06.7658087Z env:
+2026-10-22T00:23:06.7658291Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:06.7658573Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:06.7658788Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:06.7659016Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:06.7659226Z ##[endgroup]
+2026-10-22T00:23:07.0538130Z $ cargo +1.88.0 test --locked --manifest-path native/receiver/Cargo.toml
+2026-10-22T00:23:07.2863402Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+2026-10-22T00:23:12.8995868Z [1m[32m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 5.80s
+2026-10-22T00:23:12.9071467Z [1m[32m     Running[0m unittests src\lib.rs (native\receiver\target\debug\deps\thumble_rewrite_receiver-798c0e93eb8c64e8.exe)
+2026-10-22T00:23:12.9225132Z 
+2026-10-22T00:23:12.9225604Z running 54 tests
+2026-10-22T00:23:12.9307640Z test control_tls::tests::certificate_pin_is_canonical_and_identity_is_fresh ... ok
+2026-10-22T00:23:12.9372342Z test control_tls::socket_mode_tests::accepted_and_client_nonblocking_sockets_are_normalized_before_tls ... ok
+2026-10-22T00:23:12.9629908Z test control_tls::tests::pin_does_not_bypass_expiry_future_dates_hostname_or_server_usage ... ok
+2026-10-22T00:23:12.9640483Z test control_tls::tests::framing_accepts_maximum_control_and_rejects_local_invalid_frames_terminally ... ok
+2026-10-22T00:23:12.9688870Z test control_tls::tests::pinned_tls13_round_trip_control_and_exact_input_frames ... ok
+2026-10-22T00:23:12.9731510Z test control_tls::tests::malformed_remote_lengths_kinds_and_truncation_retire_connection ... ok
+2026-10-22T00:23:12.9784839Z test control_tls::tests::unsupported_alpn_and_tls12_are_rejected ... ok
+2026-10-22T00:23:12.9795073Z test control_tls::tests::wrong_pin_refuses_handshake_before_any_application_frame ... ok
+2026-10-22T00:23:13.0247880Z test control_tls::tests::absolute_io_budget_cannot_be_extended_by_trickled_reads ... ok
+2026-10-22T00:23:13.0663617Z test control_tls::tests::read_byte_budget_and_unresponsive_peer_fail_closed ... ok
+2026-10-22T00:23:13.2254715Z test enrollment::tests::client_role_cannot_consume_native_enrollment_window ... ok
+2026-10-22T00:23:13.2670059Z test enrollment::tests::earlier_control_version_is_rejected_before_invitation_consumption ... ok
+2026-10-22T00:23:13.4573898Z test enrollment::tests::duplicate_or_unknown_json_fields_fail_before_proof_admission ... ok
+2026-10-22T00:23:13.4582854Z test enrollment::tests::native_windows_are_one_use_bounded_and_secret_free_in_status ... ok
+2026-10-22T00:23:13.5633067Z test enrollment::tests::native_clock_failure_closes_window_before_any_credential_is_issued ... ok
+2026-10-22T00:23:13.5644860Z test enrollment::tests::shared_typescript_fixture_matches_native_verifier_and_control_shapes ... ok
+2026-10-22T00:23:13.5892437Z test enrollment::tests::local_cancel_or_replacement_during_tls_wait_prevents_enrollment ... ok
+2026-10-22T00:23:13.9454342Z test enrollment::tests::trust_clock_failure_after_consumption_does_not_restore_window ... ok
+2026-10-22T00:23:13.9464999Z test enrollment::tests::window_clock_and_authority_failures_do_not_retain_admission ... ok
+2026-10-22T00:23:14.2162189Z test enrollment::tests::real_tls_negotiates_versions_commits_then_requires_matching_storage_ack ... ok
+2026-10-22T00:23:14.2181577Z test gamepad::tests::retained_native_vectors ... ok
+2026-10-22T00:23:14.2357748Z test enrollment::tests::wrong_proof_spends_attempt_without_committing_trust ... ok
+2026-10-22T00:23:14.3177856Z test host_identity::tests::complete_staged_creation_recovers_the_same_key_and_pin ... ok
+2026-10-22T00:23:14.3434766Z test enrollment::tests::lost_or_mismatched_ack_preserves_committed_trust_and_consumed_window ... ok
+2026-10-22T00:23:14.4515986Z test host_identity::tests::corrupt_or_partial_records_never_regenerate_or_overwrite_material ... ok
+2026-10-22T00:23:14.4538135Z test host_identity::tests::lengths_magic_trailing_bytes_wrong_keys_and_certificate_policy_fail ... ok
+2026-10-22T00:23:14.4914006Z test host_identity::tests::exclusive_identity_owner_and_separate_runtime_namespaces ... ok
+2026-10-22T00:23:14.5077966Z test host_identity::tests::inspection_never_initializes_or_recovers_key_material ... ok
+2026-10-22T00:23:14.5098050Z test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+2026-10-22T00:23:14.5109666Z test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+2026-10-22T00:23:14.5166740Z test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+2026-10-22T00:23:14.5187581Z test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+2026-10-22T00:23:14.5193633Z test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+2026-10-22T00:23:14.5445883Z test host_identity::tests::published_but_not_cleaned_creation_recovers_without_rotation ... ok
+2026-10-22T00:23:14.5454090Z test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+2026-10-22T00:23:14.5461403Z test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+2026-10-22T00:23:14.5472092Z test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+2026-10-22T00:23:14.6729178Z test host_identity::tests::stable_reload_and_distinct_isolated_hosts_keep_private_permissions ... ok
+2026-10-22T00:23:14.7603566Z test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+2026-10-22T00:23:15.4063972Z test phone_trust::tests::actual_tls_receives_only_after_native_commit_and_wrong_channel_cannot_export_secret ... ok
+2026-10-22T00:23:15.5191217Z test enrollment::tests::unsupported_versions_and_wrong_phase_frames_never_consume_invitation ... ok
+2026-10-22T00:23:15.5272682Z test phone_trust::tests::credential_commits_reloads_and_never_persists_plaintext_or_exports_it_as_metadata ... ok
+2026-10-22T00:23:15.9610995Z test phone_trust::tests::exclusive_owner_and_host_identity_binding_are_enforced ... ok
+2026-10-22T00:23:16.0281840Z test phone_trust::tests::expiry_and_native_clock_limits_fail_without_partial_mutations ... ok
+2026-10-22T00:23:16.2154348Z test phone_trust::tests::failed_commit_rolls_back_verifier_epoch_and_observed_clock ... ok
+2026-10-22T00:23:16.3705446Z test phone_trust::tests::foreign_schemas_and_corruption_are_rejected_without_replacing_data ... ok
+2026-10-22T00:23:16.3710445Z test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+2026-10-22T00:23:16.3714295Z test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+2026-10-22T00:23:16.3719005Z test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+2026-10-22T00:23:16.3721990Z test runtime::tests::owner_lease_expires_even_without_samples ... ok
+2026-10-22T00:23:16.3725305Z test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+2026-10-22T00:23:16.4824744Z test phone_trust::tests::sqlite_uses_pinned_native_engine_and_durable_bounded_private_storage ... ok
+2026-10-22T00:23:16.9668367Z test phone_trust::tests::reenrollment_rotates_old_credentials_and_revocation_survives_restart_and_clock_rollback ... ok
+2026-10-22T00:23:17.3682364Z test phone_trust::tests::capacity_and_malformed_identities_are_bounded ... ok
+2026-10-22T00:23:17.3683333Z 
+2026-10-22T00:23:17.3683884Z test result: ok. 54 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+2026-10-22T00:23:17.3684548Z 
+2026-10-22T00:23:17.3713849Z [1m[32m     Running[0m unittests src\main.rs (native\receiver\target\debug\deps\thumble_rewrite_receiver-a27be512af305bdc.exe)
+2026-10-22T00:23:17.3822256Z 
+2026-10-22T00:23:17.3822518Z running 0 tests
+2026-10-22T00:23:17.3822754Z 
+2026-10-22T00:23:17.3824007Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T00:23:17.3824794Z 
+2026-10-22T00:23:17.3839412Z [1m[32m   Doc-tests[0m thumble_rewrite_receiver
+2026-10-22T00:23:17.5234946Z 
+2026-10-22T00:23:17.5235980Z running 0 tests
+2026-10-22T00:23:17.5236361Z 
+2026-10-22T00:23:17.5236924Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T00:23:17.5237703Z 
+2026-10-22T00:23:17.6637344Z ##[group]Run bun run native:build
+2026-10-22T00:23:17.6637940Z [36;1mbun run native:build[0m
+2026-10-22T00:23:17.6711456Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:17.6711823Z env:
+2026-10-22T00:23:17.6712025Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:17.6712323Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:17.6712548Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:17.6712785Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:17.6712996Z ##[endgroup]
+2026-10-22T00:23:17.9514949Z $ cargo +1.88.0 build --locked --manifest-path native/receiver/Cargo.toml
+2026-10-22T00:23:18.0993204Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+2026-10-22T00:23:21.0003568Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 3.01s
+2026-10-22T00:23:21.1371781Z ##[group]Run cargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe
+2026-10-22T00:23:21.1373053Z [36;1mcargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe[0m
+2026-10-22T00:23:21.1374312Z [36;1mnode tooling/test-control-tls.mjs[0m
+2026-10-22T00:23:21.1444868Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:21.1445224Z env:
+2026-10-22T00:23:21.1445427Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:21.1445705Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:21.1445916Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:21.1446142Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:21.1446347Z ##[endgroup]
+2026-10-22T00:23:21.5549616Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 0.11s
+2026-10-22T00:23:22.0236465Z Node v22.23.3; OpenSSL 3.5.8; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed
+2026-10-22T00:23:22.1464069Z ##[group]Run bun run typecheck
+2026-10-22T00:23:22.1464476Z [36;1mbun run typecheck[0m
+2026-10-22T00:23:22.1554717Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:22.1555110Z env:
+2026-10-22T00:23:22.1555313Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:22.1555602Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:22.1555814Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:22.1556034Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:22.1556250Z ##[endgroup]
+2026-10-22T00:23:22.4286074Z $ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json
+2026-10-22T00:23:25.6196319Z ##[group]Run bun run test:ci
+2026-10-22T00:23:25.6196809Z [36;1mbun run test:ci[0m
+2026-10-22T00:23:25.6306388Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:25.6306992Z env:
+2026-10-22T00:23:25.6307308Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:25.6307788Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:25.6308149Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:25.6308539Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:25.6308896Z ##[endgroup]
+2026-10-22T00:23:25.9282230Z $ bun tooling/ci-test.ts
+2026-10-22T00:23:25.9559532Z bun test v1.4.3 (c6da4a4d3)
+2026-10-22T00:23:25.9630314Z 
+2026-10-22T00:23:25.9631048Z ##[group]tests\boundaries.test.ts:
+2026-10-22T00:23:26.1429561Z (pass) portable modules cannot import platform code, host policy or escape through relative paths [9.76ms]
+2026-10-22T00:23:26.1448615Z (pass) portable domain imports and ordinary document variables remain valid [1.92ms]
+2026-10-22T00:23:26.1449300Z 
+2026-10-22T00:23:26.1449864Z ##[endgroup]
+2026-10-22T00:23:26.1450036Z 
+2026-10-22T00:23:26.1451437Z ##[group]tests\client.test.ts:
+2026-10-22T00:23:26.2344302Z (pass) typed local client handles repeated success and rejection without leaking connections [76.49ms]
+2026-10-22T00:23:26.2345138Z 
+2026-10-22T00:23:26.2345811Z ##[endgroup]
+2026-10-22T00:23:26.2346044Z 
+2026-10-22T00:23:26.2346509Z ##[group]tests\gamepad.test.ts:
+2026-10-22T00:23:26.2370647Z (pass) retained Swift/Rust v2 native report vectors > neutral [0.57ms]
+2026-10-22T00:23:26.2372744Z (pass) retained Swift/Rust v2 native report vectors > south [0.19ms]
+2026-10-22T00:23:26.2373813Z (pass) retained Swift/Rust v2 native report vectors > east [0.11ms]
+2026-10-22T00:23:26.2374639Z (pass) retained Swift/Rust v2 native report vectors > west [0.05ms]
+2026-10-22T00:23:26.2375453Z (pass) retained Swift/Rust v2 native report vectors > north [0.03ms]
+2026-10-22T00:23:26.2377268Z (pass) retained Swift/Rust v2 native report vectors > left shoulder [0.20ms]
+2026-10-22T00:23:26.2379121Z (pass) retained Swift/Rust v2 native report vectors > right shoulder [0.05ms]
+2026-10-22T00:23:26.2380190Z (pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis [0.04ms]
+2026-10-22T00:23:26.2381580Z (pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis [0.23ms]
+2026-10-22T00:23:26.2382636Z (pass) retained Swift/Rust v2 native report vectors > select [0.07ms]
+2026-10-22T00:23:26.2383410Z (pass) retained Swift/Rust v2 native report vectors > start [0.06ms]
+2026-10-22T00:23:26.2384165Z (pass) retained Swift/Rust v2 native report vectors > home [0.03ms]
+2026-10-22T00:23:26.2385017Z (pass) retained Swift/Rust v2 native report vectors > left stick press [0.02ms]
+2026-10-22T00:23:26.2385609Z (pass) retained Swift/Rust v2 native report vectors > right stick press [0.04ms]
+2026-10-22T00:23:26.2386439Z (pass) retained Swift/Rust v2 native report vectors > up [0.04ms]
+2026-10-22T00:23:26.2387291Z (pass) retained Swift/Rust v2 native report vectors > up right [0.09ms]
+2026-10-22T00:23:26.2388124Z (pass) retained Swift/Rust v2 native report vectors > right [0.05ms]
+2026-10-22T00:23:26.2389242Z (pass) retained Swift/Rust v2 native report vectors > down right [0.07ms]
+2026-10-22T00:23:26.2390079Z (pass) retained Swift/Rust v2 native report vectors > down [0.06ms]
+2026-10-22T00:23:26.2390920Z (pass) retained Swift/Rust v2 native report vectors > down left [0.03ms]
+2026-10-22T00:23:26.2391772Z (pass) retained Swift/Rust v2 native report vectors > left [0.02ms]
+2026-10-22T00:23:26.2392574Z (pass) retained Swift/Rust v2 native report vectors > up left [0.05ms]
+2026-10-22T00:23:26.2393491Z (pass) retained Swift/Rust v2 native report vectors > opposed vertical [0.03ms]
+2026-10-22T00:23:26.2394369Z (pass) retained Swift/Rust v2 native report vectors > opposed horizontal [0.02ms]
+2026-10-22T00:23:26.2395349Z (pass) retained Swift/Rust v2 native report vectors > all dpad directions [0.05ms]
+2026-10-22T00:23:26.2399307Z (pass) retained Swift/Rust v2 native report vectors > sticks full scale [0.06ms]
+2026-10-22T00:23:26.2400399Z (pass) retained Swift/Rust v2 native report vectors > sticks clamp [0.08ms]
+2026-10-22T00:23:26.2401658Z (pass) retained Swift/Rust v2 native report vectors > sticks half scale [0.05ms]
+2026-10-22T00:23:26.2402683Z (pass) retained Swift/Rust v2 native report vectors > left trigger independent [0.02ms]
+2026-10-22T00:23:26.2403742Z (pass) retained Swift/Rust v2 native report vectors > right trigger independent [0.08ms]
+2026-10-22T00:23:26.2404779Z (pass) retained Swift/Rust v2 native report vectors > triggers together [0.03ms]
+2026-10-22T00:23:26.2405925Z (pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero [0.07ms]
+2026-10-22T00:23:26.2407030Z (pass) retained Swift/Rust v2 native report vectors > triggers clamp [0.04ms]
+2026-10-22T00:23:26.2407951Z (pass) retained Swift/Rust v2 native report vectors > mixed state [0.11ms]
+2026-10-22T00:23:26.2409031Z (pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.62ms]
+2026-10-22T00:23:26.2410111Z (pass) digital trigger release restores independent analog hold [0.12ms]
+2026-10-22T00:23:26.2411150Z (pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.36ms]
+2026-10-22T00:23:26.2412179Z (pass) decoded state has independent immutable ownership [0.15ms]
+2026-10-22T00:23:26.2413091Z (pass) signed axis ties match Swift/Rust rounding away from zero [0.08ms]
+2026-10-22T00:23:26.2413645Z 
+2026-10-22T00:23:26.2414089Z ##[endgroup]
+2026-10-22T00:23:26.2414554Z 
+2026-10-22T00:23:26.2414970Z ##[group]tests\host-identity.test.ts:
+2026-10-22T00:23:26.2458079Z (pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.51ms]
+2026-10-22T00:23:26.6359969Z (pass) headless identity initialize/show survives separate native processes without exporting private keys [390.15ms]
+2026-10-22T00:23:26.6360551Z 
+2026-10-22T00:23:26.6360914Z ##[endgroup]
+2026-10-22T00:23:26.6361032Z 
+2026-10-22T00:23:26.6361280Z ##[group]tests\input-packet.test.ts:
+2026-10-22T00:23:26.6423467Z (pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [5.25ms]
+2026-10-22T00:23:26.6428925Z (pass) authenticated malformed semantic payloads are refused independently of encryption [0.55ms]
+2026-10-22T00:23:26.6430976Z (pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.19ms]
+2026-10-22T00:23:26.6431487Z 
+2026-10-22T00:23:26.6431787Z ##[endgroup]
+2026-10-22T00:23:26.6431926Z 
+2026-10-22T00:23:26.6432181Z ##[group]tests\mobile-input.test.ts:
+2026-10-22T00:23:26.6491269Z (pass) mobile control maps are bounded, immutable and share native semantic fixtures [1.64ms]
+2026-10-22T00:23:26.6497291Z (pass) invalid native maps cannot be admitted through the JS configuration boundary [0.56ms]
+2026-10-22T00:23:26.6501555Z (pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.38ms]
+2026-10-22T00:23:26.6514130Z (pass) native bridge configuration requires the matching activation receipt [1.24ms]
+2026-10-22T00:23:26.6515854Z (pass) native control lists reject holes and accessor elements without executing them [0.17ms]
+2026-10-22T00:23:26.6516350Z 
+2026-10-22T00:23:26.6516709Z ##[endgroup]
+2026-10-22T00:23:26.6516923Z 
+2026-10-22T00:23:26.6517223Z ##[group]tests\package.test.ts:
+2026-10-22T00:23:26.6522342Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+2026-10-22T00:23:26.6522831Z 
+2026-10-22T00:23:26.6523270Z ##[endgroup]
+2026-10-22T00:23:26.6523395Z 
+2026-10-22T00:23:26.6523628Z ##[group]tests\pairing.test.ts:
+2026-10-22T00:23:26.6580292Z (pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.56ms]
+2026-10-22T00:23:26.6582372Z (pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.21ms]
+2026-10-22T00:23:26.6585010Z (pass) a valid final allowed proof succeeds without granting another attempt [0.17ms]
+2026-10-22T00:23:26.6587580Z (pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.23ms]
+2026-10-22T00:23:26.6590643Z (pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.33ms]
+2026-10-22T00:23:26.6591783Z (pass) authority and window identities domain-separate the stored verifier [0.10ms]
+2026-10-22T00:23:26.6598525Z (pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.65ms]
+2026-10-22T00:23:26.6605488Z (pass) portable pairing client refuses a different authority and secret-bearing status replies [0.66ms]
+2026-10-22T00:23:26.6617799Z (pass) shared native enrollment fixture preserves service proof and public status semantics [1.20ms]
+2026-10-22T00:23:26.6618263Z 
+2026-10-22T00:23:26.6618533Z ##[endgroup]
+2026-10-22T00:23:26.6618648Z 
+2026-10-22T00:23:26.6618906Z ##[group]tests\receiver-seam.test.ts:
+2026-10-22T00:23:27.2008629Z (pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [533.11ms]
+2026-10-22T00:23:27.7012546Z (pass) service death neutralizes the independent receiver within the owner lease [500.61ms]
+2026-10-22T00:23:28.7005457Z (pass) JS stalls do not stall native expiry [999.29ms]
+2026-10-22T00:23:29.0007288Z (pass) only one service owns a runtime directory; unrelated state is refused [300.02ms]
+2026-10-22T00:23:29.2927406Z (pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [291.90ms]
+2026-10-22T00:23:29.2930669Z (pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.34ms]
+2026-10-22T00:23:30.2555146Z (pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [962.48ms]
+2026-10-22T00:23:30.2557089Z 
+2026-10-22T00:23:30.2557952Z ##[endgroup]
+2026-10-22T00:23:30.2558233Z 
+2026-10-22T00:23:30.2558426Z 1 tests skipped:
+2026-10-22T00:23:30.2559104Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+2026-10-22T00:23:30.2559771Z 
+2026-10-22T00:23:30.2560129Z  68 pass
+2026-10-22T00:23:30.2560796Z  1 skip
+2026-10-22T00:23:30.2561131Z  0 fail
+2026-10-22T00:23:30.2561419Z  817 expect() calls
+2026-10-22T00:23:30.2561762Z Ran 69 tests across 9 files. [4.30s]
+2026-10-22T00:23:30.3930071Z ##[group]Run bun run build
+2026-10-22T00:23:30.3930416Z [36;1mbun run build[0m
+2026-10-22T00:23:30.4003117Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:30.4003496Z env:
+2026-10-22T00:23:30.4003696Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:30.4003966Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:30.4004174Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:30.4004393Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:30.4004600Z ##[endgroup]
+2026-10-22T00:23:30.6850019Z $ bun tooling/build.ts
+2026-10-22T00:23:30.8662341Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+2026-10-22T00:23:38.3594980Z [1m[32m    Finished[0m `release` profile [optimized] target(s) in 7.61s
+2026-10-22T00:23:38.4009201Z   [11ms]  bundle  14 modules
+2026-10-22T00:23:38.6695798Z  [268ms] compile  dist/thumble-rewrite.exe
+2026-10-22T00:23:38.6786029Z Built standalone CLI and recording receiver; no repository checkout is needed at runtime
+2026-10-22T00:23:38.8109954Z ##[group]Run bun run test:package:ci
+2026-10-22T00:23:38.8110370Z [36;1mbun run test:package:ci[0m
+2026-10-22T00:23:38.8185385Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T00:23:38.8185759Z env:
+2026-10-22T00:23:38.8185971Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:38.8186239Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:38.8186443Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:38.8186662Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:38.8186863Z ##[endgroup]
+2026-10-22T00:23:39.1102194Z $ bun tooling/ci-test.ts --package
+2026-10-22T00:23:39.1367152Z bun test v1.4.3 (c6da4a4d3)
+2026-10-22T00:23:39.1429973Z 
+2026-10-22T00:23:39.1430957Z ##[group]tests\package.test.ts:
+2026-10-22T00:23:40.5222951Z (pass) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH [1371.90ms]
+2026-10-22T00:23:40.5223796Z 
+2026-10-22T00:23:40.5224402Z ##[endgroup]
+2026-10-22T00:23:40.5224547Z 
+2026-10-22T00:23:40.5224701Z  1 pass
+2026-10-22T00:23:40.5224897Z  0 fail
+2026-10-22T00:23:40.5225091Z  29 expect() calls
+2026-10-22T00:23:40.5225344Z Ran 1 test across 1 file. [1385.00ms]
+2026-10-22T00:23:40.6761906Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T00:23:40.6762443Z with:
+2026-10-22T00:23:40.6762786Z   name: rewrite-m2-recording-windows-latest
+2026-10-22T00:23:40.6763255Z   path: Rewrite/dist/
+2026-10-22T00:23:40.6763599Z   if-no-files-found: error
+2026-10-22T00:23:40.6763960Z   compression-level: 6
+2026-10-22T00:23:40.6764289Z   overwrite: false
+2026-10-22T00:23:40.6764621Z   include-hidden-files: false
+2026-10-22T00:23:40.6764982Z env:
+2026-10-22T00:23:40.6765288Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:40.6765722Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:40.6766055Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:40.6766413Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:40.6766748Z ##[endgroup]
+2026-10-22T00:23:40.8782555Z (node:6936) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:40.8783289Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:40.8862736Z With the provided path, there will be 5 files uploaded
+2026-10-22T00:23:40.8871233Z Artifact name is valid!
+2026-10-22T00:23:40.8873313Z Root directory input is valid!
+2026-10-22T00:23:41.2439407Z Beginning upload of artifact content to blob storage
+2026-10-22T00:23:41.8973243Z (node:6936) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T00:23:42.7828123Z Uploaded bytes 8388608
+2026-10-22T00:23:43.4304925Z Uploaded bytes 16777216
+2026-10-22T00:23:43.4436091Z Uploaded bytes 25165824
+2026-10-22T00:23:44.0993435Z Uploaded bytes 33554432
+2026-10-22T00:23:44.4910331Z Uploaded bytes 41943040
+2026-10-22T00:23:44.7848884Z Uploaded bytes 47082752
+2026-10-22T00:23:44.8431739Z Finished uploading artifact content to blob storage!
+2026-10-22T00:23:44.8435837Z SHA256 digest of uploaded artifact zip is 60c98eba586a750060eef030e5cc65989cbdb481b688cb53d09548488965e61d
+2026-10-22T00:23:44.8438510Z Finalizing artifact upload
+2026-10-22T00:23:45.3348208Z Artifact rewrite-m2-recording-windows-latest.zip successfully finalized. Artifact ID 12393040339
+2026-10-22T00:23:45.3349817Z Artifact rewrite-m2-recording-windows-latest has been successfully uploaded! Final size is 47082752 bytes. Artifact ID is 12393040339
+2026-10-22T00:23:45.3364189Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39699246581/artifacts/12393040339
+2026-10-22T00:23:45.3708369Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T00:23:45.3708803Z with:
+2026-10-22T00:23:45.3709207Z   name: rewrite-portable-tests-windows-latest
+2026-10-22T00:23:45.3709628Z   path: Rewrite/reports/*junit.xml
+2026-10-22T00:23:45.3709988Z   if-no-files-found: error
+2026-10-22T00:23:45.3710310Z   compression-level: 6
+2026-10-22T00:23:45.3710616Z   overwrite: false
+2026-10-22T00:23:45.3710912Z   include-hidden-files: false
+2026-10-22T00:23:45.3711268Z env:
+2026-10-22T00:23:45.3711529Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+2026-10-22T00:23:45.3711909Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:45.3712187Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:45.3712530Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:45.3712807Z ##[endgroup]
+2026-10-22T00:23:45.5740075Z (node:884) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:45.5741454Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:45.5821851Z With the provided path, there will be 2 files uploaded
+2026-10-22T00:23:45.5829330Z Artifact name is valid!
+2026-10-22T00:23:45.5832263Z Root directory input is valid!
+2026-10-22T00:23:45.9136285Z Beginning upload of artifact content to blob storage
+2026-10-22T00:23:45.9384022Z (node:884) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T00:23:46.1394791Z Uploaded bytes 3426
+2026-10-22T00:23:46.1976913Z Finished uploading artifact content to blob storage!
+2026-10-22T00:23:46.1978460Z SHA256 digest of uploaded artifact zip is b2dce643864393b48597c0904fae460f0483026fbdd9546a755a085606b534ec
+2026-10-22T00:23:46.1980858Z Finalizing artifact upload
+2026-10-22T00:23:46.6877982Z Artifact rewrite-portable-tests-windows-latest.zip successfully finalized. Artifact ID 12392935641
+2026-10-22T00:23:46.6879487Z Artifact rewrite-portable-tests-windows-latest has been successfully uploaded! Final size is 3426 bytes. Artifact ID is 12392935641
+2026-10-22T00:23:46.6890546Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39699246581/artifacts/12392935641
+2026-10-22T00:23:46.7249785Z Post job cleanup.
+2026-10-22T00:23:46.8906216Z Cache up-to-date.
+2026-10-22T00:23:46.9244706Z Post job cleanup.
+2026-10-22T00:23:47.1658770Z Post job cleanup.
+2026-10-22T00:23:47.3644070Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-22T00:23:47.4024148Z git version 2.56.0.windows.2
+2026-10-22T00:23:47.4105734Z Temporarily overriding HOME='D:\a\_temp\4db2e0b7-a15f-4d07-83e3-3951ffee0f05' before making global git config changes
+2026-10-22T00:23:47.4107424Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:23:47.4118663Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Thumble\Thumble
+2026-10-22T00:23:47.4541574Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:23:47.4956850Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-22T00:23:48.1143805Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:23:48.1534531Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-22T00:23:48.7614158Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:23:48.8032366Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-22T00:23:49.4384848Z Cleaning up orphan processes
+2026-10-22T00:23:49.4536105Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

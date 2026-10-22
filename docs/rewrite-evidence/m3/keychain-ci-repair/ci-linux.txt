@@ -1,0 +1,912 @@
+﻿2026-10-22T00:22:00.2538956Z Current runner version: '2.338.0'
+2026-10-22T00:22:00.2557711Z ##[group]Runner Image Provisioner
+2026-10-22T00:22:00.2558362Z Hosted Compute Agent
+2026-10-22T00:22:00.2558718Z Version: 20261012.601
+2026-10-22T00:22:00.2559135Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-22T00:22:00.2559620Z Build Date: 2026-10-12T17:48:21Z
+2026-10-22T00:22:00.2560043Z Worker ID: {8cbe3f78-1eb2-4fa7-a2b6-aa29e1633a34}
+2026-10-22T00:22:00.2560507Z Region: centralus
+2026-10-22T00:22:00.2560862Z Cloud: Azure
+2026-10-22T00:22:00.2561222Z ##[endgroup]
+2026-10-22T00:22:00.2561991Z ##[group]Operating System
+2026-10-22T00:22:00.2562383Z Ubuntu
+2026-10-22T00:22:00.2562736Z 24.04.5
+2026-10-22T00:22:00.2563059Z LTS
+2026-10-22T00:22:00.2563405Z ##[endgroup]
+2026-10-22T00:22:00.2563779Z ##[group]Runner Image
+2026-10-22T00:22:00.2564143Z Image: ubuntu-24.04
+2026-10-22T00:22:00.2564480Z Version: 20261012.334.1
+2026-10-22T00:22:00.2565487Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-22T00:22:00.2566447Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-22T00:22:00.2567035Z ##[endgroup]
+2026-10-22T00:22:00.2567743Z ##[group]GITHUB_TOKEN Permissions
+2026-10-22T00:22:00.2568944Z Contents: read
+2026-10-22T00:22:00.2569282Z Metadata: read
+2026-10-22T00:22:00.2569689Z ##[endgroup]
+2026-10-22T00:22:00.2571298Z Secret source: Actions
+2026-10-22T00:22:00.2571897Z Cache mode: write
+2026-10-22T00:22:00.2572357Z Prepare workflow directory
+2026-10-22T00:22:00.2838368Z Prepare all required actions
+2026-10-22T00:22:00.2886870Z Getting action download info
+2026-10-22T00:22:00.5116524Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-22T00:22:00.6073959Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+2026-10-22T00:22:00.9642363Z Download action repository 'dtolnay/rust-toolchain@1.88.0' (SHA:360a4e93673de6630fac2478bc9e35244b01a759)
+2026-10-22T00:22:01.1156116Z Download action repository 'Swatinem/rust-cache@v2' (SHA:d1527c8f67ef9af357290475d4af4b0fab8f12e0)
+2026-10-22T00:22:01.5331458Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-22T00:22:01.7476951Z Complete job name: portable (ubuntu-latest)
+2026-10-22T00:22:01.8048444Z ##[group]Run actions/checkout@v4
+2026-10-22T00:22:01.8048811Z with:
+2026-10-22T00:22:01.8049016Z   persist-credentials: false
+2026-10-22T00:22:01.8049255Z   repository: CodyBontecou/Thumble
+2026-10-22T00:22:01.8051012Z   token: ***
+2026-10-22T00:22:01.8051198Z   ssh-strict: true
+2026-10-22T00:22:01.8051387Z   ssh-user: git
+2026-10-22T00:22:01.8051567Z   clean: true
+2026-10-22T00:22:01.8051769Z   sparse-checkout-cone-mode: true
+2026-10-22T00:22:01.8051986Z   fetch-depth: 1
+2026-10-22T00:22:01.8052181Z   fetch-tags: false
+2026-10-22T00:22:01.8052379Z   show-progress: true
+2026-10-22T00:22:01.8052584Z   lfs: false
+2026-10-22T00:22:01.8052789Z   submodules: false
+2026-10-22T00:22:01.8052986Z   set-safe-directory: true
+2026-10-22T00:22:01.8053209Z   allow-unsafe-pr-checkout: false
+2026-10-22T00:22:01.8053495Z ##[endgroup]
+2026-10-22T00:22:01.8719094Z Syncing repository: CodyBontecou/Thumble
+2026-10-22T00:22:01.8720847Z ##[group]Getting Git version info
+2026-10-22T00:22:01.8721486Z Working directory is '/home/runner/work/Thumble/Thumble'
+2026-10-22T00:22:01.8722129Z [command]/usr/bin/git version
+2026-10-22T00:22:01.8772437Z git version 2.55.0
+2026-10-22T00:22:01.8785543Z ##[endgroup]
+2026-10-22T00:22:01.8799206Z Temporarily overriding HOME='/home/runner/work/_temp/62faa917-cc92-4808-a938-38a36b733cd8' before making global git config changes
+2026-10-22T00:22:01.8800580Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:22:01.8803899Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Thumble/Thumble
+2026-10-22T00:22:01.8849920Z Deleting the contents of '/home/runner/work/Thumble/Thumble'
+2026-10-22T00:22:01.8852922Z ##[group]Initializing the repository
+2026-10-22T00:22:01.8856861Z [command]/usr/bin/git init /home/runner/work/Thumble/Thumble
+2026-10-22T00:22:01.8948824Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-22T00:22:01.8949559Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-22T00:22:01.8950314Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-22T00:22:01.8951201Z hint: call:
+2026-10-22T00:22:01.8951545Z hint:
+2026-10-22T00:22:01.8952004Z hint: 	git config --global init.defaultBranch <name>
+2026-10-22T00:22:01.8952531Z hint:
+2026-10-22T00:22:01.8953012Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-22T00:22:01.8953743Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-22T00:22:01.8954359Z hint:
+2026-10-22T00:22:01.8954964Z hint: 	git branch -m <name>
+2026-10-22T00:22:01.8955389Z hint:
+2026-10-22T00:22:01.8955966Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-22T00:22:01.8956941Z Initialized empty Git repository in /home/runner/work/Thumble/Thumble/.git/
+2026-10-22T00:22:01.8961040Z [command]/usr/bin/git remote add origin https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:01.9003775Z ##[endgroup]
+2026-10-22T00:22:01.9004300Z ##[group]Disabling automatic garbage collection
+2026-10-22T00:22:01.9006957Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-22T00:22:01.9039807Z ##[endgroup]
+2026-10-22T00:22:01.9046941Z ##[group]Setting up auth
+2026-10-22T00:22:01.9047283Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:01.9075770Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:22:01.9367288Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:01.9396340Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:22:01.9568620Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:01.9596194Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:22:01.9766683Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-22T00:22:01.9800418Z ##[endgroup]
+2026-10-22T00:22:01.9800901Z ##[group]Fetching the repository
+2026-10-22T00:22:01.9807002Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8:refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:05.5400402Z From https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:05.5401070Z  * [new ref]         c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8 -> origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:05.5403359Z ##[endgroup]
+2026-10-22T00:22:05.5403842Z ##[group]Determining the checkout info
+2026-10-22T00:22:05.5405711Z ##[endgroup]
+2026-10-22T00:22:05.5410580Z [command]/usr/bin/git sparse-checkout disable
+2026-10-22T00:22:05.5454524Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-22T00:22:05.5481174Z ##[group]Checking out the ref
+2026-10-22T00:22:05.5485136Z [command]/usr/bin/git checkout --progress --force -B codex/typescript-rewrite-headless-ci refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:06.0736510Z Switched to a new branch 'codex/typescript-rewrite-headless-ci'
+2026-10-22T00:22:06.0738976Z branch 'codex/typescript-rewrite-headless-ci' set up to track 'origin/codex/typescript-rewrite-headless-ci'.
+2026-10-22T00:22:06.0785070Z ##[endgroup]
+2026-10-22T00:22:06.0818319Z [command]/usr/bin/git log -1 --format=%H
+2026-10-22T00:22:06.0842703Z c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8
+2026-10-22T00:22:06.0851452Z ##[group]Removing auth
+2026-10-22T00:22:06.0854264Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:06.0882890Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:22:06.1072053Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:06.1095725Z http.https://github.com/.extraheader
+2026-10-22T00:22:06.1100976Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-22T00:22:06.1129948Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:22:06.1318174Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:06.1346300Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:22:06.1519242Z ##[endgroup]
+2026-10-22T00:22:06.1705223Z ##[group]Run oven-sh/setup-bun@v2
+2026-10-22T00:22:06.1705410Z with:
+2026-10-22T00:22:06.1705527Z   bun-version: 1.4.3
+2026-10-22T00:22:06.1705654Z   no-cache: false
+2026-10-22T00:22:06.1707207Z   token: ***
+2026-10-22T00:22:06.1707344Z ##[endgroup]
+2026-10-22T00:22:06.3991345Z Cache hit for: bun-+NUKu9E/U4apAe78eSCZvQ/GSdc=
+2026-10-22T00:22:07.2206027Z Received 41001436 of 41001436 (100.0%), 59.5 MBs/sec
+2026-10-22T00:22:07.2206370Z Cache Size: ~39 MB (41001436 B)
+2026-10-22T00:22:07.2225312Z [command]/usr/bin/tar -xf /home/runner/work/_temp/959f8382-f403-4531-9305-54613fa4d87b/cache.tzst -P -C /home/runner/work/Thumble/Thumble --use-compress-program unzstd
+2026-10-22T00:22:07.3166513Z Cache restored successfully
+2026-10-22T00:22:07.3189375Z [command]/home/runner/.bun/bin/bun --revision
+2026-10-22T00:22:07.3223255Z 1.4.3+c6da4a4d3
+2026-10-22T00:22:07.3228357Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+2026-10-22T00:22:07.3411525Z ##[group]Run dtolnay/rust-toolchain@1.88.0
+2026-10-22T00:22:07.3411694Z with:
+2026-10-22T00:22:07.3411814Z   components: rustfmt, clippy
+2026-10-22T00:22:07.3411955Z ##[endgroup]
+2026-10-22T00:22:07.3456775Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-22T00:22:07.3493660Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-22T00:22:07.3493915Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-22T00:22:07.3494218Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-22T00:22:07.3494521Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-22T00:22:07.3494955Z [36;1m  exit 1[0m
+2026-10-22T00:22:07.3495148Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-22T00:22:07.3495380Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-22T00:22:07.3495715Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:07.3495993Z [36;1m  else[0m
+2026-10-22T00:22:07.3496217Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:07.3496463Z [36;1m  fi[0m
+2026-10-22T00:22:07.3496631Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-22T00:22:07.3496920Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:07.3497167Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-22T00:22:07.3497455Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:07.3497883Z [36;1melse[0m
+2026-10-22T00:22:07.3497997Z [36;1m  delimiter=EOF[0m
+2026-10-22T00:22:07.3498183Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-22T00:22:07.3498463Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:07.3498688Z [36;1mfi[0m
+2026-10-22T00:22:07.3739475Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:07.3741121Z env:
+2026-10-22T00:22:07.3741235Z   toolchain: 1.88.0
+2026-10-22T00:22:07.3741838Z ##[endgroup]
+2026-10-22T00:22:07.3877321Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=41]
+2026-10-22T00:22:07.3901947Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-22T00:22:07.3918028Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-22T00:22:07.3918310Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-22T00:22:07.3965732Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:07.3965924Z ##[endgroup]
+2026-10-22T00:22:07.4033894Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=13]
+2026-10-22T00:22:07.4035411Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-22T00:22:07.4085449Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-22T00:22:07.4085668Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-22T00:22:07.4086075Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-22T00:22:07.4086462Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-22T00:22:07.4086621Z [36;1mfi[0m
+2026-10-22T00:22:07.4131860Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:07.4132045Z env:
+2026-10-22T00:22:07.4132165Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:07.4132308Z ##[endgroup]
+2026-10-22T00:22:07.4197566Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=16]
+2026-10-22T00:22:07.4198922Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-22T00:22:07.4202151Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-22T00:22:07.4209860Z ##[start-action display=rustup toolchain install 1.88.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-22T00:22:07.4220957Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-22T00:22:07.4221323Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-22T00:22:07.4221559Z [36;1mflags=()[0m
+2026-10-22T00:22:07.4221732Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-22T00:22:07.4221958Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-22T00:22:07.4222229Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-22T00:22:07.4222468Z [36;1mlog=$(mktemp)[0m
+2026-10-22T00:22:07.4222603Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-22T00:22:07.4222752Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-22T00:22:07.4223059Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-22T00:22:07.4223359Z [36;1m    break[0m
+2026-10-22T00:22:07.4223546Z [36;1m  else[0m
+2026-10-22T00:22:07.4223679Z [36;1m    status=$?[0m
+2026-10-22T00:22:07.4223800Z [36;1m  fi[0m
+2026-10-22T00:22:07.4223965Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-22T00:22:07.4224400Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-22T00:22:07.4224847Z [36;1m    exit "$status"[0m
+2026-10-22T00:22:07.4224977Z [36;1m  fi[0m
+2026-10-22T00:22:07.4225179Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-22T00:22:07.4225404Z [36;1m  sleep 30[0m
+2026-10-22T00:22:07.4225520Z [36;1mdone[0m
+2026-10-22T00:22:07.4269901Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:07.4270085Z env:
+2026-10-22T00:22:07.4270200Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:07.4270341Z   toolchain: 1.88.0
+2026-10-22T00:22:07.4270458Z   targets: 
+2026-10-22T00:22:07.4270587Z   components: rustfmt, clippy
+2026-10-22T00:22:07.4270728Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-22T00:22:07.4270867Z ##[endgroup]
+2026-10-22T00:22:07.4647257Z info: syncing channel updates for 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:07.7237220Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:07.7237734Z info: downloading 5 components
+2026-10-22T00:22:13.8993731Z 
+2026-10-22T00:22:13.9056612Z   1.88.0-x86_64-unknown-linux-gnu installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:13.9056840Z 
+2026-10-22T00:22:13.9116965Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=6490]
+2026-10-22T00:22:13.9123157Z ##[start-action display=rustup default 1.88.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-22T00:22:13.9140155Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-22T00:22:13.9140527Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-22T00:22:13.9195574Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:13.9195769Z env:
+2026-10-22T00:22:13.9195891Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:13.9196035Z   toolchain: 1.88.0
+2026-10-22T00:22:13.9196158Z ##[endgroup]
+2026-10-22T00:22:13.9292259Z info: using existing install for 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:13.9297883Z info: default toolchain set to 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:13.9298117Z 
+2026-10-22T00:22:13.9356220Z   1.88.0-x86_64-unknown-linux-gnu unchanged - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:13.9356503Z 
+2026-10-22T00:22:13.9370742Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=24]
+2026-10-22T00:22:13.9373831Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-22T00:22:13.9386420Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-22T00:22:13.9386900Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-22T00:22:13.9387263Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-22T00:22:13.9387557Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:13.9438079Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:13.9438262Z env:
+2026-10-22T00:22:13.9438380Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:13.9438532Z   toolchain: 1.88.0
+2026-10-22T00:22:13.9438650Z ##[endgroup]
+2026-10-22T00:22:13.9716791Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=34]
+2026-10-22T00:22:13.9718582Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-22T00:22:13.9731836Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-22T00:22:13.9732057Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-22T00:22:13.9732240Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-22T00:22:13.9732397Z [36;1mfi[0m
+2026-10-22T00:22:13.9782888Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:13.9783214Z env:
+2026-10-22T00:22:13.9783332Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:13.9783473Z ##[endgroup]
+2026-10-22T00:22:13.9846978Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=12]
+2026-10-22T00:22:13.9848341Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-22T00:22:13.9860445Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-22T00:22:13.9860661Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-22T00:22:13.9860844Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-22T00:22:13.9861005Z [36;1mfi[0m
+2026-10-22T00:22:13.9904893Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:13.9905072Z env:
+2026-10-22T00:22:13.9905190Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:13.9905331Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:13.9905454Z ##[endgroup]
+2026-10-22T00:22:13.9968156Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=11]
+2026-10-22T00:22:13.9970435Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-22T00:22:13.9982503Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-22T00:22:13.9982788Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-22T00:22:13.9983171Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-22T00:22:13.9983579Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-22T00:22:13.9983891Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:13.9984179Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-22T00:22:13.9984459Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-22T00:22:13.9984948Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:13.9985226Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-22T00:22:13.9985416Z [36;1m  fi[0m
+2026-10-22T00:22:13.9985651Z [36;1mfi[0m
+2026-10-22T00:22:14.0028813Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:14.0028993Z env:
+2026-10-22T00:22:14.0029109Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:14.0029252Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:14.0029379Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:14.0029506Z   toolchain: 1.88.0
+2026-10-22T00:22:14.0029621Z ##[endgroup]
+2026-10-22T00:22:14.0301443Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=33]
+2026-10-22T00:22:14.0305206Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-22T00:22:14.0333870Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-22T00:22:14.0334301Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-22T00:22:14.0334915Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-22T00:22:14.0335225Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-22T00:22:14.0335405Z [36;1mfi[0m
+2026-10-22T00:22:14.0388117Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:14.0388307Z env:
+2026-10-22T00:22:14.0388426Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:14.0388576Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:14.0388704Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:14.0388831Z   toolchain: 1.88.0
+2026-10-22T00:22:14.0388954Z ##[endgroup]
+2026-10-22T00:22:14.0557434Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=25]
+2026-10-22T00:22:14.0561850Z ##[start-action display=rustc +1.88.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-22T00:22:14.0574761Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-22T00:22:14.0575008Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-22T00:22:14.0627060Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:14.0627252Z env:
+2026-10-22T00:22:14.0627375Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:14.0627525Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:14.0627654Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:14.0627784Z   toolchain: 1.88.0
+2026-10-22T00:22:14.0627907Z ##[endgroup]
+2026-10-22T00:22:14.0784746Z rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:14.0785087Z binary: rustc
+2026-10-22T00:22:14.0785318Z commit-hash: 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:22:14.0785598Z commit-date: 2025-06-23
+2026-10-22T00:22:14.0785807Z host: x86_64-unknown-linux-gnu
+2026-10-22T00:22:14.0786015Z release: 1.88.0
+2026-10-22T00:22:14.0786233Z LLVM version: 20.1.5
+2026-10-22T00:22:14.0798839Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=23]
+2026-10-22T00:22:14.0853693Z ##[group]Run Swatinem/rust-cache@v2
+2026-10-22T00:22:14.0853848Z with:
+2026-10-22T00:22:14.0853971Z   workspaces: Rewrite/native/receiver
+2026-10-22T00:22:14.0854123Z   prefix-key: v0-rust
+2026-10-22T00:22:14.0854253Z   add-job-id-key: true
+2026-10-22T00:22:14.0854391Z   add-rust-environment-hash-key: true
+2026-10-22T00:22:14.0854544Z   cache-targets: true
+2026-10-22T00:22:14.0854836Z   cache-all-crates: false
+2026-10-22T00:22:14.0854989Z   cache-workspace-crates: false
+2026-10-22T00:22:14.0855126Z   save-if: true
+2026-10-22T00:22:14.0855241Z   cache-provider: github
+2026-10-22T00:22:14.0855368Z   cache-bin: true
+2026-10-22T00:22:14.0855481Z   lookup-only: false
+2026-10-22T00:22:14.0855602Z   cmd-format: {0}
+2026-10-22T00:22:14.0855717Z env:
+2026-10-22T00:22:14.0855831Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:14.0855982Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:14.0856109Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:14.0856237Z ##[endgroup]
+2026-10-22T00:22:14.3624526Z ##[group]Cache Configuration
+2026-10-22T00:22:14.3624986Z Cache Provider:
+2026-10-22T00:22:14.3625164Z     github
+2026-10-22T00:22:14.3625326Z Workspaces:
+2026-10-22T00:22:14.3625556Z     /home/runner/work/Thumble/Thumble/Rewrite/native/receiver
+2026-10-22T00:22:14.3625834Z Cache Paths:
+2026-10-22T00:22:14.3626000Z     /home/runner/.cargo/bin
+2026-10-22T00:22:14.3626209Z     /home/runner/.cargo/.crates.toml
+2026-10-22T00:22:14.3626443Z     /home/runner/.cargo/.crates2.json
+2026-10-22T00:22:14.3626678Z     /home/runner/.cargo/registry
+2026-10-22T00:22:14.3626897Z     /home/runner/.cargo/git
+2026-10-22T00:22:14.3627170Z     /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/target
+2026-10-22T00:22:14.3627465Z Restore Key:
+2026-10-22T00:22:14.3627666Z     v0-rust-portable-Linux-x64-b74045d1
+2026-10-22T00:22:14.3627936Z Cache Key:
+2026-10-22T00:22:14.3628157Z     v0-rust-portable-Linux-x64-b74045d1-b2e44447
+2026-10-22T00:22:14.3628402Z .. Prefix:
+2026-10-22T00:22:14.3628588Z   - v0-rust-portable-Linux-x64
+2026-10-22T00:22:14.3628823Z .. Environment considered:
+2026-10-22T00:22:14.3629005Z   - Rust Versions:
+2026-10-22T00:22:14.3629266Z     - 1.88.0 x86_64-unknown-linux-gnu 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:22:14.3629664Z     - 1.99.0 x86_64-unknown-linux-gnu b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+2026-10-22T00:22:14.3629981Z   - CARGO_HOME
+2026-10-22T00:22:14.3630153Z   - CARGO_INCREMENTAL
+2026-10-22T00:22:14.3630333Z   - CARGO_TERM_COLOR
+2026-10-22T00:22:14.3630521Z .. Lockfiles considered:
+2026-10-22T00:22:14.3630814Z   - /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/Cargo.lock
+2026-10-22T00:22:14.3631199Z   - /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/Cargo.toml
+2026-10-22T00:22:14.3631712Z ##[endgroup]
+2026-10-22T00:22:14.3631811Z 
+2026-10-22T00:22:14.3631890Z ... Restoring cache ...
+2026-10-22T00:22:14.4828785Z Cache hit for restore-key: v0-rust-portable-Linux-x64-b74045d1-18368a29
+2026-10-22T00:22:15.6318314Z Received 117514887 of 125903495 (93.3%), 111.8 MBs/sec
+2026-10-22T00:22:15.9790519Z Received 125903495 of 125903495 (100.0%), 88.8 MBs/sec
+2026-10-22T00:22:15.9792838Z Cache Size: ~120 MB (125903495 B)
+2026-10-22T00:22:15.9815359Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d13bf786-8861-46f0-a954-8b64fdc8ff2d/cache.tzst -P -C /home/runner/work/Thumble/Thumble --use-compress-program unzstd
+2026-10-22T00:22:16.4662189Z Cache restored successfully
+2026-10-22T00:22:16.4717725Z Restored from cache key "v0-rust-portable-Linux-x64-b74045d1-18368a29" full match: false.
+2026-10-22T00:22:16.5014021Z ##[group]Run bun install --frozen-lockfile
+2026-10-22T00:22:16.5014237Z [36;1mbun install --frozen-lockfile[0m
+2026-10-22T00:22:16.5068554Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:16.5068709Z env:
+2026-10-22T00:22:16.5068835Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:16.5069002Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:16.5069141Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:16.5069280Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:16.5069414Z ##[endgroup]
+2026-10-22T00:22:16.5169942Z bun install v1.4.3 (c6da4a4d3)
+2026-10-22T00:22:16.7121045Z 
+2026-10-22T00:22:16.7121792Z + @types/bun@1.4.3
+2026-10-22T00:22:16.7122050Z + prettier@3.6.2
+2026-10-22T00:22:16.7122252Z + typescript@6.0.3
+2026-10-22T00:22:16.7122370Z 
+2026-10-22T00:22:16.7122464Z 7 packages installed [197.00ms]
+2026-10-22T00:22:16.7164472Z ##[group]Run node tooling/verify-input-packet-oracle.mjs
+2026-10-22T00:22:16.7164924Z [36;1mnode tooling/verify-input-packet-oracle.mjs[0m
+2026-10-22T00:22:16.7217892Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:16.7218041Z env:
+2026-10-22T00:22:16.7218160Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:16.7218309Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:16.7218443Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:16.7218580Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:16.7218713Z ##[endgroup]
+2026-10-22T00:22:16.8621950Z Node v22.23.3; OpenSSL 3.5.8; verified 33 exact packet vectors and 5 authenticated-invalid packets
+2026-10-22T00:22:16.8697602Z ##[group]Run bun run check:generated
+2026-10-22T00:22:16.8697940Z [36;1mbun run check:generated[0m
+2026-10-22T00:22:16.8753331Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:16.8753561Z env:
+2026-10-22T00:22:16.8753744Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:16.8753985Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:16.8754186Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:16.8754397Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:16.8754602Z ##[endgroup]
+2026-10-22T00:22:16.8848814Z $ bun tooling/generate-contracts.ts --check
+2026-10-22T00:22:16.8995201Z Generated 33 packet vectors and 5 invalid authenticated payloads
+2026-10-22T00:22:16.9058428Z ##[group]Run bun run check:boundaries
+2026-10-22T00:22:16.9058671Z [36;1mbun run check:boundaries[0m
+2026-10-22T00:22:16.9111262Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:16.9111407Z env:
+2026-10-22T00:22:16.9111542Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:16.9111694Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:16.9111829Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:16.9111963Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:16.9112096Z ##[endgroup]
+2026-10-22T00:22:16.9212330Z $ bun tooling/check-boundaries.ts
+2026-10-22T00:22:17.2402016Z Portable contracts/domain import boundaries verified
+2026-10-22T00:22:17.2500582Z ##[group]Run bun x --no-install prettier --check .
+2026-10-22T00:22:17.2500901Z [36;1mbun x --no-install prettier --check .[0m
+2026-10-22T00:22:17.2555105Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:17.2555254Z env:
+2026-10-22T00:22:17.2555381Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:17.2555539Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:17.2555670Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:17.2555808Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:17.2555944Z ##[endgroup]
+2026-10-22T00:22:17.3258105Z Checking formatting...
+2026-10-22T00:22:18.1700931Z All matched files use Prettier code style!
+2026-10-22T00:22:18.1866554Z ##[group]Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check
+2026-10-22T00:22:18.1866876Z [36;1mcargo fmt --manifest-path native/receiver/Cargo.toml -- --check[0m
+2026-10-22T00:22:18.1921353Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:18.1921502Z env:
+2026-10-22T00:22:18.1921627Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:18.1921778Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:18.1921911Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:18.1922048Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:18.1922182Z ##[endgroup]
+2026-10-22T00:22:18.2654044Z ##[group]Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+2026-10-22T00:22:18.2654480Z [36;1mcargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings[0m
+2026-10-22T00:22:18.2708360Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:18.2708507Z env:
+2026-10-22T00:22:18.2708631Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:18.2708798Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:18.2708929Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:18.2709066Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:18.2709198Z ##[endgroup]
+2026-10-22T00:22:18.3206403Z [1m[32m    Updating[0m crates.io index
+2026-10-22T00:22:18.6063091Z [1m[32m Downloading[0m crates ...
+2026-10-22T00:22:18.8700151Z [1m[32m  Downloaded[0m pkg-config v0.3.34
+2026-10-22T00:22:18.8778534Z [1m[32m  Downloaded[0m hashlink v0.12.2
+2026-10-22T00:22:18.8927827Z [1m[32m  Downloaded[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:18.8971167Z [1m[32m  Downloaded[0m fallible-iterator v0.3.0
+2026-10-22T00:22:18.9069437Z [1m[32m  Downloaded[0m foldhash v0.2.0
+2026-10-22T00:22:18.9114570Z [1m[32m  Downloaded[0m bitflags v2.13.2
+2026-10-22T00:22:18.9149466Z [1m[32m  Downloaded[0m smallvec v1.16.3
+2026-10-22T00:22:18.9322947Z [1m[32m  Downloaded[0m hashbrown v0.17.1
+2026-10-22T00:22:18.9372652Z [1m[32m  Downloaded[0m rusqlite v0.40.2
+2026-10-22T00:22:18.9505387Z [1m[32m  Downloaded[0m vcpkg v0.2.15
+2026-10-22T00:22:19.0488013Z [1m[32m  Downloaded[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:19.2825114Z [1m[32m    Checking[0m subtle v2.6.1
+2026-10-22T00:22:19.2825568Z [1m[32m   Compiling[0m pkg-config v0.3.34
+2026-10-22T00:22:19.2845435Z [1m[32m   Compiling[0m vcpkg v0.2.15
+2026-10-22T00:22:19.2845991Z [1m[32m    Checking[0m foldhash v0.2.0
+2026-10-22T00:22:19.3382733Z [1m[32m    Checking[0m hashbrown v0.17.1
+2026-10-22T00:22:19.3456141Z [1m[32m    Checking[0m universal-hash v0.5.1
+2026-10-22T00:22:19.3843619Z [1m[32m    Checking[0m polyval v0.6.2
+2026-10-22T00:22:19.4516213Z [1m[32m    Checking[0m ghash v0.5.1
+2026-10-22T00:22:19.4976299Z [1m[32m    Checking[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:19.5636243Z [1m[32m    Checking[0m bitflags v2.13.2
+2026-10-22T00:22:19.6114145Z [1m[32m    Checking[0m smallvec v1.16.3
+2026-10-22T00:22:19.6346433Z [1m[32m    Checking[0m fallible-iterator v0.3.0
+2026-10-22T00:22:19.6982804Z [1m[32m   Compiling[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:19.7035875Z [1m[32m    Checking[0m rustls v0.23.46
+2026-10-22T00:22:19.7246330Z [1m[32m    Checking[0m hashlink v0.12.2
+2026-10-22T00:22:19.8458839Z [1m[32m    Checking[0m aes-gcm v0.10.3
+2026-10-22T00:22:24.9779713Z [1m[32m    Checking[0m rusqlite v0.40.2
+2026-10-22T00:22:25.2597512Z [1m[32m    Checking[0m thumble-rewrite-receiver v0.0.0 (/home/runner/work/Thumble/Thumble/Rewrite/native/receiver)
+2026-10-22T00:22:25.9913165Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 7.69s
+2026-10-22T00:22:26.1209775Z ##[group]Run bun run native:test
+2026-10-22T00:22:26.1210066Z [36;1mbun run native:test[0m
+2026-10-22T00:22:26.1266743Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:26.1266896Z env:
+2026-10-22T00:22:26.1267023Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:26.1267177Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:26.1267311Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:26.1267598Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:26.1267732Z ##[endgroup]
+2026-10-22T00:22:26.2365376Z $ cargo +1.88.0 test --locked --manifest-path native/receiver/Cargo.toml
+2026-10-22T00:22:26.3471840Z [1m[32m   Compiling[0m subtle v2.6.1
+2026-10-22T00:22:26.3482529Z [1m[32m   Compiling[0m foldhash v0.2.0
+2026-10-22T00:22:26.3486645Z [1m[32m   Compiling[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:26.3497200Z [1m[32m   Compiling[0m bitflags v2.13.2
+2026-10-22T00:22:26.4116595Z [1m[32m   Compiling[0m universal-hash v0.5.1
+2026-10-22T00:22:26.4177916Z [1m[32m   Compiling[0m hashbrown v0.17.1
+2026-10-22T00:22:26.4474563Z [1m[32m   Compiling[0m fallible-iterator v0.3.0
+2026-10-22T00:22:26.4624969Z [1m[32m   Compiling[0m polyval v0.6.2
+2026-10-22T00:22:26.4628861Z [1m[32m   Compiling[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:26.5299023Z [1m[32m   Compiling[0m smallvec v1.16.3
+2026-10-22T00:22:26.5747287Z [1m[32m   Compiling[0m ghash v0.5.1
+2026-10-22T00:22:26.6176235Z [1m[32m   Compiling[0m aes-gcm v0.10.3
+2026-10-22T00:22:26.6386352Z [1m[32m   Compiling[0m rustls v0.23.46
+2026-10-22T00:22:26.7540805Z [1m[32m   Compiling[0m hashlink v0.12.2
+2026-10-22T00:22:26.8745604Z [1m[32m   Compiling[0m rusqlite v0.40.2
+2026-10-22T00:22:28.1986823Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (/home/runner/work/Thumble/Thumble/Rewrite/native/receiver)
+2026-10-22T00:22:30.9871668Z [1m[32m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 4.74s
+2026-10-22T00:22:30.9921060Z [1m[32m     Running[0m unittests src/lib.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-22456480c119f934)
+2026-10-22T00:22:30.9934196Z 
+2026-10-22T00:22:30.9934278Z running 56 tests
+2026-10-22T00:22:30.9949670Z test control_tls::tests::certificate_pin_is_canonical_and_identity_is_fresh ... ok
+2026-10-22T00:22:30.9961975Z test control_tls::socket_mode_tests::accepted_and_client_nonblocking_sockets_are_normalized_before_tls ... ok
+2026-10-22T00:22:31.0038679Z test control_tls::tests::pin_does_not_bypass_expiry_future_dates_hostname_or_server_usage ... ok
+2026-10-22T00:22:31.0039588Z test control_tls::tests::framing_accepts_maximum_control_and_rejects_local_invalid_frames_terminally ... ok
+2026-10-22T00:22:31.0052150Z test control_tls::tests::pinned_tls13_round_trip_control_and_exact_input_frames ... ok
+2026-10-22T00:22:31.0077862Z test control_tls::tests::malformed_remote_lengths_kinds_and_truncation_retire_connection ... ok
+2026-10-22T00:22:31.0087440Z test control_tls::tests::unsupported_alpn_and_tls12_are_rejected ... ok
+2026-10-22T00:22:31.0094600Z test control_tls::tests::wrong_pin_refuses_handshake_before_any_application_frame ... ok
+2026-10-22T00:22:31.0223597Z test enrollment::tests::client_role_cannot_consume_native_enrollment_window ... ok
+2026-10-22T00:22:31.0331968Z test enrollment::tests::duplicate_or_unknown_json_fields_fail_before_proof_admission ... ok
+2026-10-22T00:22:31.0337910Z test enrollment::tests::earlier_control_version_is_rejected_before_invitation_consumption ... ok
+2026-10-22T00:22:31.0497902Z test enrollment::tests::local_cancel_or_replacement_during_tls_wait_prevents_enrollment ... ok
+2026-10-22T00:22:31.0561432Z test enrollment::tests::native_clock_failure_closes_window_before_any_credential_is_issued ... ok
+2026-10-22T00:22:31.0564955Z test enrollment::tests::native_windows_are_one_use_bounded_and_secret_free_in_status ... ok
+2026-10-22T00:22:31.0570184Z test enrollment::tests::lost_or_mismatched_ack_preserves_committed_trust_and_consumed_window ... ok
+2026-10-22T00:22:31.0574605Z test enrollment::tests::shared_typescript_fixture_matches_native_verifier_and_control_shapes ... ok
+2026-10-22T00:22:31.0641540Z test enrollment::tests::trust_clock_failure_after_consumption_does_not_restore_window ... ok
+2026-10-22T00:22:31.0681014Z test enrollment::tests::real_tls_negotiates_versions_commits_then_requires_matching_storage_ack ... ok
+2026-10-22T00:22:31.0684161Z test enrollment::tests::window_clock_and_authority_failures_do_not_retain_admission ... ok
+2026-10-22T00:22:31.0752315Z test enrollment::tests::wrong_proof_spends_attempt_without_committing_trust ... ok
+2026-10-22T00:22:31.0755706Z test gamepad::tests::retained_native_vectors ... ok
+2026-10-22T00:22:31.0775978Z test host_identity::tests::complete_staged_creation_recovers_the_same_key_and_pin ... ok
+2026-10-22T00:22:31.0817362Z test host_identity::tests::corrupt_or_partial_records_never_regenerate_or_overwrite_material ... ok
+2026-10-22T00:22:31.0841332Z test host_identity::tests::exclusive_identity_owner_and_separate_runtime_namespaces ... ok
+2026-10-22T00:22:31.0850292Z test control_tls::tests::absolute_io_budget_cannot_be_extended_by_trickled_reads ... ok
+2026-10-22T00:22:31.0860737Z test host_identity::tests::lengths_magic_trailing_bytes_wrong_keys_and_certificate_policy_fail ... ok
+2026-10-22T00:22:31.0881913Z test host_identity::tests::published_but_not_cleaned_creation_recovers_without_rotation ... ok
+2026-10-22T00:22:31.0900303Z test host_identity::tests::inspection_never_initializes_or_recovers_key_material ... ok
+2026-10-22T00:22:31.0931735Z test host_identity::tests::symlinks_and_external_hardlinks_are_rejected_without_changing_identity ... ok
+2026-10-22T00:22:31.0933628Z test host_identity::tests::stable_reload_and_distinct_isolated_hosts_keep_private_permissions ... ok
+2026-10-22T00:22:31.0939425Z test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+2026-10-22T00:22:31.0942046Z test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+2026-10-22T00:22:31.0951475Z test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+2026-10-22T00:22:31.0953128Z test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+2026-10-22T00:22:31.0977599Z test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+2026-10-22T00:22:31.0997627Z test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+2026-10-22T00:22:31.1017029Z test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+2026-10-22T00:22:31.1017851Z test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+2026-10-22T00:22:31.1042309Z test control_tls::tests::read_byte_budget_and_unresponsive_peer_fail_closed ... ok
+2026-10-22T00:22:31.1168852Z test enrollment::tests::unsupported_versions_and_wrong_phase_frames_never_consume_invitation ... ok
+2026-10-22T00:22:31.1169879Z test phone_trust::tests::actual_tls_receives_only_after_native_commit_and_wrong_channel_cannot_export_secret ... ok
+2026-10-22T00:22:31.1198530Z test phone_trust::tests::credential_database_symlinks_and_aliases_do_not_cross_native_storage ... ok
+2026-10-22T00:22:31.1300124Z test phone_trust::tests::exclusive_owner_and_host_identity_binding_are_enforced ... ok
+2026-10-22T00:22:31.1305481Z test phone_trust::tests::credential_commits_reloads_and_never_persists_plaintext_or_exports_it_as_metadata ... ok
+2026-10-22T00:22:31.1408510Z test phone_trust::tests::expiry_and_native_clock_limits_fail_without_partial_mutations ... ok
+2026-10-22T00:22:31.1441068Z test phone_trust::tests::failed_commit_rolls_back_verifier_epoch_and_observed_clock ... ok
+2026-10-22T00:22:31.1502563Z test phone_trust::tests::foreign_schemas_and_corruption_are_rejected_without_replacing_data ... ok
+2026-10-22T00:22:31.1569055Z test phone_trust::tests::sqlite_uses_pinned_native_engine_and_durable_bounded_private_storage ... ok
+2026-10-22T00:22:31.1569817Z test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+2026-10-22T00:22:31.1570765Z test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+2026-10-22T00:22:31.1571292Z test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+2026-10-22T00:22:31.1571789Z test runtime::tests::owner_lease_expires_even_without_samples ... ok
+2026-10-22T00:22:31.1572811Z test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+2026-10-22T00:22:31.1604607Z test phone_trust::tests::reenrollment_rotates_old_credentials_and_revocation_survives_restart_and_clock_rollback ... ok
+2026-10-22T00:22:31.1696522Z test phone_trust::tests::capacity_and_malformed_identities_are_bounded ... ok
+2026-10-22T00:22:31.2096952Z test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+2026-10-22T00:22:31.2097326Z 
+2026-10-22T00:22:31.2097538Z test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+2026-10-22T00:22:31.2097830Z 
+2026-10-22T00:22:31.2103664Z [1m[32m     Running[0m unittests src/main.rs (native/receiver/target/debug/deps/thumble_rewrite_receiver-61d55d61c269bddc)
+2026-10-22T00:22:31.2114829Z 
+2026-10-22T00:22:31.2114989Z running 0 tests
+2026-10-22T00:22:31.2115097Z 
+2026-10-22T00:22:31.2115245Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T00:22:31.2115459Z 
+2026-10-22T00:22:31.2116850Z [1m[32m   Doc-tests[0m thumble_rewrite_receiver
+2026-10-22T00:22:31.2597617Z 
+2026-10-22T00:22:31.2598411Z running 0 tests
+2026-10-22T00:22:31.2598592Z 
+2026-10-22T00:22:31.2598808Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T00:22:31.2599005Z 
+2026-10-22T00:22:31.2669546Z ##[group]Run bun run native:build
+2026-10-22T00:22:31.2669852Z [36;1mbun run native:build[0m
+2026-10-22T00:22:31.2723211Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:31.2723364Z env:
+2026-10-22T00:22:31.2723485Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:31.2723638Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:31.2723797Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:31.2723935Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:31.2724068Z ##[endgroup]
+2026-10-22T00:22:31.2806461Z $ cargo +1.88.0 build --locked --manifest-path native/receiver/Cargo.toml
+2026-10-22T00:22:31.3257984Z [1m[32m   Compiling[0m rustls v0.23.46
+2026-10-22T00:22:32.6032339Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (/home/runner/work/Thumble/Thumble/Rewrite/native/receiver)
+2026-10-22T00:22:34.1108553Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 2.82s
+2026-10-22T00:22:34.1204592Z ##[group]Run cargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe
+2026-10-22T00:22:34.1205297Z [36;1mcargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe[0m
+2026-10-22T00:22:34.1205581Z [36;1mnode tooling/test-control-tls.mjs[0m
+2026-10-22T00:22:34.1259679Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:34.1259826Z env:
+2026-10-22T00:22:34.1259956Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:34.1260112Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:34.1260249Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:34.1260392Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:34.1260527Z ##[endgroup]
+2026-10-22T00:22:34.1720896Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+2026-10-22T00:22:34.2348288Z Node v22.23.3; OpenSSL 3.5.8; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed
+2026-10-22T00:22:34.2410986Z ##[group]Run bun run typecheck
+2026-10-22T00:22:34.2411173Z [36;1mbun run typecheck[0m
+2026-10-22T00:22:34.2464349Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:34.2464500Z env:
+2026-10-22T00:22:34.2464732Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:34.2464926Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:34.2465059Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:34.2465194Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:34.2465325Z ##[endgroup]
+2026-10-22T00:22:34.2549798Z $ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json
+2026-10-22T00:22:35.8537469Z ##[group]Run bun run test:ci
+2026-10-22T00:22:35.8537655Z [36;1mbun run test:ci[0m
+2026-10-22T00:22:35.8591615Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:35.8591768Z env:
+2026-10-22T00:22:35.8591889Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:35.8592044Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:35.8592333Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:35.8592470Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:35.8592605Z ##[endgroup]
+2026-10-22T00:22:35.8677920Z $ bun tooling/ci-test.ts
+2026-10-22T00:22:35.8751142Z bun test v1.4.3 (c6da4a4d3)
+2026-10-22T00:22:35.8768525Z 
+2026-10-22T00:22:35.8769149Z ##[group]tests/client.test.ts:
+2026-10-22T00:22:35.9133033Z (pass) typed local client handles repeated success and rejection without leaking connections [25.93ms]
+2026-10-22T00:22:35.9133738Z 
+2026-10-22T00:22:35.9134465Z ##[endgroup]
+2026-10-22T00:22:35.9134603Z 
+2026-10-22T00:22:35.9134972Z ##[group]tests/boundaries.test.ts:
+2026-10-22T00:22:36.0321817Z (pass) portable modules cannot import platform code, host policy or escape through relative paths [8.35ms]
+2026-10-22T00:22:36.0330539Z (pass) portable domain imports and ordinary document variables remain valid [0.92ms]
+2026-10-22T00:22:36.0331099Z 
+2026-10-22T00:22:36.0331509Z ##[endgroup]
+2026-10-22T00:22:36.0331633Z 
+2026-10-22T00:22:36.0331913Z ##[group]tests/gamepad.test.ts:
+2026-10-22T00:22:36.0345790Z (pass) retained Swift/Rust v2 native report vectors > neutral [0.36ms]
+2026-10-22T00:22:36.0346724Z (pass) retained Swift/Rust v2 native report vectors > south [0.11ms]
+2026-10-22T00:22:36.0347158Z (pass) retained Swift/Rust v2 native report vectors > east [0.04ms]
+2026-10-22T00:22:36.0347564Z (pass) retained Swift/Rust v2 native report vectors > west [0.01ms]
+2026-10-22T00:22:36.0348002Z (pass) retained Swift/Rust v2 native report vectors > north [0.01ms]
+2026-10-22T00:22:36.0354995Z (pass) retained Swift/Rust v2 native report vectors > left shoulder [0.04ms]
+2026-10-22T00:22:36.0355538Z (pass) retained Swift/Rust v2 native report vectors > right shoulder [0.02ms]
+2026-10-22T00:22:36.0356042Z (pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis [0.01ms]
+2026-10-22T00:22:36.0356600Z (pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis [0.02ms]
+2026-10-22T00:22:36.0357096Z (pass) retained Swift/Rust v2 native report vectors > select [0.01ms]
+2026-10-22T00:22:36.0357489Z (pass) retained Swift/Rust v2 native report vectors > start [0.01ms]
+2026-10-22T00:22:36.0357863Z (pass) retained Swift/Rust v2 native report vectors > home [0.01ms]
+2026-10-22T00:22:36.0358187Z (pass) retained Swift/Rust v2 native report vectors > left stick press [0.01ms]
+2026-10-22T00:22:36.0358470Z (pass) retained Swift/Rust v2 native report vectors > right stick press [0.01ms]
+2026-10-22T00:22:36.0358734Z (pass) retained Swift/Rust v2 native report vectors > up [0.02ms]
+2026-10-22T00:22:36.0358980Z (pass) retained Swift/Rust v2 native report vectors > up right [0.02ms]
+2026-10-22T00:22:36.0359231Z (pass) retained Swift/Rust v2 native report vectors > right [0.01ms]
+2026-10-22T00:22:36.0359484Z (pass) retained Swift/Rust v2 native report vectors > down right [0.01ms]
+2026-10-22T00:22:36.0359815Z (pass) retained Swift/Rust v2 native report vectors > down
+2026-10-22T00:22:36.0360201Z (pass) retained Swift/Rust v2 native report vectors > down left [0.02ms]
+2026-10-22T00:22:36.0360604Z (pass) retained Swift/Rust v2 native report vectors > left [0.01ms]
+2026-10-22T00:22:36.0360982Z (pass) retained Swift/Rust v2 native report vectors > up left
+2026-10-22T00:22:36.0361377Z (pass) retained Swift/Rust v2 native report vectors > opposed vertical
+2026-10-22T00:22:36.0361630Z (pass) retained Swift/Rust v2 native report vectors > opposed horizontal
+2026-10-22T00:22:36.0361891Z (pass) retained Swift/Rust v2 native report vectors > all dpad directions
+2026-10-22T00:22:36.0362149Z (pass) retained Swift/Rust v2 native report vectors > sticks full scale
+2026-10-22T00:22:36.0362835Z (pass) retained Swift/Rust v2 native report vectors > sticks clamp [0.02ms]
+2026-10-22T00:22:36.0363099Z (pass) retained Swift/Rust v2 native report vectors > sticks half scale
+2026-10-22T00:22:36.0363362Z (pass) retained Swift/Rust v2 native report vectors > left trigger independent
+2026-10-22T00:22:36.0363645Z (pass) retained Swift/Rust v2 native report vectors > right trigger independent
+2026-10-22T00:22:36.0364033Z (pass) retained Swift/Rust v2 native report vectors > triggers together
+2026-10-22T00:22:36.0364336Z (pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero [0.02ms]
+2026-10-22T00:22:36.0364777Z (pass) retained Swift/Rust v2 native report vectors > triggers clamp
+2026-10-22T00:22:36.0365015Z (pass) retained Swift/Rust v2 native report vectors > mixed state
+2026-10-22T00:22:36.0365303Z (pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.24ms]
+2026-10-22T00:22:36.0365606Z (pass) digital trigger release restores independent analog hold [0.04ms]
+2026-10-22T00:22:36.0365912Z (pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.18ms]
+2026-10-22T00:22:36.0366204Z (pass) decoded state has independent immutable ownership [0.05ms]
+2026-10-22T00:22:36.0366451Z (pass) signed axis ties match Swift/Rust rounding away from zero [0.03ms]
+2026-10-22T00:22:36.0366610Z 
+2026-10-22T00:22:36.0366821Z ##[endgroup]
+2026-10-22T00:22:36.0366893Z 
+2026-10-22T00:22:36.0367100Z ##[group]tests/input-packet.test.ts:
+2026-10-22T00:22:36.0387341Z (pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [2.42ms]
+2026-10-22T00:22:36.0389969Z (pass) authenticated malformed semantic payloads are refused independently of encryption [0.29ms]
+2026-10-22T00:22:36.0390977Z (pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.10ms]
+2026-10-22T00:22:36.0391272Z 
+2026-10-22T00:22:36.0391555Z ##[endgroup]
+2026-10-22T00:22:36.0391704Z 
+2026-10-22T00:22:36.0392002Z ##[group]tests/mobile-input.test.ts:
+2026-10-22T00:22:36.0410135Z (pass) mobile control maps are bounded, immutable and share native semantic fixtures [0.91ms]
+2026-10-22T00:22:36.0411800Z (pass) invalid native maps cannot be admitted through the JS configuration boundary [0.19ms]
+2026-10-22T00:22:36.0413326Z (pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.16ms]
+2026-10-22T00:22:36.0421621Z (pass) native bridge configuration requires the matching activation receipt [0.77ms]
+2026-10-22T00:22:36.0422403Z (pass) native control lists reject holes and accessor elements without executing them [0.07ms]
+2026-10-22T00:22:36.0422950Z 
+2026-10-22T00:22:36.0423285Z ##[endgroup]
+2026-10-22T00:22:36.0423407Z 
+2026-10-22T00:22:36.0423721Z ##[group]tests/package.test.ts:
+2026-10-22T00:22:36.0426588Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+2026-10-22T00:22:36.0426798Z 
+2026-10-22T00:22:36.0426980Z ##[endgroup]
+2026-10-22T00:22:36.0427106Z 
+2026-10-22T00:22:36.0427362Z ##[group]tests/receiver-seam.test.ts:
+2026-10-22T00:22:36.2426325Z (pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [196.27ms]
+2026-10-22T00:22:36.4328624Z (pass) service death neutralizes the independent receiver within the owner lease [191.60ms]
+2026-10-22T00:22:37.3591814Z (pass) JS stalls do not stall native expiry [926.35ms]
+2026-10-22T00:22:37.4622164Z (pass) only one service owns a runtime directory; unrelated state is refused [102.96ms]
+2026-10-22T00:22:37.5651362Z (pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [102.62ms]
+2026-10-22T00:22:37.5652316Z (pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.30ms]
+2026-10-22T00:22:37.8757715Z (pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [310.59ms]
+2026-10-22T00:22:37.8768043Z 
+2026-10-22T00:22:37.8768951Z ##[endgroup]
+2026-10-22T00:22:37.8769557Z 
+2026-10-22T00:22:37.8770006Z ##[group]tests/pairing.test.ts:
+2026-10-22T00:22:37.8785485Z (pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.54ms]
+2026-10-22T00:22:37.8790785Z (pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.12ms]
+2026-10-22T00:22:37.8791736Z (pass) a valid final allowed proof succeeds without granting another attempt [0.09ms]
+2026-10-22T00:22:37.8792455Z (pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.09ms]
+2026-10-22T00:22:37.8793218Z (pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.13ms]
+2026-10-22T00:22:37.8793780Z (pass) authority and window identities domain-separate the stored verifier [0.03ms]
+2026-10-22T00:22:37.8794296Z (pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.23ms]
+2026-10-22T00:22:37.8803389Z (pass) portable pairing client refuses a different authority and secret-bearing status replies [0.47ms]
+2026-10-22T00:22:37.8803951Z (pass) shared native enrollment fixture preserves service proof and public status semantics [1.78ms]
+2026-10-22T00:22:37.8804272Z 
+2026-10-22T00:22:37.8804533Z ##[endgroup]
+2026-10-22T00:22:37.8804730Z 
+2026-10-22T00:22:37.8804978Z ##[group]tests/host-identity.test.ts:
+2026-10-22T00:22:37.8814576Z (pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.22ms]
+2026-10-22T00:22:37.9753955Z (pass) headless identity initialize/show survives separate native processes without exporting private keys [93.80ms]
+2026-10-22T00:22:37.9754394Z 
+2026-10-22T00:22:37.9765054Z ##[endgroup]
+2026-10-22T00:22:37.9765187Z 
+2026-10-22T00:22:37.9765253Z 1 tests skipped:
+2026-10-22T00:22:37.9765499Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+2026-10-22T00:22:37.9765779Z 
+2026-10-22T00:22:37.9765829Z  68 pass
+2026-10-22T00:22:37.9765934Z  1 skip
+2026-10-22T00:22:37.9766064Z  0 fail
+2026-10-22T00:22:37.9766176Z  819 expect() calls
+2026-10-22T00:22:37.9766305Z Ran 69 tests across 9 files. [2.10s]
+2026-10-22T00:22:37.9848886Z ##[group]Run bun run build
+2026-10-22T00:22:37.9849054Z [36;1mbun run build[0m
+2026-10-22T00:22:37.9901414Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:37.9901574Z env:
+2026-10-22T00:22:37.9901713Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:37.9901865Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:37.9901997Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:37.9902133Z   CACHE_ON_FAILURE: false
+2026-10-22T00:22:37.9902262Z ##[endgroup]
+2026-10-22T00:22:38.0005378Z $ bun tooling/build.ts
+2026-10-22T00:22:38.0524967Z [1m[32m   Compiling[0m subtle v2.6.1
+2026-10-22T00:22:38.0525778Z [1m[32m   Compiling[0m pkg-config v0.3.34
+2026-10-22T00:22:38.0526228Z [1m[32m   Compiling[0m vcpkg v0.2.15
+2026-10-22T00:22:38.0538915Z [1m[32m   Compiling[0m foldhash v0.2.0
+2026-10-22T00:22:38.1356650Z [1m[32m   Compiling[0m universal-hash v0.5.1
+2026-10-22T00:22:38.1816282Z [1m[32m   Compiling[0m hashbrown v0.17.1
+2026-10-22T00:22:38.1954431Z [1m[32m   Compiling[0m polyval v0.6.2
+2026-10-22T00:22:38.3506217Z [1m[32m   Compiling[0m ghash v0.5.1
+2026-10-22T00:22:38.3806999Z [1m[32m   Compiling[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:38.3934987Z [1m[32m   Compiling[0m smallvec v1.16.3
+2026-10-22T00:22:38.4426415Z [1m[32m   Compiling[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:38.4484320Z [1m[32m   Compiling[0m fallible-iterator v0.3.0
+2026-10-22T00:22:38.5302047Z [1m[32m   Compiling[0m bitflags v2.13.2
+2026-10-22T00:22:38.6485899Z [1m[32m   Compiling[0m hashlink v0.12.2
+2026-10-22T00:22:38.6696119Z [1m[32m   Compiling[0m rustls v0.23.46
+2026-10-22T00:22:38.7364948Z [1m[32m   Compiling[0m aes-gcm v0.10.3
+2026-10-22T00:23:08.6051886Z [1m[32m   Compiling[0m rusqlite v0.40.2
+2026-10-22T00:23:09.0387096Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (/home/runner/work/Thumble/Thumble/Rewrite/native/receiver)
+2026-10-22T00:23:11.7568011Z [1m[32m    Finished[0m `release` profile [optimized] target(s) in 33.74s
+2026-10-22T00:23:11.7696034Z    [4ms]  bundle  14 modules
+2026-10-22T00:23:11.8668347Z   [97ms] compile  dist/thumble-rewrite
+2026-10-22T00:23:11.8826470Z Built standalone CLI and recording receiver; no repository checkout is needed at runtime
+2026-10-22T00:23:11.8873365Z ##[group]Run bun run test:package:ci
+2026-10-22T00:23:11.8873569Z [36;1mbun run test:package:ci[0m
+2026-10-22T00:23:11.8927124Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:23:11.8927273Z env:
+2026-10-22T00:23:11.8927399Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:23:11.8927551Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:11.8927692Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:11.8927835Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:11.8927972Z ##[endgroup]
+2026-10-22T00:23:11.9014568Z $ bun tooling/ci-test.ts --package
+2026-10-22T00:23:11.9090660Z bun test v1.4.3 (c6da4a4d3)
+2026-10-22T00:23:11.9106413Z 
+2026-10-22T00:23:11.9108801Z ##[group]tests/package.test.ts:
+2026-10-22T00:23:12.1377083Z (pass) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH [223.22ms]
+2026-10-22T00:23:12.1377492Z 
+2026-10-22T00:23:12.1377873Z ##[endgroup]
+2026-10-22T00:23:12.1377978Z 
+2026-10-22T00:23:12.1378099Z  1 pass
+2026-10-22T00:23:12.1378259Z  0 fail
+2026-10-22T00:23:12.1378493Z  29 expect() calls
+2026-10-22T00:23:12.1378687Z Ran 1 test across 1 file. [228.00ms]
+2026-10-22T00:23:12.1486325Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T00:23:12.1486497Z with:
+2026-10-22T00:23:12.1486633Z   name: rewrite-m2-recording-ubuntu-latest
+2026-10-22T00:23:12.1486804Z   path: Rewrite/dist/
+2026-10-22T00:23:12.1486938Z   if-no-files-found: error
+2026-10-22T00:23:12.1487087Z   compression-level: 6
+2026-10-22T00:23:12.1487214Z   overwrite: false
+2026-10-22T00:23:12.1487345Z   include-hidden-files: false
+2026-10-22T00:23:12.1487486Z env:
+2026-10-22T00:23:12.1487602Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:23:12.1487752Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:12.1487886Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:12.1488020Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:12.1488151Z ##[endgroup]
+2026-10-22T00:23:12.2626041Z (node:3986) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:12.2626702Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:12.2680928Z With the provided path, there will be 5 files uploaded
+2026-10-22T00:23:12.2684777Z Artifact name is valid!
+2026-10-22T00:23:12.2685225Z Root directory input is valid!
+2026-10-22T00:23:12.5429821Z Beginning upload of artifact content to blob storage
+2026-10-22T00:23:12.8203027Z (node:3986) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T00:23:13.3038450Z Uploaded bytes 8388608
+2026-10-22T00:23:13.6993446Z Uploaded bytes 16777216
+2026-10-22T00:23:13.8046024Z Uploaded bytes 25165824
+2026-10-22T00:23:14.1747245Z Uploaded bytes 33554432
+2026-10-22T00:23:14.6118348Z Uploaded bytes 41943040
+2026-10-22T00:23:14.6796117Z Uploaded bytes 43551750
+2026-10-22T00:23:14.7219667Z Finished uploading artifact content to blob storage!
+2026-10-22T00:23:14.7221623Z SHA256 digest of uploaded artifact zip is dc4fe4566584df54e582191634a3ab94273f1f92b6016796242ec79dde548710
+2026-10-22T00:23:14.7223252Z Finalizing artifact upload
+2026-10-22T00:23:15.2152712Z Artifact rewrite-m2-recording-ubuntu-latest.zip successfully finalized. Artifact ID 12391787846
+2026-10-22T00:23:15.2153504Z Artifact rewrite-m2-recording-ubuntu-latest has been successfully uploaded! Final size is 43551750 bytes. Artifact ID is 12391787846
+2026-10-22T00:23:15.2159050Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39699246581/artifacts/12391787846
+2026-10-22T00:23:15.2323056Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T00:23:15.2323228Z with:
+2026-10-22T00:23:15.2323372Z   name: rewrite-portable-tests-ubuntu-latest
+2026-10-22T00:23:15.2323554Z   path: Rewrite/reports/*junit.xml
+2026-10-22T00:23:15.2323716Z   if-no-files-found: error
+2026-10-22T00:23:15.2323860Z   compression-level: 6
+2026-10-22T00:23:15.2324238Z   overwrite: false
+2026-10-22T00:23:15.2324368Z   include-hidden-files: false
+2026-10-22T00:23:15.2324511Z env:
+2026-10-22T00:23:15.2324801Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:23:15.2324956Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:15.2325091Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:15.2325227Z   CACHE_ON_FAILURE: false
+2026-10-22T00:23:15.2325360Z ##[endgroup]
+2026-10-22T00:23:15.3376980Z (node:4000) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:15.3377466Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:15.3430550Z With the provided path, there will be 2 files uploaded
+2026-10-22T00:23:15.3431194Z Artifact name is valid!
+2026-10-22T00:23:15.3431465Z Root directory input is valid!
+2026-10-22T00:23:15.5954861Z Beginning upload of artifact content to blob storage
+2026-10-22T00:23:15.6088398Z (node:4000) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T00:23:15.7920810Z Uploaded bytes 3450
+2026-10-22T00:23:15.8422307Z Finished uploading artifact content to blob storage!
+2026-10-22T00:23:15.8422934Z SHA256 digest of uploaded artifact zip is 3281c7bad383c568c1584f1be2380965f5378f7d8350039122f85a64c8dc8ecb
+2026-10-22T00:23:15.8423694Z Finalizing artifact upload
+2026-10-22T00:23:16.2717782Z Artifact rewrite-portable-tests-ubuntu-latest.zip successfully finalized. Artifact ID 12392121928
+2026-10-22T00:23:16.2718710Z Artifact rewrite-portable-tests-ubuntu-latest has been successfully uploaded! Final size is 3450 bytes. Artifact ID is 12392121928
+2026-10-22T00:23:16.2723889Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39699246581/artifacts/12392121928
+2026-10-22T00:23:16.2868515Z Post job cleanup.
+2026-10-22T00:23:16.3697860Z ##[group]Cache Configuration
+2026-10-22T00:23:16.3698228Z Cache Provider:
+2026-10-22T00:23:16.3698433Z     github
+2026-10-22T00:23:16.3698636Z Workspaces:
+2026-10-22T00:23:16.3698908Z     /home/runner/work/Thumble/Thumble/Rewrite/native/receiver
+2026-10-22T00:23:16.3699272Z Cache Paths:
+2026-10-22T00:23:16.3699482Z     /home/runner/.cargo/bin
+2026-10-22T00:23:16.3699730Z     /home/runner/.cargo/.crates.toml
+2026-10-22T00:23:16.3699994Z     /home/runner/.cargo/.crates2.json
+2026-10-22T00:23:16.3700245Z     /home/runner/.cargo/registry
+2026-10-22T00:23:16.3700506Z     /home/runner/.cargo/git
+2026-10-22T00:23:16.3700821Z     /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/target
+2026-10-22T00:23:16.3701155Z Restore Key:
+2026-10-22T00:23:16.3701381Z     v0-rust-portable-Linux-x64-b74045d1
+2026-10-22T00:23:16.3701647Z Cache Key:
+2026-10-22T00:23:16.3701886Z     v0-rust-portable-Linux-x64-b74045d1-b2e44447
+2026-10-22T00:23:16.3702232Z .. Prefix:
+2026-10-22T00:23:16.3702451Z   - v0-rust-portable-Linux-x64
+2026-10-22T00:23:16.3702715Z .. Environment considered:
+2026-10-22T00:23:16.3702958Z   - Rust Versions:
+2026-10-22T00:23:16.3703281Z     - 1.88.0 x86_64-unknown-linux-gnu 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:23:16.3703759Z     - 1.99.0 x86_64-unknown-linux-gnu b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+2026-10-22T00:23:16.3704122Z   - CARGO_HOME
+2026-10-22T00:23:16.3704326Z   - CARGO_INCREMENTAL
+2026-10-22T00:23:16.3704547Z   - CARGO_TERM_COLOR
+2026-10-22T00:23:16.3704975Z .. Lockfiles considered:
+2026-10-22T00:23:16.3705295Z   - /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/Cargo.lock
+2026-10-22T00:23:16.3705749Z   - /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/Cargo.toml
+2026-10-22T00:23:16.3706282Z ##[endgroup]
+2026-10-22T00:23:16.3706399Z 
+2026-10-22T00:23:16.9900627Z ... Cleaning /home/runner/work/Thumble/Thumble/Rewrite/native/receiver/target ...
+2026-10-22T00:23:17.0327499Z ... Cleaning cargo registry (cache-all-crates: false) ...
+2026-10-22T00:23:17.3471649Z ... Cleaning cargo/bin ...
+2026-10-22T00:23:17.3491032Z ... Cleaning cargo git cache ...
+2026-10-22T00:23:17.3493966Z ... Saving cache ...
+2026-10-22T00:23:17.3616912Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/Thumble/Thumble --files-from manifest.txt --use-compress-program zstdmt
+2026-10-22T00:23:19.3521949Z Sent 0 of 184219414 (0.0%), 0.0 MBs/sec
+2026-10-22T00:23:19.8328784Z Sent 184219414 of 184219414 (100.0%), 118.6 MBs/sec
+2026-10-22T00:23:20.0190360Z Post job cleanup.
+2026-10-22T00:23:20.1309726Z Post job cleanup.
+2026-10-22T00:23:20.1870941Z [command]/usr/bin/git version
+2026-10-22T00:23:20.1904751Z git version 2.55.0
+2026-10-22T00:23:20.1929588Z Temporarily overriding HOME='/home/runner/work/_temp/0b1ad715-5f56-43bc-b984-63bdae2483bf' before making global git config changes
+2026-10-22T00:23:20.1930280Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:23:20.1933868Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Thumble/Thumble
+2026-10-22T00:23:20.1967553Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:23:20.1996051Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:23:20.2204201Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:23:20.2232311Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:23:20.2445338Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:23:20.2477888Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:23:20.2766189Z Cleaning up orphan processes
+2026-10-22T00:23:20.2962387Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

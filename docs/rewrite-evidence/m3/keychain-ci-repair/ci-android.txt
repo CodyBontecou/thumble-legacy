@@ -1,0 +1,894 @@
+﻿2026-10-22T00:21:59.9830881Z Current runner version: '2.338.0'
+2026-10-22T00:21:59.9845595Z ##[group]Runner Image Provisioner
+2026-10-22T00:21:59.9846081Z Hosted Compute Agent
+2026-10-22T00:21:59.9846484Z Version: 20261012.601
+2026-10-22T00:21:59.9846872Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-22T00:21:59.9847336Z Build Date: 2026-10-12T17:48:21Z
+2026-10-22T00:21:59.9847734Z Worker ID: {d8499e2f-60c1-4300-b2a9-f1dfab2ced2a}
+2026-10-22T00:21:59.9848135Z Region: southcentralus
+2026-10-22T00:21:59.9848498Z Cloud: Azure
+2026-10-22T00:21:59.9848899Z ##[endgroup]
+2026-10-22T00:21:59.9849585Z ##[group]Operating System
+2026-10-22T00:21:59.9849977Z Ubuntu
+2026-10-22T00:21:59.9850277Z 24.04.5
+2026-10-22T00:21:59.9850592Z LTS
+2026-10-22T00:21:59.9850931Z ##[endgroup]
+2026-10-22T00:21:59.9851244Z ##[group]Runner Image
+2026-10-22T00:21:59.9851633Z Image: ubuntu-24.04
+2026-10-22T00:21:59.9851955Z Version: 20261012.334.1
+2026-10-22T00:21:59.9853013Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-22T00:21:59.9853852Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-22T00:21:59.9854419Z ##[endgroup]
+2026-10-22T00:21:59.9855206Z ##[group]GITHUB_TOKEN Permissions
+2026-10-22T00:21:59.9856412Z Contents: read
+2026-10-22T00:21:59.9856742Z Metadata: read
+2026-10-22T00:21:59.9857099Z ##[endgroup]
+2026-10-22T00:21:59.9858291Z Secret source: Actions
+2026-10-22T00:21:59.9858879Z Cache mode: write
+2026-10-22T00:21:59.9859272Z Prepare workflow directory
+2026-10-22T00:22:00.0094181Z Prepare all required actions
+2026-10-22T00:22:00.0133785Z Getting action download info
+2026-10-22T00:22:00.2661454Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-22T00:22:00.3431857Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-10-22T00:22:00.9713732Z Download action repository 'android-actions/setup-android@v3' (SHA:9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407)
+2026-10-22T00:22:01.3064463Z Download action repository 'gradle/actions@v4' (SHA:ed408507eac070d1f99cc633dbcf757c94c7933a)
+2026-10-22T00:22:02.5871136Z Download action repository 'dtolnay/rust-toolchain@1.88.0' (SHA:360a4e93673de6630fac2478bc9e35244b01a759)
+2026-10-22T00:22:02.7441497Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-22T00:22:02.9313990Z Complete job name: android-native
+2026-10-22T00:22:02.9790068Z ##[group]Run actions/checkout@v4
+2026-10-22T00:22:02.9790351Z with:
+2026-10-22T00:22:02.9790500Z   persist-credentials: false
+2026-10-22T00:22:02.9790672Z   repository: CodyBontecou/Thumble
+2026-10-22T00:22:02.9792157Z   token: ***
+2026-10-22T00:22:02.9792296Z   ssh-strict: true
+2026-10-22T00:22:02.9792439Z   ssh-user: git
+2026-10-22T00:22:02.9792575Z   clean: true
+2026-10-22T00:22:02.9792719Z   sparse-checkout-cone-mode: true
+2026-10-22T00:22:02.9792889Z   fetch-depth: 1
+2026-10-22T00:22:02.9793032Z   fetch-tags: false
+2026-10-22T00:22:02.9793185Z   show-progress: true
+2026-10-22T00:22:02.9793323Z   lfs: false
+2026-10-22T00:22:02.9793455Z   submodules: false
+2026-10-22T00:22:02.9793598Z   set-safe-directory: true
+2026-10-22T00:22:02.9793761Z   allow-unsafe-pr-checkout: false
+2026-10-22T00:22:02.9794002Z ##[endgroup]
+2026-10-22T00:22:03.0430018Z Syncing repository: CodyBontecou/Thumble
+2026-10-22T00:22:03.0431151Z ##[group]Getting Git version info
+2026-10-22T00:22:03.0431444Z Working directory is '/home/runner/work/Thumble/Thumble'
+2026-10-22T00:22:03.0431771Z [command]/usr/bin/git version
+2026-10-22T00:22:03.0475479Z git version 2.55.0
+2026-10-22T00:22:03.0479892Z ##[endgroup]
+2026-10-22T00:22:03.0495251Z Temporarily overriding HOME='/home/runner/work/_temp/606bf79e-b925-4145-bb11-adfa8fab76a3' before making global git config changes
+2026-10-22T00:22:03.0504846Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:22:03.0505627Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Thumble/Thumble
+2026-10-22T00:22:03.0572228Z Deleting the contents of '/home/runner/work/Thumble/Thumble'
+2026-10-22T00:22:03.0573086Z ##[group]Initializing the repository
+2026-10-22T00:22:03.0574050Z [command]/usr/bin/git init /home/runner/work/Thumble/Thumble
+2026-10-22T00:22:03.0648956Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-22T00:22:03.0649703Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-22T00:22:03.0650475Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-22T00:22:03.0650909Z hint: call:
+2026-10-22T00:22:03.0651228Z hint:
+2026-10-22T00:22:03.0651535Z hint: 	git config --global init.defaultBranch <name>
+2026-10-22T00:22:03.0651842Z hint:
+2026-10-22T00:22:03.0652149Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-22T00:22:03.0652609Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-22T00:22:03.0652998Z hint:
+2026-10-22T00:22:03.0653217Z hint: 	git branch -m <name>
+2026-10-22T00:22:03.0653458Z hint:
+2026-10-22T00:22:03.0653783Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-22T00:22:03.0654289Z Initialized empty Git repository in /home/runner/work/Thumble/Thumble/.git/
+2026-10-22T00:22:03.0665810Z [command]/usr/bin/git remote add origin https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:03.0698066Z ##[endgroup]
+2026-10-22T00:22:03.0698468Z ##[group]Disabling automatic garbage collection
+2026-10-22T00:22:03.0701150Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-22T00:22:03.0725420Z ##[endgroup]
+2026-10-22T00:22:03.0729871Z ##[group]Setting up auth
+2026-10-22T00:22:03.0730256Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:03.0753169Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:22:03.1015308Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:03.1042878Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:22:03.1220494Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:03.1246482Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:22:03.1410826Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-22T00:22:03.1442029Z ##[endgroup]
+2026-10-22T00:22:03.1442437Z ##[group]Fetching the repository
+2026-10-22T00:22:03.1447717Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8:refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:06.7332365Z From https://github.com/CodyBontecou/Thumble
+2026-10-22T00:22:06.7332816Z  * [new ref]         c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8 -> origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:06.7336143Z ##[endgroup]
+2026-10-22T00:22:06.7336477Z ##[group]Determining the checkout info
+2026-10-22T00:22:06.7338396Z ##[endgroup]
+2026-10-22T00:22:06.7343010Z [command]/usr/bin/git sparse-checkout disable
+2026-10-22T00:22:06.7381962Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-22T00:22:06.7405639Z ##[group]Checking out the ref
+2026-10-22T00:22:06.7408565Z [command]/usr/bin/git checkout --progress --force -B codex/typescript-rewrite-headless-ci refs/remotes/origin/codex/typescript-rewrite-headless-ci
+2026-10-22T00:22:07.2392179Z Switched to a new branch 'codex/typescript-rewrite-headless-ci'
+2026-10-22T00:22:07.2394583Z branch 'codex/typescript-rewrite-headless-ci' set up to track 'origin/codex/typescript-rewrite-headless-ci'.
+2026-10-22T00:22:07.2431297Z ##[endgroup]
+2026-10-22T00:22:07.2468554Z [command]/usr/bin/git log -1 --format=%H
+2026-10-22T00:22:07.2490210Z c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8
+2026-10-22T00:22:07.2497197Z ##[group]Removing auth
+2026-10-22T00:22:07.2499035Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:22:07.2524290Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:22:07.2696085Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:22:07.2716779Z http.https://github.com/.extraheader
+2026-10-22T00:22:07.2721978Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-22T00:22:07.2750253Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:22:07.2924885Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:22:07.2975515Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:22:07.3115057Z ##[endgroup]
+2026-10-22T00:22:07.3293162Z ##[group]Run actions/setup-java@v4
+2026-10-22T00:22:07.3293321Z with:
+2026-10-22T00:22:07.3293434Z   distribution: temurin
+2026-10-22T00:22:07.3293553Z   java-version: 17
+2026-10-22T00:22:07.3293671Z   java-package: jdk
+2026-10-22T00:22:07.3293801Z   check-latest: false
+2026-10-22T00:22:07.3293939Z   server-id: github
+2026-10-22T00:22:07.3294058Z   server-username: GITHUB_ACTOR
+2026-10-22T00:22:07.3294196Z   server-password: GITHUB_TOKEN
+2026-10-22T00:22:07.3294346Z   overwrite-settings: true
+2026-10-22T00:22:07.3294473Z   job-status: success
+2026-10-22T00:22:07.3296003Z   token: ***
+2026-10-22T00:22:07.3296119Z ##[endgroup]
+2026-10-22T00:22:07.4252844Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-10-22T00:22:07.4257843Z ##[group]Installed distributions
+2026-10-22T00:22:07.4277675Z Resolved Java 17.0.20+1 from tool-cache
+2026-10-22T00:22:07.4277922Z Setting Java 17.0.20+1 as the default
+2026-10-22T00:22:07.4283670Z (node:2318) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:22:07.4284281Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:22:07.4286051Z Creating toolchains.xml for JDK version 17 from temurin
+2026-10-22T00:22:07.4326218Z Writing to /home/runner/.m2/toolchains.xml
+2026-10-22T00:22:07.4326546Z 
+2026-10-22T00:22:07.4326625Z Java configuration:
+2026-10-22T00:22:07.4326831Z   Distribution: temurin
+2026-10-22T00:22:07.4327015Z   Version: 17.0.20+1
+2026-10-22T00:22:07.4327277Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:07.4327515Z 
+2026-10-22T00:22:07.4327733Z ##[endgroup]
+2026-10-22T00:22:07.4340410Z Creating settings.xml with server-id: github
+2026-10-22T00:22:07.4362983Z Writing to /home/runner/.m2/settings.xml
+2026-10-22T00:22:07.4492610Z ##[group]Run android-actions/setup-android@v3
+2026-10-22T00:22:07.4493351Z with:
+2026-10-22T00:22:07.4493530Z   packages: platform-tools
+2026-10-22T00:22:07.4493818Z   log-accepted-android-sdk-licenses: false
+2026-10-22T00:22:07.4494261Z   cmdline-tools-version: 12266719
+2026-10-22T00:22:07.4494589Z   accept-android-sdk-licenses: true
+2026-10-22T00:22:07.4494956Z env:
+2026-10-22T00:22:07.4495261Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:07.4495769Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:07.4496266Z ##[endgroup]
+2026-10-22T00:22:07.5159760Z Found preinstalled sdkmanager in /usr/local/lib/android/sdk/cmdline-tools/latest with following source.properties:
+2026-10-22T00:22:07.5160397Z Pkg.Revision=12.0
+2026-10-22T00:22:07.5160656Z Pkg.Path=cmdline-tools;12.0
+2026-10-22T00:22:07.5160909Z Pkg.Desc=Android SDK Command-line Tools
+2026-10-22T00:22:07.5161087Z 
+2026-10-22T00:22:07.5161272Z Wrong version in preinstalled sdkmanager
+2026-10-22T00:22:07.5161799Z Downloading commandline tools from https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip
+2026-10-22T00:22:10.0435975Z [command]/usr/bin/unzip -o -q /home/runner/work/_temp/ceec53a8-c4b0-4d72-acef-f8dd6c4a9cf3
+2026-10-22T00:22:10.5004896Z Accepting Android SDK licenses
+2026-10-22T00:22:12.7501754Z [command]/usr/local/lib/android/sdk/cmdline-tools/16.0/bin/sdkmanager platform-tools
+2026-10-22T00:22:13.2042899Z Loading package information...                                                  
+2026-10-22T00:22:13.2656021Z Loading local repository...                                                     
+2026-10-22T00:22:13.2656301Z [                                       ] 3% Loading local repository...        
+2026-10-22T00:22:13.2709278Z [                                       ] 3% Fetch remote repository...         
+2026-10-22T00:22:13.4732037Z [=                                      ] 3% Fetch remote repository...         
+2026-10-22T00:22:13.5092513Z [=                                      ] 4% Fetch remote repository...         
+2026-10-22T00:22:13.5249952Z [=                                      ] 5% Fetch remote repository...         
+2026-10-22T00:22:13.5499950Z [==                                     ] 5% Fetch remote repository...         
+2026-10-22T00:22:13.6013512Z [==                                     ] 6% Fetch remote repository...         
+2026-10-22T00:22:13.6385993Z [==                                     ] 7% Fetch remote repository...         
+2026-10-22T00:22:13.6415400Z [==                                     ] 7% Computing updates...               
+2026-10-22T00:22:13.6459976Z [===                                    ] 8% Computing updates...               
+2026-10-22T00:22:13.6495586Z [===                                    ] 10% Computing updates...              
+2026-10-22T00:22:13.6496108Z [=======================================] 100% Computing updates...             
+2026-10-22T00:22:13.6496530Z 
+2026-10-22T00:22:13.6932767Z ##[group]Run gradle/actions/setup-gradle@v4
+2026-10-22T00:22:13.6932925Z with:
+2026-10-22T00:22:13.6933032Z   cache-disabled: false
+2026-10-22T00:22:13.6933148Z   cache-read-only: true
+2026-10-22T00:22:13.6933265Z   cache-write-only: false
+2026-10-22T00:22:13.6933394Z   cache-overwrite-existing: false
+2026-10-22T00:22:13.6933529Z   cache-cleanup: on-success
+2026-10-22T00:22:13.6933681Z   gradle-home-cache-includes: caches
+notifications
+
+2026-10-22T00:22:13.6933859Z   add-job-summary: always
+2026-10-22T00:22:13.6933995Z   add-job-summary-as-pr-comment: never
+2026-10-22T00:22:13.6934153Z   dependency-graph: disabled
+2026-10-22T00:22:13.6934314Z   dependency-graph-report-dir: dependency-graph-reports
+2026-10-22T00:22:13.6934505Z   dependency-graph-continue-on-failure: true
+2026-10-22T00:22:13.6934661Z   build-scan-publish: false
+2026-10-22T00:22:13.6934951Z   validate-wrappers: true
+2026-10-22T00:22:13.6935082Z   allow-snapshot-wrappers: false
+2026-10-22T00:22:13.6935244Z   gradle-home-cache-strict-match: false
+2026-10-22T00:22:13.6935393Z   workflow-job-context: null
+2026-10-22T00:22:13.6936808Z   github-token: ***
+2026-10-22T00:22:13.6936917Z env:
+2026-10-22T00:22:13.6937079Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:13.6937334Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:13.6937541Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:13.6937698Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:13.6937841Z ##[endgroup]
+2026-10-22T00:22:13.8997867Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-10-22T00:22:13.8999434Z ##[group]Restore Gradle state from cache
+2026-10-22T00:22:14.0434029Z Gradle User Home cache not found. Will initialize empty.
+2026-10-22T00:22:14.0434462Z ##[endgroup]
+2026-10-22T00:22:14.0731614Z ##[group]All Gradle Wrapper jars are valid
+2026-10-22T00:22:14.0732564Z ✓ Found known Gradle Wrapper JAR files:
+2026-10-22T00:22:14.0733183Z   2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046 Android/gradle/wrapper/gradle-wrapper.jar
+2026-10-22T00:22:14.0734050Z   2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046 Rewrite/native/mobile-input/android/gradle/wrapper/gradle-wrapper.jar
+2026-10-22T00:22:14.0734908Z ##[endgroup]
+2026-10-22T00:22:14.0837060Z ##[group]Run sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+2026-10-22T00:22:14.0837367Z [36;1msdkmanager 'platforms;android-35' 'build-tools;35.0.0'[0m
+2026-10-22T00:22:14.1029523Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:14.1029663Z env:
+2026-10-22T00:22:14.1029847Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:14.1030103Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:14.1030309Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:14.1030467Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:14.1030637Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:14.1030795Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:14.1030943Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:14.1031092Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:14.1031341Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:14.1031589Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:14.1031752Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:14.1031890Z ##[endgroup]
+2026-10-22T00:22:14.5858289Z Loading package information...                                                  
+2026-10-22T00:22:14.6510024Z Loading local repository...                                                     
+2026-10-22T00:22:14.6512688Z [                                       ] 3% Loading local repository...        
+2026-10-22T00:22:14.6567661Z [                                       ] 3% Fetch remote repository...         
+2026-10-22T00:22:14.8189244Z [=                                      ] 3% Fetch remote repository...         
+2026-10-22T00:22:14.8591584Z [=                                      ] 4% Fetch remote repository...         
+2026-10-22T00:22:14.8759015Z [=                                      ] 5% Fetch remote repository...         
+2026-10-22T00:22:14.9063215Z [==                                     ] 5% Fetch remote repository...         
+2026-10-22T00:22:14.9512513Z [==                                     ] 6% Fetch remote repository...         
+2026-10-22T00:22:14.9885984Z [==                                     ] 7% Fetch remote repository...         
+2026-10-22T00:22:14.9929176Z [==                                     ] 7% Computing updates...               
+2026-10-22T00:22:14.9955298Z [===                                    ] 8% Computing updates...               
+2026-10-22T00:22:14.9989970Z [===                                    ] 10% Computing updates...              
+2026-10-22T00:22:14.9995344Z [=======================================] 100% Computing updates...             
+2026-10-22T00:22:14.9995702Z 
+2026-10-22T00:22:15.0299451Z ##[group]Run dtolnay/rust-toolchain@1.88.0
+2026-10-22T00:22:15.0299609Z with:
+2026-10-22T00:22:15.0299710Z env:
+2026-10-22T00:22:15.0299867Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0300123Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0300332Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0300487Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0300652Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:15.0300941Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:15.0301088Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:15.0301238Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:15.0301461Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:15.0301707Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:15.0301888Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:15.0302024Z ##[endgroup]
+2026-10-22T00:22:15.0340353Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+2026-10-22T00:22:15.0366861Z ##[group]Run if [[ -z $toolchain ]]; then
+2026-10-22T00:22:15.0367084Z [36;1mif [[ -z $toolchain ]]; then[0m
+2026-10-22T00:22:15.0367362Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+2026-10-22T00:22:15.0367652Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+2026-10-22T00:22:15.0367818Z [36;1m  exit 1[0m
+2026-10-22T00:22:15.0367997Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+2026-10-22T00:22:15.0368213Z [36;1m  if [[ Linux == macOS ]]; then[0m
+2026-10-22T00:22:15.0368491Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:15.0368763Z [36;1m  else[0m
+2026-10-22T00:22:15.0368975Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:15.0369210Z [36;1m  fi[0m
+2026-10-22T00:22:15.0369368Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+2026-10-22T00:22:15.0369649Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:15.0369890Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+2026-10-22T00:22:15.0370169Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:15.0370425Z [36;1melse[0m
+2026-10-22T00:22:15.0370534Z [36;1m  delimiter=EOF[0m
+2026-10-22T00:22:15.0370700Z [36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done[0m
+2026-10-22T00:22:15.0370972Z [36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:15.0371187Z [36;1mfi[0m
+2026-10-22T00:22:15.0422254Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:15.0422431Z env:
+2026-10-22T00:22:15.0422592Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0422842Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0423048Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0423204Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0423378Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:15.0423539Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:15.0423688Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:15.0423838Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:15.0424065Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:15.0424454Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:15.0424621Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:15.0424896Z   toolchain: 1.88.0
+2026-10-22T00:22:15.0425007Z ##[endgroup]
+2026-10-22T00:22:15.0506053Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=16]
+2026-10-22T00:22:15.0508646Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+2026-10-22T00:22:15.0520082Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV
+2026-10-22T00:22:15.0520338Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+2026-10-22T00:22:15.0564143Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:15.0564322Z env:
+2026-10-22T00:22:15.0564484Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0564912Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0565139Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0565304Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0565553Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:15.0565741Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:15.0565894Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:15.0566049Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:15.0566280Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:15.0566533Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:15.0566708Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:15.0566850Z ##[endgroup]
+2026-10-22T00:22:15.0644546Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=13]
+2026-10-22T00:22:15.0645997Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+2026-10-22T00:22:15.0658331Z ##[group]Run if ! command -v rustup &>/dev/null; then
+2026-10-22T00:22:15.0658544Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+2026-10-22T00:22:15.0658944Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+2026-10-22T00:22:15.0659325Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+2026-10-22T00:22:15.0659474Z [36;1mfi[0m
+2026-10-22T00:22:15.0702262Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:15.0702439Z env:
+2026-10-22T00:22:15.0702602Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0702865Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0703075Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0703233Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0703401Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:15.0703560Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:15.0703713Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:15.0703869Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:15.0704099Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:15.0704350Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:15.0704517Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:15.0704666Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:15.0704946Z ##[endgroup]
+2026-10-22T00:22:15.0766027Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=11]
+2026-10-22T00:22:15.0767206Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+2026-10-22T00:22:15.0770111Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-22T00:22:15.0776463Z ##[start-action display=rustup toolchain install 1.88.0;id=__dtolnay_rust-toolchain.__run_4]
+2026-10-22T00:22:15.0786834Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+2026-10-22T00:22:15.0787184Z [36;1mset -f  # split targets and components on commas and whitespace, without glob expansion[0m
+2026-10-22T00:22:15.0787414Z [36;1mflags=()[0m
+2026-10-22T00:22:15.0787563Z [36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done[0m
+2026-10-22T00:22:15.0787781Z [36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done[0m
+2026-10-22T00:22:15.0788045Z [36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi[0m
+2026-10-22T00:22:15.0788352Z [36;1mlog=$(mktemp)[0m
+2026-10-22T00:22:15.0788478Z [36;1mtrap 'rm -f "$log"' EXIT[0m
+2026-10-22T00:22:15.0788616Z [36;1mfor attempt in 1 2 3 4 5; do[0m
+2026-10-22T00:22:15.0788911Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-22T00:22:15.0789198Z [36;1m    break[0m
+2026-10-22T00:22:15.0789310Z [36;1m  else[0m
+2026-10-22T00:22:15.0789417Z [36;1m    status=$?[0m
+2026-10-22T00:22:15.0789528Z [36;1m  fi[0m
+2026-10-22T00:22:15.0789682Z [36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \[0m
+2026-10-22T00:22:15.0789971Z [36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then[0m
+2026-10-22T00:22:15.0790210Z [36;1m    exit "$status"[0m
+2026-10-22T00:22:15.0790328Z [36;1m  fi[0m
+2026-10-22T00:22:15.0790517Z [36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2[0m
+2026-10-22T00:22:15.0790740Z [36;1m  sleep 30[0m
+2026-10-22T00:22:15.0790847Z [36;1mdone[0m
+2026-10-22T00:22:15.0833628Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:15.0833802Z env:
+2026-10-22T00:22:15.0833961Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0834221Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:15.0834429Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0834585Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:15.0834873Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:15.0835033Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:15.0835181Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:15.0835333Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:15.0835558Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:15.0835809Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:15.0835973Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:15.0836118Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:15.0836247Z   toolchain: 1.88.0
+2026-10-22T00:22:15.0836357Z   targets: 
+2026-10-22T00:22:15.0836457Z   components: 
+2026-10-22T00:22:15.0836569Z   RUSTUP_PERMIT_COPY_RENAME: 1
+2026-10-22T00:22:15.0836698Z ##[endgroup]
+2026-10-22T00:22:15.1184976Z info: syncing channel updates for 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:15.3366538Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:15.3366999Z info: downloading 3 components
+2026-10-22T00:22:20.8780780Z 
+2026-10-22T00:22:20.8840507Z   1.88.0-x86_64-unknown-linux-gnu installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:20.8840824Z 
+2026-10-22T00:22:20.8909114Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=5813]
+2026-10-22T00:22:20.8913800Z ##[start-action display=rustup default 1.88.0;id=__dtolnay_rust-toolchain.__run_5]
+2026-10-22T00:22:20.8925610Z ##[group]Run rustup default "$toolchain" --force-non-host
+2026-10-22T00:22:20.8925847Z [36;1mrustup default "$toolchain" --force-non-host[0m
+2026-10-22T00:22:20.8976069Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.8976244Z env:
+2026-10-22T00:22:20.8976537Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.8976791Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.8976996Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.8977154Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.8977322Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:20.8977478Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:20.8977632Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:20.8977874Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:20.8978100Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:20.8978352Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:20.8978519Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:20.8978683Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:20.8978812Z   toolchain: 1.88.0
+2026-10-22T00:22:20.8978924Z ##[endgroup]
+2026-10-22T00:22:20.9070129Z info: using existing install for 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:20.9076385Z info: default toolchain set to 1.88.0-x86_64-unknown-linux-gnu
+2026-10-22T00:22:20.9076625Z 
+2026-10-22T00:22:20.9132634Z   1.88.0-x86_64-unknown-linux-gnu unchanged - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:20.9132906Z 
+2026-10-22T00:22:20.9145386Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=23]
+2026-10-22T00:22:20.9147514Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+2026-10-22T00:22:20.9158287Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+2026-10-22T00:22:20.9158728Z [36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+2026-10-22T00:22:20.9159083Z [36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+2026-10-22T00:22:20.9159352Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+2026-10-22T00:22:20.9202841Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.9203014Z env:
+2026-10-22T00:22:20.9203174Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9203430Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9203637Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9203797Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9203963Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:20.9204120Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:20.9204271Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:20.9204425Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:20.9204652Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:20.9205126Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:20.9205333Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:20.9205478Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:20.9205610Z   toolchain: 1.88.0
+2026-10-22T00:22:20.9205721Z ##[endgroup]
+2026-10-22T00:22:20.9463336Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=31]
+2026-10-22T00:22:20.9465317Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+2026-10-22T00:22:20.9477726Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+2026-10-22T00:22:20.9477932Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+2026-10-22T00:22:20.9478114Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+2026-10-22T00:22:20.9478265Z [36;1mfi[0m
+2026-10-22T00:22:20.9527220Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.9527393Z env:
+2026-10-22T00:22:20.9527706Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9527964Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9528172Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9528329Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9528500Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:20.9528657Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:20.9528808Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:20.9529055Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:20.9529281Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:20.9529553Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:20.9529718Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:20.9529864Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:20.9529997Z ##[endgroup]
+2026-10-22T00:22:20.9591910Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=12]
+2026-10-22T00:22:20.9593141Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+2026-10-22T00:22:20.9603822Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+2026-10-22T00:22:20.9604020Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+2026-10-22T00:22:20.9604202Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+2026-10-22T00:22:20.9604361Z [36;1mfi[0m
+2026-10-22T00:22:20.9646265Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.9646448Z env:
+2026-10-22T00:22:20.9646605Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9646861Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9647071Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9647228Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9647403Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:20.9647562Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:20.9647712Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:20.9647868Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:20.9648094Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:20.9648341Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:20.9648506Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:20.9648656Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:20.9648791Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:20.9648912Z ##[endgroup]
+2026-10-22T00:22:20.9708079Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=11]
+2026-10-22T00:22:20.9710035Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+2026-10-22T00:22:20.9721119Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+2026-10-22T00:22:20.9721387Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+2026-10-22T00:22:20.9721760Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+2026-10-22T00:22:20.9722145Z [36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+2026-10-22T00:22:20.9722450Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:20.9722732Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+2026-10-22T00:22:20.9722999Z [36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+2026-10-22T00:22:20.9723295Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+2026-10-22T00:22:20.9723559Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+2026-10-22T00:22:20.9723850Z [36;1m  fi[0m
+2026-10-22T00:22:20.9723953Z [36;1mfi[0m
+2026-10-22T00:22:20.9767127Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:20.9767301Z env:
+2026-10-22T00:22:20.9767460Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9767713Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:20.9767934Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9768093Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:20.9768357Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:20.9768517Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:20.9768669Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:20.9768821Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:20.9769048Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:20.9769300Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:20.9769465Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:20.9769613Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:20.9769745Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:20.9769863Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:20.9769984Z   toolchain: 1.88.0
+2026-10-22T00:22:20.9770094Z ##[endgroup]
+2026-10-22T00:22:21.0024182Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=31]
+2026-10-22T00:22:21.0027282Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+2026-10-22T00:22:21.0039282Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+2026-10-22T00:22:21.0039673Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+2026-10-22T00:22:21.0040001Z [36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+2026-10-22T00:22:21.0040264Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+2026-10-22T00:22:21.0040431Z [36;1mfi[0m
+2026-10-22T00:22:21.0088970Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:21.0089143Z env:
+2026-10-22T00:22:21.0089305Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0089559Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0089766Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0089930Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0090100Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:21.0090257Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:21.0090408Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:21.0090561Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:21.0090784Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:21.0091037Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:21.0091203Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:21.0091351Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:21.0091483Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:21.0091606Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:21.0091724Z   toolchain: 1.88.0
+2026-10-22T00:22:21.0091834Z ##[endgroup]
+2026-10-22T00:22:21.0240106Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=21]
+2026-10-22T00:22:21.0242790Z ##[start-action display=rustc +1.88.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+2026-10-22T00:22:21.0253684Z ##[group]Run rustc +"$toolchain" --version --verbose
+2026-10-22T00:22:21.0253883Z [36;1mrustc +"$toolchain" --version --verbose[0m
+2026-10-22T00:22:21.0297623Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-22T00:22:21.0297800Z env:
+2026-10-22T00:22:21.0298085Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0298341Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0298548Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0298705Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0298874Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:21.0299033Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:21.0299184Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:21.0299338Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:21.0299655Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:21.0299903Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:21.0300068Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:21.0300213Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:21.0300346Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:21.0300469Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:21.0300592Z   toolchain: 1.88.0
+2026-10-22T00:22:21.0300704Z ##[endgroup]
+2026-10-22T00:22:21.0434882Z rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-10-22T00:22:21.0435248Z binary: rustc
+2026-10-22T00:22:21.0435617Z commit-hash: 6b00bc3880198600130e1cf62b8f8a93494488cc
+2026-10-22T00:22:21.0435914Z commit-date: 2025-06-23
+2026-10-22T00:22:21.0436107Z host: x86_64-unknown-linux-gnu
+2026-10-22T00:22:21.0436301Z release: 1.88.0
+2026-10-22T00:22:21.0436428Z LLVM version: 20.1.5
+2026-10-22T00:22:21.0447649Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=20]
+2026-10-22T00:22:21.0480723Z ##[group]Run cargo build --locked --manifest-path native/receiver/Cargo.toml --examples
+2026-10-22T00:22:21.0481040Z [36;1mcargo build --locked --manifest-path native/receiver/Cargo.toml --examples[0m
+2026-10-22T00:22:21.0524014Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:21.0524140Z env:
+2026-10-22T00:22:21.0524302Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0524558Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:21.0524959Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0525190Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:21.0525437Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:21.0525594Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:21.0525745Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:21.0525898Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:21.0526158Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:21.0526405Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:21.0526568Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:21.0526710Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:21.0526839Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:21.0526956Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:21.0527076Z ##[endgroup]
+2026-10-22T00:22:21.0840774Z [1m[32m    Updating[0m crates.io index
+2026-10-22T00:22:21.4991696Z [1m[32m Downloading[0m crates ...
+2026-10-22T00:22:21.6225058Z [1m[32m  Downloaded[0m asn1-rs-impl v0.2.0
+2026-10-22T00:22:21.6233582Z [1m[32m  Downloaded[0m aead v0.5.2
+2026-10-22T00:22:21.6248914Z [1m[32m  Downloaded[0m asn1-rs-derive v0.6.0
+2026-10-22T00:22:21.6444885Z [1m[32m  Downloaded[0m bitflags v2.13.2
+2026-10-22T00:22:21.6487008Z [1m[32m  Downloaded[0m untrusted v0.9.0
+2026-10-22T00:22:21.6500639Z [1m[32m  Downloaded[0m autocfg v1.5.1
+2026-10-22T00:22:21.6515226Z [1m[32m  Downloaded[0m asn1-rs v0.7.2
+2026-10-22T00:22:21.6579174Z [1m[32m  Downloaded[0m bit-vec v0.9.1
+2026-10-22T00:22:21.6592762Z [1m[32m  Downloaded[0m itoa v1.0.18
+2026-10-22T00:22:21.6604643Z [1m[32m  Downloaded[0m aes-gcm v0.10.3
+2026-10-22T00:22:21.6627112Z [1m[32m  Downloaded[0m aes v0.8.4
+2026-10-22T00:22:21.6653758Z [1m[32m  Downloaded[0m subtle v2.6.1
+2026-10-22T00:22:21.6669492Z [1m[32m  Downloaded[0m time-core v0.1.9
+2026-10-22T00:22:21.6678873Z [1m[32m  Downloaded[0m generic-array v0.14.7
+2026-10-22T00:22:21.6690047Z [1m[32m  Downloaded[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:21.6697366Z [1m[32m  Downloaded[0m pkg-config v0.3.34
+2026-10-22T00:22:21.6712651Z [1m[32m  Downloaded[0m cipher v0.4.4
+2026-10-22T00:22:21.6724826Z [1m[32m  Downloaded[0m num-bigint v0.4.8
+2026-10-22T00:22:21.6761822Z [1m[32m  Downloaded[0m num-traits v0.2.19
+2026-10-22T00:22:21.6781456Z [1m[32m  Downloaded[0m ctr v0.9.2
+2026-10-22T00:22:21.6804317Z [1m[32m  Downloaded[0m serde v1.0.229
+2026-10-22T00:22:21.6843588Z [1m[32m  Downloaded[0m cpufeatures v0.2.17
+2026-10-22T00:22:21.6855245Z [1m[32m  Downloaded[0m x509-parser v0.18.1
+2026-10-22T00:22:21.6897362Z [1m[32m  Downloaded[0m zmij v1.0.23
+2026-10-22T00:22:21.6911411Z [1m[32m  Downloaded[0m num-conv v0.2.2
+2026-10-22T00:22:21.6918194Z [1m[32m  Downloaded[0m cfg-if v1.0.5
+2026-10-22T00:22:21.6928114Z [1m[32m  Downloaded[0m serde_json v1.0.151
+2026-10-22T00:22:21.6980683Z [1m[32m  Downloaded[0m thiserror v2.0.21
+2026-10-22T00:22:21.7029937Z [1m[32m  Downloaded[0m typenum v1.20.1
+2026-10-22T00:22:21.7054864Z [1m[32m  Downloaded[0m data-encoding v2.11.1
+2026-10-22T00:22:21.7062275Z [1m[32m  Downloaded[0m rusqlite v0.40.2
+2026-10-22T00:22:21.7113166Z [1m[32m  Downloaded[0m version_check v0.9.5
+2026-10-22T00:22:21.7124031Z [1m[32m  Downloaded[0m serde_core v1.0.229
+2026-10-22T00:22:21.7145835Z [1m[32m  Downloaded[0m rcgen v0.14.10
+2026-10-22T00:22:21.7163121Z [1m[32m  Downloaded[0m ghash v0.5.1
+2026-10-22T00:22:21.7171243Z [1m[32m  Downloaded[0m getrandom v0.2.17
+2026-10-22T00:22:21.7192348Z [1m[32m  Downloaded[0m time-macros v0.2.32
+2026-10-22T00:22:21.7212677Z [1m[32m  Downloaded[0m yasna v0.6.0
+2026-10-22T00:22:21.7229865Z [1m[32m  Downloaded[0m rustls-webpki v0.103.16
+2026-10-22T00:22:21.7257008Z [1m[32m  Downloaded[0m thiserror-impl v2.0.21
+2026-10-22T00:22:21.7267496Z [1m[32m  Downloaded[0m find-msvc-tools v0.1.15
+2026-10-22T00:22:21.7279050Z [1m[32m  Downloaded[0m synstructure v0.13.2
+2026-10-22T00:22:21.7287068Z [1m[32m  Downloaded[0m zeroize v1.9.1
+2026-10-22T00:22:21.7300664Z [1m[32m  Downloaded[0m serde_derive v1.0.229
+2026-10-22T00:22:21.7325738Z [1m[32m  Downloaded[0m lazy_static v1.5.1
+2026-10-22T00:22:21.7338924Z [1m[32m  Downloaded[0m smallvec v1.16.3
+2026-10-22T00:22:21.7348968Z [1m[32m  Downloaded[0m rustls v0.23.46
+2026-10-22T00:22:21.7433732Z [1m[32m  Downloaded[0m cc v1.9.0
+2026-10-22T00:22:21.7465595Z [1m[32m  Downloaded[0m memchr v2.8.3
+2026-10-22T00:22:21.7508035Z [1m[32m  Downloaded[0m rusticata-macros v4.1.0
+2026-10-22T00:22:21.7520022Z [1m[32m  Downloaded[0m syn v3.0.9
+2026-10-22T00:22:21.7594488Z [1m[32m  Downloaded[0m minimal-lexical v0.2.1
+2026-10-22T00:22:21.7627138Z [1m[32m  Downloaded[0m der-parser v10.0.0
+2026-10-22T00:22:21.7652156Z [1m[32m  Downloaded[0m oid-registry v0.8.1
+2026-10-22T00:22:21.7668760Z [1m[32m  Downloaded[0m powerfmt v0.2.1
+2026-10-22T00:22:21.7679102Z [1m[32m  Downloaded[0m vcpkg v0.2.15
+2026-10-22T00:22:21.8074889Z [1m[32m  Downloaded[0m unicode-ident v1.0.27
+2026-10-22T00:22:21.8094653Z [1m[32m  Downloaded[0m rustls-pki-types v1.15.1
+2026-10-22T00:22:21.8115261Z [1m[32m  Downloaded[0m fs2 v0.4.3
+2026-10-22T00:22:21.8123294Z [1m[32m  Downloaded[0m crypto-common v0.1.7
+2026-10-22T00:22:21.8133461Z [1m[32m  Downloaded[0m proc-macro2 v1.0.107
+2026-10-22T00:22:21.8154420Z [1m[32m  Downloaded[0m opaque-debug v0.3.1
+2026-10-22T00:22:21.8161572Z [1m[32m  Downloaded[0m fallible-iterator v0.3.0
+2026-10-22T00:22:21.8170694Z [1m[32m  Downloaded[0m deranged v0.5.9
+2026-10-22T00:22:21.8181220Z [1m[32m  Downloaded[0m inout v0.1.4
+2026-10-22T00:22:21.8189113Z [1m[32m  Downloaded[0m universal-hash v0.5.1
+2026-10-22T00:22:21.8195801Z [1m[32m  Downloaded[0m shlex v2.0.1
+2026-10-22T00:22:21.8204566Z [1m[32m  Downloaded[0m rand_core v0.6.4
+2026-10-22T00:22:21.8214050Z [1m[32m  Downloaded[0m once_cell v1.21.4
+2026-10-22T00:22:21.8232208Z [1m[32m  Downloaded[0m hashlink v0.12.2
+2026-10-22T00:22:21.8246129Z [1m[32m  Downloaded[0m displaydoc v0.2.7
+2026-10-22T00:22:21.8261123Z [1m[32m  Downloaded[0m quote v1.0.47
+2026-10-22T00:22:21.8280508Z [1m[32m  Downloaded[0m foldhash v0.2.0
+2026-10-22T00:22:21.8290353Z [1m[32m  Downloaded[0m polyval v0.6.2
+2026-10-22T00:22:21.8302650Z [1m[32m  Downloaded[0m num-integer v0.1.47
+2026-10-22T00:22:21.8321629Z [1m[32m  Downloaded[0m nom v7.1.3
+2026-10-22T00:22:21.8361760Z [1m[32m  Downloaded[0m syn v2.0.119
+2026-10-22T00:22:21.8466223Z [1m[32m  Downloaded[0m ring v0.17.14
+2026-10-22T00:22:21.8767882Z [1m[32m  Downloaded[0m hashbrown v0.17.1
+2026-10-22T00:22:21.8809433Z [1m[32m  Downloaded[0m libc v0.2.175
+2026-10-22T00:22:21.9003975Z [1m[32m  Downloaded[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:21.9438733Z [1m[32m  Downloaded[0m time v0.3.55
+2026-10-22T00:22:21.9896799Z [1m[32m   Compiling[0m libc v0.2.175
+2026-10-22T00:22:21.9897151Z [1m[32m   Compiling[0m cfg-if v1.0.5
+2026-10-22T00:22:21.9906095Z [1m[32m   Compiling[0m version_check v0.9.5
+2026-10-22T00:22:21.9906673Z [1m[32m   Compiling[0m find-msvc-tools v0.1.15
+2026-10-22T00:22:22.0096291Z [1m[32m   Compiling[0m shlex v2.0.1
+2026-10-22T00:22:22.0757647Z [1m[32m   Compiling[0m cc v1.9.0
+2026-10-22T00:22:22.0945830Z [1m[32m   Compiling[0m typenum v1.20.1
+2026-10-22T00:22:22.1311367Z [1m[32m   Compiling[0m generic-array v0.14.7
+2026-10-22T00:22:22.2636194Z [1m[32m   Compiling[0m proc-macro2 v1.0.107
+2026-10-22T00:22:22.5076446Z [1m[32m   Compiling[0m subtle v2.6.1
+2026-10-22T00:22:22.5826328Z [1m[32m   Compiling[0m unicode-ident v1.0.27
+2026-10-22T00:22:22.6146478Z [1m[32m   Compiling[0m getrandom v0.2.17
+2026-10-22T00:22:22.6298172Z [1m[32m   Compiling[0m quote v1.0.47
+2026-10-22T00:22:22.7306989Z [1m[32m   Compiling[0m rand_core v0.6.4
+2026-10-22T00:22:22.8306389Z [1m[32m   Compiling[0m untrusted v0.9.0
+2026-10-22T00:22:22.8610402Z [1m[32m   Compiling[0m cpufeatures v0.2.17
+2026-10-22T00:22:22.8793805Z [1m[32m   Compiling[0m crypto-common v0.1.7
+2026-10-22T00:22:22.8876778Z [1m[32m   Compiling[0m inout v0.1.4
+2026-10-22T00:22:22.9196806Z [1m[32m   Compiling[0m serde_core v1.0.229
+2026-10-22T00:22:22.9265937Z [1m[32m   Compiling[0m vcpkg v0.2.15
+2026-10-22T00:22:23.0907682Z [1m[32m   Compiling[0m zeroize v1.9.1
+2026-10-22T00:22:23.0946751Z [1m[32m   Compiling[0m ring v0.17.14
+2026-10-22T00:22:23.1370004Z [1m[32m   Compiling[0m pkg-config v0.3.34
+2026-10-22T00:22:23.1594666Z [1m[32m   Compiling[0m rustls-pki-types v1.15.1
+2026-10-22T00:22:23.3986882Z [1m[32m   Compiling[0m libsqlite3-sys v0.38.2
+2026-10-22T00:22:23.4373657Z [1m[32m   Compiling[0m cipher v0.4.4
+2026-10-22T00:22:23.4466420Z [1m[32m   Compiling[0m universal-hash v0.5.1
+2026-10-22T00:22:23.4830412Z [1m[32m   Compiling[0m foldhash v0.2.0
+2026-10-22T00:22:23.5256314Z [1m[32m   Compiling[0m time-core v0.1.9
+2026-10-22T00:22:23.5574465Z [1m[32m   Compiling[0m zmij v1.0.23
+2026-10-22T00:22:23.6050600Z [1m[32m   Compiling[0m opaque-debug v0.3.1
+2026-10-22T00:22:23.6306153Z [1m[32m   Compiling[0m num-conv v0.2.2
+2026-10-22T00:22:23.6572825Z [1m[32m   Compiling[0m powerfmt v0.2.1
+2026-10-22T00:22:23.6866906Z [1m[32m   Compiling[0m deranged v0.5.9
+2026-10-22T00:22:23.7228050Z [1m[32m   Compiling[0m polyval v0.6.2
+2026-10-22T00:22:23.8186142Z [1m[32m   Compiling[0m hashbrown v0.17.1
+2026-10-22T00:22:24.1376820Z [1m[32m   Compiling[0m syn v3.0.9
+2026-10-22T00:22:24.3546306Z [1m[32m   Compiling[0m time v0.3.55
+2026-10-22T00:22:25.4050885Z [1m[32m   Compiling[0m rustls v0.23.46
+2026-10-22T00:22:25.5046437Z [1m[32m   Compiling[0m serde_json v1.0.151
+2026-10-22T00:22:25.6117029Z [1m[32m   Compiling[0m serde v1.0.229
+2026-10-22T00:22:25.7926171Z [1m[32m   Compiling[0m serde_derive v1.0.229
+2026-10-22T00:22:26.0426635Z [1m[32m   Compiling[0m yasna v0.6.0
+2026-10-22T00:22:26.5196440Z [1m[32m   Compiling[0m rustls-webpki v0.103.16
+2026-10-22T00:22:26.8195584Z [1m[32m   Compiling[0m hashlink v0.12.2
+2026-10-22T00:22:26.9696141Z [1m[32m   Compiling[0m ghash v0.5.1
+2026-10-22T00:22:27.1736256Z [1m[32m   Compiling[0m aes v0.8.4
+2026-10-22T00:22:27.2326318Z [1m[32m   Compiling[0m ctr v0.9.2
+2026-10-22T00:22:27.2956204Z [1m[32m   Compiling[0m aead v0.5.2
+2026-10-22T00:22:27.3546342Z [1m[32m   Compiling[0m smallvec v1.16.3
+2026-10-22T00:22:27.4516699Z [1m[32m   Compiling[0m once_cell v1.21.4
+2026-10-22T00:22:27.4836237Z [1m[32m   Compiling[0m itoa v1.0.18
+2026-10-22T00:22:27.5420369Z [1m[32m   Compiling[0m fallible-streaming-iterator v0.1.9
+2026-10-22T00:22:27.5537050Z [1m[32m   Compiling[0m bitflags v2.13.2
+2026-10-22T00:22:27.6023470Z [1m[32m   Compiling[0m memchr v2.8.3
+2026-10-22T00:22:27.6516172Z [1m[32m   Compiling[0m fallible-iterator v0.3.0
+2026-10-22T00:22:28.0327010Z [1m[32m   Compiling[0m aes-gcm v0.10.3
+2026-10-22T00:22:28.0916360Z [1m[32m   Compiling[0m rcgen v0.14.10
+2026-10-22T00:22:28.7000410Z [1m[32m   Compiling[0m fs2 v0.4.3
+2026-10-22T00:22:29.2297801Z [1m[32m   Compiling[0m rusqlite v0.40.2
+2026-10-22T00:22:29.7296768Z [1m[32m   Compiling[0m thumble-rewrite-receiver v0.0.0 (/home/runner/work/Thumble/Thumble/Rewrite/native/receiver)
+2026-10-22T00:22:30.9700348Z [1m[32m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 9.90s
+2026-10-22T00:22:30.9902618Z ##[group]Run THUMBLE_NATIVE_ENROLLMENT_PROBE="$GITHUB_WORKSPACE/Rewrite/native/receiver/target/debug/examples/enrollment_probe" THUMBLE_NATIVE_TLS_PROBE="$GITHUB_WORKSPACE/Rewrite/native/receiver/target/debug/examples/control_tls_probe" bash ./gradlew --no-daemon --stacktrace testDebugUnitTest assembleDebug lintDebug
+2026-10-22T00:22:30.9903748Z [36;1mTHUMBLE_NATIVE_ENROLLMENT_PROBE="$GITHUB_WORKSPACE/Rewrite/native/receiver/target/debug/examples/enrollment_probe" THUMBLE_NATIVE_TLS_PROBE="$GITHUB_WORKSPACE/Rewrite/native/receiver/target/debug/examples/control_tls_probe" bash ./gradlew --no-daemon --stacktrace testDebugUnitTest assembleDebug lintDebug[0m
+2026-10-22T00:22:30.9954613Z shell: /usr/bin/bash -e {0}
+2026-10-22T00:22:30.9954815Z env:
+2026-10-22T00:22:30.9954977Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:30.9955235Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:22:30.9955472Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:22:30.9955630Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:22:30.9955810Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:22:30.9955968Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:22:30.9956118Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:22:30.9956270Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:22:30.9956497Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:22:30.9956745Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:22:30.9956910Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:22:30.9957054Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:22:30.9957186Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:22:30.9957303Z   CARGO_TERM_COLOR: always
+2026-10-22T00:22:30.9957426Z ##[endgroup]
+2026-10-22T00:22:31.0643801Z Downloading https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
+2026-10-22T00:22:32.4926426Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+2026-10-22T00:22:33.4412786Z 
+2026-10-22T00:22:33.4417501Z Welcome to Gradle 8.11.1!
+2026-10-22T00:22:33.4418122Z 
+2026-10-22T00:22:33.4418409Z Here are the highlights of this release:
+2026-10-22T00:22:33.4419062Z  - Parallel load and store for Configuration Cache
+2026-10-22T00:22:33.4419806Z  - Java compilation errors at the end of the build output
+2026-10-22T00:22:33.4420299Z  - Consolidated report for warnings and deprecations
+2026-10-22T00:22:33.4420748Z 
+2026-10-22T00:22:33.4421311Z For more details see https://docs.gradle.org/8.11.1/release-notes.html
+2026-10-22T00:22:33.4421794Z 
+2026-10-22T00:22:33.4423017Z To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.11.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+2026-10-22T00:22:34.0395852Z Daemon will be stopped at the end of the build 
+2026-10-22T00:23:17.0427610Z > Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-10-22T00:23:17.0429067Z > Task :preBuild UP-TO-DATE
+2026-10-22T00:23:17.0430404Z > Task :preDebugBuild UP-TO-DATE
+2026-10-22T00:23:17.0430835Z > Task :generateDebugResValues
+2026-10-22T00:23:17.1392760Z > Task :generateDebugResources
+2026-10-22T00:23:17.1394987Z > Task :packageDebugResources
+2026-10-22T00:23:18.0406497Z > Task :preDebugUnitTestBuild UP-TO-DATE
+2026-10-22T00:23:18.0415937Z > Task :javaPreCompileDebugUnitTest
+2026-10-22T00:23:18.0424154Z > Task :javaPreCompileDebug
+2026-10-22T00:23:18.0424587Z > Task :mergeDebugJniLibFolders
+2026-10-22T00:23:18.0425164Z > Task :mergeDebugNativeLibs NO-SOURCE
+2026-10-22T00:23:18.0425589Z > Task :stripDebugDebugSymbols NO-SOURCE
+2026-10-22T00:23:18.0426005Z > Task :extractDeepLinksForAarDebug
+2026-10-22T00:23:18.0426428Z > Task :copyDebugJniLibsProjectAndLocalJars
+2026-10-22T00:23:18.0427187Z > Task :parseDebugLocalResources
+2026-10-22T00:23:18.0427581Z > Task :mergeDebugShaders
+2026-10-22T00:23:18.0427955Z > Task :compileDebugShaders NO-SOURCE
+2026-10-22T00:23:18.0428364Z > Task :generateDebugAssets UP-TO-DATE
+2026-10-22T00:23:18.0428732Z > Task :mergeDebugAssets
+2026-10-22T00:23:18.0429086Z > Task :prepareDebugArtProfile
+2026-10-22T00:23:18.1391402Z > Task :prepareLintJarForPublish
+2026-10-22T00:23:18.1391715Z > Task :generateDebugRFile
+2026-10-22T00:23:18.1391959Z > Task :writeDebugAarMetadata
+2026-10-22T00:23:18.1392194Z > Task :processDebugManifest
+2026-10-22T00:23:22.8426055Z > Task :preDebugAndroidTestBuild UP-TO-DATE
+2026-10-22T00:23:22.9392390Z > Task :generateDebugAndroidTestResValues
+2026-10-22T00:23:22.9397605Z > Task :writeDebugLintModelMetadata
+2026-10-22T00:23:22.9397934Z > Task :generateDebugUnitTestStubRFile
+2026-10-22T00:23:22.9398230Z > Task :extractProguardFiles
+2026-10-22T00:23:28.5392054Z > Task :compileDebugKotlin
+2026-10-22T00:23:28.5392356Z > Task :compileDebugJavaWithJavac NO-SOURCE
+2026-10-22T00:23:28.5392568Z > Task :bundleLibCompileToJarDebug
+2026-10-22T00:23:28.5392833Z > Task :bundleLibRuntimeToJarDebug
+2026-10-22T00:23:28.5393091Z > Task :processDebugJavaRes
+2026-10-22T00:23:30.8392127Z > Task :compileDebugUnitTestKotlin
+2026-10-22T00:23:34.2394034Z > Task :extractDebugAnnotations
+2026-10-22T00:23:34.2394981Z > Task :compileDebugUnitTestJavaWithJavac NO-SOURCE
+2026-10-22T00:23:34.2395551Z > Task :processDebugUnitTestJavaRes
+2026-10-22T00:23:36.2415409Z > Task :testDebugUnitTest
+2026-10-22T00:23:36.2417325Z > Task :mergeDebugGeneratedProguardFiles
+2026-10-22T00:23:36.2445158Z > Task :mergeDebugConsumerProguardFiles
+2026-10-22T00:23:36.2465453Z > Task :createFullJarDebug
+2026-10-22T00:23:36.3392125Z > Task :mergeDebugJavaResource
+2026-10-22T00:23:36.6407427Z > Task :generateDebugLintReportModel
+2026-10-22T00:23:36.6417253Z > Task :syncDebugLibJars
+2026-10-22T00:23:36.6425291Z > Task :bundleDebugAar
+2026-10-22T00:23:36.6425687Z > Task :assembleDebug
+2026-10-22T00:23:36.6426467Z > Task :bundleDebugLocalLintAar
+2026-10-22T00:23:39.3414357Z > Task :generateDebugAndroidTestLintModel
+2026-10-22T00:23:39.4416027Z > Task :generateDebugUnitTestLintModel
+2026-10-22T00:23:41.6406783Z > Task :lintAnalyzeDebugAndroidTest
+2026-10-22T00:23:45.7391974Z > Task :lintAnalyzeDebugUnitTest
+2026-10-22T00:23:48.3391982Z > Task :lintAnalyzeDebug
+2026-10-22T00:23:48.3400209Z 
+2026-10-22T00:23:48.3400685Z > Task :lintReportDebug
+2026-10-22T00:23:48.3401424Z Wrote HTML report to file:///home/runner/work/Thumble/Thumble/Rewrite/native/mobile-input/android/build/reports/lint-results-debug.html
+2026-10-22T00:23:48.3402042Z 
+2026-10-22T00:23:48.3402277Z > Task :lintDebug
+2026-10-22T00:23:48.4355054Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1792628556227.json
+2026-10-22T00:23:48.4385060Z 
+2026-10-22T00:23:48.4413080Z BUILD SUCCESSFUL in 1m 17s
+2026-10-22T00:23:48.4413832Z 43 actionable tasks: 43 executed
+2026-10-22T00:23:48.7945244Z ##[group]Run actions/upload-artifact@v4
+2026-10-22T00:23:48.7945408Z with:
+2026-10-22T00:23:48.7945529Z   name: rewrite-mobile-android-native
+2026-10-22T00:23:48.7946046Z   path: Rewrite/native/mobile-input/android/build/test-results/
+Rewrite/native/mobile-input/android/build/reports/
+Rewrite/native/mobile-input/android/build/outputs/aar/
+
+2026-10-22T00:23:48.7946542Z   if-no-files-found: error
+2026-10-22T00:23:48.7946729Z   compression-level: 6
+2026-10-22T00:23:48.7946907Z   overwrite: false
+2026-10-22T00:23:48.7947060Z   include-hidden-files: false
+2026-10-22T00:23:48.7947243Z env:
+2026-10-22T00:23:48.7947468Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:23:48.7947845Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-22T00:23:48.7948140Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-22T00:23:48.7948352Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-22T00:23:48.7948576Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-22T00:23:48.7950702Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-22T00:23:48.7950913Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-22T00:23:48.7951069Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-22T00:23:48.7951293Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-10-22T00:23:48.7951535Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-10-22T00:23:48.7951700Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-10-22T00:23:48.7951847Z   CARGO_HOME: /home/runner/.cargo
+2026-10-22T00:23:48.7951979Z   CARGO_INCREMENTAL: 0
+2026-10-22T00:23:48.7952093Z   CARGO_TERM_COLOR: always
+2026-10-22T00:23:48.7957882Z ##[endgroup]
+2026-10-22T00:23:48.9060682Z (node:4100) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:48.9061112Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:48.9146719Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-22T00:23:48.9148274Z The least common ancestor is /home/runner/work/Thumble/Thumble/Rewrite/native/mobile-input/android/build. This will be the root directory of the artifact
+2026-10-22T00:23:48.9148958Z With the provided path, there will be 30 files uploaded
+2026-10-22T00:23:48.9151791Z Artifact name is valid!
+2026-10-22T00:23:48.9152055Z Root directory input is valid!
+2026-10-22T00:23:49.2299743Z Beginning upload of artifact content to blob storage
+2026-10-22T00:23:49.2620877Z (node:4100) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T00:23:49.5461865Z Uploaded bytes 162829
+2026-10-22T00:23:49.5912123Z Finished uploading artifact content to blob storage!
+2026-10-22T00:23:49.5912825Z SHA256 digest of uploaded artifact zip is 37a3f5ff3d974b2e146fcea3117cc9c4c2fb9b4cc40df53b6443d527e10a7297
+2026-10-22T00:23:49.5913995Z Finalizing artifact upload
+2026-10-22T00:23:50.0421396Z Artifact rewrite-mobile-android-native.zip successfully finalized. Artifact ID 12392675765
+2026-10-22T00:23:50.0422223Z Artifact rewrite-mobile-android-native has been successfully uploaded! Final size is 162829 bytes. Artifact ID is 12392675765
+2026-10-22T00:23:50.0426135Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39699246522/artifacts/12392675765
+2026-10-22T00:23:50.0589415Z Post job cleanup.
+2026-10-22T00:23:50.1934606Z In post-action step
+2026-10-22T00:23:50.1940707Z Cache is read-only: will not save state for use in subsequent builds.
+2026-10-22T00:23:50.1944426Z Generating Job Summary
+2026-10-22T00:23:50.1955616Z Completed post-action step
+2026-10-22T00:23:50.2098404Z Post job cleanup.
+2026-10-22T00:23:50.2941337Z (node:4125) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T00:23:50.2942043Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T00:23:50.3098114Z Post job cleanup.
+2026-10-22T00:23:50.3627970Z [command]/usr/bin/git version
+2026-10-22T00:23:50.3658918Z git version 2.55.0
+2026-10-22T00:23:50.3683858Z Temporarily overriding HOME='/home/runner/work/_temp/81ddf3cc-47bb-4778-91ae-9ddbfa5259dc' before making global git config changes
+2026-10-22T00:23:50.3684924Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T00:23:50.3686889Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Thumble/Thumble
+2026-10-22T00:23:50.3716827Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T00:23:50.3745846Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T00:23:50.3937999Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T00:23:50.3967366Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T00:23:50.4157770Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T00:23:50.4187662Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-22T00:23:50.4479975Z Cleaning up orphan processes
+2026-10-22T00:23:50.4650502Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/upload-artifact@v4, android-actions/setup-android@v3, gradle/actions/setup-gradle@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

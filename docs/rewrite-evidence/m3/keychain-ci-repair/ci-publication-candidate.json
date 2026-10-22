@@ -4,7 +4,7 @@
   "localSourceCommit": "83e3478b92f1eb1a7e4f5ee802ee52701e49869f",
   "expectedPublicParent": "07da0e0861838002f5eb9a040a3b736fa9152841",
   "publicBaseTree": "b42c9f28fb0408a81f54f9fa4c9efc44237ab403",
-  "publication": "Pending separate scoped approval; no repair source published",
+  "publication": "Published exact eight-file capsule after explicit scoped approval",
   "capsule": {
     "path": "/private/tmp/thumble-keychain-provider-ci-frozen-delta.json",
     "bytes": 30982,
@@ -81,5 +81,13 @@
     "real credentials or signing material",
     "local evidence/build products",
     "root plan/progress documentation"
-  ]
+  ],
+  "publicCommit": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
+  "publicTree": "556f4f92cb17dce2db1dd1ce4884c202c9951836",
+  "publicVerification": {
+    "files": 8,
+    "singleParent": "07da0e0861838002f5eb9a040a3b736fa9152841",
+    "allBlobHashesModesTypesMatch": true,
+    "recursiveTreeTruncated": false
+  }
 }

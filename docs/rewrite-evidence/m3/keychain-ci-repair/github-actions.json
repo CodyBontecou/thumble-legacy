@@ -1,0 +1,717 @@
+{
+  "version": 1,
+  "commit": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
+  "sourceCommit": "83e3478b92f1eb1a7e4f5ee802ee52701e49869f",
+  "capsuleSha256": "a8ede7dfcc2a57221c327783663085ff99653a5d26f64ada384b6951e93065b8",
+  "status": "Both workflows completed successfully on exact approved public commit",
+  "runs": [
+    {
+      "id": 39699246522,
+      "name": "TypeScript rewrite native mobile",
+      "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/CodyBontecou/Thumble/actions/runs/39699246522",
+      "created_at": "2026-10-22T00:21:57Z",
+      "updated_at": "2026-10-22T00:30:07Z"
+    },
+    {
+      "id": 39699246581,
+      "name": "TypeScript rewrite (headless)",
+      "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/CodyBontecou/Thumble/actions/runs/39699246581",
+      "created_at": "2026-10-22T00:21:57Z",
+      "updated_at": "2026-10-22T00:25:01Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 119564164565,
+      "name": "Windows host",
+      "status": "completed",
+      "conclusion": "success",
+      "rustTests": 54,
+      "typescriptTests": 68,
+      "typescriptAssertions": 817,
+      "standaloneAssertions": 29
+    },
+    {
+      "id": 119564164619,
+      "name": "Linux host",
+      "status": "completed",
+      "conclusion": "success",
+      "rustTests": 56,
+      "typescriptTests": 68,
+      "typescriptAssertions": 819,
+      "standaloneAssertions": 29
+    },
+    {
+      "id": 119564164001,
+      "name": "Android native",
+      "status": "completed",
+      "conclusion": "success",
+      "validation": [
+        "unit tests",
+        "AAR assembly",
+        "lint"
+      ]
+    },
+    {
+      "id": 119564164333,
+      "name": "iOS native",
+      "status": "completed",
+      "conclusion": "success",
+      "nativeSwiftTests": 36,
+      "simulatorLibraryTests": 30,
+      "providerCase": "actualDeviceKeychainPersistsSyntheticCredentialAcrossVaultInstances",
+      "providerResult": "Passed",
+      "providerPassedTests": 1,
+      "validation": [
+        "both direct iOS SDK compiles",
+        "generic Simulator build",
+        "generic iPhone build"
+      ]
+    },
+    {
+      "id": 119564164162,
+      "name": "Android Keystore",
+      "status": "completed",
+      "conclusion": "success",
+      "providerCase": "realAndroidKeystorePersistsAndDetectsTampering",
+      "providerResult": "Passed",
+      "totalCases": 1
+    },
+    {
+      "id": 119564164217,
+      "name": "macOS host",
+      "status": "completed",
+      "conclusion": "success",
+      "rustTests": 56,
+      "typescriptTests": 68,
+      "typescriptAssertions": 819,
+      "standaloneAssertions": 29
+    }
+  ],
+  "hostArtifacts": [
+    {
+      "id": 12393040339,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MzA0MDMzOQ==",
+      "name": "rewrite-m2-recording-windows-latest",
+      "size_in_bytes": 47082752,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12393040339",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12393040339/zip",
+      "expired": false,
+      "digest": "sha256:60c98eba586a750060eef030e5cc65989cbdb481b688cb53d09548488965e61d",
+      "created_at": "2026-10-22T00:23:45Z",
+      "updated_at": "2026-10-22T00:23:45Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392935641,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjkzNTY0MQ==",
+      "name": "rewrite-portable-tests-windows-latest",
+      "size_in_bytes": 3426,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392935641",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392935641/zip",
+      "expired": false,
+      "digest": "sha256:b2dce643864393b48597c0904fae460f0483026fbdd9546a755a085606b534ec",
+      "created_at": "2026-10-22T00:23:46Z",
+      "updated_at": "2026-10-22T00:23:46Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392317082,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjMxNzA4Mg==",
+      "name": "rewrite-portable-tests-macos-latest",
+      "size_in_bytes": 3496,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392317082",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392317082/zip",
+      "expired": false,
+      "digest": "sha256:2c4f5e31531e6721e0a169ddfbad82953abf3f753e826d76e7ff7c8bc8a7172d",
+      "created_at": "2026-10-22T00:24:56Z",
+      "updated_at": "2026-10-22T00:24:56Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392276975,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjI3Njk3NQ==",
+      "name": "rewrite-m2-recording-macos-latest",
+      "size_in_bytes": 32750118,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392276975",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392276975/zip",
+      "expired": false,
+      "digest": "sha256:d120e9f143f1482c9b7b6d7038f2b6767b272033a1bd408265b65f8ba123822d",
+      "created_at": "2026-10-22T00:24:50Z",
+      "updated_at": "2026-10-22T00:24:50Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392121928,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjEyMTkyOA==",
+      "name": "rewrite-portable-tests-ubuntu-latest",
+      "size_in_bytes": 3450,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392121928",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392121928/zip",
+      "expired": false,
+      "digest": "sha256:3281c7bad383c568c1584f1be2380965f5378f7d8350039122f85a64c8dc8ecb",
+      "created_at": "2026-10-22T00:23:16Z",
+      "updated_at": "2026-10-22T00:23:16Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12391787846,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MTc4Nzg0Ng==",
+      "name": "rewrite-m2-recording-ubuntu-latest",
+      "size_in_bytes": 43551750,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12391787846",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12391787846/zip",
+      "expired": false,
+      "digest": "sha256:dc4fe4566584df54e582191634a3ab94273f1f92b6016796242ec79dde548710",
+      "created_at": "2026-10-22T00:23:14Z",
+      "updated_at": "2026-10-22T00:23:14Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246581,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    }
+  ],
+  "mobileArtifacts": [
+    {
+      "id": 12393021535,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MzAyMTUzNQ==",
+      "name": "rewrite-mobile-ios-native",
+      "size_in_bytes": 35594,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12393021535",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12393021535/zip",
+      "expired": false,
+      "digest": "sha256:97c1e9ee9c52b8b998a4ce31abf76125831d8b0c73e49c153f00dc8fa54302bc",
+      "created_at": "2026-10-22T00:30:02Z",
+      "updated_at": "2026-10-22T00:30:02Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246522,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392675765,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjY3NTc2NQ==",
+      "name": "rewrite-mobile-android-native",
+      "size_in_bytes": 162829,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392675765",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392675765/zip",
+      "expired": false,
+      "digest": "sha256:37a3f5ff3d974b2e146fcea3117cc9c4c2fb9b4cc40df53b6443d527e10a7297",
+      "created_at": "2026-10-22T00:23:49Z",
+      "updated_at": "2026-10-22T00:23:49Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246522,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    },
+    {
+      "id": 12392386125,
+      "node_id": "MDg6QXJ0aWZhY3QxMjM5MjM4NjEyNQ==",
+      "name": "rewrite-android-keystore-provider",
+      "size_in_bytes": 13491,
+      "url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392386125",
+      "archive_download_url": "https://api.github.com/repos/CodyBontecou/Thumble/actions/artifacts/12392386125/zip",
+      "expired": false,
+      "digest": "sha256:870d5c4f3002632e7d0987518986e7475a2f79de90a8a6d1327a0e3c23db37ac",
+      "created_at": "2026-10-22T00:25:55Z",
+      "updated_at": "2026-10-22T00:25:55Z",
+      "expires_at": "2027-01-20T00:21:57Z",
+      "workflow_run": {
+        "id": 39699246522,
+        "repository_id": 1286679935,
+        "head_repository_id": 1286679935,
+        "head_branch": "codex/typescript-rewrite-headless-ci",
+        "head_sha": "c8d5d2b4c1c8e5ec491abd36e27e0aac660ba2a8"
+      }
+    }
+  ],
+  "mobileJobs": [
+    {
+      "id": 119564164001,
+      "name": "android-native",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-22T00:21:59Z",
+      "completed_at": "2026-10-22T00:23:52Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T00:21:59Z",
+          "completed_at": "2026-10-22T00:22:02Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T00:22:02Z",
+          "completed_at": "2026-10-22T00:22:07Z"
+        },
+        {
+          "name": "Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T00:22:07Z",
+          "completed_at": "2026-10-22T00:22:07Z"
+        },
+        {
+          "name": "Run android-actions/setup-android@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T00:22:07Z",
+          "completed_at": "2026-10-22T00:22:13Z"
+        },
+        {
+          "name": "Run gradle/actions/setup-gradle@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T00:22:13Z",
+          "completed_at": "2026-10-22T00:22:14Z"
+        },
+        {
+          "name": "Install pinned Android SDK",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-22T00:22:14Z",
+          "completed_at": "2026-10-22T00:22:15Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.88.0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T00:22:15Z",
+          "completed_at": "2026-10-22T00:22:21Z"
+        },
+        {
+          "name": "Build synthetic native TLS witness",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T00:22:21Z",
+          "completed_at": "2026-10-22T00:22:30Z"
+        },
+        {
+          "name": "Build and test native Android module",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T00:22:30Z",
+          "completed_at": "2026-10-22T00:23:48Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T00:23:48Z",
+          "completed_at": "2026-10-22T00:23:50Z"
+        },
+        {
+          "name": "Post Run gradle/actions/setup-gradle@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-22T00:23:50Z",
+          "completed_at": "2026-10-22T00:23:50Z"
+        },
+        {
+          "name": "Post Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-22T00:23:50Z",
+          "completed_at": "2026-10-22T00:23:50Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-22T00:23:50Z",
+          "completed_at": "2026-10-22T00:23:50Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-22T00:23:50Z",
+          "completed_at": "2026-10-22T00:23:50Z"
+        }
+      ]
+    },
+    {
+      "id": 119564164162,
+      "name": "android-keystore",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-22T00:21:59Z",
+      "completed_at": "2026-10-22T00:25:59Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T00:22:00Z",
+          "completed_at": "2026-10-22T00:22:04Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T00:22:04Z",
+          "completed_at": "2026-10-22T00:22:09Z"
+        },
+        {
+          "name": "Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T00:22:09Z",
+          "completed_at": "2026-10-22T00:22:10Z"
+        },
+        {
+          "name": "Run android-actions/setup-android@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T00:22:10Z",
+          "completed_at": "2026-10-22T00:22:21Z"
+        },
+        {
+          "name": "Run gradle/actions/setup-gradle@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T00:22:21Z",
+          "completed_at": "2026-10-22T00:22:22Z"
+        },
+        {
+          "name": "Install pinned Android SDK",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-22T00:22:22Z",
+          "completed_at": "2026-10-22T00:22:23Z"
+        },
+        {
+          "name": "Enable KVM on the ephemeral runner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T00:22:23Z",
+          "completed_at": "2026-10-22T00:22:23Z"
+        },
+        {
+          "name": "Execute synthetic Keystore provider test headlessly",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T00:22:23Z",
+          "completed_at": "2026-10-22T00:25:54Z"
+        },
+        {
+          "name": "Require actual Keystore case execution",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T00:25:54Z",
+          "completed_at": "2026-10-22T00:25:54Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T00:25:54Z",
+          "completed_at": "2026-10-22T00:25:56Z"
+        },
+        {
+          "name": "Post Run gradle/actions/setup-gradle@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-22T00:25:56Z",
+          "completed_at": "2026-10-22T00:25:56Z"
+        },
+        {
+          "name": "Post Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-22T00:25:56Z",
+          "completed_at": "2026-10-22T00:25:56Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-22T00:25:56Z",
+          "completed_at": "2026-10-22T00:25:56Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-22T00:25:56Z",
+          "completed_at": "2026-10-22T00:25:56Z"
+        }
+      ]
+    },
+    {
+      "id": 119564164333,
+      "name": "ios-native",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-22T00:22:40Z",
+      "completed_at": "2026-10-22T00:30:07Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-22T00:22:40Z",
+          "completed_at": "2026-10-22T00:22:42Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-22T00:22:42Z",
+          "completed_at": "2026-10-22T00:22:50Z"
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-22T00:22:50Z",
+          "completed_at": "2026-10-22T00:22:51Z"
+        },
+        {
+          "name": "Run bun install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-22T00:22:51Z",
+          "completed_at": "2026-10-22T00:22:51Z"
+        },
+        {
+          "name": "Run bun run check:generated",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-22T00:22:51Z",
+          "completed_at": "2026-10-22T00:22:51Z"
+        },
+        {
+          "name": "Run bun run mobile:prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-22T00:22:51Z",
+          "completed_at": "2026-10-22T00:22:51Z"
+        },
+        {
+          "name": "Record native toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-22T00:22:51Z",
+          "completed_at": "2026-10-22T00:22:57Z"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.88.0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-22T00:22:57Z",
+          "completed_at": "2026-10-22T00:23:06Z"
+        },
+        {
+          "name": "Build synthetic native TLS witness",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-22T00:23:06Z",
+          "completed_at": "2026-10-22T00:23:30Z"
+        },
+        {
+          "name": "Swift native contract and lifecycle tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-22T00:23:30Z",
+          "completed_at": "2026-10-22T00:24:12Z"
+        },
+        {
+          "name": "Compile native modules directly against both iOS SDKs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-22T00:24:12Z",
+          "completed_at": "2026-10-22T00:24:36Z"
+        },
+        {
+          "name": "Build native iOS Simulator module",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-22T00:24:36Z",
+          "completed_at": "2026-10-22T00:25:22Z"
+        },
+        {
+          "name": "Execute synthetic Keychain provider test headlessly",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-22T00:25:22Z",
+          "completed_at": "2026-10-22T00:29:40Z"
+        },
+        {
+          "name": "Build native iPhone module",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-22T00:29:40Z",
+          "completed_at": "2026-10-22T00:30:00Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-22T00:30:00Z",
+          "completed_at": "2026-10-22T00:30:02Z"
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-10-22T00:30:02Z",
+          "completed_at": "2026-10-22T00:30:02Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-10-22T00:30:02Z",
+          "completed_at": "2026-10-22T00:30:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-10-22T00:30:02Z",
+          "completed_at": "2026-10-22T00:30:04Z"
+        }
+      ]
+    }
+  ],
+  "logEvidence": {
+    "ios": "Selected exact log lines with surrounding context; complete reports are in the hosted artifact",
+    "others": "Complete decoded job logs"
+  },
+  "localLogs": [
+    {
+      "path": "ci-android.txt",
+      "bytes": 71572,
+      "sha256": "76dcfa7b69b15970984c73d25940dcd634ddcf58a9b8c3035435f9ecb37da094"
+    },
+    {
+      "path": "ci-ios-selected.txt",
+      "bytes": 5457,
+      "sha256": "71ccc3c4de59a8aea61b494b5e3574adfbd069f2acd6dc2e7e3832a59fdf8daa"
+    },
+    {
+      "path": "ci-keystore.txt",
+      "bytes": 58007,
+      "sha256": "1319bf2e1849c735ba722ad646c4a213c74ccec3032a1a66cc6156edb981ad14"
+    },
+    {
+      "path": "ci-linux.txt",
+      "bytes": 72051,
+      "sha256": "e26e94268847099a3f6c91380abe9d8b4cc4976fb18bf4fac1fa618450bf7611"
+    },
+    {
+      "path": "ci-macos.txt",
+      "bytes": 67082,
+      "sha256": "40a7e8b3c669385455cd82fa223ba1ffa0edee628ec5e96836e336f37c1ceb87"
+    },
+    {
+      "path": "ci-windows.txt",
+      "bytes": 67619,
+      "sha256": "ebe7cb1339adda5b58444b162d3188b38a4cf7d550c5fc6005e42a78b1314b03"
+    }
+  ]
+}
