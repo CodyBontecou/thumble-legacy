@@ -1,0 +1,300 @@
+{
+  "localSource": "69a67e1",
+  "publicSource": "5e8ba80d2e8dcbdab0b4e13e6669c2410762e415",
+  "solePublicParent": "0cbd1d3094de445594fce0dc4d57047321c86d15",
+  "publicTree": "feb42047d259c0c5faaf6e101f83d4f264f90e24",
+  "capsuleSha256": "bd708a6ba4b4ad2a4d29f46f7fdbc343684b5307acda21fd92c3503c12eed39c",
+  "files": [
+    {
+      "path": "Rewrite/apps/mobile/modules/thumble-input/android/src/main/java/com/thumble/rewrite/bridge/PhoneConnection.kt",
+      "mode": "100644",
+      "sha": "809cd6800dc3b52ca3ec4fe83ac7878ff3b5b089"
+    },
+    {
+      "path": "Rewrite/apps/mobile/modules/thumble-input/ios/PhoneConnection.swift",
+      "mode": "100644",
+      "sha": "3b154023f925e2d6a694927cb918dfbedb72abc5"
+    },
+    {
+      "path": "Rewrite/apps/mobile/tests/android/com/thumble/rewrite/qa/PracticeInputTest.kt",
+      "mode": "100644",
+      "sha": "7d74cfdb7fcb86c50329e77109ea81e9a36ffd5a"
+    },
+    {
+      "path": "Rewrite/apps/mobile/tests/ios/NativePortalTests.swift",
+      "mode": "100644",
+      "sha": "dabc8b77c4cf930635a23368d9cd455a7b77ce80"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/NativeInputRoute.kt",
+      "mode": "100644",
+      "sha": "4528cd66296fbf6b1cd17804050e0aae05269047"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneControl.kt",
+      "mode": "100644",
+      "sha": "42b09db307032e8565cb6a62afbe09b3561567bd"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneInput.kt",
+      "mode": "100644",
+      "sha": "66001532dfd28d9bd026456adb8ad7e97d622ce8"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/NativeInputRouteTest.kt",
+      "mode": "100644",
+      "sha": "9d936487a6638996ed88f1f0ea8fa9bf2587e446"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneInputTest.kt",
+      "mode": "100644",
+      "sha": "064c26ea27b0191152eb3f3e7ac332612789d817"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneRenewalTest.kt",
+      "mode": "100644",
+      "sha": "a62da55e4d029377fe9378ee2f9b15ba9a8a16c7"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/NativeInputRoute.swift",
+      "mode": "100644",
+      "sha": "0826292ae2f4b32f22cd2e26d102d70f0dcd5b49"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneControl.swift",
+      "mode": "100644",
+      "sha": "b6926455507289e5a76aa2f234532d0428fb1ea2"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/NativeInputRouteTests.swift",
+      "mode": "100644",
+      "sha": "807c99fa991bc274d1db8a1af9ba34daf1263590"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneInputTests.swift",
+      "mode": "100644",
+      "sha": "154c73409109ae27441e5a2c2d1dd46e1da46919"
+    },
+    {
+      "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneRenewalTests.swift",
+      "mode": "100644",
+      "sha": "acf49b1c77b532ce622e9a616a3d21dfae675628"
+    },
+    {
+      "path": "Rewrite/native/receiver/examples/phone_input_probe.rs",
+      "mode": "100644",
+      "sha": "50fa43be382e43dd4ea0b48c8dec787fa6df92ee"
+    },
+    {
+      "path": "Rewrite/tooling/run_mobile_app_probe.py",
+      "mode": "100644",
+      "sha": "1ae0ccdb6bb44e60e0095beb1dd31efc196152ca"
+    },
+    {
+      "path": "docs/adr/0010-rewrite-live-grant-rotation.md",
+      "mode": "100644",
+      "sha": "ef03adf85f53cfa3462ea054603c07d8129b646f"
+    },
+    {
+      "path": "docs/rewrite-native-input-control-v6.md",
+      "mode": "100644",
+      "sha": "f3a0f4ccba8874be9c3ef7ac6fb3156419794920"
+    }
+  ],
+  "checks": {
+    "publicProjectionRustUnit": 99,
+    "publicProjectionRustProcess": 14,
+    "localAndProjectionSwift": 85,
+    "localAndProjectionAndroid": 106,
+    "nativeSkipped": 0,
+    "androidApp": 10,
+    "iosApp": 5,
+    "appSkipped": 0,
+    "portablePassed": 107,
+    "portableSkipped": 1,
+    "portableSkipReason": "standalone package case intentionally separated",
+    "isolatedStandalonePackage": "1 pass, 46 Bun assertions plus official Node SDK driver",
+    "androidReleaseAarLint": "passed locally and in isolated projection",
+    "iosSDKs": "simulator and iPhone SDK compilation passed",
+    "stack": "55 size/constrained-thread tests and both retained app builds passed",
+    "clippy": "passed -D warnings"
+  },
+  "realTimeProofs": {
+    "swiftLocal": [
+      {
+        "platform": "swift",
+        "mode": "renewal-tls-fallback",
+        "durationMs": 75012,
+        "rotations": 2,
+        "samples": 4338
+      },
+      {
+        "platform": "swift",
+        "mode": "renewal-udp",
+        "durationMs": 75012,
+        "rotations": 2,
+        "samples": 4322
+      }
+    ],
+    "swiftPublicProjection": [
+      {
+        "platform": "swift",
+        "mode": "renewal-udp",
+        "durationMs": 75008,
+        "rotations": 2,
+        "samples": 4331
+      },
+      {
+        "platform": "swift",
+        "mode": "renewal-tls-fallback",
+        "durationMs": 75009,
+        "rotations": 2,
+        "samples": 4351
+      }
+    ],
+    "kotlinLocal": [
+      {
+        "platform": "kotlin",
+        "mode": "renewal-udp",
+        "durationMs": 75006,
+        "rotations": 2,
+        "samples": 3653
+      },
+      {
+        "platform": "kotlin",
+        "mode": "renewal-tls-fallback",
+        "durationMs": 75005,
+        "rotations": 2,
+        "samples": 4031
+      }
+    ],
+    "kotlinPublicProjection": [
+      {
+        "platform": "kotlin",
+        "mode": "renewal-udp",
+        "durationMs": 75005,
+        "rotations": 2,
+        "samples": 3637
+      },
+      {
+        "platform": "kotlin",
+        "mode": "renewal-tls-fallback",
+        "durationMs": 75016,
+        "rotations": 2,
+        "samples": 4032
+      }
+    ],
+    "androidApp": {
+      "continuousHeld": true,
+      "durationMs": 75163,
+      "inputEnabled": false,
+      "inputTtlMs": 350,
+      "neutralPulses": 0,
+      "rotations": 2,
+      "samples": 1988
+    },
+    "iosApp": {
+      "continuousHeld": true,
+      "durationMs": 75007,
+      "inputEnabled": false,
+      "inputTtlMs": 350,
+      "neutralPulses": 0,
+      "rotations": 2,
+      "samples": 4068
+    }
+  },
+  "iosFailureHistory": {
+    "initialFullRun": "Failed: early native release before renewal; four other UIKit cases passed. Original test repeated assertions and Xcode lost the test-process connection during reporting. Cause of initial release not established.",
+    "focusedRerun": "Passed 75.153 seconds, two accepted rotations, 4113 held samples",
+    "fullRerun": "All five cases passed; 75.007 seconds, two accepted rotations, 4068 held samples",
+    "changesBetweenAppAttempts": "Test diagnostics/fail-fast reporting only; no production lifecycle change or input TTL relaxation",
+    "remaining": "Validate the published source on cold hosted runners; preserve the initial failure evidence"
+  },
+  "ciAtPublication": {
+    "host": 39781222675,
+    "native": 39781222894,
+    "app": 39781223090,
+    "state": "in progress at first observation",
+    "predecessor": "0cbd1d30 passes all eight hosted jobs"
+  },
+  "logs": [
+    {
+      "name": "thumble-auto-renew-swift-final.txt",
+      "sha256": "700eb5d7351d0b46743633b3a28e051b6764d1ac2d897ecae169f0d230f03259"
+    },
+    {
+      "name": "thumble-auto-renew-kotlin-final.txt",
+      "sha256": "4d737f71d0cb41b6cf2ae44bf729b4f947f4b79c7ceb20aa3b9482b708232229"
+    },
+    {
+      "name": "thumble-auto-renew-projection-native.txt",
+      "sha256": "2ec5941b90c5cfee31c006352a2de25f57192fce72234585f7ba4085609faa6e"
+    },
+    {
+      "name": "thumble-auto-renew-projection-clippy.txt",
+      "sha256": "8591dbe409b09788fcf4b0377fca4006fd9c96b54c6795c895e92c830c88e8be"
+    },
+    {
+      "name": "thumble-auto-renew-projection-swift.txt",
+      "sha256": "7618c8c2c0fb550cc67fd8a76c93b8cb308bb3760f9e8b97c4328c63b3ec189b"
+    },
+    {
+      "name": "thumble-auto-renew-projection-kotlin.txt",
+      "sha256": "a833788fecfea30b4864f394415c02ccd1da85d6b872db3741f9754082c343ab"
+    },
+    {
+      "name": "thumble-auto-renew-projection-package.txt",
+      "sha256": "c2d4c55212ff0c9b8df7f1aeb298ee519427d17ed1f435b04eb6d00266579ebd"
+    },
+    {
+      "name": "thumble-auto-renew-portable.txt",
+      "sha256": "66a2f9b37a33e644caa0ab2cb3d4f2e439cb00c7adf8fb835750f0aaca765a15"
+    },
+    {
+      "name": "thumble-auto-renew-ios-sim.txt",
+      "sha256": "7dfd1cd177b57ec6648f07866d7802d69040e7fa043171b0c075a1bb7cb00b31"
+    },
+    {
+      "name": "thumble-auto-renew-ios-device.txt",
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    {
+      "name": "thumble-auto-renew-stack.txt",
+      "sha256": "9b4adc0b3e529545964304c06ec7942e6f3da764e1c5ab375e97e980e168e632"
+    },
+    {
+      "name": "thumble-auto-renew-app-android.txt",
+      "sha256": "94bbd2f21fd26b72dc89fc1fdf9e2153164a9d7bc9c252193f52a0bf238125ea"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios.txt",
+      "sha256": "5d37ebb54cd1a009a9761bcd2a269f1b700f1368170f53c47f10f355c148b1c6"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios-1-summary.json",
+      "sha256": "5f284620f15f7ab4844ced6caf2adf1004b873854b49292afaa2206e0e38c650"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios-2.txt",
+      "sha256": "1bd4f0d5057acf44974b41c52107f952ba2288cafd048f5cd0f0f76cd4800f96"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios-3.txt",
+      "sha256": "9457fd3d0d5aa5c1b89b8f37d0e4d64147df5e4c76b3da9dbbaa8141d958c016"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios-summary.json",
+      "sha256": "3c3f728d37ecbfd2124735d205789d2b57e71c2edcaf875bb1f0b3eda6c3df3f"
+    },
+    {
+      "name": "thumble-auto-renew-app-ios-tests.json",
+      "sha256": "af26bdd72e355eb4a54c1ef8353eba9dd87809ef97355cb383aca8d55125b86b"
+    }
+  ],
+  "limits": [
+    "Recording-only native output",
+    "UIKit uses native semantic admission; Android injects actual system touch pointers",
+    "Physical gameplay, latency/ergonomics, signed drivers, haptics and optical sync are unaccepted",
+    "Discovery/QR, typed authority/editing and CLI/MCP parity, migration, WoW integrations and release distribution remain open"
+  ]
+}
