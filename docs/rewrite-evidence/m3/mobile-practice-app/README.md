@@ -32,3 +32,11 @@ are committed here; verbose local logs remain outside public source. Practice is
 recording/local feedback only. No native app host enrollment, transport binding,
 grant renewal, production signing, gameplay, phone-size/visual acceptance or
 optical live-sync acceptance is claimed.
+
+The initial hosted snapshot was superseded with failures preserved. Windows failed
+the same native TLS fixture twice; the diagnostic source `54a3c816` passed that
+case alone and reproduced its concurrent backlog-drain failure. Android app setup
+also requested the wrong platform package name; it now uses `android-37.0`.
+[The successor snapshot](../phone-input-metadata/README.md) includes the bounded
+fixture repair and passes Windows/macOS/Linux. Original source runs do not prove
+hosted app completion, and cancelled/superseded runs are not counted as passes.

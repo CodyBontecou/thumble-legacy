@@ -1,0 +1,118 @@
+{
+  "scope": "Native configuration metadata and bounded Windows test producer; no launch acceptance",
+  "localMetadataCommit": "0758bff",
+  "localSourceCommit": "b52ce8522ecefd34d61969dcd9381cfa651447a1",
+  "publicCommit": "b41af1aaaaa2e7765daabce67bcf42eace08a2bb",
+  "publicParent": "54a3c816a53cbad6462ede6652b1a6440be8bdba",
+  "publicTree": "ace6a02479053f6a76b869069ced7ffff3312a17",
+  "verifiedPaths": 11,
+  "capsuleSha256": "f748e3c1d5441e4c8766f08c336099e4227ac75b86720a9f8b1f86363b79275e",
+  "privateHistoryPublished": false,
+  "exactRemoteBlobsVerified": true,
+  "local": {
+    "swift": 73,
+    "android": 92,
+    "androidSkipped": 0,
+    "portable": 99,
+    "packagingTests": 1,
+    "packagingAssertions": 41,
+    "iosSdkBuilds": [
+      "iphonesimulator",
+      "iphoneos"
+    ],
+    "iosAppCases": 2,
+    "androidAppCases": 5,
+    "stackSafety": 55,
+    "stackSafetyResult": {
+      "outcome": "completed",
+      "exitCode": 0,
+      "elapsedSeconds": 23.93
+    },
+    "isolatedPacedFixtureRepeats": 12
+  },
+  "hosted": {
+    "hostRun": 39735127322,
+    "nativeMobileRun": 39735127446,
+    "appRun": 39735127408,
+    "jobs": {
+      "windows": {
+        "id": 119678914059,
+        "conclusion": "success"
+      },
+      "macos": {
+        "id": 119678914192,
+        "conclusion": "success"
+      },
+      "linux": {
+        "id": 119678914254,
+        "conclusion": "success"
+      },
+      "androidNative": {
+        "id": 119678914902,
+        "conclusion": "success"
+      },
+      "iosNative": {
+        "id": 119678914561,
+        "conclusion": null
+      },
+      "androidKeystore": {
+        "id": 119678914827,
+        "conclusion": null
+      },
+      "iosApp": {
+        "id": 119679239087,
+        "conclusion": null
+      },
+      "androidApp": {
+        "id": 119679239470,
+        "conclusion": null
+      }
+    }
+  },
+  "logs": {
+    "swift": {
+      "path": "/private/tmp/thumble-phone-bootstrap-metadata-swift-network.txt",
+      "sha256": "0546b161324b19415d92e55bbdc25baa30825608d1a9afda50c12f5a07d168fe"
+    },
+    "android": {
+      "path": "/private/tmp/thumble-phone-bootstrap-metadata-android-network.txt",
+      "sha256": "75105a2775e37a844bb87e01f25f854af299be8d3ded1e3d6742c9b2502d14fe"
+    },
+    "iosSimulatorSdk": {
+      "path": "/private/tmp/thumble-phone-bootstrap-metadata-ios-simulator-sdk.txt",
+      "sha256": "d722a0dd6f8d0610704503346ed6cddf7c46911980421c430ecb32ab49220750"
+    },
+    "iosDeviceSdk": {
+      "path": "/private/tmp/thumble-phone-bootstrap-metadata-ios-device-sdk.txt",
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    "iosApp": {
+      "path": "/private/tmp/thumble-phone-metadata-app-tests.txt",
+      "sha256": "51a30dc07c69ff877b1041c926af3cd64098acbbd7d113ad77cb32cac38aace7"
+    },
+    "androidApp": {
+      "path": "/private/tmp/thumble-phone-metadata-android-app-tests.txt",
+      "sha256": "d89bb6c83e5074064824156be7a74f03a156bc931666360babf37b3eff0f4f97"
+    },
+    "publicProjection": {
+      "path": "/private/tmp/thumble-phone-input-metadata-projection-verify.txt",
+      "sha256": "4da6c115c61b27cd27eaeeed0438518db834bd7b827f58c624865d97c5e4574b"
+    },
+    "packaging": {
+      "path": "/private/tmp/thumble-phone-input-metadata-projection-package.txt",
+      "sha256": "1cae51cf5431e9ec4fe09ad9f3e542256ac119097fd04e405d02da0c5ff3876b"
+    },
+    "stackSafety": {
+      "path": "/private/tmp/thumble-phone-input-metadata-stack-safety.txt",
+      "sha256": "d834cbc5b85ea59631486cebf38d2a81ca7e60a019f1f49d2eb299f773ad7200"
+    },
+    "rustSuite": {
+      "path": "/private/tmp/thumble-windows-stale-grant-paced-native-suite.txt",
+      "sha256": "4fdbfc7a6e2d7b0554154311565c7b3ca979bf2a69d26530d0891d6d6bc69788"
+    },
+    "rustClippy": {
+      "path": "/private/tmp/thumble-windows-stale-grant-paced-clippy.txt",
+      "sha256": "bdad283996128c40817766dc97c0df29786191bf62242050070dc9ec433a1841"
+    }
+  }
+}

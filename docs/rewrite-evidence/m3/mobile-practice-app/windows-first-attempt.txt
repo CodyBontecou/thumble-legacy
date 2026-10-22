@@ -1,0 +1,7 @@
+2026-10-22T06:09:21.1051884Z test result: ok. 77 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.85s
+2026-10-22T06:09:21.1204606Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T06:09:26.4457155Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... FAILED
+2026-10-22T06:09:26.4801826Z thread 'stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration' panicked at tests\native_ingress_process.rs:349:35:
+2026-10-22T06:09:26.4802822Z called `Result::unwrap()` on an `Err` value: TransportRejected
+2026-10-22T06:09:26.4805431Z test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.34s
+2026-10-22T06:09:26.5900125Z ##[error]Process completed with exit code 1.

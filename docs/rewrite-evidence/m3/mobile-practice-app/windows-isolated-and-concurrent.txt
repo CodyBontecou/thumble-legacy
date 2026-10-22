@@ -1,0 +1,29 @@
+2026-10-22T06:25:57.3394003Z stale-grant phase=receiver-ready elapsedMs=50
+2026-10-22T06:25:57.4894706Z stale-grant phase=enrolled elapsedMs=200
+2026-10-22T06:25:57.6106828Z stale-grant phase=current-authenticated elapsedMs=321
+2026-10-22T06:25:57.7648195Z stale-grant phase=current-granted elapsedMs=476
+2026-10-22T06:25:57.8940413Z stale-grant phase=current-held-acknowledged elapsedMs=605
+2026-10-22T06:25:58.1827269Z stale-grant phase=stale-authenticated elapsedMs=893
+2026-10-22T06:25:58.4548209Z stale-grant phase=stale-rejected elapsedMs=1165
+2026-10-22T06:25:58.4769631Z stale-grant phase=sampling-joined elapsedMs=1188
+2026-10-22T06:25:58.8638942Z stale-grant phase=sampling-drained elapsedMs=1575
+2026-10-22T06:25:58.9058109Z stale-grant phase=old-generation-rejected elapsedMs=1617
+2026-10-22T06:25:58.9553243Z stale-grant phase=fresh-authenticated elapsedMs=1666
+2026-10-22T06:25:59.0532823Z stale-grant phase=fresh-held-acknowledged elapsedMs=1764
+2026-10-22T06:25:59.1289648Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... ok
+2026-10-22T06:25:59.1290432Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 1.84s
+2026-10-22T06:26:15.9315451Z test result: ok. 77 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.66s
+2026-10-22T06:26:15.9457828Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-22T06:26:20.9806526Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... FAILED
+2026-10-22T06:26:20.9809225Z stale-grant phase=receiver-ready elapsedMs=62
+2026-10-22T06:26:20.9809719Z stale-grant phase=enrolled elapsedMs=341
+2026-10-22T06:26:20.9810230Z stale-grant phase=current-authenticated elapsedMs=622
+2026-10-22T06:26:20.9810857Z stale-grant phase=current-granted elapsedMs=1002
+2026-10-22T06:26:20.9811508Z stale-grant phase=current-held-acknowledged elapsedMs=1224
+2026-10-22T06:26:20.9812166Z stale-grant phase=stale-authenticated elapsedMs=1773
+2026-10-22T06:26:20.9812749Z stale-grant phase=stale-rejected elapsedMs=2067
+2026-10-22T06:26:20.9813630Z stale-grant phase=sampling-joined elapsedMs=2080
+2026-10-22T06:26:20.9815173Z thread 'stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration' panicked at tests\native_ingress_process.rs:609:16:
+2026-10-22T06:26:20.9816493Z called `Result::unwrap()` on an `Err` value: TransportRejected
+2026-10-22T06:26:20.9819760Z test result: FAILED. 11 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.03s
+2026-10-22T06:26:21.0863007Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,35 @@
+[swift]
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+✔ Test run with 73 tests in 0 suites passed after 12.306 seconds.
+[android]
+BUILD SUCCESSFUL in 14s
+[iosSimulatorSdk]
+Built all three native modules for arm64-apple-ios17.0-simulator
+[iosDeviceSdk]
+Built all three native modules for arm64-apple-ios17.0
+[iosApp]
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.064 (0.065) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.064 (0.065) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.064 (0.065) seconds
+** TEST SUCCEEDED **
+[androidApp]
+BUILD SUCCESSFUL in 55s
+[publicProjection]
+ 99 pass
+ 0 fail
+[packaging]
+ 1 pass
+ 0 fail
+ 41 expect() calls
+[stackSafety]
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.283 (13.293) seconds
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.283 (13.293) seconds
+	 Executed 55 tests, with 0 failures (0 unexpected) in 13.283 (13.293) seconds
+** TEST SUCCEEDED **
+Stack-safety verification passed.
+[rustSuite]
+test result: ok. 80 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.76s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.62s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+[rustClippy]

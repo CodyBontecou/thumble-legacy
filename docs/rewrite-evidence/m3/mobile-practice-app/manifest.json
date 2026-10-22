@@ -11,7 +11,7 @@
   "hostRun": 39731960042,
   "nativeMobileRun": 39731960118,
   "mobileAppRun": 39731960295,
-  "hostedStatus": "in_progress",
+  "hostedStatus": "superseded_with_preserved_failures",
   "local": {
     "portable": 99,
     "portableSkip": "packaging is a separate opt-in test",
@@ -74,5 +74,25 @@
       "path": "/private/tmp/thumble-mobile-android-ack-shape-isolated.txt",
       "sha256": "aa1c187f7c48187bb9d48d17f4e5daccfdf6619056b24a00030062fcb6981474"
     }
-  }
+  },
+  "windowsFirstAttempt": {
+    "job": 119668796345,
+    "result": "failure",
+    "test": "stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration",
+    "error": "TransportRejected"
+  },
+  "windowsSameSourceSecondAttempt": {
+    "job": 119671916795,
+    "result": "failure",
+    "sameFailure": true
+  },
+  "diagnosticPublicCommit": "54a3c816a53cbad6462ede6652b1a6440be8bdba",
+  "diagnosticWindowsJob": {
+    "job": 119674423479,
+    "isolated": "success",
+    "concurrent": "failure",
+    "phase": "sampling-drain"
+  },
+  "sdkRepair": "platforms;android-37.0",
+  "supersededBy": "b41af1aaaaa2e7765daabce67bcf42eace08a2bb"
 }
