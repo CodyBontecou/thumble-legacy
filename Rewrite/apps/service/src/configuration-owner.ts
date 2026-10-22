@@ -54,7 +54,13 @@ export class ConfigurationOwner {
   }
   async request(input: ConfigurationCommand): Promise<ConfigurationReply> {
     const command = decodeConfigurationCommand(input);
-    return decodeConfigurationReply(await this.pipe.request(command), command);
+    const value = await this.pipe.request(command);
+    try {
+      return decodeConfigurationReply(value, command);
+    } catch {
+      this.pipe.disconnect();
+      throw new Error("configuration_response_invalid");
+    }
   }
   disconnect(): void {
     this.pipe.disconnect();

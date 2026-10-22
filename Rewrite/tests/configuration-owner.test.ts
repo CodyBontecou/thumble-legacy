@@ -336,3 +336,36 @@ test(
     }),
   10000,
 );
+
+test(
+  "an invalid typed configuration result disconnects the owner instead of keeping a poisoned pipe",
+  async () =>
+    fixture(async (directory) => {
+      const owner = new ConfigurationOwner(executable, directory, [
+        process.execPath,
+        resolve(import.meta.dir, "fixtures/invalid-configuration-owner.ts"),
+      ]);
+      const exited = once(owner.child, "exit");
+      let deadline: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await owner.ready;
+        await expect(owner.request(list)).rejects.toThrow(
+          "configuration_response_invalid",
+        );
+        await Promise.race([
+          exited,
+          new Promise((_, reject) => {
+            deadline = setTimeout(
+              () => reject(new Error("test_invalid_owner_did_not_exit")),
+              1000,
+            );
+          }),
+        ]);
+        expect(owner.child.exitCode).toBe(0);
+      } finally {
+        if (deadline) clearTimeout(deadline);
+        await close(owner);
+      }
+    }),
+  10000,
+);
