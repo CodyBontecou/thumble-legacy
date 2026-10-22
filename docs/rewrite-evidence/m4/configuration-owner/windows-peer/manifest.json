@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1404,
+      "sha256": "e2aacf739cd8f71e58e3163e970a3cf5848ee60081b8f7cee8578fa239c9fd5b"
+    },
+    {
+      "path": "first-repair-local.txt",
+      "bytes": 774,
+      "sha256": "1371a0006d453719dc4eb4140e0859c6e813182013ea69249b761825096cf84a"
+    },
+    {
+      "path": "first-repair-projection.txt",
+      "bytes": 774,
+      "sha256": "2dd0095b63b3f76970677d6dbb5c3281dc7e567497f09bf2fdec5d23d2d4c72b"
+    },
+    {
+      "path": "first-repair-windows.txt",
+      "bytes": 145719,
+      "sha256": "0892b6f14316a7623d1c9aa8594692de2da07e1b4d3c18eeb1b04049043c343e"
+    },
+    {
+      "path": "original-windows.txt",
+      "bytes": 145530,
+      "sha256": "229332d09188db8e0f8230097d4c22685d2079b1f8d15e57a39b5afdc8e9128c"
+    },
+    {
+      "path": "phase-local.txt",
+      "bytes": 774,
+      "sha256": "e544b9a915e661ef5c9460f631ce02390354287937b9ac469a86d521ed91f2f4"
+    },
+    {
+      "path": "phase-projection.txt",
+      "bytes": 775,
+      "sha256": "253414030d1018db63d30da00cc07677dbfc868dd8f7cf7f63abb39d550cde1f"
+    }
+  ]
+}

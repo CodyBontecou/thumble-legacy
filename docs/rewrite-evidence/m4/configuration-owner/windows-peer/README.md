@@ -1,0 +1,7 @@
+# Windows synthetic peer timeout
+
+Owner snapshot run `39803021483` finishes with Linux/macOS green and Windows job `119908751344` failing one synthetic invalid-result test: expected `configuration_response_invalid`, received the two-second `configuration_owner_unavailable`. Other Windows owner/lease/CLI/catalog cases pass. No production deadline was changed.
+
+Local `c0b9833`, public `41dfd3fb`, repairs the peer's byte reader/readiness order. The exact isolated source passes six owner tests locally, but hosted run `39805549379` / Windows `119917684056` still times out in the same case. That hypothesis did not establish the cause.
+
+Local `d108f3c`, public `d6bc0b7b`, keeps the synthetic peer awaited through EOF, explicitly resumes stdin and adds four allowlisted test-only stderr phases captured only on failure. Source snapshot `58a9a09`, included in public `ecaf4728`, corrects its TypeScript module marker (`export {}`); the intermediate peer source failed local full type checking without that marker even though Bun execution passed. The corrected isolated public projection passes the complete verifier and standalone package. Root cause remains unproven until the Windows phase trace executes. Do not weaken the expected error, skip the case or lengthen production timeouts. The `[DEBUG-config-peer]` probes are temporary and log no requests, names, paths, source, credentials or packets.

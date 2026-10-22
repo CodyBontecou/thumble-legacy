@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "DC522A6E-424F-4870-9F53-BE449824193C",
+        "deviceName" : "Thumble Rewrite CI",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23C54",
+        "osVersion" : "26.2",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 4,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "NativePortalTests · Built with macOS 15.7.9",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792683528.434,
+  "passedTests" : 4,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1792681728.895,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "failed - native pairing/admission failed at enrolling",
+      "targetName" : "NativePortalTests",
+      "testIdentifier" : 5,
+      "testIdentifierString" : "NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver()",
+      "testIdentifierURL" : "test://com.apple.xcode/ThumbleRewrite/NativePortalTests/NativePortalTests/testNativePairingVaultBindingAndReconnectReachRecordingReceiver",
+      "testName" : "testNativePairingVaultBindingAndReconnectReachRecordingReceiver()"
+    }
+  ],
+  "title" : "Test - NativePortalTests",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 5
+}

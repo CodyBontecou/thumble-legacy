@@ -1,0 +1,14 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/configuration-owner.test.ts:
+(pass) dedicated configuration process preserves CAS, receipts, exclusive ownership and restart barriers [116.61ms]
+(pass) configuration owner death rejects pending work and releases its database lease [46.21ms]
+(pass) private configuration protocol refuses raw commits and malformed framing without reflecting source [84.14ms]
+(pass) a suspended configuration child cannot block native owner renewal or input publication [1094.68ms]
+(pass) configuration output backpressure preserves every queued reply through EOF [171.07ms]
+(pass) an invalid typed configuration result disconnects the owner instead of keeping a poisoned pipe [19.45ms]
+
+ 6 pass
+ 0 fail
+ 86 expect() calls
+Ran 6 tests across 1 file. [1.55s]

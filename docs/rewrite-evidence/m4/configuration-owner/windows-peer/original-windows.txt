@@ -1,0 +1,1016 @@
+portable (windows-latest)	Set up job	﻿2026-10-22T15:15:04.7897757Z Current runner version: '2.338.0'
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7956034Z ##[group]Runner Image Provisioner
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7957012Z Hosted Compute Agent
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7957965Z Version: 20261002.596
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7958722Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7959642Z Build Date: 2026-10-02T22:28:27Z
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7960429Z Worker ID: {0daf471d-268c-4446-b43f-2f6fa19c919f}
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7961241Z Region: eastus
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7961919Z Cloud: Azure
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7962478Z ##[endgroup]
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7964057Z ##[group]Operating System
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7964936Z Microsoft Windows Server 2025
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7965704Z 10.0.26100
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7966421Z Datacenter
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7966975Z ##[endgroup]
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7967568Z ##[group]Runner Image
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7968233Z Image: windows-2025-vs2026
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7968896Z Version: 20261007.264.1
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7970302Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7972799Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261007.264
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7974021Z ##[endgroup]
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7975304Z ##[group]GITHUB_TOKEN Permissions
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7977296Z Contents: read
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7978268Z Metadata: read
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7978938Z ##[endgroup]
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7981207Z Secret source: Actions
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7982379Z Cache mode: write
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.7983154Z Prepare workflow directory
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.8343845Z Prepare all required actions
+portable (windows-latest)	Set up job	2026-10-22T15:15:04.8383369Z Getting action download info
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.0161821Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.1355031Z Download action repository 'oven-sh/setup-bun@v2' (SHA:0c5077e51419868618aeaa5fe8019c62421857d6)
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.2920426Z Download action repository 'dtolnay/rust-toolchain@1.88.0' (SHA:360a4e93673de6630fac2478bc9e35244b01a759)
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.3894369Z Download action repository 'Swatinem/rust-cache@v2' (SHA:d1527c8f67ef9af357290475d4af4b0fab8f12e0)
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.5797995Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+portable (windows-latest)	Set up job	2026-10-22T15:15:05.8914220Z Complete job name: portable (windows-latest)
+portable (windows-latest)	Run actions/checkout@v4	﻿2026-10-22T15:15:06.0211883Z ##[group]Run actions/checkout@v4
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0212762Z with:
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0213080Z   persist-credentials: false
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0213472Z   repository: CodyBontecou/Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0216759Z   token: ***
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0217062Z   ssh-strict: true
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0217357Z   ssh-user: git
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0217647Z   clean: true
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0217951Z   sparse-checkout-cone-mode: true
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0218635Z   fetch-depth: 1
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0218974Z   fetch-tags: false
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0219308Z   show-progress: true
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0219612Z   lfs: false
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0219889Z   submodules: false
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0220196Z   set-safe-directory: true
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0220546Z   allow-unsafe-pr-checkout: false
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.0221113Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.1646997Z Syncing repository: CodyBontecou/Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.1648386Z ##[group]Getting Git version info
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.1648834Z Working directory is 'D:\a\Thumble\Thumble'
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.2222312Z [command]"C:\Program Files\Git\bin\git.exe" version
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6215871Z git version 2.56.0.windows.2
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6262725Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6280644Z Temporarily overriding HOME='D:\a\_temp\0b0429ac-4c32-4b6d-aee4-b3018813b024' before making global git config changes
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6282451Z Adding repository directory to the temporary git global config as a safe directory
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6289982Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Thumble\Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6972747Z Deleting the contents of 'D:\a\Thumble\Thumble'
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6977700Z ##[group]Initializing the repository
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.6985420Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Thumble\Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.7873053Z Initialized empty Git repository in D:/a/Thumble/Thumble/.git/
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.7919265Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/CodyBontecou/Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.8691135Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.8693093Z ##[group]Disabling automatic garbage collection
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.8701582Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.9033661Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.9034757Z ##[group]Setting up auth
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.9044431Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:06.9367458Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:08.4577950Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:08.4888224Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:08.9543024Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:08.9848857Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:09.4589216Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:09.4919801Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:09.4920401Z ##[group]Fetching the repository
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:09.4936772Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1c04d97f10298bbc34e118a179db7260d27e83a3:refs/remotes/origin/codex/typescript-rewrite-headless-ci
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4361546Z From https://github.com/CodyBontecou/Thumble
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4364854Z  * [new ref]         1c04d97f10298bbc34e118a179db7260d27e83a3 -> origin/codex/typescript-rewrite-headless-ci
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4396958Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4399439Z ##[group]Determining the checkout info
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4399981Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4407185Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.4870884Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.5232804Z ##[group]Checking out the ref
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:13.5243809Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/typescript-rewrite-headless-ci refs/remotes/origin/codex/typescript-rewrite-headless-ci
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.6092196Z Updating files:  91% (1582/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.8532618Z Updating files:  92% (1583/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9005270Z Updating files:  93% (1600/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9241308Z Updating files:  94% (1617/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9623550Z Updating files:  95% (1634/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9915177Z Updating files:  96% (1652/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9959835Z Updating files:  97% (1669/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:14.9993247Z Updating files:  98% (1686/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0021713Z Updating files:  99% (1703/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0022187Z Updating files: 100% (1720/1720)
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0022425Z Updating files: 100% (1720/1720), done.
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0144762Z Switched to a new branch 'codex/typescript-rewrite-headless-ci'
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0225464Z branch 'codex/typescript-rewrite-headless-ci' set up to track 'origin/codex/typescript-rewrite-headless-ci'.
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0470344Z ##[endgroup]
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.0959496Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.1230534Z 1c04d97f10298bbc34e118a179db7260d27e83a3
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.1267872Z ##[group]Removing auth
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.1275126Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.1584257Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.6277951Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.6541274Z http.https://github.com/.extraheader
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.6577337Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:15.6882992Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:16.1659130Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:16.1953104Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+portable (windows-latest)	Run actions/checkout@v4	2026-10-22T15:15:16.6399806Z ##[endgroup]
+portable (windows-latest)	Run oven-sh/setup-bun@v2	﻿2026-10-22T15:15:16.6736619Z ##[group]Run oven-sh/setup-bun@v2
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:16.6736905Z with:
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:16.6737057Z   bun-version: 1.4.3
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:16.6737395Z   no-cache: false
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:16.6739470Z   token: ***
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:16.6739641Z ##[endgroup]
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.0982244Z Cache hit for: bun-xolSjvAaK+5ef/ofj0mCjFnROAc=
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.5750219Z Received 43650525 of 43650525 (100.0%), 98.4 MBs/sec
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.5751749Z Cache Size: ~42 MB (43650525 B)
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.5839344Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/86d69f26-c3ef-45b1-a69d-44f809e84647/cache.tzst -P -C D:/a/Thumble/Thumble --force-local --use-compress-program "zstd -d"
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.8962750Z Cache restored successfully
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:17.8993472Z [command]C:\Users\runneradmin\.bun\bin\bun.exe --revision
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:19.4645130Z 1.4.3+c6da4a4d3
+portable (windows-latest)	Run oven-sh/setup-bun@v2	2026-10-22T15:15:19.4656450Z Using a cached version of Bun: 1.4.3+c6da4a4d3
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	﻿2026-10-22T15:15:19.5037520Z ##[group]Run dtolnay/rust-toolchain@1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5037819Z with:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5037981Z   components: rustfmt, clippy
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5038175Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5113424Z ##[start-action display=Parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5249465Z ##[group]Run if [[ -z $toolchain ]]; then
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5249805Z ^[[36;1mif [[ -z $toolchain ]]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5250238Z ^[[36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5250665Z ^[[36;1m  echo "'toolchain' is a required input" >&2^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5250887Z ^[[36;1m  exit 1^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5251149Z ^[[36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5251514Z ^[[36;1m  if [[ Windows == macOS ]]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5251922Z ^[[36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5252350Z ^[[36;1m  else^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5252645Z ^[[36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5253192Z ^[[36;1m  fi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5253418Z ^[[36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5253823Z ^[[36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5254197Z ^[[36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5254588Z ^[[36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5254976Z ^[[36;1melse^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5255123Z ^[[36;1m  delimiter=EOF^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5255354Z ^[[36;1m  while [[ $toolchain == *$delimiter* ]]; do delimiter+=_; done^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5255733Z ^[[36;1m  printf 'toolchain<<%s\n%s\n%s\n' "$delimiter" "$toolchain" "$delimiter" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5256436Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5294847Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5295188Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5295333Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.5295484Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7572402Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=245]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7576184Z ##[start-action display=Set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7680446Z ##[group]Run echo CARGO_HOME=${CARGO_HOME:-"$USERPROFILE\.cargo"} >> $GITHUB_ENV
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7680843Z ^[[36;1mecho CARGO_HOME=${CARGO_HOME:-"$USERPROFILE\.cargo"} >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7691632Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.7691930Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8012538Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=43]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8014529Z ##[start-action display=Install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8021654Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8023244Z ##[start-action display=Install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8122031Z ##[group]Run if ! command -v rustup &>/dev/null; then
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8122339Z ^[[36;1mif ! command -v rustup &>/dev/null; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8122939Z ^[[36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://win.rustup.rs/x86_64 --output 'D:\a\_temp\rustup-init.exe'^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8123613Z ^[[36;1m  'D:\a\_temp\rustup-init.exe' --default-toolchain none --no-modify-path -y^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8125750Z ^[[36;1m  echo "$CARGO_HOME\bin" >> $GITHUB_PATH^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8125970Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8136441Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8136760Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8136917Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8137131Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8544319Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=success;conclusion=success;duration_ms=52]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8555934Z ##[start-action display=rustup toolchain install 1.88.0;id=__dtolnay_rust-toolchain.__run_4]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8657458Z ##[group]Run set -f  # split targets and components on commas and whitespace, without glob expansion
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8657992Z ^[[36;1mset -f  # split targets and components on commas and whitespace, without glob expansion^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8658336Z ^[[36;1mflags=()^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8658545Z ^[[36;1mfor t in ${targets//,/ }; do flags+=(--target "$t"); done^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8658862Z ^[[36;1mfor c in ${components//,/ }; do flags+=(--component "$c"); done^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8659246Z ^[[36;1mif [[ $toolchain == nightly && -n $components ]]; then flags+=(--allow-downgrade); fi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8659701Z ^[[36;1mlog=$(mktemp)^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8659874Z ^[[36;1mtrap 'rm -f "$log"' EXIT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8660057Z ^[[36;1mfor attempt in 1 2 3 4 5; do^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8660483Z ^[[36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8660888Z ^[[36;1m    break^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8661445Z ^[[36;1m  else^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8661629Z ^[[36;1m    status=$?^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8661784Z ^[[36;1m  fi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8662000Z ^[[36;1m  if [[ $attempt == 5 ]] || ! grep -Fq 'checksum failed for ' "$log" \^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8662406Z ^[[36;1m      || ! grep -Fq 'this is likely due to an ongoing update of the official release server' "$log"; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8662761Z ^[[36;1m    exit "$status"^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8662922Z ^[[36;1m  fi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8663180Z ^[[36;1m  echo "Retrying rustup toolchain install in 30 seconds (retry $attempt of 4)" >&2^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8663491Z ^[[36;1m  sleep 30^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8663646Z ^[[36;1mdone^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8674029Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8674343Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8674502Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8674704Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8674850Z   targets: 
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8675011Z   components: rustfmt, clippy
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8675209Z   RUSTUP_PERMIT_COPY_RENAME: 1
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:19.8675383Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:20.9508424Z info: syncing channel updates for 1.88.0-x86_64-pc-windows-msvc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:21.5675292Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:21.5992013Z info: downloading 5 components
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4085463Z 
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4402547Z   1.88.0-x86_64-pc-windows-msvc installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4403069Z 
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4662511Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=10610]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4668948Z ##[start-action display=rustup default 1.88.0;id=__dtolnay_rust-toolchain.__run_5]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4775827Z ##[group]Run rustup default "$toolchain" --force-non-host
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4776167Z ^[[36;1mrustup default "$toolchain" --force-non-host^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4787563Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4787884Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4788043Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4788249Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.4788401Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6169911Z info: using existing install for 1.88.0-x86_64-pc-windows-msvc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6247790Z info: default toolchain set to 1.88.0-x86_64-pc-windows-msvc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6250094Z 
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6428020Z   1.88.0-x86_64-pc-windows-msvc unchanged - rustc 1.88.0 (6b00bc388 2025-06-23)
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6428486Z 
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6499816Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=183]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6504304Z ##[start-action display=Create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6622276Z ##[group]Run DATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6623074Z ^[[36;1mDATE=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6623660Z ^[[36;1mHASH=$(rustc +"$toolchain" --version --verbose | sed -ne 's/^commit-hash: //p')^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6624238Z ^[[36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6635721Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6636858Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6637100Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6637382Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:30.6637628Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5672020Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=916]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5675433Z ##[start-action display=Disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5796228Z ##[group]Run if [ -z "${CARGO_INCREMENTAL+set}" ]; then
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5796546Z ^[[36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5796794Z ^[[36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5797002Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5807483Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5807812Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5807969Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.5808181Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6142363Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=46]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6145169Z ##[start-action display=Enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6264595Z ##[group]Run if [ -z "${CARGO_TERM_COLOR+set}" ]; then
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6264914Z ^[[36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6265186Z ^[[36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6265398Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6275039Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6275335Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6275490Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6275710Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6275885Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6605439Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=45]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6608915Z ##[start-action display=Enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6708588Z ##[group]Run # implemented in 1.66, stabilized in 1.68, made default in 1.70
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6709009Z ^[[36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6709515Z ^[[36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol ]; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6710038Z ^[[36;1m  if rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[89]\.'; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6710428Z ^[[36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6710781Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6711309Z ^[[36;1m  elif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.6[67]\.'; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6711693Z ^[[36;1m    touch "D:\a\_temp"/.implicit_cargo_registries_crates_io_protocol || true^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6712083Z ^[[36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6712373Z ^[[36;1m  fi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6712525Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6723668Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6723976Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6724137Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6724344Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6724507Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6724677Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.6724841Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8352756Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=174]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8357101Z ##[start-action display=Work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8461448Z ##[group]Run # https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8462176Z ^[[36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8462638Z ^[[36;1mif rustc +"$toolchain" --version --verbose | grep -q '^release: 1\.7[01]\.'; then^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8462986Z ^[[36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8463286Z ^[[36;1mfi^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8473674Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8473996Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8474333Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8474557Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8474721Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8474896Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:31.8475061Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0318222Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=196]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0322130Z ##[start-action display=rustc +1.88.0 --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0438917Z ##[group]Run rustc +"$toolchain" --version --verbose
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0439262Z ^[[36;1mrustc +"$toolchain" --version --verbose^[[0m
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0450576Z shell: C:\Program Files\Git\bin\bash.EXE --noprofile --norc -e -o pipefail {0}
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0450878Z env:
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0451039Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0451251Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0451426Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0451595Z   toolchain: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.0451746Z ##[endgroup]
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1258614Z rustc 1.88.0 (6b00bc388 2025-06-23)
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1258935Z binary: rustc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1259142Z commit-hash: 6b00bc3880198600130e1cf62b8f8a93494488cc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1259411Z commit-date: 2025-06-23
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1259588Z host: x86_64-pc-windows-msvc
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1259767Z release: 1.88.0
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1260938Z LLVM version: 20.1.5
+portable (windows-latest)	Run dtolnay/rust-toolchain@1.88.0	2026-10-22T15:15:32.1351052Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=102]
+portable (windows-latest)	Run Swatinem/rust-cache@v2	﻿2026-10-22T15:15:32.1508279Z ##[group]Run Swatinem/rust-cache@v2
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1508556Z with:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1508717Z   workspaces: Rewrite/native/receiver
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1508934Z   prefix-key: v0-rust
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1509102Z   add-job-id-key: true
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1509281Z   add-rust-environment-hash-key: true
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1509487Z   cache-targets: true
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1509657Z   cache-all-crates: false
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1509832Z   cache-workspace-crates: false
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510016Z   save-if: true
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510164Z   cache-provider: github
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510327Z   cache-bin: true
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510479Z   lookup-only: false
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510627Z   cmd-format: {0}
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510767Z env:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1510916Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1511140Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1511433Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:32.1511680Z ##[endgroup]
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7839333Z ##[group]Cache Configuration
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7840266Z Cache Provider:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7840674Z     github
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7841060Z Workspaces:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7841277Z     D:\a\Thumble\Thumble\Rewrite\native\receiver
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7841504Z Cache Paths:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7841669Z     C:\Users\runneradmin\.cargo\bin
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7841877Z     C:\Users\runneradmin\.cargo\.crates.toml
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7842103Z     C:\Users\runneradmin\.cargo\.crates2.json
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7842321Z     C:\Users\runneradmin\.cargo\registry
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7842531Z     C:\Users\runneradmin\.cargo\git
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7842853Z     D:\a\Thumble\Thumble\Rewrite\native\receiver\target
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7843096Z Restore Key:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7843268Z     v0-rust-portable-Windows_NT-x64-2a7e1b63
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7843726Z Cache Key:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7843904Z     v0-rust-portable-Windows_NT-x64-2a7e1b63-aec0eff1
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7844124Z .. Prefix:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7844282Z   - v0-rust-portable-Windows_NT-x64
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7844479Z .. Environment considered:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7844650Z   - Rust Versions:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7844886Z     - 1.88.0 x86_64-pc-windows-msvc 6b00bc3880198600130e1cf62b8f8a93494488cc
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7845576Z     - 1.99.0 x86_64-pc-windows-msvc b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7845862Z   - CARGO_HOME
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7846010Z   - CARGO_INCREMENTAL
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7846163Z   - CARGO_TERM_COLOR
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7846328Z .. Lockfiles considered:
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7846807Z   - D:\a\Thumble\Thumble\Rewrite\native\receiver\Cargo.lock
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7847212Z   - D:\a\Thumble\Thumble\Rewrite\native\receiver\Cargo.toml
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7847888Z ##[endgroup]
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7847981Z 
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.7848055Z ... Restoring cache ...
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:39.8868943Z Cache hit for restore-key: v0-rust-portable-Windows_NT-x64-2a7e1b63-b2e44447
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:40.9587781Z Received 134217728 of 195983028 (68.5%), 125.1 MBs/sec
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:41.3318788Z Received 195983028 of 195983028 (100.0%), 133.9 MBs/sec
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:41.3322060Z Cache Size: ~187 MB (195983028 B)
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:41.3382047Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/ceee383b-392e-4321-8ab2-6a50c7bd5403/cache.tzst -P -C D:/a/Thumble/Thumble --force-local --use-compress-program "zstd -d"
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:49.9626359Z Cache restored successfully
+portable (windows-latest)	Run Swatinem/rust-cache@v2	2026-10-22T15:15:49.9721527Z Restored from cache key "v0-rust-portable-Windows_NT-x64-2a7e1b63-b2e44447" full match: false.
+portable (windows-latest)	Run bun install --frozen-lockfile	﻿2026-10-22T15:15:50.0407039Z ##[group]Run bun install --frozen-lockfile
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.0407423Z ^[[36;1mbun install --frozen-lockfile^[[0m
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2959812Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2960219Z env:
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2960442Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2960664Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2960844Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2961034Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.2961215Z ##[endgroup]
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:15:50.5964986Z bun install v1.4.3 (c6da4a4d3)
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5416497Z 
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5417240Z + @modelcontextprotocol/client@2.3.1
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5417703Z + @types/bun@1.4.3
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5417945Z + prettier@3.6.2
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5418833Z + typescript@6.0.3
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5419010Z 
+portable (windows-latest)	Run bun install --frozen-lockfile	2026-10-22T15:16:43.5419119Z 505 packages installed [52.95s]
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	﻿2026-10-22T15:16:43.6467023Z ##[group]Run node tooling/verify-input-packet-oracle.mjs
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6467459Z ^[[36;1mnode tooling/verify-input-packet-oracle.mjs^[[0m
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6532127Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6532425Z env:
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6532607Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6532837Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6533018Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6533197Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:43.6533380Z ##[endgroup]
+portable (windows-latest)	Verify independent Node AES-GCM packet oracle	2026-10-22T15:16:50.8088420Z Node v22.23.3; OpenSSL 3.5.8; verified 33 exact packet vectors and 5 authenticated-invalid packets
+portable (windows-latest)	Run bun run check:generated	﻿2026-10-22T15:16:51.1605739Z ##[group]Run bun run check:generated
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1606199Z ^[[36;1mbun run check:generated^[[0m
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1668742Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1669867Z env:
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1670274Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1670655Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1670942Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1671242Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.1671517Z ##[endgroup]
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.4233476Z $ bun tooling/generate-contracts.ts --check
+portable (windows-latest)	Run bun run check:generated	2026-10-22T15:16:51.4615691Z Generated 33 packet vectors and 5 invalid authenticated payloads
+portable (windows-latest)	Run bun run check:boundaries	﻿2026-10-22T15:16:51.5755531Z ##[group]Run bun run check:boundaries
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5755895Z ^[[36;1mbun run check:boundaries^[[0m
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5813746Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814050Z env:
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814227Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814448Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814624Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814810Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.5814980Z ##[endgroup]
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:51.8058196Z $ bun tooling/check-boundaries.ts
+portable (windows-latest)	Run bun run check:boundaries	2026-10-22T15:16:52.2599995Z Portable contracts/domain import boundaries verified
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	﻿2026-10-22T15:16:52.3784090Z ##[group]Run bun tooling/check-cli-notices.ts
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3784484Z ^[[36;1mbun tooling/check-cli-notices.ts^[[0m
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3842392Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3842695Z env:
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3842864Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3843089Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3843261Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3843452Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.3843626Z ##[endgroup]
+portable (windows-latest)	Run bun tooling/check-cli-notices.ts	2026-10-22T15:16:52.6496208Z CLI dependency notices match the audited runtime distributions
+portable (windows-latest)	Run bun x --no-install prettier --check .	﻿2026-10-22T15:16:52.7440899Z ##[group]Run bun x --no-install prettier --check .
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7441317Z ^[[36;1mbun x --no-install prettier --check .^[[0m
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7497968Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7498255Z env:
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7498432Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7498646Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7498826Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7499021Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:52.7499192Z ##[endgroup]
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:53.2277828Z Checking formatting...
+portable (windows-latest)	Run bun x --no-install prettier --check .	2026-10-22T15:16:56.9106236Z All matched files use Prettier code style!
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	﻿2026-10-22T15:16:57.2285562Z ##[group]Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2286104Z ^[[36;1mcargo fmt --manifest-path native/receiver/Cargo.toml -- --check^[[0m
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2345386Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2345675Z env:
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2345838Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2346061Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2346241Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2346424Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run cargo fmt --manifest-path native/receiver/Cargo.toml -- --check	2026-10-22T15:16:57.2346598Z ##[endgroup]
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	﻿2026-10-22T15:16:58.3832887Z ##[group]Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3833588Z ^[[36;1mcargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings^[[0m
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3890394Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3890692Z env:
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3890859Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3891067Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3891234Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3891416Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:58.3891581Z ##[endgroup]
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:16:59.9856286Z ^[[1m^[[32m    Updating^[[0m crates.io index
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:17:06.5499741Z ^[[1m^[[32m    Checking^[[0m windows-sys v0.61.2
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:17:07.8345162Z ^[[1m^[[32m    Checking^[[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+portable (windows-latest)	Run cargo clippy --locked --manifest-path native/receiver/Cargo.toml --all-targets -- -D warnings	2026-10-22T15:17:10.1118961Z ^[[1m^[[32m    Finished^[[0m `dev` profile [unoptimized + debuginfo] target(s) in 10.50s
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	﻿2026-10-22T15:17:10.2382280Z ##[group]Run cargo test --locked --manifest-path native/receiver/Cargo.toml --lib phone_trust::tests::durable_authorization_observations_remain_monotonic_across_journal_recovery -- --exact --nocapture
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2383449Z ^[[36;1mcargo test --locked --manifest-path native/receiver/Cargo.toml --lib phone_trust::tests::durable_authorization_observations_remain_monotonic_across_journal_recovery -- --exact --nocapture^[[0m
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2384689Z ^[[36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }^[[0m
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2385381Z ^[[36;1mcargo test --locked --manifest-path native/receiver/Cargo.toml --test native_ingress_process stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration -- --exact --nocapture^[[0m
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2442033Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2442320Z env:
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2442477Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2442690Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2442898Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2443070Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2443243Z   RUST_BACKTRACE: 1
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.2443397Z ##[endgroup]
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:10.7544766Z ^[[1m^[[32m   Compiling^[[0m windows-sys v0.61.2
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:12.3888063Z ^[[1m^[[32m   Compiling^[[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:19.7568707Z ^[[1m^[[32m    Finished^[[0m `test` profile [unoptimized + debuginfo] target(s) in 9.14s
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:19.7630699Z ^[[1m^[[32m     Running^[[0m unittests src\lib.rs (native\receiver\target\debug\deps\thumble_rewrite_receiver-8abfd19aafe919e8.exe)
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:19.7765415Z 
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:19.7765666Z running 1 test
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.3624181Z trust-journal-probe journal=DELETE sqlite=3.53.2 samples=32 medianUs=56361 p95Us=150318 maxUs=200404
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.8700035Z trust-journal-probe journal=WAL sqlite=3.53.2 samples=32 medianUs=4888 p95Us=15569 maxUs=171666
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.9098529Z test phone_trust::tests::durable_authorization_observations_remain_monotonic_across_journal_recovery ... ok
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.9098942Z 
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.9099152Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 95 filtered out; finished in 3.13s
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:22.9099441Z 
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:23.0415557Z ^[[1m^[[32m   Compiling^[[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:27.8620550Z ^[[1m^[[32m    Finished^[[0m `test` profile [unoptimized + debuginfo] target(s) in 4.90s
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:27.8680568Z ^[[1m^[[32m     Running^[[0m tests\native_ingress_process.rs (native\receiver\target\debug\deps\native_ingress_process-f29a0baa63eaf233.exe)
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:27.8787254Z 
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:27.8787703Z running 1 test
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:27.9067637Z stale-grant phase=receiver-ready elapsedMs=27
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.0165274Z stale-grant phase=enrolled elapsedMs=137
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.0433333Z stale-grant phase=current-authenticated elapsedMs=164
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.0852081Z stale-grant phase=current-granted elapsedMs=206
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.1231783Z stale-grant phase=current-held-acknowledged elapsedMs=244
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.1465515Z stale-grant phase=sampling-first-native-ack elapsedMs=267
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.1665353Z stale-grant phase=stale-authenticated elapsedMs=287
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.1884591Z stale-grant phase=stale-rejected elapsedMs=309
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.2487078Z stale-grant phase=sampling-joined elapsedMs=369
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.4484559Z stale-grant phase=sampling-drained elapsedMs=569
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.5016311Z stale-grant phase=old-generation-rejected elapsedMs=622
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.5228426Z stale-grant phase=fresh-authenticated elapsedMs=643
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.5838297Z stale-grant phase=fresh-held-acknowledged elapsedMs=704
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.6204199Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... ok
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.6204806Z 
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.6207361Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.74s
+portable (windows-latest)	Isolate Windows stale-grant regression with phase diagnostics	2026-10-22T15:17:28.6207756Z 
+portable (windows-latest)	Run bun run native:test	﻿2026-10-22T15:17:28.7158113Z ##[group]Run bun run native:test
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7158428Z ^[[36;1mbun run native:test^[[0m
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7229584Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7229977Z env:
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7230218Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7230546Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7230818Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7231104Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7231349Z   RUST_TEST_THREADS: 2
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.7231596Z ##[endgroup]
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:28.9339670Z $ cargo +1.88.0 test --locked --manifest-path native/receiver/Cargo.toml
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:29.0527782Z ^[[1m^[[32m   Compiling^[[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2197043Z ^[[1m^[[32m    Finished^[[0m `test` profile [unoptimized + debuginfo] target(s) in 2.26s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2265498Z ^[[1m^[[32m     Running^[[0m unittests src\lib.rs (native\receiver\target\debug\deps\thumble_rewrite_receiver-8abfd19aafe919e8.exe)
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2329876Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2331079Z running 96 tests
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2335826Z test authenticated_control::tests::input_grants_require_a_canonical_exact_receipt_and_at_least_100ms_of_auth_lifetime ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.2336940Z test authenticated_control::tests::authentication_frames_are_strict_and_no_public_connection_id_substitutes_for_a_credential ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:31.5044361Z test authenticated_control::tests::native_capability_cannot_move_to_another_socket_or_survive_close_expiry_rollback_or_epoch_change ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:32.1529032Z test authenticated_control::tests::renewal_cannot_restore_a_revoked_or_replaced_phone_epoch ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:32.1531228Z test authenticated_control::tests::renewal_frames_require_exact_unambiguous_native_receipts ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:32.3040891Z test authenticated_control::tests::legacy_control_cannot_renew_and_invalid_renewals_release_held_input ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:32.6506048Z test authenticated_control::tests::renewal_is_bounded_by_live_socket_epoch_clock_and_credential_expiry ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:32.8100767Z test authenticated_control::tests::revocation_retires_current_and_prepared_keys_before_renewal_commit ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.2869582Z test authenticated_control::tests::revocation_retires_the_committed_successor_after_renewal_commit ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.2911755Z test control_tls::socket_mode_tests::accepted_and_client_nonblocking_sockets_are_normalized_before_tls ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3580281Z test authenticated_control::tests::tls_renewals_cross_initial_wall_expiry_preserve_holds_and_retire_old_udp_routes ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3587156Z test control_tls::tests::certificate_pin_is_canonical_and_identity_is_fresh ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3732798Z test control_tls::tests::framing_accepts_maximum_control_and_rejects_local_invalid_frames_terminally ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3927129Z test control_tls::tests::malformed_remote_lengths_kinds_and_truncation_retire_connection ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3947092Z test control_tls::tests::absolute_io_budget_cannot_be_extended_by_trickled_reads ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.3981687Z test control_tls::tests::pinned_tls13_round_trip_control_and_exact_input_frames ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.4034698Z test control_tls::tests::pin_does_not_bypass_expiry_future_dates_hostname_or_server_usage ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.4093212Z test control_tls::tests::unsupported_alpn_and_tls12_are_rejected ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.4121048Z test control_tls::tests::wrong_pin_refuses_handshake_before_any_application_frame ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.4996790Z test control_tls::tests::read_byte_budget_and_unresponsive_peer_fail_closed ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:33.6122401Z test enrollment::tests::client_role_cannot_consume_native_enrollment_window ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.0180339Z test enrollment::tests::earlier_control_version_is_rejected_before_invitation_consumption ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.1912650Z test enrollment::tests::duplicate_or_unknown_json_fields_fail_before_proof_admission ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.4691709Z test enrollment::tests::local_cancel_or_replacement_during_tls_wait_prevents_enrollment ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.6364518Z test enrollment::tests::native_clock_failure_closes_window_before_any_credential_is_issued ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.6371173Z test enrollment::tests::native_windows_are_one_use_bounded_and_secret_free_in_status ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:34.8884089Z test enrollment::tests::lost_or_mismatched_ack_preserves_committed_trust_and_consumed_window ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:35.0426424Z test enrollment::tests::real_tls_negotiates_versions_commits_then_requires_matching_storage_ack ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:35.0433453Z test enrollment::tests::shared_typescript_fixture_matches_native_verifier_and_control_shapes ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:35.3593648Z test enrollment::tests::trust_clock_failure_after_consumption_does_not_restore_window ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:35.9778782Z test enrollment::tests::renewal_revision_is_explicit_and_requires_a_datagram_capable_host ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:35.9784880Z test enrollment::tests::window_clock_and_authority_failures_do_not_retain_admission ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.1623457Z test enrollment::tests::wrong_proof_spends_attempt_without_committing_trust ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.1629529Z test gamepad::tests::retained_native_vectors ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.2250520Z test host_identity::tests::complete_staged_creation_recovers_the_same_key_and_pin ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.3257782Z test host_identity::tests::corrupt_or_partial_records_never_regenerate_or_overwrite_material ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.3843110Z test host_identity::tests::exclusive_identity_owner_and_separate_runtime_namespaces ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.4671974Z test host_identity::tests::inspection_never_initializes_or_recovers_key_material ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.4695728Z test host_identity::tests::lengths_magic_trailing_bytes_wrong_keys_and_certificate_policy_fail ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.5121028Z test host_identity::tests::published_but_not_cleaned_creation_recovers_without_rotation ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.5720477Z test enrollment::tests::unsupported_versions_and_wrong_phase_frames_never_consume_invitation ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6092027Z test host_identity::tests::stable_reload_and_distinct_isolated_hosts_keep_private_permissions ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6104405Z test input_packet::tests::replay_reordering_wrong_keys_and_close ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6113936Z test input_packet::tests::sender_budget_and_invalid_grants_fail_closed ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6152661Z test input_packet::tests::shared_encrypted_vectors_match_before_quantization ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6169094Z test input_packet::tests::tampering_and_invalid_plaintext_never_advance_counter ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6319770Z test input_broker::tests::disconnect_cleanup_remains_registered_until_receiver_ack_and_concurrent_revocation_waits ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6368661Z test native_ingress::tests::abandoned_rotation_delivery_retires_the_held_source_and_staged_material ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6700689Z test native_ingress::tests::draining_native_requests_is_bounded_for_owner_progress ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.6912226Z test native_ingress::tests::expired_queue_work_never_installs_and_abandoned_grant_delivery_is_neutral ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7071706Z test native_ingress::tests::endpoint_has_one_native_owner_rotates_capability_and_never_exposes_material_through_a_codec ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7251130Z test native_ingress::tests::stale_endpoint_port_reuse_cannot_extract_the_client_capability_before_server_proof ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7254763Z test packet_runtime::activation_failure_tests::invalid_configuration_preserves_old_grant_but_failed_activation_barrier_retires_it ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7258338Z test packet_runtime::tests::attaching_or_receiving_packets_never_extends_the_independent_configuration_lease ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7407131Z test native_ingress::tests::invalid_capabilities_lengths_and_shapes_never_enter_the_output_queue ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7411774Z test packet_runtime::tests::encrypted_full_states_repair_loss_but_replays_cannot_refresh_expiry ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7417022Z test packet_runtime::tests::failed_rotation_publication_retires_current_and_pending_material ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7425628Z test packet_runtime::tests::grant_expiry_release_replacement_and_clock_rollback_discard_pending_keys ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7429090Z test packet_runtime::tests::native_packet_source_attaches_to_exact_acknowledged_config_without_replacing_owner_identity ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7433184Z test packet_runtime::tests::output_failure_and_clock_rollback_fail_closed ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7440337Z test packet_runtime::tests::owner_lease_generation_release_and_restart_retire_authenticated_packets ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7455902Z test packet_runtime::tests::pending_handoff_times_out_without_extending_or_disturbing_the_live_source ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7463779Z test packet_runtime::tests::preparing_or_committing_rotation_never_renews_the_configuration_owner_or_expired_input ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7523131Z test packet_runtime::tests::repeated_continuity_rotations_keep_constant_staging_and_do_not_consume_reconnect_history ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7527634Z test packet_runtime::tests::rotation_cannot_bypass_initial_admission_or_start_with_a_skipped_packet ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7533257Z test packet_runtime::tests::source_history_is_bounded_per_activation_and_failed_neutralization_retires_all_input ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7537868Z test packet_runtime::tests::source_replacement_is_neutral_and_cannot_restore_any_retired_session_in_the_same_generation ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7542654Z test packet_runtime::tests::stage_rejects_foreign_scope_reused_source_and_overlapping_handoffs_without_output ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.7548375Z test packet_runtime::tests::staged_key_rotation_keeps_held_output_and_commits_only_authenticated_packet_zero ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:36.8887827Z test packet_runtime::tests::authenticated_grants_expire_despite_continued_input_and_owner_renewals ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:37.2701070Z test pairing_host::tests::authenticated_native_control_rechecks_trust_and_never_enables_input ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:38.7807407Z test pairing_host::tests::authenticated_connections_bound_work_and_reject_unimplemented_input_grants ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.0110626Z test pairing_host::tests::connection_identifiers_do_not_transfer_authority_and_reenrollment_retires_old_epoch ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.5936824Z test pairing_host::tests::bounded_acceptance_and_stop_close_all_stalled_sockets_without_more_workers ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.7304837Z test pairing_host::tests::dropping_host_releases_worker_owned_trust_lease_before_restart ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.7485677Z test pairing_host::tests::local_only_owner_preserves_bootstrap_shape_and_requires_explicit_persistent_identity ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.8193304Z test pairing_host::tests::retired_window_cannot_be_serialized_as_a_fresh_offer ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:39.9763931Z test pairing_host::tests::native_listener_commits_trust_before_reply_and_requires_storage_ack_for_completion ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:40.1855223Z test pairing_host::tests::stalled_tls_never_holds_policy_or_store_lock_and_local_cancel_fences_proof ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:40.1879621Z test pairing_host::tests::revocation_fences_an_enrollment_already_waiting_to_commit_and_survives_restart ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:40.5587110Z test phone_trust::tests::actual_tls_receives_only_after_native_commit_and_wrong_channel_cannot_export_secret ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:41.1499715Z test phone_trust::tests::credential_commits_reloads_and_never_persists_plaintext_or_exports_it_as_metadata ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:41.4761286Z test phone_trust::tests::capacity_and_malformed_identities_are_bounded ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:46.4289715Z test phone_trust::tests::durable_input_observations_checkpoint_without_unbounded_journal_growth ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:46.8829816Z test phone_trust::tests::exclusive_owner_and_host_identity_binding_are_enforced ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.1497230Z test phone_trust::tests::durable_authorization_observations_remain_monotonic_across_journal_recovery ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.1778941Z test phone_trust::tests::expiry_and_native_clock_limits_fail_without_partial_mutations ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.4924595Z test phone_trust::tests::foreign_schemas_and_corruption_are_rejected_without_replacing_data ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.5405499Z test phone_trust::tests::failed_commit_rolls_back_verifier_epoch_and_observed_clock ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7608193Z test phone_trust::tests::sqlite_uses_pinned_native_engine_and_durable_bounded_private_storage ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7610934Z test runtime::tests::barriers_replay_and_release_retire_old_packets ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7613366Z test runtime::tests::failed_output_retires_session_and_latches_neutral ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7615729Z test runtime::tests::malformed_requests_and_precise_counter_bounds ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7617597Z test runtime::tests::owner_lease_expires_even_without_samples ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.7620516Z test runtime::tests::renewal_does_not_keep_stale_physical_state_alive ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8356339Z test phone_trust::tests::reenrollment_rotates_old_credentials_and_revocation_survives_restart_and_clock_rollback ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8357050Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8357274Z test result: ok. 96 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.60s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8357554Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8386638Z ^[[1m^[[32m     Running^[[0m unittests src\main.rs (native\receiver\target\debug\deps\thumble_rewrite_receiver-e079b0e83faa53da.exe)
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8476537Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8476812Z running 0 tests
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8476983Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8477306Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8477740Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8491334Z ^[[1m^[[32m     Running^[[0m tests\asset_files_process.rs (native\receiver\target\debug\deps\asset_files_process-33aa8e98d5401f19.exe)
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8568614Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:47.8568874Z running 4 tests
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:48.0042606Z test assets_have_a_real_cross_process_exclusive_lease_and_closed_cli_arguments ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:48.2138830Z test malformed_binary_requests_and_hash_mismatches_fail_before_touching_the_namespace ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:48.4702294Z test shared_binary_frame_and_preparation_vector_match_the_native_helper ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0174326Z test byte_and_entry_quotas_reject_new_preparations_before_writing_a_journal ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0174698Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0174912Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.16s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0175176Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0194656Z ^[[1m^[[32m     Running^[[0m tests\native_ingress_process.rs (native\receiver\target\debug\deps\native_ingress_process-f29a0baa63eaf233.exe)
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0255252Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.0255630Z running 14 tests
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.2212156Z test cancelling_staged_native_material_preserves_current_input_and_disconnect_retires_both ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.3686937Z test authenticated_tls_input_reaches_the_independent_receiver_and_revocation_waits_for_neutral ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:51.5491802Z test live_native_key_rotation_preserves_held_state_and_stale_cleanup_cannot_retire_the_successor ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:52.0157229Z test continuous_native_traffic_cannot_keep_a_lost_configuration_owner_alive ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:52.1940789Z test native_process_routes_sealed_packets_without_bun_and_preserves_replay_and_owner_fences ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:52.5226726Z test native_tls_source_release_is_acknowledged_and_a_peer_drop_retires_its_grant ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:52.8437486Z test managed_configuration_owner_survives_slow_pairing_before_native_input ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:53.0654706Z test reenrollment_retires_old_receiver_keys_before_delivering_the_new_credential ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:53.5383991Z test stale_local_connection_cleanup_cannot_release_a_new_source_but_current_disconnect_does ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:53.7506064Z test stale_grant_receipts_and_old_generation_packets_cannot_replace_or_release_new_configuration ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:54.0641818Z test stalled_ipc_clients_do_not_block_owner_commands_or_input_expiry ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:54.8922232Z test udp_and_tls_share_one_authenticated_counter_and_reject_malformed_datagrams_without_losing_fallback ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.3994510Z test udp_replays_cannot_renew_input_ttl_or_resurrect_an_expired_source_with_a_live_owner ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.5293000Z test udp_revocation_and_listener_stop_acknowledge_native_neutral_and_old_keys_cannot_touch_a_new_epoch ... ok
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.5293639Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.5293931Z test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.50s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.5294344Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.5315943Z ^[[1m^[[32m   Doc-tests^[[0m thumble_rewrite_receiver
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.7241337Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.7241917Z running 0 tests
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.7242125Z 
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.7242415Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+portable (windows-latest)	Run bun run native:test	2026-10-22T15:17:55.7242810Z 
+portable (windows-latest)	Run bun run native:build	﻿2026-10-22T15:17:55.8344079Z ##[group]Run bun run native:build
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8344407Z ^[[36;1mbun run native:build^[[0m
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8402851Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8403136Z env:
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8403296Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8403518Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8403687Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8403863Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:55.8404035Z ##[endgroup]
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:56.0534446Z $ cargo +1.88.0 build --locked --manifest-path native/receiver/Cargo.toml
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:17:56.1649075Z ^[[1m^[[32m   Compiling^[[0m thumble-rewrite-receiver v0.0.0 (D:\a\Thumble\Thumble\Rewrite\native\receiver)
+portable (windows-latest)	Run bun run native:build	2026-10-22T15:18:00.1576057Z ^[[1m^[[32m    Finished^[[0m `dev` profile [unoptimized + debuginfo] target(s) in 4.07s
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	﻿2026-10-22T15:18:00.2857240Z ##[group]Run cargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2858113Z ^[[36;1mcargo build --locked --manifest-path native/receiver/Cargo.toml --example control_tls_probe^[[0m
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2858515Z ^[[36;1mnode tooling/test-control-tls.mjs^[[0m
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2914194Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2914488Z env:
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2914644Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2914858Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2915039Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2915213Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.2915383Z ##[endgroup]
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:00.6152476Z ^[[1m^[[32m    Finished^[[0m `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+portable (windows-latest)	Verify native TLS with independent Node/OpenSSL client	2026-10-22T15:18:01.4248635Z Node v22.23.3; OpenSSL 3.5.8; native TLS 1.3 control/input, semantic rejection, replay repair and pin/downgrade rejection passed
+portable (windows-latest)	Run bun run typecheck	﻿2026-10-22T15:18:01.5271235Z ##[group]Run bun run typecheck
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5271573Z ^[[36;1mbun run typecheck^[[0m
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5327917Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5328205Z env:
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5328379Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5328599Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5328767Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5328948Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.5329116Z ##[endgroup]
+portable (windows-latest)	Run bun run typecheck	2026-10-22T15:18:01.7532996Z $ tsc --noEmit && tsc --noEmit -p tsconfig.portable.json && tsc --noEmit -p apps/mobile/tsconfig.json
+portable (windows-latest)	Run bun run test:ci	﻿2026-10-22T15:18:07.0455357Z ##[group]Run bun run test:ci
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0455664Z ^[[36;1mbun run test:ci^[[0m
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0513712Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0514171Z env:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0514350Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0514563Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0514738Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0514913Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.0515089Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.3278862Z $ bun tooling/ci-test.ts
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.3501801Z bun test v1.4.3 (c6da4a4d3)
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.3556677Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:07.3557215Z ##[group]tests\asset-files.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:08.1196369Z (pass) content-addressed files deduplicate across stages, verify reads and preserve durable records across reopen [743.10ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:08.6824826Z (pass) interrupted private staging can resume, while completed corrupt objects are never replaced [562.74ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:08.8019560Z (pass) crash between Unix publication link and cleanup recovers only the exact private link pair [119.51ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:09.0211905Z (pass) unsafe links, invalid input and corrupt journals cannot change neighboring files [219.20ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:10.0456485Z (pass) SQLite publishes only after assets are prepared and rollback leaves a recoverable uncommitted stage [1024.34ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:10.7135326Z (pass) recovery distinguishes a matching committed receipt from an unrelated reuse of an operation ID [667.89ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:12.1853377Z (pass) durable receipts and assets recover after actual owner process death before and after commit [1471.76ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.0206020Z (pass) pending journal count is bounded and retirement frees capacity without deleting content [3835.20ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.1085966Z (pass) TypeScript preparation agrees with the shared binary and stage identity vector [87.96ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.6321177Z (pass) reopen preserves a committed recovery record until its asset integrity is restored [523.43ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.6321652Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.6321961Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.6322062Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.6322282Z ##[group]tests\boundaries.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7714232Z (pass) portable modules cannot import platform code, host policy or escape through relative paths [12.25ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7726687Z (pass) portable domain imports and ordinary document variables remain valid [1.31ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7736705Z (pass) application operations can depend on domain while reverse imports remain forbidden [0.98ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7737700Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7738296Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7738581Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.7739003Z ##[group]tests\client.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8313511Z (pass) typed local client handles repeated success and rejection without leaking connections [45.73ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8313924Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8314226Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8314328Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8314599Z ##[group]tests\configuration-catalog.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8400962Z (pass) catalog projects case-insensitive stable IDs and exact Int64 timestamps without replacing source [1.13ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8413486Z (pass) rename targets the explicit profile even when another profile is active and preserves opaque subtrees [1.27ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8427072Z (pass) catalog refuses missing, duplicate and dangling profile identities and selection aliases [1.29ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8444143Z (pass) catalog blocks credentials, server authority fields and retired profile aliases [1.74ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8470361Z (pass) catalog timestamps reject rounded fractions and overflow while accepting exact integer spellings [2.59ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8479089Z (pass) rename rejects unknown identity, blank/oversized names, timestamp regression and noncanonical clocks [0.85ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8479483Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8479769Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8479868Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:16.8481839Z ##[group]tests\configuration-cli.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:21.7509383Z (pass) CLI/MCP configuration operations share one service authority, CAS and durable retry across restart [4899.12ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:21.7510105Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:21.7510464Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:21.7510623Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:21.7510866Z ##[group]tests\configuration-file.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.5695174Z (pass) offline CLI/MCP inspection agrees through both SDK eras without a receiver or service [815.10ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.6083197Z (pass) file inspection rejects unsafe paths, invalid source and byte overflow without returning source [38.72ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.6083650Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.6083955Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.6084057Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.6084467Z ##[group]tests\configuration-operations.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.8559419Z (pass) scoped metadata commits preserve opaque exact source, inactive profile identity and durable retries [189.72ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:22.9657256Z (pass) capability denial precedes storage and replay; stale edits return a typed revision conflict [109.73ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.1801211Z (pass) catalog paging pins the source revision and bounds repeated MCP JSON encoding [214.36ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.2713598Z (pass) empty ledger is readable, but rename cannot seed or overwrite arbitrary configuration [91.24ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3824179Z (pass) same-name writes keep exact source and still persist an idempotent receipt [111.03ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3827595Z (pass) command decoding rejects ambiguous accessors, extra capabilities, malformed IDs and invalid Unicode [0.39ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3830096Z (pass) response validation rejects mismatched receipts, stale pages and unsolicited source data [0.22ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3830676Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3831080Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3831218Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.3831535Z ##[group]tests\configuration-owner.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.8012595Z (pass) dedicated configuration process preserves CAS, receipts, exclusive ownership and restart barriers [408.35ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:23.9666875Z (pass) configuration owner death rejects pending work and releases its database lease [165.41ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:24.2400761Z (pass) private configuration protocol refuses raw commits and malformed framing without reflecting source [273.33ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:24.2401437Z (skip) a suspended configuration child cannot block native owner renewal or input publication
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:24.5767531Z (pass) configuration output backpressure preserves every queued reply through EOF [336.64ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5954502Z 347 |       ]);
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5954858Z 348 |       const exited = once(owner.child, "exit");
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5955301Z 349 |       let deadline: ReturnType<typeof setTimeout> | undefined;
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5955676Z 350 |       try {
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5955901Z 351 |         await owner.ready;
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5956240Z 352 |         await expect(owner.request(list)).rejects.toThrow(
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5956541Z                                                         ^
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5956783Z error: expect(received).toThrow(expected)
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5957193Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5957315Z Expected substring: "configuration_response_invalid"
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5957590Z Received message: "configuration_owner_unavailable"
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5957763Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5958141Z       at <anonymous> (D:\a\Thumble\Thumble\Rewrite\tests\configuration-owner.test.ts:352:51)
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5958748Z       at async fixture (D:\a\Thumble\Thumble\Rewrite\tests\configuration-owner.test.ts:25:11)
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5959100Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5978264Z ##[error]Expected substring: "configuration_response_invalid"
+portable (windows-latest)	Run bun run test:ci	Received message: "configuration_owner_unavailable"
+portable (windows-latest)	Run bun run test:ci	
+portable (windows-latest)	Run bun run test:ci	      at <anonymous> (D:\a\Thumble\Thumble\Rewrite\tests\configuration-owner.test.ts:352:51)
+portable (windows-latest)	Run bun run test:ci	      at async fixture (D:\a\Thumble\Thumble\Rewrite\tests\configuration-owner.test.ts:25:11)
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5985556Z (fail) an invalid typed configuration result disconnects the owner instead of keeping a poisoned pipe [2018.82ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5985919Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5986149Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5986923Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.5987155Z ##[group]tests\configuration-storage.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.7044053Z (pass) SQLite commits exact configuration source and receipts durably in a native-private directory [104.49ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.8246586Z (pass) retries return the original receipt after later writes; changed operation payloads cannot write [120.24ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:26.9414157Z (pass) revision conflicts do not reserve operation IDs or mutate the current source [116.76ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:27.0810492Z (pass) an idle reopened authority owns an exclusive SQLite writer lease until close [139.56ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:27.2260779Z (pass) SQLite full after a source update rolls back both source and receipt, surviving reopen [145.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:27.8840268Z (pass) foreign schemas and corrupt source hashes are refused without repair or overwrite [657.90ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:28.0437481Z (pass) unsafe state links cannot alter another file and native preparation accepts no extra path [159.68ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:28.9488591Z (pass) revision counters remain exact beyond safe integers and refuse uint64 exhaustion [905.09ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2492103Z (pass) a committed receipt survives abrupt process death and ownership transfers only after exit [300.31ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2492510Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2492845Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2492932Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2493157Z ##[group]tests\controller-layout.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2512656Z (pass) initial landscape map exposes every report control without overlapping hit regions [0.57ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2515013Z (pass) controller epochs remain caller-owned and native fixture probes hit only their intended region [0.25ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2515542Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2515850Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2516032Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2516320Z ##[group]tests\gamepad.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2527933Z (pass) retained Swift/Rust v2 native report vectors > neutral [0.29ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2528966Z (pass) retained Swift/Rust v2 native report vectors > south [0.10ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2530320Z (pass) retained Swift/Rust v2 native report vectors > east [0.04ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2530867Z (pass) retained Swift/Rust v2 native report vectors > west [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2531392Z (pass) retained Swift/Rust v2 native report vectors > north [0.03ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2532142Z (pass) retained Swift/Rust v2 native report vectors > left shoulder [0.05ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2532756Z (pass) retained Swift/Rust v2 native report vectors > right shoulder [0.05ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2533480Z (pass) retained Swift/Rust v2 native report vectors > digital left trigger also actuates axis [0.03ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2534268Z (pass) retained Swift/Rust v2 native report vectors > digital right trigger also actuates axis [0.04ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2534933Z (pass) retained Swift/Rust v2 native report vectors > select [0.04ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2535455Z (pass) retained Swift/Rust v2 native report vectors > start [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2535972Z (pass) retained Swift/Rust v2 native report vectors > home [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2536528Z (pass) retained Swift/Rust v2 native report vectors > left stick press [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2537162Z (pass) retained Swift/Rust v2 native report vectors > right stick press [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2537723Z (pass) retained Swift/Rust v2 native report vectors > up [0.03ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2538234Z (pass) retained Swift/Rust v2 native report vectors > up right [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2538747Z (pass) retained Swift/Rust v2 native report vectors > right [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2539581Z (pass) retained Swift/Rust v2 native report vectors > down right [0.04ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2540095Z (pass) retained Swift/Rust v2 native report vectors > down [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2540938Z (pass) retained Swift/Rust v2 native report vectors > down left [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2541447Z (pass) retained Swift/Rust v2 native report vectors > left [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2542184Z (pass) retained Swift/Rust v2 native report vectors > up left [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2542788Z (pass) retained Swift/Rust v2 native report vectors > opposed vertical [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2543418Z (pass) retained Swift/Rust v2 native report vectors > opposed horizontal [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2544027Z (pass) retained Swift/Rust v2 native report vectors > all dpad directions [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2544543Z (pass) retained Swift/Rust v2 native report vectors > sticks full scale [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2544912Z (pass) retained Swift/Rust v2 native report vectors > sticks clamp [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2545282Z (pass) retained Swift/Rust v2 native report vectors > sticks half scale [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2545671Z (pass) retained Swift/Rust v2 native report vectors > left trigger independent [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2546247Z (pass) retained Swift/Rust v2 native report vectors > right trigger independent [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2546800Z (pass) retained Swift/Rust v2 native report vectors > triggers together [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2547354Z (pass) retained Swift/Rust v2 native report vectors > trigger midpoint rounds away from zero [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2547826Z (pass) retained Swift/Rust v2 native report vectors > triggers clamp [0.01ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2548336Z (pass) retained Swift/Rust v2 native report vectors > mixed state [0.02ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2548756Z (pass) internal oracle neutralizes nonfinite values; external validator refuses them [0.36ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2549165Z (pass) digital trigger release restores independent analog hold [0.17ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2549560Z (pass) contract rejects malformed, unknown, duplicate, missing and out-of-range data [0.23ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2549956Z (pass) decoded state has independent immutable ownership [0.07ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2550279Z (pass) signed axis ties match Swift/Rust rounding away from zero [0.09ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2550490Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2550699Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2550790Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2550977Z ##[group]tests\host-identity.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.2588687Z (pass) public identity contract rejects credentials, unsupported policy and executable object fields [0.25ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8128953Z (pass) headless identity initialize/show survives separate native processes without exporting private keys [553.94ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8129392Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8129701Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8129792Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8130005Z ##[group]tests\input-packet.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8168948Z (pass) shared input packet vectors authenticate exact metadata and portable semantic bytes [3.11ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8172921Z (pass) authenticated malformed semantic payloads are refused independently of encryption [0.40ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8174209Z (pass) semantic payload encoding cannot execute button array accessors or accept sparse lists [0.12ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8174627Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8175122Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8175230Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8175438Z ##[group]tests\lossless-json.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8209244Z (pass) scoped source edits preserve raw full-width numbers, escaped strings and opaque subtrees [0.18ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8210859Z (pass) safe integer projections use decimal mathematics instead of rounded doubles [0.14ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8213141Z (pass) canonical source hashing representation is stable without claiming RFC 8785 [0.13ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8216144Z (pass) JSON pointers edit object data and arrays without prototype mutation or profile redirection [0.34ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.8229257Z (pass) duplicate decoded keys, malformed grammar, non-JSON whitespace and invalid Unicode fail [1.26ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.9912135Z (pass) byte, graph and depth limits apply again to composed edits [168.21ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.9912589Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.9913019Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.9913120Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:29.9913657Z ##[group]tests\mcp.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:30.0085096Z (pass) MCP framing survives split UTF-8 and coalesced messages, rejects ambiguous or excessive input before dispatch [10.97ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:30.0098568Z (pass) MCP duplicate outstanding IDs and request/output budgets close the connection [1.39ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:30.0100964Z (pass) MCP accepts the writable backpressure signal without waiting for a platform callback [0.23ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.3026430Z (pass) independent Node SDK clients exercise both MCP eras, capability gates and service survival [4292.32ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.3038611Z (pass) MCP rejects unavailable tools before dispatch without reflecting caller data [1.27ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6002904Z (pass) MCP exits naturally on EOF or invalid framing and keeps CLI errors off stdout [296.30ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6003317Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6003652Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6003745Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6003963Z ##[group]tests\mobile-input.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6052675Z (pass) mobile control maps are bounded, immutable and share native semantic fixtures [0.98ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6055960Z (pass) invalid native maps cannot be admitted through the JS configuration boundary [0.29ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6058449Z (pass) mobile map getters cannot execute and source mutation cannot edit an admitted map [0.24ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6068596Z (pass) native bridge configuration requires the matching activation receipt [0.96ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6069385Z (pass) native control lists reject holes and accessor elements without executing them [0.10ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6071964Z (pass) practice admission requires a native neutral-output receipt and rejects malformed metadata [0.22ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6074493Z (pass) native connection admission accepts only metadata and exact live receipts [0.25ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6075041Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6075318Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6075445Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:34.6075748Z ##[group]tests\owned-configuration.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.0271903Z (pass) owned v5 reader agrees with the retained cross-language admission matrix [415.95ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.0624877Z (pass) owned source, all eight states, explicit identities and pooled aliases remain immutable [35.28ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.1390132Z (pass) resource admission rejects corrupt digests, noncanonical Base64 and dangling or ambiguous references [76.47ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.1519755Z (pass) Base64 decoding is exact and remains bounded on large inputs [12.96ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.3034990Z (pass) binding and design references must belong to declared controls and canonical profiles [151.46ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.3776927Z (pass) paint banks reject mismatched identities, undeclared assets and invalid canonical owner shapes [74.12ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.3781848Z (pass) frozen retained document and matrix bytes match their recorded manifest [0.58ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.4090783Z (pass) typed element projections preserve explicit output semantics and immutable presentation [30.80ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5301499Z (pass) native mirror settings, kind limits and missing joystick outputs cannot become a conflicting projection [120.98ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5302169Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5302488Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5302593Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5302808Z ##[group]tests\package.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5342628Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5343063Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5343288Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5343392Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5343595Z ##[group]tests\pairing.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5418043Z (pass) pairing proof succeeds once; public status and admission receipt omit bootstrap material [0.46ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5419648Z (pass) wrong ID and malformed secrets each spend one attempt and exhaust the window [0.16ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5421100Z (pass) a valid final allowed proof succeeds without granting another attempt [0.10ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5423044Z (pass) expiry boundary, replacement, cancellation, restart and entropy failure retire old material [0.18ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5425294Z (pass) clock rollback and invalid clocks fail closed rather than extending pairing [0.23ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5425966Z (pass) authority and window identities domain-separate the stored verifier [0.06ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5431314Z (pass) pairing decoders reject extra fields, inconsistent state, malformed values and accessors [0.51ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5436889Z (pass) portable pairing client refuses a different authority and secret-bearing status replies [0.53ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5447413Z (pass) shared native enrollment fixture preserves service proof and public status semantics [1.04ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5450304Z (pass) listener commands require bounded explicit addresses without executing caller objects [0.27ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5454122Z (pass) native listener metadata binds full invitations to the exact advertised host pin port and authority [0.36ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5459611Z (pass) trusted inventory exposes bounded immutable metadata and rejects executable or secret fields [0.53ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5465479Z (pass) native invitation intake fixtures use the existing canonical CLI offer [0.55ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5465863Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5466112Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5466209Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:35.5466409Z ##[group]tests\receiver-seam.test.ts:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:36.7331751Z (pass) service survives CLI exit; CAS activation, replay, precision, full-state repair and generation barriers [1181.37ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:37.7419523Z (pass) service death neutralizes the independent receiver within the owner lease [1008.76ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:38.7386254Z (pass) JS stalls do not stall native expiry [996.64ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:39.3479796Z (pass) only one service owns a runtime directory; unrelated state is refused [609.28ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:39.9427332Z (pass) local auth, input opt-in and duplicate JSON rejection never activate outputs [594.74ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:39.9429058Z (pass) strict JSON rejects escaped duplicate keys, excessive nesting and malformed values [0.23ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:41.8818633Z (pass) pairing CLI requires secret opt-in, authenticated IPC, private status and neutral restart [1938.81ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:44.7842745Z (pass) headless CLI native listener pairs through independent pinned TLS and cancels stalled enrollment [2902.33ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:46.0096978Z (pass) CLI default cannot listen without explicit identity and running identity mismatches fail [1225.45ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:47.0287631Z (pass) service death closes enrollment listener and neutralizes receiver despite a stalled TLS peer [1018.96ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3490797Z (pass) service owns durable source storage and releases its lease before endpoint disappearance [1320.24ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3491397Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3491709Z ##[endgroup]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3491813Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3491885Z 2 tests skipped:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3492218Z (skip) a suspended configuration child cannot block native owner renewal or input publication
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3492730Z (skip) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493008Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493011Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493079Z 1 tests failed:
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493430Z (fail) an invalid typed configuration result disconnects the owner instead of keeping a poisoned pipe [2018.82ms]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493753Z 
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493820Z  141 pass
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3493965Z  2 skip
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3494110Z  1 fail
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3494254Z  2284 expect() calls
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3494425Z Ran 144 tests across 20 files. [41.00s]
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.3640058Z error: script "test:ci" exited with code 1
+portable (windows-latest)	Run bun run test:ci	2026-10-22T15:18:48.4438414Z ##[error]Process completed with exit code 1.
+portable (windows-latest)	Run actions/upload-artifact@v4	﻿2026-10-22T15:18:48.4621294Z ##[group]Run actions/upload-artifact@v4
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4621787Z with:
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4621978Z   name: rewrite-portable-tests-windows-latest
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4622230Z   path: Rewrite/reports/*junit.xml
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4622438Z   if-no-files-found: error
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4622623Z   compression-level: 6
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4622802Z   overwrite: false
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4622972Z   include-hidden-files: false
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4623160Z env:
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4623324Z   CARGO_HOME: C:\Users\runneradmin\.cargo
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4623538Z   CARGO_INCREMENTAL: 0
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4623720Z   CARGO_TERM_COLOR: always
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4623897Z   CACHE_ON_FAILURE: false
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.4624069Z ##[endgroup]
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.6144551Z (node:9524) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.6145178Z (Use `node --trace-deprecation ...` to show where the warning was created)
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.6193650Z With the provided path, there will be 1 file uploaded
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.6197436Z Artifact name is valid!
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.6199038Z Root directory input is valid!
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.8280502Z Beginning upload of artifact content to blob storage
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.8441221Z (node:9524) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.8859224Z Uploaded bytes 7092
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.9026563Z Finished uploading artifact content to blob storage!
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.9027421Z SHA256 digest of uploaded artifact zip is 737eedff2acc5cca2347c06727562ac6202a0296a820fe6ebfddc9b745b21496
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:48.9029455Z Finalizing artifact upload
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:49.3380332Z Artifact rewrite-portable-tests-windows-latest.zip successfully finalized. Artifact ID 12437850728
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:49.3382028Z Artifact rewrite-portable-tests-windows-latest has been successfully uploaded! Final size is 7092 bytes. Artifact ID is 12437850728
+portable (windows-latest)	Run actions/upload-artifact@v4	2026-10-22T15:18:49.3391918Z Artifact download URL: https://github.com/CodyBontecou/Thumble/actions/runs/39803021483/artifacts/12437850728
+portable (windows-latest)	Post Run actions/checkout@v4	﻿2026-10-22T15:18:49.3710532Z Post job cleanup.
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5045711Z [command]"C:\Program Files\Git\bin\git.exe" version
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5332310Z git version 2.56.0.windows.2
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5392875Z Temporarily overriding HOME='D:\a\_temp\eeba67a4-3f29-4da1-9f6c-bdb4e15e7b0f' before making global git config changes
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5394058Z Adding repository directory to the temporary git global config as a safe directory
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5403036Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Thumble\Thumble
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.5781616Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:49.6114315Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:50.0767866Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:50.1074996Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:50.5506882Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+portable (windows-latest)	Post Run actions/checkout@v4	2026-10-22T15:18:50.5819002Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+portable (windows-latest)	Complete job	﻿2026-10-22T15:18:51.0560258Z Cleaning up orphan processes
+portable (windows-latest)	Complete job	2026-10-22T15:18:51.0684663Z Terminate orphan process: pid (9456) (vctip)
+portable (windows-latest)	Complete job	2026-10-22T15:18:51.0695675Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,28 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/owned-authority.test.ts:
+(pass) canonical authority externalizes pooled bytes and round-trips exact opaque data [38.11ms]
+(pass) inline and hidden appearance data are externalized without reinterpreting future opaque metadata [32.24ms]
+(pass) canonical manifests reject incomplete, unknown, conflicting and byte-amplifying references before IO [42.14ms]
+(pass) asset materialization verifies each unique resource once and passes copies to trusted hashing [16.88ms]
+(pass) canonical resource admission caps unique objects and preserves large resource payloads without stack growth [454.28ms]
+(pass) portable Base64 encoder agrees with an independent host encoder across padding and byte values [1.38ms]
+(pass) SQLite canonical rows contain only external references and catalog edits preserve resources across reopen [178.65ms]
+(pass) shared resources deduplicate across independent profile pools without merging profile identities [31.79ms]
+(pass) reference multiplicity cannot amplify a small manifest into an oversized materialized document [18.43ms]
+(pass) stored authority agrees with the independently constructed format vector and raw numeric lexemes [0.51ms]
+
+tests/lossless-json.test.ts:
+(pass) scoped source edits preserve raw full-width numbers, escaped strings and opaque subtrees [0.11ms]
+(pass) safe integer projections use decimal mathematics instead of rounded doubles [0.06ms]
+(pass) canonical source hashing representation is stable without claiming RFC 8785 [0.03ms]
+(pass) JSON pointers edit object data and arrays without prototype mutation or profile redirection [0.15ms]
+(pass) duplicate decoded keys, malformed grammar, non-JSON whitespace and invalid Unicode fail [0.56ms]
+(pass) byte, graph and depth limits apply again to composed edits [81.32ms]
+(pass) batch replacements are atomic, nonoverlapping and preserve untouched opaque spans [0.25ms]
+(pass) batch replacements recheck composed size, graph and depth before returning [56.68ms]
+
+ 18 pass
+ 0 fail
+ 1176 expect() calls
+Ran 18 tests across 2 files. [970.00ms]

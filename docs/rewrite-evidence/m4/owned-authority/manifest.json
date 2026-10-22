@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "sourceCommit": "5732e0f",
+  "publicCommit": "ecaf47282cf9efd480f18f6e81e181e06989296b",
+  "publicTree": "36914496ff1fdf3ca4858709dc12ddf03acdabe7",
+  "parent": "d6bc0b7b4b07fcae5ab50e89d409a7a395f1fe19",
+  "capsuleSHA256": "5084ab1bdd8b61436fe049bb910d86aafc6b813d8114a4beff2ac29e6382145d",
+  "sourceFiles": [
+    {
+      "path": "Rewrite/.prettierignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f217683df7df7f97cd80c0f34a96f85b7d64ad5"
+    },
+    {
+      "path": "Rewrite/packages/application/src/configuration-catalog.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a37e5664f663a1f150dd174cc0d844c68a88153d"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/lossless-json.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba7b52b68acbbfcef7491ec89b79620a200b13cd"
+    },
+    {
+      "path": "Rewrite/packages/domain/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf18f76db537dbf6453acdbd2cb9c25c1335dfd6"
+    },
+    {
+      "path": "Rewrite/packages/domain/src/owned-profile.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39e0999f46741df495392ec1a87082018ea6031d"
+    },
+    {
+      "path": "Rewrite/packages/domain/src/owned-resources.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cc57f4921a1caf246c4c8896a465de15a9b8e49"
+    },
+    {
+      "path": "Rewrite/packages/domain/src/owned-authority.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8e0c88393096ff0df2520f6d9123ceab44b17c9"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/owned-authority-v1/vector.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "034021b3991f7810c38b042ba36ac3c228f2894b"
+    },
+    {
+      "path": "Rewrite/tests/lossless-json.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe4ca855557715211280681f51ed472e51c6c913"
+    },
+    {
+      "path": "Rewrite/tests/owned-authority.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ca442bacf79acbb57cd4c4201aa042fbdaa5f24"
+    },
+    {
+      "path": "Rewrite/tests/package.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9db85daf40e2fc63ebf4f75920767320b6d3a0a"
+    },
+    {
+      "path": "Rewrite/tooling/check-boundaries.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c91ca764dfd9dc2a54c810933fb1e9df0ae75ea"
+    },
+    {
+      "path": "docs/rewrite-owned-authority-v1.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "caf9e1abc29e454fb8d7f9934e9ecb73f7915d48"
+    },
+    {
+      "path": "Rewrite/tests/fixtures/invalid-configuration-owner.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74b58b6df8041e89f7ab3b08425ffac3a8c1fe73"
+    }
+  ],
+  "logs": [
+    {
+      "path": "verify.txt",
+      "byteCount": 16339,
+      "sha256": "2d6bb9b469c1b3af4aa8d310d7452b5c69ea993f296791215ca06764bed941d0"
+    },
+    {
+      "path": "package.txt",
+      "byteCount": 540,
+      "sha256": "8c3ae8f49883aee6399276acf3a61ce54cae4f463f3bc5ee4a1e215b84040917"
+    },
+    {
+      "path": "targeted.txt",
+      "byteCount": 2076,
+      "sha256": "b42aacca2ddab6f30cb545e5041fb182cb13348087be5def2d92b6a49bbd6aa8"
+    }
+  ]
+}

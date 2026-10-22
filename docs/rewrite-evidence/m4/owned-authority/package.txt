@@ -1,0 +1,15 @@
+$ bun tooling/build.ts
+    Finished `release` profile [optimized] target(s) in 0.12s
+  [21ms]  bundle  141 modules
+ [132ms] compile  dist/thumble-rewrite
+Built standalone CLI and recording receiver; no repository checkout is needed at runtime
+$ THUMBLE_REWRITE_PACKAGE_TEST=1 bun test tests/package.test.ts
+bun test v1.4.3 (c6da4a4d3)
+
+tests/package.test.ts:
+(pass) compiled CLI starts and stops its sibling native receiver without a checkout or Bun on PATH [7971.44ms]
+
+ 1 pass
+ 0 fail
+ 64 expect() calls
+Ran 1 test across 1 file. [7.98s]
