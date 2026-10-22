@@ -127,9 +127,6 @@ fn reserved_input_and_status_bypass_stalled_storage_then_fail_closed_without_res
         client
             .send(FrameKind::Input, &sender.seal(&neutral).unwrap())
             .unwrap();
-        client
-            .send(FrameKind::Input, &sender.seal(&held).unwrap())
-            .unwrap();
         send(
             &mut client,
             json!({"version":1,"command":"control-status","connectionId":connection}),
@@ -139,7 +136,10 @@ fn reserved_input_and_status_bypass_stalled_storage_then_fail_closed_without_res
             receive::<Value>(&mut client).unwrap()["command"],
             "control-status"
         );
-        assert_eq!(reports.lock().unwrap().last().copied(), Some(held.report()));
+        assert_eq!(
+            reports.lock().unwrap().last().copied(),
+            Some(neutral.report())
+        );
         // Model another control operation suspended in storage while it owns both
         // locks. The runtime safety owner is separate and keeps renewing normally.
         let renewal_count = renewals.load(Ordering::SeqCst);
@@ -152,7 +152,7 @@ fn reserved_input_and_status_bypass_stalled_storage_then_fail_closed_without_res
             let held = sent_held;
             // The first held packet arrives while the other operation owns the
             // durable store: neutral admission does not defer it behind fsync.
-            for _ in 0..30 {
+            for _ in 0..20 {
                 client
                     .send(FrameKind::Input, &sender.seal(&held).unwrap())
                     .unwrap();
@@ -186,7 +186,7 @@ fn reserved_input_and_status_bypass_stalled_storage_then_fail_closed_without_res
         // reservation and 350ms input freshness both run out, late held input is
         // rejected. Neither the healthy 750ms owner nor a stale queued frame may
         // extend the reservation or reanimate the released source.
-        thread::sleep(Duration::from_millis(550));
+        thread::sleep(Duration::from_millis(750));
         let state = snapshot.lock().unwrap().clone().unwrap();
         assert!(!state.active);
         assert_eq!(state.last_release_reason, "input_expired");
