@@ -1,0 +1,470 @@
+{
+  "publicCommit": "2dee80c96704d939797dd2df976caca97fa0b93d",
+  "publicTree": "90b3e2869ae020fecf858bbd17f49da9e8347bb9",
+  "soleParent": "6e85df2dc19d484d6ae1cfc55f78974cf7b0e2b3",
+  "capsuleSHA256": "0b80946ad611b1f384a30bdc0ea72c510bec30450a134ce2796493a8804cc07c",
+  "privateSourceCommits": [
+    "096bbe4",
+    "ae5d7b1"
+  ],
+  "files": [
+    {
+      "path": "Rewrite/native/output-core/src/clock.rs",
+      "mode": "100644",
+      "blob": "da5e854f12c3be23deac66c3b27235628c656e91"
+    },
+    {
+      "path": "Rewrite/native/output-core/src/lib.rs",
+      "mode": "100644",
+      "blob": "4e81c6143f0825408be63ab713dcae5ad7a2f798"
+    },
+    {
+      "path": "Rewrite/native/output-core/src/owner.rs",
+      "mode": "100644",
+      "blob": "d9d1e1f301b2ac5118098c0473fabd94097dc857"
+    },
+    {
+      "path": "Rewrite/native/output-core/src/owner/tests.rs",
+      "mode": "100644",
+      "blob": "529c97169b1e54b48dffdf55c00777299c76d0f0"
+    },
+    {
+      "path": "docs/rewrite-native-output-core-v1.md",
+      "mode": "100644",
+      "blob": "3233a4fb5c2e571fa94d9359e39328eaf26d5fee"
+    },
+    {
+      "path": "Rewrite/native/receiver/Cargo.toml",
+      "mode": "100644",
+      "blob": "e41314a94f7a20574395b0deb8e4f81f7922eec2"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/lib.rs",
+      "mode": "100644",
+      "blob": "c03a3e0e1ee56b113ed6a781b1ea82e280f2fe17"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/main.rs",
+      "mode": "100644",
+      "blob": "3eefc47bc40b8705269f709081398a773aabce1b"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/runtime.rs",
+      "mode": "100644",
+      "blob": "0db563cca24769678f6fef40c323f1924337f092"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/output_bridge.rs",
+      "mode": "100644",
+      "blob": "53996cc2ccc81f1d002cb1d7e851b1eb40f08820"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/output_bridge/tests.rs",
+      "mode": "100644",
+      "blob": "7740b3fc89cf923f376c908ea0ee3dd45321b6e4"
+    },
+    {
+      "path": "Rewrite/native/receiver/tests/output_mode_process.rs",
+      "mode": "100644",
+      "blob": "349265ca4a0b63949b6e5f248c768a0010d76a4d"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/receiver.ts",
+      "mode": "100644",
+      "blob": "6a5183cbc3494cf429a8a60e0247546a03dcaa8e"
+    },
+    {
+      "path": "Rewrite/apps/service/src/native-receiver.ts",
+      "mode": "100644",
+      "blob": "da58aeb2546d71645eef14831f8213440333390f"
+    },
+    {
+      "path": "Rewrite/packages/application/src/runtime-controller.ts",
+      "mode": "100644",
+      "blob": "5df914c15466ca85ddac376c6cf2a51f7998191c"
+    },
+    {
+      "path": "Rewrite/tests/receiver-output-mode.test.ts",
+      "mode": "100644",
+      "blob": "1a9b802fdd34d1c0f6f8d44127cd990fbd61ce89"
+    },
+    {
+      "path": "Rewrite/tooling/build.ts",
+      "mode": "100644",
+      "blob": "2a00a3a5b9859cac671d0b6f0babf018255a6284"
+    },
+    {
+      "path": "docs/rewrite-receiver-output-bridge-v1.md",
+      "mode": "100644",
+      "blob": "80879a87e1323c4a69370b22b4f5deb97e14282d"
+    },
+    {
+      "path": ".github/workflows/typescript-rewrite-output.yml",
+      "mode": "100644",
+      "blob": "8529ba5584ca26c8d0cea99b94f3e60ce82317d8"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/main.ts",
+      "mode": "100644",
+      "blob": "56fad97c255d827a7030368992addcba184b86ed"
+    },
+    {
+      "path": "Rewrite/apps/service/src/service.ts",
+      "mode": "100644",
+      "blob": "28f3cde32e902efc43adaa742500faa3504daabd"
+    },
+    {
+      "path": "Rewrite/apps/service/package.json",
+      "mode": "100644",
+      "blob": "e6961bd9ad973f3013c9f8f3c53fb6f98441584e"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/output-launch.ts",
+      "mode": "100644",
+      "blob": "994ca918845c3749d18deeb045f33b1f5d4421e3"
+    },
+    {
+      "path": "Rewrite/tests/output-launch.test.ts",
+      "mode": "100644",
+      "blob": "e5b02cb8cce09108a90cc70cfc118059dfeb2f74"
+    },
+    {
+      "path": "Rewrite/tests/output-launch-cli.test.ts",
+      "mode": "100644",
+      "blob": "eff3fa18ff25bff9d085452075d8fa990e908d31"
+    },
+    {
+      "path": "Rewrite/native/receiver/src/native_ingress.rs",
+      "mode": "100644",
+      "blob": "d33f4963a5e7ca3fdc118ed33084897b687629d4"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/wow-capture.ts",
+      "mode": "100644",
+      "blob": "950d4867249c06275d74831e92bb67a3f62f758b"
+    },
+    {
+      "path": "Rewrite/packages/domain/src/wow-capture-receipt.ts",
+      "mode": "100644",
+      "blob": "9efc8ea416c4c4f02a5b8886bf8e03d9ce213c86"
+    },
+    {
+      "path": "Rewrite/packages/application/src/wow-capture-supervisor.ts",
+      "mode": "100644",
+      "blob": "3c77e25275242b98917e0fa01b955fd49522b586"
+    },
+    {
+      "path": "Rewrite/packages/contracts/package.json",
+      "mode": "100644",
+      "blob": "1025a7c137b064daed2c144ea81a86d26605e1c0"
+    },
+    {
+      "path": "Rewrite/packages/domain/package.json",
+      "mode": "100644",
+      "blob": "22144af619691955898fbf594e6caf968c6adc80"
+    },
+    {
+      "path": "Rewrite/packages/application/package.json",
+      "mode": "100644",
+      "blob": "7dcc53e844a4e5d3fe31baeebafa44c37fe3a031"
+    },
+    {
+      "path": "Rewrite/tooling/check-boundaries.ts",
+      "mode": "100644",
+      "blob": "b5144bbb6f20d9e6f07d655c7d5d74e70ca5a1db"
+    },
+    {
+      "path": "Rewrite/tests/wow-capture-supervisor.test.ts",
+      "mode": "100644",
+      "blob": "6ccdf979171e6a7bcb4b3e009abdb2c5db96a523"
+    },
+    {
+      "path": "docs/rewrite-wow-capture-supervisor-v1.md",
+      "mode": "100644",
+      "blob": "b0c2c6c4ac6ae108cf50a3c16173b758fa4073aa"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/.gitignore",
+      "mode": "100644",
+      "blob": "af136696cf64edc98da355df69da1754e1d86521"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Package.swift",
+      "mode": "100644",
+      "blob": "d98072779d168545578d1637eb4ac4932bddaab7"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/README.md",
+      "mode": "100644",
+      "blob": "8fdb543cdb640b6d3fe795129bdaea6350dfc557"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Sources/WowCaptureMac/Wire.swift",
+      "mode": "100644",
+      "blob": "56fe024c4f4987b2e4983229f8acf98d46d378b2"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Sources/WowCaptureMac/OpticalPanel.swift",
+      "mode": "100644",
+      "blob": "d1891600085a644019476212e09cef4921f58452"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Sources/WowCaptureMac/CaptureSession.swift",
+      "mode": "100644",
+      "blob": "4b7ee9187401653389207bfecf89b9fbff5ad01a"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Sources/WowCaptureMac/NativeCapture.swift",
+      "mode": "100644",
+      "blob": "745c2df3308c325ca265023746949ea9706579a5"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Sources/WowCaptureHelper/Main.swift",
+      "mode": "100644",
+      "blob": "3feb6920fd33ad95225ab1c69204cb93d6090eab"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Tests/WowCaptureTests/CaptureTests.swift",
+      "mode": "100644",
+      "blob": "e32a28a575e2086b9b0cf79628a489e5a619302d"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Tests/WowCaptureTests/SyntheticPanel.swift",
+      "mode": "100644",
+      "blob": "1fed02bb27e3d54355e0a6629e6f862e7a67ad84"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Tests/WowCaptureTests/Fixtures/wow-live-v1.json",
+      "mode": "100644",
+      "blob": "f7914b9f91077b6ab7cd7ed9c588c51399245e0a"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-macos/Tests/WowCaptureTests/Fixtures/optical-retained-checksums-v1.json",
+      "mode": "100644",
+      "blob": "a8bb5287f35a44fbe580a255fc9f8174731de2db"
+    },
+    {
+      "path": "Rewrite/apps/cli/src/mcp.ts",
+      "mode": "100644",
+      "blob": "63885a34b5543a243fffe1dbaa2c7efc8270e54d"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-atlas-decoder.ts",
+      "mode": "100644",
+      "blob": "40ec93dac63d654588b3c5b72f5cb90f62d48387"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-capture-provider.ts",
+      "mode": "100644",
+      "blob": "dbbe8c260e423ba10caba374e07c53b35107d644"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-capture-permission.ts",
+      "mode": "100644",
+      "blob": "eaa633d2afc256dd3945ef6c0fd531cd39a1c4d2"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-capture-session.ts",
+      "mode": "100644",
+      "blob": "0805adfc0223e557be0c86e7d4eec2db7cd559f5"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-capture-owner-process.ts",
+      "mode": "100644",
+      "blob": "c3e9240215d6e76aa924a7e14098c1ca028eb386"
+    },
+    {
+      "path": "Rewrite/apps/service/src/wow-capture-owner.ts",
+      "mode": "100644",
+      "blob": "2a6186975ff1ac9d3f68ee3279fcbec1f1d4d6bf"
+    },
+    {
+      "path": "Rewrite/bun.lock",
+      "mode": "100644",
+      "blob": "c156d93bc6198e94e6188a597a3ce2d2b41deeb1"
+    },
+    {
+      "path": "Rewrite/packages/client/src/local.ts",
+      "mode": "100644",
+      "blob": "885a63693c0fbe40867233d21391050d7abd4b0c"
+    },
+    {
+      "path": "Rewrite/packages/contracts/src/wow-capture-control.ts",
+      "mode": "100644",
+      "blob": "33212226af29e188bf3025f3701da2bc1d8fe556"
+    },
+    {
+      "path": "Rewrite/tooling/test-mcp-node.mjs",
+      "mode": "100644",
+      "blob": "d2e553eb2b1f702ecd6ca5e3faa7d9d426217613"
+    },
+    {
+      "path": "Rewrite/tests/fixtures/wow-atlas-fixture.ts",
+      "mode": "100644",
+      "blob": "3bad32b8e4069d5a4b78c81bdb8bd1648e94b41b"
+    },
+    {
+      "path": "Rewrite/tests/wow-atlas-decoder.test.ts",
+      "mode": "100644",
+      "blob": "a2519f61c04fca268adf5c8a98696c1d7220e8d2"
+    },
+    {
+      "path": "Rewrite/tests/wow-capture-provider.test.ts",
+      "mode": "100644",
+      "blob": "d9499e9485a37d1ca27b6fac1bb998b0a32d6e92"
+    },
+    {
+      "path": "Rewrite/tests/wow-capture-session.test.ts",
+      "mode": "100644",
+      "blob": "397136cbb14106bdaf5e46e24800f71ba432d9a1"
+    },
+    {
+      "path": "Rewrite/tests/wow-capture-cli.test.ts",
+      "mode": "100644",
+      "blob": "4664768494c6f5d40e34ca980bfdb725136e5456"
+    },
+    {
+      "path": "docs/rewrite-optical-provider-composition.md",
+      "mode": "100644",
+      "blob": "87f11e0e1f644550b2bd14d984f80c9de796929b"
+    },
+    {
+      "path": ".github/workflows/typescript-rewrite-macos-optical.yml",
+      "mode": "100644",
+      "blob": "271edf7b0a4b29c48ca9048816b87f911165658c"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/.gitignore",
+      "mode": "100644",
+      "blob": "b83d22266ac8aa2f8df2edef68082c789727841d"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/Cargo.lock",
+      "mode": "100644",
+      "blob": "276671889b50852fe8ec66903f3fceefc5da9dc7"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/Cargo.toml",
+      "mode": "100644",
+      "blob": "36234a70ed6a6b96d53b86957ef65818e083974c"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/README.md",
+      "mode": "100644",
+      "blob": "4abb9e474b1400d7759e7cc0d4bf95b958eb0b6a"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/examples/raster_oracle.rs",
+      "mode": "100644",
+      "blob": "a13fe76090405f57f45077edc94467e9c704de08"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/src/lib.rs",
+      "mode": "100644",
+      "blob": "28cca2de956f16bc0844190528257b0abcf5682e"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/src/pixels.rs",
+      "mode": "100644",
+      "blob": "5e2414311335e02933402f644c53e16c54d3c381"
+    },
+    {
+      "path": "Rewrite/native/windows-optical/src/tests.rs",
+      "mode": "100644",
+      "blob": "ecf794173687b159071400a360994cd5692ec392"
+    },
+    {
+      "path": "Rewrite/tooling/test-windows-optical-parity.ts",
+      "mode": "100644",
+      "blob": "9014cf17431b19a4c65457bd1300a8c455913404"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/.gitignore",
+      "mode": "100644",
+      "blob": "b83d22266ac8aa2f8df2edef68082c789727841d"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/Cargo.lock",
+      "mode": "100644",
+      "blob": "1277de7bc3e4a3c90746b1dd5e82d4436497602e"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/Cargo.toml",
+      "mode": "100644",
+      "blob": "8c957a65486ed2898206a499048b1daca3e4ff3a"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/README.md",
+      "mode": "100644",
+      "blob": "37b9cb18772f124c35606c94b76c7d12aadb7122"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/THIRD-PARTY-NOTICES.txt",
+      "mode": "100644",
+      "blob": "0684409781b6a0d2548874a37556f31668bc50fd"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/examples/framed_raster_oracle.rs",
+      "mode": "100644",
+      "blob": "10b888d827fe9372f3ae1424dcc853d701eb3f97"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/lib.rs",
+      "mode": "100644",
+      "blob": "babf8e8bf835ae81bd20968d53b7c9da212f324c"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/main.rs",
+      "mode": "100644",
+      "blob": "427b75f4205534e005e09bbb9ad4e10ae08df396"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/png.rs",
+      "mode": "100644",
+      "blob": "a4b37fe9c1fc033dc733afe7c23a23fc7b63a948"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/tests.rs",
+      "mode": "100644",
+      "blob": "78eb0cbe1158774fb9bf1295425bcab6368dfe92"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/windows.rs",
+      "mode": "100644",
+      "blob": "ef1f912492a68ff7203558410ee01b26aa235467"
+    },
+    {
+      "path": "Rewrite/native/wow-capture-windows/src/wire.rs",
+      "mode": "100644",
+      "blob": "2d0339c1848e112c30b43419e0f2c30e7c3b84b9"
+    },
+    {
+      "path": "Rewrite/tooling/test-windows-capture-interop.ts",
+      "mode": "100644",
+      "blob": "3031ddba1f4879d1d5f686ca3889693263830a78"
+    },
+    {
+      "path": "Rewrite/tooling/windows-capture-notices.ts",
+      "mode": "100644",
+      "blob": "12e9b2a5ecd5905cd01770d7fb763b54a1489131"
+    },
+    {
+      "path": ".github/workflows/typescript-rewrite-windows-optical.yml",
+      "mode": "100644",
+      "blob": "ba70ca222254d3ffb86342b19d55ef2dc2893350"
+    },
+    {
+      "path": ".github/workflows/typescript-rewrite-mobile.yml",
+      "mode": "100644",
+      "blob": "ef7b1675cee8d0185847217f8b4f9bd23d7a344b"
+    },
+    {
+      "path": "Rewrite/packages/fixtures/wow-live-v1.json",
+      "mode": "100644",
+      "blob": "03f2251b01ce990152890126112f84eebbc15d06"
+    }
+  ],
+  "osCaptureInvoked": false,
+  "physicalOutputInvoked": false,
+  "releaseAccepted": false
+}
