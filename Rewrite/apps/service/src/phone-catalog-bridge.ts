@@ -17,8 +17,8 @@ export class PhoneCatalogBridge {
   ) {}
   async execute(event: PhoneCatalogEvent): Promise<PhoneCatalogOutcome> {
     if (this.pending) return { error: "phone_catalog_busy" };
-    this.pending = true;
     const command = phoneCatalogCommand(event);
+    this.pending = true;
     const work = Promise.resolve()
       .then(() => this.read(command))
       .then(

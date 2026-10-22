@@ -188,3 +188,10 @@ test("native catalog notifications reject hidden fields, malformed scalars, and 
   ])
     expect(() => decodePhoneCatalogNotification(value)).toThrow();
 });
+
+test("invalid internal read request cannot latch the single pending slot", async () => {
+  const bridge = new PhoneCatalogBridge(async () => empty);
+  const valid = decodePhoneCatalogEvent(event, authority);
+  await expect(bridge.execute({ ...valid, offset: 256 })).rejects.toThrow();
+  expect(await bridge.execute(valid)).toHaveProperty("result.profileCount", 0);
+});
