@@ -1,0 +1,228 @@
+{
+  "snapshots": [
+    {
+      "localSource": "dc5dd2e",
+      "publicSource": "1c2fe542ea4904c89635d9bb0ea4f7a94c81d8ab",
+      "solePublicParent": "fd2059c8447e9100c1fed229b231b2ac3186adba",
+      "publicTree": "2a8324fa64a21d22e2e59564194dc2d70ceedb5c",
+      "capsuleSha256": "9a800aff0e807b22a85d74a87f242dff83d53bbb11e0bfcc0c5108c0b686487e",
+      "files": [
+        {
+          "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/PhoneInputRenewal.swift",
+          "mode": "100644",
+          "sha": "089dd99400e7e1714efb6d82669277937b7380cd"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/InputPacket.swift",
+          "mode": "100644",
+          "sha": "bb18897d9cdbd373d16558e294fd951514efa2dc"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/PhoneDatagramContractTests.swift",
+          "mode": "100644",
+          "sha": "eefc436e03d9a6c2baf4a50a5a84bd2ca85acb22"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/InputPacketTests.swift",
+          "mode": "100644",
+          "sha": "18291e4854a4c8f23d3d5e35632285e1dc47279c"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/PhoneInputRenewal.kt",
+          "mode": "100644",
+          "sha": "ca30c4c4873be9fb3e0c0d6892edff16957890ff"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/InputPacket.kt",
+          "mode": "100644",
+          "sha": "e2a5caa05661829f0a5229dcd0d3bc23324d2e8c"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/PhoneDatagramContractTest.kt",
+          "mode": "100644",
+          "sha": "c6ef5284f74e897365e2a30eab45198867286a0f"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/InputPacketTest.kt",
+          "mode": "100644",
+          "sha": "56dd2da2ec1f09ffee6671d3b30f54bdfaa02eea"
+        },
+        {
+          "path": "Rewrite/native/receiver/src/phone_trust.rs",
+          "mode": "100644",
+          "sha": "b6bb950f771bc3dd38d7ad9329c285a0e4ffe7d9"
+        },
+        {
+          "path": ".github/workflows/typescript-rewrite.yml",
+          "mode": "100644",
+          "sha": "23f88ee9d413a121bfe03f7d6ecbf4fbca76b7d8"
+        },
+        {
+          "path": "docs/rewrite-native-input-control-v6.md",
+          "mode": "100644",
+          "sha": "681a75f05ea8c5668f85ab47d57c40a12fac7dea"
+        },
+        {
+          "path": "docs/adr/0010-rewrite-live-grant-rotation.md",
+          "mode": "100644",
+          "sha": "01546cef5e8e35647d77caa25ffe0945181d9932"
+        }
+      ]
+    },
+    {
+      "localSource": "75995b6",
+      "publicSource": "0cbd1d3094de445594fce0dc4d57047321c86d15",
+      "solePublicParent": "1c2fe542ea4904c89635d9bb0ea4f7a94c81d8ab",
+      "publicTree": "94e03e31c8af72eb7c77a578bcac7c9f69bf6fcb",
+      "capsuleSha256": "9fb4688e6bb929bfb57bd7a5f3ed0442a44801e692106952d69d8587cf5101b7",
+      "files": [
+        {
+          "path": "Rewrite/native/mobile-input/ios/Sources/MobileInputCore/ControlTLS.swift",
+          "mode": "100644",
+          "sha": "c2ed82a037c936aefff0c0767b5734931e3ebaad"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/ios/Tests/MobileInputTests/ControlTLSTests.swift",
+          "mode": "100644",
+          "sha": "9efcad6a3eaf2d7d19ae16e4ee4182a9fb03449b"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/ControlTLS.kt",
+          "mode": "100644",
+          "sha": "6f96b5b625073055155c7e920bf760601d950396"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/main/kotlin/com/thumble/rewrite/input/NativeTLSDelivery.kt",
+          "mode": "100644",
+          "sha": "8b777ac48e3c7fc56a814642569cdbb34b980d3c"
+        },
+        {
+          "path": "Rewrite/native/mobile-input/android/src/test/kotlin/com/thumble/rewrite/input/NativeTLSDeliveryTest.kt",
+          "mode": "100644",
+          "sha": "c95ca220e2440e4a6bc923b35ed57e0f51c8e270"
+        },
+        {
+          "path": "Rewrite/native/receiver/src/phone_trust.rs",
+          "mode": "100644",
+          "sha": "ba51024927c2dffd08483ddeecfdaf87b2448fe7"
+        },
+        {
+          "path": "docs/adr/0005-rewrite-native-phone-trust.md",
+          "mode": "100644",
+          "sha": "1cf6fc0a476dcd04bdf883c9c3202029aa55db51"
+        },
+        {
+          "path": "docs/adr/0011-rewrite-durable-trust-wal.md",
+          "mode": "100644",
+          "sha": "fe4a1e142abea404cd4469bdc938302f9f0c3c7d"
+        },
+        {
+          "path": "docs/rewrite-native-input-control-v6.md",
+          "mode": "100644",
+          "sha": "63baafedb577414d49078a11d4e55c7aa6285186"
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "localAndProjectionRustUnit": 99,
+    "localAndProjectionRustProcess": 14,
+    "localAndProjectionSwift": 81,
+    "localAndProjectionAndroid": 100,
+    "skipped": 0,
+    "clippy": "passed -D warnings",
+    "android": "release AAR and lint passed",
+    "ios": "simulator and iPhone SDK compilation passed",
+    "stack": "55 constrained-thread/size tests and both app builds passed",
+    "standalonePackage": "1 test, 46 Bun assertions including Node interoperability driver"
+  },
+  "logs": [
+    {
+      "name": "thumble-renewal-wal-native-final.txt",
+      "sha256": "bc885c29d2ad929babd6ef46d5e7d6fcf37f6ebb45df7d2041e90a3f89241c93"
+    },
+    {
+      "name": "thumble-renewal-wal-clippy-final.txt",
+      "sha256": "a37c13992e38e76c142c38042cc05ec97e1899d6e3401569705dde1905b261e9"
+    },
+    {
+      "name": "thumble-renewal-barrier-swift-full.txt",
+      "sha256": "1ee47514fa7d66265488ede176ac1a19298dbe7c4d326873b72fef98180cec3f"
+    },
+    {
+      "name": "thumble-renewal-barrier-android-full.txt",
+      "sha256": "871fbd50b8fb56f9267a6c5b3e21d0084af4dd195fcf4452f9cb2966bc9d8a9e"
+    },
+    {
+      "name": "thumble-renewal-barrier-ios-sim.txt",
+      "sha256": "7dfd1cd177b57ec6648f07866d7802d69040e7fa043171b0c075a1bb7cb00b31"
+    },
+    {
+      "name": "thumble-renewal-barrier-ios-device.txt",
+      "sha256": "b5fb01412c1b3e0758db1efb7e7d436c5f71b0d0e5f9c9bf7e3d1b4507bdc0f6"
+    },
+    {
+      "name": "thumble-renewal-barrier-stack.txt",
+      "sha256": "67f0e36cf7a4c9587312f681a5d8c4c46de5055ffddca56fd4454bb3bd4c397c"
+    },
+    {
+      "name": "thumble-renewal-wal-package.txt",
+      "sha256": "2130f3b28c7b3ea0ca1cd2cb06f7967d880c8432ffba64168009934c25faeeec"
+    },
+    {
+      "name": "thumble-barrier-wal-projection-native.txt",
+      "sha256": "0edb9f093dd37e8c64cdfe606e2ddf2f18254e4d0cf04ac11f6163f74c942ae2"
+    },
+    {
+      "name": "thumble-barrier-wal-projection-clippy.txt",
+      "sha256": "d2cee115e2b6397f099374d13107d9b89b6d90650a394453815f9717f99c25c9"
+    },
+    {
+      "name": "thumble-barrier-wal-projection-swift.txt",
+      "sha256": "d4c946dc35a85cc9f33aa6535e1ca82061176d8da772ffd0e65e092681bd96fd"
+    },
+    {
+      "name": "thumble-barrier-wal-projection-android.txt",
+      "sha256": "fa31e2f78ab906cd0faefbcae9a96d072eca1ce730791a554d0217a75d02f5f7"
+    },
+    {
+      "name": "thumble-renewal-barrier-swift-red.txt",
+      "sha256": "8e243bc34141faebe3bd511269a35de99a7ad6f2da9ba3c7534e8b0c3d399abc"
+    },
+    {
+      "name": "thumble-renewal-barrier-swift-green.txt",
+      "sha256": "5f78aab2569407514d7d4579b7ea34fcc5ec97480f28ecfe680cb0bcd164549c"
+    }
+  ],
+  "windowsObservation": {
+    "publicSource": "1c2fe542ea4904c89635d9bb0ea4f7a94c81d8ab",
+    "run": 39769979232,
+    "job": 119794783918,
+    "sqlite": "3.53.2",
+    "samples": 32,
+    "DELETE": {
+      "medianUs": 57375,
+      "p95Us": 93431,
+      "maxUs": 99615
+    },
+    "WAL": {
+      "medianUs": 5546,
+      "p95Us": 7936,
+      "maxUs": 8133
+    },
+    "result": "stale-grant process case passed; later enrollment unit case timed out; full Windows job failed"
+  },
+  "latestRuns": {
+    "host": 39771566741,
+    "native": 39771566802,
+    "app": 39771566966,
+    "state": "started/pending, not yet accepted"
+  },
+  "remaining": [
+    "Automatic renewal scheduling in both PhoneControl clients",
+    "Credential metadata retention and old wall/continuous deadline rechecks",
+    "Swap native channel/route and session progress on UI owner; first full state over protected TLS packet zero",
+    "Enable explicit control-v6 app admission only after real-duration headless hold and fault witnesses",
+    "Discovery/QR, editing/MCP parity, haptics, migration, physical output/signing/gameplay, mandatory optical sync"
+  ]
+}
