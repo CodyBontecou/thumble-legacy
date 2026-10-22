@@ -5,8 +5,10 @@ use ring::{
     rand::{SecureRandom, SystemRandom},
 };
 use serde::Serialize;
+#[cfg(windows)]
+use std::fs;
 use std::{
-    fs::{self, File, OpenOptions},
+    fs::{File, OpenOptions},
     io::{Read, Write},
     path::{Component, Path},
 };
@@ -139,6 +141,7 @@ impl Directory {
         }
         #[cfg(windows)]
         let mut ancestors = Vec::new();
+        #[cfg(windows)]
         for parent in path.ancestors() {
             let metadata = fs::symlink_metadata(parent)
                 .map_err(|_| "configuration_export_directory_unavailable")?;
@@ -177,12 +180,52 @@ impl Directory {
         }
         #[cfg(unix)]
         let handle = {
-            use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
-            let handle = OpenOptions::new()
+            use std::{
+                ffi::CString,
+                os::{
+                    fd::{AsRawFd, FromRawFd},
+                    unix::{
+                        ffi::OsStrExt,
+                        fs::{MetadataExt, OpenOptionsExt},
+                    },
+                },
+            };
+            // Pin each ancestor before resolving its child. A preflight lstat
+            // followed by open(path) could follow a replaced intermediate name.
+            let mut handle = OpenOptions::new()
                 .read(true)
-                .custom_flags(libc::O_NOFOLLOW | libc::O_DIRECTORY)
-                .open(path)
+                .custom_flags(libc::O_NOFOLLOW | libc::O_DIRECTORY | libc::O_CLOEXEC)
+                .open("/")
                 .map_err(|_| "configuration_export_directory_unavailable")?;
+            for component in path.components() {
+                let name = match component {
+                    Component::RootDir => continue,
+                    Component::Normal(name) => name,
+                    _ => return Err("configuration_export_path_invalid"),
+                };
+                let name = CString::new(name.as_bytes())
+                    .map_err(|_| "configuration_export_path_invalid")?;
+                let fd = unsafe {
+                    libc::openat(
+                        handle.as_raw_fd(),
+                        name.as_ptr(),
+                        libc::O_RDONLY | libc::O_DIRECTORY | libc::O_NOFOLLOW | libc::O_CLOEXEC,
+                    )
+                };
+                if fd < 0 {
+                    let error = std::io::Error::last_os_error();
+                    return Err(
+                        if matches!(error.raw_os_error(), Some(libc::ELOOP | libc::ENOTDIR)) {
+                            "configuration_export_directory_unsafe"
+                        } else {
+                            "configuration_export_directory_unavailable"
+                        },
+                    );
+                }
+                // SAFETY: openat returned a new owned descriptor; replacing the
+                // previous handle cannot redirect any already-resolved ancestor.
+                handle = unsafe { File::from_raw_fd(fd) };
+            }
             let metadata = handle
                 .metadata()
                 .map_err(|_| "configuration_export_directory_unavailable")?;

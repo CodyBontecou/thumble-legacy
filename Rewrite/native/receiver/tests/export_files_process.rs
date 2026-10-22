@@ -99,6 +99,19 @@ fn malformed_destinations_and_nonregular_or_linked_targets_are_refused() {
         let directory = root.join("linked-directory");
         symlink(&root, &directory).unwrap();
         assert!(!run(&directory.join("new.json"), b"{}").status.success());
+        let actual = root.join("actual");
+        let nested = actual.join("nested");
+        fs::create_dir(&actual).unwrap();
+        fs::create_dir(&nested).unwrap();
+        let intermediate = root.join("intermediate");
+        symlink(&actual, &intermediate).unwrap();
+        let redirected = run(&intermediate.join("nested").join("new.json"), b"{}");
+        assert!(!redirected.status.success());
+        assert_eq!(
+            String::from_utf8(redirected.stderr).unwrap().trim(),
+            "configuration_export_directory_unsafe"
+        );
+        assert!(!nested.join("new.json").exists());
         let unsafe_directory = root.join("writable");
         fs::create_dir(&unsafe_directory).unwrap();
         fs::set_permissions(&unsafe_directory, fs::Permissions::from_mode(0o777)).unwrap();
