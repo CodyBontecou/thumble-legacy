@@ -69,5 +69,9 @@
       "path": "docs/rewrite-native-phone-input-v5.md",
       "sha": "6bd7b936c7ae36dafb6708676a88ccce28931dd8"
     }
-  ]
+  ],
+  "localSourceCommit": "106e996",
+  "publicCommit": "9eff05ab6d30443dff4872be730ad703fa729ce6",
+  "publicTree": "626f2696eaf6676f28fe74cd0584ba807cf4d958",
+  "remoteSourceHashesVerified": true
 }
