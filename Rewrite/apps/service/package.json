@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/service.ts",
     "./configuration-files": "./src/configuration-files.ts",
-    "./configuration-owner-process": "./src/configuration-owner-process.ts"
+    "./configuration-owner-process": "./src/configuration-owner-process.ts",
+    "./native-output-options": "./src/native-receiver.ts"
   },
   "dependencies": {
     "@thumble/contracts": "workspace:*",

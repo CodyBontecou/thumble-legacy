@@ -37,7 +37,7 @@ import {
   type ServiceStatus,
 } from "@thumble/contracts/receiver";
 import { runtimeDirectory, type Endpoint } from "@thumble/client/local";
-import { NativeReceiver } from "./native-receiver.ts";
+import { NativeReceiver, type ReceiverOutput } from "./native-receiver.ts";
 
 export function secureDirectory(executable: string, path: string): string {
   const directory = runtimeDirectory(path);
@@ -75,12 +75,18 @@ export async function serve(
   path: string,
   identityDirectory: string | undefined,
   configurationLauncher: readonly string[],
+  output: ReceiverOutput = { backend: "recording" },
 ): Promise<void> {
   const directory = secureDirectory(executable, path),
     instanceId = randomUUID(),
     token = randomBytes(32).toString("hex");
   const recordingLog = join(directory, `receiver-${instanceId}.jsonl`);
-  const native = new NativeReceiver(executable, directory, recordingLog);
+  const native = new NativeReceiver(
+    executable,
+    directory,
+    recordingLog,
+    output,
+  );
   await native.ready;
   const configuration = new ConfigurationOwner(
     executable,

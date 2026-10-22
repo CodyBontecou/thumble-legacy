@@ -1,3 +1,4 @@
+import { outputLaunchOptions } from "./output-launch.ts";
 import { decodeSavedRuntimeCommand } from "@thumble/contracts/saved-runtime";
 import { inspectOutputCapabilities } from "./output-doctor.ts";
 import { runConfigurationOwner } from "@thumble/service/configuration-owner-process";
@@ -35,6 +36,7 @@ function options(values: string[]): Map<string, string | true> {
     if (
       [
         "--json",
+        "--allow-physical-output",
         "--allow-recorded-input",
         "--reveal-secret",
         "--allow-configuration-write",
@@ -48,6 +50,7 @@ function options(values: string[]): Map<string, string | true> {
     if (
       ![
         "--file",
+        "--output",
         "--operation-id",
         "--expected-source-hash",
         "--name",
@@ -111,6 +114,18 @@ function nativeIdentity(
 async function main(): Promise<unknown> {
   const [family, action, ...rest] = arguments_;
   const opts = options(rest);
+  if (
+    (opts.has("--output") || opts.has("--allow-physical-output")) &&
+    !(
+      (family === "service" && (action === "start" || action === "run")) ||
+      (family === "__service" && action === "run")
+    )
+  )
+    throw new Error("invalid_output_launch_option");
+  const output =
+    family === "service" || family === "__service"
+      ? outputLaunchOptions(opts)
+      : ({ backend: "recording" } as const);
   const configured = opts.get("--receiver");
   const receiver =
     typeof configured === "string"
@@ -185,6 +200,7 @@ async function main(): Promise<unknown> {
       root,
       typeof identityDirectory === "string" ? identityDirectory : undefined,
       source ? [process.execPath, process.argv[1]!] : [process.execPath],
+      output,
     );
     return undefined;
   }
@@ -200,6 +216,7 @@ async function main(): Promise<unknown> {
       root,
       typeof identityDirectory === "string" ? identityDirectory : undefined,
       source ? [process.execPath, process.argv[1]!] : [process.execPath],
+      output,
     );
     return undefined;
   }
@@ -222,6 +239,8 @@ async function main(): Promise<unknown> {
       });
     } catch {}
     if (running) {
+      if (opts.has("--output") || opts.has("--allow-physical-output"))
+        throw new Error("service_launch_options_restart_required");
       if (expectedIdentity) {
         const pairing = await requestPairing(readEndpoint(root, receiver), {
           command: "pairing-status",
@@ -249,6 +268,9 @@ async function main(): Promise<unknown> {
         receiver,
         ...(typeof identityDirectory === "string"
           ? ["--identity-dir", identityDirectory]
+          : []),
+        ...(output.backend === "macos-hid"
+          ? ["--output", "macos-hid", "--allow-physical-output"]
           : []),
       ],
       { detached: true, stdio: "ignore", windowsHide: true },
