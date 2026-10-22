@@ -7,3 +7,5 @@ Local checks pass 98 portable tests, 69 Swift tests including real native TLS/UD
 The manifest freezes exactly ten source/docs files, remote blob hashes, one public parent and the prepared Git-data commit. The branch advanced to public 6f82b437 only after all six prior catalog jobs passed, avoiding cancellation of the confirmed live iOS provider run. Record fresh host/mobile run handles and results here. Standing authorization covers this CI publication without renewed prompts. Private baseline/history, credentials, build products and this evidence remain excluded.
 
 This is engineering progress toward M3, not a complete controller application. React Native app/bridge/UI, native presentation feedback/haptics, discovery/manual pairing flow, continuous authorization renewal, physical output/signing/gameplay and optical live sync remain open.
+
+Hosted validation handles: headless host 39720471127 and native mobile 39720471225, both on exact public 6f82b437. Both were confirmed running. Continue observing those runs; do not restart confirmed active runs because observation is slow.
