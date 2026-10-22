@@ -174,6 +174,39 @@ export class ConfigurationCatalog {
   static read(source: LosslessJson): ConfigurationCatalog {
     return new ConfigurationCatalog(source);
   }
+  /** Saved selectors only. Profiles, bindings, timestamps and opaque source are
+   * untouched; this edit never publishes or activates receiver configuration. */
+  selectProfiles(
+    activeProfileID: string,
+    defaultProfileID: string | null,
+  ): ConfigurationCatalog {
+    const active = uuid(activeProfileID),
+      selectedDefault =
+        defaultProfileID === null ? null : uuid(defaultProfileID);
+    if (
+      !this.#indices.has(active) ||
+      (selectedDefault !== null && !this.#indices.has(selectedDefault))
+    )
+      throw new Error("profile_not_found");
+    const edits = new Map<string, LosslessJson>();
+    if (active !== this.activeProfileID)
+      edits.set(
+        "/activeProfileID",
+        this.source.get(`/profiles/${this.#indices.get(active)!}/id`)!,
+      );
+    if (selectedDefault !== this.defaultProfileID)
+      edits.set(
+        "/defaultProfileID",
+        selectedDefault === null
+          ? LosslessJson.parse("null")
+          : this.source.get(
+              `/profiles/${this.#indices.get(selectedDefault)!}/id`,
+            )!,
+      );
+    return edits.size === 0
+      ? this
+      : ConfigurationCatalog.read(this.source.replaceValues(edits));
+  }
   /** Pure source edit addressed by stable profile ID, never current selection.
    * No persistence, receipt, clock, runtime activation or capability side effect. */
   renameProfile(
