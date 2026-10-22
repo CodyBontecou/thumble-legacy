@@ -1,0 +1,304 @@
+{
+  "scope": "headless native phone app pairing and reconnect; recording output only",
+  "localSourceCommit": "2b01f7d",
+  "publicCommit": "b862c61904f3a3a3e16a127a8e88b29ba915f5fd",
+  "publicParent": "73aab76ded69c8338630e536d105f778fde1f9bb",
+  "publicTree": "8fb422b797fa92251d24c371950e2dd176e70323",
+  "verifiedPaths": 21,
+  "capsuleSha256": "6bcbdfe9877b1264d9ce3a4192b0d37fe2fdb522842c4329ec8339de872a8e59",
+  "local": {
+    "androidApp": {
+      "tests": 10,
+      "skips": 0,
+      "passes": 10,
+      "actualUiFieldAndTouches": true,
+      "receiverHeldFreshNeutralAndReleased": 2
+    },
+    "iosApp": {
+      "tests": 5,
+      "skips": 0,
+      "passes": 5,
+      "nativeSubmitMethods": true,
+      "systemFingerInjection": false,
+      "realKeychain": true,
+      "receiverHeldFreshNeutralAndReleased": 2
+    },
+    "portable": {
+      "passed": 107,
+      "skipped": 1,
+      "skipReason": "packaging is run separately"
+    },
+    "standalonePackaging": {
+      "passed": 1,
+      "assertions": 46,
+      "sdkNodeScenarios": 4
+    },
+    "swiftSdk": {
+      "passed": 77,
+      "networkProbes": true
+    },
+    "stack": {
+      "passed": 55,
+      "bothBuilds": "success"
+    },
+    "rustProbeBuildAndClippy": "success",
+    "typecheckFormattingBoundariesGeneration": "success",
+    "isolatedProjection": "typecheck, Prettier and Rust fmt pass",
+    "androidSdk": {
+      "tests": 96,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "hostRun": 39761455119,
+  "nativeRun": 39761455105,
+  "appRun": 39761455025,
+  "hosted": {
+    "macos": {
+      "job": 119766368414,
+      "conclusion": "success"
+    },
+    "linux": {
+      "job": 119766368335,
+      "conclusion": "success"
+    },
+    "windows": {
+      "job": 119766367994,
+      "status": "in_progress"
+    },
+    "androidNative": {
+      "job": 119766368300,
+      "status": "in_progress"
+    },
+    "androidKeystore": {
+      "job": 119766367867,
+      "status": "in_progress"
+    },
+    "iosNative": {
+      "job": 119766368076,
+      "status": "in_progress"
+    },
+    "androidApp": {
+      "job": 119766368338,
+      "status": "in_progress"
+    },
+    "iosApp": {
+      "job": 119766368418,
+      "status": "pending"
+    }
+  },
+  "failedAttempts": [
+    "Initial iOS recording-host HTTP assertion failed; the failing phase was not recorded, so no precise cause is claimed. Later runs use explicit phase receipts.",
+    "Android first pairing run reached the secure field and failed a case-sensitive Pair button text lookup; stable native resource IDs replace it.",
+    "The app fresh-source observation used the SDK current sequence-zero probe, which can race continuously published native samples. App evidence now checks first recorded source sample and current neutral state; the SDK probe is unchanged.",
+    "One Android repeat stopped after ADB reported the same emulator offline. It recovered without a reboot/restart. Exact ten-case checks rejected that incomplete run; a subsequent full run passes.",
+    "Owned reverse-port cleanup originally masked the offline test failure when its forward was already absent. Cleanup now verifies absence and preserves the original failure."
+  ],
+  "limitations": [
+    "No discovery/QR camera capture or multiple-host selector",
+    "Continuous authorization and grant renewal remains open",
+    "UIKit test uses native submit/reconnect and semantic input, not system fingers",
+    "No physical output, production signing, gameplay, haptic, latency or optical certification"
+  ],
+  "privateHistoryPublished": false,
+  "logs": {
+    "thumble-phone-flow-ios-app.txt": {
+      "path": "/private/tmp/thumble-phone-flow-ios-app.txt",
+      "sha256": "68db91d6c98eb1447bc6a6f8e98a1ab64e9b77b2dd3f1c1708759fd6d47c8a29"
+    },
+    "thumble-phone-flow-ios-app2.txt": {
+      "path": "/private/tmp/thumble-phone-flow-ios-app2.txt",
+      "sha256": "de2b66e6b583fa2c67b02a53d20e8c32141bcdd05c4b6ac08fe01c5d09f2e009"
+    },
+    "thumble-phone-flow-ios-app3.txt": {
+      "path": "/private/tmp/thumble-phone-flow-ios-app3.txt",
+      "sha256": "59b8f01451046ac6ac20c9911e3afb83cb233cc99cbde938824ca685c3bdb156"
+    },
+    "thumble-phone-flow-ios-final.txt": {
+      "path": "/private/tmp/thumble-phone-flow-ios-final.txt",
+      "sha256": "a0c1736f522455ee57d856d08f96375af6583e0c02815c36e3f539c50c41f8a2"
+    },
+    "thumble-phone-flow-ios-entry-final.txt": {
+      "path": "/private/tmp/thumble-phone-flow-ios-entry-final.txt",
+      "sha256": "2321c713ae8b75914c8f140f511f1a508876f76a10fa80c2e1fca9de57adb4e0"
+    },
+    "thumble-phone-flow-android-app.txt": {
+      "path": "/private/tmp/thumble-phone-flow-android-app.txt",
+      "sha256": "0faaa0cb325ab143f1b88a8dcc8a6dcf32bc4978f8792aef7264361f92b04fbd"
+    },
+    "thumble-phone-flow-android-app2.txt": {
+      "path": "/private/tmp/thumble-phone-flow-android-app2.txt",
+      "sha256": "c2ecb92a33f52b9c6c432d5c3c24f368dff1a044c7d64db42224ba20d789e765"
+    },
+    "thumble-phone-flow-android-app3.txt": {
+      "path": "/private/tmp/thumble-phone-flow-android-app3.txt",
+      "sha256": "9297cd631fbbbb164e5566fc11a649124e55fdf73b3297770c5373efcd62274e"
+    },
+    "thumble-phone-flow-android-final.txt": {
+      "path": "/private/tmp/thumble-phone-flow-android-final.txt",
+      "sha256": "18fa2efbbc55ab4ebca125fb92f7a185ca304cda2f99f45ee67a4ea119ff9759"
+    },
+    "thumble-phone-flow-android-final2.txt": {
+      "path": "/private/tmp/thumble-phone-flow-android-final2.txt",
+      "sha256": "9e03c3d53707a4ffe87662cac9ee470011bb1ad2bba8987c883f5f203bc9a449"
+    },
+    "thumble-phone-flow-portable.txt": {
+      "path": "/private/tmp/thumble-phone-flow-portable.txt",
+      "sha256": "faea9cd4720e1d93c05a9b7504e7bccfbd371a0e9528379928e3f6409fe4c010"
+    },
+    "thumble-phone-flow-package.txt": {
+      "path": "/private/tmp/thumble-phone-flow-package.txt",
+      "sha256": "80f3cd5f3027343d4c0873a8f357c9be8ce93208f83f2ed3281c4f846cdd40cc"
+    },
+    "thumble-phone-flow-stack.txt": {
+      "path": "/private/tmp/thumble-phone-flow-stack.txt",
+      "sha256": "e2503d6e4ff23ca1087bccffc3ca00762b8562cd4966030786f0400da5af6ea3"
+    },
+    "thumble-phone-flow-probe-build.txt": {
+      "path": "/private/tmp/thumble-phone-flow-probe-build.txt",
+      "sha256": "2b76c03b68c64f96639693b2c7dcfb7f059d114f4d9cd635efa144fdf3f9b39c"
+    },
+    "thumble-phone-flow-probe-clippy.txt": {
+      "path": "/private/tmp/thumble-phone-flow-probe-clippy.txt",
+      "sha256": "8a248df5a538e1b02f6e2e6c151f5c9e59b1105a809bbdc0bbe9a428a63f4ee7"
+    },
+    "thumble-phone-flow-sdk-swift.txt": {
+      "path": "/private/tmp/thumble-phone-flow-sdk-swift.txt",
+      "sha256": "eaf643d8c2985011b2f23e68f66524b63ac5c39a6dd22b3a9ff3e0291e80e382"
+    },
+    "thumble-phone-flow-sdk-android.txt": {
+      "path": "/private/tmp/thumble-phone-flow-sdk-android.txt",
+      "sha256": "00c00046be9878297ef4dab1cdb5b86807cd03d046caeb13a1e3e6f52becd22a"
+    },
+    "thumble-phone-flow-typecheck3.txt": {
+      "path": "/private/tmp/thumble-phone-flow-typecheck3.txt",
+      "sha256": "526dc66e52164ca6d19855e4868d447ea3d315e860cf8318e583c02a10162c36"
+    },
+    "thumble-phone-flow-projection-typecheck.txt": {
+      "path": "/private/tmp/thumble-phone-flow-projection-typecheck.txt",
+      "sha256": "526dc66e52164ca6d19855e4868d447ea3d315e860cf8318e583c02a10162c36"
+    },
+    "thumble-phone-flow-projection-prettier.txt": {
+      "path": "/private/tmp/thumble-phone-flow-projection-prettier.txt",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "thumble-phone-flow-projection-fmt.txt": {
+      "path": "/private/tmp/thumble-phone-flow-projection-fmt.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "thumble-phone-flow-sdk-android-fresh.txt": {
+      "path": "/private/tmp/thumble-phone-flow-sdk-android-fresh.txt",
+      "sha256": "1d2ad79dcd02d756f0ca66fb6d50a9cd21a56c1b3ecc52230bb5a8d89eae8ba4"
+    }
+  },
+  "images": {
+    "native-alert-light.png": {
+      "sha256": "bb33ae971404fedf84a9f9e3540f063eab31e98ba966fcea65be5a1d7c358771",
+      "caption": "Hosted UIKit QA alert over Home/test surface, not product connected-route visual acceptance"
+    },
+    "native-alert-dark.png": {
+      "sha256": "6d1afdcb29f89fbf62c40860ccf9cd8a919cd15f83c0211d82a63ae0c9ab5930",
+      "caption": "Hosted UIKit QA alert over Home/test surface, not product connected-route visual acceptance"
+    }
+  },
+  "observedAt": "2026-10-22T10:18:55.015160+00:00",
+  "latestHostedJobs": [
+    {
+      "id": 39756610030,
+      "jobs": [
+        {
+          "id": 119750076237,
+          "name": "android-app",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        },
+        {
+          "id": 119750076712,
+          "name": "ios-app",
+          "status": "in_progress",
+          "conclusion": null,
+          "active": [
+            "Exercise bundled app's native UIKit portal headlessly"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 39761455119,
+      "jobs": [
+        {
+          "id": 119766367994,
+          "name": "portable (windows-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        },
+        {
+          "id": 119766368335,
+          "name": "portable (ubuntu-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        },
+        {
+          "id": 119766368414,
+          "name": "portable (macos-latest)",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        }
+      ]
+    },
+    {
+      "id": 39761455105,
+      "jobs": [
+        {
+          "id": 119766367867,
+          "name": "android-keystore",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        },
+        {
+          "id": 119766368076,
+          "name": "ios-native",
+          "status": "in_progress",
+          "conclusion": null,
+          "active": [
+            "Execute synthetic Keychain provider test headlessly"
+          ]
+        },
+        {
+          "id": 119766368300,
+          "name": "android-native",
+          "status": "completed",
+          "conclusion": "success",
+          "active": []
+        }
+      ]
+    },
+    {
+      "id": 39761455025,
+      "jobs": [
+        {
+          "id": 119766368338,
+          "name": "android-app",
+          "status": "in_progress",
+          "conclusion": null,
+          "active": [
+            "Build bundled test APKs before booting the emulator"
+          ]
+        },
+        {
+          "id": 119766368418,
+          "name": "ios-app",
+          "status": "pending",
+          "conclusion": null,
+          "active": []
+        }
+      ]
+    }
+  ]
+}
