@@ -21,7 +21,7 @@ class ThumbleInputModule : Module() {
     override fun definition() = ModuleDefinition {
         Name("ThumbleNativeInput")
         View(ThumbleInputView::class) {
-            Events("onAdmission")
+            Events("onAdmission", "onCatalog")
             Prop("practiceMap") { view: ThumbleInputView, value: Map<String, Any?> ->
                 view.pendingPractice = value
             }
@@ -49,6 +49,7 @@ class ThumbleInputModule : Module() {
 
 class ThumbleInputView(context: Context, appContext: AppContext) : ExpoView(context, appContext) {
     val onAdmission by EventDispatcher()
+    val onCatalog by EventDispatcher()
     internal var pendingConnection: Map<String, Any?>? = null
     internal var pendingPractice: Map<String, Any?>? = null
     private var practiceAdmitted = false
@@ -108,9 +109,15 @@ class ThumbleInputView(context: Context, appContext: AppContext) : ExpoView(cont
             val template = decode(raw)
             configure(raw)
             val flow =
-                PhoneConnection(this, ::publishFeedback, ::adoptConnectedEngine) { status ->
-                    onAdmission(mapOf("admission" to mapOf("version" to 1, "status" to status)))
-                }
+                PhoneConnection(
+                    this,
+                    ::publishFeedback,
+                    ::adoptConnectedEngine,
+                    status = { status ->
+                        onAdmission(mapOf("admission" to mapOf("version" to 1, "status" to status)))
+                    },
+                    catalogResult = { catalog -> onCatalog(mapOf("catalog" to catalog)) },
+                )
             connection = flow
             flow.start(template)
         } catch (_: Exception) {

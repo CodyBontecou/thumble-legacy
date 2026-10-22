@@ -12,7 +12,7 @@ public final class ThumbleInputModule: Module {
     // contract before entering the Swift UI actor; only typed Sendable metadata
     // leaves the actor, with bridge dictionaries assembled afterwards.
     View(ThumbleInputView.self) {
-      Events("onAdmission")
+      Events("onAdmission", "onCatalog")
       Prop("practiceMap") { (view: ThumbleInputView, value: [String: Any]) in
         view.pendingPractice = value
       }
@@ -47,6 +47,7 @@ public final class ThumbleInputModule: Module {
 
 @MainActor final class ThumbleInputView: ExpoView {
   let onAdmission = EventDispatcher()
+  let onCatalog = EventDispatcher()
   fileprivate var pendingConnection: [String: Any]?
   fileprivate var pendingPractice: [String: Any]?
   private var practiceAdmitted = false
@@ -98,7 +99,8 @@ public final class ThumbleInputModule: Module {
         },
         status: { [weak self] status in
           self?.onAdmission(["admission": ["version": 1, "status": status]])
-        })
+        },
+        catalogResult: { [weak self] catalog in self?.onCatalog(["catalog": catalog]) })
       connection = flow
       flow.start(template: template)
     } catch {
