@@ -112,7 +112,17 @@
       "state": "Both in progress at last observation"
     }
   },
-  "newCI": "Published ref verified; Actions run discovery pending",
+  "newCI": {
+    "run": 39787465174,
+    "event": "workflow_dispatch",
+    "verifiedHead": "2ae6e6d32a9a383a0a9f6c1f4d2c0c04da78dc0a",
+    "jobs": {
+      "ios": 119854321142,
+      "android": 119854321550
+    },
+    "state": "Both pending behind existing per-branch app jobs; not restarted or cancelled",
+    "dispatch": "GitHub CLI with existing authorized account; connector lacks a workflow-dispatch tool. No automatic run appeared after publication; cause not established."
+  },
   "diagnosis": {
     "originalHostedFailureJob": 119832681939,
     "cause": "Unestablished",
