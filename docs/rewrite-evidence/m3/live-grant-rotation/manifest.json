@@ -22,7 +22,41 @@
   "hostRun": 39765297014,
   "nativeRun": 39765296810,
   "appRun": 39765296632,
-  "hostedResults": "pending",
+  "hostedResults": {
+    "linux": {
+      "job": 119779124497,
+      "conclusion": "success"
+    },
+    "macos": {
+      "job": 119779124763,
+      "conclusion": "success"
+    },
+    "windows": {
+      "job": 119779124806,
+      "status": "in_progress",
+      "step": "typecheck"
+    },
+    "iosNative": {
+      "job": 119779123496,
+      "status": "in_progress"
+    },
+    "androidKeystore": {
+      "job": 119779123784,
+      "status": "in_progress"
+    },
+    "androidNative": {
+      "job": 119779123898,
+      "status": "in_progress"
+    },
+    "iosApp": {
+      "job": 119779122740,
+      "status": "pending"
+    },
+    "androidApp": {
+      "job": 119779123338,
+      "status": "in_progress"
+    }
+  },
   "priorPhoneAppSnapshot": {
     "publicCommit": "b862c61904f3a3a3e16a127a8e88b29ba915f5fd",
     "hostRun": 39761455119,
