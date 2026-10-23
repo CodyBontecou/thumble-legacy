@@ -144,6 +144,49 @@ class NoticeInventoryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'upstream_bundle_mismatch'):
             AUDIT.upstream_supplement(result['javascript'], proof, bundle, texts)
 
+    def test_attestation_content_origin_preserves_unsigned_scope_and_requires_exact_evidence(self):
+        result, texts = self.audit()
+        package = result['javascript']['packages'][0]
+        value = b'Previously audited exact attested-source license'
+        bundle = self.root / 'attested.txt'
+        bundle.write_bytes(value)
+        proof = self.root / 'attested.json'
+        commit = 'a' * 40
+        origin = {
+            'kind': 'npm-release-attestation-content-match-upstream-license',
+            'component': 'example', 'version': '1.2.3',
+            'packageJsonSHA256': package['packageJsonSHA256'],
+            'publicAttestationsURL': 'https://registry.npmjs.org/-/npm/v1/attestations/example@1.2.3',
+            'attestationsSHA256': 'b' * 64, 'tarSHA512': 'c' * 128,
+            'npmIntegrityMatchedLock': True, 'attestationSubjectSHA512Matched': True,
+            'upstreamCommit': commit,
+            'licenseURL': 'https://raw.githubusercontent.com/owner/repo/' + commit + '/LICENSE',
+            'attestationCryptographicSignatureVerified': False,
+        }
+        data = {'schemaVersion': 1, 'bundleSHA256': AUDIT.sha(value), 'bundleByteCount': len(value),
+                'selectedTexts': [{'sha256': AUDIT.sha(value), 'offset': 0, 'byteCount': len(value), 'origins': [origin]}]}
+        proof.write_text(json.dumps(data))
+        AUDIT.upstream_supplement(result['javascript'], proof, bundle, texts)
+        matched = package['upstreamTexts'][0]
+        self.assertEqual(matched['sha256'], AUDIT.sha(value))
+        self.assertEqual(matched['upstreamCommit'], commit)
+        self.assertIs(matched['attestationCryptographicSignatureVerified'], False)
+        self.assertNotIn('gitHead', matched)
+        for key, bad in [('npmIntegrityMatchedLock', False), ('attestationSubjectSHA512Matched', 1),
+                         ('attestationCryptographicSignatureVerified', True), ('attestationsSHA256', 'bad'),
+                         ('tarSHA512', 'bad'), ('upstreamCommit', 'main'),
+                         ('packageJsonSHA256', '0' * 64), ('publicAttestationsURL', 'https://example.com/proof'),
+                         ('licenseURL', 'https://raw.githubusercontent.com/owner/repo/main/LICENSE')]:
+            original = origin[key]
+            origin[key] = bad
+            proof.write_text(json.dumps(data))
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'upstream_component_mismatch'):
+                AUDIT.upstream_supplement(result['javascript'], proof, bundle, texts)
+            origin[key] = original
+        bundle.write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'upstream_bundle_mismatch'):
+            AUDIT.upstream_supplement(result['javascript'], proof, bundle, texts)
+
     def test_corrupt_zip_and_duplicate_file_reject(self):
         self.aab.write_bytes(b'notzip')
         with self.assertRaises(zipfile.BadZipFile):

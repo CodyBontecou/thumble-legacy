@@ -323,19 +323,34 @@ def upstream_supplement(js, inventory_path, bundle_path, texts):
         if sha(value) != text.get('sha256'):
             raise ValueError('upstream_text_mismatch')
         for origin in text.get('origins', []):
-            if origin.get('kind') != 'npm-release-gitHead-upstream-license':
+            kind = origin.get('kind')
+            if kind not in ('npm-release-gitHead-upstream-license', 'npm-release-attestation-content-match-upstream-license'):
                 continue
             key = origin.get('component', '') + '@' + origin.get('version', '')
             if key not in packages:
                 continue
             package = packages[key]
-            commit = origin.get('gitHead')
-            url = origin.get('url')
+            attested = kind == 'npm-release-attestation-content-match-upstream-license'
+            commit = origin.get('upstreamCommit' if attested else 'gitHead')
+            url = origin.get('licenseURL' if attested else 'url')
+            if attested and (
+                    origin.get('npmIntegrityMatchedLock') is not True or
+                    origin.get('attestationSubjectSHA512Matched') is not True or
+                    origin.get('attestationCryptographicSignatureVerified') is not False or
+                    origin.get('publicAttestationsURL') != 'https://registry.npmjs.org/-/npm/v1/attestations/' + key or
+                    not isinstance(origin.get('attestationsSHA256'), str) or
+                    not re.fullmatch('[a-f0-9]{64}', origin['attestationsSHA256']) or
+                    not isinstance(origin.get('tarSHA512'), str) or
+                    not re.fullmatch('[a-f0-9]{128}', origin['tarSHA512'])):
+                raise ValueError('upstream_component_mismatch')
             if (package['packageJsonSHA256'] != origin.get('packageJsonSHA256') or
                     not isinstance(commit, str) or not re.fullmatch('[a-f0-9]{40}', commit) or
                     not isinstance(url, str) or not re.fullmatch(r'https://raw\.githubusercontent\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/' + commit + r'/LICENSE', url)):
                 raise ValueError('upstream_component_mismatch')
-            package.setdefault('upstreamTexts', []).append({**texts.add(value), 'gitHead': commit, 'url': url})
+            provenance = ({'upstreamCommit': commit, 'attestationCryptographicSignatureVerified': False,
+                           'attestationsSHA256': origin['attestationsSHA256'], 'tarSHA512': origin['tarSHA512']}
+                          if attested else {'gitHead': commit})
+            package.setdefault('upstreamTexts', []).append({**texts.add(value), **provenance, 'url': url})
     return {'inventorySHA256': file_sha(inventory_path), 'bundleSHA256': sha(bundle),
             'verificationScope': 'audited_external_manifest_exact_package_json_and_pinned_text_match'}
 

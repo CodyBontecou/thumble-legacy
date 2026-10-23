@@ -5100,15 +5100,27 @@
           "component": "p::expo-modules-core",
           "npmComponent": "expo-modules-core@58.0.24",
           "name": "LICENSE"
+        },
+        {
+          "kind": "npm-release-attestation-content-match-upstream-license",
+          "component": "expo-router",
+          "version": "58.0.25",
+          "packageJsonSHA256": "8f4b352bc61f2ec74c95ee73abc9f5c96e78ece0c96a4b9aa8b0a7ab5bc7cca3",
+          "publicAttestationsURL": "https://registry.npmjs.org/-/npm/v1/attestations/expo-router@58.0.25",
+          "attestationsSHA256": "913910a7242bfe2aab2963b1bfca99d1070d103b4ebfe2798de1a2635c689dd2",
+          "tarSHA512": "b05ba617ac946f17127e261c77ee6f2638c86d5374c28e57d05f52127a0d9669afce823d8c3ea4f5d712327a1ee72c2ab96a2750401d7077297ec6b4f3bffcb1",
+          "npmIntegrityMatchedLock": true,
+          "attestationSubjectSHA512Matched": true,
+          "upstreamCommit": "a248d78e3b9260e6f39b320ed25ae65e90acff7d",
+          "licenseURL": "https://raw.githubusercontent.com/expo/expo/a248d78e3b9260e6f39b320ed25ae65e90acff7d/LICENSE",
+          "mappedIOSFilesMatched": 384,
+          "sourceMapSHA256": "e7d906e352db412d463d63cc5a2447fce8704e801d8098b9b00b45ae914ad35a",
+          "attestationCryptographicSignatureVerified": false
         }
       ]
     }
   ],
   "unresolved": [
-    {
-      "component": "expo-router@58.0.25",
-      "reason": "npm_license_text_missing"
-    },
     {
       "component": "standard-navigation@0.0.5",
       "reason": "npm_license_text_missing"
@@ -5848,6 +5860,19 @@
     {
       "member": "base/lib/arm64-v8a/libzstd-kmp.so",
       "reason": "static_vendored_dependencies_unverified"
+    }
+  ],
+  "supplementalCatalogAudit": [
+    {
+      "component": "expo-router@58.0.25",
+      "verificationScope": "catalog supplement for previously recorded component; no original store artifact re-audit",
+      "sourceInventorySHA256": "857374574a4cea3f99c160acdb3eff031bceb760463a92bf191681955f9995d6",
+      "packageJsonSHA256": "8f4b352bc61f2ec74c95ee73abc9f5c96e78ece0c96a4b9aa8b0a7ab5bc7cca3",
+      "installedFilesMatchedPinnedTarball": 1886,
+      "installedFilesSHA256": "f77ebe3b62c66487c235178b767ab622372d3af296b4f7b2715b433eb4f2a448",
+      "originalArtifactReaudited": false,
+      "attestationCryptographicSignatureVerified": false,
+      "originalAuditProvenancePreserved": true
     }
   ]
 }
