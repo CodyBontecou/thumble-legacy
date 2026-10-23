@@ -166,6 +166,7 @@ test("native connection admission accepts only metadata and exact live receipts"
     "connecting",
     "cancelled",
     "unavailable",
+    "reactivation-required",
     "disconnected",
   ] as const) {
     expect(decodeConnectionAdmission({ version: 1, status })).toEqual({

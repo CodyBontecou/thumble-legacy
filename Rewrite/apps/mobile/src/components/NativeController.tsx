@@ -445,9 +445,13 @@ export function NativeController({
         }
         style={{ flex: 1, backgroundColor: "transparent" }}
       />
-      {!["error", "unavailable", "cancelled", "disconnected"].includes(
-        phase,
-      ) && (
+      {![
+        "error",
+        "unavailable",
+        "reactivation-required",
+        "cancelled",
+        "disconnected",
+      ].includes(phase) && (
         <Text
           testID={
             connected
@@ -544,9 +548,13 @@ export function NativeController({
           {catalogSummary}
         </Text>
       )}
-      {["error", "unavailable", "cancelled", "disconnected"].includes(
-        phase,
-      ) && (
+      {[
+        "error",
+        "unavailable",
+        "reactivation-required",
+        "cancelled",
+        "disconnected",
+      ].includes(phase) && (
         <Text
           accessibilityRole="alert"
           style={{
@@ -560,9 +568,11 @@ export function NativeController({
           {connected
             ? phase === "cancelled"
               ? "Connection cancelled. Close this controller to try again."
-              : phase === "disconnected"
-                ? "Disconnected. Close and reconnect to start with released controls."
-                : "Ask your agent to start the receiver and open pairing, then try again."
+              : phase === "reactivation-required"
+                ? "Your saved profile changed. Ask your agent to reactivate it on your Mac, then close and reconnect. Your phone is still paired."
+                : phase === "disconnected"
+                  ? "Disconnected. Close and reconnect to start with released controls."
+                  : "Ask your agent to start the receiver and open pairing, then try again."
             : "The controller could not start. Close practice and try again."}
         </Text>
       )}

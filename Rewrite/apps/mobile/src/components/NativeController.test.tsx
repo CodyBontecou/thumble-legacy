@@ -907,3 +907,18 @@ test("bank artwork cache evicts inactive entries at its shared64-icon budget", (
   expect(evicted?.visuals).toBeNull();
   expect(evicted?.pending).toBe(true);
 });
+
+test("stale saved map explains reactivation and never requests pairing", async () => {
+  await mount();
+  await admission("ready");
+  await admission("reactivation-required");
+  const text = JSON.stringify(renderer!.toJSON());
+  expect(text).toContain("Ask your agent to reactivate it on your Mac");
+  expect(text).toContain("Your phone is still paired");
+  expect(text).not.toContain("open pairing");
+  expect(native().props.pointerEvents).toBe("none");
+  await admission("connecting");
+  expect(JSON.stringify(renderer!.toJSON())).not.toContain(
+    "Your saved profile changed",
+  );
+});

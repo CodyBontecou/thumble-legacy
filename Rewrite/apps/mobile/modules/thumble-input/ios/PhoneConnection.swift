@@ -238,7 +238,7 @@ import UIKit
         Self.save(endpoint)
         try await bind(endpoint, template: template)
       } catch {
-        fail()
+        fail(error)
       }
     }
   }
@@ -256,7 +256,7 @@ import UIKit
         try Task.checkCancellation()
         guard !closed else { throw InputError.unavailable }
         try await bind(current, template: template)
-      } catch { fail() }
+      } catch { fail(error) }
     }
   }
   private func bind(_ endpoint: TrustedHostEndpoint, template: ControlMap? = nil) async throws {
@@ -439,7 +439,7 @@ import UIKit
     }
   }
 
-  private func fail() {
+  private func fail(_ error: Error? = nil) {
     guard !closed else { return }
     // [DEBUG-enrollment-admission] Preserve the failed native phase before cleanup.
     if let enrollment {
@@ -461,8 +461,14 @@ import UIKit
         "phone_admission_failed phase=\(self.diagnosticPhase.rawValue, privacy: .public) savedRead=\(self.savedReadDiagnostic.rawValue, privacy: .public) mapStage=\(self.savedMapClient?.diagnosticReadStage.rawValue ?? "none", privacy: .public) mapFailure=\(self.savedReadFailure.rawValue, privacy: .public) connect=\(self.diagnosticConnectOutcome.rawValue, privacy: .public) control=\(self.diagnosticControlFailure.rawValue, privacy: .public) runtime=\(self.diagnosticRuntimeOutcome.rawValue, privacy: .public)"
       )
     #endif
+    let requiresReactivation: Bool
+    if case .unavailable("saved_map_reactivation_required") = error as? SavedControllerError {
+      requiresReactivation = true
+    } else {
+      requiresReactivation = false
+    }
     close()
-    status("unavailable")
+    status(requiresReactivation ? "reactivation-required" : "unavailable")
   }
   func close() {
     guard !closed else { return }

@@ -165,6 +165,7 @@ export type ConnectionAdmission =
         | "connecting"
         | "cancelled"
         | "unavailable"
+        | "reactivation-required"
         | "disconnected";
     }>;
 export function decodeConnectionAdmission(value: unknown): ConnectionAdmission {
@@ -181,6 +182,7 @@ export function decodeConnectionAdmission(value: unknown): ConnectionAdmission {
       case "connecting":
       case "cancelled":
       case "unavailable":
+      case "reactivation-required":
       case "disconnected":
         return Object.freeze({ version: 1, status });
       default:

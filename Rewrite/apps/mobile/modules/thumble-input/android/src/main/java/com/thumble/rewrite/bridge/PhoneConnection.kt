@@ -433,8 +433,9 @@ internal class PhoneConnection(
                             fail()
                         }
                 }
-            } catch (_: Exception) {
-                main.post { fail() }
+            } catch (error: Exception) {
+                val requiresReactivation = error is SavedControllerUnavailable && error.code == "saved_map_reactivation_required"
+                main.post { fail(requiresReactivation) }
             }
         }
     }
@@ -508,10 +509,10 @@ internal class PhoneConnection(
         }
     }
 
-    private fun fail() {
+    private fun fail(requiresReactivation: Boolean = false) {
         if (closed) return
         close()
-        status("unavailable")
+        status(if (requiresReactivation) "reactivation-required" else "unavailable")
     }
 
     override fun close() {
