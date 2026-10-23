@@ -39,3 +39,33 @@ class NativeControlTerminals:
 
     def snapshot(self):
         return [dict(value) for value in self._values]
+
+    def write_report(self, path):
+        """Best-effort atomic diagnostics; failure must never bypass owned cleanup."""
+        import json
+        import os
+        from pathlib import Path
+        import tempfile
+        staged = None
+        try:
+            target = Path(path)
+            payload = (json.dumps({'version': 1, 'scope': 'native-control-terminal-outcomes',
+                                   'events': self.snapshot()}, sort_keys=True) + '\n').encode('ascii')
+            if len(payload) > 8192:
+                return False
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(dir=target.parent, prefix='.' + target.name + '.', delete=False) as output:
+                staged = Path(output.name)
+                output.write(payload)
+                output.flush()
+                os.fsync(output.fileno())
+            os.replace(staged, target)
+            return True
+        except OSError:
+            return False
+        finally:
+            if staged is not None:
+                try:
+                    staged.unlink(missing_ok=True)
+                except OSError:
+                    pass
