@@ -276,3 +276,69 @@ savedcorneriOSFAIL/unsupportedPASS, bothAndroidsavedroutesFAIL. Artifacts expose
 onlyfailed and cannot identify cause; additionalfixedsavedstage evidence inprogress.
 No native-stability fix, physical bank/game acceptance, production signing or
 store submission claimed. User asleep; phones/game/install flags untouched.
+
+
+### Typed authoring, actual CI classification and second publication — 2026-10-23
+
+Public c4a05098efc81f3a7367fa15fd9aab844fc0bfbd, tree
+0c91bdba1dd7f3490e64502b061a8c2498f58924, sole parent50d53c5.
+Curated31 source SHA33b5946a435663638726c47cf5359758ee572263658892c9c06cf8dedb03b3ba
+/private/tmp/thumble-control-label-review31-source-20261023.json.
+All31recursiveleafhashes/modes/no deletions/solepublicparent/CASverified.
+Privatecommits b0dd256/54d7628/4510ba6/4549601 retain9notice/diagnostic
+and17authoring and5orchestration/CI source deltas. Broader six privateQA working
+variants were preserved;25nonconflicting source files materialized.
+
+Domaincontract7 SHA9ddf280a4d61c8d734c95148fb5546b7fab4359cc72cd1c0bb35885da4586b83;
+app4 SHA c5b98a5e70534e93f3fcd059d64b2abdac0c1de3e832ace17b986e5e33a9bd81;
+CLI4v2 SHAe721b5cff4e3b6b9c76f6274327928eee2e697de466b9fd4a575422a01fd306b;
+MCP2v2 SHA6a867a8226e7868b8669aa32a063507850c816790d4ce05df85c0f2523532c29.
+Strict3fieldlabelpatch, string≤128UTF8/blank/nullclear, originalgeneratedlabel
+preserved via labelOverrides, rawopaque/numeric/resource/mirror data preserved.
+Contract closed6fields; authority normalfingerprint/replay-before-source+clock,
+finalSQLiteCAS, canonicalprofile/control affectedEntities. MCPwrite-capability
+only; CLIstrictcommand-gatedlabel/clear/help flags. IndependentreviewsCLEAR.
+
+Rootcoherent26v2 fullverify418pass/3optskip/0fail6855assertions/83files69.12s,
+all3types/boundaries/generated/notices/format. Root9CLI+SQLitecases121assertions;
+independentNodeSDK modern+legacy readonly/write cases/concurrentonecommit+replay/
+conflict/mismatch/blank/clear/restart/export pass. Initialfullsuite417green/1red
+NEWNodefixture export returned configuration_export_directory_unsafe: ownedalias
+red proves uncanonicalizedmkdtemp path, Node-onlyrealpath fix/permanentPOSIXalias
+regression green. Nativeexportguard/timers unchanged. No firstfailedtest deleted.
+
+Standalonebuild initialscaffold lacked exactpublic ThirdParty license8990518e…4bae;
+copiedverifiedblob, no productsourcechange; build2PASS. Existingpackage1/67PASS.
+Relocated compiledNodeSDK authoring proof4scenariosPASS with childPATH/usr/bin:/bin,
+6edits/revision7/replayafterrestart/inputActivatedfalse. PackageCLI SHA
+832089506555d1f0793490274e1afab357cfa3ca0e44708e714bce94624de958,
+releaseReceiverc8ac45244f9e1417f87e3b2dd7366338f24e919fec62dff665b37151ffbe211b.
+/private/tmp/thumble-label-relocated-proof/result.json; ownedservice stopped.
+
+Additional9actualupstreamroottexts selected, iOS35texts63751bytes. Completecoverage
+stillfalse, no newarchive claimed. NestedRewrite/.gitattributes explicit-text-off
+preservesoriginalmixedCRLF bytes;4checkoutcases (both bundles×autocrlffalse/true)
+byteexact. Private /private/tmp/thumble-notice-checkout-proof/result.json.
+Savedroutediag5v2 seven tests includecontradictoryiOSsummary cannotclaimassertion;
+oldv1attributionblockerfixed, statusneverfalsegreen. Exactpublic50actualAndroid
+savedcorner+unsupported PASS1caseeach/0skip/0fail onAPI35arm645580; no hostedx86cause
+claimed. Evidence /private/tmp/thumble-saved-route-public50-run/acceptance-summary.json.
+
+Public50nativeiOS failure exactstage: compile/sign/create/boot/install/container
+complete; launchstarts168.654s andnevercompletesbeforeouter480s. No runtime or
+firstnativeerrorartifact; fourSwiftrealservice groupsPASSED. Boundedprivateproof
+/private/tmp/thumble-public50-ios-native-failure-summary.json SHAcb7a50903b4716f1a24b8f653c57619ec897c0cf16fb25abeeedee2495e98785.
+Neworchestration4 SHA8bd516e83e6687fb6e1bd0d9deb15914924dd9eca5d5e0740b790bce60dd3106
+launchwatchdog60s/independentcleanup15each/fixedatomic0600sidecar, preserveprimary;
+16runtime/stage testsred-before/green-after+independentreviewCLEAR. Addedonlyone
+unitline toexactpublicnativeCI; oldartifactglobcoversnewsidecar; product250/350,
+runtime180 andouter480 unchanged. No real simulator/phone actions fornewguard.
+
+Public50AndroidappFULLSUCCESS inclrequiredbank; Androidnative/KeystoreSUCCESS.
+iOSapp39965465030 stilloldUIKit/savedroutes IN_PROGRESS; bankpending. Headless
+Mac/Linux+Windows2/3pass, Windows1packaging30s timeout; dormantWindowsbridge two
+authorization/controls testsfail; retainedMacbridge constrainedprocess5s timeout.
+Thosecausesremainopen; no retry/deadlineworkaround. Publicc4 jobs39971094743(app),
+39971094975(native),39971094596(headless) queued/pending; optical39971094514 and
+Windowsstdio39971094787alreadySUCCESS. Apps/native concurrencyfalse preserves
+ongoing public50run. No launch/product/game/store gate declaredcomplete.
