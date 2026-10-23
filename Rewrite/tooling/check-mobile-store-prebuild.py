@@ -43,7 +43,9 @@ def audit(root, version, build, merged=None):
         len(re.findall(r'PRODUCT_BUNDLE_IDENTIFIER = [\"]?com\.codybontecou\.PocketPad\.iOS[\"]?;', project)) == 2)
     checks["ios_version"] = (info.get("CFBundleShortVersionString") == version and
                              info.get("CFBundleVersion") == build)
-    checks["iphone_only"] = project.count('TARGETED_DEVICE_FAMILY = "1";') == 2
+    families = re.findall(r'^\s*TARGETED_DEVICE_FAMILY\s*=\s*([^;\r\n]+);', project, re.MULTILINE)
+    checks["iphone_only"] = len(families) == 2 and all(
+        family.strip() in ('1', '"1"') for family in families)
     checks["purpose_strings"] = all(isinstance(info.get(k), str) and info[k].strip()
         for k in ("NSCameraUsageDescription", "NSLocalNetworkUsageDescription"))
     reasons = {entry.get("NSPrivacyAccessedAPIType"): entry.get("NSPrivacyAccessedAPITypeReasons", [])

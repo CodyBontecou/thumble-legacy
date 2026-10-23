@@ -56,6 +56,25 @@ class StoreAuditTests(unittest.TestCase):
         self.assertFalse(result["distributionAccepted"])
         self.assertTrue(result["finalArchiveAndBundleReviewRequired"])
 
+    def test_cocoapods_unquoted_phone_family_is_equivalent(self):
+        project = self.root / "ios/Thumble.xcodeproj/project.pbxproj"
+        project.write_text(project.read_text().replace('TARGETED_DEVICE_FAMILY = "1";',
+                                                       'TARGETED_DEVICE_FAMILY = 1;'))
+        self.assertTrue(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
+
+    def test_phone_family_requires_exactly_two_phone_only_assignments(self):
+        project = self.root / "ios/Thumble.xcodeproj/project.pbxproj"
+        original = project.read_text()
+        for replacement in ('"1,2"', '2', '"1', '1"', '11'):
+            with self.subTest(replacement=replacement):
+                project.write_text(original.replace('"1"', replacement))
+                self.assertFalse(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
+        for suffix in ('TARGETED_DEVICE_FAMILY = 2;\n', 'TARGETED_DEVICE_FAMILY = 1;\n'):
+            project.write_text(original + suffix)
+            self.assertFalse(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
+        project.write_text(original.replace('TARGETED_DEVICE_FAMILY = "1";\n', '', 1))
+        self.assertFalse(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
+
     def test_missing_privacy_reason_and_release_debug_key_fail(self):
         self.privacy["NSPrivacyAccessedAPITypes"] = []
         self.write_plist("ios/Thumble/PrivacyInfo.xcprivacy", self.privacy)
