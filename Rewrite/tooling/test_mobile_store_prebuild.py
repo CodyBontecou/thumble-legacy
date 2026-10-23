@@ -69,7 +69,8 @@ class StoreAuditTests(unittest.TestCase):
             with self.subTest(replacement=replacement):
                 project.write_text(original.replace('"1"', replacement))
                 self.assertFalse(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
-        for suffix in ('TARGETED_DEVICE_FAMILY = 2;\n', 'TARGETED_DEVICE_FAMILY = 1;\n'):
+        for suffix in ('TARGETED_DEVICE_FAMILY = 2;\n', 'TARGETED_DEVICE_FAMILY = 1;\n',
+                       'TARGETED_DEVICE_FAMILY = \"1,2\"\n'):
             project.write_text(original + suffix)
             self.assertFalse(audit.audit(self.root, "1.0.0", "4")["checks"]["iphone_only"])
         project.write_text(original.replace('TARGETED_DEVICE_FAMILY = "1";\n', '', 1))

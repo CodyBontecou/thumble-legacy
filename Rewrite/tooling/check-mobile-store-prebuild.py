@@ -44,7 +44,8 @@ def audit(root, version, build, merged=None):
     checks["ios_version"] = (info.get("CFBundleShortVersionString") == version and
                              info.get("CFBundleVersion") == build)
     families = re.findall(r'^\s*TARGETED_DEVICE_FAMILY\s*=\s*([^;\r\n]+);', project, re.MULTILINE)
-    checks["iphone_only"] = len(families) == 2 and all(
+    family_assignments = re.findall(r'^\s*TARGETED_DEVICE_FAMILY\s*=', project, re.MULTILINE)
+    checks["iphone_only"] = len(family_assignments) == len(families) == 2 and all(
         family.strip() in ('1', '"1"') for family in families)
     checks["purpose_strings"] = all(isinstance(info.get(k), str) and info[k].strip()
         for k in ("NSCameraUsageDescription", "NSLocalNetworkUsageDescription"))
