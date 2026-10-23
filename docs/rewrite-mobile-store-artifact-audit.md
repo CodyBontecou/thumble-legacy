@@ -72,6 +72,32 @@ they test metadata policy, never binary execution or signing.
 A private AAPT2 conversion of the current development Release APK successfully
 parsed its real generated 10,299-byte protobuf manifest. It retained the development
 identifier and version 0.0.0/build1. This is parser compatibility evidence, not a
-final store AAB or archive. No current Thumble `.aab` or `.xcarchive` was available
-in the inspected rewrite output/store proof directories. Final store artifacts
-still need their first read-only audit; unrelated products' archives were not used.
+final store AAB or archive. At that initial inspection no current Thumble final
+artifact was available; unrelated products' archives were not used.
+
+Subsequent fresh disposable store-profile builds produced an unsigned Android
+AAB and unsigned generic-iOS archive, using illustrative version 1.0.0/build4.
+The Android AAB is 22,933,026 bytes (arm64 only), SHA256
+`4b8dda3b144fb2e2d89a8f6fe8a50917e8cfe001e3820053b082510585ac5ae1`.
+Its 11 implemented metadata checks pass. The manifest declares minSDK29 and
+targetSDK36; the bundle contains 24 arm64 native libraries. Release signing was
+unset and no JAR signature entries were found. The notice presence count is
+one under `base/assets`; a separate AndroidX license also exists under
+`base/root/META-INF`. The Android notice check intentionally covers bundled asset
+notices, not every possible upstream license location or complete coverage.
+
+The unsigned iOS archive contains 166 files / 162,000,155 bytes, with inventory
+tree SHA256 `0721ed054e37625ec1e01e7a9c0d26da63358266b18590071c05a2f868abed03`.
+Ten metadata checks pass and the notice presence check fails: zero notice files
+were shipped, despite generated Pods acknowledgements existing outside the app.
+Eleven bundled privacy plists parse successfully. This exposes a real notice
+packaging gap; it is not evidence of complete JS/native license coverage.
+
+Both builds preserve the production identifiers, exclude the visible QA targets
+and retain the curated icon source. These are unsigned inspection artifacts,
+not approved release version assignments. Complete dependency notices, signer
+and provisioning checks, privacy labels, actual runtime QA-code exclusion, icon
+visual identity, physical/game/live-sync acceptance and signed clean-install
+checks remain open. No account, key, device installation, export or upload was
+changed. The notice audit is being reconciled against actual bundle dependencies;
+a placeholder file is not a coverage repair.

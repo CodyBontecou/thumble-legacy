@@ -22,6 +22,18 @@ python3 Rewrite/tooling/check-mobile-store-prebuild.py \
 
 The inspector emits fixed check names and file hashes. It does not run Xcode, Gradle, signers or devices. Without the optional merged-manifest argument it checks source removal directives only. Final packaging and dependency/label review are always reported as still required.
 
+## Unsigned artifact inspection
+
+Fresh disposable store-profile sources now build an unsigned arm64 Android AAB
+and an unsigned generic-iOS archive with illustrative 1.0.0/build4. The Android
+artifact passes all 11 implemented metadata checks. The iOS archive passes ten
+checks and fails bundled notice presence: no notice file was copied into the app.
+All 11 bundled iOS privacy manifests parse. See
+[the artifact audit](rewrite-mobile-store-artifact-audit.md) for hashes, exact
+inspection scope and the unresolved notice/dependency coverage. Neither artifact
+was installed, signed for distribution or uploaded. These results do not close
+functional, privacy-label, signer or store acceptance gates.
+
 ## Final archive and signing path
 
 1. Confirm the existing App Store Connect/Play records, approved version and monotonically higher build number before choosing real overrides. `1.0.0`/`4` is inspection input, not an approved release assignment.
