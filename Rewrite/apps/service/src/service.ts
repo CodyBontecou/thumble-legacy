@@ -225,7 +225,7 @@ export async function serve(
     receiver: { pid: native.child.pid!, snapshot },
     permissions: "not-evaluated",
     deviceRecognition: "not-evaluated",
-    phone: "not-connected",
+    phone: "not-evaluated",
   });
   const server = createServer((socket) => {
     if (sockets.size >= 32) {
