@@ -164,3 +164,62 @@ Standalone relocated package acceptance also passes one case / 67 assertions,
 with the compiled CLI and sibling receiver outside the checkout and no Bun on
 PATH. Log: /private/tmp/thumble-bank-package-proof-test.txt.
 The composed required-mobile workflow also passes actionlint.
+
+
+## Unattended app gates and real unsigned artifacts — 2026-10-23
+
+Private commits e52ea6c/e135e46/db4ce8b/9c0d42e/d9a70e7/000e8b7 add a rehearsed
+reviewer guide, isolated Android QA selection, read-only final artifact audit,
+strict iOS bank QA, required app-bank CI and timeout-category diagnostics. Public
+head remains eca50a73 while the separate first-native-error artifact is being
+prepared for a coherent next review batch. No broad analog supersets were staged.
+Pending19 capsule SHA ea668604d5882350bbff4c7dfab81967958fd381acd38ee327a38302cb890953;
+actual artifact documentation supplement SHA
+56dafb22ed6b5f889092c2e4e6f3462639ec45e9df54171f1361e9573d6b8dcf.
+
+Android actual bank v6 complete runner passes against explicit aligned isolated
+service/native2bd546d8, one case/zero skips/failures/five phases. Private log
+/private/tmp/thumble-bank-actual-app-proof-v6-isolated-run.txt; screenshot reviewed:
+connected, correct dark palette, three synthetic controls held, Done visible.
+The prior v5 shared-development-binary result is not substituted for this exact
+host/native source witness. Reviewer rehearsal uses relocated compiled siblings
+with no Bun on PATH: default no listener, starter, explicit fixed-loopback closed
+auth listener, saved CAS activation, readiness, bounded offer/cancel and release.
+No QR/physical/game claim follows from this rehearsal.
+
+The new iOS bank QA target builds and its five ownership/parser/cleanup tests
+pass. Real three-pointer trajectories reached all banks/themes, CAS and held
+verification; one full underlying run exposed wrong final fixture response keys.
+The corrected strict next run failed late with native firstTermination=input_expired,
+already inactive before capture. It is NOT accepted. Earlier malformed screen
+captures and interpolated gesture mistakes remain failed attempts. New CI keeps
+this strict gate, independent of the existing two QA compile outcomes; all39
+existing workflow steps, original budgets/concurrency/artifacts were checked.
+Four extracted actual EXIT cleanup shell cases pass. Actionlint/ShellCheck,
+format and all three TS configurations pass; 4+5+11 new Python tests pass.
+
+Actual unsigned production-profile artifacts were built in fresh disposable
+copies using illustrative1.0.0/build4, no accounts/keys/provisioning/install/upload.
+Android arm64 AAB:22,933,026 bytes SHA
+4b8dda3b144fb2e2d89a8f6fe8a50917e8cfe001e3820053b082510585ac5ae1.
+Read-only metadata audit passes11/11;1192 files/108,520,402 expanded bytes,
+minSDK29/target36,24native libraries. signingConfig null/no JAR signature entries.
+iOS unsigned generic archive:166files/162,000,155bytes, inventory tree
+0721ed054e37625ec1e01e7a9c0d26da63358266b18590071c05a2f868abed03;
+10checks pass, notice presence fails (0 shipped notice files),11privacy plists parse.
+Original archives stay immutable while actual Metro/Pods/Maven/native provenance
+is reconciled for complete notice packaging. Android base/assets count1 is not
+the whole ZIP notice inventory; AndroidX also has a base/root/META-INF license.
+Both artifacts remain distributionAccepted=false/signingStatus=unverified.
+
+Timeout classification2 SHA92098604dac7f501d2e6df69d1a6c9e620c927c97a924659ecf6b353d4c76d6a
+maps WouldBlock/TimedOut only to native_input_timeout. Real withheld-reply test is
+red-before/green-after and preserves socket shutdown/no replay; default156+25 and
+pinned Mac169+24/strictClippy/fmt pass. Induced~280ms receiver pause proves that
+sub350ms IPC timeout can produce cleanup native_input_released, the same signature
+as earlier uninjected06. It does not prove the original scheduling cause. Later
+closed-client errors/final terminal can still be generic transport_failed.
+Four new uninjected75s local runs pass. Latest hosted eca iOS runtime fails at
+holding4992ms/progress/read-failed/maxgap19ms after setup completes, terminal
+transport_failed elapsed1us; first native error instrumentation is the next
+needed discriminator. No deadline, safety, QoS or release acceptance changed.
