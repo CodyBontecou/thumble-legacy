@@ -16,10 +16,12 @@ import {
 } from "@thumble/contracts/output-capabilities";
 import { inspectOutputCapabilities } from "../apps/cli/src/output-doctor.ts";
 const root = resolve(import.meta.dir, "..");
-const receiver = join(
-  root,
-  `native/receiver/target/debug/thumble-rewrite-receiver${process.platform === "win32" ? ".exe" : ""}`,
-);
+const receiver =
+  process.env.THUMBLE_TEST_OUTPUT_DOCTOR_RECEIVER ??
+  join(
+    root,
+    `native/receiver/target/debug/thumble-rewrite-receiver${process.platform === "win32" ? ".exe" : ""}`,
+  );
 const cli = join(root, "apps/cli/src/main.ts");
 function valid(): OutputCapabilities {
   return {
@@ -43,17 +45,19 @@ function valid(): OutputCapabilities {
     gameplayVerified: false,
   };
 }
-test("output capabilities distinguish dormant compilation, signed claims and unverified OS/driver authorization", () => {
+test("output capabilities distinguish inspection-only and runtime builds from unverified authorization", () => {
   const v = valid();
   expect(decodeOutputCapabilities(v)).toEqual(v);
   expect(Object.isFrozen(decodeOutputCapabilities(v).windows)).toBe(true);
   for (const signedClaim of ["present", "absent", "inspection-failed"] as const)
-    expect(
-      decodeOutputCapabilities({
-        ...v,
-        macos: { dormantAdapterCompiled: true, signedClaim },
-      }).macos.signedClaim,
-    ).toBe(signedClaim);
+    for (const runtimeIntegrated of [false, true])
+      expect(
+        decodeOutputCapabilities({
+          ...v,
+          runtimeIntegrated,
+          macos: { dormantAdapterCompiled: true, signedClaim },
+        }).macos.signedClaim,
+      ).toBe(signedClaim);
   for (const platform of ["windows", "linux", "unsupported"] as const)
     expect(
       decodeOutputCapabilities({
@@ -67,6 +71,12 @@ test("output capabilities distinguish dormant compilation, signed claims and unv
     { physicalOutputEnabled: true },
     { backend: "macos" },
     { runtimeIntegrated: true },
+    { runtimeIntegrated: "true" },
+    {
+      runtimeIntegrated: true,
+      platform: "linux",
+      macos: { dormantAdapterCompiled: false, signedClaim: "not-applicable" },
+    },
     { osDeviceAuthorization: "authorized" },
     { gameplayVerified: true },
     { token: "secret" },
@@ -126,7 +136,11 @@ test("native and CLI doctor work offline without creating runtime, trust, listen
   try {
     const native = await inspectOutputCapabilities(receiver);
     expect(native.physicalOutputEnabled).toBe(false);
-    expect(native.runtimeIntegrated).toBe(false);
+    expect(typeof native.runtimeIntegrated).toBe("boolean");
+    if (native.runtimeIntegrated) {
+      expect(native.platform).toBe("macos");
+      expect(native.macos.dormantAdapterCompiled).toBe(true);
+    }
     const child = Bun.spawn(
       [
         process.execPath,

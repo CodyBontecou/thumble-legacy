@@ -1,11 +1,15 @@
 // Independent official SDK clients, modern and legacy; no service is started.
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { isAbsolute } from "node:path";
 import { Client } from "@modelcontextprotocol/client";
 import { StdioClientTransport } from "@modelcontextprotocol/client/stdio";
 const [bun, cli, receiver, runtime] = process.argv.slice(2);
 assert.ok([bun, cli, receiver, runtime].every(isAbsolute));
+const expected = JSON.parse(
+  execFileSync(receiver, ["output-capabilities"], { encoding: "utf8" }),
+);
 for (const legacy of [false, true]) {
   const transport = new StdioClientTransport({
     command: bun,
@@ -46,7 +50,7 @@ for (const legacy of [false, true]) {
     const result = reply.structuredContent.result;
     assert.equal(result.backend, "recording");
     assert.equal(result.physicalOutputEnabled, false);
-    assert.equal(result.runtimeIntegrated, false);
+    assert.deepEqual(result, expected);
     assert.equal(result.osDeviceAuthorization, "not-inspected");
     assert.equal(result.windows.sdkLinked, false);
     assert.equal(result.windows.driver, "not-inspected");

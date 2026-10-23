@@ -63,7 +63,8 @@ pub fn capabilities() -> Capabilities {
         },
         backend: "recording",
         physical_output_enabled: false,
-        runtime_integrated: false,
+        // Build capability only. Offline inspection never selects or enables it.
+        runtime_integrated: cfg!(all(target_os = "macos", feature = "output-macos")),
         macos: Mac {
             dormant_adapter_compiled: cfg!(all(
                 target_os = "macos",
@@ -102,7 +103,10 @@ mod tests {
         let v = serde_json::to_value(capabilities()).unwrap();
         assert_eq!(v["backend"], "recording");
         assert_eq!(v["physicalOutputEnabled"], false);
-        assert_eq!(v["runtimeIntegrated"], false);
+        assert_eq!(
+            v["runtimeIntegrated"],
+            cfg!(all(target_os = "macos", feature = "output-macos"))
+        );
         assert_eq!(v["osDeviceAuthorization"], "not-inspected");
         assert_eq!(v["gameplayVerified"], false);
         assert_eq!(v["windows"]["driver"], "not-inspected");
@@ -116,8 +120,20 @@ mod tests {
         assert!(value.macos.dormant_adapter_compiled);
         assert_ne!(value.macos.signed_claim, "not-compiled");
         assert!(!value.physical_output_enabled);
-        assert!(!value.runtime_integrated);
+        assert!(value.runtime_integrated);
         assert!(!value.gameplay_verified);
+    }
+    #[cfg(all(
+        target_os = "macos",
+        feature = "output-doctor-macos",
+        not(feature = "output-macos")
+    ))]
+    #[test]
+    fn inspection_only_build_does_not_claim_the_runtime_path() {
+        let value = capabilities();
+        assert!(value.macos.dormant_adapter_compiled);
+        assert!(!value.runtime_integrated);
+        assert!(!value.physical_output_enabled);
     }
     #[test]
     fn arguments_do_not_accept_directories_or_activation_flags() {

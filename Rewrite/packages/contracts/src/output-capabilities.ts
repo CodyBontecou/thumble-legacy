@@ -11,7 +11,7 @@ export type OutputCapabilities = Readonly<{
   platform: "macos" | "windows" | "linux" | "unsupported";
   backend: "recording";
   physicalOutputEnabled: false;
-  runtimeIntegrated: false;
+  runtimeIntegrated: boolean;
   macos: Readonly<{
     dormantAdapterCompiled: boolean;
     signedClaim: SignedHidClaim;
@@ -79,7 +79,9 @@ export function decodeOutputCapabilities(value: unknown): OutputCapabilities {
     !["macos", "windows", "linux", "unsupported"].includes(v.platform) ||
     v.backend !== "recording" ||
     v.physicalOutputEnabled !== false ||
-    v.runtimeIntegrated !== false ||
+    typeof v.runtimeIntegrated !== "boolean" ||
+    (v.runtimeIntegrated &&
+      (v.platform !== "macos" || mac.dormantAdapterCompiled !== true)) ||
     v.osDeviceAuthorization !== "not-inspected" ||
     v.gameplayVerified !== false ||
     typeof mac.dormantAdapterCompiled !== "boolean" ||
@@ -105,7 +107,7 @@ export function decodeOutputCapabilities(value: unknown): OutputCapabilities {
     platform: v.platform as OutputCapabilities["platform"],
     backend: "recording",
     physicalOutputEnabled: false,
-    runtimeIntegrated: false,
+    runtimeIntegrated: v.runtimeIntegrated,
     macos: Object.freeze({
       dormantAdapterCompiled: mac.dormantAdapterCompiled,
       signedClaim: mac.signedClaim as SignedHidClaim,

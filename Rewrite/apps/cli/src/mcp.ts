@@ -223,7 +223,7 @@ export function startMcp(
         "output_doctor",
         {
           description:
-            "Inspect offline native output capabilities and signed-claim/source evidence without a running service. Recording-only; no device creation, driver probe, permission prompt or physical output.",
+            "Inspect offline native output capabilities and signed-claim/source evidence without a running service. Reports compiled runtime wiring separately from activation/authorization; no device creation, driver probe, permission prompt or physical output.",
           inputSchema: empty,
           annotations: annotations(true),
         },

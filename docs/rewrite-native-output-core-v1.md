@@ -1,6 +1,6 @@
 # Dormant native output core
 
-`Rewrite/native/output-core` is an isolated Rust crate. It is not a receiver dependency, is not included in the CLI executable, and adds no running output mode. Creating `OutputOwner` starts one thread but creates no device. Default features include no physical adapter. The optional `macos-hid` module compiles the retained macOS IOHID implementation; tests use fake devices exclusively and never instantiate `MacFactory`, register an OS device or send physical input. There is no Windows virtual-gamepad implementation.
+`Rewrite/native/output-core` is an isolated Rust crate and an optional native receiver dependency. Default receiver builds omit it. The receiver feature `output-macos` wires the macOS adapter into `run-macos-hid`; service use requires explicit `macos-hid` selection and `--allow-physical-output`. The CLI executable does not embed the native adapter. The inspection-only `output-doctor-macos` feature compiles signed-claim inspection without that runtime path. Creating `OutputOwner` starts one thread but creates no device. Default features include no physical adapter. The optional `macos-hid` module compiles the retained macOS IOHID implementation; tests use fake devices exclusively and never instantiate `MacFactory`, register an OS device or send physical input. There is no Windows virtual-gamepad implementation.
 
 ## Small interface and sole device ownership
 
