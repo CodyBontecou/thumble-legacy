@@ -223,3 +223,56 @@ Four new uninjected75s local runs pass. Latest hosted eca iOS runtime fails at
 holding4992ms/progress/read-failed/maxgap19ms after setup completes, terminal
 transport_failed elapsed1us; first native error instrumentation is the next
 needed discriminator. No deadline, safety, QoS or release acceptance changed.
+
+
+### Unattended store/bank acceptance and publication — 2026-10-23
+
+Published curated48 from private commits7935579/af78492 as public
+50d53c56e2fced5693c05f48bc374d329701dc93, tree
+fd40d5ece851c4820c6666cba89199aeb004b0c4, sole public parenteca50a7.
+All48 recursive leaf hashes/modes, no deletions, sole parent and CAS verified.
+Capsule /private/tmp/thumble-store-bank-review48-source-20261023.json SHA256
+5a2b867b78a2d3277f71981b08c530f8b6a72ba4833edf567ac1d959bd386ccc.
+Original upstream notice CRLF/blanklines retained verbatim; diff-whitespace checks
+exclude only the two byte-pinned notice text bundles.
+
+Exact isolated public projection verify:396pass/3explicit opt-in skips/0fail,
+6594assertions, all3TypeScript configurations, generated/boundaries/notices/format.
+Root independently passed14notice Node,10Androidinventory,11artifact and5native
+error parser tests, actionlint both workflows and Rustfmt. Agent exactdiagnostic13
+passed158nativeunit+25process, bothMacClippy variants and a cold75.338s nativeiOS
+runtime; independently reviewed positivecontrol pauses only ownedrecordingreceiver
+283115us, captures brokerWouldBlock35→packettimeout→receiverEOF/ownedexit before
+cleanup in1077bytes/0600. Induced evidence validates plumbing, not originalcause.
+
+Corrected iOSbank attempt12 PASSED exact1case/0skip/0failure/all4banks×2themes,
+appearanceCAS/heldrefresh/Done-neutral. Fifteen captures activebefore+after;
+rootvisualreview darkboth screenshot PASS. Evidence
+/private/tmp/thumble-ios-bank-ui-wide-attempt12 and-run.txt. NativebinarySHA
+29c800c6bd47302e1a6113108c1a48eb3032fa445b3b3f63a9cf5ed773a05263.
+Attempt11 stopped at Ruby/xcodeproj setup; systemRuby corrected setup without
+product/deadline changes. Earlier failed attempts remain failed.
+
+Fresh normal store-parent prebuilds in
+/private/tmp/thumble-store-parent-integration-proof register exact2resources iOS
+and exact2assets Android; generated prebuild metadata12/12PASS. Later iOSExpoRouter
+origin update is helper-verified, not rebuilt into thirdunsignedarchive.
+ThirdiOSarchive172files/161604310bytes, tree
+f86478ca5c1a55ece215ddfcdf899457cfccaaca6547031cb86e54fde296973f;
+11artifactchecksPASS, exact26textbundle29878bytesSHA9cd6ab4d31d89adafd93f46060c4252fb7a367adcc66cc3cdfd40dcb8881eb9f
+and then-frozeninventory58040bytesSHA076fd43b193ccab28c9ad499f401e9693c34a82b11b1543c20ce8eea289dee6d.
+Its own matchingbuild-emittedmap SHAe7d906e352db412d463d63cc5a2447fce8704e801d8098b9b00b45ae914ad35a
+matches priorgraph1142sources, while ownHermesSHA
+8e305b270c8fb8c197e71660bccc0190126df35551bd8fa09d2cff3c5da130b0 differs.
+FinalAndroidunsignedAAB SHA080efb4cc1aa098d6bccda22100d332e72ac201feb63b51c063411f896c30beb,
+22982799bytes,11artifactmetadataPASS, zeroJARsignatureentries, originalunchanged;
+33verbatimtextbundle91352bytesSHA9448866c217eb6099a351ab3f5488b7f0b22bffbd706d635d15bda1e77149972,
+inventory213985bytesSHAe9bfb70039728741db385f8c1d9742c204f7898badef473995d40aa198518609,
+186unresolved. Both completecoveragefalse/signingunverified/distributionfalse.
+
+Newpublic CIruns39965465030(app)/39965465215(native)/39965465195(headless)
+pending. Prior eca appiOS5/0 andAndroid10/0 legacywitnesses including75shold PASS;
+savedcorneriOSFAIL/unsupportedPASS, bothAndroidsavedroutesFAIL. Artifacts expose
+onlyfailed and cannot identify cause; additionalfixedsavedstage evidence inprogress.
+No native-stability fix, physical bank/game acceptance, production signing or
+store submission claimed. User asleep; phones/game/install flags untouched.
