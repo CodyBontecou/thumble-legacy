@@ -66,9 +66,8 @@ private enum BankHTTP {
     return rgba[at..<at + 3].map(Int.init)
   }
 
-  private func color(
-    _ app: XCUIApplication, point: CGPoint, port: Int, red: Int, blue: Int, held: Bool, dark: Bool
-  ) async throws {
+  private func expectedPixel(bank: Int, refreshed: Bool, held: Bool, dark: Bool) -> [Int] {
+    precondition((0..<4).contains(bank))
     // The actual transparent native touch portal composites its accepted-state highlight
     // over the React Image. Verify that visible composite, not a detached image draw.
     let highlight = UIColor.systemBlue.resolvedColor(
@@ -77,7 +76,8 @@ private enum BankHTTP {
     var g: CGFloat = 0
     var b: CGFloat = 0
     highlight.getRed(&r, green: &g, blue: &b, alpha: nil)
-    let rawValues: [Int] = [red, 64, blue]
+    let red = (bank + (dark ? 4 : 0) + (refreshed ? 8 : 0)) * 16
+    let rawValues: [Int] = [red, 64, 255 - red]
     let tints: [Double] = [Double(r), Double(g), Double(b)]
     var expected = rawValues
     if held {
@@ -86,6 +86,35 @@ private enum BankHTTP {
         expected[index] = Int(mixed.rounded())
       }
     }
+    return expected
+  }
+
+  private func assertPaletteDiscrimination() {
+    var states = [[Int]]()
+    for refreshed in [false, true] {
+      for dark in [false, true] {
+        for held in [false, true] {
+          for bank in 0..<4 {
+            states.append(expectedPixel(bank: bank, refreshed: refreshed, held: held, dark: dark))
+          }
+        }
+      }
+    }
+    for a in states.indices {
+      for b in states.indices where b > a {
+        let distance = zip(states[a], states[b]).map { abs($0 - $1) }.max()!
+        // With tolerance five, integer RGB boxes are disjoint iff at least one
+        // channel differs by more than ten. Resolve actual UIKit tint at runtime.
+        XCTAssertGreaterThan(distance, 10, "bank_palette_tolerance_boxes_overlap")
+      }
+    }
+  }
+
+  private func color(
+    _ app: XCUIApplication, point: CGPoint, port: Int, bank: Int, refreshed: Bool = false,
+    held: Bool, dark: Bool
+  ) async throws {
+    let expected = expectedPixel(bank: bank, refreshed: refreshed, held: held, dark: dark)
     let deadline = ContinuousClock.now.advanced(by: .seconds(3))
     var observed = [Int]()
     repeat {
@@ -98,6 +127,7 @@ private enum BankHTTP {
   }
 
   func testActualReactModifierBankArtworkAndAppearanceRefresh() async throws {
+    assertPaletteDiscrimination()
     let configURL = try XCTUnwrap(
       Bundle(for: Self.self).url(
         forResource: "SavedControllerAppProbeConfig", withExtension: "json"))
@@ -147,7 +177,7 @@ private enum BankHTTP {
     }
     captureFrame = app.frame
     print("bank_ui phase=base-pixel")
-    try await color(app, point: south, port: port, red: 16, blue: 176, held: false, dark: false)
+    try await color(app, point: south, port: port, bank: 0, held: false, dark: false)
     let origin = app.coordinate(withNormalizedOffset: .zero)
     let points = [
       south, left, right,
@@ -169,24 +199,25 @@ private enum BankHTTP {
         try await ContinuousClock().sleep(until: started.advanced(by: .seconds(seconds)))
       }
       try await at(3)
-      try await color(app, point: south, port: port, red: 24, blue: 168, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 1, held: true, dark: false)
       try await at(8)
-      try await color(app, point: south, port: port, red: 40, blue: 152, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 3, held: true, dark: false)
       try await at(13)
-      try await color(app, point: south, port: port, red: 32, blue: 160, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 2, held: true, dark: false)
       try await at(19)
-      try await color(app, point: south, port: port, red: 16, blue: 176, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 0, held: true, dark: false)
       try await at(24)
-      try await color(app, point: south, port: port, red: 24, blue: 168, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 1, held: true, dark: false)
       try await at(29)
-      try await color(app, point: south, port: port, red: 40, blue: 152, held: true, dark: false)
+      try await color(app, point: south, port: port, bank: 3, held: true, dark: false)
       try await BankHTTP.check(port, "/dark", key: "dark")
       try await at(32)
-      try await color(app, point: south, port: port, red: 72, blue: 120, held: true, dark: true)
+      try await color(app, point: south, port: port, bank: 3, held: true, dark: true)
       try await BankHTTP.check(port, "/bank-hold-start", key: "watching")
       try await BankHTTP.check(port, "/refresh", key: "refreshed")
       try await at(36)
-      try await color(app, point: south, port: port, red: 168, blue: 24, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 3, refreshed: true, held: true, dark: true)
       try await at(38)
       try await BankHTTP.check(port, "/bank-held", key: "bankHeld")
       // Do not enqueue AX or XCTest screenshot queries behind the active long gesture.
@@ -196,15 +227,20 @@ private enum BankHTTP {
       XCTAssertEqual((captureResponse as? HTTPURLResponse)?.statusCode, 200)
       try await BankHTTP.screenshot(port, data: captureData)
       try await at(42)
-      try await color(app, point: south, port: port, red: 152, blue: 40, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 1, refreshed: true, held: true, dark: true)
       try await at(46)
-      try await color(app, point: south, port: port, red: 144, blue: 48, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 0, refreshed: true, held: true, dark: true)
       try await at(49)
-      try await color(app, point: south, port: port, red: 160, blue: 32, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 2, refreshed: true, held: true, dark: true)
       try await at(55)
-      try await color(app, point: south, port: port, red: 168, blue: 24, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 3, refreshed: true, held: true, dark: true)
       try await at(60)
-      try await color(app, point: south, port: port, red: 144, blue: 48, held: true, dark: true)
+      try await color(
+        app, point: south, port: port, bank: 0, refreshed: true, held: true, dark: true)
     }
     defer {
       signal.continuation.finish()

@@ -8,7 +8,7 @@ assert(index >= 0 && path && isAbsolute(path));
 assert(basename(path) === "presentation-service-probe.ts");
 assert(process.argv.includes("--bank-presentation"));
 const { PresentationServiceProbe } = await import(path);
-const probe = new PresentationServiceProbe();
+const probe = new PresentationServiceProbe({ bankPalette: "ios-wide" });
 let closing = false;
 async function terminate(code: number) {
   if (closing) return;

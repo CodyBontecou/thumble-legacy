@@ -65,7 +65,25 @@ optical game-data acceptance remain separate gates.
 
 ## Current acceptance status
 
-This witness is not yet accepted. The corrected three-pointer trajectory reached
+The original pixel fixture did not reliably distinguish adjacent banks: eight
+raw RGB levels become only five or six levels after the native 30% highlight,
+so tolerance-five acceptance boxes overlap. A regression against the original
+fixture fails with a six-level separation. Earlier pixel observations therefore
+do not establish unique bank identity, even where the rest of a run progressed.
+
+The iOS-only adapter now explicitly selects a wider synthetic palette: initial
+red values `0,16,...,112`, refreshed values `128,144,...,240`, green `64` and blue
+`255-red`. At 70% image opacity, every held-state RGB box is separated by at least
+11 integer levels, greater than twice the unchanged five-level tolerance. A
+focused test decodes all 16 actual generated PNGs and checks all 120 pairs. The
+XCTest also checks every pair with the actual runtime-resolved light/dark UIKit
+highlight, including held and unheld states, before admission. Unexpected tint
+changes fail the witness instead of weakening its oracle. Default Android/SDK
+fixture bytes, input geometry, timeouts and product behavior remain unchanged.
+
+The corrected palette passed a full local simulator run: exactly one XCTest case, zero failures and zero skips, all four banks in both themes, appearance CAS, held-report continuity through refresh, and neutral release on Done. The strict runner reported `status: passed`; all 15 screenshot boundaries observed an active receiver before and after capture. The dark/both-trigger screenshot was also visually reviewed. This establishes this local synthetic artwork witness; it does not establish physical-phone, real-game, latency or endurance acceptance.
+
+Earlier attempts remain failed. The corrected three-pointer trajectory reached
 all bank/theme pixels, the appearance CAS and held-report check in one local run,
 then exposed a final fixture-key mismatch (`neutral`/`completed`, not `ok`). The
 next run used the corrected keys and passed CAS/held verification, but later
@@ -73,7 +91,7 @@ failed with the native receiver's first termination reason `input_expired`.
 Native state was already inactive before the failing capture. Earlier malformed
 XCTest captures and interpolated gesture trajectories are preserved as failed
 QA attempts. None is reclassified as a passing test, and no input deadline was
-increased. A complete strict one-case result remains required.
+increased. A subsequent attempt stopped at setup because the selected Ruby lacked `xcodeproj`; selecting the existing system Ruby resolved that setup issue before the passing run.
 
 For CI, create and boot a dedicated simulator named
 `Thumble Rewrite Bank CI <suffix>` (ASCII letters, digits, underscore or hyphen;
@@ -87,6 +105,4 @@ unavailable, unrelated, and physical-device identifiers are rejected.
 Cleanup independently attempts server shutdown, native child shutdown, original
 appearance restoration, and prior configuration restoration. Cleanup failure
 cannot replace the original test exception; it forces a failed sanitized result.
-The final CI runner ownership/cleanup changes have focused unit coverage and an
-actual local inventory check, but were not used to repeat the full failing UI
-scenario. Do not describe these helper gates as end-to-end acceptance.
+The final CI runner ownership/cleanup changes have focused unit coverage and were used in the complete passing local run. Hosted CI acceptance remains separate.

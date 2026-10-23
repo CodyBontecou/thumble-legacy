@@ -34,6 +34,11 @@ on:
       - "Rewrite/tooling/test_bank_presentation_ios_probe.py"
       - "Rewrite/tooling/check-mobile-store-artifact.py"
       - "Rewrite/tooling/test_mobile_store_artifact.py"
+      - "Rewrite/tooling/test_ios_store_notices.cjs"
+      - "Rewrite/tooling/test_android_store_notices.cjs"
+      - "Rewrite/tooling/android-release-notices.py"
+      - "Rewrite/tooling/test_android_release_notices.py"
+      - "Rewrite/tooling/capture-android-release-notices.gradle"
       - "Rewrite/tooling/test_mobile_app_probe.py"
       - "Rewrite/tooling/native_hold_diagnostic.py"
       - "Rewrite/tooling/test_native_hold_diagnostic.py"
@@ -74,6 +79,11 @@ on:
       - "Rewrite/tooling/test_bank_presentation_ios_probe.py"
       - "Rewrite/tooling/check-mobile-store-artifact.py"
       - "Rewrite/tooling/test_mobile_store_artifact.py"
+      - "Rewrite/tooling/test_ios_store_notices.cjs"
+      - "Rewrite/tooling/test_android_store_notices.cjs"
+      - "Rewrite/tooling/android-release-notices.py"
+      - "Rewrite/tooling/test_android_release_notices.py"
+      - "Rewrite/tooling/capture-android-release-notices.gradle"
       - "Rewrite/tooling/test_mobile_app_probe.py"
       - "Rewrite/tooling/native_hold_diagnostic.py"
       - "Rewrite/tooling/test_native_hold_diagnostic.py"
@@ -134,6 +144,8 @@ jobs:
           python3 -m unittest discover -s tooling -p test_bank_presentation_app_probe.py -v
           python3 -m unittest discover -s tooling -p test_bank_presentation_ios_probe.py -v
           python3 -m unittest discover -s tooling -p test_mobile_store_artifact.py -v
+          python3 -m unittest discover -s tooling -p test_android_release_notices.py -v
+          node --test tooling/test_ios_store_notices.cjs tooling/test_android_store_notices.cjs
       - name: Generate native Android app
         working-directory: Rewrite/apps/mobile
         run: bun run prebuild --platform android
@@ -240,6 +252,8 @@ jobs:
           python3 -m unittest discover -s tooling -p test_bank_presentation_app_probe.py -v
           python3 -m unittest discover -s tooling -p test_bank_presentation_ios_probe.py -v
           python3 -m unittest discover -s tooling -p test_mobile_store_artifact.py -v
+          python3 -m unittest discover -s tooling -p test_android_release_notices.py -v
+          node --test tooling/test_ios_store_notices.cjs tooling/test_android_store_notices.cjs
       - name: Identify the exact iOS compiler cache scope
         id: ios-toolchain
         run: |
