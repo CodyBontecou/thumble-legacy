@@ -27,6 +27,18 @@ export function startMcp(
   allowConfigurationWrite = false,
   allowWowCapture = false,
 ): void {
+  // The service captures one immutable native backend. Reuse this exact endpoint
+  // capability after inspection; never re-read a replacement owner for dispatch.
+  const recordingEndpoint = async () => {
+    const endpoint = await readEndpointAsync(root, receiver);
+    const status = await request(endpoint, { command: "status" });
+    if (
+      status.receiver.snapshot.backend !== "recording" ||
+      status.receiver.snapshot.inputEnabled
+    )
+      throw new Error("recording_receiver_required");
+    return endpoint;
+  };
   let traces = 0;
   const trace = (phase: string): void => {
     if (process.env.THUMBLE_REWRITE_MCP_TRACE === "1" && traces++ < 128)
@@ -639,7 +651,7 @@ export function startMcp(
           (args) =>
             receipt(async () =>
               requestSavedRuntime(
-                await readEndpointAsync(root, receiver),
+                await recordingEndpoint(),
                 decodeSavedRuntimeCommand({
                   command: "activate-saved",
                   ...args,
@@ -663,7 +675,7 @@ export function startMcp(
           (args) =>
             receipt(async () =>
               request(
-                await readEndpointAsync(root, receiver),
+                await recordingEndpoint(),
                 decodeLocalCommand({ command: "activate", ...args }),
               ),
             ),
@@ -697,7 +709,7 @@ export function startMcp(
           (args) =>
             receipt(async () =>
               request(
-                await readEndpointAsync(root, receiver),
+                await recordingEndpoint(),
                 decodeLocalCommand({
                   command: "sample",
                   ...args,
