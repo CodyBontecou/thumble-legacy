@@ -64,6 +64,15 @@ fn random<const N: usize>() -> Result<[u8; N], &'static str> {
         .map_err(|_| "native_input_entropy_failed")?;
     Ok(bytes)
 }
+// A socket deadline may surface as WouldBlock (including macOS EAGAIN) or
+// TimedOut. Keep its failure category consistent with an elapsed frame deadline.
+// This does not retry, extend the deadline, or change transport cleanup.
+fn io_failure(error: &std::io::Error) -> &'static str {
+    match error.kind() {
+        std::io::ErrorKind::WouldBlock | std::io::ErrorKind::TimedOut => "native_input_timeout",
+        _ => "native_input_transport_failed",
+    }
+}
 fn read_exact(
     stream: &mut TcpStream,
     bytes: &mut [u8],
@@ -81,9 +90,7 @@ fn read_exact(
         let n = stream.read(&mut bytes[at..]).map_err(|error| {
             #[cfg(debug_assertions)]
             crate::input_io_diagnostics::terminal_io("native-read", &error);
-            #[cfg(not(debug_assertions))]
-            let _ = error;
-            "native_input_transport_failed"
+            io_failure(&error)
         })?;
         if n == 0 {
             return Err("native_input_transport_failed");
@@ -123,7 +130,7 @@ fn send(stream: &mut TcpStream, bytes: &[u8], wait: Duration) -> Result<(), &'st
             .map_err(|_| "native_input_transport_failed")?;
         let n = stream
             .write(&frame[at..])
-            .map_err(|_| "native_input_transport_failed")?;
+            .map_err(|error| io_failure(&error))?;
         if n == 0 {
             return Err("native_input_transport_failed");
         }
@@ -1483,6 +1490,65 @@ mod tests {
         wake.wait(Duration::from_secs(1)).unwrap();
         server.drain(&mut runtime, 3, &mut sink).unwrap();
         assert_eq!(results.iter().filter(|r| r.try_recv().is_ok()).count(), 4);
+    }
+    #[test]
+    fn socket_deadline_categories_do_not_hide_other_io_failures() {
+        use std::io::ErrorKind;
+        for kind in [ErrorKind::WouldBlock, ErrorKind::TimedOut] {
+            assert_eq!(
+                io_failure(&std::io::Error::from(kind)),
+                "native_input_timeout"
+            );
+        }
+        for kind in [
+            ErrorKind::Interrupted,
+            ErrorKind::UnexpectedEof,
+            ErrorKind::BrokenPipe,
+            ErrorKind::ConnectionReset,
+            ErrorKind::InvalidInput,
+            ErrorKind::Other,
+        ] {
+            assert_eq!(
+                io_failure(&std::io::Error::from(kind)),
+                "native_input_transport_failed"
+            );
+        }
+        #[cfg(unix)]
+        assert_eq!(
+            io_failure(&std::io::Error::from_raw_os_error(libc::EAGAIN)),
+            "native_input_timeout"
+        );
+    }
+    #[test]
+    fn response_deadline_closes_the_transport_without_replaying_a_request() {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let address = listener.local_addr().unwrap();
+        let peer = thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let frame = receive(&mut stream, Duration::from_secs(2)).unwrap();
+            let mut expected = vec![1];
+            expected.extend_from_slice(&[8; 32]);
+            expected.push(STATUS);
+            assert_eq!(frame, expected);
+            // Never send a response. The client's unchanged OP_WAIT must cause
+            // socket shutdown; a retry would instead appear as another frame.
+            stream
+                .set_read_timeout(Some(Duration::from_secs(2)))
+                .unwrap();
+            let mut unexpected = [0];
+            assert_eq!(stream.read(&mut unexpected).unwrap(), 0);
+        });
+        let mut client = Client {
+            stream: TcpStream::connect(address).unwrap(),
+            token: [8; 32],
+            physical: false,
+        };
+        assert!(matches!(
+            client.configuration(),
+            Err("native_input_timeout")
+        ));
+        assert!(client.configuration().is_err());
+        peer.join().unwrap();
     }
     #[cfg(unix)]
     #[test]

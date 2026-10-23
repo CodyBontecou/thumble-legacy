@@ -175,6 +175,9 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           script: ANDROID_SERIAL=emulator-5554 python3 "$GITHUB_WORKSPACE/Rewrite/tooling/run_saved_android_app.py"
+      - name: Build production-shaped Android app
+        working-directory: Rewrite/apps/mobile/android
+        run: bash ./gradlew --no-daemon :app:assembleRelease -PreactNativeArchitectures=x86_64
       - name: Require actual Android bank presentation and held-input refresh
         if: always() && steps.android-apks.outcome == 'success'
         uses: reactivecircus/android-emulator-runner@v2
@@ -187,9 +190,6 @@ jobs:
           script: |
             mkdir -p "$GITHUB_WORKSPACE/Rewrite/reports"
             env ANDROID_SERIAL=emulator-5554 RUNNER_TEMP="$RUNNER_TEMP/bank-android" python3 "$GITHUB_WORKSPACE/Rewrite/tooling/run_bank_presentation_app_probe.py" --platform android -- bash "$GITHUB_WORKSPACE/Rewrite/apps/mobile/android/gradlew" -p "$GITHUB_WORKSPACE/Rewrite/apps/mobile/android" --no-daemon :app:connectedNativeQaAndroidTest -PreactNativeArchitectures=x86_64 -Pandroid.testInstrumentationRunnerArguments.class=com.thumble.rewrite.qa.BankPresentationAppTest > "$GITHUB_WORKSPACE/Rewrite/reports/mobile-app-android-bank.json"
-      - name: Build production-shaped Android app
-        working-directory: Rewrite/apps/mobile/android
-        run: bash ./gradlew --no-daemon :app:assembleRelease -PreactNativeArchitectures=x86_64
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -262,14 +262,18 @@ jobs:
         run: |
           bun run prebuild --platform ios
           ruby tests/prepare-ios.rb
-          ruby tests/prepare-ios-bank.rb
           cd ios
           pod install
-      - name: Compile app QA targets before simulator execution
+      - name: Compile both app QA targets before simulator execution
         id: ios-app-build
         run: |
           xcodebuild -quiet -workspace apps/mobile/ios/ThumbleRewrite.xcworkspace -scheme NativePortalTests -configuration Release -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/rewrite-mobile-app" ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES build-for-testing > "$RUNNER_TEMP/native-portal-app-build.log" 2>&1
           xcodebuild -quiet -workspace apps/mobile/ios/ThumbleRewrite.xcworkspace -scheme SavedControllerUITests -configuration Release -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/rewrite-mobile-app" ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES build-for-testing > "$RUNNER_TEMP/saved-controller-app-build.log" 2>&1
+      - name: Build separate iOS bank app QA target
+        id: ios-bank-build
+        if: always() && steps.ios-app-build.outcome == 'success'
+        run: |
+          ruby apps/mobile/tests/prepare-ios-bank.rb
           xcodebuild -quiet -workspace apps/mobile/ios/ThumbleRewrite.xcworkspace -scheme BankPresentationUITests -configuration Release -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/rewrite-mobile-app" ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES build-for-testing > "$RUNNER_TEMP/bank-presentation-app-build.log" 2>&1
       - name: Exercise bundled app's native UIKit portal and actual saved-map routes headlessly
         if: always() && steps.ios-app-build.outcome == 'success'
@@ -315,7 +319,7 @@ jobs:
           done
           exit "$status"
       - name: Require actual iOS bank artwork and held-input refresh
-        if: always() && steps.ios-app-build.outcome == 'success'
+        if: always() && steps.ios-bank-build.outcome == 'success'
         run: |
           set -o pipefail
           mkdir -p reports
