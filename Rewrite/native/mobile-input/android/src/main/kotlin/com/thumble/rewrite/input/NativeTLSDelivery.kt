@@ -1,14 +1,56 @@
 package com.thumble.rewrite.input
 
 import java.io.Closeable
+import java.io.EOFException
 import java.net.InetSocketAddress
+import java.net.SocketException
+import java.net.SocketTimeoutException
 import java.util.ArrayDeque
+import javax.net.ssl.SSLException
 
 internal interface NativeFrameIO : Closeable {
     fun send(frame: ControlTLSFrame)
 
     fun receive(): ControlTLSFrame
 }
+
+/** Fixed diagnostic values only: exception text and transport bytes never leave the owner. */
+enum class NativeTLSCloseCause {
+    EXPLICIT_CLOSE,
+    CONNECT_FAILED,
+    WRITE_FAILED,
+    READ_FAILED,
+    INVALID_INPUT,
+    CONTROL_QUEUE_OVERFLOW,
+    INPUT_QUEUE_OVERFLOW,
+    RECEIVED_QUEUE_OVERFLOW,
+    INVALID_DIRECTION,
+}
+
+enum class NativeTLSExceptionCategory {
+    NONE,
+    TIMEOUT,
+    EOF,
+    SOCKET,
+    TLS,
+    REJECTED,
+    OTHER,
+}
+
+data class NativeTLSTerminalDiagnostic(
+    val cause: NativeTLSCloseCause,
+    val category: NativeTLSExceptionCategory,
+)
+
+internal fun tlsExceptionCategory(error: Exception): NativeTLSExceptionCategory =
+    when (error) {
+        is SocketTimeoutException -> NativeTLSExceptionCategory.TIMEOUT
+        is EOFException -> NativeTLSExceptionCategory.EOF
+        is SSLException -> NativeTLSExceptionCategory.TLS
+        is SocketException -> NativeTLSExceptionCategory.SOCKET
+        is ControlTLSRejected -> NativeTLSExceptionCategory.REJECTED
+        else -> NativeTLSExceptionCategory.OTHER
+    }
 
 /**
  * Bounded native delivery owner, independent of React and the input/UI sampling thread. Call
@@ -34,6 +76,10 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
     private val controls = ArrayDeque<ControlTLSFrame>()
     private val received = ArrayDeque<ControlTLSFrame>()
     private var latestInput: ControlTLSFrame? = null
+    private var terminal: NativeTLSTerminalDiagnostic? = null
+    val terminalDiagnostic: NativeTLSTerminalDiagnostic?
+        get() = synchronized(gate) { terminal }
+
     val state: State
         get() = synchronized(gate) { current }
 
@@ -47,8 +93,8 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         val frame =
             try {
                 ControlTLSFrame(ControlTLSFrame.Kind.INPUT, packet)
-            } catch (_: Exception) {
-                close()
+            } catch (error: Exception) {
+                terminate(NativeTLSCloseCause.INVALID_INPUT, tlsExceptionCategory(error))
                 return false
             }
         synchronized(gate) {
@@ -66,7 +112,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                 return true
             }
         }
-        close()
+        terminate(NativeTLSCloseCause.INPUT_QUEUE_OVERFLOW, NativeTLSExceptionCategory.NONE)
         return false
     }
 
@@ -74,8 +120,8 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         val frame =
             try {
                 ControlTLSFrame(ControlTLSFrame.Kind.CONTROL, payload)
-            } catch (_: Exception) {
-                close()
+            } catch (error: Exception) {
+                terminate(NativeTLSCloseCause.INVALID_INPUT, tlsExceptionCategory(error))
                 return false
             }
         synchronized(gate) {
@@ -86,7 +132,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                 return true
             }
         }
-        close()
+        terminate(NativeTLSCloseCause.CONTROL_QUEUE_OVERFLOW, NativeTLSExceptionCategory.NONE)
         return false
     }
 
@@ -97,6 +143,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         }
 
     private fun writeLoop(connect: () -> NativeFrameIO) {
+        var cause = NativeTLSCloseCause.CONNECT_FAILED
         try {
             val transport = connect()
             val accepted =
@@ -112,6 +159,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                 transport.close()
                 return
             }
+            cause = NativeTLSCloseCause.WRITE_FAILED
             Thread({ readLoop(transport) }, "thumble-native-tls-reader")
                 .apply { isDaemon = true }
                 .start()
@@ -127,31 +175,42 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                     }
                 transport.send(frame)
             }
-        } catch (_: Exception) {
-            close()
+        } catch (error: Exception) {
+            terminate(cause, tlsExceptionCategory(error))
         }
     }
 
     private fun readLoop(transport: NativeFrameIO) {
+        var cause = NativeTLSCloseCause.READ_FAILED
         try {
             while (state == State.READY) {
                 val frame = transport.receive()
                 synchronized(gate) {
                     if (current != State.READY) return
-                    if (frame.kind != ControlTLSFrame.Kind.CONTROL || received.size >= 8)
+                    if (frame.kind != ControlTLSFrame.Kind.CONTROL) {
+                        cause = NativeTLSCloseCause.INVALID_DIRECTION
                         throw ControlTLSRejected()
+                    }
+                    if (received.size >= 8) {
+                        cause = NativeTLSCloseCause.RECEIVED_QUEUE_OVERFLOW
+                        throw ControlTLSRejected()
+                    }
                     received.addLast(frame)
                 }
             }
-        } catch (_: Exception) {
-            close()
+        } catch (error: Exception) {
+            terminate(cause, tlsExceptionCategory(error))
         }
     }
 
-    override fun close() {
+    override fun close() =
+        terminate(NativeTLSCloseCause.EXPLICIT_CLOSE, NativeTLSExceptionCategory.NONE)
+
+    private fun terminate(cause: NativeTLSCloseCause, category: NativeTLSExceptionCategory) {
         val transport =
             synchronized(gate) {
                 if (current == State.CLOSED) return
+                terminal = NativeTLSTerminalDiagnostic(cause, category)
                 current = State.CLOSED
                 controls.clear()
                 received.clear()
