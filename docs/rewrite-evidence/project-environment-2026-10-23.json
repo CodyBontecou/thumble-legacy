@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-10-23",
+  "source": "Argent workspace inspection performed by editor UI agent; reused by Android QA",
+  "environment": {
+    "is_react_native": true,
+    "is_expo": true,
+    "ios_bundle": "com.codybontecou.thumble.rewrite",
+    "android_package": "com.codybontecou.thumble.rewrite",
+    "scripts": {
+      "start": "node --dns-result-order=ipv4first ./node_modules/expo/bin/cli start --localhost --port 8087",
+      "prebuild": "node node_modules/expo/bin/cli prebuild --no-install",
+      "typecheck": "tsc --noEmit -p tsconfig.json"
+    },
+    "toolchain": {
+      "node": "26.8.1",
+      "pod": "1.17.0",
+      "bun": "durable rewrite-tools bun1.4.3"
+    },
+    "device_plan": {
+      "platform": "ios",
+      "name": "Thumble Rewrite QA",
+      "udid": "2C25402F-F87F-46EA-A615-A1A9C0689EC6"
+    },
+    "baseline_api_capsule_sha256": "b73381ba054368861e180d870370e12822d1623807ea6d45dee4aad984f5c0bf",
+    "inspection": "Argent gather_workspace_data; subagent creation unavailable due thread limit"
+  },
+  "currentQa": {
+    "ios": "Thumble Rewrite QA simulator only",
+    "android": "thumble-rewrite-api35 emulator only",
+    "physicalDevices": "deferred while user sleeps",
+    "metroPort": 8097
+  },
+  "scope": "Private implementation memory; exclude from public source projections"
+}
