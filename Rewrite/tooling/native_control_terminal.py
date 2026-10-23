@@ -7,6 +7,8 @@ CODES = frozenset({
     'input_packet_invalid', 'input_packet_budget_exhausted', 'input_broker_unavailable',
     'input_protocol_invalid', 'input_renewal_too_early', 'phone_authentication_rejected',
     'phone_trust_owner_unavailable', 'native_input_unavailable',
+    'native_input_transport_failed', 'native_input_timeout',
+    'native_input_frame_invalid', 'native_input_server_rejected',
     'native_input_rejected', 'native_input_release_unconfirmed', 'pairing_closed', 'other',
 })
 _PATTERN = re.compile(r'native_control_terminal code=([a-z_]{1,96}) elapsed_us=(0|[1-9][0-9]{0,19})')

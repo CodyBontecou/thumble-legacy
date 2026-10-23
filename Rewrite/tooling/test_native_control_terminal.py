@@ -11,6 +11,14 @@ class TerminalDiagnosticTests(unittest.TestCase):
         self.assertEqual(decode_native_control_terminal('native_control_terminal code=authenticated_control_transport_failed elapsed_us=0'), {'code': 'authenticated_control_transport_failed', 'elapsedUs': 0})
         self.assertEqual(decode_native_control_terminal('native_control_terminal code=other elapsed_us=18446744073709551615')['elapsedUs'], 18446744073709551615)
 
+    def test_audited_native_ipc_outcomes_remain_distinct(self):
+        for code in ('native_input_transport_failed', 'native_input_timeout',
+                     'native_input_frame_invalid', 'native_input_server_rejected'):
+            with self.subTest(code=code):
+                self.assertEqual(decode_native_control_terminal(
+                    f'native_control_terminal code={code} elapsed_us=1'),
+                    {'code': code, 'elapsedUs': 1})
+
     def test_unknown_static_identifier_is_only_other(self):
         self.assertEqual(decode_native_control_terminal('native_control_terminal code=private_label elapsed_us=1'), {'code': 'other', 'elapsedUs': 1})
 

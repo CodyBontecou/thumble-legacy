@@ -12,6 +12,7 @@ import {
   requestConfiguration,
   requestPairing,
   requestSavedRuntime,
+  requestSavedReadiness,
 } from "@thumble/client/local";
 import { parseStrictJson } from "@thumble/contracts/receiver";
 import { RealServicePhoneProbe, SECOND } from "./real-service-phone-probe.ts";
@@ -301,6 +302,7 @@ export class PresentationServiceProbe {
       "w",
       "g",
       "m",
+      "i",
     ].includes(byte)
       ? `command_${byte}`
       : "invalid_command";
@@ -378,6 +380,21 @@ export class PresentationServiceProbe {
         neutralPulses: 0,
         inputTtlMs: 350,
         inputEnabled: snapshot.inputEnabled,
+      };
+    }
+    if (byte === "i") {
+      const [{ snapshot }, readiness] = await Promise.all([
+        requestSavedRuntime(this.endpoint, { command: "saved-binding-status" }),
+        requestSavedReadiness(this.endpoint),
+      ]);
+      return {
+        active: snapshot.active,
+        generation: snapshot.generation,
+        revision: snapshot.revision,
+        reason: snapshot.lastReleaseReason,
+        firstReason: readiness.firstTermination?.reason ?? "none",
+        firstGeneration: readiness.firstTermination?.generation ?? "0",
+        firstRevision: readiness.firstTermination?.revision ?? "0",
       };
     }
     if (byte === "d") {
