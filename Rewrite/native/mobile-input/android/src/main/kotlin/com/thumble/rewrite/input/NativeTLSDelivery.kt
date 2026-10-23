@@ -9,6 +9,9 @@ import java.util.ArrayDeque
 import javax.net.ssl.SSLException
 
 internal interface NativeFrameIO : Closeable {
+    val failureCategory: NativeTLSExceptionCategory?
+        get() = null
+
     fun send(frame: ControlTLSFrame)
 
     fun receive(): ControlTLSFrame
@@ -144,8 +147,10 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
 
     private fun writeLoop(connect: () -> NativeFrameIO) {
         var cause = NativeTLSCloseCause.CONNECT_FAILED
+        var attempted: NativeFrameIO? = null
         try {
             val transport = connect()
+            attempted = transport
             val accepted =
                 synchronized(gate) {
                     if (current == State.CLOSED) false
@@ -176,7 +181,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                 transport.send(frame)
             }
         } catch (error: Exception) {
-            terminate(cause, tlsExceptionCategory(error))
+            terminate(cause, attempted?.failureCategory ?: tlsExceptionCategory(error))
         }
     }
 
@@ -199,7 +204,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                 }
             }
         } catch (error: Exception) {
-            terminate(cause, tlsExceptionCategory(error))
+            terminate(cause, transport.failureCategory ?: tlsExceptionCategory(error))
         }
     }
 
@@ -238,13 +243,7 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         fun connect(address: InetSocketAddress, certificatePin: String): NativeTLSDelivery =
             NativeTLSDelivery {
                 val client = ControlTLSClient.connect(address, certificatePin)
-                object : NativeFrameIO {
-                    override fun send(frame: ControlTLSFrame) = client.send(frame)
-
-                    override fun receive(): ControlTLSFrame = client.receive()
-
-                    override fun close() = client.close()
-                }
+                client.nativeFrames()
             }
     }
 }

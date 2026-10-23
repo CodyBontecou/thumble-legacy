@@ -169,4 +169,133 @@ class NativeTLSDiagnosticTest {
         } catch (_: PhoneControlRejected) {}
         assertEquals(PhoneCheckpointFailure.INVALID_TIME, client.checkpointFailure)
     }
+
+    /**
+     * Exercises the production operation/exact-reader/nativeFrames adapter, without pretending this
+     * synthetic socket performs certificate or TLS acceptance.
+     */
+    private class SyntheticSocket(
+        private val input: java.io.InputStream,
+        private val released: CountDownLatch,
+    ) : javax.net.ssl.SSLSocket() {
+        override fun getInputStream() = input
+
+        override fun close() {
+            released.countDown()
+        }
+
+        override fun getSupportedCipherSuites() = emptyArray<String>()
+
+        override fun getEnabledCipherSuites() = emptyArray<String>()
+
+        override fun setEnabledCipherSuites(values: Array<String>) {}
+
+        override fun getSupportedProtocols() = emptyArray<String>()
+
+        override fun getEnabledProtocols() = emptyArray<String>()
+
+        override fun setEnabledProtocols(values: Array<String>) {}
+
+        override fun getSession(): javax.net.ssl.SSLSession = throw UnsupportedOperationException()
+
+        override fun addHandshakeCompletedListener(
+            value: javax.net.ssl.HandshakeCompletedListener
+        ) {}
+
+        override fun removeHandshakeCompletedListener(
+            value: javax.net.ssl.HandshakeCompletedListener
+        ) {}
+
+        override fun startHandshake() {}
+
+        override fun setUseClientMode(value: Boolean) {}
+
+        override fun getUseClientMode() = true
+
+        override fun setNeedClientAuth(value: Boolean) {}
+
+        override fun getNeedClientAuth() = false
+
+        override fun setWantClientAuth(value: Boolean) {}
+
+        override fun getWantClientAuth() = false
+
+        override fun setEnableSessionCreation(value: Boolean) {}
+
+        override fun getEnableSessionCreation() = false
+    }
+
+    private fun client(input: java.io.InputStream, released: CountDownLatch): ControlTLSClient {
+        val constructor =
+            ControlTLSClient::class
+                .java
+                .getDeclaredConstructor(
+                    javax.net.ssl.SSLSocket::class.java,
+                    java.net.Socket::class.java,
+                )
+        constructor.isAccessible = true
+        return constructor.newInstance(
+            SyntheticSocket(input, released),
+            object : java.net.Socket() {
+                override fun close() {
+                    released.countDown()
+                }
+            },
+        )
+    }
+
+    @Test
+    fun productionAdapterPreservesEofAndTimeoutAfterPublicRejectionErasesTheException() {
+        for ((input, category) in
+            listOf(
+                java.io.ByteArrayInputStream(byteArrayOf()) to NativeTLSExceptionCategory.EOF,
+                object : java.io.InputStream() {
+                    override fun read(): Int = throw SocketTimeoutException()
+                } to NativeTLSExceptionCategory.TIMEOUT,
+                object : java.io.InputStream() {
+                    override fun read(): Int = throw SSLException("")
+                } to NativeTLSExceptionCategory.TLS,
+            )) {
+            val client = client(input, CountDownLatch(1))
+            val delivery = NativeTLSDelivery(client.nativeFrames())
+            until { delivery.state == NativeTLSDelivery.State.CLOSED }
+            assertEquals(
+                NativeTLSTerminalDiagnostic(NativeTLSCloseCause.READ_FAILED, category),
+                delivery.terminalDiagnostic,
+            )
+            try {
+                client.receive()
+                fail("closed_transport_read_accepted")
+            } catch (_: ControlTLSRejected) {}
+            assertEquals(category, client.failureCategory)
+        }
+    }
+
+    @Test
+    fun productionWatchdogCauseSurvivesItsOwnSocketCloseException() {
+        val released = CountDownLatch(1)
+        val entered = CountDownLatch(1)
+        val input =
+            object : java.io.InputStream() {
+                override fun read(): Int {
+                    entered.countDown()
+                    check(released.await(3, TimeUnit.SECONDS))
+                    throw SocketException()
+                }
+            }
+        val client = client(input, released)
+        val delivery = NativeTLSDelivery(client.nativeFrames())
+        assertTrue(entered.await(1, TimeUnit.SECONDS))
+        until { delivery.state == NativeTLSDelivery.State.CLOSED }
+        assertEquals(
+            NativeTLSTerminalDiagnostic(
+                NativeTLSCloseCause.READ_FAILED,
+                NativeTLSExceptionCategory.TIMEOUT,
+            ),
+            delivery.terminalDiagnostic,
+        )
+        client.close()
+        delivery.close()
+        assertEquals(NativeTLSExceptionCategory.TIMEOUT, client.failureCategory)
+    }
 }

@@ -145,13 +145,7 @@ internal constructor(
                     InetSocketAddress(endpoint.host, endpoint.port),
                     endpoint.certificatePin,
                 )
-            object : NativeFrameIO {
-                override fun send(frame: ControlTLSFrame) = client.send(frame)
-
-                override fun receive() = client.receive()
-
-                override fun close() = client.close()
-            }
+            client.nativeFrames()
         },
         PhoneCredentialVault(context)::load,
         System::currentTimeMillis,
