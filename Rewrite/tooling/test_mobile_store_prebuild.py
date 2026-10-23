@@ -43,6 +43,13 @@ class StoreAuditTests(unittest.TestCase):
     def write_plist(self, relative, value):
         (self.root / relative).write_bytes(plistlib.dumps(value))
 
+    def test_private_editor_journal_metadata_reason_is_required(self):
+        self.privacy['NSPrivacyAccessedAPITypes'] = [
+            entry for entry in self.privacy['NSPrivacyAccessedAPITypes']
+            if entry['NSPrivacyAccessedAPIType'] != 'NSPrivacyAccessedAPICategoryFileTimestamp']
+        self.write_plist("ios/Thumble/PrivacyInfo.xcprivacy", self.privacy)
+        self.assertFalse(audit.audit(self.root, "1.0.0", "4")['checks']['app_privacy_reasons'])
+
     def test_valid_fixture_is_prebuild_only_and_never_distribution_acceptance(self):
         result = audit.audit(self.root, "1.0.0", "4")
         self.assertTrue(result["ok"])

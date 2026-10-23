@@ -16,6 +16,7 @@ TOOLS = "{http://schemas.android.com/tools}"
 BLOCKED = {"android.permission." + name for name in (
     "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE", "SYSTEM_ALERT_WINDOW")}
 REASONS = {"NSPrivacyAccessedAPICategoryUserDefaults": "CA92.1",
+           "NSPrivacyAccessedAPICategoryFileTimestamp": "C617.1",
            "NSPrivacyAccessedAPICategorySystemBootTime": "35F9.1"}
 
 

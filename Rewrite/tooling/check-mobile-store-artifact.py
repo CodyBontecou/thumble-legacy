@@ -19,6 +19,7 @@ MAX_ENTRIES = 20_000
 MAX_METADATA = 2_097_152
 ANDROID = 'http://schemas.android.com/apk/res/android'
 REASONS = {'NSPrivacyAccessedAPICategoryUserDefaults': 'CA92.1',
+           'NSPrivacyAccessedAPICategoryFileTimestamp': 'C617.1',
            'NSPrivacyAccessedAPICategorySystemBootTime': '35F9.1'}
 
 

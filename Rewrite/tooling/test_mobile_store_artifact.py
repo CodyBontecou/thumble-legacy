@@ -92,6 +92,13 @@ class ArtifactTests(unittest.TestCase):
     def audit(self, platform):
         return module.audit(self.archive if platform == 'ios' else self.bundle, platform, '1.0.0', '4')
 
+    def test_private_editor_journal_metadata_reason_is_required(self):
+        self.privacy['NSPrivacyAccessedAPITypes'] = [
+            entry for entry in self.privacy['NSPrivacyAccessedAPITypes']
+            if entry['NSPrivacyAccessedAPIType'] != 'NSPrivacyAccessedAPICategoryFileTimestamp']
+        self.write('Products/Applications/Thumble.app/PrivacyInfo.xcprivacy', self.privacy)
+        self.assertFalse(self.audit('ios')['checks']['app_privacy_reasons'])
+
     def test_both_metadata_candidates_pass_without_claiming_signing_or_distribution(self):
         self.aab()
         for platform in ['ios', 'android']:

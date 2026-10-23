@@ -10,7 +10,7 @@ const env = {
   THUMBLE_STORE_VERSION: "1.0.0",
   THUMBLE_STORE_BUILD: "4",
 };
-test("store alone declares app-local preference and timer reasons and blocks inherited storage/overlay permissions", () => {
+test("store alone declares app-local preference, timer and journal metadata reasons and blocks inherited storage/overlay permissions", () => {
   const before = JSON.stringify(base),
     store = mobileProfile(base, env);
   expect(mobileProfile(base, {})).toBe(base);
@@ -22,6 +22,10 @@ test("store alone declares app-local preference and timer reasons and blocks inh
       {
         NSPrivacyAccessedAPIType: "NSPrivacyAccessedAPICategoryUserDefaults",
         NSPrivacyAccessedAPITypeReasons: ["CA92.1"],
+      },
+      {
+        NSPrivacyAccessedAPIType: "NSPrivacyAccessedAPICategoryFileTimestamp",
+        NSPrivacyAccessedAPITypeReasons: ["C617.1"],
       },
       {
         NSPrivacyAccessedAPIType: "NSPrivacyAccessedAPICategorySystemBootTime",

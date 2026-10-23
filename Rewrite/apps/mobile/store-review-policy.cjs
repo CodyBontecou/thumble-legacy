@@ -23,6 +23,8 @@ function storeReviewConfiguration(config) {
     throw new Error("store_privacy_manifest_invalid");
   const required = new Map([
     ["NSPrivacyAccessedAPICategoryUserDefaults", "CA92.1"],
+    // Native editor journal fstat checks only private app-container metadata.
+    ["NSPrivacyAccessedAPICategoryFileTimestamp", "C617.1"],
     ["NSPrivacyAccessedAPICategorySystemBootTime", "35F9.1"],
   ]);
   const seen = new Set();
