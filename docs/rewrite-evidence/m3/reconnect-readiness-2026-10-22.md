@@ -108,3 +108,54 @@ Public8cf native iOS/Android, Keystore, stack safety, macOS optical/QR and Windo
 The inherited public Rust test fixture path repair admits portable-core and hosted-builder CI. Its next macOS interoperability failure is the same missing private artwork in two Swift test files. Reusing the unchanged already-public asset-bearing Indigo example passes all64 XCTest cases and four Swift Testing cases in the two affected suites. The public-only two-file capsule SHA256 is `5bd847f0f19882c2adc23a244f237b41b49216362432a3516f7ca2818ab1b3c8`; it is not staged over the retained private test variants. No skin was authored, altered or newly published.
 
 Modifier-bank source is saved privately in `77da976` and remains pending native phone SDK completion before public publication. Frozen host14 SHA256 `be3e7bbf5078f773466ae682cde46851e0a99f4e0cbfc2a28254b89f1fbf8e7a`, native6 `336ef26b881cb519c8fe2850128ef097ecb557ba23e15580f8a37bf35e966854`, React overlay5 `82184f8b918ccb0d5d3fe25be4f2fd489c6517370ce64f05d229badd76f25161`, and actual service acceptance4 `a355f0250982170d6b93246d7891908db7f72e1cd410056aee9e3899724d6803` are independently reviewed. Exact composed root gates pass390 TypeScript tests /6,385 assertions, three explicit opt-in skips, all generated/boundary/notices/format/type checks, 154 Rust unit tests and25 process tests. Actual Kotlin bank reads pass all four banks in both themes over UDP and TLS fallback while both triggers and South remain held under unchanged TTL350; legacy role10 also passes. The full SDK exposed an accepted-callback overload compatibility regression, now assigned to its owner; no full SDK pass is inferred until corrected and rerun. Actual app bank visuals and real-game optical acceptance remain separate open gates.
+
+
+## Unattended bank composition review — 2026-10-23
+
+Published 65 curated leaves as public `eca50a73e6950f10dd0cdae7fa96ab24d872cbb0`,
+tree `27a41df05af643ae9430b5bfad7760726733796f`, sole public parent
+`8cf02404b815614b94eac5c8d06a202f5536941c`. Recursive leaf modes and Git blob
+hashes matched the frozen composition exactly, with no deletions. Private source
+commit `62cc325` contains the remaining 30 reviewed leaves; earlier 37-leaf
+source is `77da976`. Public-only Swift fixture variants remain outside private
+source commits. Draft PR4 updated; no release/store upload or submission.
+
+New source includes role11 bank metadata/icons, host and both native SDK/app
+fences, required real-service bank CI, Android bank QA, terminal artifacts,
+public retained-fixture repairs and test-only output retirement wait tracing.
+Frozen SDK20 and callback fence1 independently cleared; Android QA5 independently
+cleared. Diagnostic3 adds only four audited static native IPC terminal symbols;
+eight Python tests pass. Root QA5 SHA256
+`4491d4e3c43a258fffd1a231bf0e5a742f5d0a513fd9f471a30e1e9360d282a0`.
+
+Exact isolated composition passes generated/boundary/notices/format and all
+three TypeScript checks: 390 tests, three explicit opt-in skips, zero failures,
+6,385 assertions. First attempted verification was sandbox-bound and could not
+start local receivers; stopped that owned test run and retained its log, then
+ran with authorized host-local IPC. No product change followed that setup error.
+Both actual Kotlin role10/11 service witnesses pass. Isolated standalone CLI
+and recording receiver packaging succeeds. Required full stack-safety script
+passes 30 constrained-thread cases and macOS/iOS Debug frame budgets again.
+
+Actual Android bank app runner v5 passes exact one case, zero skips/failures,
+five service phases. Three actual pointers hold South/LT/RT; all four banks,
+both themes and appearance refresh are checked. Recording evidence confirms
+unchanged epochs, full held state and no neutral pulse across refresh. The
+visible mounted-image raster oracle is distinct from composited screenshot
+pixels. v4 app case passed but wrapper rejected valid Gradle aggregate XML;
+the corrected strict aggregate parser has four passing admission tests. Earlier
+setup and app failures remain retained. No endurance/physical acceptance claim.
+Logs: /private/tmp/thumble-bank-actual-app-proof-v5-run.txt,
+/private/tmp/thumble-bank-composition65-verify-host.txt,
+/private/tmp/thumble-bank-package-proof-build.txt,
+/private/tmp/thumble-bank-stack-safety-20261023.txt.
+
+Full aligned Swift SDK still has two renewal-mode failures. iOS actual bank QA
+is underway in additive test-only files, not published in this snapshot.
+Intermittent diagnosis has reproduced expiry without Swift/TLS/simulator, with
+one producer dispatch gap 376ms against unchanged 350ms TTL and sub4ms packet
+RPC. A separate native owner reply-timeout branch and earlier clean-release
+transport branch are not yet causally resolved. Native scheduling/activity
+parity investigation remains a private prototype. No safety deadline changes.
+Real-game login and physical phone-dependent checks remain deferred for user
+availability; no new human action requested.
