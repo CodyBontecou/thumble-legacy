@@ -22,7 +22,8 @@ and reviewed for visible connected state, trigger labels, artwork and Done.
 Cleanup independently attempts gesture cancellation, provider reset, theme and
 orientation restoration, retaining the primary failure.
 
-`run_bank_presentation_app_probe.py` requires the owned emulator-5580, starts a
+`run_bank_presentation_app_probe.py` requires an explicitly selected owned emulator (emulator-5580 locally or
+emulator-5554 in its CI job), starts a
 loopback-only synthetic service, configures only its own adb reverse mappings,
 and admits exactly one named, unskipped JUnit case with zero failures/errors.
 Both Gradle aggregate and direct suite roots require exact counters; nested or
