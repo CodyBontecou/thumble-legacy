@@ -12,6 +12,9 @@ internal interface NativeFrameIO : Closeable {
     val failureCategory: NativeTLSExceptionCategory?
         get() = null
 
+    val operationFailure: NativeTLSOperationFailure?
+        get() = null
+
     fun send(frame: ControlTLSFrame)
 
     fun receive(): ControlTLSFrame
@@ -40,9 +43,38 @@ enum class NativeTLSExceptionCategory {
     OTHER,
 }
 
+enum class NativeTLSOperationDirection {
+    SEND,
+    RECEIVE,
+}
+
+enum class NativeTLSOperationFailureKind {
+    DEADLINE,
+    IO,
+}
+
+data class NativeTLSOperationFailure(
+    val direction: NativeTLSOperationDirection,
+    val kind: NativeTLSOperationFailureKind,
+    val category: NativeTLSExceptionCategory,
+)
+
+data class NativeTLSControlActivity(
+    val queued: Long,
+    val writeStarted: Long,
+    val writeCompleted: Long,
+    val received: Long,
+    val queuedAgeMs: Long?,
+    val writeStartedAgeMs: Long?,
+    val writeCompletedAgeMs: Long?,
+    val receivedAgeMs: Long?,
+    val queueDepth: Int,
+)
+
 data class NativeTLSTerminalDiagnostic(
     val cause: NativeTLSCloseCause,
     val category: NativeTLSExceptionCategory,
+    val operation: NativeTLSOperationFailure? = null,
 )
 
 internal fun tlsExceptionCategory(error: Exception): NativeTLSExceptionCategory =
@@ -80,6 +112,24 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
     private val received = ArrayDeque<ControlTLSFrame>()
     private var latestInput: ControlTLSFrame? = null
     private var terminal: NativeTLSTerminalDiagnostic? = null
+    private var queued = 0L
+    private var writeStarted = 0L
+    private var writeCompleted = 0L
+    private var receivedCount = 0L
+    private var queuedAt: Long? = null
+    private var writeStartedAt: Long? = null
+    private var writeCompletedAt: Long? = null
+    private var receivedAt: Long? = null
+    private var activity: NativeTLSControlActivity? = null
+    val terminalActivity: NativeTLSControlActivity?
+        get() = synchronized(gate) { activity }
+
+    private fun count(value: Long) = minOf(1_048_576L, value + 1)
+
+    private fun age(now: Long, then: Long?): Long? = then?.let {
+        ((now - it).coerceAtLeast(0) / 1_000_000).coerceAtMost(86_400_000)
+    }
+
     val terminalDiagnostic: NativeTLSTerminalDiagnostic?
         get() = synchronized(gate) { terminal }
 
@@ -130,6 +180,8 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         synchronized(gate) {
             if (current != State.READY) return false
             if (controls.size < 8) {
+                queued = count(queued)
+                queuedAt = System.nanoTime()
                 controls.addLast(frame)
                 gate.notifyAll()
                 return true
@@ -178,7 +230,17 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                         if (controls.isNotEmpty()) controls.removeFirst()
                         else latestInput!!.also { latestInput = null }
                     }
+                if (frame.kind == ControlTLSFrame.Kind.CONTROL)
+                    synchronized(gate) {
+                        writeStarted = count(writeStarted)
+                        writeStartedAt = System.nanoTime()
+                    }
                 transport.send(frame)
+                if (frame.kind == ControlTLSFrame.Kind.CONTROL)
+                    synchronized(gate) {
+                        writeCompleted = count(writeCompleted)
+                        writeCompletedAt = System.nanoTime()
+                    }
             }
         } catch (error: Exception) {
             terminate(cause, attempted?.failureCategory ?: tlsExceptionCategory(error))
@@ -200,6 +262,8 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
                         cause = NativeTLSCloseCause.RECEIVED_QUEUE_OVERFLOW
                         throw ControlTLSRejected()
                     }
+                    receivedCount = count(receivedCount)
+                    receivedAt = System.nanoTime()
                     received.addLast(frame)
                 }
             }
@@ -215,7 +279,20 @@ class NativeTLSDelivery private constructor(initial: NativeFrameIO?, connect: ()
         val transport =
             synchronized(gate) {
                 if (current == State.CLOSED) return
-                terminal = NativeTLSTerminalDiagnostic(cause, category)
+                val now = System.nanoTime()
+                activity =
+                    NativeTLSControlActivity(
+                        queued,
+                        writeStarted,
+                        writeCompleted,
+                        receivedCount,
+                        age(now, queuedAt),
+                        age(now, writeStartedAt),
+                        age(now, writeCompletedAt),
+                        age(now, receivedAt),
+                        controls.size,
+                    )
+                terminal = NativeTLSTerminalDiagnostic(cause, category, io?.operationFailure)
                 current = State.CLOSED
                 controls.clear()
                 received.clear()

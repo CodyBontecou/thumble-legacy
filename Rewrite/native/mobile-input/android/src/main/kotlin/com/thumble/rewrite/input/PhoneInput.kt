@@ -61,6 +61,9 @@ internal class NativeControlDelivery(raw: NativeFrameIO) : NativeFrameIO {
     val terminalDiagnostic
         get() = delivery.terminalDiagnostic
 
+    val terminalActivity
+        get() = delivery.terminalActivity
+
     fun offerInput(packet: ByteArray) = delivery.offerInput(packet)
 
     override fun send(frame: ControlTLSFrame) {

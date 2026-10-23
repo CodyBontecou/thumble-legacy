@@ -91,6 +91,9 @@ internal constructor(
     val inputFailureStage: PhoneInputFailureStage?
         get() = firstInputFailure.get()
 
+    val inputTransportActivity: NativeTLSControlActivity?
+        get() = inputDelivery?.terminalActivity
+
     val inputTransportDiagnostic: NativeTLSTerminalDiagnostic?
         get() = inputDelivery?.terminalDiagnostic
 
