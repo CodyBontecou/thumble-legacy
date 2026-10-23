@@ -43,7 +43,9 @@ Use [the mobile privacy worksheet](rewrite-mobile-privacy-review.md) to prepare 
 
 Prepare current rewrite screenshots, truthful feature/device support, age-rating/privacy answers and reviewer notes. Do not reuse retained desktop/phone marketing screenshots as if they depict the rewrite. Describe the standalone practice path and the external Mac requirement for physical input. Provide a reproducible signed/notarized headless receiver package and instructions to initialize identity/starter, explicitly activate the saved profile, start auth-only LAN listening and open a bounded QR window. Never put real credentials/invitation images in review notes. An App Review account is unnecessary unless a real account feature is introduced; actual companion/reviewer access must still be operable.
 
-Outstanding functional acceptance includes the unresolved Pixel terminal failure, both target game experiences, full physical controls/recovery/latency and mandatory live-sync permission/freshness/authority/phone delivery. A configured store profile does not close these gates.
+Use [the reviewer setup rehearsal](rewrite-mobile-reviewer-guide.md) for the consolidated standalone recording path and its explicit limits.
+
+Outstanding functional acceptance includes intermittent native receiver stability, both target game experiences, full physical controls/recovery/latency and mandatory live-sync permission/freshness/authority/phone delivery. A configured store profile does not close these gates.
 
 ## External values not established by source
 
