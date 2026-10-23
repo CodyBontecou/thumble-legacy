@@ -159,3 +159,8 @@ transport branch are not yet causally resolved. Native scheduling/activity
 parity investigation remains a private prototype. No safety deadline changes.
 Real-game login and physical phone-dependent checks remain deferred for user
 availability; no new human action requested.
+
+Standalone relocated package acceptance also passes one case / 67 assertions,
+with the compiled CLI and sibling receiver outside the checkout and no Bun on
+PATH. Log: /private/tmp/thumble-bank-package-proof-test.txt.
+The composed required-mobile workflow also passes actionlint.
