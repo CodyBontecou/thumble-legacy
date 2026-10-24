@@ -148,42 +148,11 @@ def main():
                 assert file.read_bytes() == saved
                 (readable, _, _) = select.select([listener], [], [], 0)
                 assert not readable, 'ordinary command contacted GUI'
-                recovery = copy.deepcopy(original)
-                recovery['profiles'] = [copy.deepcopy(fixture['profiles'][1])]
-                recovery['profiles'][0]['id'] = selected
-                recovery['profiles'][0].pop('profileFormatVersion', None)
-                recovery['profiles'][0].pop('appearanceBank', None)
-                recovery['profiles'][0]['orientationPreference'] = 'landscape'
-                recovery['profiles'][0]['launchTarget'] = dict(kind='application', displayName='Fixture', filePath=str(app), attachedAt=100)
-                document = {k: recovery[k] for k in ('profiles', 'activeProfileID', 'defaultProfileID', 'keyBindings', 'outputBindings', 'profileKeyBindings', 'profileOutputBindings')}
-                document['defaultProfileID'] = selected
-                requests = []
-                errors = []
-
-                def snapshot_server():
-                    try:
-                        (connection, _) = listener.accept()
-                        with connection:
-                            data = b''
-                            while True:
-                                chunk = connection.recv(8192)
-                                if not chunk:
-                                    break
-                                data += chunk
-                            request = json.loads(data)
-                            requests.append(request)
-                            assert request['action'] == 'snapshot'
-                            reply = dict(schemaVersion=1, requestID=request['requestID'], instanceID=str(uuid.uuid4()), configurationRevision=41, contentHash='a' * 64, document=document)
-                            (out / 'legacy-snapshot-response.json').write_text(json.dumps(reply))
-                            connection.sendall(json.dumps(reply, separators=(',', ':')).encode() + b'\n')
-                    except Exception as error:
-                        errors.append(str(error))
-                worker = threading.Thread(target=snapshot_server)
-                worker.start()
-                snapshot = json.loads(cli('profile', 'show', '--legacy-desktop', '--profile', selected, '--json'))
-                worker.join(timeout=5)
-                assert not worker.is_alive() and (not errors), errors
-                assert len(requests) == 1 and snapshot['origin'] == 'legacy-desktop-migration' and (snapshot['profile']['launchTarget']['filePath'] == str(app))
+                cli('profile', 'show', '--legacy-desktop', '--profile', selected, '--json', allowed=False)
+                assert not select.select([listener], [], [], 0)[0], 'retired recovery contacted GUI'
+                retired = dict(schemaVersion=1, invocationID=str(uuid.uuid4()), command=dict(type='migration.desktop-snapshot', target=dict(kind='active')))
+                rejected = subprocess.run([str(install/'thumble-cli-bridge')], input=json.dumps(retired)+'\n', env=env, capture_output=True, text=True, timeout=10)
+                assert rejected.returncode != 0 and not select.select([listener], [], [], 0)[0]
                 assert file.read_bytes() == saved
                 fcntl.flock(lease, fcntl.LOCK_UN)
                 lease.close()
@@ -240,7 +209,7 @@ def main():
                             if process is not None and process.poll() is None:
                                 process.terminate()
                                 process.wait(timeout=10)
-        result = dict(classicAndOwned=True, legacyPrecisionRefusal=True, eightStateNativePreviews=True, explicitReadOnlyLegacySnapshot=True, blankDefaultAndCopyCreation=True, selectionAndDefaults=True, rawMetadataAndEightStates=True, helperFreeReplay=True, applicationAttachDetachNoOps=True, revisionCheckedInspection=True, issueSpecificRepair=True, ordinaryCommandsNeverUseDesktopIPC=True, stoppedReceiverLaunchRefused=True, mcpPrivateDraftCommitReplay=True, mcpLaunchOptIn=True, installedAuthorityTouched=False)
+        result = dict(classicAndOwned=True, legacyPrecisionRefusal=True, eightStateNativePreviews=True, legacySnapshotRetiredWithoutIPC=True, blankDefaultAndCopyCreation=True, selectionAndDefaults=True, rawMetadataAndEightStates=True, helperFreeReplay=True, applicationAttachDetachNoOps=True, revisionCheckedInspection=True, issueSpecificRepair=True, ordinaryCommandsNeverUseDesktopIPC=True, stoppedReceiverLaunchRefused=True, mcpPrivateDraftCommitReplay=True, mcpLaunchOptIn=True, installedAuthorityTouched=False)
         (out / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result))
 if __name__ == '__main__':

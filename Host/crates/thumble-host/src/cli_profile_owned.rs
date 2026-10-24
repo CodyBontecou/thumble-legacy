@@ -373,7 +373,7 @@ where
     authority_document(&source).map_err(draft_failure)?;
     reject_portrait_read(&request.command)?;
     if let CliProfileCommand::CustomizationExport { target, variant } = &request.command {
-        return export_customization(paths, state, target, *variant, catalog, false);
+        return export_customization(paths, state, target, *variant, catalog);
     }
     if matches!(request.command, CliProfileCommand::DesignSnapshot { .. }) {
         return design_snapshot(paths, state, request, &source);

@@ -1306,7 +1306,8 @@
             "capture"
           ],
           "status": "planned",
-          "mcpTool": "monitor_events"
+          "mcpTool": "monitor_events",
+          "phoneEffect": "Explicit capture artifact only; live headless diagnostics use host_status"
         },
         {
           "id": "runtime.latency.simulate",
@@ -1357,8 +1358,8 @@
             "server addresses",
             "server urls"
           ],
-          "status": "partial",
-          "mcpTool": "host_status"
+          "status": "current",
+          "mcpTool": "pairing_payload"
         },
         {
           "id": "runtime.pairing.code",
@@ -1373,7 +1374,7 @@
           "cli": [
             "pairing payload"
           ],
-          "status": "planned",
+          "status": "current",
           "mcpTool": "pairing_payload"
         },
         {
@@ -1381,7 +1382,7 @@
           "cli": [
             "pairing cancel"
           ],
-          "status": "planned",
+          "status": "current",
           "mcpTool": "pairing_cancel"
         },
         {
@@ -1398,7 +1399,7 @@
             "accessibility prompt",
             "accessibility request"
           ],
-          "status": "host-cli-only",
+          "status": "current",
           "mcpTool": "accessibility_action",
           "gate": "system-action"
         },
@@ -1408,7 +1409,7 @@
             "accessibility open",
             "accessibility settings"
           ],
-          "status": "host-cli-only",
+          "status": "current",
           "mcpTool": "accessibility_action",
           "gate": "system-action"
         },
@@ -1417,7 +1418,7 @@
           "cli": [
             "accessibility refresh"
           ],
-          "status": "planned",
+          "status": "current",
           "mcpTool": "accessibility_status"
         },
         {

@@ -38,7 +38,8 @@ class Links(HTMLParser):
 for page in website.rglob("*.html"):
     Links().feed(page.read_text())
 notice = (website / "skins.html").read_text()
-assert 'href="/docs.html#keypad-editor"' in notice
+assert 'href="https://thumble.io/docs#agents"' in notice
+assert 'id="agents"' in (website / "docs.html").read_text()
 assert 'name="robots" content="noindex"' in notice
 assert 'id="skin-directory"' not in notice
 assert (website / "404.html").is_file()

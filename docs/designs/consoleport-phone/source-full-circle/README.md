@@ -1,0 +1,1 @@
+Editable full-circle revision: consoleport-design-full-circle, session 2/review 1, authority target 9. Only ability icon scale changed to 1/0.34; circle mask retained. No live apply or human approval. Frozen contracts and review artifact remain in the build workspace.

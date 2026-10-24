@@ -123,13 +123,13 @@ final class ThumbleCLIBackendTests: XCTestCase {
     private let invocationID = UUID(uuidString: "AAAAAAAA-BBBB-5CCC-8DDD-EEEEEEEEEEEE")!
     private let generatedControlID = "954361D0-559A-4F70-BF56-9CA387E45DFA";
 
-    func testLegacyRuntimeIdentityRejectsAmbiguousBytesBeforeCorrelatedRouting() throws {
-        let fields = "\"updatedAt\":1000,\"runtimeProcessID\":42,\"runtimeInstanceID\":\"\(UUID())\",\"runtimeStatusRequestID\":\"\(invocationID)\""
-        let valid = Data(("{" + fields + "}").utf8)
-        XCTAssertNoThrow(try ThumbleCLIRuntimeBackend.verifyLegacyStatus(valid, requestID: invocationID, now: 1000, processIsLive: { $0 == 42 }))
-        for duplicate in [",\"runtimeProcessID\":42", ",\"\\u0072untimeStatusRequestID\":\"\(invocationID)\""] {
-            let ambiguous = Data(("{" + fields + duplicate + "}").utf8)
-            XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.verifyLegacyStatus(ambiguous, requestID: invocationID, now: 1000, processIsLive: { $0 == 42 }))
+    func testPendingPairingReceiptRejectsAmbiguousFields() throws {
+        let prefix = "{\"schemaVersion\":1,\"ok\":true,\"invocationID\":\"\(invocationID)\",\"owner\":\"rust\",\"response\":{\"ok\":true,\"pairingCancelled\":false"
+        let valid = Data((prefix + "}}").utf8) + Data([10])
+        XCTAssertEqual(try ThumbleCLIRuntimeBackend.decodeResponse(valid, invocationID: invocationID).control?.pairingCancelled, false)
+        for duplicate in [",\"pairingCancelled\":true", ",\"\\u0070airingCancelled\":false"] {
+            let ambiguous = Data((prefix + duplicate + "}}").utf8) + Data([10])
+            XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.decodeResponse(ambiguous, invocationID: invocationID))
         }
     }
 

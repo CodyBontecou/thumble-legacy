@@ -1,0 +1,25 @@
+{
+  "mask": "circle",
+  "diameterFraction": 0.918,
+  "sourceImageDataUnchanged": true,
+  "nativePixelTest": "passed",
+  "androidDeviceTests": {
+    "device": "Pixel 7",
+    "passed": 8,
+    "includes": [
+      "IconArtworkDeviceTest",
+      "AboveLegendHardwareDeviceTest"
+    ]
+  },
+  "ownedReplacementTests": {
+    "passed": 2,
+    "failures": 0
+  },
+  "stackSafety": "passed",
+  "liveIconRefreshRegression": "passed",
+  "independentVisualCritiques": [
+    "circles-critique-1.md",
+    "circles-critique-2.md"
+  ],
+  "humanApproved": false
+}

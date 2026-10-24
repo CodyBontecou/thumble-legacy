@@ -1,0 +1,281 @@
+{
+  "geometryDifferences": [],
+  "bindingDigestUnchanged": true,
+  "elementInputsAndHapticsUnchanged": true,
+  "allBankHapticsUnchanged": true,
+  "liveAssetReferencesUnchanged": true,
+  "liveAssetBytesUnchanged": true,
+  "iconMeasurements": [
+    {
+      "frame": "landscape-light-base-normal",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-light-base-normal",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-light-base-normal",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-light-base-pressed",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-light-base-pressed",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-light-base-pressed",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-light-base-active",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-light-base-active",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-light-base-active",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-light-base-disabled",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-light-base-disabled",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-light-base-disabled",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-light-base-mixed",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-light-base-mixed",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-light-base-mixed",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-dark-base-normal",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-dark-base-normal",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-dark-base-normal",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-dark-base-pressed",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-dark-base-pressed",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-dark-base-pressed",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-dark-base-active",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-dark-base-active",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-dark-base-active",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-dark-base-disabled",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-dark-base-disabled",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-dark-base-disabled",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    },
+    {
+      "frame": "landscape-dark-base-mixed",
+      "control": "builtin.00000000-0000-0000-0000-000000000102",
+      "identity": "wow-live-icon-133972",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-133972"
+    },
+    {
+      "frame": "landscape-dark-base-mixed",
+      "control": "custom.EC23E249-A085-4F43-AF36-A6A0803918C4",
+      "identity": "wow-live-icon-132282",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-132282"
+    },
+    {
+      "frame": "landscape-dark-base-mixed",
+      "control": "custom.1CC9AE7A-78B6-40DC-84CB-39E7D552DDE6",
+      "identity": "wow-live-icon-135274",
+      "mask": "circle",
+      "scale": 2.9411764705882355,
+      "size": 64.00000000000001,
+      "previousIdentity": "wow-live-icon-135274"
+    }
+  ],
+  "evidenceSHA256": "1f4bb3cbb8bd5f263a7e5df4117c16b52b9de7ead3078f2ff9d67d2285d200f9"
+}

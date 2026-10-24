@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "reviewedContactSheet": "build/ConsolePortLab/consoleport-design-circles-final/reviews/review-1/contact-sheet.png",
+  "contactSheetSHA256": "104807b8fc34342effdba399e32374b65661ef976a05062c965e94389b49f182",
+  "artifactSHA256": "365849055ddae99bfc4d22fdecce59b5581befb84ad0fe218e6d255e16e20f23",
+  "evidenceSHA256": "23905712975d41f97ee0b764215cf423b9b4a68023527ddbaade527d5fc78872",
+  "humanApproved": false,
+  "publicationAuthorized": false
+}

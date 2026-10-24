@@ -1,0 +1,722 @@
+[
+  {
+    "frame": "portrait-light-normal",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-normal",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-normal",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 7.129823850312911
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 7.129823850312911
+  },
+  {
+    "frame": "portrait-light-active",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-active",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-active",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "glyph": "Move",
+    "foregroundRGB": [
+      65,
+      67,
+      63
+    ],
+    "backgroundRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 6.104651373233958
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      101,
+      102,
+      97
+    ],
+    "backgroundRGB": [
+      243,
+      238,
+      227
+    ],
+    "contrastRatio": 5.004811940124862
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      65,
+      68,
+      64
+    ],
+    "backgroundRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 6.230064109124056
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "portrait-dark-active",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-active",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-active",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "glyph": "Move",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "backgroundRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "backgroundRGB": [
+      35,
+      46,
+      53
+    ],
+    "contrastRatio": 6.398270812678597
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      209,
+      202,
+      190
+    ],
+    "backgroundRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 9.868820001404965
+  },
+  {
+    "frame": "landscape-light-normal",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-normal",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-normal",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 7.129823850312911
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 7.129823850312911
+  },
+  {
+    "frame": "landscape-light-active",
+    "glyph": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-active",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-active",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "backgroundRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "glyph": "Move",
+    "foregroundRGB": [
+      65,
+      67,
+      63
+    ],
+    "backgroundRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 6.104651373233958
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      101,
+      102,
+      97
+    ],
+    "backgroundRGB": [
+      243,
+      238,
+      227
+    ],
+    "contrastRatio": 5.004811940124862
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      65,
+      68,
+      64
+    ],
+    "backgroundRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 6.230064109124056
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "landscape-dark-active",
+    "glyph": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-active",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-active",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "backgroundRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "glyph": "Move",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "backgroundRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "glyph": "Cursor",
+    "foregroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "backgroundRGB": [
+      35,
+      46,
+      53
+    ],
+    "contrastRatio": 6.398270812678597
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "glyph": "Drawer",
+    "foregroundRGB": [
+      209,
+      202,
+      190
+    ],
+    "backgroundRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 9.868820001404965
+  }
+]

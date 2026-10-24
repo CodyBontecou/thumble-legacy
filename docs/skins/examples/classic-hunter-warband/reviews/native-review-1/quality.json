@@ -1,0 +1,238 @@
+{
+  "checkedArtboardID" : "classic-hunter-warband-captured-v1",
+  "issues" : [
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (base, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (base, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (base, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (base, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (landscape-light, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (landscape-light, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (landscape-light, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (landscape-light, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (portrait-light, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (portrait-light, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (portrait-light, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6 (portrait-light, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-button-3-c9-b8-b-f7-6689-5-e77-a495-e7-a4995635-c6"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (base, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (base, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (base, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (base, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (landscape-light, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (landscape-light, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (landscape-light, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (landscape-light, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-landscape-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (portrait-light, normal) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (portrait-light, pressed) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (portrait-light, active) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-role-trackpad"
+      }
+    },
+    {
+      "code" : "low-style-contrast",
+      "message" : "Style css-role-trackpad (portrait-light, disabled) has 1.47:1 legend contrast against its face; require at least 3:1.",
+      "path" : "skin.json.styleLibrary.css-role-trackpad",
+      "severity" : "error",
+      "target" : {
+        "appearanceID" : "css-portrait-light",
+        "styleID" : "css-role-trackpad"
+      }
+    }
+  ],
+  "score" : 0
+}

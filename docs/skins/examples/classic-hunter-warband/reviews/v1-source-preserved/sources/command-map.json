@@ -1,0 +1,233 @@
+{
+  "movementElementID": "9839F49B-4B94-5475-8D06-F72F013D922E",
+  "commands": [
+    {
+      "command": "ACTIONBUTTON11",
+      "elementID": "700381D6-7668-5C81-ADE2-A93AE679F647",
+      "caption": "Water",
+      "accessibilityName": "Refreshing Spring Water",
+      "key": "-",
+      "icon": "spring-water",
+      "hint": "-",
+      "referenceSlot": 0,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "ACTIONBUTTON12",
+      "elementID": "FDE50653-80A4-5344-B3F9-11E4976DE226",
+      "caption": "Food",
+      "accessibilityName": "Tough Jerky",
+      "key": "=",
+      "icon": "tough-jerky",
+      "hint": "=",
+      "referenceSlot": 1,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TARGETNEARESTENEMY",
+      "elementID": "47ABBDA3-02D7-55D0-B4B8-B41C8C1E7B4C",
+      "caption": "Target",
+      "accessibilityName": "Target nearest enemy",
+      "key": "TAB",
+      "icon": null,
+      "hint": "Tab",
+      "referenceSlot": 2,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TARGETPREVIOUSENEMY",
+      "elementID": "5BD82721-D9FF-5990-BDBE-C2CF1E617EAA",
+      "caption": "Previous",
+      "accessibilityName": "Target previous enemy",
+      "key": "SHIFT-TAB",
+      "icon": null,
+      "hint": "\u21e7Tab",
+      "referenceSlot": 3,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "JUMP",
+      "elementID": "CA73647D-F9AE-5410-AE7D-D26F0F145CE7",
+      "caption": "Jump",
+      "accessibilityName": "Jump",
+      "key": "SPACE",
+      "icon": null,
+      "hint": "Space",
+      "referenceSlot": 4,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "ACTIONBUTTON1",
+      "elementID": "0987A2E8-6F5A-51AA-BC08-860A875B4F04",
+      "caption": "Attack",
+      "accessibilityName": "Attack",
+      "key": "1",
+      "icon": "attack",
+      "hint": "1",
+      "referenceSlot": 5,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "ACTIONBUTTON2",
+      "elementID": "B6EAD2EC-1AE0-5A43-B7D2-FD1505CE4E13",
+      "caption": "Raptor Strike",
+      "accessibilityName": "Raptor Strike",
+      "key": "2",
+      "icon": "raptor-strike",
+      "hint": "2",
+      "referenceSlot": 6,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "ACTIONBUTTON3",
+      "elementID": "E5F9558B-8C54-52B3-91FE-B4A758179F1D",
+      "caption": "Auto Shot",
+      "accessibilityName": "Auto Shot",
+      "key": "3",
+      "icon": "auto-shot",
+      "hint": "3",
+      "referenceSlot": 7,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TOGGLEWORLDMAP",
+      "elementID": "184FCABD-EBD3-53F7-AD4C-6EA21FB8CFD1",
+      "caption": "Map",
+      "accessibilityName": "World map",
+      "key": "M",
+      "icon": null,
+      "hint": "M",
+      "referenceSlot": 12,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TOGGLECHARACTER0",
+      "elementID": "B9DB5288-52F4-5AFB-9E9B-E17FD541890A",
+      "caption": "Character",
+      "accessibilityName": "Character",
+      "key": "C",
+      "icon": null,
+      "hint": "C",
+      "referenceSlot": 13,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "OPENALLBAGS",
+      "elementID": "F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+      "caption": "Bags",
+      "accessibilityName": "Bags",
+      "key": "SHIFT-B",
+      "icon": null,
+      "hint": "\u21e7B",
+      "referenceSlot": 14,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TARGETSELF",
+      "elementID": "5AA44897-7D31-5524-A4D0-F338A7D69B04",
+      "caption": "Self",
+      "accessibilityName": "Target self",
+      "key": "F1",
+      "icon": null,
+      "hint": "F1",
+      "referenceSlot": 15,
+      "isDuplicateShortcut": false
+    },
+    {
+      "command": "TOGGLEWORLDMAP",
+      "elementID": "50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+      "caption": "Map",
+      "accessibilityName": "World map",
+      "key": "M",
+      "icon": null,
+      "hint": "M",
+      "referenceSlot": 8,
+      "isDuplicateShortcut": true
+    },
+    {
+      "command": "TOGGLECHARACTER0",
+      "elementID": "49F0530B-1BD5-5309-8309-4E9E6332A854",
+      "caption": "Character",
+      "accessibilityName": "Character",
+      "key": "C",
+      "icon": null,
+      "hint": "C",
+      "referenceSlot": 9,
+      "isDuplicateShortcut": true
+    },
+    {
+      "command": "JUMP",
+      "elementID": "1E11667A-13FF-5290-8EB2-BE7F755F2738",
+      "caption": "Jump",
+      "accessibilityName": "Jump",
+      "key": "SPACE",
+      "icon": null,
+      "hint": "Space",
+      "referenceSlot": 16,
+      "isDuplicateShortcut": true
+    },
+    {
+      "command": "TARGETSELF",
+      "elementID": "FCF5BD0E-DDA9-54F6-BD4E-633D5297849C",
+      "caption": "Self",
+      "accessibilityName": "Target self",
+      "key": "F1",
+      "icon": null,
+      "hint": "F1",
+      "referenceSlot": 17,
+      "isDuplicateShortcut": true
+    }
+  ],
+  "movementParts": [
+    {
+      "command": "MOVEFORWARD",
+      "part": "joystick_up",
+      "output": {
+        "keyboard": {
+          "keyCode": 13,
+          "modifiersRawValue": 0
+        },
+        "gamepadButtons": []
+      }
+    },
+    {
+      "command": "MOVEBACKWARD",
+      "part": "joystick_down",
+      "output": {
+        "keyboard": {
+          "keyCode": 1,
+          "modifiersRawValue": 0
+        },
+        "gamepadButtons": []
+      }
+    },
+    {
+      "command": "STRAFELEFT",
+      "part": "joystick_left",
+      "output": {
+        "keyboard": {
+          "keyCode": 12,
+          "modifiersRawValue": 0
+        },
+        "gamepadButtons": []
+      }
+    },
+    {
+      "command": "STRAFERIGHT",
+      "part": "joystick_right",
+      "output": {
+        "keyboard": {
+          "keyCode": 14,
+          "modifiersRawValue": 0
+        },
+        "gamepadButtons": []
+      }
+    }
+  ],
+  "unboundCommands": [
+    "INTERACTTARGET"
+  ],
+  "cursorElementID": "3C9B8BF7-6689-5E77-A495-E7A4995635C6",
+  "addedAffordance": "Cursor: relative pointer/tap to click; not camera drag",
+  "omittedUnboundReferenceControls": []
+}

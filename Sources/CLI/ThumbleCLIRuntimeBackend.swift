@@ -93,17 +93,24 @@ final class ThumbleCLIRuntimeBackend {
         return output
     }
 
+    enum AccessibilityAction: String, Encodable { case status, prompt, open }
+
     enum Command: Encodable {
-        case status, releaseAll, gamepadStatus, gamepadRetry
+        case status, releaseAll, gamepadStatus, gamepadRetry, cancelPairing
+        case accessibility(AccessibilityAction)
         case launchProfile(ThumbleCLIProfileBackend.ProfileSelector)
         case tapControl(String)
         case testControl(String, ButtonPressState)
 
-        private enum CodingKeys: String, CodingKey { case type, controlID, state, profile }
+        private enum CodingKeys: String, CodingKey { case type, controlID, state, profile, action }
         func encode(to encoder: Encoder) throws {
             var c = encoder.container(keyedBy: CodingKeys.self)
             let type: String
             switch self {
+            case .cancelPairing: type = "pairing-cancel"
+            case .accessibility(let action):
+                type = "accessibility"
+                try c.encode(action, forKey: .action)
             case .status: type = "status"
             case .releaseAll: type = "release-all"
             case .gamepadStatus: type = "gamepad-status"
@@ -137,6 +144,8 @@ final class ThumbleCLIRuntimeBackend {
         let ok: Bool
         let status: HostProjection?
         let released: Bool?
+        let pairingCancelled: Bool?
+        let accessibilityTrusted: Bool?
         let pressedControlID: String?
         let virtualGamepadStatus: VirtualGamepadStatus?
         let applicationLaunch: LaunchProjection?
@@ -170,11 +179,6 @@ final class ThumbleCLIRuntimeBackend {
     struct OutputProjection: Decodable {
         let mode: String
         let virtualGamepadStatus: VirtualGamepadStatus?
-    }
-    enum Route {
-        case rust(Response)
-        /// Raw status is decoded in a separate phase by the CLI, avoiding large model copies here.
-        case legacy(Data)
     }
     enum BackendError: LocalizedError {
         case invalidControl, invalidProfile, malformedResponse, requestTooLarge, responseTooLarge
@@ -364,17 +368,16 @@ final class ThumbleCLIRuntimeBackend {
             && (status.lastError?.utf8.count ?? 0) <= 2048
     }
 
-    /// A failed Rust socket is not permission to broadcast legacy input. Only an absent
-    /// runtime or held lock without Rust artifacts may attempt correlated legacy verification.
-    func route(_ command: Command, invocationID: UUID = UUID(),
-               legacyStatus: (UUID) throws -> Data,
-               processIsLive: (Int32) -> Bool = { Darwin.kill($0, 0) == 0 },
-               now: Int64 = Int64(Date().timeIntervalSince1970 * 1000)) throws -> Route {
+    /// Only a correlated acknowledgement from the running headless receiver
+    /// authorizes an operation. No legacy status or notification path exists.
+    func route(_ command: Command, invocationID: UUID = UUID()) throws -> Response {
         let response = try perform(command, invocationID: invocationID)
         if response.owner == .rust {
             guard response.ok else { throw failure(response) }
             switch command {
             case .status: guard response.control?.status != nil else { throw BackendError.malformedResponse }
+            case .cancelPairing: guard response.control?.pairingCancelled != nil else { throw BackendError.malformedResponse }
+            case .accessibility: guard response.control?.accessibilityTrusted != nil else { throw BackendError.malformedResponse }
             case .releaseAll: guard response.control?.released == true else { throw BackendError.helperFailed }
             case .tapControl(let id), .testControl(let id, _):
                 guard response.control?.pressedControlID?.lowercased() == id.lowercased() else { throw BackendError.helperFailed }
@@ -384,7 +387,7 @@ final class ThumbleCLIRuntimeBackend {
             case .gamepadStatus, .gamepadRetry:
                 guard response.control?.virtualGamepadStatus != nil else { throw BackendError.malformedResponse }
             }
-            return .rust(response)
+            return response
         }
         // A missing or unreachable headless owner cannot authorize desktop IPC.
         throw failure(response)
@@ -392,23 +395,6 @@ final class ThumbleCLIRuntimeBackend {
 
     private func failure(_ response: Response) -> BackendError {
         response.error.map { .remote($0, response.invocationID) } ?? .noVerifiedOwner
-    }
-
-    static func verifyLegacyStatus(_ data: Data, requestID: UUID, now: Int64,
-                                   processIsLive: (Int32) -> Bool) throws {
-        struct Identity: Decodable {
-            let updatedAt: Int64
-            let runtimeProcessID: Int32
-            let runtimeInstanceID: UUID
-            let runtimeStatusRequestID: UUID
-        }
-        guard data.count <= maximumFrameBytes,
-              let identity = try? JSONDecoder().decodeUnique(Identity.self, from: data),
-              identity.runtimeStatusRequestID == requestID,
-              identity.runtimeProcessID > 0,
-              identity.updatedAt <= now + 1000, identity.updatedAt >= now - 3000,
-              processIsLive(identity.runtimeProcessID)
-        else { throw BackendError.noVerifiedOwner }
     }
 
     private static func execute(_ input: Data, at url: URL, timeout: TimeInterval,

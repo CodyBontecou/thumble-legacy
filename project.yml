@@ -146,6 +146,7 @@ targets:
       - path: Sources/NativeHost/MacConfigurationBindings.swift
       - path: Sources/NativeHost/ThumbleLinkImport.swift
       - path: Sources/Mac/ThumbleLinkImportView.swift
+      - path: Sources/Mac/ThumbleNativeConfiguration.swift
       - path: Sources/Mac/MacRustAuthorityInterlock.swift
       - path: Sources/Mac/MacSharedKeypadImport.swift
       - path: Sources/Mac/VirtualGamepadInjector.swift

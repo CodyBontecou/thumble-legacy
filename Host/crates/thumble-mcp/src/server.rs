@@ -197,8 +197,8 @@ pub struct RollbackAuthorityParams {
     pub plan_json: String,
 }
 
-const THUMBLE_ICON_URL: &str = "https://pocketpad-site.pages.dev/assets/app-icon.png?v=6eae962e";
-const THUMBLE_WEBSITE_URL: &str = "https://pocketpad-site.pages.dev";
+const THUMBLE_ICON_URL: &str = "https://thumble.io/assets/app-icon.png?v=6eae962e";
+const THUMBLE_WEBSITE_URL: &str = "https://thumble.io";
 
 fn thumble_server_implementation() -> Implementation {
     Implementation::new("thumble-mcp", env!("CARGO_PKG_VERSION"))
@@ -399,6 +399,34 @@ pub struct PairingCodeParams {
 pub struct PairingCodeResult {
     pub pairing_code: String,
     pub rotated: bool,
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(rename_all = "lowercase")]
+pub enum AccessibilityOperation {
+    Prompt,
+    Open,
+}
+
+#[derive(Debug, Clone, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AccessibilityActionParams {
+    pub action: AccessibilityOperation,
+}
+
+#[derive(Debug, Clone, Serialize, JsonSchema)]
+pub struct PairingCancelResult {
+    pub cancelled: bool,
+}
+
+#[derive(Debug, Clone, Serialize, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct PairingPayloadResult {
+    pub urls: Vec<String>,
+    pub pairing_code: String,
+    #[serde(rename = "serverID")]
+    pub server_id: String,
+    pub service_name: String,
 }
 
 #[derive(Debug, Clone, Serialize, JsonSchema)]
@@ -4751,7 +4779,85 @@ impl ThumbleMcp {
             )
             .await?;
         Ok(Json(AccessibilityStatusResult {
-            trusted: response.accessibility_trusted.unwrap_or(false),
+            trusted: response
+                .accessibility_trusted
+                .ok_or("Receiver returned no Accessibility status")?,
+        }))
+    }
+
+    #[tool(
+        description = "Explicitly prompt for the running receiver's macOS Accessibility permission or open its system settings. Requires MCP --allow-config-write. Never launches the desktop GUI.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn accessibility_action(
+        &self,
+        Parameters(params): Parameters<AccessibilityActionParams>,
+    ) -> Result<Json<AccessibilityStatusResult>, String> {
+        if !self.allow_config_write {
+            return Err("Accessibility system actions require MCP --allow-config-write".into());
+        }
+        let action = match params.action {
+            AccessibilityOperation::Prompt => AccessibilityAction::Prompt,
+            AccessibilityOperation::Open => AccessibilityAction::Open,
+        };
+        let response = self
+            .request(
+                "accessibility_action",
+                ControlRequest::Accessibility { action },
+            )
+            .await?;
+        Ok(Json(AccessibilityStatusResult {
+            trusted: response
+                .accessibility_trusted
+                .ok_or("Receiver returned no Accessibility acknowledgement")?,
+        }))
+    }
+
+    #[tool(
+        description = "Cancel only the pending phone pairing challenge and invalidate its code. Keeps trusted clients and active input intact. A repeated call without a pending challenge reports cancelled=false.",
+        annotations(
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn pairing_cancel(&self) -> Result<Json<PairingCancelResult>, String> {
+        let response = self
+            .request("pairing_cancel", ControlRequest::CancelPairing)
+            .await?;
+        Ok(Json(PairingCancelResult {
+            cancelled: response
+                .pairing_cancelled
+                .ok_or("Receiver returned no pairing cancellation acknowledgement")?,
+        }))
+    }
+
+    #[tool(
+        description = "Return the running local receiver's phone pairing URLs, code, server identity and service name from one status snapshot. Does not rotate codes, start a receiver, or read desktop preferences.",
+        annotations(
+            read_only_hint = true,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    pub async fn pairing_payload(&self) -> Result<Json<PairingPayloadResult>, String> {
+        let status = self
+            .request("pairing_payload", ControlRequest::Status)
+            .await?
+            .status
+            .ok_or("Receiver returned no pairing payload")?;
+        Ok(Json(PairingPayloadResult {
+            urls: status.urls,
+            pairing_code: status.pairing_code,
+            server_id: status.server_id,
+            service_name: status.service_name,
         }))
     }
 
@@ -6411,6 +6517,100 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn permission_actions_require_opt_in_and_all_runtime_tools_require_receipts() {
+        struct Channel {
+            calls: Arc<std::sync::Mutex<Vec<ControlRequest>>>,
+            missing: bool,
+        }
+        impl crate::channel::HostChannel for Channel {
+            fn request(
+                &self,
+                request: ControlRequest,
+            ) -> crate::channel::BoxedHostRequestFuture<'_> {
+                self.calls.lock().unwrap().push(request.clone());
+                let missing = self.missing;
+                Box::pin(async move {
+                    let mut response = ControlResponse::success();
+                    if !missing {
+                        match request {
+                            ControlRequest::Accessibility { .. } => {
+                                response.accessibility_trusted = Some(false)
+                            }
+                            ControlRequest::CancelPairing => {
+                                response.pairing_cancelled = Some(false)
+                            }
+                            _ => {}
+                        }
+                    }
+                    Ok(response)
+                })
+            }
+        }
+        let calls = Arc::new(std::sync::Mutex::new(Vec::new()));
+        let channel = || {
+            Arc::new(Channel {
+                calls: calls.clone(),
+                missing: false,
+            })
+        };
+        let disabled = ThumbleMcp::with_channel(channel(), false, false);
+        assert!(!disabled.accessibility_status().await.unwrap().0.trusted);
+        assert!(!disabled.pairing_cancel().await.unwrap().0.cancelled);
+        for action in [AccessibilityOperation::Prompt, AccessibilityOperation::Open] {
+            assert!(disabled
+                .accessibility_action(Parameters(AccessibilityActionParams { action }))
+                .await
+                .err()
+                .expect("system-action opt-in must be enforced")
+                .contains("--allow-config-write"));
+        }
+        assert_eq!(calls.lock().unwrap().len(), 2);
+        let enabled = ThumbleMcp::with_channel(channel(), false, true);
+        for action in [AccessibilityOperation::Prompt, AccessibilityOperation::Open] {
+            assert!(
+                !enabled
+                    .accessibility_action(Parameters(AccessibilityActionParams { action }))
+                    .await
+                    .unwrap()
+                    .0
+                    .trusted
+            );
+        }
+        assert_eq!(
+            *calls.lock().unwrap(),
+            vec![
+                ControlRequest::Accessibility {
+                    action: AccessibilityAction::Status
+                },
+                ControlRequest::CancelPairing,
+                ControlRequest::Accessibility {
+                    action: AccessibilityAction::Prompt
+                },
+                ControlRequest::Accessibility {
+                    action: AccessibilityAction::Open
+                }
+            ]
+        );
+        let missing = ThumbleMcp::with_channel(
+            Arc::new(Channel {
+                calls,
+                missing: true,
+            }),
+            false,
+            true,
+        );
+        assert!(missing.accessibility_status().await.is_err());
+        assert!(missing.pairing_cancel().await.is_err());
+        assert!(missing.pairing_payload().await.is_err());
+        assert!(missing
+            .accessibility_action(Parameters(AccessibilityActionParams {
+                action: AccessibilityOperation::Prompt
+            }))
+            .await
+            .is_err());
+    }
+
+    #[tokio::test]
     async fn application_launch_requires_input_opt_in_and_correlates_receipts() {
         struct Channel {
             count: Arc<std::sync::atomic::AtomicUsize>,
@@ -6973,7 +7173,7 @@ mod tests {
         assert!(!schema_json.contains("keyCode"));
         assert!(!schema_json.contains("PocketPad"));
         assert!(!schema_json.contains("pocketpad-"));
-        assert_eq!(tools.len(), 42);
+        assert_eq!(tools.len(), 45);
         for name in [
             "controller_design_capabilities",
             "begin_controller_design",
@@ -7082,6 +7282,7 @@ mod tests {
         assert_eq!(
             names,
             vec![
+                "accessibility_action",
                 "accessibility_status",
                 "apply_controller_design",
                 "begin_configuration_draft",
@@ -7107,7 +7308,9 @@ mod tests {
                 "list_controls",
                 "list_profiles",
                 "migrate_profile_authority",
+                "pairing_cancel",
                 "pairing_code",
+                "pairing_payload",
                 "prepare_legacy_profile_import",
                 "press_control",
                 "preview_configuration_draft",
@@ -7452,7 +7655,7 @@ mod tests {
             Some(["1024x1024".to_owned()].as_slice())
         );
         let tools = client.list_all_tools().await.unwrap();
-        assert_eq!(tools.len(), 42);
+        assert_eq!(tools.len(), 45);
         assert!(tools
             .iter()
             .any(|tool| tool.name == "preview_skin_workspace"));

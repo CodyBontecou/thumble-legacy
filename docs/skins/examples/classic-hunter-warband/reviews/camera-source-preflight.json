@@ -1,0 +1,29 @@
+{
+  "customization": {
+    "oldIDsPreserved": 18,
+    "newIDs": [
+      "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+      "898354BA-213F-5CA1-B85C-F06D9495E18B",
+      "BA5C2D0B-75AF-569B-8848-6227B293158D"
+    ],
+    "controlCountWithoutToggle": 21
+  },
+  "landscapeCustomization": {
+    "oldIDsPreserved": 18,
+    "newIDs": [
+      "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+      "898354BA-213F-5CA1-B85C-F06D9495E18B",
+      "BA5C2D0B-75AF-569B-8848-6227B293158D"
+    ],
+    "controlCountWithoutToggle": 21
+  },
+  "portraitCustomization": {
+    "oldIDsPreserved": 18,
+    "newIDs": [
+      "34C280F9-4C09-5EB1-8B5B-8169E8C882E8",
+      "898354BA-213F-5CA1-B85C-F06D9495E18B",
+      "BA5C2D0B-75AF-569B-8848-6227B293158D"
+    ],
+    "controlCountWithoutToggle": 21
+  }
+}

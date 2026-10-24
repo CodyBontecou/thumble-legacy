@@ -1,0 +1,1154 @@
+[
+  {
+    "frame": "portrait-light-normal",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 45,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-normal",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-normal",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-normal",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 39,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 56,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 52,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 131,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "portrait-light-active",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      88,
+      90,
+      85
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 4,
+    "contrastRatio": 6.141749083957448
+  },
+  {
+    "frame": "portrait-light-active",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-active",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-active",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 45,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      192,
+      188,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 62,
+    "contrastRatio": 6.9332170941000655
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      187,
+      182,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 43,
+    "contrastRatio": 8.79476565120098
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 76,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 61,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 169,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "portrait-dark-active",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      192,
+      188,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 60,
+    "contrastRatio": 6.9332170941000655
+  },
+  {
+    "frame": "portrait-dark-active",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-active",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-active",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 62,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "landscape-light-normal",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 45,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-normal",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-normal",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-normal",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 39,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 56,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 52,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      63,
+      65,
+      55
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "coveredInteriorPixels": 131,
+    "contrastRatio": 5.173988411451362
+  },
+  {
+    "frame": "landscape-light-active",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      88,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 4,
+    "contrastRatio": 6.1352200280360165
+  },
+  {
+    "frame": "landscape-light-active",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-active",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-active",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      89,
+      90,
+      86
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 6.11526482184579
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 45,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 68,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 55,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      84,
+      85,
+      78
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "coveredInteriorPixels": 143,
+    "contrastRatio": 4.7527367986383515
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      192,
+      188,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 62,
+    "contrastRatio": 6.9332170941000655
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      187,
+      182,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 43,
+    "contrastRatio": 8.79476565120098
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 76,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 61,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      187,
+      183,
+      171
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "coveredInteriorPixels": 169,
+    "contrastRatio": 8.864343123689855
+  },
+  {
+    "frame": "landscape-dark-active",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      192,
+      188,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 62,
+    "contrastRatio": 6.9332170941000655
+  },
+  {
+    "frame": "landscape-dark-active",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-active",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-active",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      192,
+      189,
+      178
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.986887104080714
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "hint": "M",
+    "referenceSlot": 8,
+    "controlID": "custom.50E98B5E-27EE-55A4-A8E9-5F03A41A12CE",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 62,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "hint": "Shift-B",
+    "referenceSlot": 14,
+    "controlID": "custom.F605269C-B5A3-5262-A75F-FDDA7F643CB9",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 97,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "hint": "F1",
+    "referenceSlot": 15,
+    "controlID": "custom.5AA44897-7D31-5524-A4D0-F338A7D69B04",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 70,
+    "contrastRatio": 6.31478096909961
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "hint": "Space",
+    "referenceSlot": 16,
+    "controlID": "custom.1E11667A-13FF-5290-8EB2-BE7F755F2738",
+    "foregroundRGB": [
+      166,
+      162,
+      154
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "coveredInteriorPixels": 211,
+    "contrastRatio": 6.31478096909961
+  }
+]

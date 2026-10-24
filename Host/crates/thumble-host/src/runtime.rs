@@ -451,6 +451,17 @@ impl SharedRuntime {
         Ok(core.pairing_code().to_owned())
     }
 
+    fn cancel_pairing(&self) -> Result<bool, String> {
+        let mut inner = self.inner.lock().expect("runtime mutex poisoned");
+        let cancelled = inner.core.status().pairing_pending;
+        let RuntimeInner { core, tokens, .. } = &mut *inner;
+        let effects = core
+            .cancel_pairing(tokens)
+            .map_err(|error| format!("cancel pairing: {error}"))?;
+        self.execute_effects(&mut inner, effects)?;
+        Ok(cancelled)
+    }
+
     fn pairing_code(&self) -> String {
         self.inner
             .lock()
@@ -1602,6 +1613,14 @@ impl ControlHandler for SharedRuntime {
                 "hosted_builds_retired",
                 "Hosted shared builds are retired. Use local profile import.",
             ),
+            ControlRequest::CancelPairing => match self.cancel_pairing() {
+                Ok(cancelled) => {
+                    let mut response = ControlResponse::success();
+                    response.pairing_cancelled = Some(cancelled);
+                    response
+                }
+                Err(error) => ControlResponse::error(error),
+            },
             ControlRequest::PairingCode { rotate } => {
                 let result = if rotate {
                     self.rotate_pairing_code()

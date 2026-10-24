@@ -610,7 +610,6 @@ final class ThumbleCLIProfileBackend {
         case assetRemove(ProfileSelector, assetID: String)
         case authorityStatus
         case list
-        case legacyDesktopSnapshot(ProfileSelector)
         case export(ProfileSelector?)
         case designApply(ProfileSelector, draftID: UUID?, expectedDraftRevision: UInt64?, packageBase64: String, packageSHA256: String, profileSHA256: String, evidenceSHA256: String, baseProfileSHA256: String? = nil, layoutEditsJSON: String? = nil)
         case designSnapshot(ProfileSelector, draftID: UUID?, expectedDraftRevision: UInt64?, createDraft: Bool = false)
@@ -745,9 +744,6 @@ final class ThumbleCLIProfileBackend {
                 try container.encode(assetID, forKey: .assetID)
             case .authorityStatus:
                 try container.encode("authority.status", forKey: .type)
-            case .legacyDesktopSnapshot(let target):
-                try container.encode("migration.desktop-snapshot",forKey:.type)
-                try container.encode(target,forKey:.target)
             case .list:
                 try container.encode("profile.list", forKey: .type)
             case .designApply(let target, let draftID, let expectedDraftRevision, let packageBase64, let packageSHA256, let profileSHA256, let evidenceSHA256, let baseProfileSHA256, let layoutEditsJSON):

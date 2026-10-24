@@ -1,0 +1,1442 @@
+[
+  {
+    "frame": "portrait-light-normal",
+    "legend": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-normal",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-normal",
+    "legend": "Camera",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-normal",
+    "legend": "L click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-normal",
+    "legend": "R click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-normal",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "Move",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      63,
+      65,
+      61
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 9.08072353802591
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "Camera",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "L click",
+    "foregroundRGB": [
+      54,
+      55,
+      48
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 5.9937286505990475
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "R click",
+    "foregroundRGB": [
+      54,
+      55,
+      48
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 5.9937286505990475
+  },
+  {
+    "frame": "portrait-light-pressed",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "Camera",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "L click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "R click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "portrait-light-active",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "Move",
+    "foregroundRGB": [
+      45,
+      47,
+      42
+    ],
+    "faceRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 8.259843515979862
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      84,
+      86,
+      79
+    ],
+    "faceRGB": [
+      243,
+      238,
+      227
+    ],
+    "contrastRatio": 6.43391713329759
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "Camera",
+    "foregroundRGB": [
+      45,
+      47,
+      42
+    ],
+    "faceRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 8.259843515979862
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "L click",
+    "foregroundRGB": [
+      74,
+      76,
+      69
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 5.492976676284886
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "R click",
+    "foregroundRGB": [
+      74,
+      76,
+      69
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 5.492976676284886
+  },
+  {
+    "frame": "portrait-light-disabled",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      45,
+      48,
+      43
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 8.439045867317128
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "L click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "R click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-normal",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "L click",
+    "foregroundRGB": [
+      201,
+      195,
+      182
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 10.125829805205477
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "R click",
+    "foregroundRGB": [
+      201,
+      195,
+      182
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 10.125829805205477
+  },
+  {
+    "frame": "portrait-dark-pressed",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "L click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "R click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "portrait-dark-active",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "Move",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "faceRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "faceRGB": [
+      35,
+      46,
+      53
+    ],
+    "contrastRatio": 6.398270812678597
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "Camera",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "faceRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "L click",
+    "foregroundRGB": [
+      176,
+      172,
+      163
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 7.094745109354024
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "R click",
+    "foregroundRGB": [
+      176,
+      172,
+      163
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 7.094745109354024
+  },
+  {
+    "frame": "portrait-dark-disabled",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      209,
+      202,
+      190
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 9.868820001404965
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "Camera",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "L click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "R click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-normal",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "Move",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      63,
+      65,
+      61
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 9.08072353802591
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "Camera",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "L click",
+    "foregroundRGB": [
+      54,
+      55,
+      48
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 5.9937286505990475
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "R click",
+    "foregroundRGB": [
+      54,
+      55,
+      48
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 5.9937286505990475
+  },
+  {
+    "frame": "landscape-light-pressed",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      23,
+      27,
+      24
+    ],
+    "faceRGB": [
+      194,
+      182,
+      156
+    ],
+    "contrastRatio": 8.674697028479887
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "Move",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "Camera",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "L click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "R click",
+    "foregroundRGB": [
+      77,
+      78,
+      75
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 7.370805606275174
+  },
+  {
+    "frame": "landscape-light-active",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      40,
+      43,
+      41
+    ],
+    "faceRGB": [
+      245,
+      240,
+      229
+    ],
+    "contrastRatio": 12.588940061061667
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "Move",
+    "foregroundRGB": [
+      45,
+      47,
+      42
+    ],
+    "faceRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 8.259843515979862
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      84,
+      86,
+      79
+    ],
+    "faceRGB": [
+      243,
+      238,
+      227
+    ],
+    "contrastRatio": 6.43391713329759
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "Camera",
+    "foregroundRGB": [
+      45,
+      47,
+      42
+    ],
+    "faceRGB": [
+      206,
+      202,
+      190
+    ],
+    "contrastRatio": 8.259843515979862
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "L click",
+    "foregroundRGB": [
+      74,
+      76,
+      69
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 5.492976676284886
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "R click",
+    "foregroundRGB": [
+      74,
+      76,
+      69
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 5.492976676284886
+  },
+  {
+    "frame": "landscape-light-disabled",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      45,
+      48,
+      43
+    ],
+    "faceRGB": [
+      210,
+      205,
+      193
+    ],
+    "contrastRatio": 8.439045867317128
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "L click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "R click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-normal",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "L click",
+    "foregroundRGB": [
+      201,
+      195,
+      182
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 10.125829805205477
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "R click",
+    "foregroundRGB": [
+      201,
+      195,
+      182
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 10.125829805205477
+  },
+  {
+    "frame": "landscape-dark-pressed",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      17,
+      25,
+      30
+    ],
+    "contrastRatio": 14.619056609778042
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "Move",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "Camera",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "L click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "R click",
+    "foregroundRGB": [
+      205,
+      199,
+      187
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 7.812784094805977
+  },
+  {
+    "frame": "landscape-dark-active",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      241,
+      232,
+      216
+    ],
+    "faceRGB": [
+      38,
+      50,
+      57
+    ],
+    "contrastRatio": 10.811780514377691
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "Move",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "faceRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "Cursor",
+    "foregroundRGB": [
+      179,
+      176,
+      167
+    ],
+    "faceRGB": [
+      35,
+      46,
+      53
+    ],
+    "contrastRatio": 6.398270812678597
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "Camera",
+    "foregroundRGB": [
+      208,
+      203,
+      190
+    ],
+    "faceRGB": [
+      28,
+      36,
+      43
+    ],
+    "contrastRatio": 9.70208258830427
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "L click",
+    "foregroundRGB": [
+      176,
+      172,
+      163
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 7.094745109354024
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "R click",
+    "foregroundRGB": [
+      176,
+      172,
+      163
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 7.094745109354024
+  },
+  {
+    "frame": "landscape-dark-disabled",
+    "legend": "Drawer",
+    "foregroundRGB": [
+      209,
+      202,
+      190
+    ],
+    "faceRGB": [
+      27,
+      34,
+      41
+    ],
+    "contrastRatio": 9.868820001404965
+  }
+]

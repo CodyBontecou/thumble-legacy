@@ -1,0 +1,41 @@
+/* Warband Command. Appearance-only; geometry and bindings remain canonical. */
+:root { --ground:#E8E2D5; --face:#F5F0E5; --ink:#282B29; --edge:#715323; --well:#C9C5BA; --pressed:#C2B69C; --disabled:#CEC9BD; --bank:#715323; --pressure:#241C10; --shadow:#ADA594; --highlight:#FFFFFF; }
+controller { background:var(--ground); }
+control { background:var(--face); color:var(--ink); border:1px solid var(--edge); border-radius:7px; box-shadow:0px 2px 1px var(--shadow),inset 0px 1px 0px var(--highlight); font-size:13px; font-weight:semibold; }
+control:pressed { background:var(--pressed); border:2px solid var(--pressure); box-shadow:inset 0px 2px 1px var(--shadow); transform:scale(1); }
+control:active { background:var(--face); border:3px solid var(--bank); box-shadow:none; transform:scale(1); }
+control:disabled { background:var(--disabled); color:var(--ink); border:1px solid var(--edge); box-shadow:none; opacity:0.85; transform:scale(1); }
+control[group~="abilities"] { -thumble-legend:" "; background:#0C1115; color:#F1E8D8; border:1.5px solid var(--bank); border-radius:5px; box-shadow:0px 2px 1px var(--shadow); -thumble-icon-placement:center; -thumble-icon-scale:2.55; -thumble-icon-rendering:original; }
+control[group~="abilities"]:pressed { background:#000000; border:2px solid var(--pressure); box-shadow:inset 0px 3px 1px var(--shadow); }
+control[group~="abilities"]:active { background:#0C1115; border:3px solid var(--bank); box-shadow:none; }
+control[group~="abilities"]:disabled { background:#0C1115; border:1px solid var(--edge); box-shadow:none; opacity:0.65; }
+joystick { font-size:10px; -thumble-label-placement:center; background:var(--well); border:1px solid var(--edge); border-radius:60px; box-shadow:inset 0px 2px 1px var(--shadow); -thumble-joystick-ring-color:var(--edge); -thumble-joystick-ring-stroke-width:1px; -thumble-joystick-knob-fill:var(--face); -thumble-joystick-knob-stroke:var(--bank); -thumble-joystick-knob-stroke-width:2px; -thumble-joystick-knob-ratio:0.58; }
+joystick:pressed { -thumble-joystick-knob-fill:var(--pressed); -thumble-joystick-knob-stroke-width:3px; }
+joystick:active { -thumble-joystick-ring-color:var(--bank); -thumble-joystick-ring-stroke-width:3px; }
+joystick:disabled { -thumble-joystick-knob-fill:var(--disabled); -thumble-joystick-knob-stroke:var(--edge); }
+control[action="hunter.control-bar-toggle"] { -thumble-icon-symbol:"chevron.down"; -thumble-icon-placement:center; -thumble-icon-rendering:template; }
+@media (prefers-color-scheme:dark) { :root { --ground:#11171B; --face:#263239; --ink:#F1E8D8; --edge:#B8975C; --well:#0C1115; --pressed:#11191E; --disabled:#1C252B; --bank:#B8975C; --pressure:#FFF4D9; --shadow:#080C0E; --highlight:#53616A; } }
+
+/* Actual Hunter command-owned icon assets; no modifier banks. */
+control[action="hunter.actionbutton11"] { -thumble-icon:url(#spring-water); }
+control[action="hunter.actionbutton12"] { -thumble-icon:url(#tough-jerky); }
+control[action="hunter.actionbutton1"] { -thumble-icon:url(#attack); }
+control[action="hunter.actionbutton2"] { -thumble-icon:url(#raptor-strike); }
+control[action="hunter.actionbutton3"] { -thumble-icon:url(#auto-shot); }
+trackpad { background:url(#cursor-face-light); border:1px solid var(--edge); border-radius:60px; font-size:10px; -thumble-trackpad-frame:none; -thumble-trackpad-cursor:none; -thumble-trackpad-indicators:none; -thumble-label-padding:0px; }
+trackpad:pressed { background:url(#cursor-face-light); border:2px solid var(--pressure); }
+trackpad:active { background:url(#cursor-face-light); border:3px solid var(--bank); }
+trackpad:disabled { background:url(#cursor-face-light); opacity:0.85; }
+@media (prefers-color-scheme:dark) { trackpad,trackpad:pressed,trackpad:active,trackpad:disabled { background:url(#cursor-face-dark); } }
+control[action="hunter.targetpreviousenemy"] { -thumble-legend:"Prev"; }
+control[action="hunter.targetnearestenemy"],control[action="hunter.targetpreviousenemy"] { font-size:11px; -thumble-label-padding:3px; }
+control[action="hunter.jump"][role="primary_action"] { font-size:11px; -thumble-label-padding:2px; -thumble-line-limit:1; }
+@media (prefers-color-scheme:light) { control:pressed { color:#171B18; } control:disabled { color:#101410; } control[group~="abilities"]:pressed,control[group~="abilities"]:disabled { color:#F1E8D8; } }
+trackpad[action="hunter.left-click"] { background:var(--face); border:1px solid var(--edge); border-radius:7px; font-size:11px; -thumble-line-limit:2; -thumble-label-padding:2px; -thumble-trackpad-frame:none; -thumble-trackpad-cursor:none; -thumble-trackpad-indicators:none; }
+trackpad[action="hunter.left-click"]:pressed { background:var(--pressed); border:2px solid var(--pressure); }
+trackpad[action="hunter.left-click"]:active { background:var(--face); border:3px solid var(--bank); }
+trackpad[action="hunter.left-click"]:disabled { background:var(--disabled); opacity:0.85; }
+trackpad[action="hunter.right-click"] { background:var(--face); border:1px solid var(--edge); border-radius:7px; font-size:11px; -thumble-line-limit:2; -thumble-label-padding:2px; -thumble-trackpad-frame:none; -thumble-trackpad-cursor:none; -thumble-trackpad-indicators:none; }
+trackpad[action="hunter.right-click"]:pressed { background:var(--pressed); border:2px solid var(--pressure); }
+trackpad[action="hunter.right-click"]:active { background:var(--face); border:3px solid var(--bank); }
+trackpad[action="hunter.right-click"]:disabled { background:var(--disabled); opacity:0.85; }

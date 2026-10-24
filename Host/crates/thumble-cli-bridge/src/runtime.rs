@@ -25,6 +25,10 @@ enum Command {
     ReleaseAll,
     GamepadStatus,
     GamepadRetry,
+    CancelPairing,
+    Accessibility {
+        action: thumble_host::control::AccessibilityAction,
+    },
     LaunchProfile {
         profile: thumble_host::cli_profile::ProfileSelector,
     },
@@ -97,7 +101,18 @@ fn decode_request(data: &[u8]) -> Result<Request, ()> {
         .and_then(Value::as_object)
         .ok_or(())?;
     let action = tagged.get("type").and_then(Value::as_str).ok_or(())?;
-    let command = if action == "launch-profile" {
+    let command = if action == "accessibility" {
+        if tagged.len() != 2 {
+            return Err(());
+        }
+        let action = match tagged.get("action").and_then(Value::as_str) {
+            Some("status") => thumble_host::control::AccessibilityAction::Status,
+            Some("prompt") => thumble_host::control::AccessibilityAction::Prompt,
+            Some("open") => thumble_host::control::AccessibilityAction::Open,
+            _ => return Err(()),
+        };
+        Command::Accessibility { action }
+    } else if action == "launch-profile" {
         if tagged.len() != 2 {
             return Err(());
         }
@@ -164,6 +179,7 @@ fn decode_request(data: &[u8]) -> Result<Request, ()> {
             "release-all" => Command::ReleaseAll,
             "gamepad-status" => Command::GamepadStatus,
             "gamepad-retry" => Command::GamepadRetry,
+            "pairing-cancel" => Command::CancelPairing,
             _ => return Err(()),
         }
     };
@@ -240,6 +256,8 @@ pub fn run(data: &[u8]) -> bool {
     }
     let control = match request.command {
         Command::Status => ControlRequest::Status,
+        Command::CancelPairing => ControlRequest::CancelPairing,
+        Command::Accessibility { action } => ControlRequest::Accessibility { action },
         Command::ReleaseAll => ControlRequest::ReleaseAll,
         Command::GamepadStatus => ControlRequest::GamepadStatus,
         Command::GamepadRetry => ControlRequest::GamepadRetry,
@@ -469,7 +487,13 @@ mod tests {
 
     #[test]
     fn runtime_envelope_is_tagged_strict_and_bounded() {
-        for action in ["status", "release-all", "gamepad-status", "gamepad-retry"] {
+        for action in [
+            "status",
+            "release-all",
+            "gamepad-status",
+            "gamepad-retry",
+            "pairing-cancel",
+        ] {
             assert!(decode_request(&request(serde_json::json!({"type": action}))).is_ok());
         }
         assert!(decode_request(&request(
@@ -489,6 +513,20 @@ mod tests {
             serde_json::json!({"type":"status","socketPath":"/tmp/evil"}),
             serde_json::json!({"type":"test-control","controlID":"jump","state":"stuck"}),
             serde_json::json!({"type":"test-control","controlID":"jump","state":"down","duration":999999}),
+        ] {
+            assert!(decode_request(&request(command)).is_err());
+        }
+        for action in ["status", "prompt", "open"] {
+            assert!(decode_request(&request(
+                serde_json::json!({"type":"accessibility", "action":action})
+            ))
+            .is_ok());
+        }
+        for command in [
+            serde_json::json!({"type":"accessibility"}),
+            serde_json::json!({"type":"accessibility", "action":"exec"}),
+            serde_json::json!({"type":"accessibility", "action":"open", "url":"file:///tmp"}),
+            serde_json::json!({"type":"pairing-cancel", "token":"raw"}),
         ] {
             assert!(decode_request(&request(command)).is_err());
         }

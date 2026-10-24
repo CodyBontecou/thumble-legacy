@@ -5,7 +5,6 @@ import SwiftUI
 
 @main
 struct ThumbleCLI {
-    private static let skinStoreChangedNotificationName = Notification.Name("com.codybontecou.PocketPadMac.skinStoreChanged")
     private static let defaultEditorCanvasSize = GamepadEditorDeviceCatalog.defaultFrame.screenRect.size
     private static let portraitEditorCanvasSize = GamepadEditorDeviceFrame(spec: GamepadEditorDeviceCatalog.specs[0], orientation: .portrait).screenRect.size
     private static let trackpadOptionNames = [
@@ -286,12 +285,8 @@ struct ThumbleCLI {
         case "accessibility":
             try accessibility(arguments: rest)
         case "release-all":
-            switch try runtimeRoute(.releaseAll) {
-            case .rust: print("Rust runtime released all output.")
-            case .legacy:
-                try postLegacyRuntimeCommand(.releaseAll, reason: "Release all from CLI")
-                print("Sent release-all to verified Thumble Mac runtime.")
-            }
+            _ = try runtimeRoute(.releaseAll)
+            print("Rust runtime released all output.")
         case "gamepad":
             try gamepad(arguments: rest)
         case "test":
@@ -688,12 +683,7 @@ struct ThumbleCLI {
 
         case "show":
             if rest.contains("--legacy-desktop") {
-                guard rest.contains("--json") else {throw CLIError.message("Use profile show --legacy-desktop --json for an explicit read-only migration snapshot")}
-                let response=try profileBackend().perform(.legacyDesktopSnapshot(.init(optionValue("--profile",in:rest) ?? firstPositional(in:rest))))
-                guard let snapshot=response.designSnapshot else {throw CLIError.message("Legacy owner returned no migration snapshot")}
-                _ = try ThumbleCLIProfileBackend.inspectionProfile(snapshot,expectedRevision:snapshot.configurationRevision)
-                let body="{\"schema\":\"thumble.profile-inspection\",\"version\":1,\"origin\":\"legacy-desktop-migration\",\"configurationRevision\":\(snapshot.configurationRevision),\"profile\":"+snapshot.profileJSON+",\"bindings\":"+snapshot.bindingJSON+"}\n"
-                try FileHandle.standardOutput.write(contentsOf:Data(body.utf8));return
+                throw CLIError.message("Desktop snapshots are retired. Review a saved plist with thumble-host configuration import-desktop-defaults, or use configuration prepare-import for exported profiles. No desktop IPC was sent.")
             }
             let captured = try profileBackend().captureInspectionProfile(target: .init(optionValue("--profile", in: rest) ?? firstPositional(in: rest)))
             if rest.contains("--json") {
@@ -1397,15 +1387,10 @@ struct ThumbleCLI {
             }
             index += 1
         }
-        switch try runtimeRoute(.launchProfile(.init(profileTarget))) {
-        case .rust(let response):
-            guard let launch = response.control?.applicationLaunch else { throw CLIError.message("Runtime returned no launch acknowledgement.") }
-            if json { try FileHandle.standardOutput.write(contentsOf: response.frame) }
-            else { print("Application launch queued for profile \(launch.profileID.uuidString). Launch ID: \(launch.launchID.uuidString). Inspect status for completion.") }
-            return
-        case .legacy:
-            throw CLIError.message("Start the headless receiver before launching an attached application.")
-        }
+        let response = try runtimeRoute(.launchProfile(.init(profileTarget)))
+        guard let launch = response.control?.applicationLaunch else { throw CLIError.message("Runtime returned no launch acknowledgement.") }
+        if json { try FileHandle.standardOutput.write(contentsOf: response.frame) }
+        else { print("Application launch queued for profile \(launch.profileID.uuidString). Launch ID: \(launch.launchID.uuidString). Inspect status for completion.") }
     }
 
     private static func resolveApplicationURL(path: String?, bundleIdentifier: String?) throws -> URL {
@@ -1669,7 +1654,6 @@ struct ThumbleCLI {
                 invocationID: invocationID, expectedConfigurationRevision: configurationRevision)
             guard let outcome = response.outcome else { throw CLIError.message("Design authority returned no apply receipt") }
             try ControllerDesignWorkspace.write(outcome, to: root.appendingPathComponent("reviews/apply-\(invocationID.uuidString.lowercased()).json"))
-            if session.ownedAuthority != true { notifySkinStoreChanged() }
             try printJSON(outcome)
         case "critique":
             let revision = try designRevision(rest)
@@ -1952,7 +1936,6 @@ struct ThumbleCLI {
                 ? .allowDowngrade
                 : (rest.contains("--replace") ? .replaceSameVersion : .newerOnly)
             let result = try store.install(data: packageData, policy: policy)
-            notifySkinStoreChanged()
             print("Installed \(result.reference.identifier)@\(result.reference.version).")
 
         case "apply", "set", "detach", "fork", "remove", "delete", "rm":
@@ -2614,10 +2597,6 @@ struct ThumbleCLI {
             .replacingOccurrences(of: "[^a-z0-9]+", with: "-", options: .regularExpression)
             .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
         return "\(base.isEmpty ? "thumble-skin" : base)-\(manifest.version).pocketpad"
-    }
-
-    private static func notifySkinStoreChanged() {
-        DistributedNotificationCenter.default().post(name: skinStoreChangedNotificationName, object: nil)
     }
 
     // MARK: - Bindings
@@ -5672,8 +5651,8 @@ struct ThumbleCLI {
         case "payload":
             try printJSON(readPairingPayload())
         case "cancel":
-            try postRuntimeCommand(.cancelPairing)
-            print("Requested pairing cancel.")
+            let response = try runtimeRoute(.cancelPairing)
+            print(response.control?.pairingCancelled == true ? "Cancelled pending pairing." : "No pending pairing request.")
         default:
             throw CLIError.message("Unknown pairing subcommand: \(subcommand)")
         }
@@ -5688,24 +5667,21 @@ struct ThumbleCLI {
     }
 
     private static func accessibility(arguments: [String]) throws {
-        guard let subcommand = arguments.first else { throw CLIError.message("Missing accessibility subcommand") }
-        switch subcommand {
-        case "status":
-            try postRuntimeCommand(.refreshAccessibility)
-            let status = try readFreshRuntimeStatus()
-            print(status.accessibilityTrusted ? "granted" : "required")
-        case "prompt", "request":
-            try postRuntimeCommand(.promptAccessibility)
-            print("Requested Accessibility permission prompt.")
-        case "open", "settings":
-            try postRuntimeCommand(.openAccessibilitySettings)
-            print("Opened Accessibility settings.")
-        case "refresh":
-            try postRuntimeCommand(.refreshAccessibility)
-            print("Requested Accessibility status refresh.")
-        default:
-            throw CLIError.message("Unknown accessibility subcommand: \(subcommand)")
+        guard let subcommand = arguments.first,
+              arguments.count == 1 || (arguments.count == 2 && arguments[1] == "--json") else {
+            throw CLIError.message("Usage: thumble accessibility status|refresh|prompt|open [--json]")
         }
+        let action: ThumbleCLIRuntimeBackend.AccessibilityAction
+        switch subcommand {
+        case "status", "refresh": action = .status
+        case "prompt", "request": action = .prompt
+        case "open", "settings": action = .open
+        default: throw CLIError.message("Unknown accessibility subcommand: \(subcommand)")
+        }
+        let response = try runtimeRoute(.accessibility(action))
+        guard let trusted = response.control?.accessibilityTrusted else { throw CLIError.message("Receiver returned no Accessibility acknowledgement.") }
+        if arguments.contains("--json") { try FileHandle.standardOutput.write(contentsOf: response.frame) }
+        else { print(trusted ? "granted" : "required") }
     }
 
     private static func test(arguments: [String]) throws {
@@ -5739,43 +5715,19 @@ struct ThumbleCLI {
             index += 1
         }
         guard elementInput == nil || buttonText == nil else { throw CLIError.message("Choose a button or --element, not both.") }
-        let button: KeypadElementID?
         let controlID: String
-        if let elementInput {
-            button = nil
-            controlID = "element:\(elementInput.storageKey)"
-        } else {
+        if let elementInput { controlID = "element:\(elementInput.storageKey)" }
+        else {
             guard let buttonText else { throw CLIError.message("Provide an element UUID or --element UUID#part.") }
-            let target = try parseButton(buttonText)
-            button = target
-            controlID = "element:\(target.rawValue)"
+            controlID = "element:\(try parseButton(buttonText).rawValue)"
         }
-        switch try runtimeRoute(.status) {
-        case .rust:
-            guard requestedHoldMS == nil else {
-                throw CLIError.message("--hold-ms is available for legacy receiver taps; Rust taps use the receiver's minimum duration.")
-            }
-            let command: ThumbleCLIRuntimeBackend.Command = subcommand == "tap"
-                ? .tapControl(controlID)
-                : .testControl(controlID, subcommand == "down" ? .down : .up)
-            guard case .rust = try runtimeRoute(command) else {
-                throw CLIError.message("Runtime owner changed before the test; no legacy input was sent.")
-            }
-            print("Rust runtime test \(subcommand): \(controlID). Held tests expire after 30 seconds.")
-        case .legacy:
-            if subcommand == "tap" {
-                let holdMS = requestedHoldMS ?? 120
-                // Release is owned by the receiver, not this short-lived CLI process.
-                try postLegacyCommandData(JSONEncoder().encode(LegacyTapCommand(
-                    button: button, elementInput: elementInput, holdMilliseconds: holdMS
-                )))
-                print("Requested bounded tap for \(controlID) through verified Thumble Mac runtime.")
-            } else {
-                guard requestedHoldMS == nil else { throw CLIError.message("--hold-ms applies only to taps.") }
-                try postRuntimeCommand(subcommand == "down" ? .testDown : .testUp, button: button, elementInput: elementInput)
-                print("Verified Mac runtime test \(subcommand): \(controlID). Held tests expire after 30 seconds.")
-            }
+        guard requestedHoldMS == nil else {
+            throw CLIError.message("--hold-ms is retired; taps use the headless receiver's minimum duration.")
         }
+        let command: ThumbleCLIRuntimeBackend.Command = subcommand == "tap"
+            ? .tapControl(controlID) : .testControl(controlID, subcommand == "down" ? .down : .up)
+        _ = try runtimeRoute(command)
+        print("Rust runtime test \(subcommand): \(controlID). Held tests expire after 30 seconds.")
     }
 
     private static func gamepad(arguments: [String]) throws {
@@ -5790,16 +5742,9 @@ struct ThumbleCLI {
         guard ["status", "doctor", "retry"].contains(action), rest.allSatisfy({ $0 == "--json" }) else {
             throw CLIError.message("Usage: thumble gamepad status|doctor|retry [--json] or test [button] [--element ID#part]")
         }
-        let route = try runtimeRoute(action == "retry" ? .gamepadRetry : .gamepadStatus)
-        let status: VirtualGamepadStatus
-        switch route {
-        case .rust(let response):
-            guard let value = response.control?.virtualGamepadStatus else {
-                throw CLIError.message("Rust returned no gamepad readiness status.")
-            }
-            status = value
-        case .legacy:
-            throw CLIError.message("Start the headless receiver to inspect or retry gamepad output.")
+        let response = try runtimeRoute(action == "retry" ? .gamepadRetry : .gamepadStatus)
+        guard let status = response.control?.virtualGamepadStatus else {
+            throw CLIError.message("Rust returned no gamepad readiness status.")
         }
         if rest.contains("--json") {
             try printJSON(status)
@@ -5817,16 +5762,6 @@ struct ThumbleCLI {
     private struct LegacyGamepadProjection: Decodable {
         let virtualGamepadStatus: VirtualGamepadStatus?
     }
-    private struct LegacyGamepadRetryCommand: Encodable {
-        let command = "retryGamepad"
-    }
-    private struct LegacyTapCommand: Encodable {
-        let command = "testGamepad"
-        let button: KeypadElementID?
-        let elementInput: KeypadElementInputID?
-        let holdMilliseconds: Int
-    }
-
     private static func latency(arguments: [String]) throws {
         if arguments.first == "verify" {
             try verifyLatency(arguments: Array(arguments.dropFirst()))
@@ -6096,19 +6031,8 @@ struct ThumbleCLI {
 
     private static func monitor(arguments: [String]) throws {
         let options = try parseMonitorOptions(arguments)
-        let logPath: String
-        if let pathOverride = options.pathOverride {
-            logPath = pathOverride
-        } else if let status = try? readFreshRuntimeStatus(), let path = status.captureLogPath, !path.isEmpty {
-            logPath = path
-        } else if FileManager.default.fileExists(atPath: ThumbleMacIPC.captureLogPath) {
-            logPath = ThumbleMacIPC.captureLogPath
-        } else if FileManager.default.fileExists(atPath: ThumbleMacIPC.legacyThumbConsoleCaptureLogPath) {
-            logPath = ThumbleMacIPC.legacyThumbConsoleCaptureLogPath
-        } else if FileManager.default.fileExists(atPath: ThumbleMacIPC.legacyThumbleCaptureLogPath) {
-            logPath = ThumbleMacIPC.legacyThumbleCaptureLogPath
-        } else {
-            logPath = ThumbleMacIPC.captureLogPath
+        guard let logPath = options.pathOverride else {
+            throw CLIError.message("Provide monitor --file capture.jsonl for an explicit capture artifact. Use thumble-host status --json for live headless diagnostics.")
         }
 
         if options.printPath {
@@ -6307,71 +6231,8 @@ struct ThumbleCLI {
         String(format: "%.3f", value ?? 0)
     }
 
-    private static func postRuntimeCommand(
-        _ command: ThumbleMacCLICommand,
-        button: KeypadElementID? = nil,
-        elementInput: KeypadElementInputID? = nil,
-        reason: String? = nil
-    ) throws {
-        guard case .legacy = try runtimeRoute(.status) else {
-            throw CLIError.message("This lifecycle command is not supported through Rust runtime IPC; no legacy notification was sent.")
-        }
-        try postLegacyRuntimeCommand(command, button: button, elementInput: elementInput, reason: reason)
-    }
-
-    private static func postLegacyRuntimeCommand(
-        _ command: ThumbleMacCLICommand,
-        button: KeypadElementID? = nil,
-        elementInput: KeypadElementInputID? = nil,
-        reason: String? = nil
-    ) throws {
-        let payload = ThumbleMacCLICommandPayload(
-            command: command,
-            button: button,
-            elementInput: elementInput,
-            reason: reason
-        )
-        try postLegacyCommandData(JSONEncoder().encode(payload))
-    }
-
-    private static func postLegacyCommandData(_ data: Data) throws {
-        guard data.count <= ThumbleCLIRuntimeBackend.maximumFrameBytes,
-              var object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let rawCommand = object["command"] as? String,
-              let command = ThumbleMacCLICommand(rawValue: rawCommand) else {
-            throw CLIError.message("Legacy runtime command is invalid or exceeds its bound.")
-        }
-        var scopedData = data
-        if command != .publishStatus {
-            // Bind mutations to the just-verified receiver, not a future app
-            // instance that might open between routing and notification delivery.
-            guard case .legacy(let snapshot) = try runtimeRoute(.status) else {
-                throw CLIError.message("Rust now owns input; no legacy command was sent.")
-            }
-            struct Identity: Decodable { let runtimeInstanceID: UUID }
-            object["runtimeInstanceID"] = try JSONDecoder().decode(Identity.self, from: snapshot).runtimeInstanceID.uuidString
-            scopedData = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys])
-        }
-        guard scopedData.count <= ThumbleCLIRuntimeBackend.maximumFrameBytes else {
-            throw CLIError.message("Scoped runtime command exceeds its bound.")
-        }
-        DistributedNotificationCenter.default().postNotificationName(
-            Notification.Name(ThumbleMacIPC.commandNotificationName),
-            object: nil,
-            userInfo: [ThumbleMacIPC.commandDataKey: scopedData],
-            deliverImmediately: true
-        )
-    }
-
-    private static func runtimeRoute(_ command: ThumbleCLIRuntimeBackend.Command) throws -> ThumbleCLIRuntimeBackend.Route {
-        try ThumbleCLIRuntimeBackend().route(command, legacyStatus: { _ in throw ThumbleCLIRuntimeBackend.BackendError.noVerifiedOwner })
-    }
-
-    private static func readFreshRuntimeStatus() throws -> ThumbleMacRuntimeStatus {
-        guard case .legacy(let data) = try runtimeRoute(.status) else {
-            throw CLIError.message("This operation requires verified legacy runtime status and is unavailable while Rust owns input.")
-        }
-        return try JSONDecoder().decode(ThumbleMacRuntimeStatus.self, from: data)
+    private static func runtimeRoute(_ command: ThumbleCLIRuntimeBackend.Command) throws -> ThumbleCLIRuntimeBackend.Response {
+        try ThumbleCLIRuntimeBackend().route(command)
     }
 
     private static func printRuntimeStatus(json: Bool) throws {

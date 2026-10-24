@@ -1,0 +1,39 @@
+{
+  "geometryOnlyContractChanges": true,
+  "changeCount": 144,
+  "appearanceBankUnchangedByLayoutPlan": true,
+  "bankCount": 8,
+  "noncustomizationFieldsUnchanged": true,
+  "assetHashesMatch": true,
+  "assetDimensions": {
+    "wow-live-icon-133972": [
+      32,
+      32
+    ],
+    "wow-live-icon-135274": [
+      32,
+      32
+    ],
+    "wow-live-icon-132282": [
+      32,
+      32
+    ],
+    "left-diamond-recess": [
+      256,
+      256
+    ],
+    "right-diamond-recess": [
+      256,
+      256
+    ]
+  },
+  "files": [
+    "skin.json",
+    "manifest.json",
+    "assets/wow-live-icon-133972.png",
+    "assets/wow-live-icon-135274.png",
+    "assets/wow-live-icon-132282.png",
+    "assets/right-diamond-recess.png",
+    "assets/left-diamond-recess.png"
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "orientation": "portrait",
+    "scheme": "light",
+    "nativeControlCountIncludingToggle": 22,
+    "minimumHitDimensionPt": 43.99999999999999,
+    "minimumHitGapPt": 11.019552078011158,
+    "allOldFramesExceptCursorUnchanged": true,
+    "expectedNewFramesWithinTolerancePt": 0.001
+  },
+  {
+    "orientation": "portrait",
+    "scheme": "dark",
+    "nativeControlCountIncludingToggle": 22,
+    "minimumHitDimensionPt": 43.99999999999999,
+    "minimumHitGapPt": 11.019552078011158,
+    "allOldFramesExceptCursorUnchanged": true,
+    "expectedNewFramesWithinTolerancePt": 0.001
+  },
+  {
+    "orientation": "landscape",
+    "scheme": "light",
+    "nativeControlCountIncludingToggle": 22,
+    "minimumHitDimensionPt": 44.00000000000001,
+    "minimumHitGapPt": 9.583999999999946,
+    "allOldFramesExceptCursorUnchanged": true,
+    "expectedNewFramesWithinTolerancePt": 0.001
+  },
+  {
+    "orientation": "landscape",
+    "scheme": "dark",
+    "nativeControlCountIncludingToggle": 22,
+    "minimumHitDimensionPt": 44.00000000000001,
+    "minimumHitGapPt": 9.583999999999946,
+    "allOldFramesExceptCursorUnchanged": true,
+    "expectedNewFramesWithinTolerancePt": 0.001
+  }
+]

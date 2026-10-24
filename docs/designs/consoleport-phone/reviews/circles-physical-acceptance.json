@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "profileID": "A4E1DDD3-9767-504E-AC27-099919F511CB",
+  "profileName": "Bonteq \u00b7 Doomhowl \u00b7 ConsolePort",
+  "configurationRevision": 9,
+  "device": "Pixel 7",
+  "screenshot": "docs/designs/consoleport-phone/reviews/pixel-circles-applied.png",
+  "screenshotSHA256": "78393f9ef12fa9e13c7c6cc8c2f832b1fe1e81bca3c928307e7c27e20a298e87",
+  "packageSHA256": "365849055ddae99bfc4d22fdecce59b5581befb84ad0fe218e6d255e16e20f23",
+  "evidenceSHA256": "23905712975d41f97ee0b764215cf423b9b4a68023527ddbaade527d5fc78872",
+  "observed": [
+    "Three live game images clipped to circular boundaries",
+    "Images fill 91.8 percent native disc diameter",
+    "Above legends and state rims remain visible",
+    "Phone connected after receiver helper update"
+  ],
+  "preservation": {
+    "otherProfilesUnchanged": true,
+    "outputMapsUnchanged": true,
+    "activeProfileUnchanged": true,
+    "native40PanelGeometryUnchanged": true,
+    "native40PanelHapticsUnchanged": true
+  },
+  "instrumentationTestsPassed": 8,
+  "humanApproved": false,
+  "reconnectPersistence": "passed"
+}

@@ -53,6 +53,7 @@ pub enum ControlRequest {
         #[serde(default)]
         rotate: bool,
     },
+    CancelPairing,
     Accessibility {
         action: AccessibilityAction,
     },
@@ -283,6 +284,8 @@ pub struct ControlResponse {
     pub wow_live: Option<crate::wow_live::SyncStatus>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pairing_code: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pairing_cancelled: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rotated: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -344,6 +347,7 @@ impl ControlResponse {
             virtual_gamepad_status: None,
             wow_live: None,
             pairing_code: None,
+            pairing_cancelled: None,
             rotated: None,
             accessibility_trusted: None,
             profiles: None,

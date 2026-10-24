@@ -312,3 +312,90 @@ fn debug_and_status_never_render_authentication_tokens() {
         assert!(!rendered.contains("never-print-this-token"));
     }
 }
+
+#[test]
+fn cancellation_invalidates_pending_code_and_is_idempotent_without_changing_trust() {
+    let mut core = core();
+    let before = core.persistent_state().clone();
+    let mut tokens = ScriptedTokens::new(&["654321", "765432"], &[]);
+    core.handle_message(
+        7,
+        ControllerMessage::new(ControllerMessageType::PairingRequest, 0),
+        100,
+        &mut tokens,
+    )
+    .unwrap();
+    assert!(core.status().pairing_pending);
+    let effects = core.cancel_pairing(&mut tokens).unwrap();
+    assert!(effects.iter().any(|e| matches!(
+        e,
+        Effect::CloseConnection {
+            connection_id: 7,
+            ..
+        }
+    )));
+    assert!(!effects.iter().any(|e| matches!(e, Effect::PersistState)));
+    assert!(!core.status().pairing_pending);
+    assert_eq!(core.persistent_state(), &before);
+    assert_eq!(core.pairing_code(), "765432");
+    assert!(core.cancel_pairing(&mut no_tokens()).unwrap().is_empty());
+    let mut stale_hello = ControllerMessage::new(ControllerMessageType::Hello, 0);
+    stale_hello.pairing_code = Some("654321".into());
+    let effects = core
+        .handle_message(7, stale_hello, 101, &mut no_tokens())
+        .unwrap();
+    assert_eq!(error_text(&effects), "Wrong pairing code");
+    assert!(!core.status().paired);
+    assert_eq!(core.persistent_state(), &before);
+}
+
+#[test]
+fn cancellation_preserves_active_input_even_with_a_redundant_challenge() {
+    let mut core = core();
+    pair(&mut core, 1, "active-secret");
+    let mut down = ControllerMessage::new(ControllerMessageType::Button, 0);
+    down.button = Some(KeypadElementID::preset(5));
+    down.state = Some(ButtonPressState::Down);
+    down.input_protocol_version = Some(3);
+    down.input_generation = Some(7);
+    down.input_sequence = Some(1);
+    down.press_identifier = Some(9);
+    core.handle_message(1, down, 10, &mut no_tokens()).unwrap();
+    assert!(!core.status().pressed_buttons.is_empty());
+    assert!(core.cancel_pairing(&mut no_tokens()).unwrap().is_empty());
+    let state = core.persistent_state().clone();
+    let mut tokens = ScriptedTokens::new(&["654321", "765432"], &[]);
+    core.handle_message(
+        1,
+        ControllerMessage::new(ControllerMessageType::PairingRequest, 0),
+        11,
+        &mut tokens,
+    )
+    .unwrap();
+    let before = core.status();
+    let effects = core.cancel_pairing(&mut tokens).unwrap();
+    assert!(effects
+        .iter()
+        .all(|e| matches!(e, Effect::StatusChanged(_))));
+    assert_eq!(core.persistent_state(), &state);
+    assert!(core.status().paired);
+    assert_eq!(core.status().pressed_buttons, before.pressed_buttons);
+}
+
+#[test]
+fn invalid_or_unchanged_replacement_code_keeps_pending_challenge_intact() {
+    for replacement in ["invalid", "654321"] {
+        let mut core = core();
+        let mut tokens = ScriptedTokens::new(&["654321", replacement], &[]);
+        core.handle_message(
+            7,
+            ControllerMessage::new(ControllerMessageType::PairingRequest, 0),
+            100,
+            &mut tokens,
+        )
+        .unwrap();
+        assert!(core.cancel_pairing(&mut tokens).is_err());
+        assert!(core.status().pairing_pending);
+        assert_eq!(core.pairing_code(), "654321");
+    }
+}

@@ -483,6 +483,41 @@ impl HostCore {
         &self.pairing_code
     }
 
+    /// Cancel only the pending challenge. Trusted clients and held output remain
+    /// intact. Invalidate its code before a queued hello can authenticate.
+    pub fn cancel_pairing(
+        &mut self,
+        tokens: &mut impl TokenSource,
+    ) -> Result<Vec<Effect>, CoreError> {
+        let Some(pending) = self.pending_pairing.as_ref() else {
+            return Ok(Vec::new());
+        };
+        let connection_id = pending.connection_id;
+        let replacement = tokens.next_pairing_code();
+        if !is_pairing_code(&replacement) || replacement == self.pairing_code {
+            return Err(CoreError::InvalidPairingCodeGenerated);
+        }
+        let before = self.status();
+        self.pending_pairing = None;
+        self.pairing_code = replacement;
+        // An already authenticated connection must not lose its output session
+        // if it submitted a redundant pairing request.
+        let mut effects = Vec::new();
+        if self
+            .active_client
+            .as_ref()
+            .is_none_or(|client| client.connection_id != connection_id)
+        {
+            self.send_error(connection_id, "Pairing cancelled", &mut effects);
+            effects.push(Effect::CloseConnection {
+                connection_id,
+                reason: "Pairing cancelled".into(),
+            });
+        }
+        self.append_status_if_changed(before, &mut effects);
+        Ok(effects)
+    }
+
     /// Replace the currently accepted pairing code without restarting the host.
     /// Existing trusted authentication tokens and an in-flight pairing request
     /// are left intact; only the six-digit code that the next `hello` must

@@ -25,6 +25,27 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
         XCTAssertThrowsError(try ThumbleCLIRuntimeBackend.requestFrame(.testControl("../raw", .down), invocationID: id))
     }
 
+    func testPermissionAndPairingCommandsRequireTheirTypedAcknowledgements() throws {
+        let commands: [(ThumbleCLIRuntimeBackend.Command, String)] = [
+            (.accessibility(.status), "accessibilityTrusted"), (.accessibility(.prompt), "accessibilityTrusted"),
+            (.accessibility(.open), "accessibilityTrusted"), (.cancelPairing, "pairingCancelled")]
+        for (command, field) in commands {
+            let data = try ThumbleCLIRuntimeBackend.requestFrame(command, invocationID: id)
+            let object = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+            let wire = try XCTUnwrap(object["runtimeCommand"] as? [String: String])
+            if case .accessibility(let action) = command { XCTAssertEqual(wire, ["type":"accessibility", "action":action.rawValue]) }
+            else { XCTAssertEqual(wire, ["type":"pairing-cancel"]) }
+            for flag in ["true", "false"] {
+                let backend = ThumbleCLIRuntimeBackend(transport: { _ in (0, self.frame(owner:"rust", response:"{\"ok\":true,\"\(field)\":\(flag)}")) })
+                XCTAssertEqual(try backend.route(command, invocationID:id).owner, .rust)
+            }
+            for receipt in ["{\"ok\":true}", "{\"ok\":true,\"\(field)\":1}"] {
+                let backend = ThumbleCLIRuntimeBackend(transport: { _ in (0, self.frame(owner:"rust",response:receipt)) })
+                XCTAssertThrowsError(try backend.route(command, invocationID:id))
+            }
+        }
+    }
+
     func testStrictResponseFramingBoundsAndCorrelation() throws {
         let good = frame(owner: "rust", response: "{\"ok\":true,\"released\":true}")
         XCTAssertEqual(try ThumbleCLIRuntimeBackend.decodeResponse(good, invocationID: id).owner, .rust)
@@ -36,25 +57,19 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
     }
 
     func testUnreachableRustNeverInvokesLegacyFallback() throws {
-        var legacyCalled = false
         let backend = ThumbleCLIRuntimeBackend(transport: { _ in
             (1, self.frame(owner: "unreachable", ok: false, error: "authority_unreachable"))
         })
-        XCTAssertThrowsError(try backend.route(.releaseAll, invocationID: id, legacyStatus: { _ in
-            legacyCalled = true
-            return Data()
-        }, processIsLive: { _ in true }))
-        XCTAssertFalse(legacyCalled)
+        XCTAssertThrowsError(try backend.route(.releaseAll, invocationID: id))
     }
 
     func testAbsentAndLegacyCandidatesNeverReadDesktopStatus() throws {
         for (owner, error) in [("none", "runtime_not_running"), ("unreachable", "legacy_owner_possible")] {
             let backend = ThumbleCLIRuntimeBackend(transport: { _ in (1, self.frame(owner: owner, ok: false, error: error)) })
-            var called = false
             for command in [ThumbleCLIRuntimeBackend.Command.status, .releaseAll, .launchProfile(.active)] {
-                XCTAssertThrowsError(try backend.route(command, invocationID: id, legacyStatus: { _ in called = true; return Data() }))
+                XCTAssertThrowsError(try backend.route(command, invocationID: id))
             }
-            XCTAssertFalse(called)
+
         }
     }
 
@@ -64,20 +79,16 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
             requests.append(String(decoding: request, as: UTF8.self))
             return (0, self.frame(owner: "rust", response: "{\"ok\":true,\"released\":true}"))
         })
-        let result = try backend.route(.releaseAll, invocationID: id, legacyStatus: { _ in
-            XCTFail("Rust ownership must not consult legacy defaults")
-            return Data()
-        }, processIsLive: { _ in false })
-        guard case .rust = result else { return XCTFail("Expected Rust route") }
+        let result = try backend.route(.releaseAll, invocationID: id)
+        XCTAssertEqual(result.owner, .rust)
         XCTAssertTrue(requests.last?.contains("release-all") == true)
     }
 
-    func testAmbiguousLockMayOnlyUseVerifiedLegacyStatus() throws {
+    func testAmbiguousLockCannotAuthorizeInput() throws {
         let backend = ThumbleCLIRuntimeBackend(transport: { _ in
             (1, self.frame(owner: "unreachable", ok: false, error: "legacy_owner_possible"))
         })
-        XCTAssertThrowsError(try backend.route(.tapControl("jump"), invocationID: id,
-                                              legacyStatus: { _ in Data("{}".utf8) }, processIsLive: { _ in true }))
+        XCTAssertThrowsError(try backend.route(.tapControl("jump"), invocationID: id))
     }
 
     func testEnvelopeTypesAndUnexpectedFieldsFailClosed() throws {
@@ -96,10 +107,7 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
         let backend = ThumbleCLIRuntimeBackend(transport: { _ in
             (0, self.frame(owner: "rust", response: "{\"ok\":true,\"pressedControlID\":\"button:attack\"}"))
         })
-        XCTAssertThrowsError(try backend.route(.tapControl("button:jump"), invocationID: id, legacyStatus: { _ in
-            XCTFail("Mismatched Rust acknowledgement must never route legacy input")
-            return Data()
-        }, processIsLive: { _ in false }))
+        XCTAssertThrowsError(try backend.route(.tapControl("button:jump"), invocationID: id))
     }
 
     func testGamepadReadinessProjectionIsTypedAndRangeBounded() throws {
@@ -187,11 +195,9 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
         let backend = ThumbleCLIRuntimeBackend(transport: { _ in
             (0, try self.headlessStatusFrame())
         })
-        let route = try backend.route(.status, invocationID: id, legacyStatus: { _ in
-            XCTFail("Headless pairing must not read desktop status")
-            return Data()
-        }, processIsLive: { _ in false })
-        guard case .rust(let response) = route else { return XCTFail("Expected headless owner") }
+        let route = try backend.route(.status, invocationID: id)
+        let response = route
+        XCTAssertEqual(response.owner, .rust)
         let payload = try XCTUnwrap(response.control?.status).pairingPayload()
         XCTAssertEqual(payload.urls, ["ws://192.168.1.42:9123"])
         XCTAssertEqual(payload.pairingCode, "123456")
@@ -206,11 +212,9 @@ final class ThumbleCLIRuntimeBackendTests: XCTestCase {
             let backend = ThumbleCLIRuntimeBackend(transport: { _ in
                 (0, try self.headlessStatusFrame(omitting: field))
             })
-            let route = try backend.route(.status, invocationID: id, legacyStatus: { _ in
-                XCTFail("Incomplete Rust status must not switch owners")
-                return Data()
-            }, processIsLive: { _ in false })
-            guard case .rust(let response) = route else { return XCTFail("Expected headless owner") }
+            let route = try backend.route(.status, invocationID: id)
+            let response = route
+        XCTAssertEqual(response.owner, .rust)
             XCTAssertThrowsError(try XCTUnwrap(response.control?.status).pairingPayload())
         }
     }
@@ -262,18 +266,13 @@ struct RuntimeProfileLaunchTests {
                 (0, self.frame(profile: acknowledged, phase: "resolving"))
             })
             if acknowledged == profile {
-                let route = try backend.route(.launchProfile(.id(profile)), invocationID: invocation, legacyStatus: { _ in
-                    Issue.record("Rust launch must not consult legacy state")
-                    return Data()
-                })
-                guard case .rust(let response) = route else { Issue.record("Expected Rust owner"); return }
+                let route = try backend.route(.launchProfile(.id(profile)), invocationID: invocation)
+                let response = route
+                #expect(response.owner == .rust)
                 #expect(response.control?.applicationLaunch?.profileID == profile)
             } else {
                 #expect(throws: (any Error).self) {
-                    try backend.route(.launchProfile(.id(profile)), invocationID: invocation, legacyStatus: { _ in
-                        Issue.record("Mismatched acknowledgement must not fall back")
-                        return Data()
-                    })
+                    try backend.route(.launchProfile(.id(profile)), invocationID: invocation)
                 }
             }
         }

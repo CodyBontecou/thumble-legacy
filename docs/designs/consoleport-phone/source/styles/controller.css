@@ -1,0 +1,14 @@
+/* Original ConsolePort companion composition. Live icons remain receiver-managed. */
+:root { --well: #202429; --rim: #7A848F; --ink: #FFFFFF; --canvas: #25292D; --warm: #F2D28A; }
+controller { background: var(--canvas); }
+control { background: var(--well); color: var(--ink); border: 1.5px solid var(--rim); border-radius: 32px; box-shadow: inset 0 1px 0px #AFB8C0, 0 1px 1px #111417; font-size: 12px; font-weight: semibold; -thumble-font-design: system; -thumble-label-padding: 0px; transform: scale(1); }
+control:pressed { background: #0C0F12; border: 2px solid #EFF3F6; box-shadow: inset 0 2px 2px #030507; transform: scale(1); }
+control:active { background: #302B20; border: 2.5px solid var(--warm); box-shadow: inset 0 1px 1px #8D7440; transform: scale(1); }
+control:disabled { background: #34383D; border: 1px solid #555D66; box-shadow: none; color: #D2D6DC; opacity: 0.72; transform: scale(1); }
+control[group~="abilities"] { -thumble-label-placement: above; -thumble-label-padding: 2px; -thumble-icon-placement: center; -thumble-icon-scale: 2.7; -thumble-icon-mask: circle; -thumble-icon-rendering: original; }
+control[group~="utilities"] { border-radius: 24px; font-size: 12px; }
+joystick { border-radius: 46px; background: #171A1E; -thumble-label-placement: bottom; -thumble-label-padding: 0px; -thumble-joystick-ring-color: #707A85; -thumble-joystick-ring-stroke-width: 1px; -thumble-joystick-knob-fill: #303741; -thumble-joystick-knob-stroke: #8D98A5; -thumble-joystick-knob-stroke-width: 1px; -thumble-joystick-knob-ratio: 0.42; }
+joystick:pressed { -thumble-joystick-knob-fill: #171B20; -thumble-joystick-knob-stroke: #FFFFFF; }
+joystick:active { -thumble-joystick-knob-fill: #625334; -thumble-joystick-knob-stroke: #F2D28A; }
+joystick:disabled { -thumble-joystick-knob-fill: #40454B; -thumble-joystick-knob-stroke: #626972; }
+@media (prefers-color-scheme: dark) { :root { --well: #191C20; --rim: #69717B; --ink: #F1F3F5; --canvas: #101214; --warm: #E2BE69; } control { box-shadow: inset 0 1px 0px #9CA5AD, 0 1px 1px #080A0D; } control:pressed { box-shadow: inset 0 2px 2px #030507; } control:active { box-shadow: inset 0 1px 1px #8D7440; } control:disabled { box-shadow: none; } }

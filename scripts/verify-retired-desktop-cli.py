@@ -18,7 +18,9 @@ def main():
                     'private static func terminateRunningAppIfNeeded(', 'private static func captureAppScreenshot(',
                     'private struct AppWindowDescriptor', 'private struct AppScreenshotResult',
                     'CGWindowListCopyWindowInfo', 'CGPreflightScreenCaptureAccess',
-                    'editorCleanPreviewDefaultsKey', 'editorPresentationChangedNotificationName']:
+                    'editorCleanPreviewDefaultsKey', 'editorPresentationChangedNotificationName',
+                    'DistributedNotificationCenter', 'postLegacyRuntimeCommand', 'readFreshRuntimeStatus',
+                    'ThumbleMacIPC', 'ThumbleMacRuntimeStatus']:
         assert retired not in source, retired
     assert 'Desktop UI commands are retired.' in source
     ledger = json.loads((repo / 'docs/mcp/cli-capabilities-v1.json').read_bytes())

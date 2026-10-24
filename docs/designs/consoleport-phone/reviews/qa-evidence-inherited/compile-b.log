@@ -1,0 +1,10 @@
+{
+  "issues" : [
+    {
+      "code" : "incomplete-orientation-matrix",
+      "message" : "Directory-quality skins should intentionally support portrait and landscape.",
+      "path" : "orientations",
+      "severity" : "warning"
+    }
+  ]
+}

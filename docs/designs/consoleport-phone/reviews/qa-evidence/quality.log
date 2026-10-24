@@ -1,0 +1,13 @@
+{
+  "checkedArtboardID" : "captured-a4e1ddd3-9767-504e-ac27-099919f511cb",
+  "issues" : [
+    {
+      "code" : "source-incomplete-orientation-matrix",
+      "message" : "Directory-quality skins should intentionally support portrait and landscape.",
+      "path" : "orientations",
+      "severity" : "warning"
+    }
+  ],
+  "score" : 96
+}
+thumble: Strict skin quality failed with 1 warning(s).

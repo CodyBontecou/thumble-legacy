@@ -1,0 +1,21 @@
+{
+  "status": "applied-native-verified",
+  "configurationRevision": 10,
+  "profileID": "A4E1DDD3-9767-504E-AC27-099919F511CB",
+  "diameterFraction": 1.0,
+  "iconScale": 2.9411764705882355,
+  "iconMask": "circle",
+  "nativeImageSizePoints": 64,
+  "nativeControlSizePoints": 64,
+  "nativeVisibleImageInstancesVerified": 30,
+  "otherProfilesUnchanged": true,
+  "bindingsUnchanged": true,
+  "geometryUnchanged": true,
+  "hapticsUnchanged": true,
+  "sourceImageBytesUnchanged": true,
+  "phoneWifiSessionAuthenticated": true,
+  "physicalPixelScreenshotVerification": "unavailable-device-disconnected-from-adb",
+  "packageSHA256": "79dcdefaa8d74625ae63bce0a45cd5be97ced80965c1e705994403ec22540c37",
+  "evidenceSHA256": "1f4bb3cbb8bd5f263a7e5df4117c16b52b9de7ead3078f2ff9d67d2285d200f9",
+  "humanApproved": false
+}

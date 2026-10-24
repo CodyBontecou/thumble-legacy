@@ -1,0 +1,192 @@
+{
+  "all40GeometryExactPrior": true,
+  "all40HapticsExactPrior": true,
+  "zeroHitOverlaps": true,
+  "bindingExactPrior": true,
+  "appearanceResourcesExactPrior": true,
+  "imageCount": 30,
+  "allImages64Points": true,
+  "allImageIdentitiesUnchanged": true,
+  "imageMeasurements": [
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-133972",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-132282",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    },
+    {
+      "identity": "wow-live-icon-135274",
+      "size": 64.00000000000001,
+      "mask": null,
+      "sameIdentity": true
+    }
+  ]
+}

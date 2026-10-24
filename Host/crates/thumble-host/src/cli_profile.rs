@@ -88,8 +88,6 @@ pub enum CliProfileCommand {
     AuthorityStatus,
     #[serde(rename = "profile.list")]
     List,
-    #[serde(rename = "migration.desktop-snapshot")]
-    LegacyDesktopSnapshot { target: ProfileSelector },
     #[serde(rename = "design.apply")]
     DesignApply {
         target: ProfileSelector,
@@ -674,7 +672,6 @@ impl CliProfileCommand {
             Self::AssetRemove { .. } => "asset.remove",
             Self::AuthorityStatus => "authority.status",
             Self::List => "profile.list",
-            Self::LegacyDesktopSnapshot { .. } => "migration.desktop-snapshot",
             Self::Export { .. } => "profile.export",
             Self::DesignSnapshot { .. } => "design.snapshot",
             Self::DesignApply { .. } => "design.apply",
@@ -1600,14 +1597,7 @@ where
             return owned::execute(paths, state, request, invocation_id, &catalog, &mut save);
         }
         if let CliProfileCommand::CustomizationExport { target, variant } = &request.command {
-            return export_customization(
-                paths,
-                state,
-                target,
-                *variant,
-                &catalog,
-                authority_mode == "native",
-            );
+            return export_customization(paths, state, target, *variant, &catalog);
         }
         if let CliProfileCommand::DesignSnapshot {
             target,
@@ -2898,10 +2888,6 @@ fn plan_transaction(
     invocation_id: Uuid,
 ) -> Result<PlannedTransaction, TransactionFailure> {
     match command {
-        CliProfileCommand::LegacyDesktopSnapshot { .. } => Err(TransactionFailure::new(
-            "migration_snapshot_only",
-            "Use the explicit CLI migration snapshot route",
-        )),
         CliProfileCommand::ElementAdd {
             target,
             variant,
@@ -6502,7 +6488,6 @@ fn replay_profile_names(
     invocation_id: Uuid,
 ) -> Vec<String> {
     match command {
-        CliProfileCommand::LegacyDesktopSnapshot { .. } => vec![],
         CliProfileCommand::Create { name, .. } => {
             let id = deterministic_uuid(invocation_id, "profile.create:new-profile");
             vec![catalog
@@ -6822,21 +6807,10 @@ fn export_customization(
     target: &ProfileSelector,
     variant: ConfigurationVariant,
     catalog: &CliProfileCatalog,
-    native_snapshot: bool,
 ) -> Result<TransactionResult, TransactionFailure> {
     let selected = resolve_selector(target, catalog)?;
-    // The guarded native owner supplies an authenticated in-memory document;
-    // Rust owners must capture their exact persisted bytes without fallback.
-    let bytes = if native_snapshot {
-        serde_json::to_vec(&state.profiles[selected.index]).map_err(|_| {
-            TransactionFailure::new(
-                "customization_capture_failed",
-                "native snapshot could not be encoded",
-            )
-        })?
-    } else {
-        exact_selected_profile(paths, state, selected)?
-    };
+    // Capture exact authority bytes; no desktop projection may replace them.
+    let bytes = exact_selected_profile(paths, state, selected)?;
     let variant = match variant {
         ConfigurationVariant::Primary => "primary",
         ConfigurationVariant::Landscape => "landscape",
@@ -6948,20 +6922,33 @@ mod tests {
         assert!(attachment.validate().is_err());
     }
     #[test]
-    fn customization_export_uses_guarded_native_snapshot_without_a_state_file() {
-        let state = PersistentState::minimal("native-customization-read").unwrap();
-        let document = ConfigurationDocument::from_state(&state).unwrap();
+    fn customization_export_reads_exact_headless_state_without_writing() {
+        let mut state = PersistentState::minimal("headless-customization-read").unwrap();
+        state.configuration_revision = 12;
+        let temporary = tempfile::tempdir().unwrap();
+        let paths = HostPaths::new(
+            temporary.path().into(),
+            temporary.path().join("control.sock"),
+        );
+        crate::storage::save_atomic(&paths.state_file, &state).unwrap();
+        let before = std::fs::read(&paths.state_file).unwrap();
         let request = request(CliProfileCommand::CustomizationExport {
             target: ProfileSelector::Active,
             variant: ConfigurationVariant::Primary,
         });
-        let (response, candidate) = crate::native_configuration::evaluate(&document, 12, &request);
+        let response = execute_profile_transaction(
+            &paths,
+            &state,
+            &request,
+            "rust-offline",
+            |_, _, _, _, _| panic!("read must not write"),
+        );
         assert!(response.ok, "{:?}", response.error);
-        assert!(candidate.is_none());
         assert!(thumble_core::CustomizationArtifact::decode(
             response.artifact.unwrap().artifact_json.as_bytes()
         )
         .is_ok());
+        assert_eq!(std::fs::read(&paths.state_file).unwrap(), before);
     }
 
     #[test]

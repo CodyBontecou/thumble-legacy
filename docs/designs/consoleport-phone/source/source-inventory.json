@@ -1,0 +1,24 @@
+{
+  "workspace": "build/ConsolePortLab/consoleport-design-circles-final",
+  "sessionRevision": 2,
+  "review": 1,
+  "artifactSHA256": "365849055ddae99bfc4d22fdecce59b5581befb84ad0fe218e6d255e16e20f23",
+  "evidenceSHA256": "23905712975d41f97ee0b764215cf423b9b4a68023527ddbaade527d5fc78872",
+  "files": [
+    {
+      "path": "skin-source.json",
+      "byteCount": 1271646,
+      "sha256": "7fdc1383f3ad8729c69f00fb603672f5d37073e0d35108fb4aa3d6b288833e8f"
+    },
+    {
+      "path": "styles/controller.css",
+      "byteCount": 2200,
+      "sha256": "e58c9bec25118f27696003c763356d70c2bda32617cb61f73fe32cda7b69405c"
+    },
+    {
+      "path": "sources/ability-recess.svg",
+      "byteCount": 330,
+      "sha256": "62ec45f5136689a4150ff242a8fe1a049ea3d34d45846c1c4059cd51823d5450"
+    }
+  ]
+}

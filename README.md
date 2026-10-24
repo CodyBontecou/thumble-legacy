@@ -1,5 +1,7 @@
 # Thumble
 
+The proposed [TypeScript/Bun/React Native rewrite plan](docs/typescript-rewrite-plan.md) defines the CLI/MCP and iOS/Android architecture, Classic ConsolePort and Forever launch gates, and migration sequence. It is a future implementation plan, not the current build architecture.
+
 **WoW Forever:** [Thumble Link](Addons/ThumbleLink/README.md) exports your in-game
 keyboard bindings for copy/paste import in the Mac app or `thumble wow import`.
 

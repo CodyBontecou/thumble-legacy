@@ -1,0 +1,30 @@
+{
+  "compiledSHA256": [
+    "365849055ddae99bfc4d22fdecce59b5581befb84ad0fe218e6d255e16e20f23",
+    "365849055ddae99bfc4d22fdecce59b5581befb84ad0fe218e6d255e16e20f23"
+  ],
+  "compiledMatchesReviewed": true,
+  "repackExact": true,
+  "validators": [
+    {
+      "issues": []
+    },
+    {
+      "issues": []
+    }
+  ],
+  "all45HashesMatch": true,
+  "sourceSynchronized": true,
+  "all40GeometryExactPrior": true,
+  "all40HapticsExactPrior": true,
+  "hitOverlapCount": 0,
+  "bindingExactPrior": true,
+  "assetHashesMatch": true,
+  "packageFiles": [
+    "skin.json",
+    "manifest.json",
+    "assets/right-diamond-recess.png",
+    "assets/left-diamond-recess.png"
+  ],
+  "sheetSHA256": "104807b8fc34342effdba399e32374b65661ef976a05062c965e94389b49f182"
+}

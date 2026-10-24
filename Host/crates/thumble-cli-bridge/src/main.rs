@@ -83,23 +83,6 @@ fn main() {
         }
     };
 
-    // Explicit read-only upgrade recovery. Ordinary commands never elect the GUI.
-    if matches!(
-        request.command,
-        CliProfileCommand::LegacyDesktopSnapshot { .. }
-    ) {
-        if !thumble_host::native_configuration::endpoint_present(&paths) {
-            emit(&CliProfileResponse::transport_failure(invocation_id,"none","legacy_desktop_unavailable","Read-only desktop migration snapshot requires the existing legacy owner; no state was initialized"));
-            std::process::exit(1);
-        }
-        let response = thumble_host::native_configuration::execute(&paths, &request);
-        emit(&response);
-        if !response.ok {
-            std::process::exit(1);
-        }
-        return;
-    }
-
     if matches!(request.command, CliProfileCommand::AuthorityStatus) {
         emit(&CliProfileResponse::authority_status(
             invocation_id,

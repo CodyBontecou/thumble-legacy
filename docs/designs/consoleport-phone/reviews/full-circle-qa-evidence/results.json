@@ -1,0 +1,57 @@
+{
+  "inspect": {
+    "exitCode": 0
+  },
+  "session": {
+    "artboardSHA256": "7195b4e069e34d832157c23575846dc2751881081f5258e7ef6818196b04b7e6",
+    "bindingSHA256": "79ad44961b50a80a874f39100e30881b85c037fbaadfe90a46314d3d6afccd73",
+    "id": "3903C93A-BD78-45E8-81B3-B74B60C3BCD7",
+    "latestReview": 1,
+    "ownedAuthority": true,
+    "profileID": "A4E1DDD3-9767-504E-AC27-099919F511CB",
+    "profileSHA256": "15741f271b17a2c71e54db51be3ed5fa815a65dd326299eb18409811b8ef1b8d",
+    "revision": 2,
+    "schemaVersion": 1,
+    "sourceFiles": [
+      {
+        "byteCount": 1271524,
+        "path": "skin-source.json",
+        "sha256": "ea08d6389dde1893268c0c46bf3106dad5c380ed45513039753ca16d2ec2197b"
+      },
+      {
+        "byteCount": 330,
+        "path": "sources/ability-recess.svg",
+        "sha256": "62ec45f5136689a4150ff242a8fe1a049ea3d34d45846c1c4059cd51823d5450"
+      },
+      {
+        "byteCount": 2215,
+        "path": "styles/controller.css",
+        "sha256": "b8bf1b3b6736aac937d7f89cab864b0ab8101796b454735d8a1b36109eb3b7fe"
+      }
+    ],
+    "sourceSHA256": "8b3c789fb2465080f235a9c13bfe1a143900ba129b8ed1c062b692f8d0fa313e",
+    "targetRevision": 9
+  },
+  "sourceSynchronized": true,
+  "compile-a": {
+    "exitCode": 0,
+    "sha256": "79dcdefaa8d74625ae63bce0a45cd5be97ced80965c1e705994403ec22540c37"
+  },
+  "validate-a": {
+    "exitCode": 0
+  },
+  "compile-b": {
+    "exitCode": 0,
+    "sha256": "79dcdefaa8d74625ae63bce0a45cd5be97ced80965c1e705994403ec22540c37"
+  },
+  "validate-b": {
+    "exitCode": 0
+  },
+  "quality": {
+    "exitCode": 1
+  },
+  "artifactMatch": true,
+  "evidenceCount": 45,
+  "allHashesMatch": true,
+  "sheetSHA256": "bf9d96102614b535af2936f7da013e1cea2979a1df34cb04c1d140ca413ced8a"
+}
