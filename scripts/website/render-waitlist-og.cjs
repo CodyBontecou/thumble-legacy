@@ -15,7 +15,7 @@ const root = path.resolve(__dirname, '../..');
       await document.fonts.ready;
       await Promise.all([...document.images].map(image => image.decode()));
     });
-    const output = path.join(root, 'Website/assets/og/waitlist-v5.png');
+    const output = path.join(root, 'Website/assets/og/waitlist-v7.png');
     fs.mkdirSync(path.dirname(output), { recursive: true });
     await page.screenshot({ path: output });
     console.log('Rendered 1200 × 630 waitlist card: ' + output);

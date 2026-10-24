@@ -51,3 +51,62 @@
   .launch-heading h1 { font-size: 36px; }
   .launch-product { margin-block: 22px 23px; }
 }
+
+/* Current phone-controller launch, demo pricing and receiver distribution. */
+.launch-heading .eyebrow { margin: 0 0 20px; font: 10px/1.5 var(--mono); letter-spacing: .14em; }
+.launch-heading .hero-description { max-width: 640px; margin: 20px auto 0; font: 16px/1.8 var(--sans, system-ui, sans-serif); letter-spacing: 0; }
+.launch-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.availability-note { color: #aaa; font-size: 12px; margin-top: 18px; }
+.availability-note a { color: #dedede; text-underline-offset: 4px; }
+.launch-page .launch-phone { transform: none; border-radius: 31px; padding: 5px; }
+.launch-page .launch-phone img { border-radius: 26px; }
+.launch-page .launch-product { max-width: 880px; margin-block: 44px 22px; }
+.launch-page .launch-platforms { font-size: 11px; color: #999; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.price-card { border: 1px solid #303030; background: #0b0b0b; border-radius: 24px; padding: 36px; display: flex; flex-direction: column; }
+.price-card.pro-card { border-color: #858585; background: #121212; }
+.price-card h3 { margin: 0; font-size: clamp(42px, 5vw, 60px); letter-spacing: -.06em; font-weight: 500; }
+.price-card h3 span { font-size: 13px; letter-spacing: 0; color: #aaa; }
+.price-card .price-subtitle { color: #ededed; margin: 10px 0; font-size: 15px; }
+.price-card .quiet-checklist { margin-block: 14px 30px; }
+.price-card .button { margin-top: auto; align-self: flex-start; }
+.pricing-note { max-width: 760px; margin: 24px auto 0; text-align: center; }
+.receiver-card { display: grid; grid-template-columns: 1fr auto; gap: 40px; padding: 36px; border: 1px solid #303030; border-radius: 24px; background: #0b0b0b; }
+.receiver-card h3 { margin-top: 0; font-size: 24px; }
+.receiver-card .download-detail { max-width: 540px; font-size: 12px; }
+.receiver-actions { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 20px; }
+.launch-page a:focus-visible { outline: 2px solid #ededed; outline-offset: 5px; }
+@media (max-width: 640px) {
+ .launch-page .site-header nav { gap: 14px; }
+ .launch-page .site-header nav a { font-size: 11px; }
+ .launch-heading .hero-description { font-size: 14px; }
+ .launch-heading .hero-description br { display: none; }
+ .pricing-grid, .receiver-card { grid-template-columns: 1fr; }
+ .price-card, .receiver-card { padding: 26px; }
+ .launch-page .launch-platforms { max-width: none; font-size: 10px; }
+}
+
+.current-docs .docs-hero { grid-template-columns: 1fr; min-height: auto; padding-block: 70px; }
+.current-docs .docs-layout { padding-bottom: 80px; }
+.current-docs .docs-copy h2 { scroll-margin-top: 100px; }
+.historical-note { padding-top: 24px; font-size: 13px; color: #aaa; }
+
+.launch-page .brand { gap: 0; }
+@media(max-width:640px) { .launch-page .site-header nav a:first-child { display: inline; } }
+
+.hero-pricing { margin: 18px 0 0; color: #c8c8c8; font-size: 13px; }
+
+/* Ability artwork stays aligned with the ConsolePort screenshot at every size. */
+.consoleport-preview { position: relative; }
+.consoleport-preview > img:first-child { display: block; }
+.launch-page .consoleport-preview .ability-icon { position: absolute; width: 6.65%; height: auto; aspect-ratio: 1; object-fit: cover; border: 0; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.ability-y { left: 75.4%; top: 28.9%; }
+.ability-x { left: 65.3%; top: 51.2%; }
+.ability-b { left: 85.5%; top: 51.2%; }
+.ability-a { left: 75.4%; top: 73.2%; }
+.ability-up { left: 24.6%; top: 28.9%; }
+.ability-left { left: 14.5%; top: 51.2%; }
+.ability-right { left: 34.7%; top: 51.2%; }
+.ability-lt { left: 44.7%; top: 37.1%; }
+.ability-rt { left: 55.7%; top: 37.1%; }
+ .ability-down { left: 24.6%; top: 73.2%; width: 6.95% !important; }
