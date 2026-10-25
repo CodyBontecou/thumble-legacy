@@ -36,3 +36,19 @@ Rebuild with `node scripts/website/render-waitlist-og.cjs` from the repository r
 
 The waitlist page itself reuses the homepage ConsolePort Warrior preview markup
 and ability overlays, including Sunder Armor.
+
+## Agent discovery and Markdown
+
+Public HTML pages negotiate Markdown with `Accept: text/markdown` through
+`functions/_middleware.js`. Both representations declare `Vary: Accept` and
+use `Cache-Control: no-store` to avoid shared-cache representation collisions.
+Missing Markdown pages retain HTTP 404 and link to recovery resources.
+After changing public page copy, run `node build-markdown.mjs` from Website
+before deploying to regenerate `functions/_markdown.js` from the HTML.
+
+`/developers` documents the supported read-only hosted integration. `/openapi.json`
+covers public configuration and authenticated account reads; `/llms.txt`,
+`/.well-known/mcp.json`, `/.well-known/mcp/server-card.json` and the API catalog
+link to the existing OAuth-protected MCP endpoint. These documents do not enable
+generation or expose account data. Root OAuth discovery redirects are maintained
+in the current app repository at `apps/cloud/src/worker.js`.
