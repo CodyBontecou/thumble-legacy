@@ -110,3 +110,7 @@
 .ability-lt { left: 44.7%; top: 37.1%; }
 .ability-rt { left: 55.7%; top: 37.1%; }
  .ability-down { left: 24.6%; top: 73.2%; width: 6.95% !important; }
+
+/* WoW-first positioning keeps the existing layout and controller artwork. */
+.launch-page .preview-caption { max-width: 640px; margin: 18px auto 0; padding-inline: 24px; color: #aaa; font-size: 12px; line-height: 1.6; text-align: center; }
+.launch-page .launch-heading h1 { text-wrap: balance; }

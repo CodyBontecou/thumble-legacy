@@ -1,7 +1,9 @@
 # Thumble website
 
 Production source for thumble.io (Cloudflare Pages project `pocketpad-site`).
-The current phone-controller landing page describes the full-featured 30-minute
+The landing page and setup guide target WoW on Mac with ConsolePort. The initial
+journey is choose client → pair phone → prepare ConsolePort → five in-game checks.
+AI controller generation is disabled and is not required for setup. The 30-minute
 total demo and $19.99 USD one-time Pro unlock. Pro only removes the connected-use
 time limit. The phone app is marked coming soon until public store links exist.
 
@@ -36,6 +38,8 @@ Rebuild with `node scripts/website/render-waitlist-og.cjs` from the repository r
 
 The waitlist page itself reuses the homepage ConsolePort Warrior preview markup
 and ability overlays, including Sunder Armor.
+
+The setup guide includes a dedicated #thumble-addon section explaining CurseForge installation, exact client selection, enabling both addons, updates, /thumble discovery, and the initial Classic Era 1.15.9 release scope. Approval is pending; copy must not promise an available public download until verified.
 
 ## Agent discovery and Markdown
 
