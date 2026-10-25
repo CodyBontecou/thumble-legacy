@@ -29,3 +29,9 @@ AI generation, save and deliver tools are disabled. Agents cannot send gameplay 
 - [Sitemap](https://thumble.io/sitemap.xml)
 
 Public pages support Accept: text/markdown at their canonical URLs. The Mac receiver is available; phone apps are coming soon. Do not promise store downloads or universal WoW compatibility.
+
+## Developer quick start
+- [Free synthetic sandbox](https://thumble.io/v1/sandbox): no signup, key or OAuth; fixed read-only sample data.
+- [Official Thumble CLI](https://thumble.io/developers#cli): downloadable Node.js tool and installable package archive; registry publication pending.
+- [API lifecycle policy](https://thumble.io/api-policy): major URL versions; at least 90 days notice before stable endpoint removal.
+- [REST rate limits](https://thumble.io/developers#rate-limits): enforced policy, HTTP 429 and Retry-After.

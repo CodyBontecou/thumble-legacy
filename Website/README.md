@@ -56,3 +56,9 @@ covers public configuration and authenticated account reads; `/llms.txt`,
 link to the existing OAuth-protected MCP endpoint. These documents do not enable
 generation or expose account data. Root OAuth discovery redirects are maintained
 in the current app repository at `apps/cloud/src/worker.js`.
+
+## Developer CLI distribution
+
+The hosted CLI source is maintained in the current app repository at `packages/cli/src/thumble.mjs`. Before publishing a new CLI release, run `node tools/build-developer-distribution.mjs /absolute/site-staging/cli` from that repository. It copies the script and packs the installable npm-compatible archive. Keep those files in the deployment directory; do not commit generated `.tgz` archives. The `/cli/` directory is a build output assembled for deployment.
+
+`/v1/sandbox` is implemented by the cloud Worker, not Pages. It returns synthetic, read-only records without database access. `/api-policy` documents stable read API lifecycle commitments. OpenAPI response schemas are inlined for clients that do not resolve component references; Controller matches `packages/controller/src/profile-schema.js` and must be refreshed when that contract changes.

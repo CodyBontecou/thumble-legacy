@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://thumble.io/api-policy">
+  <meta property="og:url" content="https://thumble.io/api-policy">
+  <meta property="og:site_name" content="Thumble">
+  <meta property="og:image:alt" content="Your phone. Your controls. Thumble Warrior ConsolePort controller with circular ability icons, Sunder Armor, and twin sticks.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Thumble API lifecycle policy — Thumble">
+  <meta name="twitter:description" content="Connect an agent to Thumble’s authenticated, read-only controller tools, or inspect public service configuration without an account.">
+  <meta name="twitter:image" content="https://thumble.io/assets/og/waitlist-v7.png">
+  <meta name="twitter:image:alt" content="Your phone. Your controls. Thumble Warrior ConsolePort controller with circular ability icons, Sunder Armor, and twin sticks.">
+  <title>Thumble API lifecycle policy — Thumble</title>
+  <meta name="description" content="Connect an agent to Thumble’s authenticated, read-only controller tools, or inspect public service configuration without an account.">
+  <meta name="theme-color" content="#080909">
+  <meta property="og:title" content="Thumble API lifecycle policy — Thumble">
+  <meta property="og:description" content="Connect an agent to Thumble’s authenticated, read-only controller tools, or inspect public service configuration without an account.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://thumble.io/assets/og/waitlist-v7.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/app-icon.png">
+  <link rel="stylesheet" href="/styles.css?v=c61718e97179">
+  <link rel="stylesheet" href="/design.css?v=20261023-minimal-signup">
+  <link rel="stylesheet" href="/landing.css?v=20261024-wow-first">
+<link rel="alternate" type="application/vnd.oai.openapi+json" href="/openapi.json" title="Thumble API"><link rel="alternate" type="text/plain" href="/llms.txt" title="Thumble agent guidance">
+</head><body class="home-page launch-page current-docs"><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><a class="brand" href="/" aria-label="Thumble home">thumble<span class="brand-period">.</span></a><nav aria-label="Primary navigation"><a href="/#pricing">Pricing</a><a href="/docs">Setup guide</a><a href="/#download">Download</a></nav></header><main id="main" class="section-shell"><section class="docs-hero"><h1>Thumble API lifecycle policy</h1><p class="lede">Stable contracts, versioning and advance notice for developer integrations.</p></section><section class="docs-copy" style="max-width:780px;margin:40px auto 90px"><h2 id="versioning">API versioning and deprecation</h2><p>The stable REST major version is /v1. Backward-compatible fields may be added; clients should tolerate unknown response fields and documented optional values. Breaking contract changes use a new major version. Before removing a documented stable operation, we will give at least 90 days’ notice in developer documentation and return Deprecation and Sunset headers on affected operations, with a Link to migration guidance. No documented v1 operation is currently deprecated or scheduled for removal. Read the <a href="/api-policy">API lifecycle policy</a>.</p><h2>Scope</h2><p>This policy applies to operations published in the <a href="/openapi.json">Thumble read API contract</a>. Native device management and experimental disabled generation interfaces are not part of that stable read contract. Authentication stays required for account data. New scopes always require an explicit consent flow.</p><h2>Recovering from changes</h2><p>Read response headers before retiring an integration. A Deprecation header signals that migration is recommended; Sunset announces the removal date. Follow the linked migration documentation and test against the free <a href="/v1/sandbox">synthetic sandbox</a>. No v1 endpoint is currently scheduled for removal. Questions go to <a href="/support">Thumble support</a>.</p></section></main><footer class="site-footer section-shell"><a class="brand" href="/">thumble<span class="brand-period">.</span></a><span>WoW on your Mac. Controls on your phone.</span><span class="footer-links"><a href="/docs">Setup guide</a><a href="/#pricing">Pricing</a><a href="/waitlist">Launch updates</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="/about">About</a><a href="/developers">Developers</a></span><small>© <span id="year">2026</span> Thumble</small></footer></body></html>
