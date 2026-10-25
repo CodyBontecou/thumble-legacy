@@ -32,6 +32,8 @@ Public pages support Accept: text/markdown at their canonical URLs. The Mac rece
 
 ## Developer quick start
 - [Free synthetic sandbox](https://thumble.io/v1/sandbox): no signup, key or OAuth; fixed read-only sample data.
-- [Official Thumble CLI](https://thumble.io/developers#cli): downloadable Node.js tool and installable package archive; registry publication pending.
+- [Official Thumble CLI](https://thumble.io/developers#cli): published on npm as thumble-cli; run npm install -g thumble-cli or npx thumble-cli@0.1.0 sandbox. Also available as a standalone Node.js script.
 - [API lifecycle policy](https://thumble.io/api-policy): major URL versions; at least 90 days notice before stable endpoint removal.
 - [REST rate limits](https://thumble.io/developers#rate-limits): enforced policy, HTTP 429 and Retry-After.
+
+- [Official npm package](https://www.npmjs.com/package/thumble-cli): read-only service inspection; no account needed for config or sandbox.
