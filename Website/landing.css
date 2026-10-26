@@ -114,3 +114,10 @@
 /* WoW-first positioning keeps the existing layout and controller artwork. */
 .launch-page .preview-caption { max-width: 640px; margin: 18px auto 0; padding-inline: 24px; color: #aaa; font-size: 12px; line-height: 1.6; text-align: center; }
 .launch-page .launch-heading h1 { text-wrap: balance; }
+
+/* Keep the guide entry visible without widening the page on small phones. */
+@media (max-width: 640px) {
+ .launch-page .site-header { flex-wrap: wrap; gap: 16px; }
+ .launch-page .site-header nav { max-width: 100%; flex-wrap: wrap; gap: 12px; }
+ .launch-page .site-footer .footer-links { max-width: 100%; min-width: 0; flex-wrap: wrap; }
+}

@@ -1,3 +1,5 @@
+import { normalizeAttribution } from '../../attribution.mjs';
+
 const CONSENT_TEXT = "By joining, you agree to receive launch updates.";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
@@ -132,6 +134,8 @@ export async function onRequest(context) {
     return fail(request, "Could not read that signup. Please try again.", 400);
   }
 
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return fail(request, "Invalid signup payload.", 400);
+
   // Honeypot field. Real users never see this input, so treat a value as a bot and return success.
   if (String(payload.company || "").trim()) {
     return ok(request);
@@ -165,13 +169,14 @@ export async function onRequest(context) {
     return fail(request, "Please retry the anti-spam check.", 403);
   }
 
+  const attribution = normalizeAttribution(payload.attribution);
   const now = new Date().toISOString();
   const userAgent = String(request.headers.get("User-Agent") || "").slice(0, 500);
   const country = String(request.cf?.country || request.headers.get("CF-IPCountry") || "").slice(0, 8);
   const ipHash = ip ? await sha256(`${env.IP_HASH_SALT || "pocketpad"}:${ip}`) : null;
 
   try {
-    await env.DB.prepare(`
+    const subscriber = env.DB.prepare(`
       INSERT INTO waitlist_subscribers (
         email,
         status,
@@ -203,7 +208,18 @@ export async function onRequest(context) {
       userAgent,
       country,
       ipHash
-    ).run();
+    );
+    const acquisition = env.DB.prepare(`
+      INSERT INTO waitlist_attribution (
+        subscriber_id, first_source, latest_source, first_touch, latest_touch, created_at, updated_at
+      ) SELECT id, ?, ?, ?, ?, ?, ? FROM waitlist_subscribers WHERE email = ?
+      ON CONFLICT(subscriber_id) DO UPDATE SET
+        latest_source = excluded.latest_source,
+        latest_touch = excluded.latest_touch,
+        updated_at = excluded.updated_at
+    `).bind(source, source, JSON.stringify(attribution.first), JSON.stringify(attribution.latest), now, now, email);
+    // D1 batches commit together: do not report a saved signup if its writes failed.
+    await env.DB.batch([subscriber, acquisition]);
   } catch (error) {
     console.error("waitlist_insert_failed", error);
     return fail(request, "Could not save your email right now. Please try again soon.", 500);
