@@ -1,5 +1,4 @@
 #!/usr/bin/env bun
-import { NativeInputErrorForwarder } from "../apps/service/src/native-input-error-diagnostic.ts";
 import { ProbePhaseGate } from "./probe-phase-gate.ts";
 /** Synthetic QA: real CLI service/native TLS/saved authority; recording output only. */
 import assert from "node:assert/strict";
@@ -92,8 +91,33 @@ export function neutralWaitFailure(
   return `probe_${phase}_timeout_${snapshot?.active === true ? "active" : "inactive"}_${snapshot?.reportHex === NEUTRAL ? "neutral" : "changed"}_${reason}`;
 }
 
+/** QA-only screen-coordinate oracle. Pixel rounding may move each retained axis by .025.
+ * Admit a simultaneous full-state report, then pin its exact bytes for the hold watch.
+ * Existing native SDK golden modes remain byte-exact against ANALOG.
+ */
+export function isAppAnalogReport(report: string): boolean {
+  if (!/^[0-9a-f]{40}$/.test(report)) return false;
+  const bytes = Buffer.from(report, "hex");
+  if (bytes[0] !== 0 || bytes[1] !== 20 || bytes[2] !== 0 || bytes[3] !== 16)
+    return false;
+  if (
+    [8, 9, 10, 11, 14, 15, 16, 17, 18, 19].some((index) => bytes[index] !== 0)
+  )
+    return false;
+  return [
+    bytes[4]! / 255,
+    bytes[5]! / 255,
+    bytes.readInt16LE(6) / 32767,
+    bytes.readInt16LE(12) / 32767,
+  ].every((value) => Math.abs(value - 0.4) <= 0.025);
+}
+
 export class RealServicePhoneProbe {
+  private readonly appAnalogController = process.argv.includes(
+    "--saved-controller-analog-app",
+  );
   private readonly analogController =
+    this.appAnalogController ||
     process.argv.includes("--saved-controller-analog") ||
     process.argv.includes("--saved-controller-analog-unsupported");
   private readonly savedController =
@@ -164,7 +188,6 @@ export class RealServicePhoneProbe {
       (process.platform === "win32" ? ".exe" : ""),
   );
   private service?: ReturnType<typeof Bun.spawn>;
-  private errorReader?: { cancel(): Promise<unknown> };
   private endpoint?: ReturnType<typeof readEndpoint>;
   private activationOffset = 0;
   private watch:
@@ -239,39 +262,8 @@ export class RealServicePhoneProbe {
         "--identity-dir",
         identity,
       ],
-      {
-        stdout: "ignore",
-        stderr:
-          process.env.THUMBLE_REWRITE_INPUT_ERROR_PROBE === "1"
-            ? "pipe"
-            : "ignore",
-      },
+      { stdout: "ignore", stderr: "ignore" },
     );
-    if (process.env.THUMBLE_REWRITE_INPUT_ERROR_PROBE === "1") {
-      assert(
-        this.service.stderr instanceof ReadableStream,
-        "probe_error_stream_missing",
-      );
-      const reader = this.service.stderr.getReader();
-      this.errorReader = reader;
-      const errors = new NativeInputErrorForwarder(
-        (line) => process.stderr.write(line + "\n", () => {}),
-        32,
-      );
-      void (async () => {
-        try {
-          for (;;) {
-            const result = await reader.read();
-            if (result.done) break;
-            errors.push(result.value);
-          }
-        } catch {
-          /* Optional diagnostics never change input or primary errors. */
-        } finally {
-          reader.releaseLock();
-        }
-      })();
-    }
     void this.service.exited.then((code) =>
       this.diagnose(code === 0 ? "service_exit_zero" : "service_exit_nonzero"),
     );
@@ -523,13 +515,22 @@ export class RealServicePhoneProbe {
         byte !== "k" || this.analogController,
         "probe_analog_mode_required",
       );
-      const expected = byte === "b" ? TRIGGER : byte === "k" ? ANALOG : SOUTH;
+      let expected = byte === "b" ? TRIGGER : byte === "k" ? ANALOG : SOUTH;
       assert(!this.watch, "probe_watch_exists");
       await this.until(async () => {
         const s = await this.snapshot();
+        if (byte === "k" && this.appAnalogController) {
+          if (!s.active || !isAppAnalogReport(s.reportHex)) return false;
+          expected = s.reportHex;
+          return true;
+        }
         return s.active && s.reportHex === expected;
       });
       const current = await this.snapshot();
+      assert(
+        current.active && current.reportHex === expected,
+        "probe_hold_start_changed",
+      );
       let offset = this.activationOffset;
       const limit = statSync(this.local.recordingLog).size;
       for (let count = 0; count < 64; count++) {
@@ -685,11 +686,6 @@ export class RealServicePhoneProbe {
         }
       }
     }
-    if (this.errorReader) {
-      try {
-        void this.errorReader.cancel().catch(() => {});
-      } catch {}
-    }
     rmSync(this.parent, { recursive: true, force: true });
   }
 }
@@ -721,6 +717,7 @@ if (import.meta.main) {
               "--saved-controller-unsupported",
               "--saved-controller-corner",
               "--saved-controller-analog",
+              "--saved-controller-analog-app",
               "--saved-controller-analog-unsupported",
             ].includes(arg),
           ),

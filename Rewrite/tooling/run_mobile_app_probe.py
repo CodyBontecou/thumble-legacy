@@ -14,9 +14,6 @@ import subprocess
 import sys
 import threading
 from native_hold_diagnostic import decode_native_hold_diagnostic
-from native_control_terminal import NativeControlTerminals
-from native_input_error import NativeInputErrors
-from native_io_terminal import NativeIOTerminals
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -52,7 +49,7 @@ def decode_checkpoint(value):
     return {key: value[key] for key in sorted(value)}
 
 
-GET_PHASES = frozenset({"/health", "/begin", "/held", "/renewal-start", "/renewal-verified", "/fresh", "/neutral", "/next", "/finish", "/saved-start", "/saved-held"})
+GET_PHASES = frozenset({"/health", "/begin", "/held", "/renewal-start", "/renewal-verified", "/fresh", "/neutral", "/next", "/finish", "/saved-start", "/saved-held", "/analog-start", "/analog-held"})
 
 
 def check_probe_health(port):
@@ -69,9 +66,8 @@ def check_probe_health(port):
 
 
 class Probe:
-    def __init__(self, saved_controller=None, input_error_probe=False, input_io_probe=False):
-        assert saved_controller in (None, "corner", "unsupported"), "app_probe_mode_invalid"
-        assert not input_io_probe or saved_controller is None, "app_probe_io_scope_invalid"
+    def __init__(self, saved_controller=None):
+        assert saved_controller in (None, "corner", "unsupported", "analog", "analog-unsupported"), "app_probe_mode_invalid"
         self.saved_controller = saved_controller
         self.process = None
         self.begin_requests = 0
@@ -81,26 +77,9 @@ class Probe:
         self.completed = False
         self.failure_codes = []
         self.native_hold_diagnostic = None
-        self.native_control_terminals = NativeControlTerminals()
-        self.native_input_errors = NativeInputErrors()
-        self.input_error_probe = input_error_probe
-        self.input_io_probe = input_io_probe
-        self.native_io_terminals = NativeIOTerminals()
         self.checkpoints = []
         self.readers = []
         self.counts = {"held": 0, "fresh": 0, "neutral": 0, "renewalStarts": 0, "renewalVerified": 0}
-
-    def observe_native_io(self, line):
-        try:
-            self.native_io_terminals.observe(line)
-        except Exception:
-            pass  # Optional diagnostics cannot stop the primary stderr reader.
-
-    def write_native_io_report(self, destination):
-        try:
-            return self.native_io_terminals.write_report(destination)
-        except Exception:
-            return False
 
     def line(self):
         text = self.lines.get(timeout=5)
@@ -125,13 +104,8 @@ class Probe:
                 assert self.process is None, "app_probe_already_started"
                 executable = ROOT / ("tooling/real-service-phone-probe.ts" if self.saved_controller else "native/receiver/target/debug/examples/phone_input_probe")
                 assert executable.is_file(), "app_probe_executable_missing"
-                arguments = ["--saved-controller-" + self.saved_controller] if self.saved_controller else ["--renewal-watch"]
-                environment = dict(os.environ)
-                if self.input_error_probe or self.input_io_probe:
-                    environment["THUMBLE_REWRITE_INPUT_ERROR_PROBE"] = "1"
-                if self.input_io_probe:
-                    environment["THUMBLE_REWRITE_INPUT_IO_PROBE"] = "1"
-                self.process = subprocess.Popen([str(executable), *arguments], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment)
+                arguments = ["--saved-controller-" + ("analog-app" if self.saved_controller == "analog" else self.saved_controller)] if self.saved_controller else ["--renewal-watch"]
+                self.process = subprocess.Popen([str(executable), *arguments], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 def read():
                     for line in self.process.stdout:
                         self.lines.put(line)
@@ -141,10 +115,6 @@ class Probe:
                 reader.start()
                 def read_failures():
                     for line in iter(lambda: self.process.stderr.readline(4096), b""):
-                        self.native_control_terminals.observe(line.decode("utf-8", errors="replace"))
-                        self.native_input_errors.observe(line.decode("utf-8", errors="replace"))
-                        if self.input_io_probe:
-                            self.observe_native_io(line.decode("utf-8", errors="replace"))
                         hold = decode_native_hold_diagnostic(line.decode("utf-8", errors="replace"))
                         if hold is not None and self.native_hold_diagnostic is None:
                             self.native_hold_diagnostic = hold
@@ -178,6 +148,17 @@ class Probe:
                 assert result["catalogHeld"] is True and result["durationMs"] >= 1500
                 assert result["neutralPulses"] == 0 and result["inputTtlMs"] == 350 and result["inputEnabled"] is False
                 self.counts["savedVerified"] = self.counts.get("savedVerified", 0) + 1
+            elif path == "/analog-start":
+                assert self.saved_controller == "analog", "app_probe_mode_invalid"
+                result = self.command("k")
+                assert result["watching"] is True and result["inputTtlMs"] == 350
+                self.counts["analogStarts"] = self.counts.get("analogStarts", 0) + 1
+            elif path == "/analog-held":
+                assert self.saved_controller == "analog", "app_probe_mode_invalid"
+                result = self.command("o")
+                assert result["analogHeld"] is True and result["durationMs"] >= 1500
+                assert result["neutralPulses"] == 0 and result["inputTtlMs"] == 350 and result["inputEnabled"] is False
+                self.counts["analogVerified"] = self.counts.get("analogVerified", 0) + 1
             elif path == "/renewal-start":
                 result = self.command("b")
                 assert result["watching"] is True and result["inputTtlMs"] == 350
@@ -206,7 +187,9 @@ class Probe:
                 expected = {"held": 2, "fresh": 2, "neutral": 2, "renewalStarts": 1, "renewalVerified": 1}
                 if self.saved_controller == "corner":
                     expected = {"held": 1, "fresh": 1, "neutral": 1, "renewalStarts": 0, "renewalVerified": 0, "savedStarts": 1, "savedVerified": 1}
-                elif self.saved_controller == "unsupported":
+                elif self.saved_controller == "analog":
+                    expected = {"held": 0, "fresh": 1, "neutral": 1, "renewalStarts": 0, "renewalVerified": 0, "analogStarts": 1, "analogVerified": 1}
+                elif self.saved_controller in ("unsupported", "analog-unsupported"):
                     expected = {"held": 0, "fresh": 0, "neutral": 0, "renewalStarts": 0, "renewalVerified": 0}
                 assert self.counts == expected, "missing native app receiver witnesses"
                 self.completed = True
@@ -238,19 +221,14 @@ class Probe:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--platform", choices=["ios", "android"], required=True)
-    parser.add_argument("--saved-controller", choices=["corner", "unsupported"])
-    parser.add_argument("--terminal-report", type=Path)
-    parser.add_argument("--input-error-report", type=Path)
-    parser.add_argument("--native-io-report", type=Path)
+    parser.add_argument("--saved-controller", choices=["corner", "unsupported", "analog", "analog-unsupported"])
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args()
-    if args.native_io_report is not None and (args.platform != "ios" or args.saved_controller is not None):
-        parser.error("native_io_probe_requires_owned_ios_runtime")
     command = args.command
     if command[:1] == ["--"]:
         command = command[1:]
     assert command, "missing app test command"
-    probe = Probe(args.saved_controller, input_error_probe=args.input_error_report is not None, input_io_probe=args.native_io_report is not None)
+    probe = Probe(args.saved_controller)
     reverse_ports = set()
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
@@ -350,13 +328,7 @@ def main():
         health_stop.set()
         health_thread.join(timeout=3)
         probe.close()
-        if args.terminal_report is not None and not probe.native_control_terminals.write_report(args.terminal_report):
-            print("native_control_terminal_report_unavailable", file=sys.stderr)
-        if args.input_error_report is not None and not probe.native_input_errors.write_report(args.input_error_report):
-            print("native_input_error_report_unavailable", file=sys.stderr)
-        if args.native_io_report is not None and not probe.write_native_io_report(args.native_io_report):
-            print("native_io_terminal_report_unavailable", file=sys.stderr)
-        print("[DEBUG-renewal-app] final " + json.dumps({"completed": probe.completed, "counts": probe.counts, "httpDiagnostics": {"beginRequests": probe.begin_requests, "healthRequests": probe.health_requests, "serverThreadAlive": server_thread.is_alive(), "healthMonitor": health}, "nativeExitBeforeCleanup": native_exit_before_cleanup, "nativeFailureCodes": probe.failure_codes, "nativeHoldDiagnostic": probe.native_hold_diagnostic, "nativeControlTerminals": probe.native_control_terminals.snapshot(), "lastCheckpoint": probe.checkpoints[-1] if probe.checkpoints else None}, sort_keys=True), flush=True)
+        print("[DEBUG-renewal-app] final " + json.dumps({"completed": probe.completed, "counts": probe.counts, "httpDiagnostics": {"beginRequests": probe.begin_requests, "healthRequests": probe.health_requests, "serverThreadAlive": server_thread.is_alive(), "healthMonitor": health}, "nativeExitBeforeCleanup": native_exit_before_cleanup, "nativeFailureCodes": probe.failure_codes, "nativeHoldDiagnostic": probe.native_hold_diagnostic, "lastCheckpoint": probe.checkpoints[-1] if probe.checkpoints else None}, sort_keys=True), flush=True)
         server.shutdown()
         server.server_close()
         if reverse:

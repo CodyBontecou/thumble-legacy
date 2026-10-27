@@ -153,3 +153,22 @@ class SavedAppWatchdogTests(unittest.TestCase):
                 with self.assertRaisesRegex(AssertionError, "app_saved_command_timeout"):
                     run_mobile_app_probe.main()
                 command.assert_called_once_with(["synthetic-app"], timeout=300)
+
+
+class AnalogAppModeTests(unittest.TestCase):
+    def test_analog_requires_both_combined_watch_and_done_release_without_changing_button_modes(self):
+        probe = Probe("analog")
+        probe.process = type("Process", (), {"wait": lambda self, timeout: 0})()
+        replies = {"c": {"freshNeutral": True, "firstSampleNeutral": True}, "k": {"watching": True, "inputTtlMs": 350}, "o": {"analogHeld": True, "durationMs": 1500, "neutralPulses": 0, "inputTtlMs": 350, "inputEnabled": False}, "n": {"neutral": True, "reason": "native_input_released", "inputEnabled": False}, "f": {"completed": True, "inputEnabled": False}}
+        probe.command = lambda command: replies[command]
+        for path in ("/fresh", "/analog-start", "/analog-held", "/neutral", "/finish"):
+            self.assertEqual(probe.request(path), {"ok": True})
+        self.assertTrue(probe.completed)
+        for mode in ("corner", "unsupported", "analog-unsupported"):
+            with self.assertRaisesRegex(AssertionError, "mode_invalid"):
+                Probe(mode).request("/analog-start")
+        incomplete = Probe("analog")
+        incomplete.process = probe.process
+        incomplete.command = lambda command: replies[command]
+        with self.assertRaisesRegex(AssertionError, "missing native app receiver witnesses"):
+            incomplete.request("/finish")

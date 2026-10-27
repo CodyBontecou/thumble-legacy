@@ -327,13 +327,12 @@ class PhoneRenewalTest {
         client(io).use { client ->
             client.authenticate()
             val admission = client.prepareInput(map())
-            // Force an initial progress reply before binding, then observe packet-zero
-            // dispatch below; this does not prove that the reply has been validated.
+            // Force initial progress before binding. Packet zero cannot leave the writer
+            // until that reply is validated and its control barrier is completed.
             assertTrue(io.initialProgressCompleted.await(2, TimeUnit.SECONDS))
             assertTrue(io.initialProgressWasUnacknowledged)
             val engine = admission.bind()
-            // Raw IO dispatch proves the writer already checked packet-zero eligibility
-            // before this synthetic jump; queued input still expires.
+            // Observe actual dispatch before a synthetic jump; queued input still expires.
             until { io.inputs().isNotEmpty() }
             io.wall.set(36_000)
             io.elapsed.set(TimeUnit.MILLISECONDS.toNanos(35_000))

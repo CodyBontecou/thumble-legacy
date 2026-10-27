@@ -70,6 +70,13 @@ unless ui
   group = project.main_group.new_group(ui_name, '../tests/ios')
   ui.source_build_phase.add_file_reference(group.new_file('SavedControllerUITests.swift'))
 end
+# Private XCTest event synthesis is confined to this UI-test target.
+qa_group = project.main_group.groups.find { |g| g.name == ui_name }
+%w[SavedAnalogUITests.swift SavedAnalogGesture.m].each do |file|
+  unless ui.source_build_phase.files.any? { |f| f.file_ref&.path&.end_with?(file) }
+    ui.source_build_phase.add_file_reference(qa_group.new_file(file))
+  end
+end
 ui_probe = root.join('tests/ios/SavedControllerAppProbeConfig.json')
 ui_probe.write('{"port":0,"mode":"none"}') unless ui_probe.exist?
 unless ui.resources_build_phase.files.any? { |f| f.file_ref&.path&.end_with?('SavedControllerAppProbeConfig.json') }
@@ -82,6 +89,7 @@ ui.build_configurations.each do |configuration|
     'GENERATE_INFOPLIST_FILE' => 'YES',
     'SWIFT_VERSION' => '6.0',
     'TEST_TARGET_NAME' => app.name,
+    'SWIFT_OBJC_BRIDGING_HEADER' => '../tests/ios/SavedAnalogGesture.h',
     'CODE_SIGN_STYLE[sdk=iphonesimulator*]' => 'Manual',
     'CODE_SIGN_IDENTITY[sdk=iphonesimulator*]' => '-',
     'LD_RUNPATH_SEARCH_PATHS' => ['$(inherited)', '@executable_path/Frameworks', '@loader_path/Frameworks']
