@@ -18,7 +18,7 @@ serde_json.workspace = true
 tempfile = "=3.22.0"
 thumble-core = { path = "../thumble-core" }
 thumble-protocol = { path = "../thumble-protocol" }
-tokio = { version = "=1.47.1", features = ["io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
+tokio = { version = "=1.47.1", features = ["io-std", "io-util", "macros", "net", "rt-multi-thread", "signal", "sync", "time"] }
 tokio-tungstenite = "=0.27.0"
 uuid = { version = "=1.18.1", features = ["v4"] }
 

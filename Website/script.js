@@ -1,3 +1,9 @@
+import { captureAttribution } from './attribution.mjs';
+
+let signupAttribution;
+try { signupAttribution = captureAttribution(window.location.href, window.sessionStorage); }
+catch { signupAttribution = captureAttribution(window.location.href); }
+
 const CURRENT_YEAR = new Date().getFullYear();
 const yearNode = document.querySelector("#year");
 if (yearNode) yearNode.textContent = String(CURRENT_YEAR);
@@ -83,6 +89,7 @@ function payloadFromForm(form) {
   return {
     email: String(data.get("email") || "").trim(),
     consent: data.get("consent") === "on" || data.get("consent") === "true",
+    attribution: signupAttribution,
     source: String(data.get("source") || form.dataset.source || "landing").slice(0, 64),
     company: String(data.get("company") || ""),
     turnstileToken: String(data.get("turnstileToken") || "")

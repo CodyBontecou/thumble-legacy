@@ -173,8 +173,26 @@ impl Receiver {
             Command::Control(name, reply) => {
                 let response = match name.as_str() {
                     "status" => {
-                        json!({"ok":true,"platform":std::env::consts::OS,"port":self.port,"urls":urls(self.port),"inputEnabled":self.input_enabled,"neutralizing":self.neutralizing,"lastError":self.last_error,"core":self.core.status(),"virtualGamepadStatus":gamepad_status()})
+                        json!({"ok":true,"pid":std::process::id(),"platform":std::env::consts::OS,"port":self.port,"urls":urls(self.port),"inputEnabled":self.input_enabled,"neutralizing":self.neutralizing,"lastError":self.last_error,"core":self.core.status(),"virtualGamepadStatus":gamepad_status()})
                     }
+                    "export-configuration" => match thumble_core::ConfigurationDocument::from_state(self.core.persistent_state()) {
+                        Ok(document) => json!({"ok":true,"configuration":document}),
+                        Err(error) => json!({"ok":false,"error":error.to_string()}),
+                    },
+                    "forget-clients" => {
+                        self.retire();
+                        let mut state = self.core.persistent_state().clone();
+                        let count = state.trusted_clients.len();
+                        state.trusted_clients.clear();
+                        match self.store.save(&state) {
+                            Ok(()) => {
+                                let effects = self.core.install_validated_persisted_state(state);
+                                self.effects(effects)?;
+                                json!({"ok":true,"forgottenClients":count,"neutralizing":self.neutralizing})
+                            }
+                            Err(error) => json!({"ok":false,"error":error}),
+                        }
+                    },
                     "pairing-code" => json!({"ok":true,"pairingCode":self.core.pairing_code()}),
                     "release-all" => {
                         self.retire();
@@ -432,14 +450,17 @@ async fn phone(
 }
 
 async fn line<R: tokio::io::AsyncRead + Unpin>(read: R) -> Result<Vec<u8>, String> {
-    let mut reader = BufReader::new(read).take(65537);
+    bounded_line(read, 65536).await
+}
+async fn bounded_line<R: tokio::io::AsyncRead + Unpin>(read: R, limit: usize) -> Result<Vec<u8>, String> {
+    let mut reader = BufReader::new(read).take((limit + 1) as u64);
     let mut data = Vec::new();
     // AsyncBufReadExt::take is an AsyncRead adapter; use a bounded second reader.
     let count = BufReader::new(&mut reader)
         .read_until(b'\n', &mut data)
         .await
         .map_err(|e| e.to_string())?;
-    if count > 65536 || data.last() != Some(&b'\n') {
+    if count > limit || data.last() != Some(&b'\n') {
         return Err("Invalid bounded local frame".into());
     }
     Ok(data)
@@ -491,7 +512,7 @@ pub async fn control(store: &Store, command: &str) -> Result<Value, String> {
             .write_all(&request)
             .await
             .map_err(|e| e.to_string())?;
-        serde_json::from_slice(&line(stream).await?)
+        thumble_protocol::decode_unique_json(&bounded_line(stream, crate::store::MAX_STATE_BYTES as usize + 1024).await?)
             .map_err(|_| "Invalid local response".to_owned())
     })
     .await

@@ -39,7 +39,7 @@ Rebuild with `node scripts/website/render-waitlist-og.cjs` from the repository r
 The waitlist page itself reuses the homepage ConsolePort Warrior preview markup
 and ability overlays, including Sunder Armor.
 
-The setup guide includes a dedicated #thumble-addon section explaining CurseForge installation, exact client selection, enabling both addons, updates, /thumble discovery, and the initial Classic Era 1.15.9 release scope. Approval is pending; copy must not promise an available public download until verified.
+The setup guide includes a dedicated #thumble-addon section explaining CurseForge installation, exact client selection, enabling both addons, updates, /thumble discovery, and the initial Classic Era 1.15.9 release scope. CurseForge approval and the public 0.1.2 release were verified on October 25, 2026. Direct install link: https://www.curseforge.com/wow/addons/thumble (Classic Era 1.15.9).
 
 ## Agent discovery and Markdown
 
@@ -62,3 +62,90 @@ in the current app repository at `apps/cloud/src/worker.js`.
 The hosted CLI source is maintained in the current app repository at `packages/cli/src/thumble.mjs`. Before publishing a new CLI release, run `node tools/build-developer-distribution.mjs /absolute/site-staging/cli` from that repository. It copies the script and packs the installable npm-compatible archive. Keep those files in the deployment directory; do not commit generated `.tgz` archives. The `/cli/` directory is a build output assembled for deployment.
 
 `/v1/sandbox` is implemented by the cloud Worker, not Pages. It returns synthetic, read-only records without database access. `/api-policy` documents stable read API lifecycle commitments. OpenAPI response schemas are inlined for clients that do not resolve component references; Controller matches `packages/controller/src/profile-schema.js` and must be refreshed when that contract changes.
+
+## Search guides
+
+`/guides` is the evergreen controller guide hub. Its first cluster covers WoW
+controller options on Mac, ConsolePort setup and the Thumble companion addon.
+Keep `/docs` as the canonical Thumble installation path and link detailed guides
+from the relevant setup sections. Phone download CTAs remain launch updates until
+public store links exist. The historical blog URLs are retained with current-scope
+notes; they are not the current product installation instructions.
+
+Guide forms send distinct bounded `source` identifiers through the existing
+waitlist API. This identifies the most recent signup source only; first-touch
+attribution and Search Console baseline collection remain separate work.
+
+The Markdown generator traverses the public `blog`, `guides` and `compare`
+content directories as well as root pages. It preserves page-relative anchors
+and converts HTML tables to Markdown tables. Do not place private content in
+these public directories. Run from the repository root:
+
+```sh
+node Website/build-markdown.mjs Website
+node --test scripts/website/seo.test.mjs
+```
+
+The checks cover nested discovery, duplicate routes, guide metadata and links,
+Markdown content negotiation, HEAD handling and missing-page responses. They do
+not certify live-game compatibility, external search rankings or email delivery.
+
+## Signup attribution and database migration
+
+Apply `migrations/0001_waitlist_attribution.sql` to the existing waitlist D1
+database before deploying the attribution-aware signup handler. It creates one
+new table without rewriting existing subscriber records. Fresh installations can
+apply schema.sql, which includes the table. The handler uses one D1 batch for
+subscriber and attribution writes; a failed batch must not report success.
+
+`attribution.mjs` shares the allowlists between the browser and handler. A
+sessionStorage record retains the first approved landing in this tab; the latest
+approved page is updated during navigation. Only approved paths and recognized
+utm_source, utm_medium and utm_campaign values are retained. No visitor ID, email,
+full referrer or arbitrary query string is stored in the browser record. It is
+sent with a consented signup. Storage denial falls back to the current page.
+
+The database retains the first tracked signup source and first observed landing
+submitted at that signup. Repeat submissions update only latest attribution;
+unknown historical acquisition cannot be backfilled. A native form without JS
+continues to work and records unknown landing data. This does not provide
+individual organic search queries or cross-device visitor tracking.
+
+Scripts that load script.js use type=module because it imports attribution.mjs.
+When deploying, exclude migrations/ and reports/ from the public assets. Existing
+privacy, consent, Turnstile and honeypot behavior remain in place.
+
+Run both suites (Node.js 22.13+ with node:sqlite support, or Node 24+):
+
+```sh
+node --test scripts/website/*.test.mjs
+```
+
+For aggregate reporting, run reports/attribution.sql against D1 using an
+authorized read. Counts are distinct tracked subscribers, not installations.
+
+The decision-stage articles are `/guides/iphone-controller-mac` and
+`/compare/wow-phone-vs-gamepad`. They use the same article template and appear in
+`/guides`; no separate comparison index is needed for one comparison. Keep them
+linked from the category/ConsolePort pages and maintain their attribution paths.
+The comparison describes documented methods, not benchmark results or an
+independent review. Update coming-soon copy only when phone releases are public.
+
+Control troubleshooting now has dedicated binding/modifier and reversed-camera
+guides. They distinguish game-side ConsolePort behavior from phone touch-input
+calibration, and action correctness from stale display labels. Do not describe
+source-only settings screens as universally shipped: names and sync features
+remain conditional on the installed build. Keep related links from /docs,
+/support and the detection/ConsolePort guides.
+
+## Lighthouse optimization
+
+The October 26 performance pass adds responsive content-hashed WebP variants of the controller screenshot, compressed ability artwork and a small header app icon. Original PNG assets remain available. Each HTML page embeds minified CSS at the stylesheet's original cascade position using `data-inline-css` markers.
+
+After editing a stylesheet, refresh the embedded copies before deploying:
+
+```
+node /Users/codybontecou/dev/Thumble/tools/website/optimize-lighthouse.mjs /Users/codybontecou/dev/Thumble-legacy/Website
+```
+
+Dependencies and usage are documented in `Thumble/tools/website/README.md`. Lighthouse baseline and final reports are in `Thumble/docs/evidence/lighthouse-2026-10-26`. Assemble deployments with the existing published `/cli` downloads preserved.

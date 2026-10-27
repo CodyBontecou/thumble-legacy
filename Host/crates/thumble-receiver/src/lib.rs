@@ -3,3 +3,6 @@
 pub mod input;
 pub mod runtime;
 pub mod store;
+
+pub mod management;
+pub mod mcp;
